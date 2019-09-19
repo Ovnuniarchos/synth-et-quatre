@@ -1,0 +1,14 @@
+[general]
+
+singleton=false
+load_once=true
+symbol_prefix="godot_"
+reloadable=true
+
+[entry]
+
+X11.64="res://fmsynth/bin/x11/libsynth_tracker.so"
+
+[dependencies]
+
+X11.64=[  ]

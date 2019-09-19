@@ -1,0 +1,35 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://ui/file/file_tab.gd" type="Script" id=1]
+
+[node name="File" type="Tabs"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBC" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Save" type="Button" parent="VBC"]
+margin_right = 1024.0
+margin_bottom = 298.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Save"
+
+[node name="Load" type="Button" parent="VBC"]
+margin_top = 302.0
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Load"
+[connection signal="pressed" from="VBC/Save" to="." method="_on_Save_pressed"]
+[connection signal="pressed" from="VBC/Load" to="." method="_on_Load_pressed"]

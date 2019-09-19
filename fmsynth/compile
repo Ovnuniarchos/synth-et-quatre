@@ -1,0 +1,2 @@
+scons p=x11 target=r generate_bindings=yes use_custom_api_file=yes custom_api_file=/home/jordi/godot/api.json
+

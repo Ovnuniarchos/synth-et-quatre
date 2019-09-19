@@ -1,0 +1,67 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://ui/pattern_editor/pattern_list.gd" type="Script" id=1]
+
+[node name="PatternList" type="PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBC" type="VBoxContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1017.0
+margin_bottom = 593.0
+custom_constants/separation = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBC" type="HBoxContainer" parent="VBC"]
+margin_right = 1010.0
+margin_bottom = 20.0
+custom_constants/separation = 4
+
+[node name="Add" type="Button" parent="VBC/HBC"]
+margin_right = 37.0
+margin_bottom = 20.0
+text = "Add"
+
+[node name="Copy" type="Button" parent="VBC/HBC"]
+margin_left = 41.0
+margin_right = 84.0
+margin_bottom = 20.0
+text = "Copy"
+
+[node name="S" type="ReferenceRect" parent="VBC/HBC"]
+margin_left = 88.0
+margin_right = 112.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 24, 0 )
+
+[node name="Del" type="Button" parent="VBC/HBC"]
+margin_left = 116.0
+margin_right = 150.0
+margin_bottom = 20.0
+text = "Del"
+
+[node name="SC" type="ScrollContainer" parent="VBC"]
+margin_top = 22.0
+margin_right = 1010.0
+margin_bottom = 586.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="List" type="GridContainer" parent="VBC/SC"]
+margin_right = 1010.0
+margin_bottom = 564.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/vseparation = 0
+custom_constants/hseparation = 0
+[connection signal="pressed" from="VBC/HBC/Add" to="VBC" method="_on_Add_pressed"]
+[connection signal="pressed" from="VBC/HBC/Copy" to="VBC" method="_on_Copy_pressed"]
+[connection signal="pressed" from="VBC/HBC/Del" to="VBC" method="_on_Del_pressed"]

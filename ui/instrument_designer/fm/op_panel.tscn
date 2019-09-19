@@ -1,0 +1,565 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://ui/widgets/accent_button.gd" type="Script" id=1]
+[ext_resource path="res://ui/widgets/slider.gd" type="Script" id=2]
+[ext_resource path="res://ui/instrument_designer/fm/op_panel.gd" type="Script" id=3]
+
+[node name="Operator" type="PanelContainer"]
+anchor_right = 1.0
+margin_bottom = 296.0
+size_flags_horizontal = 3
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Params" type="VBoxContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1017.0
+margin_bottom = 371.0
+size_flags_vertical = 0
+
+[node name="Switch" type="Button" parent="Params"]
+modulate = Color( 1, 2, 1, 1 )
+margin_right = 96.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 96, 0 )
+size_flags_horizontal = 0
+toggle_mode = true
+pressed = true
+text = "OPX"
+script = ExtResource( 1 )
+accent_color = Color( 1, 2, 1, 1 )
+
+[node name="Sep" type="ReferenceRect" parent="Params"]
+margin_top = 24.0
+margin_right = 1010.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 0, 16 )
+
+[node name="WaveTitle" type="Label" parent="Params"]
+margin_top = 44.0
+margin_right = 35.0
+margin_bottom = 58.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Wave"
+
+[node name="Wave" type="GridContainer" parent="Params"]
+margin_top = 62.0
+margin_right = 1010.0
+margin_bottom = 82.0
+columns = 7
+
+[node name="DUCLabel" type="Label" parent="Params/Wave"]
+margin_top = 3.0
+margin_right = 28.0
+margin_bottom = 17.0
+text = "DUC"
+
+[node name="DUCSlider" type="HSlider" parent="Params/Wave"]
+margin_left = 32.0
+margin_top = 2.0
+margin_right = 464.0
+margin_bottom = 18.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 255.0
+script = ExtResource( 2 )
+label = NodePath("../../Wave/DUCValue")
+mask = "%2d"
+
+[node name="DUCValue" type="Label" parent="Params/Wave"]
+margin_left = 468.0
+margin_top = 3.0
+margin_right = 492.0
+margin_bottom = 17.0
+size_flags_horizontal = 0
+text = "888"
+
+[node name="Sep" type="ReferenceRect" parent="Params/Wave"]
+margin_left = 496.0
+margin_right = 512.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 16, 0 )
+size_flags_vertical = 7
+
+[node name="WAVLabel" type="Label" parent="Params/Wave"]
+margin_left = 516.0
+margin_top = 3.0
+margin_right = 546.0
+margin_bottom = 17.0
+text = "WAV"
+
+[node name="WAVButton" type="OptionButton" parent="Params/Wave"]
+margin_left = 550.0
+margin_right = 982.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Rectangle"
+items = [ "Rectangle", null, false, 0, null, "Saw", null, false, 1, null, "Triangle", null, false, 2, null, "Noise", null, false, 3, null ]
+selected = 0
+
+[node name="Sep2" type="ReferenceRect" parent="Params/Wave"]
+margin_left = 986.0
+margin_right = 1010.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 24, 0 )
+size_flags_vertical = 7
+
+[node name="ReferenceRect2" type="ReferenceRect" parent="Params"]
+margin_top = 86.0
+margin_right = 1010.0
+margin_bottom = 102.0
+rect_min_size = Vector2( 0, 16 )
+
+[node name="EnvelopeTitle" type="Label" parent="Params"]
+margin_top = 106.0
+margin_right = 58.0
+margin_bottom = 120.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Envelope"
+
+[node name="ADSR" type="GridContainer" parent="Params"]
+margin_top = 124.0
+margin_right = 1010.0
+margin_bottom = 204.0
+custom_constants/hseparation = 2
+columns = 7
+
+[node name="ARLabel" type="Label" parent="Params/ADSR"]
+margin_top = 2.0
+margin_right = 28.0
+margin_bottom = 16.0
+text = "ATR"
+
+[node name="ARSlider" type="HSlider" parent="Params/ADSR"]
+margin_left = 30.0
+margin_top = 1.0
+margin_right = 470.0
+margin_bottom = 17.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 255.0
+script = ExtResource( 2 )
+label = NodePath("../ARValue")
+
+[node name="ARValue" type="Label" parent="Params/ADSR"]
+margin_left = 472.0
+margin_top = 2.0
+margin_right = 496.0
+margin_bottom = 16.0
+size_flags_horizontal = 0
+text = "888"
+
+[node name="Sep" type="ReferenceRect" parent="Params/ADSR"]
+margin_left = 498.0
+margin_right = 514.0
+margin_bottom = 18.0
+rect_min_size = Vector2( 16, 0 )
+size_flags_vertical = 7
+
+[node name="DRLabel" type="Label" parent="Params/ADSR"]
+margin_left = 516.0
+margin_top = 2.0
+margin_right = 541.0
+margin_bottom = 16.0
+text = "DER"
+
+[node name="DRSlider" type="HSlider" parent="Params/ADSR"]
+margin_left = 543.0
+margin_top = 1.0
+margin_right = 983.0
+margin_bottom = 17.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 255.0
+script = ExtResource( 2 )
+label = NodePath("../DRValue")
+
+[node name="DRValue" type="Label" parent="Params/ADSR"]
+margin_left = 985.0
+margin_top = 2.0
+margin_right = 1009.0
+margin_bottom = 16.0
+size_flags_horizontal = 0
+text = "888"
+
+[node name="SLLabel" type="Label" parent="Params/ADSR"]
+margin_top = 24.0
+margin_right = 28.0
+margin_bottom = 38.0
+text = "SUL"
+
+[node name="SLSlider" type="HSlider" parent="Params/ADSR"]
+margin_left = 30.0
+margin_top = 23.0
+margin_right = 470.0
+margin_bottom = 39.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 255.0
+script = ExtResource( 2 )
+label = NodePath("../SLValue")
+
+[node name="SLValue" type="Label" parent="Params/ADSR"]
+margin_left = 472.0
+margin_top = 24.0
+margin_right = 496.0
+margin_bottom = 38.0
+size_flags_horizontal = 0
+text = "888"
+
+[node name="Sep2" type="ReferenceRect" parent="Params/ADSR"]
+margin_left = 498.0
+margin_top = 22.0
+margin_right = 514.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 16, 0 )
+size_flags_vertical = 7
+
+[node name="SRLabel" type="Label" parent="Params/ADSR"]
+margin_left = 516.0
+margin_top = 24.0
+margin_right = 541.0
+margin_bottom = 38.0
+text = "SUR"
+
+[node name="SRSlider" type="HSlider" parent="Params/ADSR"]
+margin_left = 543.0
+margin_top = 23.0
+margin_right = 983.0
+margin_bottom = 39.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 255.0
+script = ExtResource( 2 )
+label = NodePath("../SRValue")
+
+[node name="SRValue" type="Label" parent="Params/ADSR"]
+margin_left = 985.0
+margin_top = 24.0
+margin_right = 1009.0
+margin_bottom = 38.0
+size_flags_horizontal = 0
+text = "888"
+
+[node name="RRLabel" type="Label" parent="Params/ADSR"]
+margin_top = 47.0
+margin_right = 28.0
+margin_bottom = 61.0
+text = "RER"
+
+[node name="RRSlider" type="HSlider" parent="Params/ADSR"]
+margin_left = 30.0
+margin_top = 46.0
+margin_right = 470.0
+margin_bottom = 62.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 255.0
+script = ExtResource( 2 )
+label = NodePath("../RRValue")
+
+[node name="RRValue" type="Label" parent="Params/ADSR"]
+margin_left = 472.0
+margin_top = 47.0
+margin_right = 496.0
+margin_bottom = 61.0
+size_flags_horizontal = 0
+text = "888"
+
+[node name="Sep3" type="ReferenceRect" parent="Params/ADSR"]
+margin_left = 498.0
+margin_top = 44.0
+margin_right = 514.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 16, 0 )
+size_flags_vertical = 7
+
+[node name="RPLabel" type="Label" parent="Params/ADSR"]
+margin_left = 516.0
+margin_top = 47.0
+margin_right = 541.0
+margin_bottom = 61.0
+text = "RPT"
+
+[node name="Repeat" type="OptionButton" parent="Params/ADSR"]
+margin_left = 543.0
+margin_top = 44.0
+margin_right = 983.0
+margin_bottom = 64.0
+text = "OFF"
+items = [ "OFF", null, false, 0, null, "Attack", null, false, 4, null, "Decay", null, false, 3, null, "Sustain", null, false, 2, null, "Release", null, false, 1, null ]
+selected = 0
+
+[node name="Sep4" type="ReferenceRect" parent="Params/ADSR"]
+margin_left = 985.0
+margin_top = 44.0
+margin_right = 1009.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 16, 0 )
+size_flags_vertical = 7
+
+[node name="AMSLabel" type="Label" parent="Params/ADSR"]
+margin_top = 69.0
+margin_right = 28.0
+margin_bottom = 83.0
+text = "AMS"
+
+[node name="AMSSlider" type="HSlider" parent="Params/ADSR"]
+margin_left = 30.0
+margin_top = 68.0
+margin_right = 470.0
+margin_bottom = 84.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 255.0
+script = ExtResource( 2 )
+label = NodePath("../AMSValue")
+
+[node name="AMSValue" type="Label" parent="Params/ADSR"]
+margin_left = 472.0
+margin_top = 69.0
+margin_right = 496.0
+margin_bottom = 83.0
+size_flags_horizontal = 0
+text = "888"
+
+[node name="ReferenceRect3" type="ReferenceRect" parent="Params"]
+margin_top = 208.0
+margin_right = 1010.0
+margin_bottom = 224.0
+rect_min_size = Vector2( 0, 16 )
+
+[node name="FrequencyTitle" type="Label" parent="Params"]
+margin_top = 228.0
+margin_right = 66.0
+margin_bottom = 242.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Frequency"
+
+[node name="Frequency" type="GridContainer" parent="Params"]
+margin_top = 246.0
+margin_right = 1010.0
+margin_bottom = 262.0
+custom_constants/hseparation = 2
+columns = 7
+
+[node name="MULLabel" type="Label" parent="Params/Frequency"]
+margin_top = 1.0
+margin_right = 29.0
+margin_bottom = 15.0
+text = "MUL"
+
+[node name="MULSlider" type="HSlider" parent="Params/Frequency"]
+margin_left = 31.0
+margin_right = 480.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = 1.0
+max_value = 32.0
+value = 1.0
+script = ExtResource( 2 )
+label = NodePath("../MULValue")
+mask = "%2d"
+
+[node name="MULValue" type="Label" parent="Params/Frequency"]
+margin_left = 482.0
+margin_top = 1.0
+margin_right = 498.0
+margin_bottom = 15.0
+size_flags_horizontal = 0
+text = "88"
+
+[node name="Sep" type="ReferenceRect" parent="Params/Frequency"]
+margin_left = 500.0
+margin_right = 516.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 16, 0 )
+size_flags_vertical = 7
+
+[node name="DIVLabel" type="Label" parent="Params/Frequency"]
+margin_left = 518.0
+margin_top = 1.0
+margin_right = 541.0
+margin_bottom = 15.0
+text = "DIV"
+
+[node name="DIVSlider" type="HSlider" parent="Params/Frequency"]
+margin_left = 543.0
+margin_right = 992.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = 1.0
+max_value = 32.0
+value = 1.0
+script = ExtResource( 2 )
+label = NodePath("../DIVValue")
+mask = "%2d"
+
+[node name="DIVValue" type="Label" parent="Params/Frequency"]
+margin_left = 994.0
+margin_top = 1.0
+margin_right = 1010.0
+margin_bottom = 15.0
+size_flags_horizontal = 0
+text = "88"
+
+[node name="Detune" type="HBoxContainer" parent="Params"]
+margin_top = 266.0
+margin_right = 1010.0
+margin_bottom = 282.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DETLabel" type="Label" parent="Params/Detune"]
+margin_top = 1.0
+margin_right = 24.0
+margin_bottom = 15.0
+text = "DET"
+
+[node name="DETSlider" type="HSlider" parent="Params/Detune"]
+margin_left = 28.0
+margin_right = 966.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = -12000.0
+max_value = 12000.0
+script = ExtResource( 2 )
+label = NodePath("../DETValue")
+mask = "%+4d"
+
+[node name="DETValue" type="Label" parent="Params/Detune"]
+margin_left = 970.0
+margin_top = 1.0
+margin_right = 1010.0
+margin_bottom = 15.0
+rect_min_size = Vector2( 40, 0 )
+size_flags_horizontal = 0
+text = "-1200"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FMS" type="HBoxContainer" parent="Params"]
+margin_top = 286.0
+margin_right = 1010.0
+margin_bottom = 302.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FMSLabel" type="Label" parent="Params/FMS"]
+margin_top = 1.0
+margin_right = 26.0
+margin_bottom = 15.0
+text = "FMS"
+
+[node name="FMSSlider" type="HSlider" parent="Params/FMS"]
+margin_left = 30.0
+margin_right = 966.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 12000.0
+script = ExtResource( 2 )
+label = NodePath("../FMSValue")
+mask = "%+4d"
+
+[node name="FMSValue" type="Label" parent="Params/FMS"]
+margin_left = 970.0
+margin_top = 1.0
+margin_right = 1010.0
+margin_bottom = 15.0
+rect_min_size = Vector2( 40, 0 )
+size_flags_horizontal = 0
+text = "-1200"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sep2" type="ReferenceRect" parent="Params"]
+margin_top = 306.0
+margin_right = 1010.0
+margin_bottom = 322.0
+rect_min_size = Vector2( 0, 16 )
+
+[node name="LFOsTitle" type="Label" parent="Params"]
+margin_top = 326.0
+margin_right = 32.0
+margin_bottom = 340.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "LFOs"
+
+[node name="LFOs" type="HBoxContainer" parent="Params"]
+margin_top = 344.0
+margin_right = 1010.0
+margin_bottom = 364.0
+size_flags_horizontal = 3
+
+[node name="AMFLabel" type="Label" parent="Params/LFOs"]
+margin_top = 3.0
+margin_right = 50.0
+margin_bottom = 17.0
+text = "AM LFO"
+
+[node name="AmpLFO" type="OptionButton" parent="Params/LFOs"]
+margin_left = 54.0
+margin_right = 494.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "1"
+items = [ "1", null, false, 0, null, "2", null, false, 4, null, "3", null, false, 3, null, "4", null, false, 2, null ]
+selected = 0
+
+[node name="Sep" type="ReferenceRect" parent="Params/LFOs"]
+margin_left = 498.0
+margin_right = 514.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 16, 0 )
+size_flags_vertical = 7
+
+[node name="FMFLabel" type="Label" parent="Params/LFOs"]
+margin_left = 518.0
+margin_top = 3.0
+margin_right = 566.0
+margin_bottom = 17.0
+text = "FM LFO"
+
+[node name="FreqLFO" type="OptionButton" parent="Params/LFOs"]
+margin_left = 570.0
+margin_right = 1010.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "1"
+items = [ "1", null, false, 0, null, "2", null, false, 4, null, "3", null, false, 3, null, "4", null, false, 2, null ]
+selected = 0
+[connection signal="toggled" from="Params/Switch" to="." method="_on_Switch_toggled"]
+[connection signal="value_changed" from="Params/Wave/DUCSlider" to="." method="_on_DUCSlider_value_changed"]
+[connection signal="item_selected" from="Params/Wave/WAVButton" to="." method="_on_WAVButton_item_selected"]
+[connection signal="value_changed" from="Params/ADSR/ARSlider" to="." method="_on_ARSlider_value_changed"]
+[connection signal="value_changed" from="Params/ADSR/DRSlider" to="." method="_on_DRSlider_value_changed"]
+[connection signal="value_changed" from="Params/ADSR/SLSlider" to="." method="_on_SLSlider_value_changed"]
+[connection signal="value_changed" from="Params/ADSR/SRSlider" to="." method="_on_SRSlider_value_changed"]
+[connection signal="value_changed" from="Params/ADSR/RRSlider" to="." method="_on_RRSlider_value_changed"]
+[connection signal="item_selected" from="Params/ADSR/Repeat" to="." method="_on_Repeat_item_selected"]
+[connection signal="value_changed" from="Params/ADSR/AMSSlider" to="." method="_on_AMSSlider_value_changed"]
+[connection signal="value_changed" from="Params/Frequency/MULSlider" to="." method="_on_MULSlider_value_changed"]
+[connection signal="value_changed" from="Params/Frequency/DIVSlider" to="." method="_on_DIVSlider_value_changed"]
+[connection signal="value_changed" from="Params/Detune/DETSlider" to="." method="_on_ADDSlider_value_changed"]
+[connection signal="value_changed" from="Params/FMS/FMSSlider" to="." method="_on_FMSSlider_value_changed"]
+[connection signal="item_selected" from="Params/LFOs/AmpLFO" to="." method="_on_AmpLFO_item_selected"]
+[connection signal="item_selected" from="Params/LFOs/FreqLFO" to="." method="_on_FreqLFO_item_selected"]

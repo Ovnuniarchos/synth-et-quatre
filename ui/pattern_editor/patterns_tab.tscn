@@ -1,0 +1,142 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://ui/widgets/cycle_button.gd" type="Script" id=1]
+[ext_resource path="res://ui/pattern_editor/patterns_tab.gd" type="Script" id=2]
+[ext_resource path="res://ui/pattern_editor/pattern_editor.tscn" type="PackedScene" id=3]
+[ext_resource path="res://ui/pattern_editor/pattern_list.tscn" type="PackedScene" id=4]
+[ext_resource path="res://ui/pattern_editor/info.tscn" type="PackedScene" id=5]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+content_margin_left = 0.0
+content_margin_right = 0.0
+content_margin_top = 0.0
+content_margin_bottom = 0.0
+
+[node name="Patterns" type="Tabs"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_clip_content = true
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="VSC" type="VSplitContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_clip_content = true
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSC" type="HSplitContainer" parent="VSC"]
+margin_right = 1024.0
+margin_bottom = 108.0
+
+[node name="PatternList" parent="VSC/HSC" instance=ExtResource( 4 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 506.0
+margin_bottom = 108.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Info" parent="VSC/HSC" instance=ExtResource( 5 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 518.0
+margin_right = 1024.0
+margin_bottom = 108.0
+
+[node name="VBC" type="VBoxContainer" parent="VSC"]
+margin_top = 120.0
+margin_right = 1024.0
+margin_bottom = 600.0
+custom_constants/separation = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CNT" type="Container" parent="VSC/VBC"]
+margin_right = 1024.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 0, 24 )
+rect_clip_content = true
+size_flags_vertical = 0
+
+[node name="Channels" type="HBoxContainer" parent="VSC/VBC/CNT"]
+margin_right = 1024.0
+margin_bottom = 24.0
+rect_clip_content = true
+custom_constants/separation = 0
+
+[node name="S" type="ReferenceRect" parent="VSC/VBC/CNT/Channels"]
+margin_right = 32.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 32, 0 )
+
+[node name="Scroll" type="PanelContainer" parent="VSC/VBC/CNT/Channels"]
+margin_left = 32.0
+margin_right = 1024.0
+margin_bottom = 24.0
+rect_clip_content = true
+size_flags_horizontal = 3
+custom_styles/panel = SubResource( 1 )
+
+[node name="HB" type="HBoxContainer" parent="VSC/VBC/CNT/Channels/Scroll"]
+margin_right = 992.0
+margin_bottom = 24.0
+custom_constants/separation = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DelFX" type="Button" parent="VSC/VBC/CNT/Channels/Scroll/HB"]
+margin_right = 24.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 24, 0 )
+custom_constants/hseparation = 0
+shortcut_in_tooltip = false
+text = "-"
+
+[node name="AddFX" type="Button" parent="VSC/VBC/CNT/Channels/Scroll/HB"]
+margin_left = 24.0
+margin_right = 48.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 24, 0 )
+custom_constants/hseparation = 0
+shortcut_in_tooltip = false
+text = "+"
+
+[node name="Channel" type="Button" parent="VSC/VBC/CNT/Channels/Scroll/HB"]
+margin_left = 48.0
+margin_right = 128.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 80, 0 )
+custom_constants/hseparation = 0
+shortcut_in_tooltip = false
+text = "Chn 1"
+clip_text = true
+script = ExtResource( 1 )
+status = 0
+colors = PoolColorArray( 1, 1, 1, 1, 0.501961, 0.752941, 1, 1, 2, 1, 1, 1 )
+
+[node name="S" type="ReferenceRect" parent="VSC/VBC/CNT/Channels/Scroll/HB"]
+margin_left = 128.0
+margin_right = 144.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 16, 0 )
+
+[node name="Editor" parent="VSC/VBC" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 24.0
+margin_right = 1024.0
+margin_bottom = 480.0
+rect_min_size = Vector2( 0, 48 )
+[connection signal="order_selected" from="VSC/HSC/PatternList" to="VSC/VBC/Editor" method="_on_order_selected"]
+[connection signal="step_changed" from="VSC/HSC/Info" to="VSC/VBC/Editor" method="_on_Info_step_changed"]
+[connection signal="sort_children" from="VSC/VBC/CNT" to="." method="_on_CNT_sort_children"]
+[connection signal="horizontal_scroll" from="VSC/VBC/Editor" to="." method="_on_editor_horizontal_scroll"]

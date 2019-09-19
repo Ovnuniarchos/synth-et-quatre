@@ -1,0 +1,47 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://ui/widgets/numbered_item_list.tscn" type="PackedScene" id=1]
+[ext_resource path="res://ui/wave_designer/wave_list.gd" type="Script" id=2]
+
+[node name="WaveList" type="VBoxContainer"]
+margin_right = 1024.0
+margin_bottom = 600.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Buttons" type="HBoxContainer" parent="."]
+margin_right = 1024.0
+margin_bottom = 20.0
+
+[node name="Add" type="Button" parent="Buttons"]
+margin_right = 37.0
+margin_bottom = 20.0
+text = "Add"
+
+[node name="Copy" type="Button" parent="Buttons"]
+margin_left = 41.0
+margin_right = 84.0
+margin_bottom = 20.0
+text = "Copy"
+
+[node name="S" type="ReferenceRect" parent="Buttons"]
+margin_left = 88.0
+margin_right = 112.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 24, 0 )
+
+[node name="Del" type="Button" parent="Buttons"]
+margin_left = 116.0
+margin_right = 150.0
+margin_bottom = 20.0
+text = "Del"
+
+[node name="Waves" parent="." instance=ExtResource( 1 )]
+margin_top = 24.0
+margin_right = 1024.0
+[connection signal="pressed" from="Buttons/Add" to="." method="_on_Add_pressed"]
+[connection signal="pressed" from="Buttons/Copy" to="." method="_on_Copy_pressed"]
+[connection signal="pressed" from="Buttons/Del" to="." method="_on_Del_pressed"]
+[connection signal="item_selected" from="Waves" to="." method="_on_item_selected"]

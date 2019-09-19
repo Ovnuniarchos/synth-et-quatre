@@ -1,0 +1,59 @@
+[gd_resource type="Theme" load_steps=9 format=2]
+
+[ext_resource path="res://theme/DejaVuBold14.tres" type="DynamicFont" id=1]
+[ext_resource path="res://theme/DejaVu10.tres" type="DynamicFontData" id=2]
+[ext_resource path="res://theme/editor.png" type="Texture" id=3]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 3 )
+region = Rect2( 96, 112, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 3 )
+region = Rect2( 112, 112, 16, 16 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0, 0, 0.12549, 1 )
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="DynamicFont" id=4]
+size = 10
+font_data = ExtResource( 2 )
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.8, 0.8, 0.666667, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0, 0, 0, 1 )
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+corner_detail = 1
+expand_margin_left = 4.0
+expand_margin_right = 4.0
+expand_margin_top = 4.0
+expand_margin_bottom = 4.0
+anti_aliasing = false
+
+[resource]
+default_font = ExtResource( 1 )
+GridContainer/constants/hseparation = 0
+GridContainer/constants/vseparation = 0
+HBoxContainer/constants/separation = 0
+HSplitContainer/constants/autohide = 0
+Icons/icons/Play = SubResource( 1 )
+Icons/icons/Stop = SubResource( 2 )
+Label/colors/font_color = Color( 0.752941, 0.752941, 0.752941, 1 )
+PlotPanel/styles/ = SubResource( 3 )
+TooltipLabel/colors/font_color = Color( 0, 0, 0, 1 )
+TooltipLabel/colors/font_color_shadow = Color( 0, 0, 0, 0 )
+TooltipLabel/constants/shadow_offset_x = 0
+TooltipLabel/constants/shadow_offset_y = 0
+TooltipLabel/fonts/font = SubResource( 4 )
+TooltipPanel/styles/panel = SubResource( 5 )
+VBoxContainer/constants/separation = 0
+VSplitContainer/constants/autohide = 0

@@ -1,0 +1,79 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://ui/pattern_editor/info.gd" type="Script" id=1]
+
+[node name="Info" type="GridContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 2
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabelOctave" type="Label" parent="."]
+margin_top = 5.0
+margin_right = 60.0
+margin_bottom = 19.0
+text = "Octave"
+
+[node name="Octave" type="SpinBox" parent="."]
+margin_left = 64.0
+margin_right = 138.0
+margin_bottom = 24.0
+min_value = -1.0
+max_value = 9.0
+rounded = true
+
+[node name="LabelOctave2" type="Label" parent="."]
+margin_top = 33.0
+margin_right = 60.0
+margin_bottom = 47.0
+text = "Ticks/s"
+
+[node name="TicksSec" type="SpinBox" parent="."]
+margin_left = 64.0
+margin_top = 28.0
+margin_right = 138.0
+margin_bottom = 52.0
+min_value = 1.0
+max_value = 256.0
+value = 1.0
+rounded = true
+
+[node name="LabelOctave3" type="Label" parent="."]
+margin_top = 61.0
+margin_right = 60.0
+margin_bottom = 75.0
+text = "Ticks/row"
+
+[node name="TicksRow" type="SpinBox" parent="."]
+margin_left = 64.0
+margin_top = 56.0
+margin_right = 138.0
+margin_bottom = 80.0
+min_value = 1.0
+max_value = 256.0
+value = 1.0
+rounded = true
+
+[node name="LabelOctave4" type="Label" parent="."]
+margin_top = 89.0
+margin_right = 60.0
+margin_bottom = 103.0
+text = "Step"
+
+[node name="Step" type="SpinBox" parent="."]
+margin_left = 64.0
+margin_top = 84.0
+margin_right = 138.0
+margin_bottom = 108.0
+max_value = 256.0
+value = 1.0
+rounded = true
+[connection signal="value_changed" from="Octave" to="." method="_on_Octave_value_changed"]
+[connection signal="value_changed" from="TicksSec" to="." method="_on_TicksSec_value_changed"]
+[connection signal="value_changed" from="TicksRow" to="." method="_on_TicksRow_value_changed"]
+[connection signal="value_changed" from="Step" to="." method="_on_Step_value_changed"]

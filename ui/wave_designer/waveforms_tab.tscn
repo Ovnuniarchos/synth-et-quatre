@@ -1,0 +1,46 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://ui/wave_designer/wave_list.tscn" type="PackedScene" id=1]
+[ext_resource path="res://ui/wave_designer/synth_designer.tscn" type="PackedScene" id=2]
+[ext_resource path="res://ui/wave_designer/plotter.tscn" type="PackedScene" id=3]
+[ext_resource path="res://theme/theme.tres" type="Theme" id=4]
+
+[node name="Waveforms" type="Tabs"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HS" type="HSplitContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WaveList" parent="HS" instance=ExtResource( 1 )]
+margin_right = 140.0
+
+[node name="VS" type="VSplitContainer" parent="HS"]
+margin_left = 152.0
+margin_right = 1024.0
+margin_bottom = 600.0
+
+[node name="SynthDesigner" parent="HS/VS" instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 872.0
+margin_bottom = 294.0
+
+[node name="Plotter" parent="HS/VS" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 306.0
+margin_right = 872.0
+margin_bottom = 600.0
+[connection signal="wave_deleted" from="HS/WaveList" to="HS/VS/SynthDesigner" method="_on_wave_deleted"]
+[connection signal="wave_selected" from="HS/WaveList" to="HS/VS/SynthDesigner" method="_on_wave_selected"]
+[connection signal="name_changed" from="HS/VS/SynthDesigner" to="HS/WaveList" method="_on_name_changed"]
+[connection signal="wave_calculated" from="HS/VS/SynthDesigner" to="HS/VS/Plotter" method="_on_wave_calculated"]

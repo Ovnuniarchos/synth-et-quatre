@@ -1,0 +1,55 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://ui/widgets/numbered_item_list.tscn" type="PackedScene" id=1]
+[ext_resource path="res://ui/instrument_designer/instrument_list.gd" type="Script" id=2]
+
+[node name="InstrumentList" type="VBoxContainer"]
+margin_right = 130.0
+margin_bottom = 561.0
+rect_clip_content = true
+size_flags_vertical = 3
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Buttons" type="HBoxContainer" parent="."]
+margin_right = 162.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+custom_constants/separation = 8
+
+[node name="Add" type="Button" parent="Buttons"]
+margin_right = 37.0
+margin_bottom = 20.0
+shortcut_in_tooltip = false
+text = "Add"
+
+[node name="Copy" type="Button" parent="Buttons"]
+margin_left = 45.0
+margin_right = 88.0
+margin_bottom = 20.0
+shortcut_in_tooltip = false
+text = "Copy"
+
+[node name="ReferenceRect" type="ReferenceRect" parent="Buttons"]
+margin_left = 96.0
+margin_right = 120.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 24, 0 )
+
+[node name="Del" type="Button" parent="Buttons"]
+margin_left = 128.0
+margin_right = 162.0
+margin_bottom = 20.0
+shortcut_in_tooltip = false
+text = "Del"
+
+[node name="Instruments" parent="." instance=ExtResource( 1 )]
+margin_top = 24.0
+margin_right = 162.0
+margin_bottom = 561.0
+[connection signal="pressed" from="Buttons/Add" to="." method="_on_Add_pressed"]
+[connection signal="pressed" from="Buttons/Copy" to="." method="_on_Copy_pressed"]
+[connection signal="pressed" from="Buttons/Del" to="." method="_on_Del_pressed"]
+[connection signal="item_selected" from="Instruments" to="." method="_on_item_selected"]

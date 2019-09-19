@@ -1,0 +1,66 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://theme/pattern.tres" type="TileSet" id=1]
+[ext_resource path="res://ui/pattern_editor/pattern_editor.gd" type="Script" id=2]
+[ext_resource path="res://ui/pattern_editor/pattern_bg.gd" type="Script" id=3]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.0666667, 0, 0, 1 )
+
+[sub_resource type="Animation" id=2]
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[node name="Editor" type="PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_clip_content = true
+focus_mode = 2
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 1 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BG" type="Node2D" parent="."]
+script = ExtResource( 3 )
+
+[node name="Lines" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 8, 16 )
+format = 1
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Pattern" type="TileMap" parent="."]
+position = Vector2( 32, 0 )
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 8, 16 )
+format = 1
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Cursor" type="Polygon2D" parent="."]
+polygon = PoolVector2Array( 0, 12, 8, 12, 8, 16, 0, 16 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Cursor"]
+autoplay = "Blink"
+anims/Blink = SubResource( 2 )
+[connection signal="resized" from="." to="." method="_on_resized"]

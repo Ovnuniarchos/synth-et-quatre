@@ -2,9 +2,9 @@
 
 [ext_resource path="res://ui/widgets/cycle_button.gd" type="Script" id=1]
 [ext_resource path="res://ui/pattern_editor/patterns_tab.gd" type="Script" id=2]
-[ext_resource path="res://ui/pattern_editor/pattern_editor.tscn" type="PackedScene" id=3]
-[ext_resource path="res://ui/pattern_editor/pattern_list.tscn" type="PackedScene" id=4]
-[ext_resource path="res://ui/pattern_editor/info.tscn" type="PackedScene" id=5]
+[ext_resource path="res://ui/pattern_editor/info.tscn" type="PackedScene" id=3]
+[ext_resource path="res://ui/pattern_editor/pattern_editor.tscn" type="PackedScene" id=4]
+[ext_resource path="res://ui/pattern_editor/pattern_list.tscn" type="PackedScene" id=5]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 content_margin_left = 0.0
@@ -33,25 +33,24 @@ __meta__ = {
 
 [node name="HSC" type="HSplitContainer" parent="VSC"]
 margin_right = 1024.0
-margin_bottom = 108.0
+margin_bottom = 122.0
 
-[node name="PatternList" parent="VSC/HSC" instance=ExtResource( 4 )]
+[node name="PatternList" parent="VSC/HSC" instance=ExtResource( 5 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 506.0
-margin_bottom = 108.0
+margin_right = 860.0
+margin_bottom = 122.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Info" parent="VSC/HSC" instance=ExtResource( 5 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 518.0
+[node name="Info" parent="VSC/HSC" instance=ExtResource( 3 )]
+margin_left = 872.0
+margin_top = 0.0
 margin_right = 1024.0
-margin_bottom = 108.0
+margin_bottom = 122.0
 
 [node name="VBC" type="VBoxContainer" parent="VSC"]
-margin_top = 120.0
+margin_top = 134.0
 margin_right = 1024.0
 margin_bottom = 600.0
 custom_constants/separation = 0
@@ -129,12 +128,12 @@ margin_right = 144.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 16, 0 )
 
-[node name="Editor" parent="VSC/VBC" instance=ExtResource( 3 )]
+[node name="Editor" parent="VSC/VBC" instance=ExtResource( 4 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 24.0
 margin_right = 1024.0
-margin_bottom = 480.0
+margin_bottom = 466.0
 rect_min_size = Vector2( 0, 48 )
 [connection signal="order_selected" from="VSC/HSC/PatternList" to="VSC/VBC/Editor" method="_on_order_selected"]
 [connection signal="step_changed" from="VSC/HSC/Info" to="VSC/VBC/Editor" method="_on_Info_step_changed"]

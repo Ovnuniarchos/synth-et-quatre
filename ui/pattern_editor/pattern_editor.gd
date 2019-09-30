@@ -61,24 +61,25 @@ func process_mouse_button(ev:InputEventMouseButton)->bool:
 		return false
 	if !Rect2(rect_global_position,rect_size).has_point(ev.global_position):
 		_on_focus_exited()
+		release_focus()
 		return false
 	_on_focus_entered()
 	grab_focus()
 	if ev.pressed:
-		return false
+		return true
 	if ev.button_index==BUTTON_LEFT:
 		var pos:Vector2=editor.world_to_map(ev.global_position-editor.global_position)
 		if pos.x<0.0 or pos.y<0.0 or pos.y>=GLOBALS.song.pattern_length:
 			return false
 		var chan:int=-1
-		for i in range(0,channel_col0.size()):
+		for i in range(channel_col0.size()):
 			if channel_col0[i]>pos.x:
 				chan=i-1
 				break
 		if chan<0:
 			return false
 		var col:int=ATTRS.PAN+(GLOBALS.song.num_fxs[chan]*3)
-		for i in range(0,col+1):
+		for i in range(col+1):
 			if (COLS[i]+channel_col0[chan])>pos.x:
 				col=i-1
 				break
@@ -363,11 +364,13 @@ func set_cursor()->void:
 #
 
 func _on_focus_entered()->void:
+	grab_focus()
 	focused=true
 	$Cursor.show()
 	set_cursor()
 
 func _on_focus_exited()->void:
+	release_focus()
 	focused=false
 	$Cursor.hide()
 
@@ -381,10 +384,15 @@ func _on_resized()->void:
 	set_row(curr_row)
 	set_cursor()
 
-# warning-ignore:unused_argument
 func _on_order_selected(order:int)->void:
 	curr_order=order
 	update_tilemap()
 
 func _on_Info_step_changed(s:int)->void:
 	step=max(0.0,s)
+
+func _on_Editor_mouse_entered():
+	_on_focus_entered()
+
+func _on_Editor_mouse_exited():
+	_on_focus_exited()

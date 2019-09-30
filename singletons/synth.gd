@@ -36,7 +36,9 @@ func set_fm_instrument(channel:int,instr:FmInstrument)->void:
 		for j in range(0,4):
 			synth.set_pm_factor(channel,i,j,instr.routings[i][j])
 		synth.set_am_intensity(channel,op_mask,instr.am_intensity[i])
+		synth.set_am_lfo(channel,op_mask,instr.am_lfo[i])
 		synth.set_fm_intensity(channel,op_mask,instr.fm_intensity[i])
+		synth.set_fm_lfo(channel,op_mask,instr.fm_lfo[i])
 
 func play_fm_note(channel:int,instr:FmInstrument,semi:int,legato:bool)->void:
 	var semitone:int=semi*100
@@ -44,3 +46,12 @@ func play_fm_note(channel:int,instr:FmInstrument,semi:int,legato:bool)->void:
 	synth.set_enable(channel,15,0)
 	synth.set_panning(channel,31,false,false)
 	synth.key_on(channel,instr.op_mask,255,legato)
+
+func set_lfo_duty_cycle(lfo_ix:int,duc:int)->void:
+	synth.set_lfo_duty_cycle(lfo_ix,duc)
+
+func set_lfo_wave(lfo_ix:int,wave_ix:int)->void:
+	synth.set_lfo_wave_mode(lfo_ix,wave_ix)
+
+func set_lfo_frequency(lfo_ix:int,freq:float)->void:
+	synth.set_lfo_freq(lfo_ix,freq)

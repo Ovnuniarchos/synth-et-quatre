@@ -94,7 +94,7 @@ public:
 
 	void set_phase(int voice,int op_mask,int phi);
 
-	void set_lfo_freq(int lfo,int freq256);
+	void set_lfo_freq(int lfo,float frequency);
 	void set_lfo_wave_mode(int lfo,int mode);
 	void set_lfo_duty_cycle(int lfo,int duty_cycle);
 };

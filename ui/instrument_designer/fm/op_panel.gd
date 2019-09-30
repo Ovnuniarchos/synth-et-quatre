@@ -7,8 +7,6 @@ export (int) var operator:int=0 setget set_op
 var op_mask:int
 
 func _ready()->void:
-	GLOBALS.song.connect("wave_list_changed",self,"update_waves")
-	update_waves()
 	set_op(operator)
 
 func set_op(v:int)->void:
@@ -54,7 +52,6 @@ func _on_AMSSlider_value_changed(value:float)->void:
 	emit_signal("instrument_changed")
 
 func _on_AmpLFO_item_selected(idx:int)->void:
-	idx=$Params/LFOs/AmpLFO.get_item_id(idx)
 	GLOBALS.get_instrument().am_lfo[operator]=idx
 	emit_signal("instrument_changed")
 
@@ -63,7 +60,6 @@ func _on_FMSSlider_value_changed(value:float)->void:
 	emit_signal("instrument_changed")
 
 func _on_FreqLFO_item_selected(idx:int)->void:
-	idx=$Params/LFOs/FreqLFO.get_item_id(idx)
 	GLOBALS.get_instrument().fm_lfo[operator]=idx
 	emit_signal("instrument_changed")
 
@@ -87,6 +83,7 @@ func _on_Switch_toggled(on:bool)->void:
 	emit_signal("instrument_changed")
 
 func set_sliders(inst:FmInstrument)->void:
+	set_block_signals(true)
 	$Params/Switch.pressed=bool(inst.op_mask&op_mask)
 	$Params/ADSR/ARSlider.value=inst.attacks[operator]
 	$Params/ADSR/DRSlider.value=inst.decays[operator]
@@ -103,10 +100,5 @@ func set_sliders(inst:FmInstrument)->void:
 	$Params/LFOs/AmpLFO.select($Params/LFOs/AmpLFO.get_item_index(inst.am_lfo[operator]))
 	$Params/FMS/FMSSlider.value=inst.fm_intensity[operator]
 	$Params/LFOs/FreqLFO.select($Params/LFOs/FreqLFO.get_item_index(inst.fm_lfo[operator]))
-
-func update_waves()->void:
-	var wave_sel:OptionButton=$Params/Wave/WAVButton
-	for i in range(wave_sel.get_item_count()-1,3,-1):
-		wave_sel.remove_item(i)
-	for i in range(0,GLOBALS.song.wave_list.size()):
-		wave_sel.add_item("%02X %s"%[i,GLOBALS.song.wave_list[i].name.left(8)])
+	set_block_signals(false)
+	emit_signal("instrument_changed")

@@ -1,11 +1,10 @@
 extends Button
 class_name OrderButton
 
-var order:int=0
-var channel:int=0
 var clipper:Control=self
 
-func _init()->void:
+func _init(clipper:Control)->void:
+	focus_mode=FOCUS_NONE
 	mouse_filter=Control.MOUSE_FILTER_STOP
 	button_mask=BUTTON_MASK_LEFT|BUTTON_MASK_RIGHT
 

@@ -1,16 +1,16 @@
-extends GridContainer
+extends PanelContainer
 
 signal step_changed(step)
 
 func _ready()->void:
 	sync_with_song()
-	$Step.value=1
+	$GC/Step.value=1
 
 func sync_with_song()->void:
 	set_block_signals(true)
-	$Octave.value=GLOBALS.curr_octave-1
-	$TicksSec.value=GLOBALS.song.ticks_second
-	$TicksRow.value=GLOBALS.song.ticks_row
+	$GC/Octave.value=GLOBALS.curr_octave-1
+	$GC/TicksSec.value=GLOBALS.song.ticks_second
+	$GC/TicksRow.value=GLOBALS.song.ticks_row
 	set_block_signals(false)
 
 #

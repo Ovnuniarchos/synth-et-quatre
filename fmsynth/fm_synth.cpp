@@ -155,9 +155,10 @@ void FmSynth::set_phase(int voice,int op_mask,int phi){
 }
 
 
-void FmSynth::set_lfo_freq(int lfo,float frequency){
+void FmSynth::set_lfo_freq(int lfo,int freq8_8){
 	lfo&=3;
-	lfo_freqs[lfo]=clamp(frequency,0.0f,100.0f);
+	float frequency=(freq8_8&0xFFFF)/256.0;
+	lfo_freqs[lfo]=frequency;
 	lfo_deltas[lfo]=(frequency*FP_ONE)/lfo_mix_rates[lfo];
 }
 

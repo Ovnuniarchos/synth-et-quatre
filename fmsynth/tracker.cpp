@@ -365,8 +365,8 @@ void SynthTracker::set_phase(int voice,int op_mask,int phi){
 }
 
 
-void SynthTracker::set_lfo_freq(int lfo,int freq256){
-	synth.set_lfo_freq(lfo,(freq256&0xFFFF)/256.0);
+void SynthTracker::set_lfo_freq(int lfo,float frequency){
+	synth.set_lfo_freq(lfo,frequency*256.0);
 }
 
 void SynthTracker::set_lfo_wave_mode(int lfo,int mode){

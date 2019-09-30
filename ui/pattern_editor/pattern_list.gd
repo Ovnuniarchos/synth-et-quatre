@@ -4,6 +4,7 @@ signal order_selected(ix)
 
 onready var list_scroll:ScrollContainer=$VBC/SC
 onready var list:GridContainer=$VBC/SC/List
+var order_labels:Array
 
 func _ready()->void:
 	GLOBALS.connect("song_changed",self,"_on_song_changed")
@@ -24,20 +25,19 @@ func update_list(from:int=0,to:int=-1)->void:
 	var l:Control
 	for i in range(from*list.columns,list.get_child_count()):
 		list.get_child(i).queue_free()
-	for ordr in range(from,to):
+	order_labels.resize(to)
+	for order in range(from,to):
 		l=Label.new()
-		l.name="ord%03d"%[ordr]
-		l.text="%03d"%[ordr]
-		l.modulate=Color8(0,255,0) if ordr==GLOBALS.curr_order else Color8(255,255,255)
+		l.name="ord%03d"%[order]
+		l.text="%03d"%[order]
+		l.modulate=Color8(0,255,0) if order==GLOBALS.curr_order else Color8(255,255,255)
 		list.add_child(l)
+		order_labels[order]=l
 		for chn in range(0,song.num_channels):
-			l=OrderButton.new()
-			l.order=ordr
-			l.channel=chn
-			l.clipper=list_scroll
-			l.name="ord%03dchn%02d"%[ordr,chn]
-			l.text="%03d"%[song.orders[ordr][chn]]
-			l.connect("gui_input",self,"_on_button_gui_input",[ordr,chn,l])
+			l=OrderButton.new(list_scroll)
+			l.name="ord%03dchn%02d"%[order,chn]
+			l.text="%03d"%[song.orders[order][chn]]
+			l.connect("gui_input",self,"_on_button_gui_input",[order,chn,l])
 			list.add_child(l)
 
 func highlight_current_order()->void:
@@ -62,8 +62,10 @@ func _on_button_gui_input(ev:InputEvent,order:int,channel:int,button:Button)->vo
 	var song:Song=GLOBALS.song
 	if ev.button_index==BUTTON_LEFT:
 		var o:int=song.orders[order][channel]+1
-		if ev.shift and o>=song.patterns[channel].size():
-			o=song.add_pattern(channel)
+		if ev.shift:
+			o=song.add_pattern(channel,-1)
+		elif ev.control:
+			o=song.add_pattern(channel,song.orders[order][channel])
 		song.set_pattern(order,channel,o)
 		button.text="%03d"%[song.orders[order][channel]]
 		return

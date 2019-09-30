@@ -6,6 +6,7 @@ signal instrument_list_changed
 signal channels_changed
 signal order_changed(order_ix,channel_ix)
 
+const WAVE=FmInstrument.WAVE
 const MIN_CHANNELS:int=1
 const MAX_CHANNELS:int=32
 const MIN_PAT_LENGTH:int=16
@@ -27,6 +28,8 @@ const CHUNK_ORDERS:String="ORDL"
 const CHUNK_PATTERNS:String="PATL"
 
 
+var title:String="Untitled"
+var author:String=""
 var patterns:Array # [channel,order]
 var orders:Array # [row,channel]
 var wave_list:Array
@@ -36,6 +39,9 @@ var num_fxs:Array
 var pattern_length:int
 var ticks_second:int
 var ticks_row:int
+var lfo_frequencies:Array=[4.0,2.0,1.0,0.5]
+var lfo_waves:Array=[WAVE.TRIANGLE,WAVE.SAW,WAVE.RECTANGLE,WAVE.NOISE]
+var lfo_duty_cycles:Array=[0,0,128,0]
 
 
 func _init(max_channels:int=MAX_CHANNELS,pat_length:int=DFL_PAT_LENGTH,fx_length:int=1,tks_sec:int=50,tks_row:int=6)->void:
@@ -79,6 +85,9 @@ func can_delete_wave(wave:Waveform)->bool:
 	var wave_ix:int=wave_list.find(wave)
 	if wave_ix==-1:
 		return false
+	for w in lfo_waves:
+		if (w-MIN_CUSTOM_WAVE)==wave_ix:
+			return false
 	for ins in instrument_list:
 		if !(ins is FmInstrument):
 			continue
@@ -180,9 +189,13 @@ func set_pattern(order:int,channel:int,pattern:int)->void:
 		orders[order][channel]=pattern
 		emit_signal("order_changed",order,channel)
 
-func add_pattern(channel:int)->int:
-	if patterns[channel].size()<255:
+func add_pattern(channel:int,copy_from:int=-1)->int:
+	if patterns[channel].size()>254:
+		return 255
+	if copy_from==-1:
 		patterns[channel].append(Pattern.new(MAX_PAT_LENGTH))
+	else:
+		patterns[channel].append(patterns[channel][copy_from].duplicate())
 	return patterns[channel].size()-1
 
 #
@@ -217,16 +230,22 @@ func serialize(out:ChunkedFile)->void:
 	out.store_16(pattern_length)
 	out.store_16(ticks_second)
 	out.store_16(ticks_row)
+	out.store_pascal_string(title)
+	out.store_pascal_string(author)
 	out.end_chunk()
 	# Channels
 	out.start_chunk(CHUNK_CHANNELS)
 	out.store_16(num_channels)
-	for i in range(0,num_channels):
+	for i in range(num_channels):
 		out.store_string(CHANNEL_FM4)
 		out.store_8(num_fxs[i])
 	out.end_chunk()
 	# Instruments
 	out.start_chunk(CHUNK_INSTRUMENTS)
+	for i in range(4):
+		out.store_16(lfo_frequencies[i]*256.0)
+		out.store_8(lfo_waves[i])
+		out.store_8(lfo_duty_cycles[i])
 	out.store_16(instrument_list.size())
 	for inst in instrument_list:
 		inst.serialize(out)
@@ -246,7 +265,7 @@ func serialize(out:ChunkedFile)->void:
 	out.end_chunk()
 	# Patterns
 	out.start_chunk(CHUNK_PATTERNS)
-	for i in range(0,num_channels):
+	for i in range(num_channels):
 		var chn:Pattern=patterns[i]
 		out.store_16(chn.size())
 		for pat in chn:
@@ -267,6 +286,8 @@ func deserialize(inf:ChunkedFile)->Song:
 	song.pattern_length=inf.get_16()
 	song.ticks_second=inf.get_16()
 	song.ticks_row=inf.get_16()
+	song.title=inf.get_pascal_string()
+	song.author=inf.get_pascal_string()
 	# Chunks
 	var mandatory_CHAL:bool=false
 	while true:
@@ -315,6 +336,10 @@ func process_order_list(inf:ChunkedFile,song:Song)->void:
 func process_instrument_list(inf:ChunkedFile,song:Song)->void:
 	var hdr:Dictionary
 	var inst_l:Array=[]
+	for i in range(4):
+		song.lfo_frequencies[i]=inf.get_16()/256.0
+		song.lfo_waves[i]=inf.get_8()
+		song.lfo_duty_cycles[i]=inf.get_8()
 	inst_l.resize(inf.get_16())
 	for i in range(0,inst_l.size()):
 		hdr=inf.get_chunk_header()

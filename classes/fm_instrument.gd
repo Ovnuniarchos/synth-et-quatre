@@ -71,7 +71,7 @@ func duplicate()->Instrument:
 func serialize(out:ChunkedFile)->void:
 	out.start_chunk(CHUNK_ID)
 	out.store_8(op_mask)
-	for i in range(0,4):
+	for i in range(4):
 		out.store_8(attacks[i])
 		out.store_8(decays[i])
 		out.store_8(sustains[i])
@@ -97,7 +97,7 @@ func serialize(out:ChunkedFile)->void:
 
 func deserialize(inf:ChunkedFile,ins:FmInstrument)->void:
 	ins.op_mask=inf.get_8()
-	for i in range(0,4):
+	for i in range(4):
 		ins.attacks[i]=inf.get_8()
 		ins.decays[i]=inf.get_8()
 		ins.sustains[i]=inf.get_8()
@@ -113,7 +113,7 @@ func deserialize(inf:ChunkedFile,ins:FmInstrument)->void:
 		ins.am_lfo[i]=inf.get_8()
 		ins.fm_intensity[i]=inf.get_16()
 		ins.fm_lfo[i]=inf.get_8()
-	for i in range(0,4):
-		for j in range(0,5):
+	for i in range(4):
+		for j in range(5):
 			routings[i][j]=inf.get_8()
 	ins.name=inf.get_pascal_string()

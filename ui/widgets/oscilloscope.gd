@@ -28,20 +28,20 @@ func _draw()->void:
 	if buffer==null or buffer.size()==0:
 		return
 	var step:float=buffer.size()/rect_size.x
-	var i:float=0.0
 	points.resize(rect_size.x)
+	var i:float=0.0
 	if channels==2:
-		for x in range(0,points.size()):
+		for x in range(points.size()):
 			points[x]=Vector2(x,buffer[floor(i)].x)
 			i+=step
 	else:
-		for x in range(0,points.size()):
+		for x in range(points.size()):
 			points[x]=Vector2(x,buffer[floor(i)])
 			i+=step
 	draw_polyline(points,left_color)
 	if channels==2:
 		i=0.0
-		for x in range(0,points.size()):
+		for x in range(points.size()):
 			points[x]=Vector2(x,buffer[floor(i)].y)
 			i+=step
 		draw_polyline(points,right_color)

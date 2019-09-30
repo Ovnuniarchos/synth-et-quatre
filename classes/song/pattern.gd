@@ -14,9 +14,15 @@ var notes:Array=[]
 
 func _init(length:int)->void:
 	notes.resize(length)
-	for i in range(0,length):
+	for i in range(length):
 		notes[i]=[]
 		notes[i].resize(MAX_ATTR+1)
+
+func duplicate()->Pattern:
+	var np:Pattern=get_script().new(notes.size())
+	for i in range(notes.size()):
+		np.notes[i]=notes[i].duplicate(true)
+	return np
 
 func is_note_empty(ix:int,num_fx:int)->bool:
 	var n:Array=notes[ix]
@@ -32,7 +38,7 @@ func is_note_empty(ix:int,num_fx:int)->bool:
 
 func serialize(out:ChunkedFile,length:int,num_fx:int)->void:
 	out.start_chunk(CHUNK_ID)
-	for j in range(0,length):
+	for j in range(length):
 		var n=notes[j]
 		var mask:int=0
 		if n[ATTRS.LG_MODE]!=null and n[ATTRS.LG_MODE]!=LEGATO_MODE.OFF:
@@ -44,7 +50,7 @@ func serialize(out:ChunkedFile,length:int,num_fx:int)->void:
 			elif n[i]!=null:
 				mask|=1<<i
 		out.store_32(mask)
-		for i in range(0,MAX_ATTR):
+		for i in range(MAX_ATTR):
 			if mask&(1<<i):
 				out.store_8(n[i])
 	out.end_chunk()
@@ -53,10 +59,10 @@ func serialize(out:ChunkedFile,length:int,num_fx:int)->void:
 
 func deserialize(inf:ChunkedFile,pat:Pattern,length:int)->void:
 	inf.get_chunk_header()
-	for j in range(0,length):
+	for j in range(length):
 		var n:Array=pat.notes[j]
 		var mask:int=inf.get_32()
-		for i in range(0,MAX_ATTR):
+		for i in range(MAX_ATTR):
 			if mask&(1<<i):
 				n[i]=inf.get_8()
 		if n[ATTRS.NOTE]==255:

@@ -85,7 +85,7 @@ func deserialize_start(inf:ChunkedFile,c:WaveComponent,components:Array)->void:
 	c.vol=inf.get_float()
 	c.am=inf.get_float()
 	c.xm=inf.get_float()
-	var ic:int=inf.get_16()
+	var ic:int=inf.get_signed_16()
 	if ic<0:
 		c.input_comp=null
 	elif ic<components.size():

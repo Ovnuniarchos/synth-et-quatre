@@ -22,3 +22,8 @@ func get_ascii(length:int)->String:
 
 func get_chunk_header()->Dictionary:
 	return {CHUNK_NEXT:get_64(),CHUNK_ID:get_ascii(4)}
+
+func get_signed_16()->int:
+	var v:int=get_16()
+	v=v if v<0x8000 else v|-65536
+	return v

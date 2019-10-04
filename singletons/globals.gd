@@ -3,15 +3,6 @@ extends Node
 signal song_changed
 signal octave_changed(oct)
 
-const KEYBOARD=[
-	KEY_Z,KEY_S,KEY_X,KEY_D,KEY_C,KEY_V,KEY_G,KEY_B,KEY_H,KEY_N,KEY_J,KEY_M,
-	KEY_Q,KEY_2,KEY_W,KEY_3,KEY_E,KEY_R,KEY_5,KEY_T,KEY_6,KEY_Y,KEY_7,KEY_U
-]
-const HEX_INPUT=[
-	KEY_0,KEY_1,KEY_2,KEY_3,KEY_4,KEY_5,KEY_6,KEY_7,
-	KEY_8,KEY_9,KEY_A,KEY_B,KEY_C,KEY_D,KEY_E,KEY_F
-]
-
 var song:Song setget set_song
 var curr_instrument:int setget set_instrument
 var curr_octave:int setget set_octave
@@ -29,6 +20,8 @@ func set_song(s:Song)->void:
 	song=s
 	curr_instrument=0
 	curr_order=0
+	for w in song.wave_list:
+		song.send_wave(w)
 	emit_signal("song_changed")
 
 func get_instrument(index:int=-1)->Instrument:

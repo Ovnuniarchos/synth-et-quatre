@@ -35,7 +35,7 @@ func play(from:int=-1)->void:
 		curr_tick=0
 		curr_row=0
 		curr_sample=0.0
-		playing=true
+	playing=true
 
 func pause()->void:
 	playing=!playing
@@ -46,6 +46,7 @@ func stop()->void:
 	curr_tick=0
 	curr_row=0
 	curr_sample=0.0
+	SYNTH.reset()
 
 #
 

@@ -34,5 +34,4 @@ margin_left = 174.0
 margin_right = 1016.0
 margin_bottom = 561.0
 [connection signal="instrument_selected" from="Cols/Instrs" to="Cols/FmEditor" method="_on_instrument_selected"]
-[connection signal="instrument_changed" from="Cols/FmEditor" to="." method="_on_FmEditor_instrument_changed"]
 [connection signal="instrument_name_changed" from="Cols/FmEditor" to="Cols/Instrs" method="_on_instrument_name_changed"]

@@ -172,6 +172,7 @@ GLOBALS="*res://singletons/globals.gd"
 SYNTH="*res://singletons/synth.gd"
 AUDIO="*res://singletons/audio.tscn"
 DEBUG="*res://singletons/debug.tscn"
+GKBD="*res://singletons/global_keys.gd"
 
 [debug]
 

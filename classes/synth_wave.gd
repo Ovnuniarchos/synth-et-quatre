@@ -82,5 +82,5 @@ func deserialize(inf:ChunkedFile,w:SynthWave)->void:
 			w.components[i]=nw
 		else:
 			inf.seek(hdr[ChunkedFile.CHUNK_NEXT])
-	w.resize_data(w.size_po2)
+	w.resize_data(1<<w.size_po2)
 	w.calculate()

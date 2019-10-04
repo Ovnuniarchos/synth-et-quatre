@@ -60,12 +60,12 @@ min_value = 4.0
 max_value = 16.0
 value = 4.0
 
-[node name="LabelSizeBytes" type="Label" parent="Info/HBC"]
+[node name="LabelSizeSamples" type="Label" parent="Info/HBC"]
 margin_left = 422.0
 margin_top = 5.0
-margin_right = 478.0
+margin_right = 494.0
 margin_bottom = 22.0
-text = "0 bytes"
+text = "0 samples"
 
 [node name="Designer" type="PanelContainer" parent="."]
 margin_top = 41.0

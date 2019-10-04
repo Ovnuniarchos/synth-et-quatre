@@ -106,7 +106,7 @@ func deserialize(inf:ChunkedFile,ins:FmInstrument)->void:
 		ins.repeats[i]=inf.get_8()
 		ins.multipliers[i]=inf.get_8()
 		ins.dividers[i]=inf.get_8()
-		ins.detunes[i]=inf.get_16()
+		ins.detunes[i]=inf.get_signed_16()
 		ins.duty_cycles[i]=inf.get_8()
 		ins.waveforms[i]=inf.get_8()
 		ins.am_intensity[i]=inf.get_8()

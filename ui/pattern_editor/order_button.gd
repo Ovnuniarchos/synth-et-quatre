@@ -3,7 +3,8 @@ class_name OrderButton
 
 var clipper:Control=self
 
-func _init(clipper:Control)->void:
+func _init(clip:Control)->void:
+	clipper=clip
 	focus_mode=FOCUS_NONE
 	mouse_filter=Control.MOUSE_FILTER_STOP
 	button_mask=BUTTON_MASK_LEFT|BUTTON_MASK_RIGHT

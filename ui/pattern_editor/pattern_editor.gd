@@ -140,8 +140,8 @@ func process_keyboard(ev:InputEventKey)->bool:
 			put_legato(Pattern.LEGATO_MODE.OFF)
 			return true
 	if curr_column==ATTRS.NOTE:
-		if ev.scancode in GLOBALS.KEYBOARD:
-			var semi:int=GLOBALS.KEYBOARD.find(ev.scancode)
+		if ev.scancode in GKBD.KEYBOARD:
+			var semi:int=GKBD.KEYBOARD.find(ev.scancode)
 			put_note(semi%12,GLOBALS.curr_octave+(semi/12),GLOBALS.curr_instrument)
 			return true
 		if ev.scancode==KEY_DELETE:
@@ -154,15 +154,15 @@ func process_keyboard(ev:InputEventKey)->bool:
 		if ev.scancode==KEY_DELETE:
 			put_opmask(0)
 			return true
-		if ev.scancode in GLOBALS.HEX_INPUT:
-			put_opmask(GLOBALS.HEX_INPUT.find(ev.scancode))
+		if ev.scancode in GKBD.HEX_INPUT:
+			put_opmask(GKBD.HEX_INPUT.find(ev.scancode))
 			return true
 	if curr_column>ATTRS.NOTE:
 		if ev.scancode==KEY_DELETE:
 			put_2_digits(null)
 			return true
-		if ev.scancode in GLOBALS.HEX_INPUT:
-			put_2_digits(GLOBALS.HEX_INPUT.find(ev.scancode))
+		if ev.scancode in GKBD.HEX_INPUT:
+			put_2_digits(GKBD.HEX_INPUT.find(ev.scancode))
 			return true
 	return false
 

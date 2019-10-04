@@ -1,7 +1,8 @@
 extends VBoxContainer
 
 """
-TODO:
+TODO:	Octave change key
+		Inc/Dec parameter key
 """
 
 func _ready()->void:

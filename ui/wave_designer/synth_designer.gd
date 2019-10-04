@@ -47,7 +47,10 @@ func _on_Size_changed(value:float)->void:
 	set_size_bytes(value)
 
 func set_size_bytes(size:int)->void:
-	$Info/HBC/LabelSizeBytes.text="%d bytes"%[1<<size]
+	if size>0:
+		$Info/HBC/LabelSizeSamples.text="%d samples"%[1<<size]
+	else:
+		$Info/HBC/LabelSizeSamples.text="-- samples"
 
 func _on_wave_selected(wave:int)->void:
 	curr_wave_ix=wave
@@ -56,7 +59,7 @@ func _on_wave_selected(wave:int)->void:
 		$Info/HBC/Name.editable=false
 		$Info/HBC/Name.text=""
 		$Info/HBC/Size.editable=false
-		$Info/HBC/LabelSizeBytes.text="-- bytes"
+		set_size_bytes(-1)
 		$Designer/SC.visible=false
 	else:
 		$Info/HBC/Name.editable=true
@@ -75,7 +78,7 @@ func _on_wave_deleted(wave:int)->void:
 	$Info/HBC/Name.editable=false
 	$Info/HBC/Name.text=""
 	$Info/HBC/Size.editable=false
-	$Info/HBC/LabelSizeBytes.text="-- bytes"
+	set_size_bytes(-1)
 	regen_editor_nodes(null)
 	calculate()
 

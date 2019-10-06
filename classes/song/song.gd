@@ -220,6 +220,14 @@ func delete_order(order:int)->void:
 	orders.remove(order)
 	emit_signal("order_changed",order,-1)
 
+func delete_row(order:int,channel:int,row:int)->void:
+	patterns[channel][orders[row][channel]].remove_row(row)
+	emit_signal("order_changed",order,channel)
+
+func insert_row(order:int,channel:int,row:int)->void:
+	patterns[channel][orders[row][channel]].insert_row(row)
+	emit_signal("order_changed",order,channel)
+
 #
 
 func serialize(out:ChunkedFile)->void:

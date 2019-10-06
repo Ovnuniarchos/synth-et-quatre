@@ -2,6 +2,7 @@
 
 FmSynth::FmSynth(){
 	for(int i=0;i<MAX_WAVES;i++) waves[i]=NULL;
+	for(int i=0;i<MAX_VOICES;i++) mute_voice[i]=false;
 }
 
 FmSynth::~FmSynth(){
@@ -11,7 +12,7 @@ FmSynth::~FmSynth(){
 
 void FmSynth::set_mix_rate(float mix_rate){
 	mix_rate=mix_rate<1.0?1.0:mix_rate;
-	for(int i=0;i<32;i++){
+	for(int i=0;i<MAX_VOICES;i++){
 		voices[i].set_mix_rate(mix_rate);
 	}
 	lfo_mix_rates[0]=mix_rate;
@@ -173,4 +174,11 @@ void FmSynth::set_lfo_wave_mode(int lfo,int mode){
 
 void FmSynth::set_lfo_duty_cycle(int lfo,int duty_cycle){
 	lfos[lfo&3].set_duty_cycle((duty_cycle&0xff)<<16);
+}
+
+void FmSynth::mute_voices(int mute_mask){
+	for(int i=0;i<MAX_VOICES;i++){
+		mute_voice[i]=(bool)(mute_mask&1);
+		mute_mask>>=1;
+	}
 }

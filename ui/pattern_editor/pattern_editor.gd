@@ -100,117 +100,190 @@ func process_mouse_button(ev:InputEventMouseButton)->bool:
 func process_keyboard(ev:InputEventKey)->bool:
 	if ev==null or !focused:
 		return false
-	if !ev.pressed:
-		return false
-	if ev.is_action("ui_down"):
-		advance(1)
+	if ev.scancode==GKBD.DOWN:
+		if ev.pressed:
+			advance(1)
 		return true
-	if ev.is_action("ui_up"):
-		advance(-1)
+	if ev.scancode==GKBD.UP:
+		if ev.pressed:
+			advance(-1)
 		return true
-	if ev.is_action("ui_page_up"):
-		advance(-4*step)
+	if ev.scancode==GKBD.FAST_UP:
+		if ev.pressed:
+			advance(-4*step)
 		return true
-	if ev.is_action("ui_page_down"):
-		advance(4*step)
+	if ev.scancode==GKBD.FAST_DOWN:
+		if ev.pressed:
+			advance(4*step)
 		return true
-	if ev.is_action("ui_home"):
-		set_row(0)
+	if ev.scancode==GKBD.HOME:
+		if ev.pressed:
+			set_row(0)
 		return true
-	if ev.is_action("ui_end"):
-		set_row(GLOBALS.song.pattern_length-1)
+	if ev.scancode==GKBD.END:
+		if ev.pressed:
+			set_row(GLOBALS.song.pattern_length-1)
 		return true
-	if ev.is_action("ui_right"):
-		if ev.shift:
-			set_channel(curr_channel+1)
-		else:
-			set_column(curr_column+1)
+	if ev.scancode==GKBD.RIGHT:
+		if ev.pressed:
+			if ev.shift:
+				set_channel(curr_channel+1)
+			else:
+				set_column(curr_column+1)
 		return true
-	if ev.is_action("ui_left"):
+	if ev.pressed and ev.scancode==GKBD.LEFT:
 		if ev.shift:
 			set_channel(curr_channel-1)
 		else:
 			set_column(curr_column-1)
 		return true
+	if ev.shift and ev.scancode==GKBD.DELETE:
+		if ev.pressed:
+			GLOBALS.song.delete_row(curr_order,curr_channel,curr_row)
+		return true
+	if ev.scancode==GKBD.INSERT:
+		if ev.pressed:
+			GLOBALS.song.insert_row(curr_order,curr_channel,curr_row)
+		return true
 	if curr_column==ATTRS.LG_MODE:
-		if ev.is_action_pressed("ui_select"):
-			put_legato(null)
+		if ev.is_action_released("ui_select"):
+			if !ev.pressed:
+				put_legato(null)
 			return true
-		if ev.scancode==KEY_DELETE:
-			put_legato(Pattern.LEGATO_MODE.OFF)
+		if ev.scancode==GKBD.DELETE:
+			if !ev.pressed:
+				put_legato(Pattern.LEGATO_MODE.OFF)
+			return true
+		if ev.scancode in GKBD.VALUE_UP:
+			if !ev.pressed:
+				put_legato(null,1,0)
+			return true
+		if ev.scancode in GKBD.VALUE_DOWN:
+			if !ev.pressed:
+				put_legato(null,Pattern.LEGATO_MAX,0)
 			return true
 	if curr_column==ATTRS.NOTE:
 		if ev.scancode in GKBD.KEYBOARD:
-			var semi:int=GKBD.KEYBOARD.find(ev.scancode)
-			put_note(semi%12,GLOBALS.curr_octave+(semi/12),GLOBALS.curr_instrument)
+			if !ev.pressed:
+				var semi:int=GKBD.KEYBOARD.find(ev.scancode)
+				put_note(semi%12,GLOBALS.curr_octave+(semi/12),GLOBALS.curr_instrument)
 			return true
-		if ev.scancode==KEY_DELETE:
-			put_note(null,0,null)
+		if ev.scancode==GKBD.DELETE:
+			if !ev.pressed:
+				put_note(null,0,null)
 			return true
-		if ev.scancode==KEY_BACKSPACE:
-			put_note(-1,0,null)
+		if ev.scancode==GKBD.NOTE_OFF:
+			if !ev.pressed:
+				put_note(-2 if ev.shift else -1,0,null)
 			return true
-	if (curr_column-ATTRS.FM0)>=0 and (curr_column-ATTRS.FM0)%3==0:
-		if ev.scancode==KEY_DELETE:
-			put_opmask(0)
+		if ev.scancode in GKBD.VALUE_UP:
+			if !ev.pressed:
+				put_note(null,0,null,12 if ev.shift else 1,0)
+			return true
+		if ev.scancode in GKBD.VALUE_DOWN:
+			if !ev.pressed:
+				put_note(null,0,null,-12 if ev.shift else -1,0)
+			return true
+	if curr_column in [ATTRS.FM0,ATTRS.FM1,ATTRS.FM2,ATTRS.FM3]:
+		if ev.scancode==GKBD.DELETE:
+			if !ev.pressed:
+				put_opmask(0)
 			return true
 		if ev.scancode in GKBD.HEX_INPUT:
-			put_opmask(GKBD.HEX_INPUT.find(ev.scancode))
+			if !ev.pressed:
+				put_opmask(GKBD.HEX_INPUT.find(ev.scancode))
+			return true
+		if ev.scancode in GKBD.HEX_INPUT_KP:
+			if !ev.pressed:
+				put_opmask(GKBD.HEX_INPUT_KP.find(ev.scancode)/2)
+			return true
+		if ev.scancode in GKBD.VALUE_UP:
+			if !ev.pressed:
+				put_opmask(0,1)
+			return true
+		if ev.scancode in GKBD.VALUE_DOWN:
+			if !ev.pressed:
+				put_opmask(0,-1)
 			return true
 	if curr_column>ATTRS.NOTE:
-		if ev.scancode==KEY_DELETE:
-			put_2_digits(null)
+		if ev.scancode==GKBD.DELETE:
+			if !ev.pressed:
+				put_2_digits(null)
 			return true
 		if ev.scancode in GKBD.HEX_INPUT:
-			put_2_digits(GKBD.HEX_INPUT.find(ev.scancode))
+			if !ev.pressed:
+				put_2_digits(GKBD.HEX_INPUT.find(ev.scancode))
+			return true
+		if ev.scancode in GKBD.HEX_INPUT_KP:
+			if !ev.pressed:
+				put_2_digits(GKBD.HEX_INPUT_KP.find(ev.scancode))
+			return true
+		if ev.scancode in GKBD.VALUE_UP:
+			if !ev.pressed:
+				put_2_digits(0,16 if ev.shift else 1)
+			return true
+		if ev.scancode in GKBD.VALUE_DOWN:
+			if !ev.pressed:
+				put_2_digits(0,-16 if ev.shift else -1)
 			return true
 	return false
 
 #
 
-func put_opmask(val:int)->void:
-	GLOBALS.song.set_note(curr_order,curr_channel,curr_row,curr_column,val)
-	set_opmask(curr_row,channel_col0[curr_channel]+COLS[curr_column],val)
-	advance(step)
-
-func put_2_digits(val)->void:
+func put_opmask(val:int,add:int=0)->void:
 	var song:Song=GLOBALS.song
-	if val==null:
+	if add!=0:
+		val=(GLOBALS.nvl(song.get_note(curr_order,curr_channel,curr_row,curr_column),0)+add)&0xf
+	song.set_note(curr_order,curr_channel,curr_row,curr_column,val)
+	set_opmask(curr_row,channel_col0[curr_channel]+COLS[curr_column],val)
+	advance(step if add==0 else 0)
+
+func put_2_digits(val,add:int=0)->void:
+	var song:Song=GLOBALS.song
+	if add!=0:
+		val=song.get_note(curr_order,curr_channel,curr_row,curr_column)
+		if val==null:
+			return
+		val=(val+add)&0xff
+		song.set_note(curr_order,curr_channel,curr_row,curr_column,val)
+		digit_ix=0
+	elif val==null:
 		song.set_note(curr_order,curr_channel,curr_row,curr_column,null)
 		digit_ix=0
 	else:
 		var n_val=GLOBALS.nvl(song.get_note(curr_order,curr_channel,curr_row,curr_column),0)<<4
 		val=(n_val|(val&0xf))&0xff
 		song.set_note(curr_order,curr_channel,curr_row,curr_column,val)
-		digit_ix+=1
-		if digit_ix>=2:
-			digit_ix=0
+		digit_ix=(digit_ix+1)%2
 	set_2_digits(curr_row,channel_col0[curr_channel]+COLS[curr_column],val)
-	if digit_ix==0:
+	if digit_ix==0 and add==0:
 		advance(step)
 
-func put_legato(lm)->void:
+func put_legato(lm,add:int=1,adv:int=step)->void:
 	var song:Song=GLOBALS.song
 	var legato:int
 	if lm==null:
-		legato=(GLOBALS.nvl(song.get_note(curr_order,curr_channel,curr_row,ATTRS.LG_MODE),0)+1)%(Pattern.LEGATO_MAX+1)
+		legato=(GLOBALS.nvl(song.get_note(curr_order,curr_channel,curr_row,ATTRS.LG_MODE),0)+add)%(Pattern.LEGATO_MAX+1)
 	else:
 		legato=clamp(lm,Pattern.LEGATO_MIN,Pattern.LEGATO_MAX)
 	song.set_note(curr_order,curr_channel,curr_row,ATTRS.LG_MODE,legato)
 	set_legato_cell(curr_row,channel_col0[curr_channel],legato)
-	advance(step)
+	advance(adv)
 
-# warning-ignore:unused_argument
-func put_note(semitone,octave:int,instrument)->void:
+func put_note(semitone,octave:int,instrument,add:int=0,adv:int=step)->void:
 	var song:Song=GLOBALS.song
 	var note
-	if semitone==null:
+	if add!=0:
+		note=song.get_note(curr_order,curr_channel,curr_row,ATTRS.NOTE)
+# warning-ignore:incompatible_ternary
+		note=clamp(note+add,0,143) if note!=null else null
+		instrument=song.get_note(curr_order,curr_channel,curr_row,ATTRS.INSTR)
+	elif semitone==null:
 		note=null
 		instrument=null
 	else:
 		if semitone<0:
-			note=song.get_note(curr_order,curr_channel,curr_row,ATTRS.NOTE)
-			note=-2 if note==-1 else -1
+			note=-2 if semitone==-2 else -1
 			instrument=null
 		else:
 			note=semitone+(octave*12)
@@ -218,7 +291,7 @@ func put_note(semitone,octave:int,instrument)->void:
 	song.set_note(curr_order,curr_channel,curr_row,ATTRS.INSTR,instrument)
 	set_note_cells(curr_row,channel_col0[curr_channel],note)
 	set_2_digits(curr_row,6+channel_col0[curr_channel],instrument)
-	advance(step)
+	advance(adv)
 
 #
 

@@ -2,8 +2,8 @@
 
 [ext_resource path="res://ui/widgets/cycle_button.gd" type="Script" id=1]
 [ext_resource path="res://ui/pattern_editor/patterns_tab.gd" type="Script" id=2]
-[ext_resource path="res://ui/pattern_editor/pattern_editor.tscn" type="PackedScene" id=3]
-[ext_resource path="res://ui/pattern_editor/info.tscn" type="PackedScene" id=4]
+[ext_resource path="res://ui/pattern_editor/info.tscn" type="PackedScene" id=3]
+[ext_resource path="res://ui/pattern_editor/pattern_editor.tscn" type="PackedScene" id=4]
 [ext_resource path="res://ui/pattern_editor/pattern_list.tscn" type="PackedScene" id=5]
 
 [sub_resource type="StyleBoxEmpty" id=1]
@@ -38,13 +38,13 @@ margin_bottom = 122.0
 [node name="PatternList" parent="VSC/HSC" instance=ExtResource( 5 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 860.0
+margin_right = 856.0
 margin_bottom = 122.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Info" parent="VSC/HSC" instance=ExtResource( 4 )]
-margin_left = 872.0
+[node name="Info" parent="VSC/HSC" instance=ExtResource( 3 )]
+margin_left = 868.0
 margin_top = 0.0
 margin_right = 1024.0
 margin_bottom = 122.0
@@ -119,7 +119,6 @@ shortcut_in_tooltip = false
 text = "Chn 1"
 clip_text = true
 script = ExtResource( 1 )
-status = 0
 colors = PoolColorArray( 1, 1, 1, 1, 0.501961, 0.752941, 1, 1, 2, 1, 1, 1 )
 
 [node name="S" type="ReferenceRect" parent="VSC/VBC/CNT/Channels/Scroll/HB"]
@@ -128,7 +127,7 @@ margin_right = 144.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 16, 0 )
 
-[node name="Editor" parent="VSC/VBC" instance=ExtResource( 3 )]
+[node name="Editor" parent="VSC/VBC" instance=ExtResource( 4 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 24.0

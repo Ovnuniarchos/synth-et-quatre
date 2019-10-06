@@ -1,7 +1,6 @@
 extends Node
 
 signal song_changed
-signal octave_changed(oct)
 
 var song:Song setget set_song
 var curr_instrument:int setget set_instrument
@@ -34,8 +33,7 @@ func set_instrument(index:int)->void:
 		curr_instrument=index
 
 func set_octave(oct:int)->void:
-	curr_octave=clamp(oct,-1.0,10.0)
-	emit_signal("octave_changed",curr_octave)
+	curr_octave=clamp(oct,0.0,10.0)
 
 func goto_order(order:int)->void:
 	var mx:int=song.orders.size()-1

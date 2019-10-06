@@ -33,6 +33,22 @@ func is_note_empty(ix:int,num_fx:int)->bool:
 		if n[i]!=null:
 			return false
 	return true
+	
+func remove_row(row:int)->void:
+	if row<0 or row>=notes.size():
+		return
+	notes.remove(row)
+	var a:Array=[]
+	a.resize(MAX_ATTR+1)
+	notes.append(a)
+
+func insert_row(row:int)->void:
+	if row<0 or row>=notes.size():
+		return
+	var a:Array=[]
+	a.resize(MAX_ATTR+1)
+	notes.insert(row,a)
+	notes.pop_back()
 
 #
 

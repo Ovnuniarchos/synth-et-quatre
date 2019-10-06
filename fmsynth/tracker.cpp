@@ -44,6 +44,8 @@ void SynthTracker::_register_methods(){
 	register_method("set_lfo_wave_mode",&SynthTracker::set_lfo_wave_mode);
 	register_method("set_lfo_duty_cycle",&SynthTracker::set_lfo_duty_cycle);
 	register_method("set_lfo_freq",&SynthTracker::set_lfo_freq);
+
+	register_method("mute_voices",&SynthTracker::mute_voices);
 }
 
 
@@ -376,3 +378,9 @@ void SynthTracker::set_lfo_wave_mode(int lfo,int mode){
 void SynthTracker::set_lfo_duty_cycle(int lfo,int duty_cycle){
 	synth.set_lfo_duty_cycle(lfo,duty_cycle);
 }
+
+
+void SynthTracker::mute_voices(int mute_mask){
+	synth.mute_voices(mute_mask);
+}
+

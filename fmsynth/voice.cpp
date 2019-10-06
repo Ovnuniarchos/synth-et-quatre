@@ -7,7 +7,7 @@ void Voice::set_mix_rate(float mix_rate){
 }
 
 void Voice::set_note(int op_mask,int cents){
-	cents=clamp(cents,-200,13000); // Some leeway beyond MIDI 0-127
+	cents=clamp(cents,-200,14300); // Some leeway beyond MIDI 0-127
 	float freq=pow(2.0,(cents-6900)/1200.0)*440.0;
 	for(int i=0;i<4;i++,op_mask>>=1){
 		if(op_mask&1) ops[i].set_frequency(freq);

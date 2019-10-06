@@ -8,8 +8,10 @@ class FmSynth{
 private:
 	static const int MAX_WAVES=252;
 	static const int MAX_LFOS=4;
-	Voice voices[32];
+	static const int MAX_VOICES=32;
+	Voice voices[MAX_VOICES];
 	UserWave *waves[MAX_WAVES];
+	bool mute_voice[MAX_VOICES];
 
 	Wave lfos[MAX_LFOS];
 	float lfo_mix_rates[MAX_LFOS]={DEFAULT_MIX_RATE,DEFAULT_MIX_RATE,DEFAULT_MIX_RATE,DEFAULT_MIX_RATE};
@@ -33,8 +35,11 @@ public:
 		lfo_phis[2]+=lfo_deltas[2];
 		lfo_phis[3]+=lfo_deltas[3];
 		left=right=0;
-		for(int i=0;i<32;i++){
+		for(int i=0;i<MAX_VOICES;i++){
 			FixedPoint s=voices[i].generate(lfo_vals);
+			if(mute_voice[i]){
+				continue;
+			}
 			left+=(s*voices[i].get_volume_left())>>6;
 			right+=(s*voices[i].get_volume_right())>>6;
 		}
@@ -79,6 +84,8 @@ public:
 	void set_lfo_freq(int lfo,int freq8_8);
 	void set_lfo_wave_mode(int lfo,int mode);
 	void set_lfo_duty_cycle(int lfo,int duty_cycle);
+
+	void mute_voices(int mute_mask);
 
 };
 

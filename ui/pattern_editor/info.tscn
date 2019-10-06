@@ -14,10 +14,11 @@ __meta__ = {
 [node name="GC" type="GridContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 145.0
+margin_right = 149.0
 margin_bottom = 115.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_constants/hseparation = 8
 columns = 2
 __meta__ = {
 "_edit_use_anchors_": false
@@ -30,55 +31,55 @@ margin_bottom = 19.0
 text = "Octave"
 
 [node name="Octave" type="SpinBox" parent="GC"]
-margin_left = 64.0
-margin_right = 138.0
+margin_left = 68.0
+margin_right = 142.0
 margin_bottom = 24.0
 min_value = -1.0
 max_value = 9.0
 rounded = true
 
-[node name="LabelOctave2" type="Label" parent="GC"]
+[node name="LabelTicksSec" type="Label" parent="GC"]
 margin_top = 33.0
 margin_right = 60.0
 margin_bottom = 47.0
 text = "Ticks/s"
 
 [node name="TicksSec" type="SpinBox" parent="GC"]
-margin_left = 64.0
+margin_left = 68.0
 margin_top = 28.0
-margin_right = 138.0
+margin_right = 142.0
 margin_bottom = 52.0
 min_value = 1.0
 max_value = 256.0
 value = 1.0
 rounded = true
 
-[node name="LabelOctave3" type="Label" parent="GC"]
+[node name="LabelTicksRow" type="Label" parent="GC"]
 margin_top = 61.0
 margin_right = 60.0
 margin_bottom = 75.0
 text = "Ticks/row"
 
 [node name="TicksRow" type="SpinBox" parent="GC"]
-margin_left = 64.0
+margin_left = 68.0
 margin_top = 56.0
-margin_right = 138.0
+margin_right = 142.0
 margin_bottom = 80.0
 min_value = 1.0
 max_value = 256.0
 value = 1.0
 rounded = true
 
-[node name="LabelOctave4" type="Label" parent="GC"]
+[node name="LabelStep" type="Label" parent="GC"]
 margin_top = 89.0
 margin_right = 60.0
 margin_bottom = 103.0
 text = "Step"
 
 [node name="Step" type="SpinBox" parent="GC"]
-margin_left = 64.0
+margin_left = 68.0
 margin_top = 84.0
-margin_right = 138.0
+margin_right = 142.0
 margin_bottom = 108.0
 max_value = 256.0
 value = 1.0

@@ -13,7 +13,7 @@ func _input(ev:InputEvent)->void:
 	ev=ev as InputEventMouseButton
 	if ev==null:
 		return
-	if get_global_rect().clip(clipper.get_global_rect()).has_point(ev.global_position):
+	if is_visible_in_tree() and get_global_rect().clip(clipper.get_global_rect()).has_point(ev.global_position):
 		set_block_signals(false)
 		emit_signal("gui_input",ev)
 		set_block_signals(true)

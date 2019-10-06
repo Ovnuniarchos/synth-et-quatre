@@ -55,3 +55,6 @@ func set_lfo_wave(lfo_ix:int,wave_ix:int)->void:
 
 func set_lfo_frequency(lfo_ix:int,freq:float)->void:
 	synth.set_lfo_freq(lfo_ix,freq)
+
+func mute_voices(mask:int)->void:
+	synth.mute_voices(mask)

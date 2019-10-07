@@ -33,13 +33,13 @@ __meta__ = {
 
 [node name="HSC" type="HSplitContainer" parent="VSC"]
 margin_right = 1024.0
-margin_bottom = 122.0
+margin_bottom = 150.0
 
 [node name="PatternList" parent="VSC/HSC" instance=ExtResource( 5 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 856.0
-margin_bottom = 122.0
+margin_bottom = 150.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
@@ -47,10 +47,10 @@ size_flags_vertical = 3
 margin_left = 868.0
 margin_top = 0.0
 margin_right = 1024.0
-margin_bottom = 122.0
+margin_bottom = 150.0
 
 [node name="VBC" type="VBoxContainer" parent="VSC"]
-margin_top = 134.0
+margin_top = 162.0
 margin_right = 1024.0
 margin_bottom = 600.0
 custom_constants/separation = 0
@@ -119,6 +119,7 @@ shortcut_in_tooltip = false
 text = "Chn 1"
 clip_text = true
 script = ExtResource( 1 )
+status = 0
 colors = PoolColorArray( 1, 1, 1, 1, 0.501961, 0.752941, 1, 1, 2, 1, 1, 1 )
 
 [node name="S" type="ReferenceRect" parent="VSC/VBC/CNT/Channels/Scroll/HB"]
@@ -132,9 +133,10 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 24.0
 margin_right = 1024.0
-margin_bottom = 466.0
+margin_bottom = 438.0
 rect_min_size = Vector2( 0, 48 )
 [connection signal="order_selected" from="VSC/HSC/PatternList" to="VSC/VBC/Editor" method="_on_order_selected"]
 [connection signal="step_changed" from="VSC/HSC/Info" to="VSC/VBC/Editor" method="_on_Info_step_changed"]
+[connection signal="velocity_changed" from="VSC/HSC/Info" to="VSC/VBC/Editor" method="_on_Info_velocity_changed"]
 [connection signal="sort_children" from="VSC/VBC/CNT" to="." method="_on_CNT_sort_children"]
 [connection signal="horizontal_scroll" from="VSC/VBC/Editor" to="." method="_on_editor_horizontal_scroll"]

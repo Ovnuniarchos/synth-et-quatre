@@ -15,7 +15,7 @@ __meta__ = {
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 149.0
-margin_bottom = 115.0
+margin_bottom = 143.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/hseparation = 8
@@ -84,7 +84,23 @@ margin_bottom = 108.0
 max_value = 256.0
 value = 1.0
 rounded = true
+
+[node name="LabelVelocity" type="Label" parent="GC"]
+margin_top = 117.0
+margin_right = 60.0
+margin_bottom = 131.0
+text = "Velocity"
+
+[node name="Velocity" type="SpinBox" parent="GC"]
+margin_left = 68.0
+margin_top = 112.0
+margin_right = 142.0
+margin_bottom = 136.0
+max_value = 255.0
+value = 128.0
+rounded = true
 [connection signal="value_changed" from="GC/Octave" to="." method="_on_Octave_value_changed"]
 [connection signal="value_changed" from="GC/TicksSec" to="." method="_on_TicksSec_value_changed"]
 [connection signal="value_changed" from="GC/TicksRow" to="." method="_on_TicksRow_value_changed"]
 [connection signal="value_changed" from="GC/Step" to="." method="_on_Step_value_changed"]
+[connection signal="value_changed" from="GC/Velocity" to="." method="_on_Velocity_value_changed"]

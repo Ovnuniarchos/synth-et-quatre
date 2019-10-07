@@ -47,11 +47,11 @@
 17 vv oo nn
 : Set AM (tremolo) intensity for voice `vv`, with operator mask `oo`, to `nn/255`% amplitude.
 18 vv oo nn
-: Set AM (tremolo) intensity for voice `vv`, with operator mask `oo`, to `nn/255`% amplitude.
+: Set AM (tremolo) LFO for voice `vv`, with operator mask `oo`, to LFO number `nn`.
 19 vv oo hh ll
 : Set FM (vibrato) intensity for voice `vv`, with operator mask `oo`, to `hh:ll` millis.
-1A vv oo hh ll
-: Set FM (vibrato) intensity for voice `vv`, with operator mask `oo`, to `hh:ll` millis.
+1A vv oo nn
+: Set FM (vibrato) LFO for voice `vv`, with operator mask `oo`,to LFO number `nn`.
 1B ff hh ll
 : Set LFO number `ff` frequency to `(hh:ll)/256` Hz.
 1C ff nn

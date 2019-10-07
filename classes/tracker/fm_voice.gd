@@ -355,7 +355,19 @@ func commit_instrument(channel:int,cmds:Array,ptr:int)->int:
 		cmds[ptr+47]=1<<i
 		cmds[ptr+48]=fm_intensity[i]>>8
 		cmds[ptr+49]=fm_intensity[i]&255
-		ptr+=50
+		cmds[ptr+50]=CMD_FML
+		cmds[ptr+51]=channel
+		cmds[ptr+52]=1<<i
+		cmds[ptr+53]=fm_lfo[i]
+		cmds[ptr+54]=CMD_AMS
+		cmds[ptr+55]=channel
+		cmds[ptr+56]=1<<i
+		cmds[ptr+57]=am_intensity[i]
+		cmds[ptr+58]=CMD_AML
+		cmds[ptr+59]=channel
+		cmds[ptr+60]=1<<i
+		cmds[ptr+61]=am_lfo[i]
+		ptr+=62
 		for j in range(4):
 			cmds[ptr]=CMD_PM
 			cmds[ptr+1]=channel
@@ -397,7 +409,9 @@ func set_instrument(inst:FmInstrument)->void:
 	duty_cycles=inst.duty_cycles.duplicate()
 	waveforms=inst.waveforms.duplicate()
 	am_intensity=inst.am_intensity.duplicate()
+	am_lfo=inst.am_lfo.duplicate()
 	fm_intensity=inst.fm_intensity.duplicate()
+	fm_lfo=inst.fm_lfo.duplicate()
 	routings=inst.routings.duplicate(true)
 
 #

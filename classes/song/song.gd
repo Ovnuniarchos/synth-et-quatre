@@ -98,7 +98,7 @@ func can_delete_wave(wave:Waveform)->bool:
 	return true
 
 func get_wave(index:int)->Waveform:
-	if index<0 or index>wave_list.size():
+	if index<0 or index>=wave_list.size():
 		return null
 	return wave_list[index]
 
@@ -135,7 +135,7 @@ func can_delete_instrument(instr:Instrument)->bool:
 	return true
 
 func get_instrument(index:int)->Instrument:
-	if index<0 or index>instrument_list.size():
+	if index<0 or index>=instrument_list.size():
 		return null
 	return instrument_list[index]
 
@@ -190,7 +190,7 @@ func set_pattern(order:int,channel:int,pattern:int)->void:
 		emit_signal("order_changed",order,channel)
 
 func add_pattern(channel:int,copy_from:int=-1)->int:
-	if patterns[channel].size()>254:
+	if patterns[channel].size()>=255:
 		return 255
 	if copy_from==-1:
 		patterns[channel].append(Pattern.new(MAX_PAT_LENGTH))

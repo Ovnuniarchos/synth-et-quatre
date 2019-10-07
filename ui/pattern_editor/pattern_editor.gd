@@ -29,6 +29,7 @@ var container_size:Vector2=Vector2()
 var channel_col0:Array
 var focused:bool=false
 var digit_ix:int=0
+var velocity:int=128
 
 
 func _ready()->void:
@@ -289,8 +290,10 @@ func put_note(semitone,octave:int,instrument,add:int=0,adv:int=step)->void:
 			note=semitone+(octave*12)
 	song.set_note(curr_order,curr_channel,curr_row,ATTRS.NOTE,note)
 	song.set_note(curr_order,curr_channel,curr_row,ATTRS.INSTR,instrument)
+	song.set_note(curr_order,curr_channel,curr_row,ATTRS.VOL,velocity)
 	set_note_cells(curr_row,channel_col0[curr_channel],note)
-	set_2_digits(curr_row,6+channel_col0[curr_channel],instrument)
+	set_2_digits(curr_row,COLS[ATTRS.INSTR]+channel_col0[curr_channel],instrument)
+	set_2_digits(curr_row,COLS[ATTRS.VOL]+channel_col0[curr_channel],velocity)
 	advance(adv)
 
 #
@@ -463,6 +466,9 @@ func _on_order_selected(order:int)->void:
 
 func _on_Info_step_changed(s:int)->void:
 	step=max(0.0,s)
+
+func _on_Info_velocity_changed(vel:int):
+	velocity=vel
 
 func _on_Editor_mouse_entered():
 	_on_focus_entered()

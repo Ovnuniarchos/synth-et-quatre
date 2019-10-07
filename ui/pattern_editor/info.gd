@@ -1,6 +1,7 @@
 extends PanelContainer
 
 signal step_changed(step)
+signal velocity_changed(velocity)
 
 func _ready()->void:
 	GKBD.connect("octave_changed",self,"_on_octave_changed")
@@ -16,6 +17,7 @@ func sync_with_song()->void:
 
 #
 
+# warning-ignore:unused_argument
 func _on_octave_changed(oct:int)->void:
 	var oc:SpinBox=$GC/Octave
 	oc.set_block_signals(true)
@@ -33,3 +35,6 @@ func _on_TicksRow_value_changed(value:float)->void:
 
 func _on_Step_value_changed(value:float)->void:
 	emit_signal("step_changed",int(value))
+
+func _on_Velocity_value_changed(value):
+	emit_signal("velocity_changed",clamp(value,0.0,255.0))

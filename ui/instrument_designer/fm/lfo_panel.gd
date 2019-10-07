@@ -3,6 +3,7 @@ extends PanelContainer
 export (int) var lfo:int=0 setget set_lfo
 
 func _ready()->void:
+	GLOBALS.connect("song_changed",self,"update_values")
 	set_lfo(lfo)
 	update_values()
 

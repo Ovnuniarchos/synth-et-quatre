@@ -4,8 +4,9 @@
 [ext_resource path="res://ui/widgets/slider.gd" type="Script" id=4]
 
 [node name="Routing" type="PanelContainer"]
+margin_top = -0.463303
 margin_right = 829.0
-margin_bottom = 141.0
+margin_bottom = 145.537
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false

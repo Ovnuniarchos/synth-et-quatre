@@ -23,7 +23,8 @@ func _on_OutSlider_value_changed(value:float,op:int)->void:
 	emit_signal("instrument_changed")
 
 func set_sliders(rts:Array)->void:
-	for i in range(0,4):
-		for j in range(0,4-i):
-			get_node("Routings/Params/OP%d/OP%dSlider"%[i+1,i+j+1]).value=float(rts[i][j])
+	for i in range(4):
+		for j in range(4):
+			var n="Routings/Params/OP%d/OP%dSlider"%[i+1,j+1]
+			get_node(n).value=float(rts[i][j])
 		get_node("Routings/Params/OP%d/OutSlider"%(i+1)).value=float(rts[i][-1])

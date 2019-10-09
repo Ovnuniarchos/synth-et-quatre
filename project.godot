@@ -89,6 +89,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://classes/wave_components/saw_wave.gd"
 }, {
+"base": "Reference",
+"class": "Selection",
+"language": "GDScript",
+"path": "res://ui/pattern_editor/selection.gd"
+}, {
 "base": "WaveComponent",
 "class": "SineWave",
 "language": "GDScript",
@@ -146,6 +151,7 @@ _global_script_class_icons={
 "PlayButton": "",
 "RectangleWave": "",
 "SawWave": "",
+"Selection": "",
 "SineWave": "",
 "Song": "",
 "SynthWave": "",

@@ -23,13 +23,17 @@ var step:int=1
 
 onready var editor:TileMap=$Pattern
 onready var lines:TileMap=$Lines
+onready var sel_rect:Node2D=$Selection
 var ofs_chan:int=0
 var container:Control
-var container_size:Vector2=Vector2()
+var container_size:Vector2
 var channel_col0:Array
 var focused:bool=false
 var digit_ix:int=0
 var velocity:int=128
+var selection:Selection=Selection.new()
+var dragging:bool=false
+var drag_start:Vector2
 
 
 func _ready()->void:
@@ -37,6 +41,8 @@ func _ready()->void:
 	AUDIO.tracker.connect("position_changed",self,"_on_playing_pos_changed")
 	_on_song_changed()
 	_on_resized()
+	selection.active=false
+	sel_rect.selection=selection
 
 func _on_song_changed()->void:
 	GLOBALS.song.connect("channels_changed",self,"_on_channels_changed")
@@ -50,6 +56,9 @@ func _on_song_changed()->void:
 func _input(event:InputEvent)->void:
 	if !is_visible_in_tree():
 		return
+	if process_mouse_motion(event as InputEventMouseMotion):
+		accept_event()
+		return
 	if process_keyboard(event as InputEventKey):
 		accept_event()
 		return
@@ -57,19 +66,14 @@ func _input(event:InputEvent)->void:
 		accept_event()
 		return
 
-func process_mouse_button(ev:InputEventMouseButton)->bool:
+func process_mouse_motion(ev:InputEventMouseMotion)->bool:
 	if ev==null:
 		return false
-	if !Rect2(rect_global_position,rect_size).has_point(ev.global_position):
-		_on_focus_exited()
-		release_focus()
-		return false
-	_on_focus_entered()
-	grab_focus()
-	if ev.pressed:
-		return true
-	if ev.button_index==BUTTON_LEFT:
+	if dragging and (ev.global_position-drag_start).abs()>Vector2(8.0,16.0):
+		selection.active=true
 		var pos:Vector2=editor.world_to_map(ev.global_position-editor.global_position)
+		selection.set_end(round_to_column(pos,true))
+		sel_rect.update()
 		if pos.x<0.0 or pos.y<0.0 or pos.y>=GLOBALS.song.pattern_length:
 			return false
 		var chan:int=-1
@@ -90,11 +94,73 @@ func process_mouse_button(ev:InputEventMouseButton)->bool:
 		set_column(col)
 		set_row(pos.y)
 		return true
+	return false
+
+func round_to_column(pos:Vector2,end:bool)->Vector2:
+	var col:int=0
+	var chn:int=0
+	var tx:int=max(0,pos.x)
+	pos.y=clamp(pos.y,0.0,GLOBALS.song.pattern_length-(0 if end else 1))
+	for i in range(channel_col0.size()):
+		if channel_col0[i]>tx:
+			chn=i-1
+			break
+	tx-=channel_col0[chn]
+	for i in range(COLS.size()):
+		if COLS[i]>tx:
+			col=i-1
+			break
+	if end:
+		pos.x=channel_col0[chn]+COLS[col]+COL_WIDTH[col]
+	pos.x=channel_col0[chn]+COLS[col]
+	return pos
+
+func process_mouse_button(ev:InputEventMouseButton)->bool:
+	if ev==null:
+		return false
+	if !Rect2(rect_global_position,rect_size).has_point(ev.global_position):
+		_on_focus_exited()
+		release_focus()
+		return false
+	_on_focus_entered()
+	grab_focus()
+	if ev.button_index==BUTTON_LEFT:
+		var pos:Vector2
+		dragging=ev.pressed
+		drag_start=ev.global_position
+		pos=editor.world_to_map(ev.global_position-editor.global_position)
+		if !ev.pressed:
+			if pos.x<0.0 or pos.y<0.0 or pos.y>=GLOBALS.song.pattern_length:
+				return false
+			var chan:int=-1
+			for i in range(channel_col0.size()):
+				if channel_col0[i]>pos.x:
+					chan=i-1
+					break
+			if chan<0:
+				return false
+			var col:int=ATTRS.PAN+(GLOBALS.song.num_fxs[chan]*3)
+			for i in range(col+1):
+				if (COLS[i]+channel_col0[chan])>pos.x:
+					col=i-1
+					break
+			if col<0:
+				return false
+			set_channel(chan)
+			set_column(col)
+			set_row(pos.y)
+		else:
+			selection.set_start(round_to_column(pos,false))
+			selection.set_end(round_to_column(pos,true))
+			selection.active=false
+		return true
 	if ev.button_index==BUTTON_WHEEL_DOWN:
-		advance(4*step if ev.shift else 1)
+		if !ev.pressed:
+			advance(4*step if ev.shift else 1)
 		return true
 	if ev.button_index==BUTTON_WHEEL_UP:
-		advance(-4*step if ev.shift else -1)
+		if !ev.pressed:
+			advance(-4*step if ev.shift else -1)
 		return true
 	return false
 
@@ -152,7 +218,7 @@ func process_keyboard(ev:InputEventKey)->bool:
 				put_legato(null)
 			return true
 		if ev.scancode==GKBD.DELETE:
-			if !ev.pressed:
+			if ev.pressed:
 				put_legato(Pattern.LEGATO_MODE.OFF)
 			return true
 		if ev.scancode in GKBD.VALUE_UP:
@@ -170,7 +236,7 @@ func process_keyboard(ev:InputEventKey)->bool:
 				put_note(semi%12,GLOBALS.curr_octave+(semi/12),GLOBALS.curr_instrument)
 			return true
 		if ev.scancode==GKBD.DELETE:
-			if !ev.pressed:
+			if ev.pressed:
 				put_note(null,0,null)
 			return true
 		if ev.scancode==GKBD.NOTE_OFF:
@@ -187,7 +253,7 @@ func process_keyboard(ev:InputEventKey)->bool:
 			return true
 	if curr_column in [ATTRS.FM0,ATTRS.FM1,ATTRS.FM2,ATTRS.FM3]:
 		if ev.scancode==GKBD.DELETE:
-			if !ev.pressed:
+			if ev.pressed:
 				put_opmask(0)
 			return true
 		if ev.scancode in GKBD.HEX_INPUT:
@@ -208,7 +274,7 @@ func process_keyboard(ev:InputEventKey)->bool:
 			return true
 	if curr_column>ATTRS.NOTE:
 		if ev.scancode==GKBD.DELETE:
-			if !ev.pressed:
+			if ev.pressed:
 				put_2_digits(null)
 			return true
 		if ev.scancode in GKBD.HEX_INPUT:
@@ -386,7 +452,6 @@ func set_note_cells(row:int,col:int,note)->void:
 func advance(f:int)->void:
 	set_row(curr_row+f)
 
-# Will be called before _ready()
 func set_row(r:int)->void:
 	var sz:int=GLOBALS.song.pattern_length
 	curr_row=clamp(r,0,sz-1)
@@ -394,8 +459,9 @@ func set_row(r:int)->void:
 	digit_ix=0
 	$BG.row=curr_row
 	$BG.position.y=dy
-	$Lines.position.y=dy
-	$Pattern.position.y=dy
+	lines.position.y=dy
+	editor.position.y=dy
+	sel_rect.position.y=dy
 
 func set_channel(c:int)->void:
 	curr_channel=0 if c<0 else 31 if c>31 else c
@@ -434,6 +500,7 @@ func set_cursor()->void:
 		ofs_chan+=144.0
 	emit_signal("horizontal_scroll",ofs_chan)
 	editor.position.x=ofs_chan+32.0
+	sel_rect.position.x=ofs_chan+32.0
 	c.position=Vector2(x,rect_size.y*0.5)
 	c.scale.x=COL_WIDTH[curr_column]
 

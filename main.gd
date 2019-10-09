@@ -1,7 +1,10 @@
 extends VBoxContainer
 
 """
-TODO:
+TODO:	Selection ops
+		Pattern cleanup
+		Instrument cleanup
+		Waves cleanup
 """
 
 func _ready()->void:

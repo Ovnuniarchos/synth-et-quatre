@@ -3,12 +3,12 @@
 [ext_resource path="res://ui/widgets/oscilloscope.tscn" type="PackedScene" id=1]
 [ext_resource path="res://theme/editor.png" type="Texture" id=2]
 [ext_resource path="res://theme/theme.tres" type="Theme" id=3]
-[ext_resource path="res://ui/pattern_editor/patterns_tab.tscn" type="PackedScene" id=4]
+[ext_resource path="res://ui/file/file_tab.tscn" type="PackedScene" id=4]
 [ext_resource path="res://ui/widgets/play_button.gd" type="Script" id=5]
 [ext_resource path="res://main.gd" type="Script" id=6]
-[ext_resource path="res://ui/file/file_tab.tscn" type="PackedScene" id=7]
+[ext_resource path="res://ui/wave_designer/waveforms_tab.tscn" type="PackedScene" id=7]
 [ext_resource path="res://ui/instrument_designer/instruments_tab.tscn" type="PackedScene" id=8]
-[ext_resource path="res://ui/wave_designer/waveforms_tab.tscn" type="PackedScene" id=9]
+[ext_resource path="res://ui/pattern_editor/patterns_tab.tscn" type="PackedScene" id=9]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 2 )
@@ -41,7 +41,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Patterns" parent="Main/Tabs" instance=ExtResource( 4 )]
+[node name="Patterns" parent="Main/Tabs" instance=ExtResource( 9 )]
 margin_left = 4.0
 margin_top = 35.0
 margin_right = -4.0
@@ -50,14 +50,14 @@ margin_bottom = -4.0
 [node name="Instruments" parent="Main/Tabs" instance=ExtResource( 8 )]
 visible = false
 
-[node name="Waveforms" parent="Main/Tabs" instance=ExtResource( 9 )]
+[node name="Waveforms" parent="Main/Tabs" instance=ExtResource( 7 )]
 visible = false
 margin_left = 4.0
 margin_top = 35.0
 margin_right = -4.0
 margin_bottom = -4.0
 
-[node name="File" parent="Main/Tabs" instance=ExtResource( 7 )]
+[node name="File" parent="Main/Tabs" instance=ExtResource( 4 )]
 visible = false
 margin_left = 4.0
 margin_top = 35.0

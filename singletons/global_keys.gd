@@ -15,8 +15,8 @@ const HEX_INPUT_KP=[
 	KEY_KP_8,KEY_KP_9,KEY_A,KEY_B,KEY_C,KEY_D,KEY_E,KEY_F
 ]
 const NOTE_OFF=KEY_BACKSPACE
-const OCTAVE_UP=KEY_KP_DIVIDE
-const OCTAVE_DOWN=KEY_KP_MULTIPLY
+const OCTAVE_UP=[KEY_KP_DIVIDE]
+const OCTAVE_DOWN=[KEY_KP_MULTIPLY]
 const UP=KEY_UP
 const DOWN=KEY_DOWN
 const LEFT=KEY_LEFT
@@ -29,6 +29,10 @@ const DELETE=KEY_DELETE
 const INSERT=KEY_INSERT
 const VALUE_UP=[KEY_KP_ADD,KEY_VOLUMEUP]
 const VALUE_DOWN=[KEY_KP_SUBTRACT,KEY_VOLUMEDOWN]
+const COPY=[KEY_C|KEY_MASK_CTRL,KEY_C|KEY_MASK_CMD]
+const CUT=[KEY_X|KEY_MASK_CTRL,KEY_X|KEY_MASK_CMD]
+const PASTE=[KEY_V|KEY_MASK_CTRL,KEY_V|KEY_MASK_CMD]
+const MIX_PASTE=[KEY_V|KEY_MASK_SHIFT|KEY_MASK_CTRL,KEY_V|KEY_MASK_SHIFT|KEY_MASK_CMD]
 
 var notes:Array=[]
 var key_on:Array=[]
@@ -48,7 +52,8 @@ func _unhandled_input(event:InputEvent)->void:
 func handle_keys(event:InputEventKey)->bool:
 	if event==null or event.is_echo():
 		return false
-	if event.scancode in KEYBOARD:
+	var fscan:int=event.get_scancode_with_modifiers()
+	if (fscan&~KEY_MASK_SHIFT) in KEYBOARD:
 		var semi:int=KEYBOARD.find(event.scancode)+(GLOBALS.curr_octave*12)
 		var chan:int=notes.find(semi)
 		var instr:Instrument=GLOBALS.get_instrument()
@@ -72,12 +77,12 @@ func handle_keys(event:InputEventKey)->bool:
 			if instr is FmInstrument:
 				SYNTH.synth.key_off(chan,15)
 		return true
-	if event.scancode==OCTAVE_UP:
+	if fscan in OCTAVE_UP:
 		if !event.pressed:
 			GLOBALS.curr_octave+=1
 			emit_signal("octave_changed",GLOBALS.curr_octave)
 		return true
-	if event.scancode==OCTAVE_DOWN:
+	if fscan in OCTAVE_DOWN:
 		if !event.pressed:
 			GLOBALS.curr_octave-=1
 			emit_signal("octave_changed",GLOBALS.curr_octave)

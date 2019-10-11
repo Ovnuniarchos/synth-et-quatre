@@ -34,6 +34,7 @@ var velocity:int=128
 var selection:Selection=Selection.new()
 var dragging:bool=false
 var drag_start:Vector2
+var kbd_drag:bool=false
 
 
 func _ready()->void:
@@ -51,6 +52,7 @@ func _on_song_changed()->void:
 	set_row(0)
 	set_channel(0)
 	set_column(0)
+	selection.active=false
 	_on_channels_changed()
 
 func _input(event:InputEvent)->void:
@@ -72,8 +74,6 @@ func process_mouse_motion(ev:InputEventMouseMotion)->bool:
 	if dragging and (ev.global_position-drag_start).abs()>Vector2(8.0,16.0):
 		selection.active=true
 		var pos:Vector2=editor.world_to_map(ev.global_position-editor.global_position)
-		selection.set_end(round_to_column(pos,true))
-		sel_rect.update()
 		if pos.x<0.0 or pos.y<0.0 or pos.y>=GLOBALS.song.pattern_length:
 			return false
 		var chan:int=-1
@@ -93,27 +93,10 @@ func process_mouse_motion(ev:InputEventMouseMotion)->bool:
 		set_channel(chan)
 		set_column(col)
 		set_row(pos.y)
+		selection.set_end(curr_channel,curr_column,curr_row)
+		sel_rect.update()
 		return true
 	return false
-
-func round_to_column(pos:Vector2,end:bool)->Vector2:
-	var col:int=0
-	var chn:int=0
-	var tx:int=max(0,pos.x)
-	pos.y=clamp(pos.y,0.0,GLOBALS.song.pattern_length-(0 if end else 1))
-	for i in range(channel_col0.size()):
-		if channel_col0[i]>tx:
-			chn=i-1
-			break
-	tx-=channel_col0[chn]
-	for i in range(COLS.size()):
-		if COLS[i]>tx:
-			col=i-1
-			break
-	if end:
-		pos.x=channel_col0[chn]+COLS[col]+COL_WIDTH[col]
-	pos.x=channel_col0[chn]+COLS[col]
-	return pos
 
 func process_mouse_button(ev:InputEventMouseButton)->bool:
 	if ev==null:
@@ -150,8 +133,8 @@ func process_mouse_button(ev:InputEventMouseButton)->bool:
 			set_column(col)
 			set_row(pos.y)
 		else:
-			selection.set_start(round_to_column(pos,false))
-			selection.set_end(round_to_column(pos,true))
+			selection.set_start(curr_channel,curr_column,curr_row)
+			selection.set_end(curr_channel,curr_column,curr_row)
 			selection.active=false
 		return true
 	if ev.button_index==BUTTON_WHEEL_DOWN:
@@ -167,42 +150,59 @@ func process_mouse_button(ev:InputEventMouseButton)->bool:
 func process_keyboard(ev:InputEventKey)->bool:
 	if ev==null or !focused:
 		return false
+	#var fscan:int=ev.get_scancode_with_modifiers()
+	var moved:bool=false
+	var old_channel:int=curr_channel
+	var old_column:int=curr_column
+	var old_row:int=curr_row
 	if ev.scancode==GKBD.DOWN:
 		if ev.pressed:
 			advance(1)
-		return true
+		moved=true
 	if ev.scancode==GKBD.UP:
 		if ev.pressed:
 			advance(-1)
-		return true
+		moved=true
 	if ev.scancode==GKBD.FAST_UP:
 		if ev.pressed:
 			advance(-4*step)
-		return true
+		moved=true
 	if ev.scancode==GKBD.FAST_DOWN:
 		if ev.pressed:
 			advance(4*step)
-		return true
+		moved=true
 	if ev.scancode==GKBD.HOME:
 		if ev.pressed:
 			set_row(0)
-		return true
+		moved=true
 	if ev.scancode==GKBD.END:
 		if ev.pressed:
 			set_row(GLOBALS.song.pattern_length-1)
-		return true
+		moved=true
 	if ev.scancode==GKBD.RIGHT:
 		if ev.pressed:
-			if ev.shift:
+			if ev.control or ev.command:
 				set_channel(curr_channel+1)
 			else:
 				set_column(curr_column+1)
-		return true
-	if ev.pressed and ev.scancode==GKBD.LEFT:
+		moved=true
+	if ev.scancode==GKBD.LEFT:
+		if ev.pressed:
+			if ev.control or ev.command:
+				set_channel(curr_channel-1)
+			else:
+				set_column(curr_column-1)
+		moved=true
+	if moved:
 		if ev.shift:
-			set_channel(curr_channel-1)
+			if !kbd_drag:
+				selection.set_start(old_channel,old_column,old_row)
+				kbd_drag=true
+			selection.set_end(curr_channel,curr_column,curr_row)
+			selection.active=true
 		else:
-			set_column(curr_column-1)
+			kbd_drag=false
+			selection.active=false
 		return true
 	if ev.shift and ev.scancode==GKBD.DELETE:
 		if ev.pressed:
@@ -372,6 +372,7 @@ func _on_channels_changed()->void:
 		channel_col0[i]=col0
 		col0+=16+song.num_fxs[i]*6
 	update_tilemap()
+	$Selection.update()
 
 func _on_playing_pos_changed(order:int,row:int)->void:
 	if order!=curr_order:
@@ -542,3 +543,6 @@ func _on_Editor_mouse_entered():
 
 func _on_Editor_mouse_exited():
 	_on_focus_exited()
+
+func _on_Selection_ready():
+	$Selection.set_arrays(COL_WIDTH,COLS,channel_col0)

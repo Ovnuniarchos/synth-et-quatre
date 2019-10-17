@@ -1,10 +1,11 @@
 extends VBoxContainer
 
 """
-TODO:	Selection ops
-		Pattern cleanup
+TODO:	Pattern cleanup
 		Instrument cleanup
 		Waves cleanup
+		Channel count setter
+		Row count setter
 """
 
 func _ready()->void:

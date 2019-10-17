@@ -30,7 +30,7 @@ var container_size:Vector2
 var channel_col0:Array
 var focused:bool=false
 var digit_ix:int=0
-var velocity:int=128
+var dflt_velocity:int=128
 var selection:Selection=Selection.new()
 var dragging:bool=false
 var drag_start:Vector2
@@ -147,10 +147,22 @@ func process_mouse_button(ev:InputEventMouseButton)->bool:
 		return true
 	return false
 
+func collect_patterns()->Array:
+	var pats:Array=[]
+	var song:Song=GLOBALS.song
+	if selection.start_chan>selection.end_chan:
+		for i in range(selection.end_chan,selection.start_chan+1):
+			pats.append(song.get_order_pattern(curr_order,i))
+	else:
+		for i in range(selection.start_chan,selection.end_chan+1):
+			pats.append(song.get_order_pattern(curr_order,i))
+	return pats
+
 func process_keyboard(ev:InputEventKey)->bool:
 	if ev==null or !focused:
 		return false
-	#var fscan:int=ev.get_scancode_with_modifiers()
+	var fscan:int=ev.get_scancode_with_modifiers()
+	#
 	var moved:bool=false
 	var old_channel:int=curr_channel
 	var old_column:int=curr_column
@@ -204,14 +216,32 @@ func process_keyboard(ev:InputEventKey)->bool:
 			kbd_drag=false
 			selection.active=false
 		return true
-	if ev.shift and ev.scancode==GKBD.DELETE:
+	#
+	if ev.scancode==GKBD.DELETE and selection.active:
 		if ev.pressed:
-			GLOBALS.song.delete_row(curr_order,curr_channel,curr_row)
+			selection.clear(collect_patterns(),curr_order,curr_channel)
 		return true
 	if ev.scancode==GKBD.INSERT:
 		if ev.pressed:
 			GLOBALS.song.insert_row(curr_order,curr_channel,curr_row)
 		return true
+	if fscan in GKBD.COPY:
+		if ev.pressed and selection.active:
+			selection.copy(collect_patterns())
+		return true
+	if fscan in GKBD.CUT:
+		if ev.pressed and selection.active:
+			selection.cut(collect_patterns(),curr_order,curr_channel)
+		return true
+	if fscan in GKBD.PASTE:
+		if ev.pressed:
+			selection.paste(GLOBALS.song,curr_order,curr_channel,curr_row,curr_column,false)
+		return true
+	if fscan in GKBD.MIX_PASTE:
+		if ev.pressed:
+			selection.paste(GLOBALS.song,curr_order,curr_channel,curr_row,curr_column,true)
+		return true
+	#
 	if curr_column==ATTRS.LG_MODE:
 		if ev.is_action_released("ui_select"):
 			if !ev.pressed:
@@ -342,8 +372,10 @@ func put_note(semitone,octave:int,instrument,add:int=0,adv:int=step)->void:
 	var note
 	if add!=0:
 		note=song.get_note(curr_order,curr_channel,curr_row,ATTRS.NOTE)
-# warning-ignore:incompatible_ternary
-		note=clamp(note+add,0,143) if note!=null else null
+		if note!=null:
+			note=clamp(note+add,0,143)
+		else:
+			note=null
 		instrument=song.get_note(curr_order,curr_channel,curr_row,ATTRS.INSTR)
 	elif semitone==null:
 		note=null
@@ -356,10 +388,13 @@ func put_note(semitone,octave:int,instrument,add:int=0,adv:int=step)->void:
 			note=semitone+(octave*12)
 	song.set_note(curr_order,curr_channel,curr_row,ATTRS.NOTE,note)
 	song.set_note(curr_order,curr_channel,curr_row,ATTRS.INSTR,instrument)
-	song.set_note(curr_order,curr_channel,curr_row,ATTRS.VOL,velocity)
+	song.set_note(curr_order,curr_channel,curr_row,ATTRS.VOL,dflt_velocity)
 	set_note_cells(curr_row,channel_col0[curr_channel],note)
 	set_2_digits(curr_row,COLS[ATTRS.INSTR]+channel_col0[curr_channel],instrument)
-	set_2_digits(curr_row,COLS[ATTRS.VOL]+channel_col0[curr_channel],velocity)
+	if note==null:
+		set_2_digits(curr_row,COLS[ATTRS.VOL]+channel_col0[curr_channel],null)
+	else:
+		set_2_digits(curr_row,COLS[ATTRS.VOL]+channel_col0[curr_channel],dflt_velocity)
 	advance(adv)
 
 #
@@ -535,8 +570,8 @@ func _on_order_selected(order:int)->void:
 func _on_Info_step_changed(s:int)->void:
 	step=max(0.0,s)
 
-func _on_Info_velocity_changed(vel:int):
-	velocity=vel
+func _on_Info_dflt_velocity_changed(vel:int):
+	dflt_velocity=vel
 
 func _on_Editor_mouse_entered():
 	_on_focus_entered()

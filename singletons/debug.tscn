@@ -16,10 +16,10 @@ func unset_var(k:String)->void:
 	upd()
 
 func upd()->void:
-	var t:String=\"\"
+	var t:PoolStringArray=PoolStringArray()
 	for k in vars:
-		t+=\"%s:%s\\n\"%[k,vars[k]]
-	label.text=t
+		t.append(\"%s:%s\"%[k,vars[k]])
+	label.text=t.join(\"\\n\")
 	bg.rect_size.y=label.rect_size.y
 	if bg.anchor_bottom==1:
 		bg.margin_top=-label.rect_size.y

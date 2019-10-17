@@ -3,6 +3,7 @@ class_name Pattern
 
 enum LEGATO_MODE{OFF,LEGATO,STACCATO}
 enum ATTRS{LG_MODE,NOTE,INSTR,VOL,PAN,FX0,FM0,FV0,FX1,FM1,FV1,FX2,FM2,FV2,FX3,FM3,FV3}
+const MIN_FX_COL:int=ATTRS.FX0
 const MAX_ATTR:int=ATTRS.FV3
 const MIN_FX:int=0
 const MAX_FX:int=4
@@ -29,7 +30,7 @@ func is_note_empty(ix:int,num_fx:int)->bool:
 	var lgm=n[ATTRS.LG_MODE]
 	if lgm!=null and lgm!=LEGATO_MODE.OFF:
 		return false
-	for i in range(ATTRS.NOTE,ATTRS.FX0+(num_fx*2)):
+	for i in range(ATTRS.NOTE,MIN_FX_COL+(num_fx*2)):
 		if n[i]!=null:
 			return false
 	return true
@@ -59,7 +60,7 @@ func serialize(out:ChunkedFile,length:int,num_fx:int)->void:
 		var mask:int=0
 		if n[ATTRS.LG_MODE]!=null and n[ATTRS.LG_MODE]!=LEGATO_MODE.OFF:
 			mask|=1
-		for i in range(ATTRS.NOTE,ATTRS.FX0+(num_fx*3)):
+		for i in range(ATTRS.NOTE,MIN_FX_COL+(num_fx*3)):
 			if i in [ATTRS.FM0,ATTRS.FM1,ATTRS.FM2,ATTRS.FM3]:
 				if n[i]!=null and n[i]!=0:
 					mask|=1<<i

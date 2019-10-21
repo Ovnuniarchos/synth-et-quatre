@@ -23,7 +23,6 @@ func _init()->void:
 
 func set_active(act:bool)->void:
 	active=act
-	DEBUG.set_var("act",act)
 	emit_signal("selection_changed")
 
 func set_start(chan:int,col:int,row:int)->void:
@@ -36,7 +35,6 @@ func set_end(chan:int,col:int,row:int)->void:
 	end_chan=chan
 	end_col=col
 	end_row=row
-	DEBUG.set_var("r",end_row)
 	emit_signal("selection_changed")
 
 func correct_limits()->Array:

@@ -2,20 +2,24 @@ extends Tabs
 
 enum {ENABLED,SOLO,MUTE}
 
-onready var chan_but:Control=$VSC/VBC/CNT/Channels/Scroll/HB/Channel
-onready var delfx_but:Control=$VSC/VBC/CNT/Channels/Scroll/HB/DelFX
-onready var addfx_but:Control=$VSC/VBC/CNT/Channels/Scroll/HB/AddFX
-onready var sep:Control=$VSC/VBC/CNT/Channels/Scroll/HB/S
-onready var channels:HBoxContainer=$VSC/VBC/CNT/Channels/Scroll/HB
+
+onready var chan_but:Control=$VSC/CCVBC/VBC/CNT/Channels/Scroll/HB/Channel
+onready var delfx_but:Control=$VSC/CCVBC/VBC/CNT/Channels/Scroll/HB/DelFX
+onready var addfx_but:Control=$VSC/CCVBC/VBC/CNT/Channels/Scroll/HB/AddFX
+onready var sep:Control=$VSC/CCVBC/VBC/CNT/Channels/Scroll/HB/S
+onready var channels:HBoxContainer=$VSC/CCVBC/VBC/CNT/Channels/Scroll/HB
+onready var editor:PanelContainer=$VSC/CCVBC/VBC/Editor
 
 var mute_status:Array
 
 func _ready()->void:
+	$VSC.split_offset=rect_size.y*-0.25
+	$VSC/CCHSC/HSC.split_offset=rect_size.x*0.25
 	mute_status.resize(Song.MAX_CHANNELS)
 	GLOBALS.connect("song_changed",self,"_on_song_changed")
 	_on_song_changed()
-	connect("resized",$VSC/VBC/Editor,"_on_container_resized",[self])
-	$VSC/VBC/Editor._on_container_resized(self)
+	connect("resized",editor,"_on_container_resized",[self])
+	editor._on_container_resized(self)
 
 func _on_song_changed()->void:
 	for i in range(Song.MAX_CHANNELS):
@@ -52,10 +56,7 @@ func _on_editor_horizontal_scroll(offset:float)->void:
 
 func _on_goto_position(pos:int)->void:
 	if GLOBALS.curr_order==pos:
-		$VSC/VBC/Editor.update_tilemap()
-
-func _on_CNT_sort_children()->void:
-	$VSC/VBC/CNT.rect_min_size.y=$VSC/VBC/CNT/Channels.rect_size.y
+		editor.update_tilemap()
 
 func _on_DelFX_pressed(chan:int)->void:
 	GLOBALS.song.mod_fx_channel(chan,-1)

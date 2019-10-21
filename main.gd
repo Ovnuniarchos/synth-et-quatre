@@ -1,18 +1,23 @@
-extends VBoxContainer
+extends Control
 
 """
-TODO:	Pattern cleanup
+TODO:	Song title/author editor
+		Pattern cleanup
 		Instrument cleanup
 		Waves cleanup
-		Channel count setter
-		Row count setter
+		Note commands
+		Envelope commands
+		Global commands
+		Full play controls
+		Beautify file menu
+		Disk writer
 """
 
 func _ready()->void:
-	AUDIO.connect("buffer_sent",$Oscilloscope,"plot_stereo_buffer")
+	AUDIO.connect("buffer_sent",$Main/Oscilloscope,"plot_stereo_buffer")
 
 func _on_tab_changed(tab:int)->void:
-	var t:Tabs=$Tabs.get_tab_control(tab)
+	var t:Tabs=$Main/Tabs.get_tab_control(tab)
 	if t.has_method("update_ui"):
 		t.update_ui()
 

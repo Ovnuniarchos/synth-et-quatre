@@ -19,6 +19,7 @@ Slide frequency by `xx-128` cents/tick. This affects the ending note of a portam
 Slide frequency to current note by `xx` cents/tick.
 
 ##04xy
+
 Arpeggio at note, note+`x` semitones, note+`y` semitones. Each note lasts 1 tick.
 
 ## 05xx
@@ -99,58 +100,75 @@ Set tremolo to use LFO # `xx`.
 
 
 
+# Note commands
 
+Any command that triggers after a delay will not trigger if that delay is greater than song speed (ticks/s), but any other effect in the same row will be registered anyways.
 
-## XXxx
+## 20xx
+
 Trigger note off after `xx` ticks.
 
-## XXxx
+## 21xx
+
 Trigger note cut after `xx` ticks.
 
-## XXxx
+## 22xx
 
 Send key on every `xx` ticks.
 
-## XXxx
+## 23xx
 
 Send key stop+key on every `xx` ticks.
 
-## XXxx
+## 24xx
+
+Delays note by `xx` ticks.
+
+## 25xx
 
 Set waveform phase to `xx/2.56`%.
 
-## XXxx
+
+
+# Jump commands
+
+## 30xx
 
 Jump to order `xx`.
 
-## XXxx
+## 31xx
 
 Jump to next order, row `xx`.
 
-## XXxx
-
-Set LFO waveform `xx`.
-
-## XXxx
-
-Set LFO frequency to `xx`.
-
-## XXxx
-
-Set LFO duty cycle to `xx`.
-
-## XXxx
-
-Set LFO phase to `xx/256`%.
-
-## XXxx
-
-Delays not by `xx` ticks. If `xx` is greater than song speed, the note will not play (but any effect will be registered).
-
-## XXxx
+## 32xx
 
 Delay playback by `xx` ticks.
 
-## XXxx
+
+
+
+# Global commands
+
+## 40xx
+
+Set LFO waveform `xx`.
+
+## 41xx
+
+Set LFO frequency to `xx`.
+
+## 42xx
+
+Set LFO duty cycle to `xx`.
+
+## 43xx
+
+Set LFO phase to `xx/256`%.
+
+## 44xx
 
 Set song speed to `xx` ticks/row.
+
+## 45xx
+
+Set song speed to `xx` ticks/second.

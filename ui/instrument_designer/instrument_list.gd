@@ -76,7 +76,6 @@ func _on_Copy_pressed()->void:
 func _on_item_selected(index:int)->void:
 	var inst:Instrument=GLOBALS.song.get_instrument(index)
 	GLOBALS.curr_instrument=-1 if inst==null else index
-	DEBUG.set("CInst",GLOBALS.curr_instrument)
 	set_buttons()
 	emit_signal("instrument_selected",GLOBALS.curr_instrument)
 

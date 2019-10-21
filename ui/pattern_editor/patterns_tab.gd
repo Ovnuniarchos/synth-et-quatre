@@ -24,16 +24,13 @@ func _ready()->void:
 func _on_song_changed()->void:
 	for i in range(Song.MAX_CHANNELS):
 		mute_status[i]=ENABLED
-	GLOBALS.song.connect("channels_changed",self,"_on_channels_changed",[true])
-	_on_channels_changed(false)
+	GLOBALS.song.connect("channels_changed",self,"_on_channels_changed")
+	_on_channels_changed()
 
-func _on_channels_changed(delete:bool)->void:
+func _on_channels_changed()->void:
 	var song:Song=GLOBALS.song
 	for chl in channels.get_children():
-		if delete:
-			chl.queue_free()
-		else:
-			channels.remove_child(chl)
+		channels.remove_child(chl)
 	for i in range(0,song.num_channels):
 		var nb:Button=delfx_but.duplicate()
 		nb.connect("pressed",self,"_on_DelFX_pressed",[i])

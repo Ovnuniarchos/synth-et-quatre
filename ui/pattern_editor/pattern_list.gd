@@ -14,6 +14,7 @@ func _ready()->void:
 
 func _on_song_changed()->void:
 	GLOBALS.song.connect("order_changed",self,"_on_order_changed")
+	GLOBALS.song.connect("channels_changed",self,"update_list")
 	update_list()
 
 func update_list(from:int=0,to:int=-1)->void:

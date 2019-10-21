@@ -2,4 +2,5 @@
 .sconsign.dblite
 *.os
 *.pdf
+/fmsynth/bin
 

@@ -10,7 +10,7 @@ TODO:	Song title/author editor
 		Global commands
 		Full play controls
 		Beautify file menu
-		Disk writer
+		Disk writer+WAV format saver
 """
 
 func _ready()->void:

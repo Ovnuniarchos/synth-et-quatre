@@ -55,7 +55,7 @@ func _init(max_channels:int=MAX_CHANNELS,pat_length:int=DFL_PAT_LENGTH,fx_length
 	orders=[[]]
 	orders[0].resize(num_channels)
 	num_fxs.resize(num_channels)
-	for i in range(0,num_channels):
+	for i in range(num_channels):
 		patterns[i]=[Pattern.new(MAX_PAT_LENGTH)]
 		orders[0][i]=0
 		num_fxs[i]=nfx
@@ -206,10 +206,10 @@ func add_order(copy_from:int=-1)->void:
 	var no:Array=[]
 	no.resize(num_channels)
 	if copy_from<0:
-		for i in range(0,num_channels):
+		for i in range(num_channels):
 			no[i]=0
 	else:
-		for i in range(0,num_channels):
+		for i in range(num_channels):
 			no[i]=orders[copy_from][i]
 	orders.append(no)
 	emit_signal("order_changed",orders.size()-1,-1)
@@ -268,8 +268,8 @@ func serialize(out:ChunkedFile)->void:
 	out.start_chunk(CHUNK_ORDERS)
 	out.store_16(orders.size())
 	for ordr in orders:
-		for chn in ordr:
-			out.store_8(chn)
+		for chn in range(num_channels):
+			out.store_8(ordr[chn])
 	out.end_chunk()
 	# Patterns
 	out.start_chunk(CHUNK_PATTERNS)
@@ -314,7 +314,7 @@ func deserialize(inf:ChunkedFile)->Song:
 				process_pattern_list(inf,song)
 			_:
 				print("Unrecognized chunk [%s]"%[hdr[ChunkedFile.CHUNK_ID]])
-				inf.seek(hdr[ChunkedFile.CHUNK_NEXT])
+		inf.seek(hdr[ChunkedFile.CHUNK_NEXT])
 	if !mandatory_CHAL:
 		return null
 	return song
@@ -322,10 +322,10 @@ func deserialize(inf:ChunkedFile)->Song:
 func process_pattern_list(inf:ChunkedFile,song:Song)->void:
 	var pat_l:Array=[]
 	pat_l.resize(song.num_channels)
-	for i in range(0,song.num_channels):
+	for i in range(song.num_channels):
 		pat_l[i]=[]
 		pat_l[i].resize(inf.get_16())
-		for j in range(0,pat_l[i].size()):
+		for j in range(pat_l[i].size()):
 			var n:Pattern=Pattern.new(MAX_PAT_LENGTH)
 			n.deserialize(inf,n,song.pattern_length)
 			pat_l[i][j]=n
@@ -334,10 +334,10 @@ func process_pattern_list(inf:ChunkedFile,song:Song)->void:
 func process_order_list(inf:ChunkedFile,song:Song)->void:
 	var ord_l:Array=[]
 	ord_l.resize(inf.get_16())
-	for i in range(0,ord_l.size()):
+	for i in range(ord_l.size()):
 		ord_l[i]=[]
 		ord_l[i].resize(song.num_channels)
-		for j in range(0,song.num_channels):
+		for j in range(song.num_channels):
 			ord_l[i][j]=inf.get_8()
 	song.orders=ord_l
 
@@ -349,7 +349,7 @@ func process_instrument_list(inf:ChunkedFile,song:Song)->void:
 		song.lfo_waves[i]=inf.get_8()
 		song.lfo_duty_cycles[i]=inf.get_8()
 	inst_l.resize(inf.get_16())
-	for i in range(0,inst_l.size()):
+	for i in range(inst_l.size()):
 		hdr=inf.get_chunk_header()
 		match hdr[ChunkedFile.CHUNK_ID]:
 			FmInstrument.CHUNK_ID:
@@ -364,7 +364,7 @@ func process_instrument_list(inf:ChunkedFile,song:Song)->void:
 		return
 	var wav_l:Array=[]
 	wav_l.resize(inf.get_16())
-	for i in range(0,wav_l.size()):
+	for i in range(wav_l.size()):
 		hdr=inf.get_chunk_header()
 		match hdr[ChunkedFile.CHUNK_ID]:
 			SynthWave.CHUNK_ID:
@@ -383,7 +383,7 @@ func process_channel_list(inf:ChunkedFile,song:Song)->void:
 	song.patterns.resize(nc)
 	song.orders[0].resize(nc)
 	song.num_fxs.resize(nc)
-	for i in range(0,nc):
+	for i in range(nc):
 		inf.get_ascii(4) # Unused
 		var nfx:int=inf.get_8()
 		patterns[i]=[]

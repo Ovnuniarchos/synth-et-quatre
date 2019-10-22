@@ -152,6 +152,12 @@ func get_note(order:int,channel:int,row:int,attr:int)->int:
 
 #
 
+func set_title(t:String)->void:
+	title=t
+
+func set_author(t:String)->void:
+	author=t
+
 func set_num_channels(n:int)->void:
 	num_channels=clamp(n,MIN_CHANNELS,MAX_CHANNELS)
 	emit_signal("channels_changed")
@@ -296,6 +302,7 @@ func deserialize(inf:ChunkedFile)->Song:
 	song.ticks_row=inf.get_16()
 	song.title=inf.get_pascal_string()
 	song.author=inf.get_pascal_string()
+	inf.skip_chunk(hdr)
 	# Chunks
 	var mandatory_CHAL:bool=false
 	while true:
@@ -314,7 +321,7 @@ func deserialize(inf:ChunkedFile)->Song:
 				process_pattern_list(inf,song)
 			_:
 				print("Unrecognized chunk [%s]"%[hdr[ChunkedFile.CHUNK_ID]])
-		inf.seek(hdr[ChunkedFile.CHUNK_NEXT])
+		inf.skip_chunk(hdr)
 	if !mandatory_CHAL:
 		return null
 	return song
@@ -358,7 +365,7 @@ func process_instrument_list(inf:ChunkedFile,song:Song)->void:
 				inst_l[i]=n
 			_:
 				print("Unrecognized chunk [%s]"%[hdr[ChunkedFile.CHUNK_ID]])
-				inf.seek(hdr[ChunkedFile.CHUNK_NEXT])
+		inf.skip_chunk(hdr)
 	hdr=inf.get_chunk_header()
 	if hdr[ChunkedFile.CHUNK_ID]!=CHUNK_WAVES:
 		return
@@ -373,7 +380,7 @@ func process_instrument_list(inf:ChunkedFile,song:Song)->void:
 				wav_l[i]=n
 			_:
 				print("Unrecognized chunk [%s]"%[hdr[ChunkedFile.CHUNK_ID]])
-				inf.seek(hdr[ChunkedFile.CHUNK_NEXT])
+		inf.skip_chunk(hdr)
 	song.instrument_list=inst_l
 	song.wave_list=wav_l
 

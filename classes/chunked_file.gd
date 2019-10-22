@@ -17,6 +17,10 @@ func end_chunk()->void:
 	store_64(pos)
 	seek(pos)
 
+func skip_chunk(d:Dictionary)->void:
+	if d.has(CHUNK_NEXT) and typeof(d[CHUNK_NEXT]) in [TYPE_INT,TYPE_REAL]:
+		seek(d[CHUNK_NEXT])
+
 func get_ascii(length:int)->String:
 	return get_buffer(length).get_string_from_ascii()
 

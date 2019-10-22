@@ -11,11 +11,37 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="GC" type="GridContainer" parent="."]
+[node name="VBC" type="VBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 173.0
-margin_bottom = 199.0
+margin_bottom = 291.0
+
+[node name="LabelTitle" type="Label" parent="VBC"]
+margin_right = 166.0
+margin_bottom = 14.0
+text = "Title"
+
+[node name="Title" type="LineEdit" parent="VBC"]
+margin_top = 18.0
+margin_right = 166.0
+margin_bottom = 42.0
+
+[node name="LabelAuthor" type="Label" parent="VBC"]
+margin_top = 46.0
+margin_right = 166.0
+margin_bottom = 60.0
+text = "Author"
+
+[node name="Author" type="LineEdit" parent="VBC"]
+margin_top = 64.0
+margin_right = 166.0
+margin_bottom = 88.0
+
+[node name="GC" type="GridContainer" parent="VBC"]
+margin_top = 92.0
+margin_right = 166.0
+margin_bottom = 284.0
 rect_clip_content = true
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -25,13 +51,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LabelOctave" type="Label" parent="GC"]
+[node name="LabelOctave" type="Label" parent="VBC/GC"]
 margin_top = 5.0
 margin_right = 84.0
 margin_bottom = 19.0
 text = "Octave"
 
-[node name="Octave" type="SpinBox" parent="GC"]
+[node name="Octave" type="SpinBox" parent="VBC/GC"]
 margin_left = 92.0
 margin_right = 166.0
 margin_bottom = 24.0
@@ -39,13 +65,13 @@ min_value = -1.0
 max_value = 9.0
 rounded = true
 
-[node name="LabelTicksSec" type="Label" parent="GC"]
+[node name="LabelTicksSec" type="Label" parent="VBC/GC"]
 margin_top = 33.0
 margin_right = 84.0
 margin_bottom = 47.0
 text = "Ticks/s"
 
-[node name="TicksSec" type="SpinBox" parent="GC"]
+[node name="TicksSec" type="SpinBox" parent="VBC/GC"]
 margin_left = 92.0
 margin_top = 28.0
 margin_right = 166.0
@@ -55,13 +81,13 @@ max_value = 256.0
 value = 1.0
 rounded = true
 
-[node name="LabelTicksRow" type="Label" parent="GC"]
+[node name="LabelTicksRow" type="Label" parent="VBC/GC"]
 margin_top = 61.0
 margin_right = 84.0
 margin_bottom = 75.0
 text = "Ticks/row"
 
-[node name="TicksRow" type="SpinBox" parent="GC"]
+[node name="TicksRow" type="SpinBox" parent="VBC/GC"]
 margin_left = 92.0
 margin_top = 56.0
 margin_right = 166.0
@@ -71,13 +97,13 @@ max_value = 256.0
 value = 1.0
 rounded = true
 
-[node name="LabelStep" type="Label" parent="GC"]
+[node name="LabelStep" type="Label" parent="VBC/GC"]
 margin_top = 89.0
 margin_right = 84.0
 margin_bottom = 103.0
 text = "Step"
 
-[node name="Step" type="SpinBox" parent="GC"]
+[node name="Step" type="SpinBox" parent="VBC/GC"]
 margin_left = 92.0
 margin_top = 84.0
 margin_right = 166.0
@@ -86,13 +112,13 @@ max_value = 256.0
 value = 1.0
 rounded = true
 
-[node name="LabelVelocity" type="Label" parent="GC"]
+[node name="LabelVelocity" type="Label" parent="VBC/GC"]
 margin_top = 117.0
 margin_right = 84.0
 margin_bottom = 131.0
 text = "Velocity"
 
-[node name="Velocity" type="SpinBox" parent="GC"]
+[node name="Velocity" type="SpinBox" parent="VBC/GC"]
 margin_left = 92.0
 margin_top = 112.0
 margin_right = 166.0
@@ -101,13 +127,13 @@ max_value = 255.0
 value = 128.0
 rounded = true
 
-[node name="LabelRowsPat" type="Label" parent="GC"]
+[node name="LabelRowsPat" type="Label" parent="VBC/GC"]
 margin_top = 145.0
 margin_right = 84.0
 margin_bottom = 159.0
 text = "Rows/pattern"
 
-[node name="RowsPat" type="SpinBox" parent="GC"]
+[node name="RowsPat" type="SpinBox" parent="VBC/GC"]
 margin_left = 92.0
 margin_top = 140.0
 margin_right = 166.0
@@ -117,13 +143,13 @@ max_value = 128.0
 value = 64.0
 rounded = true
 
-[node name="LabelChannels" type="Label" parent="GC"]
+[node name="LabelChannels" type="Label" parent="VBC/GC"]
 margin_top = 173.0
 margin_right = 84.0
 margin_bottom = 187.0
 text = "Channels"
 
-[node name="Channels" type="SpinBox" parent="GC"]
+[node name="Channels" type="SpinBox" parent="VBC/GC"]
 margin_left = 92.0
 margin_top = 168.0
 margin_right = 166.0
@@ -132,10 +158,12 @@ min_value = 4.0
 max_value = 32.0
 value = 32.0
 rounded = true
-[connection signal="value_changed" from="GC/Octave" to="." method="_on_Octave_value_changed"]
-[connection signal="value_changed" from="GC/TicksSec" to="." method="_on_TicksSec_value_changed"]
-[connection signal="value_changed" from="GC/TicksRow" to="." method="_on_TicksRow_value_changed"]
-[connection signal="value_changed" from="GC/Step" to="." method="_on_Step_value_changed"]
-[connection signal="value_changed" from="GC/Velocity" to="." method="_on_Velocity_value_changed"]
-[connection signal="value_changed" from="GC/RowsPat" to="." method="_on_RowsPat_value_changed"]
-[connection signal="value_changed" from="GC/Channels" to="." method="_on_Channels_value_changed"]
+[connection signal="text_entered" from="VBC/Title" to="." method="_on_Title_text_entered"]
+[connection signal="text_entered" from="VBC/Author" to="." method="_on_Author_text_entered"]
+[connection signal="value_changed" from="VBC/GC/Octave" to="." method="_on_Octave_value_changed"]
+[connection signal="value_changed" from="VBC/GC/TicksSec" to="." method="_on_TicksSec_value_changed"]
+[connection signal="value_changed" from="VBC/GC/TicksRow" to="." method="_on_TicksRow_value_changed"]
+[connection signal="value_changed" from="VBC/GC/Step" to="." method="_on_Step_value_changed"]
+[connection signal="value_changed" from="VBC/GC/Velocity" to="." method="_on_Velocity_value_changed"]
+[connection signal="value_changed" from="VBC/GC/RowsPat" to="." method="_on_RowsPat_value_changed"]
+[connection signal="value_changed" from="VBC/GC/Channels" to="." method="_on_Channels_value_changed"]

@@ -7,22 +7,24 @@ func _ready()->void:
 	GKBD.connect("octave_changed",self,"_on_octave_changed")
 	GLOBALS.connect("song_changed",self,"_on_song_changed")
 	_on_song_changed()
-	$GC/Step.value=1
+	$VBC/GC/Step.value=1
 
 func _on_song_changed()->void:
 	set_block_signals(true)
-	$GC/Octave.value=GLOBALS.curr_octave-1
-	$GC/TicksSec.value=GLOBALS.song.ticks_second
-	$GC/TicksRow.value=GLOBALS.song.ticks_row
-	$GC/RowsPat.value=GLOBALS.song.pattern_length
-	$GC/Channels.value=GLOBALS.song.num_channels
+	$VBC/Author.text=GLOBALS.song.author
+	$VBC/Title.text=GLOBALS.song.title
+	$VBC/GC/Octave.value=GLOBALS.curr_octave-1
+	$VBC/GC/TicksSec.value=GLOBALS.song.ticks_second
+	$VBC/GC/TicksRow.value=GLOBALS.song.ticks_row
+	$VBC/GC/RowsPat.value=GLOBALS.song.pattern_length
+	$VBC/GC/Channels.value=GLOBALS.song.num_channels
 	set_block_signals(false)
 
 #
 
 # warning-ignore:unused_argument
 func _on_octave_changed(oct:int)->void:
-	var oc:SpinBox=$GC/Octave
+	var oc:SpinBox=$VBC/GC/Octave
 	oc.set_block_signals(true)
 	oc.value=GLOBALS.curr_octave-1
 	oc.set_block_signals(false)
@@ -47,3 +49,9 @@ func _on_RowsPat_value_changed(value:float)->void:
 
 func _on_Channels_value_changed(value:float)->void:
 	GLOBALS.song.set_num_channels(value)
+
+func _on_Title_text_entered(t:String)->void:
+	GLOBALS.song.set_title(t)
+
+func _on_Author_text_entered(t:String)->void:
+	GLOBALS.song.set_author(t)

@@ -1,7 +1,7 @@
 extends Control
 
 """
-TODO:	Song title/author editor
+TODO:	Instrument/waveform deletion tests
 		Pattern cleanup
 		Instrument cleanup
 		Waves cleanup

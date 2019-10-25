@@ -66,6 +66,9 @@ func duplicate()->Instrument:
 	ni.routings=routings.duplicate(true)
 	return ni
 
+func uses_wave(w:Waveform)->bool:
+	return w in waveforms
+
 #
 
 func serialize(out:ChunkedFile)->void:

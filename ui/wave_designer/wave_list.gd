@@ -47,7 +47,7 @@ func _on_Del_pressed()->void:
 			emit_signal("wave_selected",curr_wave_ix)
 			set_buttons()
 		else:
-			pass # Alert
+			pass # TODO: ALARM
 
 func _on_Copy_pressed()->void:
 	var w:Waveform=GLOBALS.song.get_wave(curr_wave_ix)
@@ -61,6 +61,8 @@ func _on_Copy_pressed()->void:
 		$Waves.select(cnt)
 		$Waves.ensure_current_is_visible()
 		emit_signal("wave_selected",cnt)
+	else:
+		pass # TODO: ALARM
 	set_buttons()
 
 func _on_Add_pressed()->void:
@@ -76,6 +78,8 @@ func _on_Add_pressed()->void:
 		$Waves.select(cnt)
 		$Waves.ensure_current_is_visible()
 		emit_signal("wave_selected",cnt)
+	else:
+		pass # TODO: ALARM
 	set_buttons()
 
 func _on_name_changed(wave:int,text:String)->void:

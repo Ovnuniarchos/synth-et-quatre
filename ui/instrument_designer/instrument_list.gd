@@ -8,10 +8,15 @@ var inst_l:ItemList
 
 func _ready()->void:
 	GLOBALS.connect("song_changed",self,"_on_song_changed")
-	update_ui()
+	_on_song_changed()
 
 func _on_song_changed()->void:
+	GLOBALS.song.connect("error",self,"_on_song_error")
 	update_ui()
+
+func _on_song_error(message:String)->void:
+	ALERT.alert(message)
+	pass
 
 func update_ui()->void:
 	inst_l=$Instruments
@@ -56,8 +61,6 @@ func _on_Del_pressed()->void:
 			inst_l.ensure_current_is_visible()
 			emit_signal("instrument_selected",GLOBALS.curr_instrument)
 			set_buttons()
-		else:
-			pass # Alert
 
 func _on_Copy_pressed()->void:
 	var i:Instrument=GLOBALS.song.get_instrument(GLOBALS.curr_instrument)

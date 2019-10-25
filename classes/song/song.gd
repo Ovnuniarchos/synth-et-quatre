@@ -5,6 +5,8 @@ signal wave_list_changed
 signal instrument_list_changed
 signal channels_changed
 signal order_changed(order_ix,channel_ix)
+signal error(message)
+
 
 const WAVE=FmInstrument.WAVE
 const MIN_CHANNELS:int=1
@@ -25,12 +27,12 @@ const CHANNEL_FM4:String="CFM4"
 const CHUNK_INSTRUMENTS:String="INSL"
 const CHUNK_WAVES:String="WAVL"
 const CHUNK_ORDERS:String="ORDL"
-const CHUNK_PATTERNS:String="PATL"
+const CHUNK_pattern_list:String="PATL"
 
 
 var title:String="Untitled"
 var author:String=""
-var patterns:Array # [channel,order]
+var pattern_list:Array # [channel,order]
 var orders:Array # [row,channel]
 var wave_list:Array
 var instrument_list:Array
@@ -50,13 +52,13 @@ func _init(max_channels:int=MAX_CHANNELS,pat_length:int=DFL_PAT_LENGTH,fx_length
 	ticks_second=max(tks_sec,1.0)
 	ticks_row=max(tks_row,1.0)
 	var nfx:int=clamp(fx_length,MIN_FX_LENGTH,MAX_FX_LENGTH)
-	patterns=[]
-	patterns.resize(num_channels)
+	pattern_list=[]
+	pattern_list.resize(num_channels)
 	orders=[[]]
 	orders[0].resize(num_channels)
 	num_fxs.resize(num_channels)
 	for i in range(num_channels):
-		patterns[i]=[Pattern.new(MAX_PAT_LENGTH)]
+		pattern_list[i]=[Pattern.new(MAX_PAT_LENGTH)]
 		orders[0][i]=0
 		num_fxs[i]=nfx
 	instrument_list.append(FmInstrument.new())
@@ -79,22 +81,28 @@ func delete_wave(wave:Waveform)->void:
 		emit_signal("wave_list_changed")
 
 func can_add_wave()->bool:
-	return wave_list.size()<MAX_WAVES
+	if wave_list.size()<MAX_WAVES:
+		return true
+	emit_signal("error","Limit of %d waveforms reached."%[MAX_WAVES])
+	return false
 
 func can_delete_wave(wave:Waveform)->bool:
 	var wave_ix:int=wave_list.find(wave)
 	if wave_ix==-1:
+		emit_signal("error","Wave not found.")
 		return false
-	for w in lfo_waves:
-		if (w-MIN_CUSTOM_WAVE)==wave_ix:
+	for lw in range(lfo_waves.size()):
+		if (lfo_waves[lw]-MIN_CUSTOM_WAVE)==wave_ix:
+			emit_signal("error","Wave is in use by LFO %d."%[lw])
 			return false
-	for ins in instrument_list:
-		if !(ins is FmInstrument):
+	for ins in range(instrument_list.size()):
+		if !(instrument_list[ins] is FmInstrument):
 			continue
-		for w in ins.waveforms:
-			if (w-MIN_CUSTOM_WAVE)==wave_ix:
+		for w in range(instrument_list[ins].waveforms.size()):
+			if (instrument_list[ins].waveforms[w]-MIN_CUSTOM_WAVE)==wave_ix:
+				emit_signal("error","Wave is in use by instrument %d operator %d."%[ins,w])
 				return false
-	# TODO: Scan patterns
+	# TODO: Scan pattern_list
 	return true
 
 func get_wave(index:int)->Waveform:
@@ -127,11 +135,25 @@ func delete_instrument(instr:Instrument)->void:
 		emit_signal("instrument_list_changed")
 
 func can_add_instrument()->bool:
-	return instrument_list.size()<MAX_INSTRUMENTS
+	if instrument_list.size()<MAX_INSTRUMENTS:
+		return true
+	emit_signal("error","Limit of %d instruments reached."%[MAX_INSTRUMENTS])
+	return false
 
 func can_delete_instrument(instr:Instrument)->bool:
-	if instrument_list.size()==1 or instrument_list.find(instr)==-1:
+	if instrument_list.size()==1:
+		emit_signal("error","Need at least one instrument.")
 		return false
+	var iix:int=instrument_list.find(instr)
+	if iix==-1:
+		emit_signal("error","Instrument not found.")
+		return false
+	for chan in range(pattern_list.size()):
+		for pat in range(pattern_list[chan].size()):
+			for note in range(pattern_list[chan][pat].notes.size()):
+				if pattern_list[chan][pat].notes[note][Pattern.ATTRS.INSTR]==iix:
+					emit_signal("error","Instrument is in use on pattern %d of channel %d, row %d."%[pat,chan,note])
+					return false
 	return true
 
 func get_instrument(index:int)->Instrument:
@@ -145,10 +167,10 @@ func find_instrument(inst:Instrument)->int:
 #
 
 func set_note(order:int,channel:int,row:int,attr:int,value)->void:
-	patterns[channel][orders[order][channel]].notes[row][attr]=value
+	pattern_list[channel][orders[order][channel]].notes[row][attr]=value
 
 func get_note(order:int,channel:int,row:int,attr:int)->int:
-	return patterns[channel][orders[order][channel]].notes[row][attr]
+	return pattern_list[channel][orders[order][channel]].notes[row][attr]
 
 #
 
@@ -185,24 +207,24 @@ func mod_fx_channel(chan:int,add:int)->void:
 #
 
 func get_order_pattern(order:int,channel:int)->Pattern:
-	return patterns[channel][orders[order][channel]]
+	return pattern_list[channel][orders[order][channel]]
 	
 func get_pattern(index:int,channel:int)->Pattern:
-	return patterns[channel][index]
+	return pattern_list[channel][index]
 
 func set_pattern(order:int,channel:int,pattern:int)->void:
-	if pattern>-1 and pattern<patterns[channel].size():
+	if pattern>-1 and pattern<pattern_list[channel].size():
 		orders[order][channel]=pattern
 		emit_signal("order_changed",order,channel)
 
 func add_pattern(channel:int,copy_from:int=-1)->int:
-	if patterns[channel].size()>=255:
+	if pattern_list[channel].size()>=255:
 		return 255
 	if copy_from==-1:
-		patterns[channel].append(Pattern.new(MAX_PAT_LENGTH))
+		pattern_list[channel].append(Pattern.new(MAX_PAT_LENGTH))
 	else:
-		patterns[channel].append(patterns[channel][copy_from].duplicate())
-	return patterns[channel].size()-1
+		pattern_list[channel].append(pattern_list[channel][copy_from].duplicate())
+	return pattern_list[channel].size()-1
 
 #
 
@@ -227,11 +249,11 @@ func delete_order(order:int)->void:
 	emit_signal("order_changed",order,-1)
 
 func delete_row(order:int,channel:int,row:int)->void:
-	patterns[channel][orders[order][channel]].remove_row(row)
+	pattern_list[channel][orders[order][channel]].remove_row(row)
 	emit_signal("order_changed",order,channel)
 
 func insert_row(order:int,channel:int,row:int)->void:
-	patterns[channel][orders[order][channel]].insert_row(row)
+	pattern_list[channel][orders[order][channel]].insert_row(row)
 	emit_signal("order_changed",order,channel)
 
 #
@@ -277,10 +299,10 @@ func serialize(out:ChunkedFile)->void:
 		for chn in range(num_channels):
 			out.store_8(ordr[chn])
 	out.end_chunk()
-	# Patterns
-	out.start_chunk(CHUNK_PATTERNS)
+	# pattern_list
+	out.start_chunk(CHUNK_pattern_list)
 	for i in range(num_channels):
-		var chn:Pattern=patterns[i]
+		var chn:Pattern=pattern_list[i]
 		out.store_16(chn.size())
 		for pat in chn:
 			pat.serialize(out,pattern_length,num_fxs[i])
@@ -317,7 +339,7 @@ func deserialize(inf:ChunkedFile)->Song:
 				process_instrument_list(inf,song)
 			CHUNK_ORDERS:
 				process_order_list(inf,song)
-			CHUNK_PATTERNS:
+			CHUNK_pattern_list:
 				process_pattern_list(inf,song)
 			_:
 				print("Unrecognized chunk [%s]"%[hdr[ChunkedFile.CHUNK_ID]])
@@ -336,7 +358,7 @@ func process_pattern_list(inf:ChunkedFile,song:Song)->void:
 			var n:Pattern=Pattern.new(MAX_PAT_LENGTH)
 			n.deserialize(inf,n,song.pattern_length)
 			pat_l[i][j]=n
-	song.patterns=pat_l
+	song.pattern_list=pat_l
 
 func process_order_list(inf:ChunkedFile,song:Song)->void:
 	var ord_l:Array=[]
@@ -387,12 +409,12 @@ func process_instrument_list(inf:ChunkedFile,song:Song)->void:
 func process_channel_list(inf:ChunkedFile,song:Song)->void:
 	var nc:int=inf.get_16()
 	song.num_channels=nc
-	song.patterns.resize(nc)
+	song.pattern_list.resize(nc)
 	song.orders[0].resize(nc)
 	song.num_fxs.resize(nc)
 	for i in range(nc):
 		inf.get_ascii(4) # Unused
 		var nfx:int=inf.get_8()
-		patterns[i]=[]
+		pattern_list[i]=[]
 		orders[0][i]=0
 		num_fxs[i]=nfx

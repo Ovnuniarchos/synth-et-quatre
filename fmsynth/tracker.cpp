@@ -177,9 +177,9 @@ PoolVector2Array SynthTracker::generate(int size,float volume,Array cmds){
 					cmd_ptr+=3;
 					break;
 				case CMD_PM:
-					TRACE("PMF %02x %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]),VAR2INT(cmds[cmd_ptr+3]));
-					synth.set_pm_factor(VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]),VAR2INT(cmds[cmd_ptr+3]));
-					cmd_ptr+=4;
+					TRACE("PMF %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
+					synth.set_pm_factor(VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1])>>4,VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
+					cmd_ptr+=3;
 					break;
 				case CMD_OUT:
 					TRACE("OUT %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));

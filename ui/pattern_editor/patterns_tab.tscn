@@ -72,7 +72,7 @@ script = ExtResource( 6 )
 
 [node name="Info" parent="VSC/CCHSC/HSC/CCInfo" instance=ExtResource( 3 )]
 margin_right = 506.0
-margin_bottom = 294.0
+margin_bottom = 298.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 

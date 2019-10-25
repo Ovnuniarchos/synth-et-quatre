@@ -36,8 +36,8 @@
 : Set release rate in voice `vv`, with operator mask `oo`, to `nn`.
 12 vv oo nn
 : Set repeat point voice `vv`, with operator mask `oo`, to `nn`. Modes are [0,attack,decay,sustain.release]
-13 vv ff tt nn
-: Set PM modulation factor for voice `vv`, from operator `ff` to operator `tt`, with factor `nn*PI/127.5`.
+13 vv ft nn
+: Set PM modulation factor for voice `vv`, from operator `f` to operator `t`, with factor `nn*PI/127.5`.
 14 vv oo nn
 : Set output volume for voice `vv`, with operator mask `oo`, to volume `nn/255`%.
 15 vv nn

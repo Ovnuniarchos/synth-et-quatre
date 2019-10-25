@@ -5,7 +5,7 @@ enum{
 	CMD_FREQ=0x01, CMD_KEYON, CMD_KEYON_LEGATO, CMD_KEYOFF, CMD_STOP, CMD_ENABLE,
 	CMD_MULT=0x07, CMD_DIV, CMD_DET, CMD_DUC,
 	CMD_WAV=0x0B,
-	CMD_VEL=0x0C, CMD_AR, CMD_DR, CMD_SL,	CMD_SR, CMD_RR, CMD_RM,
+	CMD_VEL=0x0C, CMD_AR, CMD_DR, CMD_SL, CMD_SR, CMD_RR, CMD_RM,
 	CMD_PM=0x13, CMD_OUT,
 	CMD_PAN=0x15,
 	CMD_PHI=0x16,
@@ -371,10 +371,9 @@ func commit_instrument(channel:int,cmds:Array,ptr:int)->int:
 		for j in range(4):
 			cmds[ptr]=CMD_PM
 			cmds[ptr+1]=channel
-			cmds[ptr+2]=i
-			cmds[ptr+3]=j
-			cmds[ptr+4]=routings[i][j]
-			ptr+=5
+			cmds[ptr+2]=(i<<4)|j
+			cmds[ptr+3]=routings[i][j]
+			ptr+=4
 		cmds[ptr]=CMD_OUT
 		cmds[ptr+1]=channel
 		cmds[ptr+2]=opm

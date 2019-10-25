@@ -128,19 +128,39 @@ Delays note by `xx` ticks.
 
 Set waveform phase to `xx/2.56`%.
 
+## 26xx
+
+Set waveform #`xx`.
+
+## 27xx
+
+Set waveform duty cycle to `xx/2.56`%.
+
+
+
+# Synth commands
+
+## 3yxx
+
+Set modulation intensity from operator `y&3` to operator `y/4`, to ±`π*xx/127.5`. This command ignores the operator mask.
+
+## 40xx
+
+Set operator `y` output to `xx/2.55`%.
+
 
 
 # Jump commands
 
-## 30xx
+## 50xx
 
 Jump to order `xx`.
 
-## 31xx
+## 51xx
 
 Jump to next order, row `xx`.
 
-## 32xx
+## 52xx
 
 Delay playback by `xx` ticks.
 
@@ -149,26 +169,26 @@ Delay playback by `xx` ticks.
 
 # Global commands
 
-## 40xx
+## 60xx
 
 Set LFO waveform `xx`.
 
-## 41xx
+## 61xx
 
 Set LFO frequency to `xx`.
 
-## 42xx
+## 62xx
 
-Set LFO duty cycle to `xx`.
+Set LFO duty cycle to `xx/2.56`%.
 
-## 43xx
+## 63xx
 
-Set LFO phase to `xx/256`%.
+Set LFO phase to `xx/2.56`%.
 
-## 44xx
+## 64xx
 
 Set song speed to `xx` ticks/row.
 
-## 45xx
+## 65xx
 
 Set song speed to `xx` ticks/second.

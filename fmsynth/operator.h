@@ -6,7 +6,7 @@
 class Operator{
 private:
 	const int EG_DIVIDER=32;
-	const FixedPoint ENVELOPE_RATE=FP_ONE*EG_DIVIDER;
+	const FixedPoint ENVELOPE_RATE=FP_ONE*EG_DIVIDER/8;
 
 	enum ADSR{OFF,RELEASE,SUSTAIN,DECAY,ATTACK};
 

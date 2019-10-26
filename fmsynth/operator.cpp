@@ -4,8 +4,8 @@
 
 FixedPoint Operator::get_rate(int rate,int &var){
 	var=clamp(rate,0,255);
-	if (var<128) return (ENVELOPE_RATE*var)/(mix_rate*128);
-	return (ENVELOPE_RATE<<8)/(mix_rate*(256-var));
+	int var1=var+1;
+	return (ENVELOPE_RATE/mix_rate)*(var1*((var1/55.0)+1));
 };
 
 void Operator::set_mix_rate(float m){

@@ -32,6 +32,7 @@ border_color = Color( 0, 0, 0, 1 )
 corner_detail = 1
 
 [node name="Debug" type="CanvasLayer"]
+layer = 2
 script = SubResource( 1 )
 
 [node name="C" type="PanelContainer" parent="."]

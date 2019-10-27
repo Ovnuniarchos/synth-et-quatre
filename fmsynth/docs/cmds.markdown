@@ -36,27 +36,29 @@
 : Set release rate in voice `vv`, with operator mask `oo`, to `nn`.
 12 vv oo nn
 : Set repeat point voice `vv`, with operator mask `oo`, to `nn`. Modes are [0,attack,decay,sustain.release]
-13 vv ft nn
+13 vv oo nn
+: Set key scaling for voice `vv`, with operator mask `oo`, to `nn`. Values are truncated to the range `0-7`. This shortens the envelope for higher-pitched notes.
+14 vv ft nn
 : Set PM modulation factor for voice `vv`, from operator `f` to operator `t`, with factor `nn*PI/127.5`.
-14 vv oo nn
+15 vv oo nn
 : Set output volume for voice `vv`, with operator mask `oo`, to volume `nn/255`%.
-15 vv nn
+16 vv nn
 : Set pan position for voice `vv` to bits 0-5 of`nn`. 0 is left, 62-63 is right, and 31 is center. Bit 6 inverts the left channel, and bit 7 the right one. This allows for pseudo-surround effects.
-16 vv oo pp
+17 vv oo pp
 : Set waveform phase for voice `vv`, with operator mask `oo`, to `pp/256`%.
-17 vv oo nn
-: Set AM (tremolo) intensity for voice `vv`, with operator mask `oo`, to `nn/255`% amplitude.
 18 vv oo nn
+: Set AM (tremolo) intensity for voice `vv`, with operator mask `oo`, to `nn/255`% amplitude.
+19 vv oo nn
 : Set AM (tremolo) LFO for voice `vv`, with operator mask `oo`, to LFO number `nn`.
-19 vv oo hh ll
+1A vv oo hh ll
 : Set FM (vibrato) intensity for voice `vv`, with operator mask `oo`, to `hh:ll` millis.
-1A vv oo nn
+1B vv oo nn
 : Set FM (vibrato) LFO for voice `vv`, with operator mask `oo`,to LFO number `nn`.
-1B ff hh ll
+1C ff hh ll
 : Set LFO number `ff` frequency to `(hh:ll)/256` Hz.
-1C ff nn
-: Set wave `nn` for LFO number `ff`. Waves 0-3 are internal. Waves 4+ are user-defined, and must be defined before use.
 1D ff nn
+: Set wave `nn` for LFO number `ff`. Waves 0-3 are internal. Waves 4+ are user-defined, and must be defined before use.
+1E ff nn
 : Set LFO number `ff`'s duty cycle high byte to `nn`. The duty cycle is then `duty_cycle/16777216`%.
 FF
 : Ends the command list. Any unrecognized command ends the command list, but this is the only command guaranteed to end the list.

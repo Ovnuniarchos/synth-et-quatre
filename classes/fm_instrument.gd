@@ -17,6 +17,8 @@ var sustain_levels:Array=[192,192,192,192]
 
 var releases:Array=[32,32,32,32]
 
+var key_scalers:Array=[0,0,0,0]
+
 var repeats:Array=[0,0,0,0]
 
 var multipliers:Array=[0,0,0,0]
@@ -90,6 +92,7 @@ func serialize(out:ChunkedFile)->void:
 		out.store_8(am_lfo[i])
 		out.store_16(fm_intensity[i])
 		out.store_8(fm_lfo[i])
+		out.store_8(key_scalers[i])
 	for r in routings:
 		for v in r:
 			out.store_8(v)
@@ -116,6 +119,7 @@ func deserialize(inf:ChunkedFile,ins:FmInstrument)->void:
 		ins.am_lfo[i]=inf.get_8()
 		ins.fm_intensity[i]=inf.get_16()
 		ins.fm_lfo[i]=inf.get_8()
+		ins.key_scalers[i]=inf.get_8()
 	for i in range(4):
 		for j in range(5):
 			routings[i][j]=inf.get_8()

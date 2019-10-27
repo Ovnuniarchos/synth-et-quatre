@@ -76,6 +76,7 @@ public:
 	void set_sustain_rate(int op_mask,int rate);
 	void set_release_rate(int op_mask,int rate);
 	void set_repeat(int op_mask,int phase);
+	void set_ksr(int op_mask,int ksr);
 
 	void set_am_intensity(int op_mask,int intensity);
 	void set_am_lfo(int op_mask,int lfo);

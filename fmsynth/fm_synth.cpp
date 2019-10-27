@@ -102,6 +102,10 @@ void FmSynth::set_repeat(int voice,int op_mask,int phase){
 	voices[voice&31].set_repeat(op_mask,phase);
 }
 
+void FmSynth::set_ksr(int voice,int op_mask,int ksr){
+	voices[voice&31].set_ksr(op_mask,ksr);
+}
+
 
 void FmSynth::set_am_intensity(int voice,int op_mask,int intensity){
 	voices[voice&31].set_am_intensity(op_mask,intensity);

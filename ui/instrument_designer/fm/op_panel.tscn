@@ -98,7 +98,6 @@ margin_left = 550.0
 margin_right = 982.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
-selected = 0
 script = ExtResource( 4 )
 
 [node name="Sep2" type="ReferenceRect" parent="Params/Wave"]
@@ -131,16 +130,15 @@ custom_constants/hseparation = 2
 columns = 7
 
 [node name="ARLabel" type="Label" parent="Params/ADSR"]
-margin_top = 2.0
+margin_top = 1.0
 margin_right = 28.0
-margin_bottom = 16.0
+margin_bottom = 15.0
 text = "ATR"
 
 [node name="ARSlider" type="HSlider" parent="Params/ADSR"]
 margin_left = 30.0
-margin_top = 1.0
 margin_right = 470.0
-margin_bottom = 17.0
+margin_bottom = 16.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 max_value = 255.0
@@ -149,31 +147,30 @@ label = NodePath("../ARValue")
 
 [node name="ARValue" type="Label" parent="Params/ADSR"]
 margin_left = 472.0
-margin_top = 2.0
+margin_top = 1.0
 margin_right = 496.0
-margin_bottom = 16.0
+margin_bottom = 15.0
 size_flags_horizontal = 0
 text = "888"
 
 [node name="Sep" type="ReferenceRect" parent="Params/ADSR"]
 margin_left = 498.0
 margin_right = 514.0
-margin_bottom = 18.0
+margin_bottom = 16.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
 [node name="DRLabel" type="Label" parent="Params/ADSR"]
 margin_left = 516.0
-margin_top = 2.0
+margin_top = 1.0
 margin_right = 541.0
-margin_bottom = 16.0
+margin_bottom = 15.0
 text = "DER"
 
 [node name="DRSlider" type="HSlider" parent="Params/ADSR"]
 margin_left = 543.0
-margin_top = 1.0
 margin_right = 983.0
-margin_bottom = 17.0
+margin_bottom = 16.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 max_value = 255.0
@@ -182,23 +179,23 @@ label = NodePath("../DRValue")
 
 [node name="DRValue" type="Label" parent="Params/ADSR"]
 margin_left = 985.0
-margin_top = 2.0
+margin_top = 1.0
 margin_right = 1009.0
-margin_bottom = 16.0
+margin_bottom = 15.0
 size_flags_horizontal = 0
 text = "888"
 
 [node name="SLLabel" type="Label" parent="Params/ADSR"]
-margin_top = 24.0
+margin_top = 21.0
 margin_right = 28.0
-margin_bottom = 38.0
+margin_bottom = 35.0
 text = "SUL"
 
 [node name="SLSlider" type="HSlider" parent="Params/ADSR"]
 margin_left = 30.0
-margin_top = 23.0
+margin_top = 20.0
 margin_right = 470.0
-margin_bottom = 39.0
+margin_bottom = 36.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 max_value = 255.0
@@ -207,32 +204,32 @@ label = NodePath("../SLValue")
 
 [node name="SLValue" type="Label" parent="Params/ADSR"]
 margin_left = 472.0
-margin_top = 24.0
+margin_top = 21.0
 margin_right = 496.0
-margin_bottom = 38.0
+margin_bottom = 35.0
 size_flags_horizontal = 0
 text = "888"
 
 [node name="Sep2" type="ReferenceRect" parent="Params/ADSR"]
 margin_left = 498.0
-margin_top = 22.0
+margin_top = 20.0
 margin_right = 514.0
-margin_bottom = 40.0
+margin_bottom = 36.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
 [node name="SRLabel" type="Label" parent="Params/ADSR"]
 margin_left = 516.0
-margin_top = 24.0
+margin_top = 21.0
 margin_right = 541.0
-margin_bottom = 38.0
+margin_bottom = 35.0
 text = "SUR"
 
 [node name="SRSlider" type="HSlider" parent="Params/ADSR"]
 margin_left = 543.0
-margin_top = 23.0
+margin_top = 20.0
 margin_right = 983.0
-margin_bottom = 39.0
+margin_bottom = 36.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 max_value = 255.0
@@ -241,23 +238,23 @@ label = NodePath("../SRValue")
 
 [node name="SRValue" type="Label" parent="Params/ADSR"]
 margin_left = 985.0
-margin_top = 24.0
+margin_top = 21.0
 margin_right = 1009.0
-margin_bottom = 38.0
+margin_bottom = 35.0
 size_flags_horizontal = 0
 text = "888"
 
 [node name="RRLabel" type="Label" parent="Params/ADSR"]
-margin_top = 47.0
+margin_top = 43.0
 margin_right = 28.0
-margin_bottom = 61.0
+margin_bottom = 57.0
 text = "RER"
 
 [node name="RRSlider" type="HSlider" parent="Params/ADSR"]
 margin_left = 30.0
-margin_top = 46.0
+margin_top = 42.0
 margin_right = 470.0
-margin_bottom = 62.0
+margin_bottom = 58.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 max_value = 255.0
@@ -266,55 +263,55 @@ label = NodePath("../RRValue")
 
 [node name="RRValue" type="Label" parent="Params/ADSR"]
 margin_left = 472.0
-margin_top = 47.0
+margin_top = 43.0
 margin_right = 496.0
-margin_bottom = 61.0
+margin_bottom = 57.0
 size_flags_horizontal = 0
 text = "888"
 
 [node name="Sep3" type="ReferenceRect" parent="Params/ADSR"]
 margin_left = 498.0
-margin_top = 44.0
+margin_top = 40.0
 margin_right = 514.0
-margin_bottom = 64.0
+margin_bottom = 60.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
 [node name="RPLabel" type="Label" parent="Params/ADSR"]
 margin_left = 516.0
-margin_top = 47.0
+margin_top = 43.0
 margin_right = 541.0
-margin_bottom = 61.0
+margin_bottom = 57.0
 text = "RPT"
 
 [node name="Repeat" type="OptionButton" parent="Params/ADSR"]
 margin_left = 543.0
-margin_top = 44.0
+margin_top = 40.0
 margin_right = 983.0
-margin_bottom = 64.0
+margin_bottom = 60.0
 text = "OFF"
 items = [ "OFF", null, false, 0, null, "Attack", null, false, 4, null, "Decay", null, false, 3, null, "Sustain", null, false, 2, null, "Release", null, false, 1, null ]
 selected = 0
 
 [node name="Sep4" type="ReferenceRect" parent="Params/ADSR"]
 margin_left = 985.0
-margin_top = 44.0
+margin_top = 40.0
 margin_right = 1009.0
-margin_bottom = 64.0
+margin_bottom = 60.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
 [node name="AMSLabel" type="Label" parent="Params/ADSR"]
-margin_top = 69.0
+margin_top = 65.0
 margin_right = 28.0
-margin_bottom = 83.0
+margin_bottom = 79.0
 text = "AMS"
 
 [node name="AMSSlider" type="HSlider" parent="Params/ADSR"]
 margin_left = 30.0
-margin_top = 68.0
+margin_top = 64.0
 margin_right = 470.0
-margin_bottom = 84.0
+margin_bottom = 80.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 max_value = 255.0
@@ -323,11 +320,46 @@ label = NodePath("../AMSValue")
 
 [node name="AMSValue" type="Label" parent="Params/ADSR"]
 margin_left = 472.0
-margin_top = 69.0
+margin_top = 65.0
 margin_right = 496.0
-margin_bottom = 83.0
+margin_bottom = 79.0
 size_flags_horizontal = 0
 text = "888"
+
+[node name="Sep5" type="ReferenceRect" parent="Params/ADSR"]
+margin_left = 498.0
+margin_top = 64.0
+margin_right = 514.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 16, 0 )
+size_flags_vertical = 7
+
+[node name="KSRLabel" type="Label" parent="Params/ADSR"]
+margin_left = 516.0
+margin_top = 65.0
+margin_right = 541.0
+margin_bottom = 79.0
+text = "KSR"
+
+[node name="KSRSlider" type="HSlider" parent="Params/ADSR"]
+margin_left = 543.0
+margin_top = 64.0
+margin_right = 983.0
+margin_bottom = 80.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 7.0
+script = ExtResource( 2 )
+label = NodePath("../KSRValue")
+mask = "%1d"
+
+[node name="KSRValue" type="Label" parent="Params/ADSR"]
+margin_left = 985.0
+margin_top = 65.0
+margin_right = 993.0
+margin_bottom = 79.0
+size_flags_horizontal = 0
+text = "8"
 
 [node name="ReferenceRect3" type="ReferenceRect" parent="Params"]
 margin_top = 208.0
@@ -556,6 +588,7 @@ selected = 0
 [connection signal="value_changed" from="Params/ADSR/RRSlider" to="." method="_on_RRSlider_value_changed"]
 [connection signal="item_selected" from="Params/ADSR/Repeat" to="." method="_on_Repeat_item_selected"]
 [connection signal="value_changed" from="Params/ADSR/AMSSlider" to="." method="_on_AMSSlider_value_changed"]
+[connection signal="value_changed" from="Params/ADSR/KSRSlider" to="." method="_on_KSRSlider_value_changed"]
 [connection signal="value_changed" from="Params/Frequency/MULSlider" to="." method="_on_MULSlider_value_changed"]
 [connection signal="value_changed" from="Params/Frequency/DIVSlider" to="." method="_on_DIVSlider_value_changed"]
 [connection signal="value_changed" from="Params/Detune/DETSlider" to="." method="_on_ADDSlider_value_changed"]

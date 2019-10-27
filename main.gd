@@ -1,8 +1,7 @@
 extends Control
 
 """
-TODO:	Alarm messages
-		Waveform deletion tests
+TODO:	Waveform deletion tests
 		Pattern cleanup
 		Instrument cleanup
 		Waves cleanup

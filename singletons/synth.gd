@@ -39,6 +39,7 @@ func set_fm_instrument(channel:int,instr:FmInstrument)->void:
 		synth.set_am_lfo(channel,op_mask,instr.am_lfo[i])
 		synth.set_fm_intensity(channel,op_mask,instr.fm_intensity[i])
 		synth.set_fm_lfo(channel,op_mask,instr.fm_lfo[i])
+		synth.set_ksr(channel,op_mask,instr.key_scalers[i])
 
 func play_fm_note(channel:int,instr:FmInstrument,semi:int,legato:bool)->void:
 	var semitone:int=semi*100

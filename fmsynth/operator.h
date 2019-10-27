@@ -6,12 +6,13 @@
 class Operator{
 private:
 	const int EG_DIVIDER=32;
-	const FixedPoint ENVELOPE_RATE=FP_ONE*EG_DIVIDER/8;
+	const FixedPoint ENVELOPE_RATE_1S=FP_ONE*EG_DIVIDER*256;
 
 	enum ADSR{OFF,RELEASE,SUSTAIN,DECAY,ATTACK};
 
 	float mix_rate=DEFAULT_MIX_RATE;
 
+	int key_cents=0;
 	float frequency=0.0;
 	float freq_mul=1.0;
 	float freq_div=1.0;
@@ -36,6 +37,7 @@ private:
 	int release_rate=64;
 	FixedPoint eg_rr=0L;
 	ADSR eg_repeat=OFF;
+	int key_scale=0;
 
 	FixedPoint am_floor=FP_ONE;
 	FixedPoint am_level=0L;
@@ -112,7 +114,7 @@ public:
 	}
 
 	void set_mix_rate(float mix_rate);
-	void set_frequency(float frequency);
+	void set_frequency(int cents,float frequency);
 	void set_freq_mul(int multiplier);
 	void set_freq_div(int divider);
 	void set_detune(float detune);
@@ -127,6 +129,7 @@ public:
 	void set_sustain_rate(int rate);
 	void set_release_rate(int rate);
 	void set_repeat(int phase);
+	void set_ksr(int ksr);
 
 	void set_am_intensity(int intensity);
 	void set_fm_intensity(int millis);

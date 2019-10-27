@@ -5,12 +5,12 @@ enum{
 	CMD_FREQ=0x01, CMD_KEYON, CMD_KEYON_LEGATO, CMD_KEYOFF, CMD_STOP, CMD_ENABLE,
 	CMD_MULT=0x07, CMD_DIV, CMD_DET, CMD_DUC,
 	CMD_WAV=0x0B,
-	CMD_VEL=0x0C, CMD_AR, CMD_DR, CMD_SL, CMD_SR, CMD_RR, CMD_RM,
-	CMD_PM=0x13, CMD_OUT,
-	CMD_PAN=0x15,
-	CMD_PHI=0x16,
-	CMD_AMS=0x17, CMD_AML, CMD_FMS, CMD_FML,
-	CMD_LFO_FREQ=0x1B, CMD_LFO_WAVE, CMD_LFO_DUC
+	CMD_VEL=0x0C, CMD_AR, CMD_DR, CMD_SL, CMD_SR, CMD_RR, CMD_RM, CMD_KSR,
+	CMD_PM=0x14, CMD_OUT,
+	CMD_PAN=0x16,
+	CMD_PHI=0x17,
+	CMD_AMS=0x18, CMD_AML, CMD_FMS, CMD_FML,
+	CMD_LFO_FREQ=0x1C, CMD_LFO_WAVE, CMD_LFO_DUC
 }
 enum{
 	FX_FRQ_SET,FX_FRQ_ADJ,FX_FRQ_SLIDE,FX_FRQ_PORTA,FX_ARPEGGIO,
@@ -367,6 +367,10 @@ func commit_instrument(channel:int,cmds:Array,ptr:int)->int:
 		cmds[ptr+59]=channel
 		cmds[ptr+60]=1<<i
 		cmds[ptr+61]=am_lfo[i]
+		cmds[ptr+62]=CMD_KSR
+		cmds[ptr+63]=channel
+		cmds[ptr+64]=1<<i
+		cmds[ptr+65]=key_scalers[i]
 		ptr+=62
 		for j in range(4):
 			cmds[ptr]=CMD_PM

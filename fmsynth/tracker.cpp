@@ -23,6 +23,7 @@ void SynthTracker::_register_methods(){
 	register_method("set_sustain_rate",&SynthTracker::set_sustain_rate);
 	register_method("set_release_rate",&SynthTracker::set_release_rate);
 	register_method("set_repeat",&SynthTracker::set_repeat);
+	register_method("set_ksr",&SynthTracker::set_ksr);
 
 	register_method("set_am_intensity",&SynthTracker::set_am_intensity);
 	register_method("set_am_lfo",&SynthTracker::set_am_lfo);
@@ -176,6 +177,11 @@ PoolVector2Array SynthTracker::generate(int size,float volume,Array cmds){
 					synth.set_repeat(VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
 					cmd_ptr+=3;
 					break;
+				case CMD_KSR:
+					TRACE("KSR %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
+					synth.set_ksr(VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
+					cmd_ptr+=3;
+					break;
 				case CMD_PM:
 					TRACE("PMF %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
 					synth.set_pm_factor(VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1])>>4,VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
@@ -311,6 +317,10 @@ void SynthTracker::set_release_rate(int voice,int op_mask,int rate){
 
 void SynthTracker::set_repeat(int voice,int op_mask,int phase){
 	synth.set_repeat(voice,op_mask,phase);
+}
+
+void SynthTracker::set_ksr(int voice,int op_mask,int ksr){
+	synth.set_ksr(voice,op_mask,ksr);
 }
 
 

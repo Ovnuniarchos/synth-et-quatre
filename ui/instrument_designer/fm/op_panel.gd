@@ -55,6 +55,10 @@ func _on_AmpLFO_item_selected(idx:int)->void:
 	GLOBALS.get_instrument().am_lfo[operator]=idx
 	emit_signal("instrument_changed")
 
+func _on_KSRSlider_value_changed(value:float)->void:
+	GLOBALS.get_instrument().key_scalers[operator]=int(value)
+	emit_signal("instrument_changed")
+
 func _on_FMSSlider_value_changed(value:float)->void:
 	GLOBALS.get_instrument().fm_intensity[operator]=int(value)
 	emit_signal("instrument_changed")
@@ -98,6 +102,7 @@ func set_sliders(inst:FmInstrument)->void:
 	$Params/Wave/WAVButton.select(inst.waveforms[operator])
 	$Params/ADSR/AMSSlider.value=inst.am_intensity[operator]
 	$Params/LFOs/AmpLFO.select($Params/LFOs/AmpLFO.get_item_index(inst.am_lfo[operator]))
+	$Params/ADSR/KSRSlider.value=inst.key_scalers[operator]
 	$Params/FMS/FMSSlider.value=inst.fm_intensity[operator]
 	$Params/LFOs/FreqLFO.select($Params/LFOs/FreqLFO.get_item_index(inst.fm_lfo[operator]))
 	set_block_signals(false)

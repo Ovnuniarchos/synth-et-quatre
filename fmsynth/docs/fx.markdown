@@ -84,17 +84,21 @@ Set release rate to `xx`.
 
 ## 15xx
 
-Set repeat mode to `xx`.
+Set key scale ratio to `xx`. This is truncated to the range `0-7`.
 
 ## 16xx
 
-Set tremolo intensity from `1x` to `0x - 1x`.
+Set repeat mode to `xx`.
 
 ## 17xx
 
-Slide tremolo intensity by `xx-128` units/tick.
+Set tremolo intensity from `1x` to `0x - 1x`.
 
 ## 18xx
+
+Slide tremolo intensity by `xx-128` units/tick.
+
+## 19xx
 
 Set tremolo to use LFO # `xx`.
 

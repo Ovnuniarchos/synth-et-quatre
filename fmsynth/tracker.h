@@ -35,15 +35,16 @@ private:
 		CMD_SR,
 		CMD_RR,
 		CMD_RM,
-		CMD_PM=0x13,
+		CMD_KSR,
+		CMD_PM=0x14,
 		CMD_OUT,
-		CMD_PAN=0x15,
-		CMD_PHI=0x16,
-		CMD_AMS=0x17,
+		CMD_PAN=0x16,
+		CMD_PHI=0x17,
+		CMD_AMS=0x18,
 		CMD_AM_LFO,
 		CMD_FMS,
 		CMD_FM_LFO,
-		CMD_LFO_FREQ=0x1b,
+		CMD_LFO_FREQ=0x1c,
 		CMD_LFO_WAVE,
 		CMD_LFO_DUC,
 		CMD_END=0xff
@@ -76,6 +77,7 @@ public:
 	void set_sustain_rate(int voice,int op_mask,int rate);
 	void set_release_rate(int voice,int op_mask,int rate);
 	void set_repeat(int voice,int op_mask,int phase);
+	void set_ksr(int voice,int op_mask,int ksr);
 
 	void set_am_intensity(int voice,int op_mask,int intensity);
 	void set_am_lfo(int voice,int op_mask,int lfo);

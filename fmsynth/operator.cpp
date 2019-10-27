@@ -4,21 +4,24 @@
 
 FixedPoint Operator::get_rate(int rate,int &var){
 	var=clamp(rate,0,255);
-	int var1=var+1;
-	return (ENVELOPE_RATE/mix_rate)*(var1*((var1/55.0)+1));
+	float ivar=256.0-var;
+	ivar=(ivar*ivar/24.0)+1.0;
+	float iksr=(key_scale==0)?1.0:1.0-(((key_cents+200)*key_scale)*0.000009); // This 0.000009 is (partially) calculated by ear
+	return ENVELOPE_RATE_1S/(mix_rate*ivar*iksr);
 };
 
 void Operator::set_mix_rate(float m){
 	mix_rate=m<1.0?1.0:m;
-	set_frequency(frequency);
+	set_frequency(key_cents,frequency);
 	set_attack_rate(attack_rate);
 	set_decay_rate(decay_rate);
 	set_sustain_rate(sustain_rate);
 	set_release_rate(release_rate);
 }
 
-void Operator::set_frequency(float frequency){
+void Operator::set_frequency(int cents,float frequency){
 	this->frequency=frequency;
+	key_cents=cents;
 	set_delta();
 }
 
@@ -81,6 +84,14 @@ void Operator::set_repeat(int phase){
 	eg_repeat=(ADSR)clamp(phase,(int)OFF,(int)ATTACK);
 }
 
+void Operator::set_ksr(int ksr){
+	key_scale=clamp(ksr,0,7);
+	set_attack_rate(attack_rate);
+	set_decay_rate(decay_rate);
+	set_sustain_rate(sustain_rate);
+	set_release_rate(release_rate);
+}
+
 
 void Operator::set_am_intensity(int intensity){
 	intensity&=255;
@@ -108,6 +119,10 @@ void Operator::key_on(bool legato){
 		eg_phase=ATTACK;
 		on=true;
 	}
+	set_attack_rate(attack_rate);
+	set_decay_rate(decay_rate);
+	set_sustain_rate(sustain_rate);
+	set_release_rate(release_rate);
 }
 
 void Operator::key_off(){

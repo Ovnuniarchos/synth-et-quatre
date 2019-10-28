@@ -418,3 +418,36 @@ func process_channel_list(inf:ChunkedFile,song:Song)->void:
 		pattern_list[i]=[]
 		orders[0][i]=0
 		num_fxs[i]=nfx
+
+#
+
+func clean_patterns()->void:
+	var pats_xform:Array=[]
+	for chan in range(num_channels):
+		var pats_chan:Array=[]
+		var npat:int=0
+		for pat in range(pattern_list[chan].size()):
+			var found:bool=false
+			for ordr in orders:
+				if ordr[chan]==pat:
+					found=true
+					break
+			pats_chan.append(pat)
+			if found:
+				pats_chan.append(npat)
+				npat+=1
+			else:
+				pats_chan.append(null)
+		pats_xform.append(pats_chan)
+	#
+	for chan in range(num_channels):
+		for pat in range(0,pats_xform[chan].size(),2):
+			var oldp=pats_xform[chan][pat]
+			var newp=pats_xform[chan][pat+1]
+			if newp==null:
+				pattern_list[chan].remove(pat)
+			elif oldp!=newp:
+				for order in orders:
+					if order[chan]==oldp:
+						order[chan]=newp
+	emit_signal("order_changed",-1,-1)

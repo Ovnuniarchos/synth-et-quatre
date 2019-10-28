@@ -1,12 +1,13 @@
 extends Control
 
 """
-TODO:	Waveform deletion tests
-		Pattern cleanup
-		Instrument cleanup
-		Waves cleanup
+TODO:	Instrument cleanup
 		Note commands
 		Envelope commands
+		Synth commands
+		Waveform deletion tests
+		Waves cleanup
+		Jump commands
 		Global commands
 		Full play controls
 		Beautify file menu

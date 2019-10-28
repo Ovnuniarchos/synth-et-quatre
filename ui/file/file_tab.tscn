@@ -10,26 +10,32 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBC" type="VBoxContainer" parent="."]
+[node name="VBC" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Save" type="Button" parent="VBC"]
-margin_right = 1024.0
-margin_bottom = 298.0
+margin_right = 64.0
+margin_bottom = 20.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Save"
 
 [node name="Load" type="Button" parent="VBC"]
-margin_top = 302.0
-margin_right = 1024.0
-margin_bottom = 600.0
+margin_top = 32.0
+margin_right = 64.0
+margin_bottom = 52.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Load"
+
+[node name="CleanPats" type="Button" parent="VBC"]
+margin_top = 64.0
+margin_right = 128.0
+margin_bottom = 84.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Clean patterns"
 [connection signal="pressed" from="VBC/Save" to="." method="_on_Save_pressed"]
 [connection signal="pressed" from="VBC/Load" to="." method="_on_Load_pressed"]
+[connection signal="pressed" from="VBC/CleanPats" to="." method="_on_CleanPats_pressed"]

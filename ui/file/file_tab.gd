@@ -14,3 +14,6 @@ func _on_Load_pressed():
 	f.close()
 	if new_song!=null:
 		GLOBALS.song=new_song
+
+func _on_CleanPats_pressed():
+	GLOBALS.song.clean_patterns()

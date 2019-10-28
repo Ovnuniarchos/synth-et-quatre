@@ -128,18 +128,6 @@ Send key stop+key on every `xx` ticks.
 
 Delays note by `xx` ticks.
 
-## 25xx
-
-Set waveform phase to `xx/2.56`%.
-
-## 26xx
-
-Set waveform #`xx`.
-
-## 27xx
-
-Set waveform duty cycle to `xx/2.56`%.
-
 
 
 # Synth commands
@@ -151,6 +139,18 @@ Set modulation intensity from operator `y&3` to operator `y/4`, to ±`π*xx/127.
 ## 40xx
 
 Set operator `y` output to `xx/2.55`%.
+
+## 41xx
+
+Set waveform phase to `xx/2.56`%.
+
+## 42xx
+
+Set waveform #`xx`.
+
+## 43xx
+
+Set waveform duty cycle to `xx/2.56`%.
 
 
 

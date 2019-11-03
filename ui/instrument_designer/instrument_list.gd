@@ -11,21 +11,24 @@ func _ready()->void:
 	_on_song_changed()
 
 func _on_song_changed()->void:
+	GLOBALS.song.connect("instrument_list_changed",self,"update_ui")
 	GLOBALS.song.connect("error",self,"_on_song_error")
 	update_ui()
 
 func _on_song_error(message:String)->void:
 	ALERT.alert(message)
-	pass
 
 func update_ui()->void:
 	inst_l=$Instruments
 	inst_l.clear()
 	for inst in GLOBALS.song.instrument_list:
 		inst_l.add_item(inst.name)
+	if GLOBALS.curr_instrument>=GLOBALS.song.instrument_list.size():
+		GLOBALS.curr_instrument=GLOBALS.song.instrument_list.size()-1
 	inst_l.select(GLOBALS.curr_instrument)
 	inst_l.ensure_current_is_visible()
 	set_buttons()
+	emit_signal("instrument_selected",GLOBALS.curr_instrument)
 
 func set_buttons()->void:
 	$Buttons/Add.disabled=!GLOBALS.song.can_add_instrument()

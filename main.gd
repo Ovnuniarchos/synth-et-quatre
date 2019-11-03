@@ -2,6 +2,9 @@ extends Control
 
 """
 TODO:	Instrument cleanup
+		Pattern cleanup: Bad deletion order after 1st remove/channel
+		Double click needed on order list
+		Bad highlight on order list
 		Note commands
 		Envelope commands
 		Synth commands

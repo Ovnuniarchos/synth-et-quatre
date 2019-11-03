@@ -432,22 +432,46 @@ func clean_patterns()->void:
 				if ordr[chan]==pat:
 					found=true
 					break
-			pats_chan.append(pat)
 			if found:
 				pats_chan.append(npat)
 				npat+=1
 			else:
 				pats_chan.append(null)
 		pats_xform.append(pats_chan)
-	#
 	for chan in range(num_channels):
-		for pat in range(0,pats_xform[chan].size(),2):
-			var oldp=pats_xform[chan][pat]
-			var newp=pats_xform[chan][pat+1]
-			if newp==null:
-				pattern_list[chan].remove(pat)
-			elif oldp!=newp:
+		var newp
+		for oldp in range(pats_xform[chan].size()):
+			newp=pats_xform[chan][oldp]
+			if newp!=null and oldp!=newp:
 				for order in orders:
 					if order[chan]==oldp:
 						order[chan]=newp
+		for oldp in range(pats_xform[chan].size()-1,-1,-1):
+			newp=pats_xform[chan][oldp]
+			if newp==null:
+				pattern_list[chan].remove(oldp)
 	emit_signal("order_changed",-1,-1)
+
+func clean_instruments()->void:
+	var inst_xform:Array=[]
+	inst_xform.resize(instrument_list.size())
+	var ninst:int=0
+	for chan in pattern_list:
+		for pat in chan:
+			for note in pat.notes:
+				var n=note[Pattern.ATTRS.INSTR]
+				if n!=null and inst_xform[n]==null:
+					inst_xform[n]=ninst
+					ninst+=1
+	if ninst==0:
+		instrument_list.resize(1)
+		emit_signal("instrument_list_changed")
+		return
+	#
+	"""
+	for chan in pattern_list:
+		for pat in chan:
+			for note in pat.notes:
+				var n=note[Pattern.ATTRS.INSTR]
+				if n!=null:
+					used_inst[note[Pattern.ATTRS.INSTR]]=true"""

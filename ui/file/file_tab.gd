@@ -7,7 +7,7 @@ func _on_Save_pressed()->void:
 	GLOBALS.song.serialize(f)
 	f.close()
 
-func _on_Load_pressed():
+func _on_Load_pressed()->void:
 	var f:ChunkedFile=ChunkedFile.new()
 	f.open(".songs/tmp.txt",File.READ)
 	var new_song:Song=GLOBALS.song.deserialize(f)
@@ -15,5 +15,8 @@ func _on_Load_pressed():
 	if new_song!=null:
 		GLOBALS.song=new_song
 
-func _on_CleanPats_pressed():
+func _on_CleanPats_pressed()->void:
 	GLOBALS.song.clean_patterns()
+
+func _on_CleanInsts_pressed()->void:
+	GLOBALS.song.clean_instruments()

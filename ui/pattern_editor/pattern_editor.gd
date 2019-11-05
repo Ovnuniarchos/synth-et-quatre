@@ -416,7 +416,7 @@ func _on_playing_pos_changed(order:int,row:int)->void:
 	set_row(row)
 
 func _on_order_changed(order_ix:int,channel_ix:int)->void:
-	if order_ix==curr_order:
+	if order_ix==curr_order or order_ix<0:
 		update_tilemap(channel_ix)
 
 func update_tilemap(channel:int=-1)->void:

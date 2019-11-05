@@ -67,7 +67,7 @@ func _on_order_changed(order:int,channel:int)->void:
 	if order>GLOBALS.song.orders.size():
 		GLOBALS.curr_order=GLOBALS.song.orders.size()-1
 		order=GLOBALS.curr_order
-	else:
+	elif order>=0:
 		GLOBALS.curr_order=order
 	if channel==-1:
 		update_list(order)

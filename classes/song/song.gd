@@ -460,18 +460,24 @@ func clean_instruments()->void:
 		for pat in chan:
 			for note in pat.notes:
 				var n=note[Pattern.ATTRS.INSTR]
-				if n!=null and inst_xform[n]==null:
+				if n==null:
+					continue
+				if inst_xform[n]==null:
 					inst_xform[n]=ninst
 					ninst+=1
 	if ninst==0:
 		instrument_list.resize(1)
 		emit_signal("instrument_list_changed")
 		return
-	#
-	"""
 	for chan in pattern_list:
 		for pat in chan:
-			for note in pat.notes:
-				var n=note[Pattern.ATTRS.INSTR]
-				if n!=null:
-					used_inst[note[Pattern.ATTRS.INSTR]]=true"""
+			for note in range(pat.notes.size()):
+				var n=pat.notes[note][Pattern.ATTRS.INSTR]
+				if n==null:
+					continue
+				pat.notes[note][Pattern.ATTRS.INSTR]=inst_xform[n]
+	for inst in range(inst_xform.size()-1,-1,-1):
+		if inst_xform[inst]==null:
+			instrument_list.remove(inst)
+	emit_signal("instrument_list_changed")
+	emit_signal("order_changed",-1,-1)

@@ -1,8 +1,7 @@
 extends Control
 
 """
-TODO:	Instrument cleanup
-		Pattern cleanup: Bad deletion order after 1st remove/channel
+TODO:	Error when deleting current order
 		Double click needed on order list
 		Bad highlight on order list
 		Note commands

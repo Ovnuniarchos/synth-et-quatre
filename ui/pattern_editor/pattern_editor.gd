@@ -421,6 +421,8 @@ func _on_order_changed(order_ix:int,channel_ix:int)->void:
 
 func update_tilemap(channel:int=-1)->void:
 	var song:Song=GLOBALS.song
+	if curr_order>=song.orders.size():
+		curr_order=GLOBALS.curr_order
 	var col:int=0
 	lines.clear()
 	for i in range(0,song.pattern_length):

@@ -39,16 +39,17 @@ func update_list(from:int=0,to:int=-1)->void:
 		list.add_child(l)
 		l.connect("pressed",self,"_on_order_pressed",[order])
 		order_labels[order]=l
-		for chn in range(0,song.num_channels):
+		for chn in range(song.num_channels):
 			l=OrderButton.new(list_scroll)
 			l.name="ord%03dchn%02d"%[order,chn]
 			l.text="%03d"%[song.orders[order][chn]]
 			l.connect("gui_input",self,"_on_button_gui_input",[order,chn,l])
 			list.add_child(l)
+	highlight_current_order()
 
 func highlight_current_order()->void:
 	var song:Song=GLOBALS.song
-	for i in range(0,song.orders.size()):
+	for i in range(song.orders.size()):
 		list.get_child(i*list.columns).modulate=Color8(0,255,0) if i==GLOBALS.curr_order else Color8(255,255,255)
 
 # warning-ignore:unused_argument
@@ -64,7 +65,7 @@ func _on_order_pressed(order:int)->void:
 	emit_signal("order_selected",order)
 
 func _on_order_changed(order:int,channel:int)->void:
-	if order>GLOBALS.song.orders.size():
+	if order>=GLOBALS.song.orders.size():
 		GLOBALS.curr_order=GLOBALS.song.orders.size()-1
 		order=GLOBALS.curr_order
 	elif order>=0:
@@ -80,7 +81,6 @@ func _on_button_gui_input(ev:InputEvent,order:int,channel:int,button:Button)->vo
 	if order!=GLOBALS.curr_order:
 		GLOBALS.goto_order(order)
 		_on_playing_pos_changed(order,0)
-		# highlight_current_order()
 		emit_signal("order_selected",order)
 		return
 	var song:Song=GLOBALS.song
@@ -108,6 +108,7 @@ func _on_Copy_pressed():
 
 func _on_Del_pressed():
 	var order:int=GLOBALS.curr_order
-	if order==GLOBALS.song.orders.size()-1:
-		GLOBALS.curr_order-=1
+	if order>=GLOBALS.song.orders.size()-1:
+		GLOBALS.curr_order=max(0,GLOBALS.song.orders.size()-2)
+		curr_highlight=GLOBALS.curr_order
 	GLOBALS.song.delete_order(order)

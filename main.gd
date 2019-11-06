@@ -1,7 +1,7 @@
 extends Control
 
 """
-TODO:	Double click needed on order list
+TODO:	Tick advance may not be correctly calculated
 		Note commands
 		Envelope commands
 		Synth commands

@@ -111,4 +111,5 @@ func _on_Del_pressed():
 	if order>=GLOBALS.song.orders.size()-1:
 		GLOBALS.curr_order=max(0,GLOBALS.song.orders.size()-2)
 		curr_highlight=GLOBALS.curr_order
+		emit_signal("order_selected",GLOBALS.curr_order)
 	GLOBALS.song.delete_order(order)

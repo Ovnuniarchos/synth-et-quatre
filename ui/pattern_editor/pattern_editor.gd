@@ -241,6 +241,10 @@ func process_keyboard(ev:InputEventKey)->bool:
 		if ev.pressed:
 			selection.paste(GLOBALS.song,curr_order,curr_channel,curr_row,curr_column,true)
 		return true
+	if ev.scancode==KEY_ENTER:
+		if ev.pressed and curr_row>0:
+			copy_last()
+		return true
 	#
 	if curr_column==ATTRS.LG_MODE:
 		if ev.is_action_released("ui_select"):
@@ -326,6 +330,20 @@ func process_keyboard(ev:InputEventKey)->bool:
 	return false
 
 #
+
+func copy_last()->void:
+	var song:Song=GLOBALS.song
+	var val=song.get_note(curr_order,curr_channel,curr_row-1,curr_column)
+	song.set_note(curr_order,curr_channel,curr_row,curr_column,val)
+	if curr_column==ATTRS.LG_MODE:
+		set_legato_cell(curr_row,channel_col0[curr_channel],val)
+	elif curr_column==ATTRS.NOTE:
+		set_note_cells(curr_row,channel_col0[curr_channel],val)
+	elif curr_column in [ATTRS.FM0,ATTRS.FM1,ATTRS.FM2,ATTRS.FM3]:
+		set_opmask(curr_row,COLS[curr_column],val)
+	else:
+		set_2_digits(curr_row,COLS[curr_column]+channel_col0[curr_channel],val)
+	advance(step)
 
 func put_opmask(val:int,add:int=0)->void:
 	var song:Song=GLOBALS.song
@@ -421,8 +439,6 @@ func _on_order_changed(order_ix:int,channel_ix:int)->void:
 
 func update_tilemap(channel:int=-1)->void:
 	var song:Song=GLOBALS.song
-	if curr_order>=song.orders.size():
-		curr_order=GLOBALS.curr_order
 	var col:int=0
 	lines.clear()
 	for i in range(0,song.pattern_length):
@@ -572,7 +588,7 @@ func _on_order_selected(order:int)->void:
 func _on_Info_step_changed(s:int)->void:
 	step=max(0.0,s)
 
-func _on_Info_dflt_velocity_changed(vel:int):
+func _on_Info_velocity_changed(vel:int):
 	dflt_velocity=vel
 
 func _on_Editor_mouse_entered():

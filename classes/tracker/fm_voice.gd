@@ -32,6 +32,7 @@ var fx_apply:Array=[false,false,false,false]
 # Index by command
 var fx_vals:Array
 
+var self_tick:int=0
 var legato:int=0
 var freqs:Array=[0,0,0,0]
 var base_freqs:Array=[0,0,0,0]
@@ -105,6 +106,9 @@ func process_tick_0(song:Song,channel:int,curr_order:int,curr_row:int)->void:
 				slide_frequency(fx_val,fx_opm)
 			elif fx_cmd==FX_FRQ_PORTA:
 				slide_frequency_to(fx_val,fx_opm)
+			elif fx_cmd==FX_ARPEGGIO:
+				DEBUG.set_var("tick",self_tick)
+				arpeggio(fx_vals[0x04][self_tick],fx_opm)
 			elif fx_cmd==FX_FMS_SET:
 				set_fms(fx_val,fx_opm)
 			elif fx_cmd==FX_FMS_ADJ:
@@ -119,9 +123,10 @@ func process_tick_0(song:Song,channel:int,curr_order:int,curr_row:int)->void:
 				slide_detune(fx_val,fx_opm)
 	for i in range(4):
 		base_freqs[i]=pre_freqs[i]
-		freqs[i]=base_freqs[i]
+		freqs[i]=base_freqs[i]+arp_freqs[i]
+	self_tick=(self_tick+1)%3
 
-func process_tick_n(song:Song,channel:int,tick:int)->void:
+func process_tick_n(song:Song,channel:int)->void:
 	var fx_cmd:int
 	for i in range(song.num_fxs[channel]):
 		if not fx_apply[i]:
@@ -132,7 +137,8 @@ func process_tick_n(song:Song,channel:int,tick:int)->void:
 		elif fx_cmd==FX_FRQ_PORTA:
 			slide_frequency_to(fx_vals[FX_FRQ_PORTA],fx_opmasks[i])
 		elif fx_cmd==FX_ARPEGGIO:
-			arpeggio(fx_vals[0x04][tick%3],fx_opmasks[i])
+			DEBUG.set_var("tick",self_tick)
+			arpeggio(fx_vals[0x04][self_tick],fx_opmasks[i])
 		elif fx_cmd==FX_FMS_SLIDE:
 			slide_fms(fx_vals[FX_FMS_SLIDE],fx_opmasks[i])
 		elif fx_cmd==FX_DET_SLIDE:
@@ -140,6 +146,7 @@ func process_tick_n(song:Song,channel:int,tick:int)->void:
 	for i in range(4):
 		base_freqs[i]=pre_freqs[i]
 		freqs[i]=base_freqs[i]+arp_freqs[i]
+	self_tick=(self_tick+1)%3
 
 func get_fx_cmd(c,i:int)->int:
 	if c!=null:

@@ -64,9 +64,9 @@ func gen_commands(song:Song,mix_rate:float,buf_size:int,cmds:Array)->void:
 	var bs:float=0.0
 	var ibuf_size:int=buf_size
 	# Should not insert more than buf_size
-	if curr_sample>=0.0 and ibuf_size>0:
+	if curr_sample>=1.0 and ibuf_size>0:
 		bs=min(max(256.0,ibuf_size),floor(curr_sample))
-		while bs>0.0 and ibuf_size>0:
+		while bs>=1.0 and ibuf_size>0:
 			cmds[ptr]=CMD_WAIT
 			cmds[ptr+1]=bs-1
 			curr_sample-=bs
@@ -77,8 +77,10 @@ func gen_commands(song:Song,mix_rate:float,buf_size:int,cmds:Array)->void:
 		cmds[0]=CMD_END
 		return
 	#
+	var spt:float
+	var dbs:float
 	bs=buf_size
-	while bs>0.0:
+	while bs>=1.0:
 		if curr_tick==0:
 			for chn in range(song.num_channels):
 				voices[chn].process_tick_0(song,chn,curr_order,curr_row)
@@ -87,7 +89,14 @@ func gen_commands(song:Song,mix_rate:float,buf_size:int,cmds:Array)->void:
 				voices[chn].process_tick_n(song,chn)
 		for chn in range(song.num_channels):
 			ptr=voices[chn].commit(chn,cmds,ptr)
-		bs-=samples_tick
+		spt=samples_tick
+		while spt>=1.0 and bs>=1.0:
+			dbs=min(256.0,spt)
+			cmds[ptr]=CMD_WAIT
+			cmds[ptr+1]=dbs-1
+			spt-=dbs
+			bs-=dbs
+			ptr+=2
 		curr_tick+=1
 		if curr_tick>=song.ticks_row:
 			curr_tick=0
@@ -97,7 +106,7 @@ func gen_commands(song:Song,mix_rate:float,buf_size:int,cmds:Array)->void:
 				curr_order=(curr_order+1)%song.orders.size()
 			DEBUG.set_var("order",curr_order)
 			DEBUG.set_var("row",curr_row)
-			#emit_signal("position_changed",curr_order,curr_row)
+			emit_signal("position_changed",curr_order,curr_row)
 	curr_sample=-bs
 	cmds[ptr]=CMD_END
 	DEBUG.set_var("ptr",ptr)

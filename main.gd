@@ -1,7 +1,7 @@
 extends Control
 
 """
-TODO:	Tick advance may not be correctly calculated
+TODO:	!!!NOTES ARE BEING SKIPPED!!!
 		Note commands
 		Envelope commands
 		Synth commands

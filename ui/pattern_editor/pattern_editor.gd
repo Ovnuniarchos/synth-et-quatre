@@ -170,41 +170,41 @@ func process_keyboard(ev:InputEventKey)->bool:
 	if ev.scancode==GKBD.DOWN:
 		if ev.pressed:
 			advance(1)
-		moved=true
+			moved=true
 	if ev.scancode==GKBD.UP:
 		if ev.pressed:
 			advance(-1)
-		moved=true
+			moved=true
 	if ev.scancode==GKBD.FAST_UP:
 		if ev.pressed:
 			advance(-4*step)
-		moved=true
+			moved=true
 	if ev.scancode==GKBD.FAST_DOWN:
 		if ev.pressed:
 			advance(4*step)
-		moved=true
+			moved=true
 	if ev.scancode==GKBD.HOME:
 		if ev.pressed:
 			set_row(0)
-		moved=true
+			moved=true
 	if ev.scancode==GKBD.END:
 		if ev.pressed:
 			set_row(GLOBALS.song.pattern_length-1)
-		moved=true
+			moved=true
 	if ev.scancode==GKBD.RIGHT:
 		if ev.pressed:
 			if ev.control or ev.command:
 				set_channel(curr_channel+1)
 			else:
 				set_column(curr_column+1)
-		moved=true
+			moved=true
 	if ev.scancode==GKBD.LEFT:
 		if ev.pressed:
 			if ev.control or ev.command:
 				set_channel(curr_channel-1)
 			else:
 				set_column(curr_column-1)
-		moved=true
+			moved=true
 	if moved:
 		if ev.shift:
 			if !kbd_drag:
@@ -241,7 +241,7 @@ func process_keyboard(ev:InputEventKey)->bool:
 		if ev.pressed:
 			selection.paste(GLOBALS.song,curr_order,curr_channel,curr_row,curr_column,true)
 		return true
-	if ev.scancode==KEY_ENTER:
+	if fscan in GKBD.DUPLICATE:
 		if ev.pressed and curr_row>0:
 			copy_last()
 		return true

@@ -69,7 +69,7 @@ void SynthTracker::_init(){
 #endif
 
 #ifndef VAR2INT
-#define VAR2INT(x) ((int)x)
+#define VAR2INT(x) ((uint8_t)x)
 #endif
 
 #ifndef DVAR2INT
@@ -239,6 +239,10 @@ PoolVector2Array SynthTracker::generate(int size,float volume,Array cmds){
 					synth.set_lfo_duty_cycle(VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]));
 					cmd_ptr+=2;
 					break;
+				case CMD_DEBUG:
+					TRACE("DEBUG@%x  ",cmd_ptr-1);
+					debug(cmds,cmd_ptr);
+					break;
 				case CMD_END:
 					TRACE("END@%x  ",cmd_ptr-1);
 					cmd_ptr=cmd_sz;
@@ -254,6 +258,144 @@ PoolVector2Array SynthTracker::generate(int size,float volume,Array cmds){
 	}
 	TRACE("\n");
 	return buffer;
+}
+
+void SynthTracker::debug(Array cmds,int end_ix){
+	for(int cmd_ptr=0;cmd_ptr<=end_ix;){
+		switch(VAR2INT(cmds[cmd_ptr++])){
+			case CMD_WAIT:
+				printf("WAI %02x  ",VAR2INT(cmds[cmd_ptr++]));
+				break;
+			case CMD_FREQ:
+				printf("FRQ %02x %02x %02x%02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]),VAR2INT(cmds[cmd_ptr+3]));
+				cmd_ptr+=4;
+				break;
+			case CMD_KEYON:
+				printf("KON %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
+				cmd_ptr+=3;
+				break;
+			case CMD_KEYON_LEGATO:
+				printf("KOL %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
+				cmd_ptr+=3;
+				break;
+			case CMD_KEYOFF:
+				printf("KOF %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]));
+				cmd_ptr+=2;
+				break;
+			case CMD_STOP:
+				printf("STO %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]));
+				cmd_ptr+=2;
+				break;
+			case CMD_ENABLE:
+				printf("ENA %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
+				cmd_ptr+=3;
+				break;
+			case CMD_MULT:
+				printf("MUL %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
+				cmd_ptr+=3;
+				break;
+			case CMD_DIV:
+				printf("DIV %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
+				cmd_ptr+=3;
+				break;
+			case CMD_DET:
+				printf("DET %02x %02x %02x%02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]),VAR2INT(cmds[cmd_ptr+3]));
+				cmd_ptr+=4;
+				break;
+			case CMD_DUC:
+				printf("DUC %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
+				cmd_ptr+=3;
+				break;
+			case CMD_WAVE:
+				printf("WAV %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
+				cmd_ptr+=3;
+				break;
+			case CMD_VEL:
+				printf("VEL %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]));
+				cmd_ptr+=2;
+			case CMD_AR:
+				printf("ATR %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
+				cmd_ptr+=3;
+				break;
+			case CMD_DR:
+				printf("DER %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
+				cmd_ptr+=3;
+				break;
+			case CMD_SL:
+				printf("SUL %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
+				cmd_ptr+=3;
+				break;
+			case CMD_SR:
+				printf("SUR %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
+				cmd_ptr+=3;
+				break;
+			case CMD_RR:
+				printf("RER %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
+				cmd_ptr+=3;
+				break;
+			case CMD_RM:
+				printf("RPM %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
+				cmd_ptr+=3;
+				break;
+			case CMD_KSR:
+				printf("KSR %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
+				cmd_ptr+=3;
+				break;
+			case CMD_PM:
+				printf("PMF %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
+				cmd_ptr+=3;
+				break;
+			case CMD_OUT:
+				printf("OUT %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
+				cmd_ptr+=3;
+				break;
+			case CMD_PAN:
+				printf("PAN %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]));
+				cmd_ptr+=2;
+				break;
+			case CMD_PHI:
+				printf("PHI %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
+				cmd_ptr+=3;
+				break;
+			case CMD_AMS:
+				printf("AMS %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
+				cmd_ptr+=3;
+				break;
+			case CMD_AM_LFO:
+				printf("AML %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
+				cmd_ptr+=3;
+				break;
+			case CMD_FMS:
+				printf("FMS %02x %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]),VAR2INT(cmds[cmd_ptr+3]));
+				cmd_ptr+=4;
+				break;
+			case CMD_FM_LFO:
+				printf("FML %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
+				cmd_ptr+=3;
+				break;
+			case CMD_LFO_FREQ:
+				printf("LFF %02x %02x%02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
+				cmd_ptr+=3;
+				break;
+			case CMD_LFO_WAVE:
+				printf("LFW %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]));
+				cmd_ptr+=2;
+				break;
+			case CMD_LFO_DUC:
+				printf("LFD %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]));
+				cmd_ptr+=2;
+				break;
+			case CMD_DEBUG:
+				printf("DEBUG@%x  ",cmd_ptr-1);
+				break;
+			case CMD_END:
+				printf("END@%x  ",cmd_ptr-1);
+				break;
+			default:
+				printf("??? %02x  ",VAR2INT(cmds[cmd_ptr-1]));
+		}
+	}
+	printf("\n");
 }
 
 

@@ -47,8 +47,11 @@ private:
 		CMD_LFO_FREQ=0x1c,
 		CMD_LFO_WAVE,
 		CMD_LFO_DUC,
+		CMD_DEBUG=0xfe,
 		CMD_END=0xff
 	};
+
+	void debug(Array cmds,int end_ix);
 
 public:
 	static void _register_methods();

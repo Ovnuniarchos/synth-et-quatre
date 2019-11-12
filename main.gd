@@ -1,8 +1,7 @@
 extends Control
 
 """
-TODO:	!!!NOTES ARE BEING SKIPPED!!!
-		Note commands
+TODO:	Trigger commands
 		Envelope commands
 		Synth commands
 		Waveform deletion tests

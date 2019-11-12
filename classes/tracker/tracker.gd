@@ -5,6 +5,7 @@ signal position_changed(order,row)
 
 enum{
 	CMD_WAIT=0,
+	CMD_DEBUG=254,
 	CMD_END=255
 }
 const ATTRS=Pattern.ATTRS
@@ -55,6 +56,7 @@ func _on_song_changed()->void:
 
 #
 
+var copy_buffer:bool
 func gen_commands(song:Song,mix_rate:float,buf_size:int,cmds:Array)->void:
 	if !playing:
 		cmds[0]=255
@@ -63,23 +65,24 @@ func gen_commands(song:Song,mix_rate:float,buf_size:int,cmds:Array)->void:
 	var ptr:int=0
 	var bs:float=0.0
 	var ibuf_size:int=buf_size
+	var last_wait:int=0
 	# Should not insert more than buf_size
-	if curr_sample>=1.0 and ibuf_size>0:
-		bs=min(max(256.0,ibuf_size),floor(curr_sample))
+	if curr_sample>=1.0:
+		bs=min(min(256.0,ibuf_size),floor(curr_sample))
 		while bs>=1.0 and ibuf_size>0:
 			cmds[ptr]=CMD_WAIT
 			cmds[ptr+1]=bs-1
 			curr_sample-=bs
 			ibuf_size-=bs
 			ptr+=2
-			bs=min(max(256.0,ibuf_size),floor(curr_sample))
+			bs=min(min(256.0,ibuf_size),floor(curr_sample))
 	if ibuf_size<=0:
-		cmds[0]=CMD_END
+		cmds[last_wait]=CMD_END
 		return
 	#
 	var spt:float
 	var dbs:float
-	bs=buf_size
+	bs=ibuf_size
 	while bs>=1.0:
 		if curr_tick==0:
 			for chn in range(song.num_channels):
@@ -89,14 +92,6 @@ func gen_commands(song:Song,mix_rate:float,buf_size:int,cmds:Array)->void:
 				voices[chn].process_tick_n(song,chn)
 		for chn in range(song.num_channels):
 			ptr=voices[chn].commit(chn,cmds,ptr)
-		spt=samples_tick
-		while spt>=1.0 and bs>=1.0:
-			dbs=min(256.0,spt)
-			cmds[ptr]=CMD_WAIT
-			cmds[ptr+1]=dbs-1
-			spt-=dbs
-			bs-=dbs
-			ptr+=2
 		curr_tick+=1
 		if curr_tick>=song.ticks_row:
 			curr_tick=0
@@ -107,6 +102,16 @@ func gen_commands(song:Song,mix_rate:float,buf_size:int,cmds:Array)->void:
 			DEBUG.set_var("order",curr_order)
 			DEBUG.set_var("row",curr_row)
 			emit_signal("position_changed",curr_order,curr_row)
-	curr_sample=-bs
-	cmds[ptr]=CMD_END
-	DEBUG.set_var("ptr",ptr)
+		spt=samples_tick
+		last_wait=ptr
+		while spt>=1.0 and bs>=1.0:
+			dbs=min(256.0,spt)
+			cmds[ptr]=CMD_WAIT
+			cmds[ptr+1]=dbs-1
+			spt-=dbs
+			bs-=dbs
+			ptr+=2
+		if bs<1.0:
+			break
+	curr_sample=spt
+	cmds[last_wait]=CMD_END

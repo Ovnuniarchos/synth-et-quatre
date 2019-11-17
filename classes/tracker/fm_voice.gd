@@ -17,8 +17,8 @@ enum{
 	FX_FMS_SET,FX_FMS_ADJ,FX_FMS_SLIDE,FX_FMS_LFO,
 	FX_MUL_SET,FX_DIV_SET,
 	FX_DET_SET,FX_DET_ADJ,FX_DET_SLIDE,
-	FX_DLY_OFF=0x20,FX_DLY_CUT,FX_DLY_ON,FX_DLY_RETRIG,
-	FX_RPT_ON,FX_RPT_RETRIG,FX_DELAY,
+	FX_DELAY=0x20,FX_DLY_OFF,FX_DLY_CUT,FX_DLY_ON,FX_DLY_RETRIG,
+	FX_RPT_ON,FX_RPT_RETRIG,
 	FX_DEBUG=0x3F
 }
 enum{
@@ -36,6 +36,7 @@ var fx_apply:Array=[false,false,false,false]
 var fx_vals:Array
 
 var arpeggio_tick:int=0
+var internal_tick:int=0
 var legato:int=0
 var freqs:Array=[0,0,0,0]
 var base_freqs:Array=[0,0,0,0]
@@ -43,8 +44,6 @@ var pre_freqs:Array=[0,0,0,0]
 var arp_freqs:Array=[0,0,0,0]
 var velocity:int=255
 var panning:int=0x1F
-var delay:int=0
-var delay_end:int=0
 
 var instrument_dirty:bool=false
 var freqs_dirty_any:bool=true
@@ -66,13 +65,35 @@ func _init()->void:
 		if i==FX_FRQ_PORTA:
 			fx_vals.append([0,0,0,0,0])
 		elif i==FX_ARPEGGIO:
-			fx_vals.append([0,400,700])
+			fx_vals.append([0,0,0])
 		else:
 			fx_vals.append(0)
 
-func process_tick_0(song:Song,channel:int,curr_order:int,curr_row:int)->void:
+func reset_row(song:Song,channel:int,curr_order:int,curr_row:int)->void:
+	fx_vals[FX_DELAY]=0
+	internal_tick=0
+
+func process_tick(song:Song,channel:int,curr_order:int,curr_row:int,curr_tick:int)->void:
 	var pat:Pattern=song.get_order_pattern(curr_order,channel)
 	var note:Array=pat.notes[curr_row]
+	var fx_cmd:int
+	if curr_tick==0 and fx_vals[FX_DELAY]==0:
+		var j:int=0
+		for i in range(song.num_fxs[channel]):
+			fx_cmd=get_fx_cmd(note[ATTRS.FX0+j],i)
+			if fx_cmd==FX_DELAY:
+				get_fx_val(note[ATTRS.FV0+j],note[ATTRS.NOTE],fx_cmd,i)
+			j+=3
+	if fx_vals[FX_DELAY]==0:
+		if internal_tick==0:
+			process_tick_0(note,song,song.num_fxs[channel])
+		else:
+			process_tick_n(song,channel)
+		internal_tick+=1
+	else:
+		fx_vals[FX_DELAY]-=1
+
+func process_tick_0(note:Array,song:Song,num_fxs:int)->void:
 	legato=0 if note[ATTRS.LG_MODE]==null else note[ATTRS.LG_MODE]
 	if note[ATTRS.NOTE]!=null:
 		if note[ATTRS.NOTE]>=0:
@@ -86,7 +107,7 @@ func process_tick_0(song:Song,channel:int,curr_order:int,curr_row:int)->void:
 		set_instrument(song.get_instrument(note[ATTRS.INSTR]) as FmInstrument)
 	set_velocity(note[ATTRS.VOL])
 	set_panning(note[ATTRS.PAN])
-	var j:int=-3
+	var j:int=0
 	var fx_cmd:int
 	var fx_opm
 	var fx_val
@@ -94,9 +115,7 @@ func process_tick_0(song:Song,channel:int,curr_order:int,curr_row:int)->void:
 	arp_freqs[1]=0
 	arp_freqs[2]=0
 	arp_freqs[3]=0
-	delay=0
-	for i in range(song.num_fxs[channel]):
-		j+=3
+	for i in range(num_fxs):
 		fx_apply[i]=false
 		fx_cmd=get_fx_cmd(note[ATTRS.FX0+j],i)
 		fx_val=get_fx_val(note[ATTRS.FV0+j],note[ATTRS.NOTE],fx_cmd,i)
@@ -128,6 +147,7 @@ func process_tick_0(song:Song,channel:int,curr_order:int,curr_row:int)->void:
 				slide_detune(fx_val,fx_opm)
 			elif fx_cmd==FX_DEBUG:
 				breakpoint
+		j+=3
 	for i in range(4):
 		base_freqs[i]=pre_freqs[i]
 		freqs[i]=base_freqs[i]+arp_freqs[i]
@@ -160,7 +180,7 @@ func get_fx_cmd(c,i:int)->int:
 		fx_apply[i]=true
 	return fx_cmds[i]
 
-func get_fx_val(v,note,cmd:int,i:int)->int:
+func get_fx_val(v,note,cmd:int,cmd_col:int)->int:
 	if v==null:
 		return fx_vals[cmd]
 	if cmd==FX_FRQ_SET:
@@ -184,20 +204,18 @@ func get_fx_val(v,note,cmd:int,i:int)->int:
 		fx_vals[FX_ARPEGGIO][2]=(v&15)*100
 	elif cmd==FX_FMS_SET:
 		fx_vals[FX_FMS_SET]=v*50
-	elif cmd==FX_MUL_SET or cmd==FX_DIV_SET:
+	else:
 		fx_vals[cmd]=v
-	fx_apply[i]=true
+	fx_apply[cmd_col]=true
 	return fx_vals[cmd]
 
 #
 
 func commit(channel:int,cmds:Array,ptr:int)->int:
-	delay+=1
 	if instrument_dirty:
 		ptr=commit_instrument(channel,cmds,ptr)
-	if trigger>TRG_KEEP:# and delay>=delay_end:
+	if trigger>TRG_KEEP:
 		ptr=commit_retrigger(channel,cmds,ptr)
-		delay_end=0
 	if freqs_dirty_any:
 		ptr=commit_freqs(channel,cmds,ptr)
 	if velocity_dirty:

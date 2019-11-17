@@ -56,7 +56,6 @@ func _on_song_changed()->void:
 
 #
 
-var copy_buffer:bool
 func gen_commands(song:Song,mix_rate:float,buf_size:int,cmds:Array)->void:
 	if !playing:
 		cmds[0]=255
@@ -84,13 +83,10 @@ func gen_commands(song:Song,mix_rate:float,buf_size:int,cmds:Array)->void:
 	var dbs:float
 	bs=ibuf_size
 	while bs>=1.0:
-		if curr_tick==0:
-			for chn in range(song.num_channels):
-				voices[chn].process_tick_0(song,chn,curr_order,curr_row)
-		else:
-			for chn in range(song.num_channels):
-				voices[chn].process_tick_n(song,chn)
 		for chn in range(song.num_channels):
+			if curr_tick==0:
+				voices[chn].reset_row(song,chn,curr_order,curr_row)
+			voices[chn].process_tick(song,chn,curr_order,curr_row,curr_tick)
 			ptr=voices[chn].commit(chn,cmds,ptr)
 		curr_tick+=1
 		if curr_tick>=song.ticks_row:

@@ -217,13 +217,17 @@ func process_keyboard(ev:InputEventKey)->bool:
 			selection.active=false
 		return true
 	#
-	if ev.scancode==GKBD.DELETE and selection.active:
+	if ev.scancode==GKBD.CLEAR and selection.active:
 		if ev.pressed:
 			selection.clear(collect_patterns(),curr_order,curr_channel)
 		return true
 	if ev.scancode==GKBD.INSERT:
 		if ev.pressed:
 			GLOBALS.song.insert_row(curr_order,curr_channel,curr_row)
+		return true
+	if fscan==GKBD.DELETE:
+		if ev.pressed:
+			GLOBALS.song.delete_row(curr_order,curr_channel,curr_row)
 		return true
 	if fscan in GKBD.COPY:
 		if ev.pressed and selection.active:
@@ -251,7 +255,7 @@ func process_keyboard(ev:InputEventKey)->bool:
 			if !ev.pressed:
 				put_legato(null)
 			return true
-		if ev.scancode==GKBD.DELETE:
+		if ev.scancode==GKBD.CLEAR:
 			if ev.pressed:
 				put_legato(Pattern.LEGATO_MODE.OFF)
 			return true
@@ -269,7 +273,7 @@ func process_keyboard(ev:InputEventKey)->bool:
 				var semi:int=GKBD.KEYBOARD.find(ev.scancode)
 				put_note(semi%12,GLOBALS.curr_octave+(semi/12),GLOBALS.curr_instrument)
 			return true
-		if ev.scancode==GKBD.DELETE:
+		if ev.scancode==GKBD.CLEAR:
 			if ev.pressed:
 				put_note(null,0,null)
 			return true
@@ -286,7 +290,7 @@ func process_keyboard(ev:InputEventKey)->bool:
 				put_note(null,0,null,-12 if ev.shift else -1,0)
 			return true
 	if curr_column in [ATTRS.FM0,ATTRS.FM1,ATTRS.FM2,ATTRS.FM3]:
-		if ev.scancode==GKBD.DELETE:
+		if ev.scancode==GKBD.CLEAR:
 			if ev.pressed:
 				put_opmask(0)
 			return true
@@ -307,7 +311,7 @@ func process_keyboard(ev:InputEventKey)->bool:
 				put_opmask(0,-1)
 			return true
 	if curr_column>ATTRS.NOTE:
-		if ev.scancode==GKBD.DELETE:
+		if ev.scancode==GKBD.CLEAR:
 			if ev.pressed:
 				put_2_digits(null)
 			return true
@@ -406,10 +410,10 @@ func put_note(semitone,octave:int,instrument,add:int=0,adv:int=step)->void:
 			note=semitone+(octave*12)
 	song.set_note(curr_order,curr_channel,curr_row,ATTRS.NOTE,note)
 	song.set_note(curr_order,curr_channel,curr_row,ATTRS.INSTR,instrument)
-	song.set_note(curr_order,curr_channel,curr_row,ATTRS.VOL,dflt_velocity)
+	song.set_note(curr_order,curr_channel,curr_row,ATTRS.VOL,dflt_velocity if instrument!=null else null)
 	set_note_cells(curr_row,channel_col0[curr_channel],note)
 	set_2_digits(curr_row,COLS[ATTRS.INSTR]+channel_col0[curr_channel],instrument)
-	if note==null:
+	if instrument==null:
 		set_2_digits(curr_row,COLS[ATTRS.VOL]+channel_col0[curr_channel],null)
 	else:
 		set_2_digits(curr_row,COLS[ATTRS.VOL]+channel_col0[curr_channel],dflt_velocity)

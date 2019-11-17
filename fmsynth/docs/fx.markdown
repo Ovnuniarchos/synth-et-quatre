@@ -106,35 +106,37 @@ Set tremolo to use LFO # `xx`.
 
 # Trigger commands
 
-Any command that triggers after a delay will not trigger if that delay is greater than song speed (ticks/s), but any other effect in the same row will be registered anyways.
+Any command that triggers after a delay will not trigger if that delay puts it after the current row, but any other effect in the same row will be registered anyways.
 
 ## 20xx
 
-Trigger note off after `xx` ticks.
+Delays row by `xx` ticks. This command ignores the operator mask.
+
+Any other command, and any further delay/repeat will be relative to the end of this command.
 
 ## 21xx
 
-Trigger note cut after `xx` ticks.
+Trigger note off after `xx` ticks.
 
 ## 22xx
 
-Trigger note on after `xx` ticks.
+Trigger note cut after `xx` ticks.
 
 ## 23xx
 
-Trigger note stop+on after `xx` ticks.
+Trigger note on after `xx` ticks.
 
 ## 24xx
 
-Send note on every `xx` ticks.
+Trigger note stop+on after `xx` ticks.
 
 ## 25xx
 
-Send note stop+on every `xx` ticks.
+Send note on every `xx` ticks.
 
 ## 26xx
 
-Delays note by `xx` ticks.
+Send note stop+on every `xx` ticks.
 
 
 

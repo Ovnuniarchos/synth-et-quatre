@@ -84,8 +84,6 @@ func gen_commands(song:Song,mix_rate:float,buf_size:int,cmds:Array)->void:
 	bs=ibuf_size
 	while bs>=1.0:
 		for chn in range(song.num_channels):
-			if curr_tick==0:
-				voices[chn].reset_row(song,chn,curr_order,curr_row)
 			voices[chn].process_tick(song,chn,curr_order,curr_row,curr_tick)
 			ptr=voices[chn].commit(chn,cmds,ptr)
 		curr_tick+=1

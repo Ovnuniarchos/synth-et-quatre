@@ -69,21 +69,23 @@ func _init()->void:
 		else:
 			fx_vals.append(0)
 
-func reset_row(song:Song,channel:int,curr_order:int,curr_row:int)->void:
-	fx_vals[FX_DELAY]=0
-	internal_tick=0
-
 func process_tick(song:Song,channel:int,curr_order:int,curr_row:int,curr_tick:int)->void:
 	var pat:Pattern=song.get_order_pattern(curr_order,channel)
 	var note:Array=pat.notes[curr_row]
 	var fx_cmd:int
-	if curr_tick==0 and fx_vals[FX_DELAY]==0:
+	if curr_tick==0:
+		# Reset delay counters
+		for i in range(FX_DELAY,FX_RPT_RETRIG+1):
+			fx_vals[i]=0
+		internal_tick=0
+		#
 		var j:int=0
 		for i in range(song.num_fxs[channel]):
 			fx_cmd=get_fx_cmd(note[ATTRS.FX0+j],i)
 			if fx_cmd==FX_DELAY:
-				get_fx_val(note[ATTRS.FV0+j],note[ATTRS.NOTE],fx_cmd,i)
+				fx_vals[FX_DELAY]=get_fx_val(note[ATTRS.FV0+j],note[ATTRS.NOTE],fx_cmd,i)
 			j+=3
+	var fxdelay:int=fx_vals[FX_DELAY]
 	if fx_vals[FX_DELAY]==0:
 		if internal_tick==0:
 			process_tick_0(note,song,song.num_fxs[channel])
@@ -204,6 +206,9 @@ func get_fx_val(v,note,cmd:int,cmd_col:int)->int:
 		fx_vals[FX_ARPEGGIO][2]=(v&15)*100
 	elif cmd==FX_FMS_SET:
 		fx_vals[FX_FMS_SET]=v*50
+	elif cmd==FX_DELAY:
+		fx_apply[cmd_col]=false
+		return v
 	else:
 		fx_vals[cmd]=v
 	fx_apply[cmd_col]=true

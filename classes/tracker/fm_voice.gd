@@ -85,7 +85,6 @@ func process_tick(song:Song,channel:int,curr_order:int,curr_row:int,curr_tick:in
 			if fx_cmd==FX_DELAY:
 				fx_vals[FX_DELAY]=get_fx_val(note[ATTRS.FV0+j],note[ATTRS.NOTE],fx_cmd,i)
 			j+=3
-	var fxdelay:int=fx_vals[FX_DELAY]
 	if fx_vals[FX_DELAY]==0:
 		if internal_tick==0:
 			process_tick_0(note,song,song.num_fxs[channel])
@@ -171,10 +170,27 @@ func process_tick_n(song:Song,channel:int)->void:
 			slide_fms(fx_vals[FX_FMS_SLIDE],fx_opmasks[i])
 		elif fx_cmd==FX_DET_SLIDE:
 			slide_detune(fx_vals[FX_DET_SLIDE],fx_opmasks[i])
+		elif fx_cmd==FX_DLY_OFF or fx_cmd==FX_DLY_CUT\
+				or fx_cmd==FX_DLY_ON or fx_cmd==FX_DLY_RETRIG:
+			set_delayed_triggers(fx_cmd)
 	for i in range(4):
 		base_freqs[i]=pre_freqs[i]
 		freqs[i]=base_freqs[i]+arp_freqs[i]
 	arpeggio_tick=(arpeggio_tick+1)%3
+
+func set_delayed_triggers(fx_cmd:int)->void:
+	fx_vals[fx_cmd]-=1
+	if fx_vals[fx_cmd]<=0:
+		if fx_cmd==FX_DLY_OFF:
+			trigger=TRG_OFF
+		elif fx_cmd==FX_DLY_CUT:
+			trigger=TRG_STOP
+		elif fx_cmd==FX_DLY_ON:
+			trigger=TRG_ON
+			legato=LG_MODE.OFF
+		elif fx_cmd==FX_DLY_RETRIG:
+			trigger=TRG_ON
+			legato=LG_MODE.STACCATO
 
 func get_fx_cmd(c,i:int)->int:
 	if c!=null:
@@ -326,7 +342,8 @@ func commit_retrigger(channel:int,cmds:Array,ptr:int)->int:
 		cmds[ptr+1]=channel
 		cmds[ptr+2]=15
 		return ptr+3
-	ptr=commit_freqs(channel,cmds,ptr)
+	if freqs_dirty_any:
+		ptr=commit_freqs(channel,cmds,ptr)
 	if legato==LG_MODE.STACCATO:
 		cmds[ptr]=CMD_STOP
 		cmds[ptr+1]=channel

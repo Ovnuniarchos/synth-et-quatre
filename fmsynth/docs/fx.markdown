@@ -106,13 +106,11 @@ Set tremolo to use LFO # `xx`.
 
 # Trigger commands
 
-Any command that triggers after a delay will not trigger if that delay puts it after the current row, but any other effect in the same row will be registered anyways.
+Any command that triggers after a delay will not trigger if that delay puts it after the current row, but any other effect in the same row will be registered anyways. These commands ignore the operator mask.
 
 ## 20xx
 
-Delays row by `xx` ticks. This command ignores the operator mask.
-
-Any other command, and any further delay/repeat will be relative to the end of this command.
+Delays row by `xx` ticks. Any other command, and any further delay/repeat will be relative to the end of this command.
 
 ## 21xx
 
@@ -124,11 +122,15 @@ Trigger note cut after `xx` ticks.
 
 ## 23xx
 
-Trigger note on after `xx` ticks.
+Trigger note on after `xx` ticks. This note on is neither legato nor staccato, and supersedes the legato/staccato column value.
+
+This command does not delay the natural note on, just retriggers it.
 
 ## 24xx
 
-Trigger note stop+on after `xx` ticks.
+Fully retriggers the note, envelope and wave generators, after `xx` ticks.
+
+This command does not delay the natural note on, just retriggers it.
 
 ## 25xx
 
@@ -136,7 +138,7 @@ Send note on every `xx` ticks.
 
 ## 26xx
 
-Send note stop+on every `xx` ticks.
+Fully retriggers the note, envelope and wave generators, every `xx` ticks.
 
 
 

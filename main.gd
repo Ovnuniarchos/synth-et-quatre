@@ -1,8 +1,7 @@
 extends Control
 
 """
-TODO:	Trigger commands
-		Envelope commands
+TODO:	Envelope commands
 		Synth commands
 		Waveform deletion tests
 		Waves cleanup

@@ -103,7 +103,5 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 accent_color = Color( 1, 2, 1, 1 )
-pressed_icon = "Stop"
-unpressed_icon = "Play"
 [connection signal="tab_changed" from="Main/Tabs" to="." method="_on_tab_changed"]
 [connection signal="toggled" from="PanelContainer/PanelContainer/PlayButton" to="." method="_on_PlayButton_toggled"]

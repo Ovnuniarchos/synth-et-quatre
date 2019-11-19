@@ -66,6 +66,8 @@ func _init()->void:
 			fx_vals.append([0,0,0,0,0])
 		elif i==FX_ARPEGGIO:
 			fx_vals.append([0,0,0])
+		elif i==FX_RPT_ON or i==FX_RPT_RETRIG:
+			fx_vals.append([0,0])
 		else:
 			fx_vals.append(0)
 
@@ -75,8 +77,10 @@ func process_tick(song:Song,channel:int,curr_order:int,curr_row:int,curr_tick:in
 	var fx_cmd:int
 	if curr_tick==0:
 		# Reset delay counters
-		for i in range(FX_DELAY,FX_RPT_RETRIG+1):
+		for i in range(FX_DELAY,FX_DLY_RETRIG+1):
 			fx_vals[i]=0
+		fx_vals[FX_RPT_ON][0]=0
+		fx_vals[FX_RPT_RETRIG][0]=0
 		internal_tick=0
 		#
 		var j:int=0
@@ -173,24 +177,12 @@ func process_tick_n(song:Song,channel:int)->void:
 		elif fx_cmd==FX_DLY_OFF or fx_cmd==FX_DLY_CUT\
 				or fx_cmd==FX_DLY_ON or fx_cmd==FX_DLY_RETRIG:
 			set_delayed_triggers(fx_cmd)
+		elif fx_cmd==FX_RPT_ON or fx_cmd==FX_RPT_RETRIG:
+			set_repeated_triggers(fx_cmd)
 	for i in range(4):
 		base_freqs[i]=pre_freqs[i]
 		freqs[i]=base_freqs[i]+arp_freqs[i]
 	arpeggio_tick=(arpeggio_tick+1)%3
-
-func set_delayed_triggers(fx_cmd:int)->void:
-	fx_vals[fx_cmd]-=1
-	if fx_vals[fx_cmd]<=0:
-		if fx_cmd==FX_DLY_OFF:
-			trigger=TRG_OFF
-		elif fx_cmd==FX_DLY_CUT:
-			trigger=TRG_STOP
-		elif fx_cmd==FX_DLY_ON:
-			trigger=TRG_ON
-			legato=LG_MODE.OFF
-		elif fx_cmd==FX_DLY_RETRIG:
-			trigger=TRG_ON
-			legato=LG_MODE.STACCATO
 
 func get_fx_cmd(c,i:int)->int:
 	if c!=null:
@@ -225,6 +217,9 @@ func get_fx_val(v,note,cmd:int,cmd_col:int)->int:
 	elif cmd==FX_DELAY:
 		fx_apply[cmd_col]=false
 		return v
+	elif cmd==FX_RPT_ON or cmd==FX_RPT_RETRIG:
+		fx_vals[cmd][0]=0
+		fx_vals[cmd][1]=v
 	else:
 		fx_vals[cmd]=v
 	fx_apply[cmd_col]=true
@@ -600,3 +595,31 @@ func set_panning(p)->void:
 	if p!=null:
 		panning_dirty=true
 		panning=p
+
+#
+
+
+func set_repeated_triggers(fx_cmd:int)->void:
+	fx_vals[fx_cmd][0]-=1
+	if fx_vals[fx_cmd][0]<=0:
+		fx_vals[fx_cmd][0]=fx_vals[fx_cmd][1]
+		if fx_cmd==FX_RPT_ON:
+			trigger=TRG_ON
+			legato=LG_MODE.OFF
+		elif fx_cmd==FX_RPT_RETRIG:
+			trigger=TRG_ON
+			legato=LG_MODE.STACCATO
+
+func set_delayed_triggers(fx_cmd:int)->void:
+	fx_vals[fx_cmd]-=1
+	if fx_vals[fx_cmd]<=0:
+		if fx_cmd==FX_DLY_OFF:
+			trigger=TRG_OFF
+		elif fx_cmd==FX_DLY_CUT:
+			trigger=TRG_STOP
+		elif fx_cmd==FX_DLY_ON:
+			trigger=TRG_ON
+			legato=LG_MODE.OFF
+		elif fx_cmd==FX_DLY_RETRIG:
+			trigger=TRG_ON
+			legato=LG_MODE.STACCATO

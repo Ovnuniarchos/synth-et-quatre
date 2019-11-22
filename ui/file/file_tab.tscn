@@ -22,6 +22,20 @@ margin_bottom = 20.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Save"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SaveWav" type="Button" parent="VBC"]
+margin_top = 128.0
+margin_right = 64.0
+margin_bottom = 151.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Save WAV"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Load" type="Button" parent="VBC"]
 margin_top = 32.0
@@ -53,6 +67,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 [connection signal="pressed" from="VBC/Save" to="." method="_on_Save_pressed"]
+[connection signal="pressed" from="VBC/SaveWav" to="." method="_on_SaveWav_pressed"]
 [connection signal="pressed" from="VBC/Load" to="." method="_on_Load_pressed"]
 [connection signal="pressed" from="VBC/CleanPats" to="." method="_on_CleanPats_pressed"]
 [connection signal="pressed" from="VBC/CleanInsts" to="." method="_on_CleanInsts_pressed"]

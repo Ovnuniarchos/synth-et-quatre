@@ -1,4 +1,5 @@
 extends Node
+class_name Synth
 
 const DEFAULT_VOLUME=1.0/32.0
 

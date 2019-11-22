@@ -14,19 +14,23 @@ const DEFAULT_VOLUME:int=255
 const DEFAULT_PAN:int=31
 
 var playing:bool
+var recording:bool
 var curr_sample:float
 var curr_tick:int
 var curr_row:int
 var curr_order:int
 var voices:Array
+var synth:Synth
 
-func _init()->void:
+
+func _init(syn:Synth)->void:
 	playing=false
 	curr_sample=0.0
 	curr_tick=0
 	curr_row=0
 	curr_order=0
 	voices.resize(Song.MAX_CHANNELS)
+	synth=syn
 	for i in range(Song.MAX_CHANNELS):
 		voices[i]=FmVoice.new()
 
@@ -37,6 +41,11 @@ func play(from:int=-1)->void:
 		curr_row=0
 		curr_sample=0.0
 	playing=true
+	recording=false
+
+func record(from:int=-1)->void:
+	play(from)
+	recording=true
 
 func pause()->void:
 	playing=!playing
@@ -47,7 +56,7 @@ func stop()->void:
 	curr_tick=0
 	curr_row=0
 	curr_sample=0.0
-	SYNTH.reset()
+	synth.reset()
 
 #
 
@@ -56,10 +65,10 @@ func _on_song_changed()->void:
 
 #
 
-func gen_commands(song:Song,mix_rate:float,buf_size:int,cmds:Array)->void:
+func gen_commands(song:Song,mix_rate:float,buf_size:int,cmds:Array)->bool:
 	if !playing:
 		cmds[0]=255
-		return
+		return false
 	var samples_tick:float=mix_rate/song.ticks_second
 	var ptr:int=0
 	var bs:float=0.0
@@ -77,7 +86,7 @@ func gen_commands(song:Song,mix_rate:float,buf_size:int,cmds:Array)->void:
 			bs=min(min(256.0,ibuf_size),floor(curr_sample))
 	if ibuf_size<=0:
 		cmds[last_wait]=CMD_END
-		return
+		return true
 	#
 	var spt:float
 	var dbs:float
@@ -92,7 +101,11 @@ func gen_commands(song:Song,mix_rate:float,buf_size:int,cmds:Array)->void:
 			curr_row=curr_row+1
 			if curr_row>=song.pattern_length:
 				curr_row=0
-				curr_order=(curr_order+1)%song.orders.size()
+				curr_order+=1
+				if curr_order>=song.orders.size():
+					curr_order=0
+					if recording:
+						return false
 			DEBUG.set_var("order",curr_order)
 			DEBUG.set_var("row",curr_row)
 			emit_signal("position_changed",curr_order,curr_row)
@@ -109,3 +122,4 @@ func gen_commands(song:Song,mix_rate:float,buf_size:int,cmds:Array)->void:
 			break
 	curr_sample=spt
 	cmds[last_wait]=CMD_END
+	return true

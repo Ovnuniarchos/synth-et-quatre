@@ -9,7 +9,11 @@ TODO:	Envelope commands
 		Global commands
 		Full play controls
 		Beautify file menu
-		Disk writer+WAV format saver
+		File selectors
+		Sound format selector
+		Export format selector
+		WAV writer error messages
+		File save/load errors
 """
 
 func _ready()->void:

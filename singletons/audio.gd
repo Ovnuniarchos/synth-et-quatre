@@ -2,11 +2,12 @@ extends AudioStreamPlayer
 
 signal buffer_sent(buffer)
 
-var tracker=Tracker.new()
+var tracker:Tracker
 
 var cmds:Array=Array()
 
 func _ready()->void:
+	tracker=Tracker.new(SYNTH)
 	SYNTH.set_mix_rate(stream.mix_rate)
 	GLOBALS.connect("song_changed",tracker,"_on_song_changed")
 	cmds.resize(65536)

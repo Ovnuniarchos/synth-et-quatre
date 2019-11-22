@@ -36,15 +36,15 @@ Slide vibrato intensity by `xx-128` millis/tick.
 
 ## 08xx
 
-Set vibrato to use LFO #`xx`.
+Set vibrato to use LFO #`xx`. This value is clamped to the range `0-3`.
 
 ## 09xx
 
-Set frequency multiplier to `xx+1`.
+Set frequency multiplier to `xx+1`. This value is clamped to the range `0-31`.
 
 ## 0Axx
 
-Set frequency divider to `xx+1`.
+Set frequency divider to `xx+1`. This value is clamped to the range `0-31`.
 
 ## 0Bxx
 
@@ -84,11 +84,11 @@ Set release rate to `xx`.
 
 ## 15xx
 
-Set key scale ratio to `xx`. This is truncated to the range `0-7`.
+Set key scale ratio to `xx`. This value is clamped to the range `0-7`.
 
 ## 16xx
 
-Set repeat mode to `xx`.
+Set repeat mode to `xx`. This value is clamped to the range `0-4`.
 
 ## 17xx
 
@@ -96,11 +96,7 @@ Set tremolo intensity from `1x` to `0x - 1x`.
 
 ## 18xx
 
-Slide tremolo intensity by `xx-128` units/tick.
-
-## 19xx
-
-Set tremolo to use LFO # `xx`.
+Set tremolo to use LFO # `xx`. This value is clamped to the range `0-3`.
 
 
 

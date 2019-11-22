@@ -1,8 +1,8 @@
 extends Control
 
 """
-TODO:	Envelope commands
-		Synth commands
+TODO:	Synth commands
+		Refactor opmask setters
 		Waveform deletion tests
 		Waves cleanup
 		Jump commands

@@ -73,7 +73,7 @@ public:
 				}
 				return noise_latch;
 			case USER:
-				if(wave==NULL) return 0L;
+				if(wave==NULL || (*wave)==NULL) return 0L;
 				tmp=(*wave)->wave[(phi>>(*wave)->size_shift)&(*wave)->size_mask];
 				return phi>=duty_cycle?tmp:-tmp;
 			default:

@@ -130,49 +130,57 @@ This command does not delay the natural note on, just retriggers it.
 
 ## 25xx
 
-Send note on every `xx` ticks.
+Resets the wave generator phase after `xx` ticks.
 
 ## 26xx
 
+Send note on every `xx` ticks.
+
+## 27xx
+
 Fully retriggers the note, envelope and wave generators, every `xx` ticks.
+
+## 28xx
+
+Resets the wave generator phase every `xx` ticks.
 
 
 
 # Synth commands
 
-## 3yxx
+## 30xx – 33xx
 
-Set modulation intensity from operator `y&3` to operator `y/4`, to ±`π*xx/127.5`. This command ignores the operator mask.
+Set modulation intensity from operator 1–4 to the operators selected by the operator mask, to ±`π*xx/127.5`.
 
-## 40xx
+## 34xx
 
-Set operator `y` output to `xx/2.55`%.
+Set operator output to `xx/2.55`%.
 
-## 41xx
-
-Set waveform phase to `xx/2.56`%.
-
-## 42xx
+## 35xx
 
 Set waveform #`xx`.
 
-## 43xx
+## 36xx
 
 Set waveform duty cycle to `xx/2.56`%.
+
+## 37xx
+
+Set waveform phase to `xx/2.56`%.
 
 
 
 # Jump commands
 
-## 50xx
+## 40xx
 
 Jump to order `xx`.
 
-## 51xx
+## 41xx
 
 Jump to next order, row `xx`.
 
-## 52xx
+## 42xx
 
 Delay playback by `xx` ticks.
 
@@ -181,26 +189,26 @@ Delay playback by `xx` ticks.
 
 # Global commands
 
-## 60xx
+## 50xx
 
 Set LFO waveform `xx`.
 
-## 61xx
+## 51xx
 
 Set LFO frequency to `xx`.
 
-## 62xx
+## 52xx
 
 Set LFO duty cycle to `xx/2.56`%.
 
-## 63xx
+## 53xx
 
 Set LFO phase to `xx/2.56`%.
 
-## 64xx
+## 54xx
 
 Set song speed to `xx` ticks/row.
 
-## 65xx
+## 55xx
 
 Set song speed to `xx` ticks/second.

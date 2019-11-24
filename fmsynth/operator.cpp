@@ -135,6 +135,7 @@ void Operator::key_off(){
 void Operator::stop(){
 	eg_phase=OFF;
 	eg_vol=0L;
+	phi=0L;
 	enabled=false;
 	on=false;
 }

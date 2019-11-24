@@ -1,9 +1,8 @@
 extends Control
 
 """
-TODO:	Synth commands
-		Refactor opmask setters
-		Waveform deletion tests
+TODO:	Waveform deletion tests
+		Clear waveform data on delete
 		Waves cleanup
 		Jump commands
 		Global commands

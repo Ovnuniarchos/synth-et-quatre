@@ -19,7 +19,7 @@
 09 vv oo hh ll
 : Set detune in voice `vv`, with operator mask `oo`, to `hh:ll` millis.
 0A vv oo nn
-: Set duty cycle high byte in voice `vv`, with operator mask `oo`, to `nn`. The duty cycle is then `duty_cycle/16777216`%.
+: Set duty cycle high byte in voice `vv`, with operator mask `oo`, to `nn`. The duty cycle is then `duty_cycle/167772.16`%.
 0B vv oo nn
 : Set wave in voice `vv`, with operator mask `oo`, to wave number `nn`. Waves 0-3 are internal. Waves 4+ are user-defined, and must be defined before use.
 0C vv nn

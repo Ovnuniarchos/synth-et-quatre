@@ -1,6 +1,7 @@
 extends Reference
 class_name Song
 
+
 signal wave_list_changed
 signal instrument_list_changed
 signal channels_changed
@@ -8,6 +9,7 @@ signal order_changed(order_ix,channel_ix)
 signal error(message)
 
 
+const FMVC=preload("res://classes/tracker/fm_voice_constants.gd")
 const WAVE=FmInstrument.WAVE
 const MIN_CHANNELS:int=1
 const MAX_CHANNELS:int=32
@@ -102,7 +104,17 @@ func can_delete_wave(wave:Waveform)->bool:
 			if (instrument_list[ins].waveforms[w]-MIN_CUSTOM_WAVE)==wave_ix:
 				emit_signal("error","Wave is in use by instrument %d operator %d."%[ins,w])
 				return false
-	# TODO: Scan pattern_list
+	wave_ix+=MIN_CUSTOM_WAVE
+	for chan in range(pattern_list.size()):
+		for pat in range(pattern_list[chan].size()):
+			for note in range(pattern_list[chan][pat].notes.size()):
+				for col in range(Pattern.MIN_FX_COL,Pattern.MAX_ATTR,3):
+					var cmd=pattern_list[chan][pat].notes[note][col]
+					if cmd!=FMVC.FX_WAVE_SET and cmd!=FMVC.FX_LFO_WAVE_SET:
+						continue
+					if pattern_list[chan][pat].notes[note][col+2]==wave_ix:
+						emit_signal("error","Wave is in use on pattern %d of channel %d, row %d."%[pat,chan,note])
+						return false
 	return true
 
 func get_wave(index:int)->Waveform:

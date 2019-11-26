@@ -12,11 +12,7 @@ func _ready()->void:
 
 func _on_song_changed()->void:
 	GLOBALS.song.connect("instrument_list_changed",self,"update_ui")
-	GLOBALS.song.connect("error",self,"_on_song_error")
 	update_ui()
-
-func _on_song_error(message:String)->void:
-	ALERT.alert(message)
 
 func update_ui()->void:
 	inst_l=$Instruments

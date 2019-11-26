@@ -8,11 +8,12 @@ var curr_wave_ix:int=-1
 
 func _ready()->void:
 	GLOBALS.connect("song_changed",self,"_on_song_changed")
-	update_ui()
-	emit_signal("wave_selected",-1)
+	_on_song_changed()
 
 func _on_song_changed()->void:
+	GLOBALS.song.connect("wave_list_changed",self,"update_ui")
 	curr_wave_ix=-1
+	emit_signal("wave_selected",-1)
 	update_ui()
 
 func update_ui()->void:
@@ -46,8 +47,6 @@ func _on_Del_pressed()->void:
 				curr_wave_ix=GLOBALS.song.wave_list.size()-1
 			emit_signal("wave_selected",curr_wave_ix)
 			set_buttons()
-		else:
-			pass # TODO: ALARM
 
 func _on_Copy_pressed()->void:
 	var w:Waveform=GLOBALS.song.get_wave(curr_wave_ix)
@@ -61,8 +60,6 @@ func _on_Copy_pressed()->void:
 		$Waves.select(cnt)
 		$Waves.ensure_current_is_visible()
 		emit_signal("wave_selected",cnt)
-	else:
-		pass # TODO: ALARM
 	set_buttons()
 
 func _on_Add_pressed()->void:
@@ -78,8 +75,6 @@ func _on_Add_pressed()->void:
 		$Waves.select(cnt)
 		$Waves.ensure_current_is_visible()
 		emit_signal("wave_selected",cnt)
-	else:
-		pass # TODO: ALARM
 	set_buttons()
 
 func _on_name_changed(wave:int,text:String)->void:

@@ -1,8 +1,7 @@
 extends Control
 
 """
-TODO:	Waveform deletion tests
-		Clear waveform data on delete
+TODO:	Clear waveform data on delete
 		Waves cleanup
 		Jump commands
 		Global commands

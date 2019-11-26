@@ -1,37 +1,11 @@
 extends FmInstrument
 class_name FmVoice
 
-enum{
-	CMD_FREQ=0x01, CMD_KEYON, CMD_KEYON_LEGATO, CMD_KEYOFF, CMD_STOP, CMD_ENABLE,
-	CMD_MULT=0x07, CMD_DIV, CMD_DET, CMD_DUC,
-	CMD_WAV=0x0B,
-	CMD_VEL=0x0C, CMD_AR, CMD_DR, CMD_SL, CMD_SR, CMD_RR, CMD_RM, CMD_KSR,
-	CMD_PM=0x14, CMD_OUT,
-	CMD_PAN=0x16,
-	CMD_PHI=0x17,
-	CMD_AMS=0x18, CMD_AML, CMD_FMS, CMD_FML,
-	CMD_LFO_FREQ=0x1C, CMD_LFO_WAVE, CMD_LFO_DUC
-}
-enum{
-	FX_FRQ_SET=0x00, FX_FRQ_ADJ, FX_FRQ_SLIDE, FX_FRQ_PORTA, FX_ARPEGGIO,
-	FX_FMS_SET, FX_FMS_ADJ, FX_FMS_SLIDE, FX_FMS_LFO,
-	FX_MUL_SET, FX_DIV_SET,
-	FX_DET_SET, FX_DET_ADJ, FX_DET_SLIDE,
-	FX_ATK_SET=0x10, FX_DEC_SET, FX_SUL_SET, FX_SUR_SET, FX_REL_SET,
-	FX_KS_SET, FX_RPM_SET, FX_AMS_SET, FX_AMS_LFO,
-	FX_DELAY=0x20, FX_DLY_OFF, FX_DLY_CUT, FX_DLY_ON, FX_DLY_RETRIG, FX_DLY_PHI0,
-	FX_RPT_ON, FX_RPT_RETRIG, FX_RPT_PHI0,
-	FX_MOD_SET_MIN=0x30, FX_MOD_SET_MAX=0x33, FX_OUT_SET,
-	FX_WAVE_SET, FX_DUC_SET, FX_PHI_SET
-	FX_DEBUG=0xFF
-}
-enum{
-	TRG_KEEP, TRG_ON, TRG_OFF, TRG_STOP
-}
+const CONSTS=preload("res://classes/tracker/fm_voice_constants.gd")
 const ATTRS=Pattern.ATTRS
 const LG_MODE=Pattern.LEGATO_MODE
 
-var trigger:int=TRG_KEEP
+var trigger:int=CONSTS.TRG_KEEP
 # Index by track
 var fx_cmds:Array=[0,0,0,0]
 var fx_opmasks:Array=[0,0,0,0]
@@ -102,11 +76,11 @@ var phases:Array=[0,0,0,0]
 
 func _init()->void:
 	for i in range(256):
-		if i==FX_FRQ_PORTA:
+		if i==CONSTS.FX_FRQ_PORTA:
 			fx_vals.append([0,0,0,0,0])
-		elif i==FX_ARPEGGIO:
+		elif i==CONSTS.FX_ARPEGGIO:
 			fx_vals.append([0,0,0])
-		elif i==FX_RPT_ON or i==FX_RPT_RETRIG or i==FX_RPT_PHI0:
+		elif i==CONSTS.FX_RPT_ON or i==CONSTS.FX_RPT_RETRIG or i==CONSTS.FX_RPT_PHI0:
 			fx_vals.append([0,0])
 		else:
 			fx_vals.append(0)
@@ -117,37 +91,37 @@ func process_tick(song:Song,channel:int,curr_order:int,curr_row:int,curr_tick:in
 	var fx_cmd:int
 	if curr_tick==0:
 		# Reset delay counters
-		for i in range(FX_DELAY,FX_DLY_RETRIG+1):
+		for i in range(CONSTS.FX_DELAY,CONSTS.FX_DLY_RETRIG+1):
 			fx_vals[i]=0
-		fx_vals[FX_RPT_ON][0]=0
-		fx_vals[FX_RPT_RETRIG][0]=0
+		fx_vals[CONSTS.FX_RPT_ON][0]=0
+		fx_vals[CONSTS.FX_RPT_RETRIG][0]=0
 		internal_tick=0
 		#
 		var j:int=0
 		for i in range(song.num_fxs[channel]):
 			fx_cmd=get_fx_cmd(note[ATTRS.FX0+j],i)
-			if fx_cmd==FX_DELAY:
-				fx_vals[FX_DELAY]=get_fx_val(note[ATTRS.FV0+j],note[ATTRS.NOTE],fx_cmd,i)
+			if fx_cmd==CONSTS.FX_DELAY:
+				fx_vals[CONSTS.FX_DELAY]=get_fx_val(note[ATTRS.FV0+j],note[ATTRS.NOTE],fx_cmd,i)
 			j+=3
-	if fx_vals[FX_DELAY]==0:
+	if fx_vals[CONSTS.FX_DELAY]==0:
 		if internal_tick==0:
 			process_tick_0(note,song,song.num_fxs[channel])
 		else:
 			process_tick_n(song,channel)
 		internal_tick+=1
 	else:
-		fx_vals[FX_DELAY]-=1
+		fx_vals[CONSTS.FX_DELAY]-=1
 
 func process_tick_0(note:Array,song:Song,num_fxs:int)->void:
 	legato=0 if note[ATTRS.LG_MODE]==null else note[ATTRS.LG_MODE]
 	if note[ATTRS.NOTE]!=null:
 		if note[ATTRS.NOTE]>=0:
-			trigger=TRG_ON
+			trigger=CONSTS.TRG_ON
 			set_frequency(note[ATTRS.NOTE]*100)
 		elif note[ATTRS.NOTE]==-1:
-			trigger=TRG_OFF
+			trigger=CONSTS.TRG_OFF
 		else:
-			trigger=TRG_STOP
+			trigger=CONSTS.TRG_STOP
 	if note[ATTRS.INSTR]!=null:
 		set_instrument(song.get_instrument(note[ATTRS.INSTR]) as FmInstrument)
 	set_velocity(note[ATTRS.VOL])
@@ -170,58 +144,58 @@ func process_tick_0(note:Array,song:Song,num_fxs:int)->void:
 				fx_opmasks[i]=fx_opm
 			else:
 				fx_opm=fx_opmasks[i]
-			if fx_cmd==FX_FRQ_SET:
+			if fx_cmd==CONSTS.FX_FRQ_SET:
 				set_frequency(fx_val,fx_opm)
-			elif fx_cmd==FX_FRQ_ADJ or fx_cmd==FX_FRQ_SLIDE:
+			elif fx_cmd==CONSTS.FX_FRQ_ADJ or fx_cmd==CONSTS.FX_FRQ_SLIDE:
 				slide_frequency(fx_val,fx_opm)
-			elif fx_cmd==FX_FRQ_PORTA:
+			elif fx_cmd==CONSTS.FX_FRQ_PORTA:
 				slide_frequency_to(fx_val,fx_opm)
-			elif fx_cmd==FX_ARPEGGIO:
+			elif fx_cmd==CONSTS.FX_ARPEGGIO:
 				freqs_dirty_any=set_opmasked(fx_vals[0x04][arpeggio_tick],\
 						arp_freqs,freqs_dirty,fx_opm)
-			elif fx_cmd==FX_FMS_SET:
+			elif fx_cmd==CONSTS.FX_FMS_SET:
 				fms_dirty_any=set_opmasked(fx_val,fm_intensity,fms_dirty,fx_opm)
-			elif fx_cmd==FX_FMS_ADJ or fx_cmd==FX_FMS_SLIDE:
+			elif fx_cmd==CONSTS.FX_FMS_ADJ or fx_cmd==CONSTS.FX_FMS_SLIDE:
 				slide_fms(fx_val,fx_opm)
-			elif fx_cmd==FX_FMS_LFO:
+			elif fx_cmd==CONSTS.FX_FMS_LFO:
 				fml_dirty_any=set_opmasked(fx_val,fm_lfo,fml_dirty,fx_opm)
-			elif fx_cmd==FX_MUL_SET:
+			elif fx_cmd==CONSTS.FX_MUL_SET:
 				multiplier_dirty_any=set_opmasked(fx_val,multipliers,multiplier_dirty,fx_opm)
-			elif fx_cmd==FX_DIV_SET:
+			elif fx_cmd==CONSTS.FX_DIV_SET:
 				divider_dirty_any=set_opmasked(fx_val,dividers,divider_dirty,fx_opm)
-			elif fx_cmd==FX_DET_SET:
+			elif fx_cmd==CONSTS.FX_DET_SET:
 				detune_dirty_any=set_opmasked(fx_val,detunes,detune_dirty,fx_opm)
-			elif fx_cmd==FX_DET_ADJ or fx_cmd==FX_DET_SLIDE:
+			elif fx_cmd==CONSTS.FX_DET_ADJ or fx_cmd==CONSTS.FX_DET_SLIDE:
 				slide_detune(fx_val,fx_opm)
-			elif fx_cmd==FX_ATK_SET:
+			elif fx_cmd==CONSTS.FX_ATK_SET:
 				attack_dirty_any=set_opmasked(fx_val,attacks,attack_dirty,fx_opm)
-			elif fx_cmd==FX_DEC_SET:
+			elif fx_cmd==CONSTS.FX_DEC_SET:
 				decay_dirty_any=set_opmasked(fx_val,decays,decay_dirty,fx_opm)
-			elif fx_cmd==FX_SUL_SET:
+			elif fx_cmd==CONSTS.FX_SUL_SET:
 				suslev_dirty_any=set_opmasked(fx_val,sustain_levels,suslev_dirty,fx_opm)
-			elif fx_cmd==FX_SUR_SET:
+			elif fx_cmd==CONSTS.FX_SUR_SET:
 				susrate_dirty_any=set_opmasked(fx_val,sustains,susrate_dirty,fx_opm)
-			elif fx_cmd==FX_REL_SET:
+			elif fx_cmd==CONSTS.FX_REL_SET:
 				release_dirty_any=set_opmasked(fx_val,releases,release_dirty,fx_opm)
-			elif fx_cmd==FX_KS_SET:
+			elif fx_cmd==CONSTS.FX_KS_SET:
 				ksr_dirty_any=set_opmasked(fx_val,key_scalers,ksr_dirty,fx_opm)
-			elif fx_cmd==FX_RPM_SET:
+			elif fx_cmd==CONSTS.FX_RPM_SET:
 				repeat_dirty_any=set_opmasked(fx_val,repeats,repeat_dirty,fx_opm)
-			elif fx_cmd==FX_AMS_SET:
+			elif fx_cmd==CONSTS.FX_AMS_SET:
 				ams_dirty_any=set_opmasked(fx_val,am_intensity,ams_dirty,fx_opm)
-			elif fx_cmd==FX_AMS_LFO:
+			elif fx_cmd==CONSTS.FX_AMS_LFO:
 				aml_dirty_any=set_opmasked(fx_val,am_lfo,aml_dirty,fx_opm)
-			elif fx_cmd>=FX_MOD_SET_MIN and fx_cmd<=FX_MOD_SET_MAX:
+			elif fx_cmd>=CONSTS.FX_MOD_SET_MIN and fx_cmd<=CONSTS.FX_MOD_SET_MAX:
 				set_fm_level(fx_val,fx_cmd&3,fx_opm)
-			elif fx_cmd==FX_OUT_SET:
+			elif fx_cmd==CONSTS.FX_OUT_SET:
 				set_output(fx_val,fx_opm)
-			elif fx_cmd==FX_WAVE_SET:
+			elif fx_cmd==CONSTS.FX_WAVE_SET:
 				wave_dirty_any=set_opmasked(fx_val,waveforms,wave_dirty,fx_opm)
-			elif fx_cmd==FX_DUC_SET:
+			elif fx_cmd==CONSTS.FX_DUC_SET:
 				duty_cycle_dirty_any=set_opmasked(fx_val,duty_cycles,duty_cycle_dirty,fx_opm)
-			elif fx_cmd==FX_PHI_SET:
+			elif fx_cmd==CONSTS.FX_PHI_SET:
 				phase_dirty_any=set_opmasked(fx_val,phases,phase_dirty,fx_opm)
-			elif fx_cmd==FX_DEBUG:
+			elif fx_cmd==CONSTS.FX_DEBUG:
 				breakpoint
 		j+=3
 	for i in range(4):
@@ -235,25 +209,25 @@ func process_tick_n(song:Song,channel:int)->void:
 		if not fx_apply[i]:
 			continue
 		fx_cmd=fx_cmds[i]
-		if fx_cmd==FX_FRQ_SLIDE:
-			slide_frequency(fx_vals[FX_FRQ_SLIDE],fx_opmasks[i])
-		elif fx_cmd==FX_FRQ_PORTA:
-			slide_frequency_to(fx_vals[FX_FRQ_PORTA],fx_opmasks[i])
-		elif fx_cmd==FX_ARPEGGIO:
+		if fx_cmd==CONSTS.FX_FRQ_SLIDE:
+			slide_frequency(fx_vals[CONSTS.FX_FRQ_SLIDE],fx_opmasks[i])
+		elif fx_cmd==CONSTS.FX_FRQ_PORTA:
+			slide_frequency_to(fx_vals[CONSTS.FX_FRQ_PORTA],fx_opmasks[i])
+		elif fx_cmd==CONSTS.FX_ARPEGGIO:
 			freqs_dirty_any=set_opmasked(fx_vals[0x04][arpeggio_tick],\
 					arp_freqs,freqs_dirty,fx_opmasks[i])
-		elif fx_cmd==FX_FMS_SLIDE:
-			slide_fms(fx_vals[FX_FMS_SLIDE],fx_opmasks[i])
-		elif fx_cmd==FX_DET_SLIDE:
-			slide_detune(fx_vals[FX_DET_SLIDE],fx_opmasks[i])
-		elif fx_cmd==FX_DLY_OFF or fx_cmd==FX_DLY_CUT\
-				or fx_cmd==FX_DLY_ON or fx_cmd==FX_DLY_RETRIG:
+		elif fx_cmd==CONSTS.FX_FMS_SLIDE:
+			slide_fms(fx_vals[CONSTS.FX_FMS_SLIDE],fx_opmasks[i])
+		elif fx_cmd==CONSTS.FX_DET_SLIDE:
+			slide_detune(fx_vals[CONSTS.FX_DET_SLIDE],fx_opmasks[i])
+		elif fx_cmd==CONSTS.FX_DLY_OFF or fx_cmd==CONSTS.FX_DLY_CUT\
+				or fx_cmd==CONSTS.FX_DLY_ON or fx_cmd==CONSTS.FX_DLY_RETRIG:
 			set_delayed_triggers(fx_cmd)
-		elif fx_cmd==FX_DLY_PHI0:
+		elif fx_cmd==CONSTS.FX_DLY_PHI0:
 			set_delayed_phi_zero(fx_opmasks[i])
-		elif fx_cmd==FX_RPT_ON or fx_cmd==FX_RPT_RETRIG:
+		elif fx_cmd==CONSTS.FX_RPT_ON or fx_cmd==CONSTS.FX_RPT_RETRIG:
 			set_repeated_triggers(fx_cmd)
-		elif fx_cmd==FX_RPT_PHI0:
+		elif fx_cmd==CONSTS.FX_RPT_PHI0:
 			set_repeated_phi_zero(fx_opmasks[i])
 	for i in range(4):
 		base_freqs[i]=pre_freqs[i]
@@ -269,15 +243,15 @@ func get_fx_cmd(c,i:int)->int:
 func get_fx_val(v,note,cmd:int,cmd_col:int)->int:
 	if v==null:
 		return fx_vals[cmd]
-	if cmd==FX_FRQ_SET:
+	if cmd==CONSTS.FX_FRQ_SET:
 		fx_vals[cmd]=clamp(v*50,-200,13000)
-	elif cmd==FX_DET_SET:
+	elif cmd==CONSTS.FX_DET_SET:
 		fx_vals[cmd]=clamp((v-128)*100,-12000,12000)
-	elif cmd==FX_FRQ_ADJ or cmd==FX_FRQ_SLIDE\
-			or cmd==FX_FMS_ADJ or cmd==FX_FMS_SLIDE\
-			or cmd==FX_DET_ADJ or cmd==FX_DET_SLIDE:
+	elif cmd==CONSTS.FX_FRQ_ADJ or cmd==CONSTS.FX_FRQ_SLIDE\
+			or cmd==CONSTS.FX_FMS_ADJ or cmd==CONSTS.FX_FMS_SLIDE\
+			or cmd==CONSTS.FX_DET_ADJ or cmd==CONSTS.FX_DET_SLIDE:
 		fx_vals[cmd]=v-128
-	elif cmd==FX_FRQ_PORTA:
+	elif cmd==CONSTS.FX_FRQ_PORTA:
 		fx_vals[cmd][0]=v
 		if note!=null:
 			note*=100
@@ -285,24 +259,24 @@ func get_fx_val(v,note,cmd:int,cmd_col:int)->int:
 			fx_vals[cmd][2]=note
 			fx_vals[cmd][3]=note
 			fx_vals[cmd][4]=note
-	elif cmd==FX_ARPEGGIO:
+	elif cmd==CONSTS.FX_ARPEGGIO:
 		fx_vals[cmd][1]=clamp((v>>4)*100,-200,13000)
 		fx_vals[cmd][2]=clamp((v&15)*100,-200,13000)
-	elif cmd==FX_FMS_SET:
+	elif cmd==CONSTS.FX_FMS_SET:
 		fx_vals[cmd]=clamp(v*50,0,12000)
-	elif cmd==FX_FMS_LFO or cmd==FX_AMS_LFO:
+	elif cmd==CONSTS.FX_FMS_LFO or cmd==CONSTS.FX_AMS_LFO:
 		fx_vals[cmd]=clamp(v,0,3)
-	elif cmd==FX_MUL_SET or cmd==FX_DIV_SET:
+	elif cmd==CONSTS.FX_MUL_SET or cmd==CONSTS.FX_DIV_SET:
 		fx_vals[cmd]=clamp(v,0,31)
-	elif cmd==FX_DELAY:
+	elif cmd==CONSTS.FX_DELAY:
 		fx_apply[cmd_col]=false
 		return v
-	elif cmd==FX_RPT_ON or cmd==FX_RPT_RETRIG or cmd==FX_RPT_PHI0:
+	elif cmd==CONSTS.FX_RPT_ON or cmd==CONSTS.FX_RPT_RETRIG or cmd==CONSTS.FX_RPT_PHI0:
 		fx_vals[cmd][0]=0
 		fx_vals[cmd][1]=v
-	elif cmd==FX_KS_SET:
+	elif cmd==CONSTS.FX_KS_SET:
 		fx_vals[cmd]=clamp(v,0,7)
-	elif cmd==FX_RPM_SET:
+	elif cmd==CONSTS.FX_RPM_SET:
 		fx_vals[cmd]=clamp(v,0,4)
 	else:
 		fx_vals[cmd]=v
@@ -314,56 +288,56 @@ func get_fx_val(v,note,cmd:int,cmd_col:int)->int:
 func commit(channel:int,cmds:Array,ptr:int)->int:
 	if instrument_dirty:
 		ptr=commit_instrument(channel,cmds,ptr)
-	if trigger>TRG_KEEP:
+	if trigger>CONSTS.TRG_KEEP:
 		ptr=commit_retrigger(channel,cmds,ptr)
 	if freqs_dirty_any:
-		ptr=commit_opmasked_16(channel,cmds,ptr,CMD_FREQ,freqs_dirty,freqs)
+		ptr=commit_opmasked_16(channel,cmds,ptr,CONSTS.CMD_FREQ,freqs_dirty,freqs)
 		freqs_dirty_any=false
 	if velocity_dirty:
 		ptr=commit_velocity(channel,cmds,ptr)
 	if panning_dirty:
 		ptr=commit_panning(channel,cmds,ptr)
 	if fms_dirty_any:
-		ptr=commit_opmasked_16(channel,cmds,ptr,CMD_FMS,fms_dirty,fm_intensity)
+		ptr=commit_opmasked_16(channel,cmds,ptr,CONSTS.CMD_FMS,fms_dirty,fm_intensity)
 		fms_dirty_any=false
 	if fml_dirty_any:
-		ptr=commit_opmasked_16(channel,cmds,ptr,CMD_FML,fml_dirty,fm_lfo)
+		ptr=commit_opmasked_16(channel,cmds,ptr,CONSTS.CMD_FML,fml_dirty,fm_lfo)
 		fml_dirty_any=false
 	if multiplier_dirty_any:
-		ptr=commit_opmasked_8(channel,cmds,ptr,CMD_MULT,multiplier_dirty,multipliers)
+		ptr=commit_opmasked_8(channel,cmds,ptr,CONSTS.CMD_MULT,multiplier_dirty,multipliers)
 		multiplier_dirty_any=false
 	if divider_dirty_any:
-		ptr=commit_opmasked_8(channel,cmds,ptr,CMD_DIV,divider_dirty,dividers)
+		ptr=commit_opmasked_8(channel,cmds,ptr,CONSTS.CMD_DIV,divider_dirty,dividers)
 		divider_dirty_any=false
 	if detune_dirty_any:
-		ptr=commit_opmasked_16(channel,cmds,ptr,CMD_DET,detune_dirty,detunes)
+		ptr=commit_opmasked_16(channel,cmds,ptr,CONSTS.CMD_DET,detune_dirty,detunes)
 		detune_dirty_any=false
 	if attack_dirty_any:
-		ptr=commit_opmasked_8(channel,cmds,ptr,CMD_AR,attack_dirty,attacks)
+		ptr=commit_opmasked_8(channel,cmds,ptr,CONSTS.CMD_AR,attack_dirty,attacks)
 		attack_dirty_any=false
 	if decay_dirty_any:
-		ptr=commit_opmasked_8(channel,cmds,ptr,CMD_DR,decay_dirty,decays)
+		ptr=commit_opmasked_8(channel,cmds,ptr,CONSTS.CMD_DR,decay_dirty,decays)
 		decay_dirty_any=false
 	if suslev_dirty_any:
-		ptr=commit_opmasked_8(channel,cmds,ptr,CMD_SL,suslev_dirty,sustain_levels)
+		ptr=commit_opmasked_8(channel,cmds,ptr,CONSTS.CMD_SL,suslev_dirty,sustain_levels)
 		suslev_dirty_any=false
 	if susrate_dirty_any:
-		ptr=commit_opmasked_8(channel,cmds,ptr,CMD_SR,susrate_dirty,sustains)
+		ptr=commit_opmasked_8(channel,cmds,ptr,CONSTS.CMD_SR,susrate_dirty,sustains)
 		susrate_dirty_any=false
 	if release_dirty_any:
-		ptr=commit_opmasked_8(channel,cmds,ptr,CMD_RR,release_dirty,releases)
+		ptr=commit_opmasked_8(channel,cmds,ptr,CONSTS.CMD_RR,release_dirty,releases)
 		release_dirty_any=false
 	if ksr_dirty_any:
-		ptr=commit_opmasked_8(channel,cmds,ptr,CMD_KSR,ksr_dirty,key_scalers)
+		ptr=commit_opmasked_8(channel,cmds,ptr,CONSTS.CMD_KSR,ksr_dirty,key_scalers)
 		ksr_dirty_any=false
 	if repeat_dirty_any:
-		ptr=commit_opmasked_8(channel,cmds,ptr,CMD_RM,repeat_dirty,repeats)
+		ptr=commit_opmasked_8(channel,cmds,ptr,CONSTS.CMD_RM,repeat_dirty,repeats)
 		repeat_dirty_any=false
 	if ams_dirty_any:
-		ptr=commit_opmasked_8(channel,cmds,ptr,CMD_AMS,ams_dirty,am_intensity)
+		ptr=commit_opmasked_8(channel,cmds,ptr,CONSTS.CMD_AMS,ams_dirty,am_intensity)
 		ams_dirty_any=false
 	if aml_dirty_any:
-		ptr=commit_opmasked_8(channel,cmds,ptr,CMD_AML,aml_dirty,am_lfo)
+		ptr=commit_opmasked_8(channel,cmds,ptr,CONSTS.CMD_AML,aml_dirty,am_lfo)
 		aml_dirty_any=false
 	for i in range(4):
 		if fm_level_dirty_any[i]:
@@ -371,13 +345,13 @@ func commit(channel:int,cmds:Array,ptr:int)->int:
 	if output_dirty_any:
 		ptr=commit_output(channel,cmds,ptr)
 	if wave_dirty_any:
-		ptr=commit_opmasked_8(channel,cmds,ptr,CMD_WAV,wave_dirty,waveforms)
+		ptr=commit_opmasked_8(channel,cmds,ptr,CONSTS.CMD_WAV,wave_dirty,waveforms)
 		wave_dirty_any=false
 	if duty_cycle_dirty_any:
-		ptr=commit_opmasked_8(channel,cmds,ptr,CMD_DUC,duty_cycle_dirty,duty_cycles)
+		ptr=commit_opmasked_8(channel,cmds,ptr,CONSTS.CMD_DUC,duty_cycle_dirty,duty_cycles)
 		duty_cycle_dirty_any=false
 	if phase_dirty_any:
-		ptr=commit_opmasked_8(channel,cmds,ptr,CMD_PHI,phase_dirty,phases)
+		ptr=commit_opmasked_8(channel,cmds,ptr,CONSTS.CMD_PHI,phase_dirty,phases)
 		phase_dirty_any=false
 	return ptr
 
@@ -385,7 +359,7 @@ func commit_output(channel:int,cmds:Array,ptr:int)->int:
 	for i in range(4):
 		if output_dirty[i]:
 			output_dirty[i]=false
-			cmds[ptr]=CMD_OUT
+			cmds[ptr]=CONSTS.CMD_OUT
 			cmds[ptr+1]=channel
 			cmds[ptr+2]=1<<i
 			cmds[ptr+3]=routings[i][4]
@@ -399,7 +373,7 @@ func commit_fm_level(channel:int,cmds:Array,ptr:int,from:int,dirties:Array,value
 	for i in range(4):
 		if dirties[i]:
 			dirties[i]=false
-			cmds[ptr]=CMD_PM
+			cmds[ptr]=CONSTS.CMD_PM
 			cmds[ptr+1]=channel
 			cmds[ptr+2]=from
 			cmds[ptr+3]=values[i]
@@ -431,43 +405,43 @@ func commit_opmasked_16(channel:int,cmds:Array,ptr:int,cmd:int,dirties:Array,val
 	return ptr
 
 func commit_panning(channel:int,cmds:Array,ptr:int)->int:
-	cmds[ptr]=CMD_PAN
+	cmds[ptr]=CONSTS.CMD_PAN
 	cmds[ptr+1]=channel
 	cmds[ptr+2]=panning
 	panning_dirty=false
 	return ptr+3
 
 func commit_velocity(channel:int,cmds:Array,ptr:int)->int:
-	cmds[ptr]=CMD_VEL
+	cmds[ptr]=CONSTS.CMD_VEL
 	cmds[ptr+1]=channel
 	cmds[ptr+2]=velocity
 	velocity_dirty=false
 	return ptr+3
 
 func commit_retrigger(channel:int,cmds:Array,ptr:int)->int:
-	if trigger==TRG_OFF:
-		cmds[ptr]=CMD_KEYOFF
+	if trigger==CONSTS.TRG_OFF:
+		cmds[ptr]=CONSTS.CMD_KEYOFF
 		cmds[ptr+1]=channel
 		cmds[ptr+2]=15
 		return ptr+3
-	elif trigger==TRG_STOP:
-		cmds[ptr]=CMD_STOP
+	elif trigger==CONSTS.TRG_STOP:
+		cmds[ptr]=CONSTS.CMD_STOP
 		cmds[ptr+1]=channel
 		cmds[ptr+2]=15
 		return ptr+3
 	if freqs_dirty_any:
-		ptr=commit_opmasked_16(channel,cmds,ptr,CMD_FREQ,freqs_dirty,freqs)
+		ptr=commit_opmasked_16(channel,cmds,ptr,CONSTS.CMD_FREQ,freqs_dirty,freqs)
 		freqs_dirty_any=false
 	if legato==LG_MODE.STACCATO:
-		cmds[ptr]=CMD_STOP
+		cmds[ptr]=CONSTS.CMD_STOP
 		cmds[ptr+1]=channel
 		cmds[ptr+2]=15
 		ptr+=3
-	cmds[ptr]=CMD_KEYON_LEGATO if legato==LG_MODE.LEGATO else CMD_KEYON
+	cmds[ptr]=CONSTS.CMD_KEYON_LEGATO if legato==LG_MODE.LEGATO else CONSTS.CMD_KEYON
 	cmds[ptr+1]=channel
 	cmds[ptr+2]=op_mask
 	cmds[ptr+3]=velocity
-	trigger=TRG_KEEP
+	trigger=CONSTS.TRG_KEEP
 	velocity_dirty=false
 	return commit_panning(channel,cmds,ptr+4)
 
@@ -508,86 +482,86 @@ func commit_instrument(channel:int,cmds:Array,ptr:int)->int:
 		wave_dirty[i]=false
 		duty_cycle_dirty[i]=false
 		var opm:int=1<<i
-		cmds[ptr]=CMD_AR
+		cmds[ptr]=CONSTS.CMD_AR
 		cmds[ptr+1]=channel
 		cmds[ptr+2]=opm
 		cmds[ptr+3]=attacks[i]
-		cmds[ptr+4]=CMD_DR
+		cmds[ptr+4]=CONSTS.CMD_DR
 		cmds[ptr+5]=channel
 		cmds[ptr+6]=opm
 		cmds[ptr+7]=decays[i]
-		cmds[ptr+8]=CMD_SL
+		cmds[ptr+8]=CONSTS.CMD_SL
 		cmds[ptr+9]=channel
 		cmds[ptr+10]=opm
 		cmds[ptr+11]=sustain_levels[i]
-		cmds[ptr+12]=CMD_SR
+		cmds[ptr+12]=CONSTS.CMD_SR
 		cmds[ptr+13]=channel
 		cmds[ptr+14]=opm
 		cmds[ptr+15]=sustains[i]
-		cmds[ptr+16]=CMD_RR
+		cmds[ptr+16]=CONSTS.CMD_RR
 		cmds[ptr+17]=channel
 		cmds[ptr+18]=opm
 		cmds[ptr+19]=releases[i]
-		cmds[ptr+20]=CMD_RM
+		cmds[ptr+20]=CONSTS.CMD_RM
 		cmds[ptr+21]=channel
 		cmds[ptr+22]=opm
 		cmds[ptr+23]=repeats[i]
-		cmds[ptr+24]=CMD_WAV
+		cmds[ptr+24]=CONSTS.CMD_WAV
 		cmds[ptr+25]=channel
 		cmds[ptr+26]=opm
 		cmds[ptr+27]=waveforms[i]
-		cmds[ptr+28]=CMD_DUC
+		cmds[ptr+28]=CONSTS.CMD_DUC
 		cmds[ptr+29]=channel
 		cmds[ptr+30]=opm
 		cmds[ptr+31]=duty_cycles[i]
-		cmds[ptr+32]=CMD_MULT
+		cmds[ptr+32]=CONSTS.CMD_MULT
 		cmds[ptr+33]=channel
 		cmds[ptr+34]=opm
 		cmds[ptr+35]=multipliers[i]
-		cmds[ptr+36]=CMD_DIV
+		cmds[ptr+36]=CONSTS.CMD_DIV
 		cmds[ptr+37]=channel
 		cmds[ptr+38]=opm
 		cmds[ptr+39]=dividers[i]
-		cmds[ptr+40]=CMD_DET
+		cmds[ptr+40]=CONSTS.CMD_DET
 		cmds[ptr+41]=channel
 		cmds[ptr+42]=opm
 		cmds[ptr+43]=detunes[i]>>8
 		cmds[ptr+44]=detunes[i]&255
-		cmds[ptr+45]=CMD_FMS
+		cmds[ptr+45]=CONSTS.CMD_FMS
 		cmds[ptr+46]=channel
 		cmds[ptr+47]=1<<i
 		cmds[ptr+48]=fm_intensity[i]>>8
 		cmds[ptr+49]=fm_intensity[i]&255
-		cmds[ptr+50]=CMD_FML
+		cmds[ptr+50]=CONSTS.CMD_FML
 		cmds[ptr+51]=channel
 		cmds[ptr+52]=1<<i
 		cmds[ptr+53]=fm_lfo[i]
-		cmds[ptr+54]=CMD_AMS
+		cmds[ptr+54]=CONSTS.CMD_AMS
 		cmds[ptr+55]=channel
 		cmds[ptr+56]=1<<i
 		cmds[ptr+57]=am_intensity[i]
-		cmds[ptr+58]=CMD_AML
+		cmds[ptr+58]=CONSTS.CMD_AML
 		cmds[ptr+59]=channel
 		cmds[ptr+60]=1<<i
 		cmds[ptr+61]=am_lfo[i]
-		cmds[ptr+62]=CMD_KSR
+		cmds[ptr+62]=CONSTS.CMD_KSR
 		cmds[ptr+63]=channel
 		cmds[ptr+64]=1<<i
 		cmds[ptr+65]=key_scalers[i]
 		ptr+=62
 		for j in range(4):
 			fm_level_dirty[i][j]=false
-			cmds[ptr]=CMD_PM
+			cmds[ptr]=CONSTS.CMD_PM
 			cmds[ptr+1]=channel
 			cmds[ptr+2]=(i<<4)|j
 			cmds[ptr+3]=routings[i][j]
 			ptr+=4
-		cmds[ptr]=CMD_OUT
+		cmds[ptr]=CONSTS.CMD_OUT
 		cmds[ptr+1]=channel
 		cmds[ptr+2]=opm
 		cmds[ptr+3]=routings[i][4]
 		ptr+=4
-	cmds[ptr]=CMD_ENABLE
+	cmds[ptr]=CONSTS.CMD_ENABLE
 	cmds[ptr+1]=channel
 	cmds[ptr+2]=15
 	cmds[ptr+3]=op_mask
@@ -657,7 +631,7 @@ func set_frequency(f,op_mask:int=-1)->void:
 	for i in range(4):
 		if op_mask&1:
 			freqs_dirty[i]=true
-			fx_vals[FX_FRQ_PORTA][1+i]=f
+			fx_vals[CONSTS.FX_FRQ_PORTA][1+i]=f
 			if set_now:
 				pre_freqs[i]=f
 		op_mask>>=1
@@ -670,7 +644,7 @@ func slide_frequency(d,op_mask:int)->void:
 		if op_mask&1:
 			freqs_dirty[i]=true
 			pre_freqs[i]=clamp(pre_freqs[i]+d,-200,13000)
-			fx_vals[FX_FRQ_PORTA][1+i]=clamp(fx_vals[FX_FRQ_PORTA][1+i]+d,-200,13000)
+			fx_vals[CONSTS.FX_FRQ_PORTA][1+i]=clamp(fx_vals[CONSTS.FX_FRQ_PORTA][1+i]+d,-200,13000)
 		op_mask>>=1
 	freqs_dirty_any=true
 
@@ -727,31 +701,31 @@ func set_repeated_triggers(fx_cmd:int)->void:
 	fx_vals[fx_cmd][0]-=1
 	if fx_vals[fx_cmd][0]<=0:
 		fx_vals[fx_cmd][0]=fx_vals[fx_cmd][1]
-		if fx_cmd==FX_RPT_ON:
-			trigger=TRG_ON
+		if fx_cmd==CONSTS.FX_RPT_ON:
+			trigger=CONSTS.TRG_ON
 			legato=LG_MODE.OFF
-		elif fx_cmd==FX_RPT_RETRIG:
-			trigger=TRG_ON
+		elif fx_cmd==CONSTS.FX_RPT_RETRIG:
+			trigger=CONSTS.TRG_ON
 			legato=LG_MODE.STACCATO
 
 func set_delayed_triggers(fx_cmd:int)->void:
 	fx_vals[fx_cmd]-=1
 	if fx_vals[fx_cmd]<=0:
-		if fx_cmd==FX_DLY_OFF:
-			trigger=TRG_OFF
-		elif fx_cmd==FX_DLY_CUT:
-			trigger=TRG_STOP
-		elif fx_cmd==FX_DLY_ON:
-			trigger=TRG_ON
+		if fx_cmd==CONSTS.FX_DLY_OFF:
+			trigger=CONSTS.TRG_OFF
+		elif fx_cmd==CONSTS.FX_DLY_CUT:
+			trigger=CONSTS.TRG_STOP
+		elif fx_cmd==CONSTS.FX_DLY_ON:
+			trigger=CONSTS.TRG_ON
 			legato=LG_MODE.OFF
-		elif fx_cmd==FX_DLY_RETRIG:
-			trigger=TRG_ON
+		elif fx_cmd==CONSTS.FX_DLY_RETRIG:
+			trigger=CONSTS.TRG_ON
 			legato=LG_MODE.STACCATO
 
 func set_repeated_phi_zero(op_mask:int)->void:
-	fx_vals[FX_RPT_PHI0][0]-=1
-	if fx_vals[FX_RPT_PHI0][0]<=0:
-		fx_vals[FX_RPT_PHI0][0]=fx_vals[FX_RPT_PHI0][1]
+	fx_vals[CONSTS.FX_RPT_PHI0][0]-=1
+	if fx_vals[CONSTS.FX_RPT_PHI0][0]<=0:
+		fx_vals[CONSTS.FX_RPT_PHI0][0]=fx_vals[CONSTS.FX_RPT_PHI0][1]
 	if (op_mask&15)==0:
 		return
 	for i in range(4):
@@ -762,8 +736,8 @@ func set_repeated_phi_zero(op_mask:int)->void:
 	phase_dirty_any=true
 
 func set_delayed_phi_zero(op_mask:int)->void:
-	fx_vals[FX_DLY_PHI0]-=1
-	if fx_vals[FX_DLY_PHI0]>0 or (op_mask&15)==0:
+	fx_vals[CONSTS.FX_DLY_PHI0]-=1
+	if fx_vals[CONSTS.FX_DLY_PHI0]>0 or (op_mask&15)==0:
 		return
 	for i in range(4):
 		if op_mask&1:

@@ -41,6 +41,7 @@ text = "Del"
 [node name="Waves" parent="." instance=ExtResource( 1 )]
 margin_top = 24.0
 margin_right = 1024.0
+offset = 4
 [connection signal="pressed" from="Buttons/Add" to="." method="_on_Add_pressed"]
 [connection signal="pressed" from="Buttons/Copy" to="." method="_on_Copy_pressed"]
 [connection signal="pressed" from="Buttons/Del" to="." method="_on_Del_pressed"]

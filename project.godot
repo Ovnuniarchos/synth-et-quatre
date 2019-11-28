@@ -114,6 +114,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://singletons/synth.gd"
 }, {
+"base": "Object",
+"class": "SynthTracker",
+"language": "NativeScript",
+"path": "res://fm_synth.gdns"
+}, {
 "base": "Waveform",
 "class": "SynthWave",
 "language": "GDScript",
@@ -171,6 +176,7 @@ _global_script_class_icons={
 "SineWave": "",
 "Song": "",
 "Synth": "",
+"SynthTracker": "",
 "SynthWave": "",
 "Tracker": "",
 "TriangleWave": "",

@@ -64,7 +64,7 @@ void FmSynth::set_wave(int wave_ix,godot::PoolRealArray wave){
 	UserWave *new_wave=new UserWave();
 	new_wave->size_mask=mask;
 	new_wave->size_shift=shift;
-	new_wave->wave=new FixedPoint[size];
+	new_wave->wave=(size==0)?NULL:new FixedPoint[size];
 	for(int i=0;i<size;i++){
 		new_wave->wave[i]=wave[i]*FP_ONE;
 	}

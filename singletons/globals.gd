@@ -22,8 +22,6 @@ func set_song(s:Song)->void:
 	song=s
 	curr_instrument=0
 	curr_order=0
-	for w in song.wave_list:
-		song.send_wave(w)
 	emit_signal("song_changed")
 
 func get_instrument(index:int=-1)->Instrument:

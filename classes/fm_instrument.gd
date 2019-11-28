@@ -68,8 +68,16 @@ func duplicate()->Instrument:
 	ni.routings=routings.duplicate(true)
 	return ni
 
-func uses_wave(w:Waveform)->bool:
-	return w in waveforms
+# Deprecated
+func uses_wave(w_ix:int)->bool:
+	return w_ix in waveforms
+
+func delete_waveform(w_ix:int)->void:
+	for i in range(4):
+		if waveforms[i]>=w_ix:
+			waveforms[i]-=1
+			if waveforms[i]==WAVE.NOISE:
+				waveforms[i]=WAVE.TRIANGLE
 
 #
 

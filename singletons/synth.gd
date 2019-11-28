@@ -5,6 +5,13 @@ const DEFAULT_VOLUME=1.0/32.0
 
 var synth=preload("res://fm_synth.gdns").new()
 
+func _ready()->void:
+	GLOBALS.connect("song_changed",self,"_on_song_changed")
+	_on_song_changed()
+
+func _on_song_changed()->void:
+	GLOBALS.song.sync_waves(self)
+
 #
 
 func generate(buffer_size:int,command_list:Array,global_volume:float=DEFAULT_VOLUME)->PoolVector2Array:

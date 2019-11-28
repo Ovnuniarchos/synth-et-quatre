@@ -6,7 +6,7 @@ var size_po2:int=8 setget set_size
 # warning-ignore:unused_class_variable
 var name:String=""
 
-func _init():
+func _init()->void:
 	resize_data(1<<size_po2)
 
 func set_size(s:int)->void:

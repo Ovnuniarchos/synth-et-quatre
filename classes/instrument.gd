@@ -9,5 +9,10 @@ func duplicate()->Instrument:
 	return ni
 
 # warning-ignore:unused_argument
-func uses_waveform(w:Waveform)->bool:
+# Deprecated
+func uses_waveform(w_ix:int)->bool:
 	return false
+
+# warning-ignore:unused_argument
+func delete_waveform(w_ix:int)->void:
+	pass

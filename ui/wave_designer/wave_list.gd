@@ -41,6 +41,7 @@ func _on_Del_pressed()->void:
 		if GLOBALS.song.can_delete_wave(w):
 			$Waves.remove_item(GLOBALS.song.find_wave(w))
 			GLOBALS.song.delete_wave(w)
+			GLOBALS.song.sync_waves(SYNTH,curr_wave_ix)
 			emit_signal("wave_deleted",curr_wave_ix)
 			$Waves.unselect_all()
 			if curr_wave_ix>=GLOBALS.song.wave_list.size():
@@ -55,6 +56,7 @@ func _on_Copy_pressed()->void:
 		var nw:Waveform=w.duplicate()
 		$Waves.add_item(nw.name)
 		GLOBALS.song.add_wave(nw)
+		GLOBALS.song.send_wave(nw,SYNTH)
 		emit_signal("wave_added",cnt)
 		curr_wave_ix=cnt
 		$Waves.select(cnt)
@@ -70,6 +72,7 @@ func _on_Add_pressed()->void:
 		var nw:Waveform=SynthWave.new()
 		nw.name=nn
 		GLOBALS.song.add_wave(nw)
+		GLOBALS.song.send_wave(nw,SYNTH)
 		emit_signal("wave_added",cnt)
 		curr_wave_ix=cnt
 		$Waves.select(cnt)

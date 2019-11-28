@@ -1,8 +1,7 @@
 extends Control
 
 """
-TODO:	Clear waveform data on delete
-		Waves cleanup
+TODO:	Waves cleanup
 		Jump commands
 		Global commands
 		Full play controls

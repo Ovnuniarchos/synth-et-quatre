@@ -29,7 +29,7 @@ func _on_SaveWav_pressed()->void:
 	var cmds:Array=[]
 	cmds.resize(65536)
 	synth.set_mix_rate(11025.0)
-	tracker.record()
+	GLOBALS.song.sync_waves(synth)
 	file.start_file(".songs/z.wav",false,11025)
 	while tracker.gen_commands(GLOBALS.song,11025.0,BUFFER_SIZE,cmds):
 		file.write_chunk(synth.generate(BUFFER_SIZE,cmds,1.0))

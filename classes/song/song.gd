@@ -79,8 +79,12 @@ func add_wave(wave:Waveform)->void:
 
 func delete_wave(wave:Waveform)->void:
 	if can_delete_wave(wave):
+		var ix:int=wave_list.find(wave)
+		for inst in instrument_list:
+			inst.delete_waveform(ix)
 		wave_list.erase(wave)
 		emit_signal("wave_list_changed")
+		emit_signal("instrument_list_changed")
 
 func can_add_wave()->bool:
 	if wave_list.size()<MAX_WAVES:
@@ -130,9 +134,22 @@ func find_wave_ref(wave:WeakRef)->int:
 		return -1
 	return wave_list.find(wave.get_ref() as Waveform)
 
-func send_wave(wave:Waveform)->void:
-	var wave_ix:int=wave_list.find(wave)
-	SYNTH.synth.set_wave(wave_ix+MIN_CUSTOM_WAVE,wave.data)
+func send_wave(wave:Waveform,synth:Synth,wave_ix:int=-1)->void:
+	wave_ix=wave_list.find(wave) if wave_ix==-1 else wave_ix
+	if wave_ix!=-1:
+		synth.synth.set_wave(wave_ix+MIN_CUSTOM_WAVE,wave.data)
+
+func sync_waves(synth:Synth,from:int=MIN_CUSTOM_WAVE)->void:
+	if synth==null:
+		return
+	var wave_ix:int=from
+	for wave in wave_list:
+		synth.synth.set_wave(wave_ix,wave.data)
+		wave_ix+=1
+	var null_wave:PoolRealArray=PoolRealArray()
+	while wave_ix<256:
+		synth.synth.set_wave(wave_ix,null_wave)
+		wave_ix+=1
 
 #
 

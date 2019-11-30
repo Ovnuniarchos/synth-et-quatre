@@ -1,7 +1,7 @@
 extends Reference
 class_name Song
 
-
+signal wave_changed(wave,wave_ix)
 signal wave_list_changed
 signal instrument_list_changed
 signal channels_changed
@@ -72,9 +72,16 @@ func _init(max_channels:int=MAX_CHANNELS,pat_length:int=DFL_PAT_LENGTH,fx_length
 
 #
 
+# warning-ignore:unused_argument
+func _on_wave_name_changed(wave:Waveform,name:String)->void:
+	var ix:int=wave_list.find(wave)
+	if ix!=-1:
+		emit_signal("wave_changed",wave,ix)
+
 func add_wave(wave:Waveform)->void:
 	if can_add_wave() and wave_list.find(wave)==-1:
 		wave_list.append(wave)
+		wave.connect("name_changed",self,"_on_wave_name_changed")
 		emit_signal("wave_list_changed")
 
 func delete_wave(wave:Waveform)->void:
@@ -451,6 +458,7 @@ func process_channel_list(inf:ChunkedFile,song:Song)->void:
 #
 
 func clean_patterns()->void:
+	# Capture used patterns and set an array of translations old->new
 	var pats_xform:Array=[]
 	for chan in range(num_channels):
 		var pats_chan:Array=[]
@@ -467,6 +475,7 @@ func clean_patterns()->void:
 			else:
 				pats_chan.append(null)
 		pats_xform.append(pats_chan)
+	# Scan the pattern list and translate old->new or remove unused
 	for chan in range(num_channels):
 		var newp
 		for oldp in range(pats_xform[chan].size()):
@@ -484,6 +493,7 @@ func clean_patterns()->void:
 func clean_instruments()->void:
 	var inst_xform:Array=[]
 	inst_xform.resize(instrument_list.size())
+	# Capture used instruments and set an array of translations old->new
 	var ninst:int=0
 	for chan in pattern_list:
 		for pat in chan:
@@ -498,6 +508,7 @@ func clean_instruments()->void:
 		instrument_list.resize(1)
 		emit_signal("instrument_list_changed")
 		return
+	# Scan the patterns to change old->new
 	for chan in pattern_list:
 		for pat in chan:
 			for note in range(pat.notes.size()):
@@ -505,8 +516,65 @@ func clean_instruments()->void:
 				if n==null:
 					continue
 				pat.notes[note][Pattern.ATTRS.INSTR]=inst_xform[n]
+	# Remove unused instruments (this changes instrument order)
 	for inst in range(inst_xform.size()-1,-1,-1):
 		if inst_xform[inst]==null:
 			instrument_list.remove(inst)
+	emit_signal("instrument_list_changed")
+	emit_signal("order_changed",-1,-1)
+
+func clean_waveforms()->void:
+	var wave_xform:Array=[0,1,2,3]
+	wave_xform.resize(wave_list.size()+MIN_CUSTOM_WAVE)
+	var nwave:int=MIN_CUSTOM_WAVE
+	# Set the array of transformations old->new
+	## Capture waves used in instruments
+	for inst in instrument_list:
+		if inst is FmInstrument:
+			for wi in inst.waveforms:
+				if wi<MIN_CUSTOM_WAVE:
+					continue
+				if wave_xform[wi]==null:
+					wave_xform[wi]=nwave
+					nwave+=1
+	## Capture waves used in pattern commands
+	for chan in pattern_list:
+		for pat in chan:
+			for note in range(pat.notes.size()):
+				for fxi in range(Pattern.ATTRS.FX0,Pattern.MAX_ATTR,3):
+					var cmd=pat.notes[note][fxi]
+					var val=pat.notes[note][fxi+2]
+					if (cmd!=FMVC.FX_WAVE_SET and cmd!=FMVC.FX_LFO_WAVE_SET)\
+							|| val==null || val<MIN_CUSTOM_WAVE:
+						continue
+					if wave_xform[val]==null:
+						wave_xform[val]=nwave
+						nwave+=1
+	if nwave==MIN_CUSTOM_WAVE:
+		wave_list.clear()
+		emit_signal("wave_list_changed")
+		return
+	# Scan the patterns to change old->new
+	for chan in pattern_list:
+		for pat in chan:
+			for note in range(pat.notes.size()):
+				for fxi in range(Pattern.ATTRS.FX0,Pattern.MAX_ATTR,3):
+					var cmd=pat.notes[note][fxi]
+					var val=pat.notes[note][fxi+2]
+					if (cmd!=FMVC.FX_WAVE_SET and cmd!=FMVC.FX_LFO_WAVE_SET)\
+							|| val==null || val<MIN_CUSTOM_WAVE:
+						continue
+					pat.notes[note][fxi+2]=wave_xform[val]
+	# Scan the instruments to change old->new
+	print(wave_xform)
+	for inst in instrument_list:
+		if inst is FmInstrument:
+			for wi in range(4):
+				inst.waveforms[wi]=wave_xform[inst.waveforms[wi]]
+	# Delete unused
+	for i in range(wave_xform.size()-1,MIN_CUSTOM_WAVE-1,-1):
+		if wave_xform[i]==null:
+			wave_list.remove(i-MIN_CUSTOM_WAVE)
+	emit_signal("wave_list_changed")
 	emit_signal("instrument_list_changed")
 	emit_signal("order_changed",-1,-1)

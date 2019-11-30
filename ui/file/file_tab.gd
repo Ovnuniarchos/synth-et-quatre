@@ -1,5 +1,8 @@
 extends Tabs
 
+const BUFFER_SIZE=2048
+
+
 func _on_Save_pressed()->void:
 	var f:ChunkedFile=ChunkedFile.new()
 	f.open(".songs/tmp.txt",File.WRITE)
@@ -12,15 +15,22 @@ func _on_Load_pressed()->void:
 	var new_song:Song=GLOBALS.song.deserialize(f)
 	f.close()
 	if new_song!=null:
+		AUDIO.tracker.stop()
 		GLOBALS.song=new_song
 
 func _on_CleanPats_pressed()->void:
+	AUDIO.tracker.stop()
 	GLOBALS.song.clean_patterns()
 
 func _on_CleanInsts_pressed()->void:
+	AUDIO.tracker.stop()
 	GLOBALS.song.clean_instruments()
 
-const BUFFER_SIZE=2048
+func _on_CleanWaves_pressed():
+	AUDIO.tracker.stop()
+	GLOBALS.song.clean_waveforms()
+
+#
 
 func _on_SaveWav_pressed()->void:
 	var synth:Synth=Synth.new()
@@ -34,3 +44,5 @@ func _on_SaveWav_pressed()->void:
 	while tracker.gen_commands(GLOBALS.song,11025.0,BUFFER_SIZE,cmds):
 		file.write_chunk(synth.generate(BUFFER_SIZE,cmds,1.0))
 	file.end_file()
+
+

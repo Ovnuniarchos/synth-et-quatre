@@ -26,17 +26,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SaveWav" type="Button" parent="VBC"]
-margin_top = 128.0
-margin_right = 64.0
-margin_bottom = 151.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-text = "Save WAV"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Load" type="Button" parent="VBC"]
 margin_top = 32.0
 margin_right = 64.0
@@ -45,10 +34,21 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Load"
 
+[node name="SaveWav" type="Button" parent="VBC"]
+margin_top = 104.0
+margin_right = 76.0
+margin_bottom = 127.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Save WAV"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="CleanPats" type="Button" parent="VBC"]
-margin_top = 64.0
-margin_right = 128.0
-margin_bottom = 84.0
+margin_left = 128.0
+margin_right = 256.0
+margin_bottom = 23.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Clean patterns"
@@ -57,17 +57,31 @@ __meta__ = {
 }
 
 [node name="CleanInsts" type="Button" parent="VBC"]
-margin_top = 96.0
-margin_right = 160.0
-margin_bottom = 119.0
+margin_left = 128.0
+margin_top = 32.0
+margin_right = 288.0
+margin_bottom = 55.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Clean instruments"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="CleanWaves" type="Button" parent="VBC"]
+margin_left = 128.0
+margin_top = 64.0
+margin_right = 228.0
+margin_bottom = 87.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Clean waves"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="pressed" from="VBC/Save" to="." method="_on_Save_pressed"]
-[connection signal="pressed" from="VBC/SaveWav" to="." method="_on_SaveWav_pressed"]
 [connection signal="pressed" from="VBC/Load" to="." method="_on_Load_pressed"]
+[connection signal="pressed" from="VBC/SaveWav" to="." method="_on_SaveWav_pressed"]
 [connection signal="pressed" from="VBC/CleanPats" to="." method="_on_CleanPats_pressed"]
 [connection signal="pressed" from="VBC/CleanInsts" to="." method="_on_CleanInsts_pressed"]
+[connection signal="pressed" from="VBC/CleanWaves" to="." method="_on_CleanWaves_pressed"]

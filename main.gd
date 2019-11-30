@@ -1,7 +1,7 @@
 extends Control
 
 """
-TODO:	Waves cleanup
+TODO:	Cleanup should delete by copy not null, then substitue
 		Jump commands
 		Global commands
 		Full play controls

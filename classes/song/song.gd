@@ -475,7 +475,7 @@ func clean_patterns()->void:
 			else:
 				pats_chan.append(null)
 		pats_xform.append(pats_chan)
-	# Scan the pattern list and translate old->new or remove unused
+	# Scan the pattern list and translate old->new
 	for chan in range(num_channels):
 		var newp
 		for oldp in range(pats_xform[chan].size()):
@@ -484,10 +484,12 @@ func clean_patterns()->void:
 				for order in orders:
 					if order[chan]==oldp:
 						order[chan]=newp
-		for oldp in range(pats_xform[chan].size()-1,-1,-1):
-			newp=pats_xform[chan][oldp]
-			if newp==null:
-				pattern_list[chan].remove(oldp)
+		# Create a new list from used
+		var npl:Array=[]
+		for oldp in range(pats_xform[chan].size()):
+			if pats_xform[chan][oldp]!=null:
+				npl.append(pattern_list[chan][oldp])
+		pattern_list[chan]=npl
 	emit_signal("order_changed",-1,-1)
 
 func clean_instruments()->void:
@@ -516,10 +518,12 @@ func clean_instruments()->void:
 				if n==null:
 					continue
 				pat.notes[note][Pattern.ATTRS.INSTR]=inst_xform[n]
-	# Remove unused instruments (this changes instrument order)
-	for inst in range(inst_xform.size()-1,-1,-1):
-		if inst_xform[inst]==null:
-			instrument_list.remove(inst)
+	# Make new list from used
+	var ins_list:Array=[]
+	for inst in range(inst_xform.size()):
+		if inst_xform[inst]!=null:
+			ins_list.append(instrument_list[inst])
+	instrument_list=ins_list
 	emit_signal("instrument_list_changed")
 	emit_signal("order_changed",-1,-1)
 
@@ -566,15 +570,16 @@ func clean_waveforms()->void:
 						continue
 					pat.notes[note][fxi+2]=wave_xform[val]
 	# Scan the instruments to change old->new
-	print(wave_xform)
 	for inst in instrument_list:
 		if inst is FmInstrument:
 			for wi in range(4):
 				inst.waveforms[wi]=wave_xform[inst.waveforms[wi]]
-	# Delete unused
-	for i in range(wave_xform.size()-1,MIN_CUSTOM_WAVE-1,-1):
-		if wave_xform[i]==null:
-			wave_list.remove(i-MIN_CUSTOM_WAVE)
+	# Make new list from used
+	var w_list:Array=[]
+	for wi in range(MIN_CUSTOM_WAVE,wave_xform.size()):
+		if wave_xform[wi]!=null:
+			w_list.append(wave_list[wi-MIN_CUSTOM_WAVE])
+	wave_list=w_list
 	emit_signal("wave_list_changed")
 	emit_signal("instrument_list_changed")
 	emit_signal("order_changed",-1,-1)

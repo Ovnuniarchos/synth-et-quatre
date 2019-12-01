@@ -1,8 +1,7 @@
 extends Control
 
 """
-TODO:	Cleanup should delete by copy not null, then substitue
-		Jump commands
+TODO:	Jump commands
 		Global commands
 		Full play controls
 		Beautify file menu

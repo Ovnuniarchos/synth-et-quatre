@@ -1,8 +1,9 @@
 extends Control
 
 """
-TODO:	Jump commands
-		Global commands
+TODO:	Delete instrument desyncs song
+		Play commands
+		Synth commands (LFO)
 		Full play controls
 		Beautify file menu
 		File selectors

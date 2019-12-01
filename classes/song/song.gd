@@ -86,7 +86,7 @@ func add_wave(wave:Waveform)->void:
 
 func delete_wave(wave:Waveform)->void:
 	if can_delete_wave(wave):
-		var ix:int=wave_list.find(wave)
+		var ix:int=wave_list.find(wave)+MIN_CUSTOM_WAVE
 		for inst in instrument_list:
 			inst.delete_waveform(ix)
 		wave_list.erase(wave)
@@ -104,18 +104,18 @@ func can_delete_wave(wave:Waveform)->bool:
 	if wave_ix==-1:
 		emit_signal("error","Wave not found.")
 		return false
+	wave_ix+=MIN_CUSTOM_WAVE
 	for lw in range(lfo_waves.size()):
-		if (lfo_waves[lw]-MIN_CUSTOM_WAVE)==wave_ix:
+		if lfo_waves[lw]==wave_ix:
 			emit_signal("error","Wave is in use by LFO %d."%[lw])
 			return false
 	for ins in range(instrument_list.size()):
 		if !(instrument_list[ins] is FmInstrument):
 			continue
 		for w in range(instrument_list[ins].waveforms.size()):
-			if (instrument_list[ins].waveforms[w]-MIN_CUSTOM_WAVE)==wave_ix:
+			if instrument_list[ins].waveforms[w]==wave_ix:
 				emit_signal("error","Wave is in use by instrument %d operator %d."%[ins,w])
 				return false
-	wave_ix+=MIN_CUSTOM_WAVE
 	for chan in range(pattern_list.size()):
 		for pat in range(pattern_list[chan].size()):
 			for note in range(pattern_list[chan][pat].notes.size()):

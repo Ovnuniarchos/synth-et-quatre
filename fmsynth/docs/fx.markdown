@@ -104,10 +104,6 @@ Set tremolo to use LFO # `xx`. This value is clamped to the range `0-3`.
 
 Any command that triggers after a delay will not trigger if that delay puts it after the current row, but any other effect in the same row will be registered anyways. These commands ignore the operator mask.
 
-## 20xx
-
-Delays row by `xx` ticks. Any other command, and any further delay/repeat will be relative to the end of this command.
-
 ## 21xx
 
 Trigger note off after `xx` ticks.
@@ -148,6 +144,8 @@ Resets the wave generator phase every `xx` ticks.
 
 # Synth commands
 
+In the LFO command set, the LFOs to be affected are selected with the operator mask.
+
 ## 30xx – 33xx
 
 Set modulation intensity from operator 1–4 to the operators selected by the operator mask, to ±`π*xx/127.5`.
@@ -168,47 +166,48 @@ Set waveform duty cycle to `xx/2.56`%.
 
 Set waveform phase to `xx/2.56`%.
 
-
-
-# Jump commands
-
-## 40xx
-
-Jump to order `xx`.
-
-## 41xx
-
-Jump to next order, row `xx`.
-
-## 42xx
-
-Delay playback by `xx` ticks.
-
-
-
-
-# Global commands
-
-## 50xx
+## 38xx
 
 Set LFO waveform `xx`.
 
-## 51xx
+## 39xx
 
 Set LFO frequency to `xx`.
 
-## 52xx
+## 3Axx
 
 Set LFO duty cycle to `xx/2.56`%.
 
-## 53xx
+## 3Bxx
 
 Set LFO phase to `xx/2.56`%.
 
-## 54xx
+
+
+# Play commands
+
+Save for 40xx, only the last command (in channel order) will be used, and any further delay/repeat will be relative to the end of it.
+
+## 40xx
+
+Delays this channel by `xx` ticks. Any other command, and any further delay/repeat will be relative to the end of this command.
+
+## 41xx
+
+Delay all channels by `xx` ticks.
+
+## 42xx
+
+Jump to order `xx`.
+
+## 43xx
+
+Jump to next order, row `xx`.
+
+## 44xx
 
 Set song speed to `xx` ticks/row.
 
-## 55xx
+## 45xx
 
 Set song speed to `xx` ticks/second.

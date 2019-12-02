@@ -1,7 +1,7 @@
 extends Control
 
 """
-TODO:	Delete instrument desyncs song
+TODO:	Delete waveform desyncs song
 		Play commands
 		Synth commands (LFO)
 		Full play controls

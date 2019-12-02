@@ -89,6 +89,7 @@ func delete_wave(wave:Waveform)->void:
 		var ix:int=wave_list.find(wave)+MIN_CUSTOM_WAVE
 		for inst in instrument_list:
 			inst.delete_waveform(ix)
+		
 		wave_list.erase(wave)
 		emit_signal("wave_list_changed")
 		emit_signal("instrument_list_changed")
@@ -166,9 +167,17 @@ func add_instrument(instr:Instrument)->void:
 		emit_signal("instrument_list_changed")
 
 func delete_instrument(instr:Instrument)->void:
-	if can_delete_instrument(instr):
-		instrument_list.erase(instr)
-		emit_signal("instrument_list_changed")
+	if not can_delete_instrument(instr):
+		return
+	var iix:int=instrument_list.find(instr)
+	instrument_list.erase(instr)
+	for chan in pattern_list:
+		for pat in chan:
+			for note in pat.notes:
+				if note[Pattern.ATTRS.INSTR]!=null and note[Pattern.ATTRS.INSTR]>iix:
+					note[Pattern.ATTRS.INSTR]-=1
+	emit_signal("instrument_list_changed")
+	emit_signal("order_changed",-1,-1)
 
 func can_add_instrument()->bool:
 	if instrument_list.size()<MAX_INSTRUMENTS:

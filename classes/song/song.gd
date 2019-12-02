@@ -85,14 +85,34 @@ func add_wave(wave:Waveform)->void:
 		emit_signal("wave_list_changed")
 
 func delete_wave(wave:Waveform)->void:
-	if can_delete_wave(wave):
-		var ix:int=wave_list.find(wave)+MIN_CUSTOM_WAVE
-		for inst in instrument_list:
-			inst.delete_waveform(ix)
-		
-		wave_list.erase(wave)
-		emit_signal("wave_list_changed")
-		emit_signal("instrument_list_changed")
+	if not can_delete_wave(wave):
+		return
+	var ix:int=wave_list.find(wave)+MIN_CUSTOM_WAVE
+	for inst in instrument_list:
+		inst.delete_waveform(ix)
+	for lfi in range(4):
+		if lfo_waves[lfi]>ix:
+			lfo_waves[lfi]=correct_wave(lfo_waves[lfi])
+	for chan in pattern_list:
+		for pat in chan:
+			for note in pat.notes:
+				for fxi in range(Pattern.ATTRS.FX0,Pattern.MAX_ATTR,3):
+					var cmd=note[fxi]
+					var val=note[fxi+2]
+					if (cmd!=FMVC.FX_WAVE_SET and cmd!=FMVC.FX_LFO_WAVE_SET)\
+								|| val==null || val<MIN_CUSTOM_WAVE:
+							continue
+					note[fxi+2]=correct_wave(note[fxi+2])
+	wave_list.erase(wave)
+	emit_signal("order_changed",-1,-1)
+	emit_signal("wave_list_changed")
+	emit_signal("instrument_list_changed")
+
+func correct_wave(w:int)->int:
+	w-=1
+	if w==WAVE.NOISE:
+		return WAVE.TRIANGLE
+	return w
 
 func can_add_wave()->bool:
 	if wave_list.size()<MAX_WAVES:
@@ -541,6 +561,13 @@ func clean_waveforms()->void:
 	wave_xform.resize(wave_list.size()+MIN_CUSTOM_WAVE)
 	var nwave:int=MIN_CUSTOM_WAVE
 	# Set the array of transformations old->new
+	## Capture waves used in LFOs
+	for lfw in lfo_waves:
+		if lfw<MIN_CUSTOM_WAVE:
+			continue
+		if wave_xform[lfw]==null:
+			wave_xform[lfw]=nwave
+			nwave+=1
 	## Capture waves used in instruments
 	for inst in instrument_list:
 		if inst is FmInstrument:

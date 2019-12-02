@@ -46,6 +46,8 @@ shortcut_in_tooltip = false
 text = "Del"
 
 [node name="Instruments" parent="." instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
 margin_top = 24.0
 margin_right = 162.0
 margin_bottom = 561.0

@@ -31,6 +31,11 @@ func set_buttons()->void:
 	$Buttons/Copy.disabled=!GLOBALS.song.can_add_instrument() or GLOBALS.curr_instrument==-1
 	$Buttons/Del.disabled=GLOBALS.song.instrument_list.size()==1 or GLOBALS.curr_instrument==-1
 
+func select_item(idx:int)->void:
+	inst_l.select(idx)
+	inst_l.ensure_current_is_visible()
+	emit_signal("instrument_selected",idx)
+
 func _on_Add_pressed()->void:
 	if GLOBALS.song.can_add_wave():
 		var cnt:int=inst_l.get_item_count()
@@ -41,9 +46,7 @@ func _on_Add_pressed()->void:
 		GLOBALS.song.add_instrument(ni)
 		emit_signal("instrument_added",cnt)
 		GLOBALS.curr_instrument=cnt
-		inst_l.select(cnt)
-		inst_l.ensure_current_is_visible()
-		emit_signal("instrument_selected",cnt)
+		select_item(cnt)
 	set_buttons()
 
 func _on_Del_pressed()->void:
@@ -56,9 +59,7 @@ func _on_Del_pressed()->void:
 			inst_l.unselect_all()
 			if GLOBALS.curr_instrument>=GLOBALS.song.instrument_list.size():
 				GLOBALS.curr_instrument=GLOBALS.song.instrument_list.size()-1
-			inst_l.select(GLOBALS.curr_instrument)
-			inst_l.ensure_current_is_visible()
-			emit_signal("instrument_selected",GLOBALS.curr_instrument)
+			select_item(GLOBALS.curr_instrument)
 			set_buttons()
 
 func _on_Copy_pressed()->void:
@@ -70,9 +71,7 @@ func _on_Copy_pressed()->void:
 		GLOBALS.song.add_instrument(ni)
 		emit_signal("instrument_added",cnt)
 		GLOBALS.curr_instrument=cnt
-		inst_l.select(cnt)
-		inst_l.ensure_current_is_visible()
-		emit_signal("instrument_selected",cnt)
+		select_item(cnt)
 	set_buttons()
 
 func _on_item_selected(index:int)->void:

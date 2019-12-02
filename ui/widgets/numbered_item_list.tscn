@@ -26,8 +26,8 @@ margin_top = 4.0
 margin_bottom = 5.0
 
 [node name="NumberedItemList" type="ItemList"]
-margin_right = 165.0
-margin_bottom = 600.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/bg = SubResource( 3 )

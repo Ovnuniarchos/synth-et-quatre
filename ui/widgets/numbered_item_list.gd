@@ -35,6 +35,19 @@ func select(index:int,single:bool=true)->void:
 	else:
 		.select(index,single)
 
+func ensure_current_is_visible()->void:
+	.ensure_current_is_visible()
+	call_deferred("fix_ensure_current_is_visible")
+
+func fix_ensure_current_is_visible()->void:
+	# Forces recalc of scroll values, fixes bug in ItemList.ensure_current_is_visible
+	update()
+
+func _draw()->void:
+	# Forces recalc of scroll values, fixes bug in ItemList.ensure_current_is_visible
+	notification(NOTIFICATION_DRAW,true)
+	notification(NOTIFICATION_RESIZED,true)
+
 #
 
 func renumber()->void:

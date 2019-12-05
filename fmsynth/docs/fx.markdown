@@ -84,11 +84,11 @@ Set release rate to `xx`.
 
 ## 15xx
 
-Set key scale ratio to `xx`. This value is clamped to the range `0-7`.
+Set key scale ratio to `xx`. This value is clamped to the range 0-7.
 
 ## 16xx
 
-Set repeat mode to `xx`. This value is clamped to the range `0-4`.
+Set repeat mode to `xx`. This value is clamped to the range 0-4.
 
 ## 17xx
 
@@ -96,7 +96,7 @@ Set tremolo intensity from `1x` to `0x - 1x`.
 
 ## 18xx
 
-Set tremolo to use LFO # `xx`. This value is clamped to the range `0-3`.
+Set tremolo to use LFO # `xx`. This value is clamped to the range 0-3.
 
 
 
@@ -186,7 +186,9 @@ Set LFO phase to `xx/2.56`%.
 
 # Play commands
 
-Save for 40xx, only the last command (in channel order) will be used, and any further delay/repeat will be relative to the end of it.
+Save for `40xx`, only the last command (in channel order) will be used, and any further delay/repeat will be relative to the end of it.
+
+Delays are executed before jumps.
 
 ## 40xx
 
@@ -198,7 +200,9 @@ Delay all channels by `xx` ticks.
 
 ## 42xx
 
-Jump to order `xx`.
+Jump to order `xx`. If order `xx` does not exist, jump to order 0.
+
+This command cancels `43xx`.
 
 ## 43xx
 
@@ -206,8 +210,8 @@ Jump to next order, row `xx`.
 
 ## 44xx
 
-Set song speed to `xx` ticks/row.
+Set song speed to `xx+1` ticks/row.
 
 ## 45xx
 
-Set song speed to `xx` ticks/second.
+Set song speed to `xx+1` ticks/second.

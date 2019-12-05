@@ -1,7 +1,7 @@
 extends Control
 
 """
-TODO:	Play commands
+TODO:	Make arpeggio last until new note
 		Synth commands (LFO)
 		Full play controls
 		Beautify file menu

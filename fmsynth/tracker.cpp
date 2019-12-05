@@ -73,7 +73,7 @@ void SynthTracker::_init(){
 #endif
 
 #ifndef DVAR2INT
-#define DVAR2INT(x,y) ((VAR2INT(x)<<8)|VAR2INT(y))
+#define DVAR2INT(x,y) ((int16_t)((VAR2INT(x)<<8)|VAR2INT(y)))
 #endif
 
 PoolVector2Array SynthTracker::generate(int size,float volume,Array cmds){

@@ -2,6 +2,7 @@ extends FmInstrument
 class_name FmVoice
 
 const CONSTS=preload("res://classes/tracker/fm_voice_constants.gd")
+const TRCK=preload("res://classes/tracker/tracker_constants.gd")
 const ATTRS=Pattern.ATTRS
 const LG_MODE=Pattern.LEGATO_MODE
 
@@ -85,34 +86,41 @@ func _init()->void:
 		else:
 			fx_vals.append(0)
 
-func process_tick(song:Song,channel:int,curr_order:int,curr_row:int,curr_tick:int)->void:
+func process_tick(song:Song,channel:int,curr_order:int,curr_row:int,curr_tick:int)->int:
 	var pat:Pattern=song.get_order_pattern(curr_order,channel)
 	var note:Array=pat.notes[curr_row]
 	var fx_cmd:int
 	if curr_tick==0:
 		# Reset delay counters
-		for i in range(CONSTS.FX_DELAY,CONSTS.FX_DLY_RETRIG+1):
+		for i in range(CONSTS.FX_DLY_OFF,CONSTS.FX_DLY_RETRIG+1):
 			fx_vals[i]=0
 		fx_vals[CONSTS.FX_RPT_ON][0]=0
 		fx_vals[CONSTS.FX_RPT_RETRIG][0]=0
+		fx_vals[CONSTS.FX_DELAY]=0
+		fx_vals[CONSTS.FX_DELAY_SONG]=0
 		internal_tick=0
 		#
 		var j:int=0
 		for i in range(song.num_fxs[channel]):
 			fx_cmd=get_fx_cmd(note[ATTRS.FX0+j],i)
-			if fx_cmd==CONSTS.FX_DELAY:
-				fx_vals[CONSTS.FX_DELAY]=get_fx_val(note[ATTRS.FV0+j],note[ATTRS.NOTE],fx_cmd,i)
+			if fx_cmd==CONSTS.FX_DELAY or fx_cmd==CONSTS.FX_DELAY_SONG:
+				fx_vals[fx_cmd]=get_fx_val(note[ATTRS.FV0+j],note[ATTRS.NOTE],fx_cmd,i)
 			j+=3
+	var tracker_cmd:int=0
+	if fx_vals[CONSTS.FX_DELAY_SONG]!=0:
+		if curr_tick==0:
+			return fx_vals[CONSTS.FX_DELAY_SONG]|TRCK.SIG_DELAY_SONG
 	if fx_vals[CONSTS.FX_DELAY]==0:
 		if internal_tick==0:
-			process_tick_0(note,song,song.num_fxs[channel])
+			tracker_cmd=process_tick_0(note,song,song.num_fxs[channel])
 		else:
 			process_tick_n(song,channel)
 		internal_tick+=1
 	else:
 		fx_vals[CONSTS.FX_DELAY]-=1
+	return tracker_cmd
 
-func process_tick_0(note:Array,song:Song,num_fxs:int)->void:
+func process_tick_0(note:Array,song:Song,num_fxs:int)->int:
 	legato=0 if note[ATTRS.LG_MODE]==null else note[ATTRS.LG_MODE]
 	if note[ATTRS.NOTE]!=null:
 		if note[ATTRS.NOTE]>=0:
@@ -127,13 +135,14 @@ func process_tick_0(note:Array,song:Song,num_fxs:int)->void:
 	set_velocity(note[ATTRS.VOL])
 	set_panning(note[ATTRS.PAN])
 	var j:int=0
-	var fx_cmd:int
+	var fx_cmd:int=0
 	var fx_opm
 	var fx_val
 	arp_freqs[0]=0
 	arp_freqs[1]=0
 	arp_freqs[2]=0
 	arp_freqs[3]=0
+	var tracker_cmd:int=0
 	for i in range(num_fxs):
 		fx_apply[i]=false
 		fx_cmd=get_fx_cmd(note[ATTRS.FX0+j],i)
@@ -195,6 +204,14 @@ func process_tick_0(note:Array,song:Song,num_fxs:int)->void:
 				duty_cycle_dirty_any=set_opmasked(fx_val,duty_cycles,duty_cycle_dirty,fx_opm)
 			elif fx_cmd==CONSTS.FX_PHI_SET:
 				phase_dirty_any=set_opmasked(fx_val,phases,phase_dirty,fx_opm)
+			elif fx_cmd==CONSTS.FX_GOTO_ORDER:
+				tracker_cmd=fx_val|TRCK.SIG_GOTO_ORDER
+			elif fx_cmd==CONSTS.FX_GOTO_NEXT and tracker_cmd==0:
+				tracker_cmd=fx_val|TRCK.SIG_GOTO_NEXT
+			elif fx_cmd==CONSTS.FX_TICKSROW_SET:
+				song.ticks_row=fx_val+1
+			elif fx_cmd==CONSTS.FX_TICKSSEC_SET:
+				song.ticks_second=fx_val+1
 			elif fx_cmd==CONSTS.FX_DEBUG:
 				breakpoint
 		j+=3
@@ -202,6 +219,7 @@ func process_tick_0(note:Array,song:Song,num_fxs:int)->void:
 		base_freqs[i]=pre_freqs[i]
 		freqs[i]=base_freqs[i]+arp_freqs[i]
 	arpeggio_tick=(arpeggio_tick+1)%3
+	return tracker_cmd
 
 func process_tick_n(song:Song,channel:int)->void:
 	var fx_cmd:int
@@ -268,7 +286,7 @@ func get_fx_val(v,note,cmd:int,cmd_col:int)->int:
 		fx_vals[cmd]=clamp(v,0,3)
 	elif cmd==CONSTS.FX_MUL_SET or cmd==CONSTS.FX_DIV_SET:
 		fx_vals[cmd]=clamp(v,0,31)
-	elif cmd==CONSTS.FX_DELAY:
+	elif cmd==CONSTS.FX_DELAY or cmd==CONSTS.FX_DELAY_SONG:
 		fx_apply[cmd_col]=false
 		return v
 	elif cmd==CONSTS.FX_RPT_ON or cmd==CONSTS.FX_RPT_RETRIG or cmd==CONSTS.FX_RPT_PHI0:
@@ -399,7 +417,7 @@ func commit_opmasked_16(channel:int,cmds:Array,ptr:int,cmd:int,dirties:Array,val
 			cmds[ptr]=cmd
 			cmds[ptr+1]=channel
 			cmds[ptr+2]=1<<i
-			cmds[ptr+3]=values[i]>>8
+			cmds[ptr+3]=(values[i]>>8)&255
 			cmds[ptr+4]=values[i]&255
 			ptr+=5
 	return ptr

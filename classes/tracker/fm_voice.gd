@@ -73,6 +73,18 @@ var duty_cycle_dirty:Array=[false,false,false,false]
 var phase_dirty_any:bool=false
 var phase_dirty:Array=[false,false,false,false]
 var phases:Array=[0,0,0,0]
+var lfo_wave_dirty_any:bool=true
+var lfo_wave_dirty:Array=[false,false,false,false]
+var lfo_waves:Array=[0,0,0,0]
+var lfo_freq_dirty_any:bool=true
+var lfo_freq_dirty:Array=[false,false,false,false]
+var lfo_freqs:Array=[0,0,0,0]
+var lfo_duty_cycle_dirty_any:bool=false
+var lfo_duty_cycle_dirty:Array=[false,false,false,false]
+var lfo_duty_cycles:Array=[0,0,0,0]
+var lfo_phase_dirty_any:bool=false
+var lfo_phase_dirty:Array=[false,false,false,false]
+var lfo_phases:Array=[0,0,0,0]
 
 
 func _init()->void:
@@ -204,6 +216,18 @@ func process_tick_0(note:Array,song:Song,num_fxs:int)->int:
 				duty_cycle_dirty_any=set_opmasked(fx_val,duty_cycles,duty_cycle_dirty,fx_opm)
 			elif fx_cmd==CONSTS.FX_PHI_SET:
 				phase_dirty_any=set_opmasked(fx_val,phases,phase_dirty,fx_opm)
+			elif fx_cmd==CONSTS.FX_LFO_WAVE_SET:
+				lfo_wave_dirty_any=set_opmasked(fx_val,lfo_waves,lfo_wave_dirty,fx_opm)
+			elif fx_cmd==CONSTS.FX_LFO_DUC_SET:
+				lfo_duty_cycle_dirty_any=set_opmasked(fx_val,lfo_duty_cycles,lfo_duty_cycle_dirty,fx_opm)
+			elif fx_cmd==CONSTS.FX_LFO_PHI_SET:
+				lfo_phase_dirty_any=set_opmasked(fx_val,lfo_phases,lfo_phase_dirty,fx_opm)
+			elif fx_cmd==CONSTS.FX_LFO_FREQ_SET:
+				lfo_freq_dirty_any=set_lfo_freq(fx_val,fx_opm,0,4)
+			elif fx_cmd==CONSTS.FX_LFO_FREQ_SET_HI:
+				lfo_freq_dirty_any=set_lfo_freq(fx_val,fx_opm,0xFF,8)
+			elif fx_cmd==CONSTS.FX_LFO_FREQ_SET_LO:
+				lfo_freq_dirty_any=set_lfo_freq(fx_val,fx_opm,0xFF00,0)
 			elif fx_cmd==CONSTS.FX_GOTO_ORDER:
 				tracker_cmd=fx_val|TRCK.SIG_GOTO_ORDER
 			elif fx_cmd==CONSTS.FX_GOTO_NEXT and tracker_cmd==0:
@@ -371,6 +395,39 @@ func commit(channel:int,cmds:Array,ptr:int)->int:
 	if phase_dirty_any:
 		ptr=commit_opmasked_8(channel,cmds,ptr,CONSTS.CMD_PHI,phase_dirty,phases)
 		phase_dirty_any=false
+	if lfo_wave_dirty_any:
+		ptr=commit_lfos(cmds,ptr,CONSTS.CMD_LFO_WAVE,lfo_wave_dirty,lfo_waves)
+		lfo_wave_dirty_any=false
+	if lfo_freq_dirty_any:
+		ptr=commit_lfo_freqs(cmds,ptr)
+	if lfo_duty_cycle_dirty_any:
+		ptr=commit_lfos(cmds,ptr,CONSTS.CMD_LFO_DUC,lfo_duty_cycle_dirty,lfo_duty_cycles)
+		lfo_duty_cycle_dirty_any=false
+	if lfo_phase_dirty_any:
+		ptr=commit_lfos(cmds,ptr,CONSTS.CMD_LFO_PHI,lfo_phase_dirty,lfo_phases)
+		lfo_phase_dirty_any=false
+	return ptr
+
+func commit_lfo_freqs(cmds:Array,ptr:int)->int:
+	for i in range(4):
+		if lfo_freq_dirty[i]:
+			lfo_freq_dirty[i]=false
+			cmds[ptr]=CONSTS.CMD_LFO_FREQ
+			cmds[ptr+1]=i
+			cmds[ptr+2]=(lfo_freqs[i]>>8)&255
+			cmds[ptr+3]=lfo_freqs[i]&255
+			ptr+=4
+	lfo_freq_dirty_any=false
+	return ptr
+
+func commit_lfos(cmds:Array,ptr:int,cmd:int,dirties:Array,values:Array)->int:
+	for i in range(4):
+		if dirties[i]:
+			dirties[i]=false
+			cmds[ptr]=cmd
+			cmds[ptr+1]=i
+			cmds[ptr+2]=values[i]
+			ptr+=3
 	return ptr
 
 func commit_output(channel:int,cmds:Array,ptr:int)->int:
@@ -610,6 +667,16 @@ func set_instrument(inst:FmInstrument)->void:
 	routings=inst.routings.duplicate(true)
 
 #
+
+func set_lfo_freq(value:int,lfo_mask:int,val_mask:int,val_shift:int)->bool:
+	if (lfo_mask&15)==0:
+		return false
+	for i in range(4):
+		if lfo_mask&1:
+			lfo_freq_dirty[i]=true
+			lfo_freqs[i]=(lfo_freqs[i]&val_mask)|(value<<val_shift)
+		lfo_mask>>=1
+	return true
 
 func set_opmasked(value:int,params:Array,dirties:Array,op_mask:int)->bool:
 	if (op_mask&15)==0:

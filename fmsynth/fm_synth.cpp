@@ -180,6 +180,11 @@ void FmSynth::set_lfo_duty_cycle(int lfo,int duty_cycle){
 	lfos[lfo&3].set_duty_cycle((duty_cycle&0xff)<<16);
 }
 
+void FmSynth::set_lfo_phase(int lfo,int phi){
+	lfo_phis[lfo&3]=(phi&0xff)<<16;
+}
+
+
 void FmSynth::mute_voices(int mute_mask){
 	for(int i=0;i<MAX_VOICES;i++){
 		mute_voice[i]=(bool)(mute_mask&1);

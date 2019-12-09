@@ -144,7 +144,7 @@ Resets the wave generator phase every `xx` ticks.
 
 # Synth commands
 
-In the LFO command set, the LFOs to be affected are selected with the operator mask.
+In the LFO command set, the LFOs to be affected are selected with the operator mask. In case of conflict, only the last LFO command in a row affects the LFOs.
 
 ## 30xx – 33xx
 
@@ -172,15 +172,23 @@ Set LFO waveform `xx`.
 
 ## 39xx
 
-Set LFO frequency to `xx`.
+Set LFO duty cycle to `xx/2.56`%.
 
 ## 3Axx
 
-Set LFO duty cycle to `xx/2.56`%.
+Set LFO phase to `xx/2.56`%.
 
 ## 3Bxx
 
-Set LFO phase to `xx/2.56`%.
+Set LFO frequency to `xx/16`Hz.
+
+## 3Cxx
+
+Set LFO frequency integral part to `xx`Hz.
+
+## 3Dxx
+
+Set LFO frequency decimal part to `xx/256`Hz.
 
 
 

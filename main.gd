@@ -1,15 +1,14 @@
 extends Control
 
 """
-TODO:	Make arpeggio last until new note
-		Synth commands (LFO)
-		Full play controls
+TODO:	Full play controls
 		Beautify file menu
 		File selectors
 		Sound format selector
 		Export format selector
 		WAV writer error messages
 		File save/load errors
+		Make arpeggio last until new note?
 """
 
 func _ready()->void:

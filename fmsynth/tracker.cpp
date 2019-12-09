@@ -61,7 +61,7 @@ void SynthTracker::_init(){
 }
 
 
-//#define TRACE_CMDS
+// #define TRACE_CMDS
 #ifdef TRACE_CMDS
 #define TRACE(...) printf(__VA_ARGS__)
 #else
@@ -74,6 +74,10 @@ void SynthTracker::_init(){
 
 #ifndef DVAR2INT
 #define DVAR2INT(x,y) ((int16_t)((VAR2INT(x)<<8)|VAR2INT(y)))
+#endif
+
+#ifndef DVAR2UINT
+#define DVAR2UINT(x,y) ((uint16_t)((VAR2INT(x)<<8)|VAR2INT(y)))
 #endif
 
 PoolVector2Array SynthTracker::generate(int size,float volume,Array cmds){
@@ -226,7 +230,7 @@ PoolVector2Array SynthTracker::generate(int size,float volume,Array cmds){
 					break;
 				case CMD_LFO_FREQ:
 					TRACE("LFF %02x %02x%02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					synth.set_lfo_freq(VAR2INT(cmds[cmd_ptr+1]),DVAR2INT(cmds[cmd_ptr+1],cmds[cmd_ptr+2]));
+					synth.set_lfo_freq(VAR2INT(cmds[cmd_ptr]),DVAR2UINT(cmds[cmd_ptr+1],cmds[cmd_ptr+2]));
 					cmd_ptr+=3;
 					break;
 				case CMD_LFO_WAVE:
@@ -237,6 +241,11 @@ PoolVector2Array SynthTracker::generate(int size,float volume,Array cmds){
 				case CMD_LFO_DUC:
 					TRACE("LFD %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]));
 					synth.set_lfo_duty_cycle(VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]));
+					cmd_ptr+=2;
+					break;
+				case CMD_LFO_PHI:
+					TRACE("LFP %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]));
+					synth.set_lfo_phase(VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]));
 					cmd_ptr+=2;
 					break;
 				case CMD_DEBUG:
@@ -385,6 +394,10 @@ void SynthTracker::debug(Array cmds,int end_ix){
 				printf("LFD %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]));
 				cmd_ptr+=2;
 				break;
+			case CMD_LFO_PHI:
+				printf("LFP %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]));
+				cmd_ptr+=2;
+				break;
 			case CMD_DEBUG:
 				printf("DEBUG@%x  ",cmd_ptr-1);
 				break;
@@ -529,6 +542,10 @@ void SynthTracker::set_lfo_wave_mode(int lfo,int mode){
 
 void SynthTracker::set_lfo_duty_cycle(int lfo,int duty_cycle){
 	synth.set_lfo_duty_cycle(lfo,duty_cycle);
+}
+
+void SynthTracker::set_lfo_phase(int lfo,int phi){
+	synth.set_lfo_phase(lfo,phi);
 }
 
 

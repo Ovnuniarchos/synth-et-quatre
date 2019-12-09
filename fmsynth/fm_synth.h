@@ -85,6 +85,7 @@ public:
 	void set_lfo_freq(int lfo,int freq8_8);
 	void set_lfo_wave_mode(int lfo,int mode);
 	void set_lfo_duty_cycle(int lfo,int duty_cycle);
+	void set_lfo_phase(int lfo,int phi);
 
 	void mute_voices(int mute_mask);
 

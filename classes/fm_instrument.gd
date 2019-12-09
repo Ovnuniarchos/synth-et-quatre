@@ -2,6 +2,7 @@ extends Instrument
 class_name FmInstrument
 
 enum WAVE{RECTANGLE,SAW,TRIANGLE,NOISE}
+enum REPEAT{OFF,RELEASE,SUSTAIN,DECAY,ATTACK}
 const TYPE:String="FmInstrument"
 const CHUNK_ID:String="fM4I"
 
@@ -19,7 +20,7 @@ var releases:Array=[32,32,32,32]
 
 var key_scalers:Array=[0,0,0,0]
 
-var repeats:Array=[0,0,0,0]
+var repeats:Array=[REPEAT.OFF,REPEAT.OFF,REPEAT.OFF,REPEAT.OFF]
 
 var multipliers:Array=[0,0,0,0]
 

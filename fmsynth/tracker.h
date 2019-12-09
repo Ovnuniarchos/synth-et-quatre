@@ -47,6 +47,7 @@ private:
 		CMD_LFO_FREQ=0x1c,
 		CMD_LFO_WAVE,
 		CMD_LFO_DUC,
+		CMD_LFO_PHI,
 		CMD_DEBUG=0xfe,
 		CMD_END=0xff
 	};
@@ -102,6 +103,7 @@ public:
 	void set_lfo_freq(int lfo,float frequency);
 	void set_lfo_wave_mode(int lfo,int mode);
 	void set_lfo_duty_cycle(int lfo,int duty_cycle);
+	void set_lfo_phase(int lfo,int phi);
 
 	void mute_voices(int mute_mask);
 };

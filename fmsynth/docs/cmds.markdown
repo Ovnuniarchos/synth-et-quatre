@@ -1,7 +1,7 @@
 00 nn
 : Wait `nn+1` samples.
 01 vv oo hh ll
-: Set frequency in voice `vv`, with operator mask `oo`, to `hh:ll` cents.
+: Set frequency in voice `vv`, with operator mask `oo`, to `(signed)hh:ll` cents.
 02 vv oo nn
 : Trigger (key on) voice `vv`, with operator mask `oo` and velocity `nn/255`%. A key on message automatically enables operators.
 03 vv oo nn
@@ -17,7 +17,7 @@
 08 vv oo nn
 : Set frequency divider in voice `vv`, with operator mask `oo`, to `nn+1`.
 09 vv oo hh ll
-: Set detune in voice `vv`, with operator mask `oo`, to `hh:ll` millis.
+: Set detune in voice `vv`, with operator mask `oo`, to `(signed)hh:ll` millis.
 0A vv oo nn
 : Set duty cycle high byte in voice `vv`, with operator mask `oo`, to `nn`. The duty cycle is then `duty_cycle/167772.16`%.
 0B vv oo nn
@@ -44,8 +44,8 @@
 : Set output volume for voice `vv`, with operator mask `oo`, to volume `nn/255`%.
 16 vv nn
 : Set pan position for voice `vv` to bits 0-5 of`nn`. 0 is left, 62-63 is right, and 31 is center. Bit 6 inverts the left channel, and bit 7 the right one. This allows for pseudo-surround effects.
-17 vv oo pp
-: Set waveform phase for voice `vv`, with operator mask `oo`, to `pp/256`%.
+17 vv oo nn
+: Set waveform phase for voice `vv`, with operator mask `oo`, to `nn/256`%.
 18 vv oo nn
 : Set AM (tremolo) intensity for voice `vv`, with operator mask `oo`, to `nn/255`% amplitude.
 19 vv oo nn
@@ -55,10 +55,14 @@
 1B vv oo nn
 : Set FM (vibrato) LFO for voice `vv`, with operator mask `oo`,to LFO number `nn`.
 1C ff hh ll
-: Set LFO number `ff` frequency to `(hh:ll)/256` Hz.
+: Set LFO number `ff` frequency to `(unsigned)(hh:ll)/256` Hz.
 1D ff nn
 : Set wave `nn` for LFO number `ff`. Waves 0-3 are internal. Waves 4+ are user-defined, and must be defined before use.
 1E ff nn
 : Set LFO number `ff`'s duty cycle high byte to `nn`. The duty cycle is then `duty_cycle/16777216`%.
+1F ff nn
+: Set waveform phase for LFO `ff`, to `nn/256`%.
+FE
+: Dumps the command buffer to console, up to this command.
 FF
-: Ends the command list. Any unrecognized command ends the command list, but this is the only command guaranteed to end the list.
+: Ends the command list. Any unrecognized command ends the command list, but this is the only command guaranteed to ever have this meaning.

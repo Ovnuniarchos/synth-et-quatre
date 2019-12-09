@@ -10,6 +10,7 @@ func _ready()->void:
 	_on_song_changed()
 
 func _on_song_changed()->void:
+	reset(true)
 	GLOBALS.song.sync_waves(self)
 
 #
@@ -19,15 +20,44 @@ func generate(buffer_size:int,command_list:Array,global_volume:float=DEFAULT_VOL
 
 #
 
-func reset()->void:
-	for i in range(0,32):
+func reset(full:bool=false)->void:
+	for i in range(32):
 		synth.stop(i,15)
+		if !full:
+			continue
+		synth.set_attack_rate(i,15,240)
+		synth.set_decay_rate(i,15,192)
+		synth.set_sustain_level(i,15,192)
+		synth.set_sustain_rate(i,15,0)
+		synth.set_release_rate(i,15,32)
+		synth.set_repeat(i,15,FmInstrument.REPEAT.OFF)
+		synth.set_wave_mode(i,15,FmInstrument.WAVE.TRIANGLE)
+		synth.set_duty_cycle(i,15,0)
+		synth.set_freq_mul(i,15,0)
+		synth.set_freq_div(i,15,0)
+		synth.set_detune(i,15,0)
+		synth.set_output(i,1,255)
+		synth.set_output(i,14,0)
+		for j in range(4):
+			for k in range(4):
+				synth.set_pm_factor(i,j,k,16 if (j+k)==0 else 0)
+		synth.set_am_intensity(i,15,0)
+		synth.set_am_lfo(i,15,0)
+		synth.set_fm_intensity(i,15,0)
+		synth.set_fm_lfo(i,15,0)
+		synth.set_ksr(i,15,0)
+	if full:
+		for i in range(4):
+			synth.set_lfo_duty_cycle(i,0)
+			synth.set_lfo_duty_cycle(i,FmInstrument.WAVE.TRIANGLE)
+			synth.set_lfo_freq(i,1.0)
+
 
 func set_mix_rate(mix_rate:float)->void:
 	synth.set_mix_rate(mix_rate)
 
 func set_fm_instrument(channel:int,instr:FmInstrument)->void:
-	for i in range(0,4):
+	for i in range(4):
 		var op_mask:int=1<<i
 		synth.set_attack_rate(channel,op_mask,instr.attacks[i])
 		synth.set_decay_rate(channel,op_mask,instr.decays[i])
@@ -41,7 +71,7 @@ func set_fm_instrument(channel:int,instr:FmInstrument)->void:
 		synth.set_freq_div(channel,op_mask,instr.dividers[i])
 		synth.set_detune(channel,op_mask,instr.detunes[i])
 		synth.set_output(channel,op_mask,instr.routings[i][4])
-		for j in range(0,4):
+		for j in range(4):
 			synth.set_pm_factor(channel,i,j,instr.routings[i][j])
 		synth.set_am_intensity(channel,op_mask,instr.am_intensity[i])
 		synth.set_am_lfo(channel,op_mask,instr.am_lfo[i])

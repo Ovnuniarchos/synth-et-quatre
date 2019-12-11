@@ -3,7 +3,12 @@ extends Tabs
 const BUFFER_SIZE=2048
 
 
+func _on_New_pressed():
+	pass # Replace with function body.
+
 func _on_Save_pressed()->void:
+	$FileDialog.popup_centered_ratio()
+	return
 	var f:ChunkedFile=ChunkedFile.new()
 	f.open(".songs/tmp.txt",File.WRITE)
 	GLOBALS.song.serialize(f)
@@ -44,5 +49,3 @@ func _on_SaveWav_pressed()->void:
 	while tracker.gen_commands(GLOBALS.song,11025.0,BUFFER_SIZE,cmds):
 		file.write_chunk(synth.generate(BUFFER_SIZE,cmds,1.0))
 	file.end_file()
-
-

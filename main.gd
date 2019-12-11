@@ -1,9 +1,10 @@
 extends Control
 
 """
-TODO:	Full play controls
-		Beautify file menu
+TODO:	Immediate note play skips notes (skips muted channels)
 		File selectors
+		Full play controls
+		Beautify file menu
 		Sound format selector
 		Export format selector
 		WAV writer error messages
@@ -22,5 +23,11 @@ func _on_tab_changed(tab:int)->void:
 func _on_PlayButton_toggled(button_pressed:bool)->void:
 	if button_pressed:
 		AUDIO.tracker.play(GLOBALS.curr_order)
+	else:
+		AUDIO.tracker.stop()
+
+func _on_PlayButton2_toggled(button_pressed):
+	if button_pressed:
+		AUDIO.tracker.play_track(GLOBALS.curr_order)
 	else:
 		AUDIO.tracker.stop()

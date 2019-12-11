@@ -16,9 +16,20 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 
+[node name="New" type="Button" parent="VBC"]
+margin_right = 40.0
+margin_bottom = 23.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "New"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Save" type="Button" parent="VBC"]
+margin_top = 64.0
 margin_right = 64.0
-margin_bottom = 20.0
+margin_bottom = 87.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Save"
@@ -27,17 +38,17 @@ __meta__ = {
 }
 
 [node name="Load" type="Button" parent="VBC"]
-margin_top = 32.0
+margin_top = 96.0
 margin_right = 64.0
-margin_bottom = 52.0
+margin_bottom = 119.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Load"
 
 [node name="SaveWav" type="Button" parent="VBC"]
-margin_top = 104.0
-margin_right = 76.0
-margin_bottom = 127.0
+margin_top = 168.0
+margin_right = 80.0
+margin_bottom = 191.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Save WAV"
@@ -71,7 +82,7 @@ __meta__ = {
 [node name="CleanWaves" type="Button" parent="VBC"]
 margin_left = 128.0
 margin_top = 64.0
-margin_right = 228.0
+margin_right = 232.0
 margin_bottom = 87.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -79,6 +90,16 @@ text = "Clean waves"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="FileDialog" type="FileDialog" parent="."]
+margin_right = 362.0
+margin_bottom = 138.0
+mode_overrides_title = false
+access = 2
+filters = PoolStringArray( "se4" )
+current_dir = "/home/jordi/godot/SynthEtQuatre"
+current_path = "/home/jordi/godot/SynthEtQuatre/"
+[connection signal="pressed" from="VBC/New" to="." method="_on_New_pressed"]
 [connection signal="pressed" from="VBC/Save" to="." method="_on_Save_pressed"]
 [connection signal="pressed" from="VBC/Load" to="." method="_on_Load_pressed"]
 [connection signal="pressed" from="VBC/SaveWav" to="." method="_on_SaveWav_pressed"]

@@ -9,6 +9,7 @@ const CONSTS=preload("res://classes/tracker/tracker_constants.gd")
 
 
 var playing:bool
+var loop_track:bool
 var recording:bool
 var curr_sample:float
 var curr_tick:int
@@ -44,6 +45,11 @@ func play(from:int=-1)->void:
 		goto_next=-1
 	playing=true
 	recording=false
+	loop_track=false
+
+func play_track(from:int=-1)->void:
+	play(from)
+	loop_track=true
 
 func record(from:int=-1)->void:
 	play(from)
@@ -113,7 +119,7 @@ func gen_commands(song:Song,mix_rate:float,buf_size:int,cmds:Array)->bool:
 			if goto_order!=-1:
 				curr_tick=0
 				curr_row=0
-				curr_order=goto_order
+				next_order(goto_order)
 				goto_order=-1
 				if needs_restart(song):
 					return false
@@ -123,7 +129,7 @@ func gen_commands(song:Song,mix_rate:float,buf_size:int,cmds:Array)->bool:
 			elif goto_next!=-1:
 				curr_tick=0
 				curr_row=0 if goto_next>=song.pattern_length else goto_next
-				curr_order+=1
+				next_order(curr_order+1)
 				goto_next=-1
 				if needs_restart(song):
 					return false
@@ -135,7 +141,7 @@ func gen_commands(song:Song,mix_rate:float,buf_size:int,cmds:Array)->bool:
 				curr_row=curr_row+1
 				if curr_row>=song.pattern_length:
 					curr_row=0
-					curr_order+=1
+					next_order(curr_order+1)
 					if needs_restart(song):
 						return false
 				DEBUG.set_var("order",curr_order)
@@ -160,6 +166,10 @@ func gen_commands(song:Song,mix_rate:float,buf_size:int,cmds:Array)->bool:
 	curr_sample=spt
 	cmds[last_wait]=CONSTS.CMD_END
 	return true
+
+func next_order(next:int)->void:
+	if not loop_track:
+		curr_order=next
 
 func needs_restart(song:Song)->bool:
 	if curr_order>=song.orders.size():

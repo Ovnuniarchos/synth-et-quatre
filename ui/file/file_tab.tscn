@@ -106,3 +106,4 @@ current_path = "/home/jordi/godot/SynthEtQuatre/"
 [connection signal="pressed" from="VBC/CleanPats" to="." method="_on_CleanPats_pressed"]
 [connection signal="pressed" from="VBC/CleanInsts" to="." method="_on_CleanInsts_pressed"]
 [connection signal="pressed" from="VBC/CleanWaves" to="." method="_on_CleanWaves_pressed"]
+[connection signal="file_selected" from="FileDialog" to="." method="_on_file_selected"]

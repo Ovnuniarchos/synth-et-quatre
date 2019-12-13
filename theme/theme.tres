@@ -8,24 +8,24 @@
 atlas = ExtResource( 3 )
 region = Rect2( 96, 112, 16, 16 )
 
-[sub_resource type="AtlasTexture" id=6]
+[sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 3 )
 region = Rect2( 64, 112, 16, 16 )
 
-[sub_resource type="AtlasTexture" id=2]
+[sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 3 )
 region = Rect2( 112, 112, 16, 16 )
 
-[sub_resource type="StyleBoxFlat" id=3]
+[sub_resource type="StyleBoxFlat" id=4]
 bg_color = Color( 0, 0, 0.12549, 1 )
 corner_detail = 1
 anti_aliasing = false
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=5]
 size = 10
 font_data = ExtResource( 2 )
 
-[sub_resource type="StyleBoxFlat" id=5]
+[sub_resource type="StyleBoxFlat" id=6]
 bg_color = Color( 0.8, 0.8, 0.666667, 1 )
 border_width_left = 1
 border_width_top = 1
@@ -50,15 +50,15 @@ GridContainer/constants/vseparation = 0
 HBoxContainer/constants/separation = 0
 HSplitContainer/constants/autohide = 0
 Icons/icons/Play = SubResource( 1 )
-Icons/icons/PlayTrack = SubResource( 6 )
-Icons/icons/Stop = SubResource( 2 )
+Icons/icons/PlayTrack = SubResource( 2 )
+Icons/icons/Stop = SubResource( 3 )
 Label/colors/font_color = Color( 0.752941, 0.752941, 0.752941, 1 )
-PlotPanel/styles/ = SubResource( 3 )
+PlotPanel/styles/ = SubResource( 4 )
 TooltipLabel/colors/font_color = Color( 0, 0, 0, 1 )
 TooltipLabel/colors/font_color_shadow = Color( 0, 0, 0, 0 )
 TooltipLabel/constants/shadow_offset_x = 0
 TooltipLabel/constants/shadow_offset_y = 0
-TooltipLabel/fonts/font = SubResource( 4 )
-TooltipPanel/styles/panel = SubResource( 5 )
+TooltipLabel/fonts/font = SubResource( 5 )
+TooltipPanel/styles/panel = SubResource( 6 )
 VBoxContainer/constants/separation = 0
 VSplitContainer/constants/autohide = 0

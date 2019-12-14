@@ -11,7 +11,7 @@ func _init(clip:Control)->void:
 
 func _input(ev:InputEvent)->void:
 	ev=ev as InputEventMouseButton
-	if ev==null or ALERT.active:
+	if ev==null or GLOBALS.is_any_dialog_open():
 		return
 	if is_visible_in_tree() and get_global_rect().clip(clipper.get_global_rect()).has_point(ev.global_position):
 		set_block_signals(false)

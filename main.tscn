@@ -3,12 +3,12 @@
 [ext_resource path="res://ui/widgets/oscilloscope.tscn" type="PackedScene" id=1]
 [ext_resource path="res://theme/editor.png" type="Texture" id=2]
 [ext_resource path="res://theme/theme.tres" type="Theme" id=3]
-[ext_resource path="res://ui/file/file_tab.tscn" type="PackedScene" id=4]
 [ext_resource path="res://ui/widgets/play_button.gd" type="Script" id=5]
 [ext_resource path="res://main.gd" type="Script" id=6]
 [ext_resource path="res://ui/instrument_designer/instruments_tab.tscn" type="PackedScene" id=7]
 [ext_resource path="res://ui/pattern_editor/patterns_tab.tscn" type="PackedScene" id=8]
 [ext_resource path="res://ui/wave_designer/waveforms_tab.tscn" type="PackedScene" id=9]
+[ext_resource path="res://ui/menu/menu.tscn" type="PackedScene" id=10]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 2 )
@@ -36,7 +36,13 @@ __meta__ = {
 "_edit_use_anchors_": true
 }
 
+[node name="ReferenceRect" type="ReferenceRect" parent="Main"]
+margin_right = 1024.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 0, 16 )
+
 [node name="Tabs" type="TabContainer" parent="Main"]
+margin_top = 16.0
 margin_right = 1024.0
 margin_bottom = 536.0
 size_flags_vertical = 3
@@ -61,13 +67,6 @@ margin_top = 35.0
 margin_right = -4.0
 margin_bottom = -4.0
 
-[node name="File" parent="Main/Tabs" instance=ExtResource( 4 )]
-visible = false
-margin_left = 4.0
-margin_top = 35.0
-margin_right = -4.0
-margin_bottom = -4.0
-
 [node name="Oscilloscope" parent="Main" instance=ExtResource( 1 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
@@ -81,12 +80,15 @@ right_color = Color( 0, 1, 0, 1 )
 dc_line = false
 dc_line_color = Color( 1, 1, 1, 0.25098 )
 
-[node name="PanelContainer" type="Control" parent="."]
+[node name="Menu" parent="." instance=ExtResource( 10 )]
+margin_bottom = 14.0
+
+[node name="PlayControls" type="Control" parent="."]
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PanelContainer" type="PanelContainer" parent="PanelContainer"]
+[node name="PC" type="PanelContainer" parent="PlayControls"]
 margin_left = 464.0
 margin_right = 506.0
 margin_bottom = 37.0
@@ -94,7 +96,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/PanelContainer"]
+[node name="HBC" type="HBoxContainer" parent="PlayControls/PC"]
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 79.0
@@ -103,7 +105,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 16
 
-[node name="PlayButton" type="Button" parent="PanelContainer/PanelContainer/HBoxContainer"]
+[node name="Play" type="Button" parent="PlayControls/PC/HBC"]
 margin_right = 28.0
 margin_bottom = 23.0
 toggle_mode = true
@@ -113,10 +115,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 accent_color = Color( 1, 2, 1, 1 )
-pressed_icon = "Stop"
-unpressed_icon = "Play"
 
-[node name="PlayButton2" type="Button" parent="PanelContainer/PanelContainer/HBoxContainer"]
+[node name="PlayTrack" type="Button" parent="PlayControls/PC/HBC"]
 margin_left = 44.0
 margin_right = 72.0
 margin_bottom = 23.0
@@ -127,8 +127,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 accent_color = Color( 1, 2, 1, 1 )
-pressed_icon = "Stop"
 unpressed_icon = "PlayTrack"
 [connection signal="tab_changed" from="Main/Tabs" to="." method="_on_tab_changed"]
-[connection signal="toggled" from="PanelContainer/PanelContainer/HBoxContainer/PlayButton" to="." method="_on_PlayButton_toggled"]
-[connection signal="toggled" from="PanelContainer/PanelContainer/HBoxContainer/PlayButton2" to="." method="_on_PlayButton2_toggled"]
+[connection signal="toggled" from="PlayControls/PC/HBC/Play" to="." method="_on_Play_toggled"]
+[connection signal="toggled" from="PlayControls/PC/HBC/PlayTrack" to="." method="_on_PlayTrack_toggled"]

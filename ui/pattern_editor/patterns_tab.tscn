@@ -71,10 +71,10 @@ size_flags_vertical = 3
 script = ExtResource( 6 )
 
 [node name="Info" parent="VSC/CCHSC/HSC/CCInfo" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
 margin_right = 506.0
 margin_bottom = 294.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="CCVBC" type="Container" parent="VSC"]
 margin_top = 306.0

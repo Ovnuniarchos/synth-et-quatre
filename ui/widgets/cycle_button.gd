@@ -25,10 +25,18 @@ func set_colors(c:PoolColorArray)->void:
 		status%=c.size()
 	set_visuals()
 
-func _pressed()->void:
-	status=(status+1)%colors.size()
+func cycle(dir:int)->void:
+	status=(status+dir+colors.size())%colors.size()
 	set_visuals()
 	emit_signal("cycled",status)
+
+func _gui_input(ev:InputEvent)->void:
+	if !(ev is InputEventMouseButton):
+		return
+	if ev.button_index==BUTTON_LEFT or ev.button_index==BUTTON_RIGHT:
+		if !ev.pressed:
+			cycle(1 if ev.button_index==BUTTON_LEFT else -1)
+		accept_event()
 
 func set_visuals()->void:
 	modulate=colors[status]

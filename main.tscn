@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://ui/widgets/oscilloscope.tscn" type="PackedScene" id=1]
 [ext_resource path="res://theme/editor.png" type="Texture" id=2]
 [ext_resource path="res://theme/theme.tres" type="Theme" id=3]
+[ext_resource path="res://ui/options/options.tscn" type="PackedScene" id=4]
 [ext_resource path="res://ui/widgets/play_button.gd" type="Script" id=5]
 [ext_resource path="res://main.gd" type="Script" id=6]
 [ext_resource path="res://ui/instrument_designer/instruments_tab.tscn" type="PackedScene" id=7]
@@ -67,6 +68,9 @@ margin_top = 35.0
 margin_right = -4.0
 margin_bottom = -4.0
 
+[node name="Options" parent="Main/Tabs" instance=ExtResource( 4 )]
+visible = false
+
 [node name="Oscilloscope" parent="Main" instance=ExtResource( 1 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
@@ -81,7 +85,6 @@ dc_line = false
 dc_line_color = Color( 1, 1, 1, 0.25098 )
 
 [node name="Menu" parent="." instance=ExtResource( 10 )]
-margin_bottom = 14.0
 
 [node name="PlayControls" type="Control" parent="."]
 __meta__ = {
@@ -115,6 +118,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 accent_color = Color( 1, 2, 1, 1 )
+pressed_icon = "Stop"
+unpressed_icon = "Play"
 
 [node name="PlayTrack" type="Button" parent="PlayControls/PC/HBC"]
 margin_left = 44.0
@@ -127,6 +132,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 accent_color = Color( 1, 2, 1, 1 )
+pressed_icon = "Stop"
 unpressed_icon = "PlayTrack"
 [connection signal="tab_changed" from="Main/Tabs" to="." method="_on_tab_changed"]
 [connection signal="toggled" from="PlayControls/PC/HBC/Play" to="." method="_on_Play_toggled"]

@@ -1,0 +1,98 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://theme/theme.tres" type="Theme" id=1]
+[ext_resource path="res://ui/options/options.gd" type="Script" id=2]
+[ext_resource path="res://ui/widgets/label_spinbox.tscn" type="PackedScene" id=3]
+
+[node name="Options" type="Tabs"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 35.0
+margin_right = -4.0
+margin_bottom = -4.0
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBC" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 8
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Audio" type="VBoxContainer" parent="HBC"]
+margin_right = 504.0
+margin_bottom = 561.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 8
+
+[node name="Audio" type="Label" parent="HBC/Audio"]
+margin_right = 504.0
+margin_bottom = 17.0
+text = "Audio"
+
+[node name="SampleRate" parent="HBC/Audio" instance=ExtResource( 3 )]
+margin_top = 25.0
+margin_right = 504.0
+margin_bottom = 52.0
+label = "Sample rate"
+value = 8000.0
+min_value = 8000.0
+max_value = 192000.0
+
+[node name="BufferSize" parent="HBC/Audio" instance=ExtResource( 3 )]
+margin_top = 60.0
+margin_right = 504.0
+margin_bottom = 87.0
+label = "Buffer size"
+value = 0.1
+min_value = 0.1
+max_value = 10.0
+step = 0.1
+
+[node name="Export" type="VBoxContainer" parent="HBC"]
+margin_left = 512.0
+margin_right = 1016.0
+margin_bottom = 561.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 8
+
+[node name="Export" type="Label" parent="HBC/Export"]
+margin_right = 504.0
+margin_bottom = 17.0
+text = "Export to WAV"
+
+[node name="SampleRate" parent="HBC/Export" instance=ExtResource( 3 )]
+margin_top = 25.0
+margin_right = 504.0
+margin_bottom = 52.0
+label = "Sample rate"
+value = 8000.0
+min_value = 8000.0
+max_value = 192000.0
+
+[node name="FPSamples" type="CheckBox" parent="HBC/Export"]
+margin_top = 60.0
+margin_right = 504.0
+margin_bottom = 85.0
+text = "Floating point samples"
+
+[node name="SaveMuted" type="CheckBox" parent="HBC/Export"]
+margin_top = 93.0
+margin_right = 504.0
+margin_bottom = 118.0
+text = "Save muted channels"
+[connection signal="value_changed" from="HBC/Audio/SampleRate" to="." method="_on_AudioSampleRate_value_changed"]
+[connection signal="value_changed" from="HBC/Audio/BufferSize" to="." method="_on_BufferSize_value_changed"]
+[connection signal="value_changed" from="HBC/Export/SampleRate" to="." method="_on_SampleRate_value_changed"]
+[connection signal="toggled" from="HBC/Export/FPSamples" to="." method="_on_FPSamples_toggled"]
+[connection signal="toggled" from="HBC/Export/SaveMuted" to="." method="_on_SaveMuted_toggled"]

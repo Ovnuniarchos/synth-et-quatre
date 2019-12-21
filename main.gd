@@ -1,9 +1,8 @@
 extends Control
 
 """
-TODO:	Beautify file menu
-		Sound format selector
-		Export format selector
+TODO:	Record progress bar
+		FX edit mode selector
 		WAV writer error messages
 		File save/load errors
 		Make arpeggio last until new note?

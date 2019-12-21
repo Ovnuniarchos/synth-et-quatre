@@ -1,6 +1,8 @@
 tool extends PanelContainer
 
 const BUFFER_SIZE=2048
+const FILES_SE4=PoolStringArray(["*.se4 ; SynthEtQuatre song"])
+const FILES_WAV=PoolStringArray(["*.wav ; WAV file"])
 
 
 enum FILE_MODE{LOAD,SAVE,SAVE_WAV}
@@ -27,25 +29,41 @@ func _on_New_pressed():
 
 func _on_Load_pressed()->void:
 	file_mode=FILE_MODE.LOAD
+	$FileDialog.current_dir=CONFIG.get_value(CONFIG.CURR_DIR)
 	$FileDialog.window_title="Load Song"
 	$FileDialog.mode=FileDialog.MODE_OPEN_FILE
+	$FileDialog.filters=FILES_SE4
 	$FileDialog.popup_centered_ratio()
 
 func _on_Save_pressed()->void:
 	file_mode=FILE_MODE.SAVE
+	$FileDialog.current_dir=CONFIG.get_value(CONFIG.CURR_DIR)
 	$FileDialog.window_title="Save Song"
 	$FileDialog.mode=FileDialog.MODE_SAVE_FILE
+	$FileDialog.filters=FILES_SE4
 	$FileDialog.popup_centered_ratio()
 
 func _on_SaveWav_pressed()->void:
 	file_mode=FILE_MODE.SAVE_WAV
+	$FileDialog.current_dir=CONFIG.get_value(CONFIG.CURR_DIR)
 	$FileDialog.window_title="Export as Wave"
 	$FileDialog.mode=FileDialog.MODE_SAVE_FILE
+	$FileDialog.filters=FILES_WAV
 	$FileDialog.popup_centered_ratio()
+
+func adjust_base_dir()->void:
+	var d:String=CONFIG.get_value(CONFIG.CURR_DIR)
+	var dir:Directory=Directory.new()
+	if dir.file_exists(d):
+		d=d.get_base_dir()
+	elif !dir.dir_exists(d):
+		d=OS.get_user_data_dir()
+	CONFIG.set_value(CONFIG.CURR_DIR,d)
 
 #
 
 func _on_file_selected(path:String)->void:
+	CONFIG.set_value(CONFIG.CURR_DIR,path.get_base_dir())
 	if file_mode==FILE_MODE.SAVE:
 		var f:ChunkedFile=ChunkedFile.new()
 		f.open(path,File.WRITE)
@@ -64,11 +82,15 @@ func _on_file_selected(path:String)->void:
 		var tracker:Tracker=Tracker.new(synth)
 		var file:WaveFile=WaveFile.new()
 		var cmds:Array=[]
+		var sample_rate:int=CONFIG.get_value(CONFIG.RECORD_SAMPLERATE)
 		cmds.resize(65536)
-		synth.set_mix_rate(11025.0)
+		synth.set_mix_rate(sample_rate)
+		if CONFIG.get_value(CONFIG.RECORD_SAVEMUTED):
+			pass # TODO
 		GLOBALS.song.sync_waves(synth)
-		file.start_file(path,false,11025)
-		while tracker.gen_commands(GLOBALS.song,11025.0,BUFFER_SIZE,cmds):
+		file.start_file(path,CONFIG.get_value(CONFIG.RECORD_FPSAMPLES),sample_rate)
+		tracker.record(0)
+		while tracker.gen_commands(GLOBALS.song,sample_rate,BUFFER_SIZE,cmds):
 			file.write_chunk(synth.generate(BUFFER_SIZE,cmds,1.0))
 		file.end_file()
 

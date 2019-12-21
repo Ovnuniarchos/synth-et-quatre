@@ -6,7 +6,7 @@
 
 [node name="Menu" type="PanelContainer"]
 margin_right = 1024.0
-margin_bottom = 29.0
+margin_bottom = 14.0
 size_flags_horizontal = 3
 theme = ExtResource( 3 )
 script = ExtResource( 1 )
@@ -18,7 +18,7 @@ __meta__ = {
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 1017.0
-margin_bottom = 22.0
+margin_bottom = 7.0
 rect_clip_content = true
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -88,7 +88,7 @@ margin_bottom = 138.0
 window_title = "Guardar un Archivo"
 mode_overrides_title = false
 access = 2
-filters = PoolStringArray( "se4" )
+filters = PoolStringArray( "*.se4 ; SynthEtQuatre song" )
 current_dir = "/home/jordi/godot/SynthEtQuatre"
 current_path = "/home/jordi/godot/SynthEtQuatre/"
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

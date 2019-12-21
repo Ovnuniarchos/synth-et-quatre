@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://ui/widgets/label_spinbox.gd" type="Script" id=1]
+
+[node name="LabelSpinBox" type="HBoxContainer"]
+margin_right = 158.0
+margin_bottom = 24.0
+custom_constants/separation = 8
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_top = 5.0
+margin_right = 34.0
+margin_bottom = 19.0
+text = "Label"
+
+[node name="Value" type="SpinBox" parent="."]
+margin_left = 42.0
+margin_right = 116.0
+margin_bottom = 24.0
+min_value = 8000.0
+max_value = 192000.0
+value = 8000.0
+[connection signal="value_changed" from="Value" to="." method="_on_value_changed"]

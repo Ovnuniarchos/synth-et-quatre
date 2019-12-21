@@ -121,7 +121,7 @@ func gen_commands(song:Song,mix_rate:float,buf_size:int,cmds:Array)->bool:
 				curr_row=0
 				next_order(goto_order)
 				goto_order=-1
-				if needs_restart(song):
+				if needs_stop(song):
 					return false
 				DEBUG.set_var("order",curr_order)
 				DEBUG.set_var("row",curr_row)
@@ -131,7 +131,7 @@ func gen_commands(song:Song,mix_rate:float,buf_size:int,cmds:Array)->bool:
 				curr_row=0 if goto_next>=song.pattern_length else goto_next
 				next_order(curr_order+1)
 				goto_next=-1
-				if needs_restart(song):
+				if needs_stop(song):
 					return false
 				DEBUG.set_var("order",curr_order)
 				DEBUG.set_var("row",curr_row)
@@ -142,7 +142,7 @@ func gen_commands(song:Song,mix_rate:float,buf_size:int,cmds:Array)->bool:
 				if curr_row>=song.pattern_length:
 					curr_row=0
 					next_order(curr_order+1)
-					if needs_restart(song):
+					if needs_stop(song):
 						return false
 				DEBUG.set_var("order",curr_order)
 				DEBUG.set_var("row",curr_row)
@@ -171,8 +171,8 @@ func next_order(next:int)->void:
 	if not loop_track:
 		curr_order=next
 
-func needs_restart(song:Song)->bool:
+func needs_stop(song:Song)->bool:
 	if curr_order>=song.orders.size():
 		curr_order=0
-		return !recording
+		return recording
 	return false

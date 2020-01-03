@@ -6,6 +6,7 @@ var song:Song setget set_song
 var curr_instrument:int setget set_instrument
 var curr_octave:int setget set_octave
 var curr_order:int setget set_order
+var muted_mask:int=0
 var dialogs:Array
 
 func _init():

@@ -23,8 +23,7 @@ func set_buffer_length(bl:float)->void:
 	stream.buffer_length=bl
 	play()
 
-# warning-ignore:unused_argument
-func _process(delta:float)->void:
+func _process(_delta:float)->void:
 	var playback:AudioStreamPlayback=get_stream_playback()
 	var size:int=playback.get_frames_available()
 	if size>0 and playback.can_push_buffer(size):

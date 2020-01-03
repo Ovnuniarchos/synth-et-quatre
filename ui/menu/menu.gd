@@ -86,7 +86,7 @@ func _on_file_selected(path:String)->void:
 		cmds.resize(65536)
 		synth.set_mix_rate(sample_rate)
 		if CONFIG.get_value(CONFIG.RECORD_SAVEMUTED):
-			pass # TODO
+			synth.mute_voices(GLOBALS.muted_mask)
 		GLOBALS.song.sync_waves(synth)
 		file.start_file(path,CONFIG.get_value(CONFIG.RECORD_FPSAMPLES),sample_rate)
 		tracker.record(0)

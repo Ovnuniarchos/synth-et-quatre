@@ -7,6 +7,7 @@ TODO:	Record progress bar
 		File save/load errors
 		Make arpeggio last until new note?
 		Immediate note play skips notes (skips muted channels)
+		MIDI input
 """
 
 func _ready()->void:

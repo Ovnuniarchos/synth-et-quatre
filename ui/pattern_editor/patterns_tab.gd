@@ -76,4 +76,5 @@ func _on_Channel_cycled(status:int,chan:int)->void:
 		for i in range(song.num_channels):
 			mask|=(1<<i) if mute_status[i]==SOLO else 0
 		mask^=0xffffffff
+	GLOBALS.muted_mask=mask
 	SYNTH.mute_voices(mask)

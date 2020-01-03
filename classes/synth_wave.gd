@@ -13,7 +13,7 @@ func calculate()->void:
 		buffer[i]=0.0
 	for comp in components:
 		buffer=comp.calculate(buf_size,buffer,null)
-	data=PoolRealArray(buffer)
+	data=buffer
 
 func duplicate()->Waveform:
 	var nw:SynthWave=.duplicate() as SynthWave

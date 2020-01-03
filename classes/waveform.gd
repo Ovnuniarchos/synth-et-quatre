@@ -3,7 +3,7 @@ class_name Waveform
 
 signal name_changed(wave,name)
 
-var data:PoolRealArray=PoolRealArray()
+var data:Array=[]
 var size_po2:int=8 setget set_size
 # warning-ignore:unused_class_variable
 var name:String="" setget set_name
@@ -33,5 +33,5 @@ func duplicate()->Waveform:
 	var nw:Waveform=get_script().new()
 	nw.name=name
 	nw.size_po2=size_po2
-	nw.data=PoolRealArray(Array(data))
+	nw.data=data.duplicate()
 	return nw

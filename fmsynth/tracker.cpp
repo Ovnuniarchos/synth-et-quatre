@@ -80,9 +80,8 @@ void SynthTracker::_init(){
 #define DVAR2UINT(x,y) ((uint16_t)((VAR2INT(x)<<8)|VAR2INT(y)))
 #endif
 
-PoolVector2Array SynthTracker::generate(int size,float volume,Array cmds){
+Array SynthTracker::generate(int size,float volume,Array cmds){
 	buffer.resize(size);
-	PoolVector2Array::Write writer=buffer.write();
 	volume/=FP_ONE;
 	int cmd_ptr=0,cmd_sz=cmds.size(),time=0,next_time=0;
 	for(int i=0;size;i++,size--,time++){
@@ -263,7 +262,7 @@ PoolVector2Array SynthTracker::generate(int size,float volume,Array cmds){
 		}
 		FixedPoint left,right;
 		synth.generate(left,right);
-		writer[i]=Vector2(left*volume,right*volume);
+		buffer[i]=Vector2(left*volume,right*volume);
 	}
 	TRACE("\n");
 	return buffer;

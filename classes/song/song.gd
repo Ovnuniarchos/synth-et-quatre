@@ -174,7 +174,7 @@ func sync_waves(synth:Synth,from:int=MIN_CUSTOM_WAVE)->void:
 	for wave in wave_list:
 		synth.synth.set_wave(wave_ix,wave.data)
 		wave_ix+=1
-	var null_wave:PoolRealArray=PoolRealArray()
+	var null_wave:Array=[]
 	while wave_ix<256:
 		synth.synth.set_wave(wave_ix,null_wave)
 		wave_ix+=1

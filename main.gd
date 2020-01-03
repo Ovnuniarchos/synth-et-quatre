@@ -1,7 +1,8 @@
 extends Control
 
 """
-TODO:	Record progress bar
+TODO:	New Song leaks
+		Record progress bar
 		FX edit mode selector
 		WAV writer error messages
 		File save/load errors

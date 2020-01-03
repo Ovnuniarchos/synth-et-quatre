@@ -14,7 +14,7 @@ class SynthTracker : public Object{
 	GODOT_CLASS(SynthTracker,Object)
 private:
 	FmSynth synth=FmSynth();
-	PoolVector2Array buffer=PoolVector2Array();
+	Array buffer=Array();
 	enum{
 		CMD_WAIT=0x00,
 		CMD_FREQ,
@@ -62,7 +62,7 @@ public:
 
 	void _init();
 
-	PoolVector2Array generate(int size,float volume,Array cmds);
+	Array generate(int size,float volume,Array cmds);
 
 	void set_mix_rate(float mix_rate);
 	void set_note(int voice,int op_mask,int cents);

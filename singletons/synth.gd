@@ -15,7 +15,7 @@ func _on_song_changed()->void:
 
 #
 
-func generate(buffer_size:int,command_list:Array,global_volume:float=DEFAULT_VOLUME)->PoolVector2Array:
+func generate(buffer_size:int,command_list:Array,global_volume:float=DEFAULT_VOLUME)->Array:
 	return synth.generate(buffer_size,global_volume,command_list)
 
 #

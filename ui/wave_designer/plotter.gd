@@ -1,11 +1,11 @@
 extends Container
 
-var sam:PoolByteArray=PoolByteArray()
+var sam:Array=Array()
 
 func _ready():
 	_on_wave_calculated(-1)
 
-func change_sample(buf:PoolRealArray)->void:
+func change_sample(buf:Array)->void:
 	send_sample(buf,$Control/Frequency.value)
 	$Oscilloscope.plot_mono_buffer(buf)
 
@@ -25,19 +25,18 @@ func _on_Play_toggled(pressed:bool)->void:
 	else:
 		$Player.stop()
 
-# warning-ignore:unused_argument
-func _on_wave_deleted(wave:WeakRef)->void:
+func _on_wave_deleted(_wave:WeakRef)->void:
 	$Control/Play.pressed=false
 	_on_Play_toggled(false)
 
 #
 
-func send_sample(sample:PoolRealArray,freq:float)->void:
+func send_sample(sample:Array,freq:float)->void:
 	var std:AudioStreamSample=$Player.stream as AudioStreamSample
 	sam.resize(sample.size())
 	for i in range(0,sample.size()):
 		sam[i]=sample[i]*127.0
-	std.data=sam
+	std.data=PoolByteArray(sam)
 	std.loop_end=sample.size()-1
 	change_frequency(freq)
 
@@ -51,6 +50,6 @@ func change_frequency(freq:float)->void:
 
 func _on_wave_calculated(wave_ix:int)->void:
 	if wave_ix==-1:
-		change_sample(PoolRealArray([0.0]))
+		change_sample([0.0])
 	else:
 		change_sample(GLOBALS.song.wave_list[wave_ix].data)

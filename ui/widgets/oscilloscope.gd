@@ -10,13 +10,13 @@ export (Color) var right_color=Color8(0,255,0) setget set_right_color
 export (bool) var dc_line=false setget set_dc_line
 export (Color) var dc_line_color=Color8(255,255,255,64) setget set_dc_line_color
 
-func plot_stereo_buffer(buf:PoolVector2Array)->void:
-	buffer=Array(buf)
+func plot_stereo_buffer(buf:Array)->void:
+	buffer=buf
 	channels=2
 	update()
 
-func plot_mono_buffer(buf:PoolRealArray)->void:
-	buffer=Array(buf)
+func plot_mono_buffer(buf:Array)->void:
+	buffer=buf
 	channels=1
 	update()
 

@@ -29,7 +29,7 @@ func start_file(path:String,fp_samples:bool,sample_rate:int)->void:
 	store_32(0)
 	data_size=0
 
-func write_chunk(data:PoolVector2Array)->void:
+func write_chunk(data:Array)->void:
 	if !is_open():
 		emit_signal("error","File is not open.")
 		return

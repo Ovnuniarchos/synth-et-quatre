@@ -28,6 +28,6 @@ func _process(_delta:float)->void:
 	var size:int=playback.get_frames_available()
 	if size>0 and playback.can_push_buffer(size):
 		tracker.gen_commands(GLOBALS.song,stream.mix_rate,size,cmds)
-		var buf:PoolVector2Array=SYNTH.generate(size,cmds,1.0/GLOBALS.song.num_channels)
-		playback.push_buffer(buf)
+		var buf:Array=SYNTH.generate(size,cmds,1.0/GLOBALS.song.num_channels)
+		playback.push_buffer(PoolVector2Array(buf))
 		emit_signal("buffer_sent",buf)

@@ -17,6 +17,9 @@ func _ready()->void:
 	$VSC/CCHSC/HSC.split_offset=rect_size.x*0.25
 	mute_status.resize(Song.MAX_CHANNELS)
 	GLOBALS.connect("song_changed",self,"_on_song_changed")
+	delfx_but.connect("pressed",self,"_on_DelFX_pressed",[0])
+	addfx_but.connect("pressed",self,"_on_AddFX_pressed",[0])
+	chan_but.connect("cycled",self,"_on_Channel_cycled",[0])
 	_on_song_changed()
 	connect("resized",editor,"_on_container_resized",[self])
 	editor._on_container_resized(self)
@@ -30,8 +33,15 @@ func _on_song_changed()->void:
 func _on_channels_changed()->void:
 	var song:Song=GLOBALS.song
 	for chl in channels.get_children():
-		channels.remove_child(chl)
-	for i in range(0,song.num_channels):
+		if !(chl in [chan_but,delfx_but,addfx_but,sep]):
+			channels.remove_child(chl)
+			chl.queue_free()
+	delfx_but.disabled=song.num_fxs[0]==song.MIN_FX_LENGTH
+	addfx_but.disabled=song.num_fxs[0]==song.MAX_FX_LENGTH
+	chan_but.rect_min_size.x=64.0+(song.num_fxs[0]*48.0)
+	chan_but.text=("F%d" if song.num_fxs[0]<1 else "FM %d")%[1]
+	chan_but.status=mute_status[0]
+	for i in range(1,song.num_channels):
 		var nb:Button=delfx_but.duplicate()
 		nb.connect("pressed",self,"_on_DelFX_pressed",[i])
 		nb.disabled=song.num_fxs[i]==song.MIN_FX_LENGTH

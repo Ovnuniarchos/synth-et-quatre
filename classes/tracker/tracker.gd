@@ -123,8 +123,6 @@ func gen_commands(song:Song,mix_rate:float,buf_size:int,cmds:Array)->bool:
 				goto_order=-1
 				if needs_stop(song):
 					return false
-				DEBUG.set_var("order",curr_order)
-				DEBUG.set_var("row",curr_row)
 				emit_signal("position_changed",curr_order,curr_row)
 			elif goto_next!=-1:
 				curr_tick=0
@@ -133,8 +131,6 @@ func gen_commands(song:Song,mix_rate:float,buf_size:int,cmds:Array)->bool:
 				goto_next=-1
 				if needs_stop(song):
 					return false
-				DEBUG.set_var("order",curr_order)
-				DEBUG.set_var("row",curr_row)
 				emit_signal("position_changed",curr_order,curr_row)
 			if curr_tick>=song.ticks_row:
 				curr_tick=0
@@ -144,12 +140,8 @@ func gen_commands(song:Song,mix_rate:float,buf_size:int,cmds:Array)->bool:
 					next_order(curr_order+1)
 					if needs_stop(song):
 						return false
-				DEBUG.set_var("order",curr_order)
-				DEBUG.set_var("row",curr_row)
 				emit_signal("position_changed",curr_order,curr_row)
-			DEBUG.unset_var("SD")
 		else:
-			DEBUG.set_var("SD",song_delay)
 			song_delay-=1
 		#
 		spt=samples_tick

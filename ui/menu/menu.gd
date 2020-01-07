@@ -79,27 +79,51 @@ func _on_file_selected(path:String)->void:
 			GLOBALS.song=new_song
 	elif file_mode==FILE_MODE.SAVE_WAV:
 		var synth:Synth=Synth.new()
-		var tracker:Tracker=Tracker.new(synth)
-		var file:WaveFile=WaveFile.new()
-		var cmds:Array=[]
-		var sample_rate:int=CONFIG.get_value(CONFIG.RECORD_SAMPLERATE)
-		cmds.resize(65536)
-		synth.set_mix_rate(sample_rate)
+		synth.set_mix_rate(CONFIG.get_value(CONFIG.RECORD_SAMPLERATE))
 		if CONFIG.get_value(CONFIG.RECORD_SAVEMUTED):
 			synth.mute_voices(GLOBALS.muted_mask)
 		GLOBALS.song.sync_waves(synth)
-		file.start_file(path,CONFIG.get_value(CONFIG.RECORD_FPSAMPLES),sample_rate)
+		var thr:Thread=Thread.new()
+		thr.start(self,"export_thread",{
+			"synth":synth,
+			"path":path,
+			"thread":thr
+		})
+
+func export_thread(data:Dictionary)->void:
+	var synth:Synth=data["synth"]
+	var tracker:Tracker=Tracker.new(synth)
+	var file:WaveFile=WaveFile.new()
+	var sample_rate:int=CONFIG.get_value(CONFIG.RECORD_SAMPLERATE)
+	var cmds:Array=[]
+	cmds.resize(65536)
+	tracker.set_block_signals(true)
+	PROGRESS.start()
+	var err:int=file.start_file(data["path"],CONFIG.get_value(CONFIG.RECORD_FPSAMPLES),sample_rate)
+	if err==OK:
 		tracker.record(0)
 		while tracker.gen_commands(GLOBALS.song,sample_rate,BUFFER_SIZE,cmds):
-			file.write_chunk(synth.generate(BUFFER_SIZE,cmds,1.0))
+			err=file.write_chunk(synth.generate(BUFFER_SIZE,cmds,1.0))
+			if err!=OK:
+				ALERT.alert(WaveFile.get_error_message(err))
+				call_deferred("thread_kill",data["thread"])
+				return
+			PROGRESS.set_value((tracker.curr_order*100)/GLOBALS.song.orders.size())
 		file.end_file()
+	else:
+		ALERT.alert(WaveFile.get_error_message(err))
+	PROGRESS.end()
+	call_deferred("thread_kill",data["thread"])
+
+func thread_kill(thr:Thread)->void:
+	thr.wait_to_finish()
 
 
 func _on_FileDialog_visibility_changed()->void:
 	if $FileDialog.visible:
-		GLOBALS.dialog_opened($FileDialog)
+		FADER.open_dialog($FileDialog)
 	else:
-		GLOBALS.dialog_closed($FileDialog)
+		FADER.close_dialog($FileDialog)
 
 #
 

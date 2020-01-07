@@ -1,39 +1,16 @@
 [gd_scene load_steps=3 format=2]
 
-[sub_resource type="GDScript" id=1]
-script/source = "extends CanvasLayer
+[ext_resource path="res://singletons/debug.gd" type="Script" id=1]
 
-var vars={}
-onready var bg=$C
-onready var label=$C/Debug
-
-func set_var(k:String,v)->void:
-	vars[k]=v
-	upd()
-
-func unset_var(k:String)->void:
-	vars.erase(k)
-	upd()
-
-func upd()->void:
-	var t:PoolStringArray=PoolStringArray()
-	for k in vars:
-		t.append(\"%s:%s\"%[k,vars[k]])
-	label.text=t.join(\"\\n\")
-	bg.rect_size.y=label.rect_size.y
-	if bg.anchor_bottom==1:
-		bg.margin_top=-label.rect_size.y
-"
-
-[sub_resource type="StyleBoxFlat" id=2]
+[sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 0.12549 )
 border_width_bottom = 2
 border_color = Color( 0, 0, 0, 1 )
 corner_detail = 1
 
 [node name="Debug" type="CanvasLayer"]
-layer = 2
-script = SubResource( 1 )
+layer = 128
+script = ExtResource( 1 )
 
 [node name="C" type="PanelContainer" parent="."]
 anchor_top = 1.0
@@ -41,7 +18,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = -16.0
 mouse_filter = 2
-custom_styles/panel = SubResource( 2 )
+custom_styles/panel = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

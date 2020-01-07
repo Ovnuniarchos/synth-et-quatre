@@ -56,7 +56,7 @@ func _on_song_changed()->void:
 	_on_channels_changed()
 
 func _input(event:InputEvent)->void:
-	if !is_visible_in_tree() or GLOBALS.is_any_dialog_open():
+	if !is_visible_in_tree() or FADER.active:
 		return
 	if process_mouse_motion(event as InputEventMouseMotion):
 		accept_event()

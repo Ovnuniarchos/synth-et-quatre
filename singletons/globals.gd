@@ -7,7 +7,7 @@ var curr_instrument:int setget set_instrument
 var curr_octave:int setget set_octave
 var curr_order:int setget set_order
 var muted_mask:int=0
-var dialogs:Array
+
 
 func _init():
 	set_song(Song.new())
@@ -54,17 +54,3 @@ func array_fill(array:Array,value,size:int=-1)->void:
 
 func nvl(value,default):
 	return value if value!=null else default
-
-#
-
-func dialog_opened(n:Node)->void:
-	if n in dialogs:
-		return
-	dialogs.append(n)
-
-func dialog_closed(n:Node)->void:
-	if n in dialogs:
-		dialogs.erase(n)
-
-func is_any_dialog_open()->bool:
-	return !dialogs.empty()

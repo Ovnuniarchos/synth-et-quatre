@@ -50,8 +50,8 @@ func _on_RowsPat_value_changed(value:float)->void:
 func _on_Channels_value_changed(value:float)->void:
 	GLOBALS.song.set_num_channels(value)
 
-func _on_Title_text_entered(t:String)->void:
+func _on_Title_text_changed(t:String)->void:
 	GLOBALS.song.set_title(t)
 
-func _on_Author_text_entered(t:String)->void:
+func _on_Author_text_changed(t:String)->void:
 	GLOBALS.song.set_author(t)

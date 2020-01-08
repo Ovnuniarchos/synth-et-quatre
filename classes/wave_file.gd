@@ -97,7 +97,7 @@ func end_file()->int:
 		return err
 	return OK
 
-static func get_error_message(err:int)->String:
+func get_error_message(err:int)->String:
 	if err in ERR_MESSAGES:
-		return ERR_MESSAGES[err]
+		return ERR_MESSAGES[err]%[get_path(),err]
 	return ERR_MESSAGES[ERR_UNRECOGNIZED_ERROR]

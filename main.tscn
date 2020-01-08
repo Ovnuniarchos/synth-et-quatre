@@ -85,6 +85,7 @@ dc_line = false
 dc_line_color = Color( 1, 1, 1, 0.25098 )
 
 [node name="Menu" parent="." instance=ExtResource( 10 )]
+margin_right = 14.0
 
 [node name="PlayControls" type="Control" parent="."]
 __meta__ = {

@@ -105,13 +105,13 @@ func export_thread(data:Dictionary)->void:
 		while tracker.gen_commands(GLOBALS.song,sample_rate,BUFFER_SIZE,cmds):
 			err=file.write_chunk(synth.generate(BUFFER_SIZE,cmds,1.0))
 			if err!=OK:
-				ALERT.alert(WaveFile.get_error_message(err))
+				ALERT.alert(file.get_error_message(err))
 				call_deferred("thread_kill",data["thread"])
 				return
 			PROGRESS.set_value((tracker.curr_order*100)/GLOBALS.song.orders.size())
 		file.end_file()
 	else:
-		ALERT.alert(WaveFile.get_error_message(err))
+		ALERT.alert(file.get_error_message(err))
 	PROGRESS.end()
 	call_deferred("thread_kill",data["thread"])
 

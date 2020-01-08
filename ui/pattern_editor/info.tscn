@@ -166,8 +166,8 @@ min_value = 4.0
 max_value = 32.0
 value = 32.0
 rounded = true
-[connection signal="text_entered" from="SC/VBC/Title" to="." method="_on_Title_text_entered"]
-[connection signal="text_entered" from="SC/VBC/Author" to="." method="_on_Author_text_entered"]
+[connection signal="text_changed" from="SC/VBC/Title" to="." method="_on_Title_text_changed"]
+[connection signal="text_changed" from="SC/VBC/Author" to="." method="_on_Author_text_changed"]
 [connection signal="value_changed" from="SC/VBC/GC/Octave" to="." method="_on_Octave_value_changed"]
 [connection signal="value_changed" from="SC/VBC/GC/Step" to="." method="_on_Step_value_changed"]
 [connection signal="value_changed" from="SC/VBC/GC/Velocity" to="." method="_on_Velocity_value_changed"]

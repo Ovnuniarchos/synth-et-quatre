@@ -2,11 +2,15 @@ extends Control
 
 """
 TODO:	FX edit mode selector
-		WAV writer error messages
-		File save/load errors
 		Make arpeggio last until new note?
 		Immediate note play skips notes (skips muted channels)
 		MIDI input
+		Can pass/reject filters
+		Power parameter for filters
+		Reordering of pattern rows
+
+FUTURE:	Translations
+		Themability
 """
 
 func _ready()->void:

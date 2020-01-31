@@ -29,6 +29,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://ui/widgets/clip_container.gd"
 }, {
+"base": "CheckBox",
+"class": "ConfigCheckBox",
+"language": "GDScript",
+"path": "res://ui/options/config_checkbox.gd"
+}, {
+"base": "LabelSpinBox",
+"class": "ConfigSpinBox",
+"language": "GDScript",
+"path": "res://ui/options/config_spinbox.gd"
+}, {
 "base": "Button",
 "class": "CycleButton",
 "language": "GDScript",
@@ -164,6 +174,8 @@ _global_script_class_icons={
 "ChunkedFile": "",
 "ClampFilter": "",
 "ClipContainer": "",
+"ConfigCheckBox": "",
+"ConfigSpinBox": "",
 "CycleButton": "",
 "FmInstrument": "",
 "FmVoice": "",
@@ -213,6 +225,7 @@ FADER="*res://singletons/fader.tscn"
 DEBUG="*res://singletons/debug.tscn"
 ALERT="*res://singletons/alert.tscn"
 PROGRESS="*res://singletons/progress.tscn"
+MIDI="*res://singletons/midi.gd"
 
 [debug]
 

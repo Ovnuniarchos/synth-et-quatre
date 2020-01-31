@@ -1,10 +1,13 @@
 extends Control
 
 """
-TODO:	FX edit mode selector
+TODO:	MIDI input
+			Flag?: MIDI Pitch bend
+			Flag?: MIDI modulation
+			Range?: MIDI modulation
+		FX edit mode selector
 		Make arpeggio last until new note?
 		Immediate note play skips notes (skips muted channels)
-		MIDI input
 		Can pass/reject filters
 		Power parameter for filters
 		Reordering of pattern rows

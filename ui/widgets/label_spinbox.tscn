@@ -21,7 +21,4 @@ text = "Label"
 margin_left = 42.0
 margin_right = 116.0
 margin_bottom = 24.0
-min_value = 8000.0
-max_value = 192000.0
-value = 8000.0
 [connection signal="value_changed" from="Value" to="." method="_on_value_changed"]

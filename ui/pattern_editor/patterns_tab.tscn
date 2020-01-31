@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://ui/widgets/cycle_button.gd" type="Script" id=1]
 [ext_resource path="res://ui/pattern_editor/patterns_tab.gd" type="Script" id=2]
@@ -7,6 +7,29 @@
 [ext_resource path="res://ui/pattern_editor/pattern_list.tscn" type="PackedScene" id=5]
 [ext_resource path="res://ui/widgets/clip_container.gd" type="Script" id=6]
 [ext_resource path="res://ui/pattern_editor/channel_container.gd" type="Script" id=7]
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends HBoxContainer
+
+
+func _ready()->void:
+	GKBD.connect(\"octave_changed\",self,\"_on_octave_changed\")
+	GLOBALS.connect(\"song_changed\",self,\"_on_song_changed\")
+	_on_song_changed()
+
+func _on_song_changed()->void:
+	$Octave.text=\"Octave: %-2d\"%[GLOBALS.curr_octave-1]
+	$Step.text=\"Step: %-3d\"%[1] # From editor
+	$Velocity.text=\"Velocity: %-3d\"%[1] # From editor
+	$Tempo.text=\"Tempo: %-3.2f rows/s\"%[GLOBALS.song.ticks_second/float(GLOBALS.song.ticks_row)]
+	$Instrument.text=\"Instrument: %s\"%[GLOBALS.get_instrument_name()]
+
+func _on_octave_changed(o:int)->void:
+	$Octave.text=\"Octave %2d\"%[o-1]
+
+func _on_Info_step_changed(step:int)->void:
+	$Step.text=\"Step: %-3d\"%[step]
+"
 
 [sub_resource type="StyleBoxEmpty" id=1]
 content_margin_left = 0.0
@@ -93,9 +116,45 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CNT" type="Container" parent="VSC/CCVBC/VBC"]
+[node name="Info" type="HBoxContainer" parent="VSC/CCVBC/VBC"]
 margin_right = 1024.0
-margin_bottom = 24.0
+margin_bottom = 14.0
+custom_constants/separation = 16
+script = SubResource( 2 )
+
+[node name="Octave" type="Label" parent="VSC/CCVBC/VBC/Info"]
+margin_right = 69.0
+margin_bottom = 14.0
+text = "Octave: 00"
+
+[node name="Step" type="Label" parent="VSC/CCVBC/VBC/Info"]
+margin_left = 85.0
+margin_right = 145.0
+margin_bottom = 14.0
+text = "Step: 000"
+
+[node name="Velocity" type="Label" parent="VSC/CCVBC/VBC/Info"]
+margin_left = 161.0
+margin_right = 244.0
+margin_bottom = 14.0
+text = "Velocity: 000"
+
+[node name="Tempo" type="Label" parent="VSC/CCVBC/VBC/Info"]
+margin_left = 260.0
+margin_right = 402.0
+margin_bottom = 14.0
+text = "Tempo: 000.00 rows/s"
+
+[node name="Instrument" type="Label" parent="VSC/CCVBC/VBC/Info"]
+margin_left = 418.0
+margin_right = 494.0
+margin_bottom = 14.0
+text = "Instrument:"
+
+[node name="CNT" type="Container" parent="VSC/CCVBC/VBC"]
+margin_top = 14.0
+margin_right = 1024.0
+margin_bottom = 38.0
 rect_min_size = Vector2( 0, 24 )
 rect_clip_content = true
 size_flags_vertical = 0
@@ -156,6 +215,7 @@ button_mask = 3
 text = "Chn 1"
 clip_text = true
 script = ExtResource( 1 )
+status = 0
 colors = PoolColorArray( 1, 1, 1, 1, 0.501961, 0.752941, 1, 1, 2, 1, 1, 1 )
 
 [node name="S" type="ReferenceRect" parent="VSC/CCVBC/VBC/CNT/Channels/Scroll/HB"]
@@ -167,11 +227,12 @@ rect_min_size = Vector2( 16, 0 )
 [node name="Editor" parent="VSC/CCVBC/VBC" instance=ExtResource( 4 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 24.0
+margin_top = 38.0
 margin_right = 1024.0
 margin_bottom = 294.0
 rect_min_size = Vector2( 0, 48 )
 [connection signal="order_selected" from="VSC/CCHSC/HSC/CCPatternList/PatternList" to="VSC/CCVBC/VBC/Editor" method="_on_order_selected"]
+[connection signal="step_changed" from="VSC/CCHSC/HSC/CCInfo/Info" to="VSC/CCVBC/VBC/Info" method="_on_Info_step_changed"]
 [connection signal="step_changed" from="VSC/CCHSC/HSC/CCInfo/Info" to="VSC/CCVBC/VBC/Editor" method="_on_Info_step_changed"]
 [connection signal="velocity_changed" from="VSC/CCHSC/HSC/CCInfo/Info" to="VSC/CCVBC/VBC/Editor" method="_on_Info_velocity_changed"]
 [connection signal="sort_children" from="VSC/CCVBC/VBC/CNT" to="VSC/CCVBC/VBC/CNT" method="_on_sort_children"]

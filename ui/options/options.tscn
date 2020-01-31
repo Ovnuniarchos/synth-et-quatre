@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://theme/theme.tres" type="Theme" id=1]
 [ext_resource path="res://ui/options/options.gd" type="Script" id=2]
 [ext_resource path="res://ui/widgets/label_spinbox.tscn" type="PackedScene" id=3]
+[ext_resource path="res://ui/options/config_spinbox.gd" type="Script" id=4]
+[ext_resource path="res://ui/options/config_checkbox.gd" type="Script" id=5]
+[ext_resource path="res://ui/options/config_option.gd" type="Script" id=6]
 
 [node name="Options" type="Tabs"]
 anchor_right = 1.0
@@ -17,82 +20,198 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBC" type="HBoxContainer" parent="."]
+[node name="SC" type="ScrollContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBC" type="VBoxContainer" parent="SC"]
+margin_right = 1016.0
+margin_bottom = 314.0
 size_flags_horizontal = 3
-size_flags_vertical = 3
+custom_constants/separation = 16
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Titles1" type="HBoxContainer" parent="SC/VBC"]
+margin_right = 1016.0
+margin_bottom = 17.0
+
+[node name="Audio" type="Label" parent="SC/VBC/Titles1"]
+margin_right = 508.0
+margin_bottom = 17.0
+size_flags_horizontal = 3
+text = "Audio"
+
+[node name="Export" type="Label" parent="SC/VBC/Titles1"]
+margin_left = 508.0
+margin_right = 1016.0
+margin_bottom = 17.0
+size_flags_horizontal = 3
+text = "Export to WAV"
+
+[node name="HBC1" type="HBoxContainer" parent="SC/VBC"]
+margin_top = 33.0
+margin_right = 1016.0
+margin_bottom = 126.0
+size_flags_horizontal = 3
 custom_constants/separation = 8
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Audio" type="VBoxContainer" parent="HBC"]
+[node name="S" type="ReferenceRect" parent="SC/VBC/HBC1"]
+margin_right = 8.0
+margin_bottom = 93.0
+rect_min_size = Vector2( 8, 0 )
+
+[node name="Audio" type="VBoxContainer" parent="SC/VBC/HBC1"]
+margin_left = 16.0
 margin_right = 504.0
-margin_bottom = 561.0
+margin_bottom = 93.0
 size_flags_horizontal = 3
-size_flags_vertical = 3
 custom_constants/separation = 8
 
-[node name="Audio" type="Label" parent="HBC/Audio"]
-margin_right = 504.0
-margin_bottom = 17.0
-text = "Audio"
-
-[node name="SampleRate" parent="HBC/Audio" instance=ExtResource( 3 )]
-margin_top = 25.0
-margin_right = 504.0
-margin_bottom = 52.0
+[node name="SampleRate" parent="SC/VBC/HBC1/Audio" instance=ExtResource( 3 )]
+margin_right = 488.0
+margin_bottom = 27.0
+script = ExtResource( 4 )
 label = "Sample rate"
-value = 8000.0
 min_value = 8000.0
 max_value = 192000.0
+config_key = "AUDIO_SAMPLERATE"
 
-[node name="BufferSize" parent="HBC/Audio" instance=ExtResource( 3 )]
-margin_top = 60.0
-margin_right = 504.0
-margin_bottom = 87.0
-label = "Buffer size"
-value = 0.1
+[node name="BufferLength" parent="SC/VBC/HBC1/Audio" instance=ExtResource( 3 )]
+margin_top = 35.0
+margin_right = 488.0
+margin_bottom = 62.0
+script = ExtResource( 4 )
+label = "Buffer length"
 min_value = 0.1
-max_value = 10.0
+max_value = 1.0
 step = 0.1
+config_key = "AUDIO_BUFFERLENGTH"
 
-[node name="Export" type="VBoxContainer" parent="HBC"]
+[node name="S2" type="ReferenceRect" parent="SC/VBC/HBC1"]
 margin_left = 512.0
+margin_right = 520.0
+margin_bottom = 93.0
+rect_min_size = Vector2( 8, 0 )
+
+[node name="Export" type="VBoxContainer" parent="SC/VBC/HBC1"]
+margin_left = 528.0
 margin_right = 1016.0
-margin_bottom = 561.0
+margin_bottom = 93.0
 size_flags_horizontal = 3
-size_flags_vertical = 3
 custom_constants/separation = 8
 
-[node name="Export" type="Label" parent="HBC/Export"]
-margin_right = 504.0
-margin_bottom = 17.0
-text = "Export to WAV"
-
-[node name="SampleRate" parent="HBC/Export" instance=ExtResource( 3 )]
-margin_top = 25.0
-margin_right = 504.0
-margin_bottom = 52.0
+[node name="SampleRate" parent="SC/VBC/HBC1/Export" instance=ExtResource( 3 )]
+margin_right = 488.0
+margin_bottom = 27.0
+script = ExtResource( 4 )
 label = "Sample rate"
-value = 8000.0
 min_value = 8000.0
 max_value = 192000.0
+config_key = "RECORD_SAMPLERATE"
 
-[node name="FPSamples" type="CheckBox" parent="HBC/Export"]
-margin_top = 60.0
-margin_right = 504.0
-margin_bottom = 85.0
+[node name="FPSamples" type="CheckBox" parent="SC/VBC/HBC1/Export"]
+margin_top = 35.0
+margin_right = 488.0
+margin_bottom = 60.0
 text = "Floating point samples"
+script = ExtResource( 5 )
+config_key = "RECORD_FPSAMPLES"
 
-[node name="SaveMuted" type="CheckBox" parent="HBC/Export"]
-margin_top = 93.0
-margin_right = 504.0
-margin_bottom = 118.0
+[node name="SaveMuted" type="CheckBox" parent="SC/VBC/HBC1/Export"]
+margin_top = 68.0
+margin_right = 488.0
+margin_bottom = 93.0
 text = "Save muted channels"
-[connection signal="value_changed" from="HBC/Audio/SampleRate" to="." method="_on_AudioSampleRate_value_changed"]
-[connection signal="value_changed" from="HBC/Audio/BufferSize" to="." method="_on_BufferSize_value_changed"]
-[connection signal="value_changed" from="HBC/Export/SampleRate" to="." method="_on_SampleRate_value_changed"]
-[connection signal="toggled" from="HBC/Export/FPSamples" to="." method="_on_FPSamples_toggled"]
-[connection signal="toggled" from="HBC/Export/SaveMuted" to="." method="_on_SaveMuted_toggled"]
+script = ExtResource( 5 )
+config_key = "RECORD_SAVEMUTED"
+
+[node name="Titles2" type="HBoxContainer" parent="SC/VBC"]
+margin_top = 142.0
+margin_right = 1016.0
+margin_bottom = 159.0
+
+[node name="MIDI" type="Label" parent="SC/VBC/Titles2"]
+margin_right = 80.0
+margin_bottom = 17.0
+text = "MIDI input"
+
+[node name="HBC2" type="HBoxContainer" parent="SC/VBC"]
+margin_top = 175.0
+margin_right = 1016.0
+margin_bottom = 314.0
+size_flags_horizontal = 3
+custom_constants/separation = 8
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="S3" type="ReferenceRect" parent="SC/VBC/HBC2"]
+margin_right = 8.0
+margin_bottom = 139.0
+rect_min_size = Vector2( 8, 0 )
+
+[node name="MIDI" type="VBoxContainer" parent="SC/VBC/HBC2"]
+margin_left = 16.0
+margin_right = 512.0
+margin_bottom = 139.0
+size_flags_horizontal = 3
+custom_constants/separation = 8
+
+[node name="NNV" type="VBoxContainer" parent="SC/VBC/HBC2/MIDI"]
+margin_right = 496.0
+margin_bottom = 40.0
+
+[node name="NNV" type="Label" parent="SC/VBC/HBC2/MIDI/NNV"]
+margin_right = 496.0
+margin_bottom = 17.0
+text = "New note velocity"
+
+[node name="NNVel" type="OptionButton" parent="SC/VBC/HBC2/MIDI/NNV"]
+margin_top = 17.0
+margin_right = 496.0
+margin_bottom = 40.0
+text = "Se4 velocity"
+items = [ "Se4 velocity", null, false, 0, null, "MIDI velocity", null, false, 1, null, "MIDI volume", null, false, 2, null, "Se4 × MIDI velocity", null, false, 3, null, "Se4 × MIDI volume", null, false, 4, null, "MIDI velocity × MIDI volume", null, false, 5, null, "Se4 × MIDI vel × MIDI vol", null, false, 6, null ]
+selected = 0
+script = ExtResource( 6 )
+config_key = "MIDI_VELOCITYSRC"
+
+[node name="NoteOff" type="CheckBox" parent="SC/VBC/HBC2/MIDI"]
+margin_top = 48.0
+margin_right = 496.0
+margin_bottom = 73.0
+text = "Record MIDI Note Off"
+script = ExtResource( 5 )
+config_key = "MIDI_NOTEOFF"
+
+[node name="VolumeChange" type="CheckBox" parent="SC/VBC/HBC2/MIDI"]
+margin_top = 81.0
+margin_right = 496.0
+margin_bottom = 106.0
+text = "Record MIDI Volume"
+script = ExtResource( 5 )
+config_key = "MIDI_VOLUME"
+
+[node name="Aftertouch" type="CheckBox" parent="SC/VBC/HBC2/MIDI"]
+margin_top = 114.0
+margin_right = 496.0
+margin_bottom = 139.0
+text = "Record MIDI Aftertouch"
+script = ExtResource( 5 )
+config_key = "MIDI_AFTERTOUCH"
+
+[node name="ReferenceRect" type="ReferenceRect" parent="SC/VBC/HBC2"]
+margin_left = 520.0
+margin_right = 1016.0
+margin_bottom = 139.0
+size_flags_horizontal = 3
+[connection signal="value_changed" from="SC/VBC/HBC1/Audio/SampleRate" to="." method="_on_AudioSampleRate_value_changed"]
+[connection signal="value_changed" from="SC/VBC/HBC1/Audio/BufferLength" to="." method="_on_AudioBufferSize_value_changed"]

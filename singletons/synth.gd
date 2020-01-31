@@ -4,6 +4,7 @@ class_name Synth
 const DEFAULT_VOLUME=1.0/32.0
 
 var synth=preload("res://fm_synth.gdns").new()
+var mute_mask:int=0
 
 func _ready()->void:
 	GLOBALS.connect("song_changed",self,"_on_song_changed")
@@ -96,4 +97,5 @@ func set_lfo_frequency(lfo_ix:int,freq:float)->void:
 	synth.set_lfo_freq(lfo_ix,freq)
 
 func mute_voices(mask:int)->void:
+	mute_mask=mask
 	synth.mute_voices(mask)

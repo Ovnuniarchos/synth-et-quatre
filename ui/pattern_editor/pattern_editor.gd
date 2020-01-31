@@ -15,11 +15,17 @@ const SHARP2TILE:Array=[DOT,SHARP,DOT,SHARP,DOT,DOT,SHARP,DOT,SHARP,DOT,SHARP,DO
 const COL_WIDTH:Array=[1,4,2,2,2,2,1,2,2,1,2,2,1,2,2,1,2]
 const COLS:Array=[0,1,6,9,12,15,17,18,21,23,24,27,29,30,33,35,36]
 
+const KEYOFF:int=-1
+const KEYCUT:int=-2
+
 var curr_order:int=0
 var curr_row:int=0
 var curr_channel:int=0
 var curr_column:int=0
 var step:int=1
+var midi_note:int=-1
+var midi_vel:int=127
+var midi_vol:int=127
 
 onready var editor:TileMap=$Pattern
 onready var lines:TileMap=$Lines
@@ -67,6 +73,43 @@ func _input(event:InputEvent)->void:
 	if process_mouse_button(event as InputEventMouseButton):
 		accept_event()
 		return
+	if process_midi(event as InputEventMIDI):
+		accept_event()
+		return
+
+func process_midi(ev:InputEventMIDI)->bool:
+	if ev==null:
+		return false
+	var velocity:int
+	if ev.message==MIDI_MESSAGE_NOTE_ON and midi_note==-1:
+		midi_vel=ev.velocity
+		midi_note=ev.pitch
+		put_note(ev.pitch%12,ev.pitch/12,GLOBALS.curr_instrument)
+		GKBD.play_note(true,false,ev.pitch,curr_channel)
+		return true
+	if ev.message==MIDI_MESSAGE_NOTE_OFF and ev.pitch==midi_note:
+		midi_note=-1
+		if CONFIG.get_value(CONFIG.MIDI_NOTEOFF):
+			put_note(KEYOFF,0,null)
+		GKBD.play_note(false,false,ev.pitch,curr_channel)
+		return true
+	if ev.message==MIDI_MESSAGE_AFTERTOUCH and CONFIG.get_value(CONFIG.MIDI_AFTERTOUCH)\
+			and midi_note==ev.pitch:
+		midi_vel=ev.pressure
+		velocity=calculate_velocity(dflt_velocity,midi_vel,midi_vol)
+		GLOBALS.song.set_note(curr_order,curr_channel,curr_row,ATTRS.VOL,velocity)
+		set_2_digits(curr_row,COLS[ATTRS.VOL]+channel_col0[curr_channel],velocity)
+		advance(1)
+		return true
+	if ev.message==MIDI_MESSAGE_CONTROL_CHANGE and ev.controller_number==7:
+		midi_vol=ev.controller_value
+		if CONFIG.get_value(CONFIG.MIDI_VOLUME):
+			velocity=calculate_velocity(dflt_velocity,midi_vel if midi_note!=-1 else 127,midi_vol)
+			GLOBALS.song.set_note(curr_order,curr_channel,curr_row,ATTRS.VOL,velocity)
+			set_2_digits(curr_row,COLS[ATTRS.VOL]+channel_col0[curr_channel],velocity)
+			advance(1)
+		return true
+	return false
 
 func process_mouse_motion(ev:InputEventMouseMotion)->bool:
 	if ev==null:
@@ -279,7 +322,7 @@ func process_keyboard(ev:InputEventKey)->bool:
 			return true
 		if ev.scancode==GKBD.NOTE_OFF:
 			if !ev.pressed:
-				put_note(-2 if ev.shift else -1,0,null)
+				put_note(KEYCUT if ev.shift else KEYOFF,0,null)
 			return true
 		if ev.scancode in GKBD.VALUE_UP:
 			if !ev.pressed:
@@ -404,7 +447,7 @@ func put_note(semitone,octave:int,instrument,add:int=0,adv:int=step)->void:
 		instrument=null
 	else:
 		if semitone<0:
-			note=-2 if semitone==-2 else -1
+			note=KEYCUT if semitone==KEYCUT else KEYOFF
 			instrument=null
 		else:
 			note=semitone+(octave*12)
@@ -412,15 +455,31 @@ func put_note(semitone,octave:int,instrument,add:int=0,adv:int=step)->void:
 	song.set_note(curr_order,curr_channel,curr_row,ATTRS.INSTR,instrument)
 # warning-ignore:incompatible_ternary
 # warning-ignore:incompatible_ternary
-	song.set_note(curr_order,curr_channel,curr_row,ATTRS.VOL,dflt_velocity if instrument!=null else null)
+	var velocity:int=calculate_velocity(dflt_velocity,midi_vel,midi_vol)
+	song.set_note(curr_order,curr_channel,curr_row,ATTRS.VOL,velocity if instrument!=null else null)
 	set_note_cells(curr_row,channel_col0[curr_channel],note)
 	set_2_digits(curr_row,COLS[ATTRS.INSTR]+channel_col0[curr_channel],instrument)
 	if instrument==null:
 		set_2_digits(curr_row,COLS[ATTRS.VOL]+channel_col0[curr_channel],null)
 	else:
-		set_2_digits(curr_row,COLS[ATTRS.VOL]+channel_col0[curr_channel],dflt_velocity)
+		set_2_digits(curr_row,COLS[ATTRS.VOL]+channel_col0[curr_channel],velocity)
 	advance(adv)
 
+func calculate_velocity(base:int,vel:int,vol:int)->int:
+	var vel_mode:int=CONFIG.get_value(CONFIG.MIDI_VELOCITYSRC)
+	if vel_mode==CONFIG.VELMODE_SE4:
+		return base
+	if vel_mode==CONFIG.VELMODE_VEL:
+		return int(floor(vel*2.008))
+	elif vel_mode==CONFIG.VELMODE_VOL:
+		return int(floor(vol*2.008))
+	elif vel_mode==CONFIG.VELMODE_SE4VEL:
+		return (base*vel)/127
+	elif vel_mode==CONFIG.VELMODE_SE4VOL:
+		return (base*vol)/127
+	elif vel_mode==CONFIG.VELMODE_VELVOL:
+		return int(floor((vel*vol)/63.25))
+	return (base*vel*vol)/16129
 #
 
 func _on_channels_changed()->void:
@@ -494,8 +553,8 @@ func set_legato_cell(row:int,col:int,legato)->void:
 	editor.set_cell(col,row,[DOT,LEGATO,STACCATO][legato])
 
 func set_note_cells(row:int,col:int,note)->void:
-	if note==null or note==-1 or note==-2:
-		var ch:int=DOT if note==null else MINUS if note==-1 else SHARP
+	if note==null or note==KEYOFF or note==KEYCUT:
+		var ch:int=DOT if note==null else MINUS if note==KEYOFF else SHARP
 		editor.set_cell(col+1,row,ch)
 		editor.set_cell(col+2,row,ch)
 		editor.set_cell(col+3,row,ch)

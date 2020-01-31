@@ -36,48 +36,40 @@ const PASTE=[KEY_V|KEY_MASK_CTRL,KEY_V|KEY_MASK_CMD]
 const MIX_PASTE=[KEY_V|KEY_MASK_SHIFT|KEY_MASK_CTRL,KEY_V|KEY_MASK_SHIFT|KEY_MASK_CMD]
 const DUPLICATE=[KEY_ENTER,KEY_KP_ENTER]
 
-var notes:Array=[]
-var key_on:Array=[]
-var last_channel:int=-1
+
+var notes_on:Array=[]
+var channel:int=-1
 
 
-func _ready():
-	GLOBALS.array_fill(notes,-1,32)
-	GLOBALS.array_fill(key_on,false,32)
-
-#
+func _ready()->void:
+	GLOBALS.array_fill(notes_on,-1,Song.MAX_CHANNELS)
 
 func _unhandled_input(event:InputEvent)->void:
 	if handle_keys(event as InputEventKey):
 		get_tree().set_input_as_handled()
+	elif handle_midi(event as InputEventMIDI):
+		get_tree().set_input_as_handled()
+
+func handle_midi(event:InputEventMIDI)->bool:
+	if event==null:
+		return false
+	if event.message==MIDI_MESSAGE_NOTE_ON:
+		play_note(true,false,event.pitch)
+	elif event.message==MIDI_MESSAGE_NOTE_OFF:
+		play_note(false,false,event.pitch)
+	else:
+		print("CH:%d MS:%d PI:%d VE:%d IN:%d PR:%d CN:%d CV:%d"%[event.channel,event.message,event.pitch,event.velocity,event.instrument,event.pressure,event.controller_number,event.controller_value])
+	return true
 
 func handle_keys(event:InputEventKey)->bool:
 	if event==null or event.is_echo():
 		return false
 	var fscan:int=event.get_scancode_with_modifiers()
 	if (fscan&~KEY_MASK_SHIFT) in KEYBOARD:
-		var semi:int=KEYBOARD.find(event.scancode)+(GLOBALS.curr_octave*12)
-		var chan:int=notes.find(semi)
-		var instr:Instrument=GLOBALS.get_instrument()
-		if event.pressed:
-			if chan==-1:
-				chan=notes.find(-1)
-				if chan==-1:
-					chan=0
-			if last_channel==-1:
-				last_channel=chan
-			elif event.shift:
-				chan=last_channel
-			key_on[chan]=true
-			notes[chan]=semi
-			last_channel=chan
-			if instr is FmInstrument:
-				SYNTH.set_fm_instrument(chan,instr)
-				SYNTH.play_fm_note(chan,instr,semi,event.shift)
-		elif chan!=-1:
-			key_on[chan]=false
-			if instr is FmInstrument:
-				SYNTH.synth.key_off(chan,15)
+		play_note(event.pressed,
+				event.shift,
+				KEYBOARD.find(event.scancode)+(GLOBALS.curr_octave*12)
+			)
 		return true
 	if fscan in OCTAVE_UP:
 		if !event.pressed:
@@ -91,8 +83,32 @@ func handle_keys(event:InputEventKey)->bool:
 		return true
 	return false
 
+func play_note(keyon:bool,legato:bool,semi:int,chan:int=-1)->void:
+	if SYNTH.mute_mask&0xFFFFFFFF==0xFFFFFFFF:
+		return
+	var instr:Instrument=GLOBALS.get_instrument()
+	if keyon:
+		if chan==-1:
+			channel=(channel+1)&31
+			var bailout:int=0
+			while SYNTH.mute_mask&(1<<channel)!=0 and bailout<32:
+				channel=(channel+1)&31
+				bailout+=1
+			chan=channel
+		notes_on[chan]=semi
+		if instr is FmInstrument:
+			SYNTH.set_fm_instrument(chan,instr)
+			SYNTH.play_fm_note(chan,instr,semi,legato)
+	else:
+		for i in range(Song.MAX_CHANNELS):
+			if notes_on[i]!=semi:
+				continue
+			notes_on[i]=-1
+			if instr is FmInstrument:
+				SYNTH.synth.key_off(i,15)
+
 #
 
-func _on_FmEditor_instrument_changed():
-	if last_channel!=-1:
-		SYNTH.set_fm_instrument(last_channel,GLOBALS.get_instrument())
+func _on_FmEditor_instrument_changed()->void:
+	if channel!=-1:
+		SYNTH.set_fm_instrument(channel,GLOBALS.get_instrument())

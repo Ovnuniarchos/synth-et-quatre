@@ -35,6 +35,12 @@ func set_instrument(index:int)->void:
 	if index>-1 and index<song.instrument_list.size():
 		curr_instrument=index
 
+func get_instrument_name(index:int=-1)->String:
+	if index<=0:
+		index=curr_instrument
+	var instr:Instrument=song.get_instrument(index)
+	return "--" if instr==null else instr.name
+
 func set_octave(oct:int)->void:
 	curr_octave=clamp(oct,0.0,10.0)
 

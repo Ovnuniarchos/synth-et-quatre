@@ -1,41 +1,51 @@
-extends HBoxContainer
+tool extends HBoxContainer
 class_name LabelSpinBox
 
 signal value_changed(value)
 
-export (String) var label="Label" setget set_label
-export (float) var value=0.0 setget set_value,get_value
-export (float) var min_value=0.0 setget set_min_value,get_min_value
-export (float) var max_value=100.0 setget set_max_value,get_max_value
-export (float) var step=1.0 setget set_step,get_step
+export (String) var label:String="Label" setget set_label
+export (float) var min_value:float=0.0 setget set_min_value
+export (float) var max_value:float=100.0 setget set_max_value
+export (float) var step:float=1.0 setget set_step
+
+var value:float=0.0
+
+func _ready()->void:
+	set_label(label)
+	set_min_value(min_value)
+	set_max_value(max_value)
+	set_step(step)
+	set_value(value)
 
 func set_label(t:String)->void:
-	$Label.text=t
+	label=t
+	if $Label:
+		$Label.text=t
 
 func set_value(v:float)->void:
-	$Value.value=v
-
-func get_value()->float:
-	return $Value.value
+	if $Value:
+		$Value.value=v
+	value=stepify(clamp(v,min_value,max_value),step)
+	property_list_changed_notify()
 
 func set_min_value(v:float)->void:
-	$Value.min_value=v
-
-func get_min_value()->float:
-	return $Value.min_value
+	min_value=v
+	if $Value:
+		$Value.min_value=v
+	set_value(stepify(clamp(value,min_value,max_value),step))
 
 func set_max_value(v:float)->void:
-	$Value.max_value=v
-
-func get_max_value()->float:
-	return $Value.max_value
+	max_value=v
+	if $Value:
+		$Value.max_value=v
+	set_value(stepify(clamp(value,min_value,max_value),step))
 
 func set_step(v:float)->void:
-	$Value.step=v
-
-func get_step()->float:
-	return $Value.step
+	step=v
+	if $Value:
+		$Value.step=v
+	set_value(stepify(clamp(value,min_value,max_value),step))
 
 func _on_value_changed(v:float)->void:
-	value=v
-	emit_signal("value_changed",v)
+	set_value(v)
+	emit_signal("value_changed",value)

@@ -181,6 +181,14 @@ func sync_waves(synth:Synth,from:int=MIN_CUSTOM_WAVE)->void:
 
 #
 
+func sync_lfos(synth:Synth)->void:
+	for i in range(lfo_frequencies.size()):
+		synth.set_lfo_frequency(i,lfo_frequencies[i])
+		synth.set_lfo_wave(i,lfo_waves[i])
+		synth.set_lfo_duty_cycle(i,lfo_duty_cycles[i])
+
+#
+
 func add_instrument(instr:Instrument)->void:
 	if can_add_instrument() and instrument_list.find(instr)==-1:
 		instrument_list.append(instr)

@@ -25,6 +25,7 @@ func _ready()->void:
 func _on_New_pressed():
 	var song:Song=Song.new()
 	AUDIO.tracker.stop()
+	SYNTH.mute_voices(0)
 	GLOBALS.song=song
 
 func _on_Load_pressed()->void:
@@ -83,6 +84,7 @@ func _on_file_selected(path:String)->void:
 		if CONFIG.get_value(CONFIG.RECORD_SAVEMUTED):
 			synth.mute_voices(GLOBALS.muted_mask)
 		GLOBALS.song.sync_waves(synth)
+		GLOBALS.song.sync_lfos(synth)
 		var thr:Thread=Thread.new()
 		thr.start(self,"export_thread",{
 			"synth":synth,

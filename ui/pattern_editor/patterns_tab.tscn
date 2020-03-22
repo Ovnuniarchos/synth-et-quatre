@@ -8,7 +8,7 @@
 [ext_resource path="res://ui/widgets/clip_container.gd" type="Script" id=6]
 [ext_resource path="res://ui/pattern_editor/channel_container.gd" type="Script" id=7]
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id=1]
 script/source = "extends HBoxContainer
 
 
@@ -31,7 +31,7 @@ func _on_Info_step_changed(step:int)->void:
 	$Step.text=\"Step: %-3d\"%[step]
 "
 
-[sub_resource type="StyleBoxEmpty" id=1]
+[sub_resource type="StyleBoxEmpty" id=2]
 content_margin_left = 0.0
 content_margin_right = 0.0
 content_margin_top = 0.0
@@ -120,7 +120,7 @@ __meta__ = {
 margin_right = 1024.0
 margin_bottom = 14.0
 custom_constants/separation = 16
-script = SubResource( 2 )
+script = SubResource( 1 )
 
 [node name="Octave" type="Label" parent="VSC/CCVBC/VBC/Info"]
 margin_right = 69.0
@@ -177,7 +177,7 @@ margin_right = 1024.0
 margin_bottom = 24.0
 rect_clip_content = true
 size_flags_horizontal = 3
-custom_styles/panel = SubResource( 1 )
+custom_styles/panel = SubResource( 2 )
 
 [node name="HB" type="HBoxContainer" parent="VSC/CCVBC/VBC/CNT/Channels/Scroll"]
 margin_right = 992.0
@@ -215,7 +215,6 @@ button_mask = 3
 text = "Chn 1"
 clip_text = true
 script = ExtResource( 1 )
-status = 0
 colors = PoolColorArray( 1, 1, 1, 1, 0.501961, 0.752941, 1, 1, 2, 1, 1, 1 )
 
 [node name="S" type="ReferenceRect" parent="VSC/CCVBC/VBC/CNT/Channels/Scroll/HB"]
@@ -232,8 +231,8 @@ margin_right = 1024.0
 margin_bottom = 294.0
 rect_min_size = Vector2( 0, 48 )
 [connection signal="order_selected" from="VSC/CCHSC/HSC/CCPatternList/PatternList" to="VSC/CCVBC/VBC/Editor" method="_on_order_selected"]
-[connection signal="step_changed" from="VSC/CCHSC/HSC/CCInfo/Info" to="VSC/CCVBC/VBC/Info" method="_on_Info_step_changed"]
 [connection signal="step_changed" from="VSC/CCHSC/HSC/CCInfo/Info" to="VSC/CCVBC/VBC/Editor" method="_on_Info_step_changed"]
+[connection signal="step_changed" from="VSC/CCHSC/HSC/CCInfo/Info" to="VSC/CCVBC/VBC/Info" method="_on_Info_step_changed"]
 [connection signal="velocity_changed" from="VSC/CCHSC/HSC/CCInfo/Info" to="VSC/CCVBC/VBC/Editor" method="_on_Info_velocity_changed"]
 [connection signal="sort_children" from="VSC/CCVBC/VBC/CNT" to="VSC/CCVBC/VBC/CNT" method="_on_sort_children"]
 [connection signal="horizontal_scroll" from="VSC/CCVBC/VBC/Editor" to="." method="_on_editor_horizontal_scroll"]

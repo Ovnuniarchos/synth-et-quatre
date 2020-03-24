@@ -19,16 +19,17 @@ private:
 		CMD_WAIT=0x00,
 		CMD_FREQ,
 		CMD_KEYON,
-		CMD_KEYON_LEGATO,
+		CMD_KEYON_LEG,
+		CMD_KEYON_STA,
 		CMD_KEYOFF,
 		CMD_STOP,
 		CMD_ENABLE,
-		CMD_MULT=0x07,
+		CMD_MULT=0x08,
 		CMD_DIV,
 		CMD_DET,
 		CMD_DUC,
-		CMD_WAVE=0x0b,
-		CMD_VEL=0x0c,
+		CMD_WAVE=0x0c,
+		CMD_VOL=0x0d,
 		CMD_AR,
 		CMD_DR,
 		CMD_SL,
@@ -36,15 +37,15 @@ private:
 		CMD_RR,
 		CMD_RM,
 		CMD_KSR,
-		CMD_PM=0x14,
+		CMD_PM=0x15,
 		CMD_OUT,
-		CMD_PAN=0x16,
-		CMD_PHI=0x17,
-		CMD_AMS=0x18,
+		CMD_PAN=0x17,
+		CMD_PHI=0x18,
+		CMD_AMS=0x19,
 		CMD_AM_LFO,
 		CMD_FMS,
 		CMD_FM_LFO,
-		CMD_LFO_FREQ=0x1c,
+		CMD_LFO_FREQ=0x1d,
 		CMD_LFO_WAVE,
 		CMD_LFO_DUC,
 		CMD_LFO_PHI,
@@ -74,7 +75,7 @@ public:
 	void set_duty_cycle(int voice,int op_mask,FixedPoint duty_cycle);
 	void set_wave(int wave_ix,PoolRealArray wave);
 
-	void set_velocity(int voice,int vel);
+	void set_volume(int voice,int vel);
 	void set_attack_rate(int voice,int op_mask,int rate);
 	void set_decay_rate(int voice,int op_mask,int rate);
 	void set_sustain_level(int voice,int op_mask,int level);

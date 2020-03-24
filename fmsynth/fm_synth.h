@@ -8,6 +8,7 @@ class FmSynth{
 private:
 	static const int MAX_WAVES=252;
 	static const int MAX_LFOS=4;
+	static const int LAST_LFO=MAX_LFOS-1;
 	static const int MAX_VOICES=32;
 	Voice voices[MAX_VOICES];
 	UserWave *waves[MAX_WAVES];
@@ -55,7 +56,7 @@ public:
 	void set_duty_cycle(int voice,int op_mask,int duty_cycle);
 	void set_wave(int wave_ix,godot::PoolRealArray wave);
 
-	void set_velocity(int voice,int vel);
+	void set_volume(int voice,int vel);
 	void set_attack_rate(int voice,int op_mask,int rate);
 	void set_decay_rate(int voice,int op_mask,int rate);
 	void set_sustain_level(int voice,int op_mask,int level);

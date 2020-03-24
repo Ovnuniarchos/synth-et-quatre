@@ -14,3 +14,5 @@ const SIG_CMD_MASK:int=0xFFFF0000
 const SIG_DELAY_SONG:int=0x10000
 const SIG_GOTO_ORDER:int=0x20000
 const SIG_GOTO_NEXT:int=0x30000
+
+const MAX_WAIT_TIME:float=float(0x1000000)

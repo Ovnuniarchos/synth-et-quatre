@@ -74,8 +74,8 @@ void FmSynth::set_wave(int wave_ix,godot::PoolRealArray wave){
 }
 
 
-void FmSynth::set_velocity(int voice,int vel){
-	voices[voice&31].set_velocity(vel);
+void FmSynth::set_volume(int voice,int vel){
+	voices[voice&31].set_volume(vel);
 }
 
 void FmSynth::set_attack_rate(int voice,int op_mask,int rate){
@@ -112,6 +112,7 @@ void FmSynth::set_am_intensity(int voice,int op_mask,int intensity){
 }
 
 void FmSynth::set_am_lfo(int voice,int op_mask,int lfo){
+	lfo=clamp(lfo,0,LAST_LFO);
 	voices[voice&31].set_am_lfo(op_mask,lfo);
 }
 
@@ -120,6 +121,7 @@ void FmSynth::set_fm_intensity(int voice,int op_mask,int millis){
 }
 
 void FmSynth::set_fm_lfo(int voice,int op_mask,int lfo){
+	lfo=clamp(lfo,0,LAST_LFO);
 	voices[voice&31].set_fm_lfo(op_mask,lfo);
 }
 
@@ -161,14 +163,14 @@ void FmSynth::set_phase(int voice,int op_mask,int phi){
 
 
 void FmSynth::set_lfo_freq(int lfo,int freq8_8){
-	lfo&=3;
-	float frequency=(freq8_8&0xFFFF)/256.0;
+	lfo=clamp(lfo,0,LAST_LFO);
+	float frequency=clamp(freq8_8,0,0xFFFF)/256.0;
 	lfo_freqs[lfo]=frequency;
 	lfo_deltas[lfo]=(frequency*FP_ONE)/lfo_mix_rates[lfo];
 }
 
 void FmSynth::set_lfo_wave_mode(int lfo,int mode){
-	lfo&=3;
+	lfo=clamp(lfo,0,LAST_LFO);
 	mode&=255;
 	if(mode>=4){
 		lfos[lfo].set_wave(&waves[mode-4]);
@@ -177,11 +179,13 @@ void FmSynth::set_lfo_wave_mode(int lfo,int mode){
 }
 
 void FmSynth::set_lfo_duty_cycle(int lfo,int duty_cycle){
-	lfos[lfo&3].set_duty_cycle((duty_cycle&0xff)<<16);
+	lfo=clamp(lfo,0,LAST_LFO);
+	lfos[lfo].set_duty_cycle((duty_cycle&0xff)<<16);
 }
 
 void FmSynth::set_lfo_phase(int lfo,int phi){
-	lfo_phis[lfo&3]=(phi&0xff)<<16;
+	lfo=clamp(lfo,0,LAST_LFO);
+	lfo_phis[lfo]=(phi&0xff)<<16;
 }
 
 

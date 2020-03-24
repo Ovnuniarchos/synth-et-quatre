@@ -84,14 +84,14 @@ func gen_commands(song:Song,mix_rate:float,buf_size:int,cmds:Array)->bool:
 	var last_wait:int=0
 	# Should not insert more than buf_size
 	if curr_sample>=1.0:
-		bs=min(min(256.0,ibuf_size),floor(curr_sample))
+		bs=min(min(CONSTS.MAX_WAIT_TIME,ibuf_size),floor(curr_sample))
 		while bs>=1.0 and ibuf_size>0:
 			cmds[ptr]=CONSTS.CMD_WAIT
 			cmds[ptr+1]=bs-1
 			curr_sample-=bs
 			ibuf_size-=bs
 			ptr+=2
-			bs=min(min(256.0,ibuf_size),floor(curr_sample))
+			bs=min(min(CONSTS.MAX_WAIT_TIME,ibuf_size),floor(curr_sample))
 	if ibuf_size<=0:
 		cmds[last_wait]=CONSTS.CMD_END
 		return true
@@ -147,7 +147,7 @@ func gen_commands(song:Song,mix_rate:float,buf_size:int,cmds:Array)->bool:
 		spt=samples_tick
 		last_wait=ptr
 		while spt>=1.0 and bs>=1.0:
-			dbs=min(256.0,spt)
+			dbs=min(CONSTS.MAX_WAIT_TIME,spt)
 			cmds[ptr]=CONSTS.CMD_WAIT
 			cmds[ptr+1]=dbs-1
 			spt-=dbs

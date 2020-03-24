@@ -16,7 +16,7 @@ void SynthTracker::_register_methods(){
 	register_method("set_duty_cycle",&SynthTracker::set_duty_cycle);
 	register_method("set_wave",&SynthTracker::set_wave);
 
-	register_method("set_velocity",&SynthTracker::set_velocity);
+	register_method("set_volume",&SynthTracker::set_volume);
 	register_method("set_attack_rate",&SynthTracker::set_attack_rate);
 	register_method("set_decay_rate",&SynthTracker::set_decay_rate);
 	register_method("set_sustain_level",&SynthTracker::set_sustain_level);
@@ -60,6 +60,42 @@ SynthTracker::~SynthTracker(){
 void SynthTracker::_init(){
 }
 
+#define TRACE_WAIT "WAI[%d] "
+#define TRACE_FREQUENCY "FRQ[%d %02x %d] "
+#define TRACE_KEYON "KON[%d %02x %d] "
+#define TRACE_KEYON_LEG "KOL[%d %02x %d] "
+#define TRACE_KEYON_STA "KOS[%d %02x %d] "
+#define TRACE_KEYOFF "KOF[%d %02x] "
+#define TRACE_STOP "STO[%d %02x] "
+#define TRACE_ENABLE "ENA[%d %02x %02x] "
+#define TRACE_MUL "MUL[%d %02x %d] "
+#define TRACE_DIV "DIV[%d %02x %d] "
+#define TRACE_DETUNE "DET[%d %02x %d] "
+#define TRACE_DUTY "DUC[%d %02x %06x] "
+#define TRACE_WAVE "WAV[%d %02x %d] "
+#define TRACE_VOLUME "VOL[%d %d] "
+#define TRACE_ATTACK "ATR[%d %02x %d] "
+#define TRACE_DECAY "DER[%d %02x %d] "
+#define TRACE_SUST_LEVEL "SUL[%d %02x %d] "
+#define TRACE_SUST_RATE "SUR[%d %02x %d] "
+#define TRACE_RELEASE "RER[%02x %02x %02x] "
+#define TRACE_ENV_REPEAT "RPM[%d %02x %d] "
+#define TRACE_KEY_SCALE "KSR[%d %02x %d] "
+#define TRACE_PM_FACTOR "PMF[%d %02x %02x %d] "
+#define TRACE_OUTPUT "OUT[%d %02x %d] "
+#define TRACE_PAN "PAN[%d %02x] "
+#define TRACE_PHI "PHI[%d %02x %06x] "
+#define TRACE_AM_FACTOR "AMS[%d %02x %d] "
+#define TRACE_AM_LFO "AML[%d %02x %d] "
+#define TRACE_FM_FACTOR "FMS[%d %02x %d] "
+#define TRACE_FM_LFO "FML[%d %02x %d] "
+#define TRACE_LFO_FREQUENCY "LFF[%d %d] "
+#define TRACE_LFO_WAVE "LFW[%d %d] "
+#define TRACE_LFO_DUTY_CYCLE "LFD[%d %d] "
+#define TRACE_LFO_PHI "LFP[%d %d] "
+#define TRACE_DEBUG "DEBUG@%d "
+#define TRACE_END "END@%d "
+#define TRACE_UNKNOWN "???[%08x] "
 
 // #define TRACE_CMDS
 #ifdef TRACE_CMDS
@@ -69,7 +105,7 @@ void SynthTracker::_init(){
 #endif
 
 #ifndef VAR2INT
-#define VAR2INT(x) ((uint8_t)x)
+#define VAR2INT(x) ((int32_t)x)
 #endif
 
 #ifndef DVAR2INT
@@ -83,180 +119,174 @@ void SynthTracker::_init(){
 Array SynthTracker::generate(int size,float volume,Array cmds){
 	buffer.resize(size);
 	volume/=FP_ONE;
-	int cmd_ptr=0,cmd_sz=cmds.size(),time=0,next_time=0;
+	int cmd_ptr=0;
+	int cmd_sz=cmds.size();
+	int time=0;
+	int next_time=0;
+	uint8_t command;
+	uint8_t voice;
+	uint8_t op_mask;
+	uint8_t data_8;
+	int data;
 	for(int i=0;size;i++,size--,time++){
 		while(cmd_ptr<cmd_sz && time==next_time){
-			switch(VAR2INT(cmds[cmd_ptr++])){
+			command=VAR2INT(cmds[cmd_ptr]);
+			voice=VAR2INT(cmds[cmd_ptr])>>8;
+			op_mask=VAR2INT(cmds[cmd_ptr])>>16;
+			data_8=VAR2INT(cmds[cmd_ptr++])>>24;
+			switch(command){
 				case CMD_WAIT:
-					TRACE("WAI %02x  ",VAR2INT(cmds[cmd_ptr]));
-					next_time=time+VAR2INT(cmds[cmd_ptr++])+1;
+					data=VAR2INT(cmds[cmd_ptr++]);
+					TRACE(TRACE_WAIT,data);
+					next_time=time+data+1;
 					break;
 				case CMD_FREQ:
-					TRACE("FRQ %02x %02x %02x%02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]),VAR2INT(cmds[cmd_ptr+3]));
-					synth.set_note(VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),DVAR2INT(cmds[cmd_ptr+2],cmds[cmd_ptr+3]));
-					cmd_ptr+=4;
+					data=VAR2INT(cmds[cmd_ptr++]);
+					TRACE(TRACE_FREQUENCY,voice,op_mask,data);
+					synth.set_note(voice,op_mask,data);
 					break;
 				case CMD_KEYON:
-					TRACE("KON %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					synth.key_on(VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]),false);
-					cmd_ptr+=3;
+					TRACE(TRACE_KEYON,voice,op_mask,data_8);
+					synth.key_on(voice,op_mask,data_8,false);
 					break;
-				case CMD_KEYON_LEGATO:
-					TRACE("KOL %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					synth.key_on(VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]),true);
-					cmd_ptr+=3;
+				case CMD_KEYON_LEG:
+					TRACE(TRACE_KEYON_LEG,voice,op_mask,data_8);
+					synth.key_on(voice,op_mask,data_8,true);
+					break;
+				case CMD_KEYON_STA:
+					TRACE(TRACE_KEYON_STA,voice,op_mask,data_8);
+					synth.stop(voice,op_mask);
+					synth.key_on(voice,op_mask,data,false);
 					break;
 				case CMD_KEYOFF:
-					TRACE("KOF %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]));
-					synth.key_off(VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]));
-					cmd_ptr+=2;
+					TRACE(TRACE_KEYOFF,voice,op_mask);
+					synth.key_off(voice,op_mask);
 					break;
 				case CMD_STOP:
-					TRACE("STO %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]));
-					synth.stop(VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]));
-					cmd_ptr+=2;
+					TRACE(TRACE_STOP,voice,op_mask);
+					synth.stop(voice,op_mask);
 					break;
 				case CMD_ENABLE:
-					TRACE("ENA %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					synth.set_enable(VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					cmd_ptr+=3;
+					TRACE(TRACE_ENABLE,voice,op_mask,data_8);
+					synth.set_enable(voice,op_mask,data_8);
 					break;
 				case CMD_MULT:
-					TRACE("MUL %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					synth.set_freq_mul(VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					cmd_ptr+=3;
+					TRACE(TRACE_MUL,voice,op_mask,data_8);
+					synth.set_freq_mul(voice,op_mask,data_8);
 					break;
 				case CMD_DIV:
-					TRACE("DIV %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					synth.set_freq_div(VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					cmd_ptr+=3;
+					TRACE(TRACE_DIV,voice,op_mask,data_8);
+					synth.set_freq_div(voice,op_mask,data_8);
 					break;
 				case CMD_DET:
-					TRACE("DET %02x %02x %02x%02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]),VAR2INT(cmds[cmd_ptr+3]));
-					synth.set_detune(VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),DVAR2INT(cmds[cmd_ptr+2],cmds[cmd_ptr+3]));
-					cmd_ptr+=4;
+					data=VAR2INT(cmds[cmd_ptr++]);
+					TRACE(TRACE_DETUNE,voice,op_mask,data);
+					synth.set_detune(voice,op_mask,data);
 					break;
 				case CMD_DUC:
-					TRACE("DUC %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					synth.set_duty_cycle(VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					cmd_ptr+=3;
+					data=VAR2INT(cmds[cmd_ptr++]);
+					TRACE(TRACE_DUTY,voice,op_mask,data);
+					synth.set_duty_cycle(voice,op_mask,data);
 					break;
 				case CMD_WAVE:
-					TRACE("WAV %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					synth.set_wave_mode(VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					cmd_ptr+=3;
+					TRACE(TRACE_WAVE,voice,op_mask,data_8);
+					synth.set_wave_mode(voice,op_mask,data_8);
 					break;
-				case CMD_VEL:
-					TRACE("VEL %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]));
-					synth.set_velocity(VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]));
-					cmd_ptr+=2;
+				case CMD_VOL:
+					TRACE(TRACE_VOLUME,voice,op_mask);
+					synth.set_volume(voice,op_mask);
 				case CMD_AR:
-					TRACE("ATR %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					synth.set_attack_rate(VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					cmd_ptr+=3;
+					TRACE(TRACE_ATTACK,voice,op_mask,data_8);
+					synth.set_attack_rate(voice,op_mask,data_8);
 					break;
 				case CMD_DR:
-					TRACE("DER %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					synth.set_decay_rate(VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					cmd_ptr+=3;
+					TRACE(TRACE_DECAY,voice,op_mask,data_8);
+					synth.set_decay_rate(voice,op_mask,data_8);
 					break;
 				case CMD_SL:
-					TRACE("SUL %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					synth.set_sustain_level(VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					cmd_ptr+=3;
+					TRACE(TRACE_SUST_LEVEL,voice,op_mask,data_8);
+					synth.set_sustain_level(voice,op_mask,data_8);
 					break;
 				case CMD_SR:
-					TRACE("SUR %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					synth.set_sustain_rate(VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					cmd_ptr+=3;
+					TRACE(TRACE_SUST_RATE,voice,op_mask,data_8);
+					synth.set_sustain_rate(voice,op_mask,data_8);
 					break;
 				case CMD_RR:
-					TRACE("RER %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					synth.set_release_rate(VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					cmd_ptr+=3;
+					TRACE(TRACE_RELEASE,voice,op_mask,data_8);
+					synth.set_release_rate(voice,op_mask,data_8);
 					break;
 				case CMD_RM:
-					TRACE("RPM %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					synth.set_repeat(VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					cmd_ptr+=3;
+					TRACE(TRACE_ENV_REPEAT,voice,op_mask,data_8);
+					synth.set_repeat(voice,op_mask,data_8);
 					break;
 				case CMD_KSR:
-					TRACE("KSR %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					synth.set_ksr(VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					cmd_ptr+=3;
+					TRACE(TRACE_KEY_SCALE,voice,op_mask,data_8);
+					synth.set_ksr(voice,op_mask,data_8);
 					break;
 				case CMD_PM:
-					TRACE("PMF %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					synth.set_pm_factor(VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1])>>4,VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					cmd_ptr+=3;
+					data=VAR2INT(cmds[cmd_ptr++]);
+					TRACE(TRACE_PM_FACTOR,voice,data_8,op_mask,data);
+					synth.set_pm_factor(voice,data_8,op_mask,data);
 					break;
 				case CMD_OUT:
-					TRACE("OUT %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					synth.set_output(VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					cmd_ptr+=3;
+					TRACE(TRACE_OUTPUT,voice,op_mask,data_8);
+					synth.set_output(voice,op_mask,data_8);
 					break;
-				case CMD_PAN:{
-					int pan_val=VAR2INT(cmds[cmd_ptr+1]);
-					TRACE("PAN %02x %02x  ",VAR2INT(cmds[cmd_ptr]),pan_val);
-					synth.set_panning(VAR2INT(cmds[cmd_ptr]),pan_val&63,pan_val&64,pan_val&128);
-					cmd_ptr+=2;
+				case CMD_PAN:
+					TRACE(TRACE_PAN,voice,op_mask);
+					synth.set_panning(voice,op_mask&0x3f,op_mask&0x40,op_mask&0x80);
 					break;
-				}
 				case CMD_PHI:
-					TRACE("PHI %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					synth.set_phase(VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					cmd_ptr+=3;
+					data=VAR2INT(cmds[cmd_ptr++]);
+					TRACE(TRACE_PHI,voice,op_mask,data);
+					synth.set_phase(voice,op_mask,data);
 					break;
 				case CMD_AMS:
-					TRACE("AMS %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					synth.set_am_intensity(VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					cmd_ptr+=3;
+					TRACE(TRACE_AM_FACTOR,voice,op_mask,data_8);
+					synth.set_am_intensity(voice,op_mask,data_8);
 					break;
 				case CMD_AM_LFO:
-					TRACE("AML %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					synth.set_am_lfo(VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					cmd_ptr+=3;
+					TRACE(TRACE_AM_LFO,voice,op_mask,data_8);
+					synth.set_am_lfo(voice,op_mask,data_8);
 					break;
 				case CMD_FMS:
-					TRACE("FMS %02x %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]),VAR2INT(cmds[cmd_ptr+3]));
-					synth.set_fm_intensity(VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),DVAR2INT(cmds[cmd_ptr+2],cmds[cmd_ptr+3]));
-					cmd_ptr+=4;
+					data=VAR2INT(cmds[cmd_ptr++]);
+					TRACE(TRACE_FM_FACTOR,voice,op_mask,data);
+					synth.set_fm_intensity(voice,op_mask,data);
 					break;
 				case CMD_FM_LFO:
-					TRACE("FML %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					synth.set_fm_lfo(VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					cmd_ptr+=3;
+					TRACE(TRACE_FM_LFO,voice,op_mask,data_8);
+					synth.set_fm_lfo(voice,op_mask,data_8);
 					break;
 				case CMD_LFO_FREQ:
-					TRACE("LFF %02x %02x%02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-					synth.set_lfo_freq(VAR2INT(cmds[cmd_ptr]),DVAR2UINT(cmds[cmd_ptr+1],cmds[cmd_ptr+2]));
-					cmd_ptr+=3;
+					data=VAR2INT(cmds[cmd_ptr++]);
+					TRACE(TRACE_LFO_FREQUENCY,voice,op_mask,data);
+					synth.set_lfo_freq(voice,data);
 					break;
 				case CMD_LFO_WAVE:
-					TRACE("LFW %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]));
-					synth.set_lfo_wave_mode(VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]));
-					cmd_ptr+=2;
+					TRACE(TRACE_LFO_WAVE,voice,op_mask);
+					synth.set_lfo_wave_mode(voice,op_mask);
 					break;
 				case CMD_LFO_DUC:
-					TRACE("LFD %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]));
-					synth.set_lfo_duty_cycle(VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]));
-					cmd_ptr+=2;
+					data=VAR2INT(cmds[cmd_ptr++]);
+					TRACE(TRACE_LFO_DUTY_CYCLE,voice,data);
+					synth.set_lfo_duty_cycle(voice,data);
 					break;
 				case CMD_LFO_PHI:
-					TRACE("LFP %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]));
-					synth.set_lfo_phase(VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]));
-					cmd_ptr+=2;
+					data=VAR2INT(cmds[cmd_ptr++]);
+					TRACE(TRACE_LFO_PHI,voice,data);
+					synth.set_lfo_phase(voice,data);
 					break;
 				case CMD_DEBUG:
-					TRACE("DEBUG@%x  ",cmd_ptr-1);
-					debug(cmds,cmd_ptr);
+					TRACE(TRACE_DEBUG,cmd_ptr-1);
+					debug(cmds,cmd_ptr-1);
 					break;
 				case CMD_END:
-					TRACE("END@%x  ",cmd_ptr-1);
+					TRACE(TRACE_END,cmd_ptr-1);
 					cmd_ptr=cmd_sz;
 					break;
 				default:
-					TRACE("??? %02x  ",VAR2INT(cmds[cmd_ptr-1]));
+					TRACE(TRACE_UNKNOWN,VAR2INT(cmds[cmd_ptr-1]));
 					cmd_ptr=cmd_sz;
 			}
 		}
@@ -269,145 +299,138 @@ Array SynthTracker::generate(int size,float volume,Array cmds){
 }
 
 void SynthTracker::debug(Array cmds,int end_ix){
+	uint8_t command;
+	uint8_t voice;
+	uint8_t op_mask;
+	uint8_t data_8;
+	int data;
+	printf(">>>> DEBUG [0 - %d]\n",end_ix);
 	for(int cmd_ptr=0;cmd_ptr<=end_ix;){
-		switch(VAR2INT(cmds[cmd_ptr++])){
+		command=VAR2INT(cmds[cmd_ptr])&0xff;
+		voice=VAR2INT(cmds[cmd_ptr])>>8;
+		op_mask=VAR2INT(cmds[cmd_ptr])>>16;
+		data_8=VAR2INT(cmds[cmd_ptr++])>>24;
+		switch(command){
 			case CMD_WAIT:
-				printf("WAI %02x  ",VAR2INT(cmds[cmd_ptr++]));
+				data=VAR2INT(cmds[cmd_ptr++]);
+				printf(TRACE_WAIT,data);
 				break;
 			case CMD_FREQ:
-				printf("FRQ %02x %02x %02x%02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]),VAR2INT(cmds[cmd_ptr+3]));
-				cmd_ptr+=4;
+				data=VAR2INT(cmds[cmd_ptr++]);
+				printf(TRACE_FREQUENCY,voice,op_mask,data);
 				break;
 			case CMD_KEYON:
-				printf("KON %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-				cmd_ptr+=3;
+				printf(TRACE_KEYON,voice,op_mask,data_8);
 				break;
-			case CMD_KEYON_LEGATO:
-				printf("KOL %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-				cmd_ptr+=3;
+			case CMD_KEYON_LEG:
+				printf(TRACE_KEYON_LEG,voice,op_mask,data_8);
+				break;
+			case CMD_KEYON_STA:
+				printf(TRACE_KEYON_STA,voice,op_mask,data_8);
 				break;
 			case CMD_KEYOFF:
-				printf("KOF %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]));
-				cmd_ptr+=2;
+				printf(TRACE_KEYOFF,voice,op_mask);
 				break;
 			case CMD_STOP:
-				printf("STO %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]));
-				cmd_ptr+=2;
+				printf(TRACE_STOP,voice,op_mask);
 				break;
 			case CMD_ENABLE:
-				printf("ENA %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-				cmd_ptr+=3;
+				printf(TRACE_ENABLE,voice,op_mask,data_8);
 				break;
 			case CMD_MULT:
-				printf("MUL %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-				cmd_ptr+=3;
+				printf(TRACE_MUL,voice,op_mask,data_8);
 				break;
 			case CMD_DIV:
-				printf("DIV %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-				cmd_ptr+=3;
+				printf(TRACE_DIV,voice,op_mask,data_8);
 				break;
 			case CMD_DET:
-				printf("DET %02x %02x %02x%02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]),VAR2INT(cmds[cmd_ptr+3]));
-				cmd_ptr+=4;
+				data=VAR2INT(cmds[cmd_ptr++]);
+				printf(TRACE_DETUNE,voice,op_mask,data);
 				break;
 			case CMD_DUC:
-				printf("DUC %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-				cmd_ptr+=3;
+				data=VAR2INT(cmds[cmd_ptr++]);
+				printf(TRACE_DUTY,voice,op_mask,data);
 				break;
 			case CMD_WAVE:
-				printf("WAV %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-				cmd_ptr+=3;
+				printf(TRACE_WAVE,voice,op_mask,data_8);
 				break;
-			case CMD_VEL:
-				printf("VEL %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]));
-				cmd_ptr+=2;
+			case CMD_VOL:
+				printf(TRACE_VOLUME,voice,op_mask);
+				break;
 			case CMD_AR:
-				printf("ATR %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-				cmd_ptr+=3;
+				printf(TRACE_ATTACK,voice,op_mask,data_8);
 				break;
 			case CMD_DR:
-				printf("DER %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-				cmd_ptr+=3;
+				printf(TRACE_DECAY,voice,op_mask,data_8);
 				break;
 			case CMD_SL:
-				printf("SUL %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-				cmd_ptr+=3;
+				printf(TRACE_SUST_LEVEL,voice,op_mask,data_8);
 				break;
 			case CMD_SR:
-				printf("SUR %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-				cmd_ptr+=3;
+				printf(TRACE_SUST_RATE,voice,op_mask,data_8);
 				break;
 			case CMD_RR:
-				printf("RER %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-				cmd_ptr+=3;
+				printf(TRACE_RELEASE,voice,op_mask,data_8);
 				break;
 			case CMD_RM:
-				printf("RPM %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-				cmd_ptr+=3;
+				printf(TRACE_ENV_REPEAT,voice,op_mask,data_8);
 				break;
 			case CMD_KSR:
-				printf("KSR %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-				cmd_ptr+=3;
+				printf(TRACE_KEY_SCALE,voice,op_mask,data_8);
 				break;
 			case CMD_PM:
-				printf("PMF %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-				cmd_ptr+=3;
+				data=VAR2INT(cmds[cmd_ptr++]);
+				printf(TRACE_PM_FACTOR,voice,data_8,op_mask,data);
 				break;
 			case CMD_OUT:
-				printf("OUT %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-				cmd_ptr+=3;
+				printf(TRACE_OUTPUT,voice,op_mask,data_8);
 				break;
 			case CMD_PAN:
-				printf("PAN %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]));
-				cmd_ptr+=2;
+				printf(TRACE_PAN,voice,op_mask);
 				break;
 			case CMD_PHI:
-				printf("PHI %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-				cmd_ptr+=3;
+				data=VAR2INT(cmds[cmd_ptr++]);
+				printf(TRACE_PHI,voice,op_mask,data);
 				break;
 			case CMD_AMS:
-				printf("AMS %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-				cmd_ptr+=3;
+				printf(TRACE_AM_FACTOR,voice,op_mask,data_8);
 				break;
 			case CMD_AM_LFO:
-				printf("AML %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-				cmd_ptr+=3;
+				printf(TRACE_AM_LFO,voice,op_mask,data_8);
 				break;
 			case CMD_FMS:
-				printf("FMS %02x %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]),VAR2INT(cmds[cmd_ptr+3]));
-				cmd_ptr+=4;
+				data=VAR2INT(cmds[cmd_ptr++]);
+				printf(TRACE_FM_FACTOR,voice,op_mask,data);
 				break;
 			case CMD_FM_LFO:
-				printf("FML %02x %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-				cmd_ptr+=3;
+				printf(TRACE_AM_LFO,voice,op_mask,data_8);
 				break;
 			case CMD_LFO_FREQ:
-				printf("LFF %02x %02x%02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]),VAR2INT(cmds[cmd_ptr+2]));
-				cmd_ptr+=3;
+				data=VAR2INT(cmds[cmd_ptr++]);
+				printf(TRACE_LFO_FREQUENCY,voice,op_mask,data);
 				break;
 			case CMD_LFO_WAVE:
-				printf("LFW %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]));
-				cmd_ptr+=2;
+				printf(TRACE_LFO_WAVE,voice,op_mask);
 				break;
 			case CMD_LFO_DUC:
-				printf("LFD %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]));
-				cmd_ptr+=2;
+				data=VAR2INT(cmds[cmd_ptr++]);
+				printf(TRACE_LFO_DUTY_CYCLE,voice,data);
 				break;
 			case CMD_LFO_PHI:
-				printf("LFP %02x %02x  ",VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]));
-				cmd_ptr+=2;
+				data=VAR2INT(cmds[cmd_ptr++]);
+				printf(TRACE_LFO_PHI,VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]));
 				break;
 			case CMD_DEBUG:
-				printf("DEBUG@%x  ",cmd_ptr-1);
+				printf(TRACE_DEBUG,cmd_ptr-1);
 				break;
 			case CMD_END:
-				printf("END@%x  ",cmd_ptr-1);
+				printf(TRACE_END,cmd_ptr-1);
 				break;
 			default:
-				printf("??? %02x  ",VAR2INT(cmds[cmd_ptr-1]));
+				printf(TRACE_UNKNOWN,VAR2INT(cmds[cmd_ptr-1]));
 		}
 	}
-	printf("\n");
+	printf("<<<< DEBUG [0 - %d]\n",end_ix);
 }
 
 
@@ -445,8 +468,8 @@ void SynthTracker::set_wave(int wave_ix,PoolRealArray wave){
 }
 
 
-void SynthTracker::set_velocity(int voice,int vel){
-	synth.set_velocity(voice,vel);
+void SynthTracker::set_volume(int voice,int vel){
+	synth.set_volume(voice,vel);
 }
 
 void SynthTracker::set_attack_rate(int voice,int op_mask,int rate){

@@ -8,20 +8,21 @@
 
 class Voice{
 private:
-	Operator ops[4];
-	int pms[4][4]={
+	static const int MAX_OPS=4;
+	Operator ops[MAX_OPS];
+	int pms[MAX_OPS][MAX_OPS]={
 		0,0,0,0,
 		0,0,0,0,
 		0,0,0,0,
 		0,0,0,0
 	};
-	int outs[4]={256,0,0,0};
-	FixedPoint last_samples[4]={0L,0L,0L,0L};
-	int velocity=256;
+	int outs[MAX_OPS]={256,0,0,0};
+	FixedPoint last_samples[MAX_OPS]={0L,0L,0L,0L};
+	int volume=256;
 	int vol_left=33;
 	int vol_right=33;
-	int am_lfos[4]={0,0,0,0};
-	int fm_lfos[4]={0,0,0,0};
+	int am_lfos[MAX_OPS]={0,0,0,0};
+	int fm_lfos[MAX_OPS]={0,0,0,0};
 
 public:
 	_ALWAYS_INLINE_ FixedPoint generate(FixedPoint* lfo_ins){
@@ -56,7 +57,7 @@ public:
 		return ((
 				(last_samples[0]*outs[0])+(last_samples[1]*outs[1])+
 				(last_samples[2]*outs[2])+(last_samples[3]*outs[3])
-			)*velocity)>>16;
+			)*volume)>>16;
 	};
 
 	void set_mix_rate(float mix_rate);
@@ -69,7 +70,7 @@ public:
 	void set_duty_cycle(int op_mask,FixedPoint duty_cycle);
 	void set_wave(int op_mask,UserWave **user_wave);
 
-	void set_velocity(int vel);
+	void set_volume(int vol);
 	void set_attack_rate(int op_mask,int rate);
 	void set_decay_rate(int op_mask,int rate);
 	void set_sustain_level(int op_mask,int level);
@@ -83,7 +84,7 @@ public:
 	void set_fm_intensity(int op_mask,int millis);
 	void set_fm_lfo(int op_mask,int lfo);
 
-	void key_on(int op_mask,int velocity,bool legato);
+	void key_on(int op_mask,int volume,bool legato);
 	void key_off(int op_mask);
 	void stop(int op_mask);
 	void set_enable(int op_mask,bool enable);

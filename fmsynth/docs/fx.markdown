@@ -1,10 +1,10 @@
 # Tone commands
 
-All frequencies are affected by MUL/DIV/DET.
+All frequencies are affected by MUL÷DIV÷DET.
 
 ## 00xx
 
-Set frequency to semitone `(xx/2)-2`. This affects the ending note of a portamento (0x03).
+Set frequency to semitone `(xx÷2)-2`. This affects the ending note of a portamento (0x03).
 
 ## 01xx
 
@@ -12,11 +12,11 @@ Adjust frequency by `xx-128` cents. This affects the ending note of a portamento
 
 ## 02xx
 
-Slide frequency by `xx-128` cents/tick. This affects the ending note of a portamento (0x03).
+Slide frequency by `xx-128` cents÷tick. This affects the ending note of a portamento (0x03).
 
 ## 03xx
 
-Slide frequency to current note by `xx` cents/tick.
+Slide frequency to current note by `xx` cents÷tick.
 
 ##04xy
 
@@ -32,7 +32,7 @@ Adjust vibrato intensity by `xx-128` millis.
 
 ## 07xx
 
-Slide vibrato intensity by `xx-128` millis/tick.
+Slide vibrato intensity by `xx-128` millis÷tick.
 
 ## 08xx
 
@@ -56,7 +56,7 @@ Adjust detune by `xx-128` millis.
 
 ## 0Dxx
 
-Slide detune by `xx-128` millis/tick.
+Slide detune by `xx-128` millis÷tick.
 
 
 
@@ -114,7 +114,7 @@ Trigger note cut after `xx` ticks.
 
 ## 23xx
 
-Trigger note on after `xx` ticks. This note on is neither legato nor staccato, and supersedes the legato/staccato column value.
+Trigger note on after `xx` ticks. This note on is neither legato nor staccato, and supersedes the legato÷staccato column value.
 
 This command does not delay the natural note on, just retriggers it.
 
@@ -148,11 +148,11 @@ In the LFO command set, the LFOs to be affected are selected with the operator m
 
 ## 30xx – 33xx
 
-Set modulation intensity from operator 1–4 to the operators selected by the operator mask, to ±`π*xx/127.5`.
+Set modulation intensity from operator 1–4 to the operators selected by the operator mask, to ±`π*xx÷127.5`.
 
 ## 34xx
 
-Set operator output to `xx/2.55`%.
+Set operator output to `xx÷2.55`%.
 
 ## 35xx
 
@@ -160,11 +160,11 @@ Set waveform #`xx`.
 
 ## 36xx
 
-Set waveform duty cycle to `xx/2.56`%.
+Set waveform duty cycle to `xx÷2.56`%.
 
 ## 37xx
 
-Set waveform phase to `xx/2.56`%.
+Set waveform phase to `xx÷2.56`%.
 
 ## 38xx
 
@@ -172,15 +172,15 @@ Set LFO waveform `xx`.
 
 ## 39xx
 
-Set LFO duty cycle to `xx/2.56`%.
+Set LFO duty cycle to `xx÷2.56`%.
 
 ## 3Axx
 
-Set LFO phase to `xx/2.56`%.
+Set LFO phase to `xx÷2.56`%.
 
 ## 3Bxx
 
-Set LFO frequency to `xx/16`Hz.
+Set LFO frequency to `xx÷16`Hz.
 
 ## 3Cxx
 
@@ -188,19 +188,19 @@ Set LFO frequency integral part to `xx`Hz.
 
 ## 3Dxx
 
-Set LFO frequency decimal part to `xx/256`Hz.
+Set LFO frequency decimal part to `xx÷256`Hz.
 
 
 
 # Play commands
 
-Save for `40xx`, only the last command (in channel order) will be used, and any further delay/repeat will be relative to the end of it.
+Save for `40xx`, only the last command (in channel order) will be used, and any further delay÷repeat will be relative to the end of it.
 
 Delays are executed before jumps.
 
 ## 40xx
 
-Delays this channel by `xx` ticks. Any other command, and any further delay/repeat will be relative to the end of this command.
+Delays this channel by `xx` ticks. Any other command, and any further delay÷repeat will be relative to the end of this command.
 
 ## 41xx
 
@@ -218,8 +218,8 @@ Jump to next order, row `xx`.
 
 ## 44xx
 
-Set song speed to `xx+1` ticks/row.
+Set song speed to `xx+1` ticks÷row.
 
 ## 45xx
 
-Set song speed to `xx+1` ticks/second.
+Set song speed to `xx+1` ticks÷second.

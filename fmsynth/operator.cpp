@@ -94,8 +94,7 @@ void Operator::set_ksr(int ksr){
 
 
 void Operator::set_am_intensity(int intensity){
-	intensity&=255;
-	intensity+=(intensity==0?0:1);
+	intensity=clamp(intensity,0,255)+(intensity<=0?0:1);
 	am_level=intensity<<15;
 	am_floor=FP_ONE-am_level;
 }

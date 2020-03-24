@@ -57,8 +57,8 @@ var ams_dirty_any:bool=true
 var ams_dirty:Array=[false,false,false,false]
 var aml_dirty_any:bool=true
 var aml_dirty:Array=[false,false,false,false]
-var fm_level_dirty_any:Array=[false,false,false,false]
-var fm_level_dirty:Array=[
+var pm_level_dirty_any:Array=[false,false,false,false]
+var pm_level_dirty:Array=[
 		[false,false,false,false],
 		[false,false,false,false],
 		[false,false,false,false],
@@ -320,6 +320,9 @@ func get_fx_val(v,note,cmd:int,cmd_col:int)->int:
 		fx_vals[cmd]=clamp(v,0,7)
 	elif cmd==CONSTS.FX_RPM_SET:
 		fx_vals[cmd]=clamp(v,0,4)
+	elif cmd==CONSTS.FX_DUC_SET or cmd==CONSTS.FX_PHI_SET\
+			or cmd==CONSTS.FX_LFO_DUC_SET or cmd==CONSTS.FX_LFO_PHI_SET:
+		fx_vals[cmd]=v<<16
 	else:
 		fx_vals[cmd]=v
 	fx_apply[cmd_col]=true
@@ -333,192 +336,165 @@ func commit(channel:int,cmds:Array,ptr:int)->int:
 	if trigger>CONSTS.TRG_KEEP:
 		ptr=commit_retrigger(channel,cmds,ptr)
 	if freqs_dirty_any:
-		ptr=commit_opmasked_16(channel,cmds,ptr,CONSTS.CMD_FREQ,freqs_dirty,freqs)
+		ptr=commit_opmasked_long(channel,cmds,ptr,CONSTS.CMD_FREQ,freqs_dirty,freqs)
 		freqs_dirty_any=false
 	if velocity_dirty:
 		ptr=commit_velocity(channel,cmds,ptr)
 	if panning_dirty:
 		ptr=commit_panning(channel,cmds,ptr)
 	if fms_dirty_any:
-		ptr=commit_opmasked_16(channel,cmds,ptr,CONSTS.CMD_FMS,fms_dirty,fm_intensity)
+		ptr=commit_opmasked_long(channel,cmds,ptr,CONSTS.CMD_FMS,fms_dirty,fm_intensity)
 		fms_dirty_any=false
 	if fml_dirty_any:
-		ptr=commit_opmasked_16(channel,cmds,ptr,CONSTS.CMD_FML,fml_dirty,fm_lfo)
+		ptr=commit_opmasked_short(channel,cmds,ptr,CONSTS.CMD_FML,fml_dirty,fm_lfo)
 		fml_dirty_any=false
 	if multiplier_dirty_any:
-		ptr=commit_opmasked_8(channel,cmds,ptr,CONSTS.CMD_MULT,multiplier_dirty,multipliers)
+		ptr=commit_opmasked_short(channel,cmds,ptr,CONSTS.CMD_MULT,multiplier_dirty,multipliers)
 		multiplier_dirty_any=false
 	if divider_dirty_any:
-		ptr=commit_opmasked_8(channel,cmds,ptr,CONSTS.CMD_DIV,divider_dirty,dividers)
+		ptr=commit_opmasked_short(channel,cmds,ptr,CONSTS.CMD_DIV,divider_dirty,dividers)
 		divider_dirty_any=false
 	if detune_dirty_any:
-		ptr=commit_opmasked_16(channel,cmds,ptr,CONSTS.CMD_DET,detune_dirty,detunes)
+		ptr=commit_opmasked_long(channel,cmds,ptr,CONSTS.CMD_DET,detune_dirty,detunes)
 		detune_dirty_any=false
 	if attack_dirty_any:
-		ptr=commit_opmasked_8(channel,cmds,ptr,CONSTS.CMD_AR,attack_dirty,attacks)
+		ptr=commit_opmasked_short(channel,cmds,ptr,CONSTS.CMD_AR,attack_dirty,attacks)
 		attack_dirty_any=false
 	if decay_dirty_any:
-		ptr=commit_opmasked_8(channel,cmds,ptr,CONSTS.CMD_DR,decay_dirty,decays)
+		ptr=commit_opmasked_short(channel,cmds,ptr,CONSTS.CMD_DR,decay_dirty,decays)
 		decay_dirty_any=false
 	if suslev_dirty_any:
-		ptr=commit_opmasked_8(channel,cmds,ptr,CONSTS.CMD_SL,suslev_dirty,sustain_levels)
+		ptr=commit_opmasked_short(channel,cmds,ptr,CONSTS.CMD_SL,suslev_dirty,sustain_levels)
 		suslev_dirty_any=false
 	if susrate_dirty_any:
-		ptr=commit_opmasked_8(channel,cmds,ptr,CONSTS.CMD_SR,susrate_dirty,sustains)
+		ptr=commit_opmasked_short(channel,cmds,ptr,CONSTS.CMD_SR,susrate_dirty,sustains)
 		susrate_dirty_any=false
 	if release_dirty_any:
-		ptr=commit_opmasked_8(channel,cmds,ptr,CONSTS.CMD_RR,release_dirty,releases)
+		ptr=commit_opmasked_short(channel,cmds,ptr,CONSTS.CMD_RR,release_dirty,releases)
 		release_dirty_any=false
 	if ksr_dirty_any:
-		ptr=commit_opmasked_8(channel,cmds,ptr,CONSTS.CMD_KSR,ksr_dirty,key_scalers)
+		ptr=commit_opmasked_short(channel,cmds,ptr,CONSTS.CMD_KSR,ksr_dirty,key_scalers)
 		ksr_dirty_any=false
 	if repeat_dirty_any:
-		ptr=commit_opmasked_8(channel,cmds,ptr,CONSTS.CMD_RM,repeat_dirty,repeats)
+		ptr=commit_opmasked_short(channel,cmds,ptr,CONSTS.CMD_RM,repeat_dirty,repeats)
 		repeat_dirty_any=false
 	if ams_dirty_any:
-		ptr=commit_opmasked_8(channel,cmds,ptr,CONSTS.CMD_AMS,ams_dirty,am_intensity)
+		ptr=commit_opmasked_short(channel,cmds,ptr,CONSTS.CMD_AMS,ams_dirty,am_intensity)
 		ams_dirty_any=false
 	if aml_dirty_any:
-		ptr=commit_opmasked_8(channel,cmds,ptr,CONSTS.CMD_AML,aml_dirty,am_lfo)
+		ptr=commit_opmasked_short(channel,cmds,ptr,CONSTS.CMD_AML,aml_dirty,am_lfo)
 		aml_dirty_any=false
 	for i in range(4):
-		if fm_level_dirty_any[i]:
-			ptr=commit_fm_level(channel,cmds,ptr,i,fm_level_dirty[i],routings[i])
+		if pm_level_dirty_any[i]:
+			ptr=commit_pm_level(channel,cmds,ptr,i,pm_level_dirty[i],routings[i])
 	if output_dirty_any:
 		ptr=commit_output(channel,cmds,ptr)
 	if wave_dirty_any:
-		ptr=commit_opmasked_8(channel,cmds,ptr,CONSTS.CMD_WAV,wave_dirty,waveforms)
+		ptr=commit_opmasked_short(channel,cmds,ptr,CONSTS.CMD_WAV,wave_dirty,waveforms)
 		wave_dirty_any=false
 	if duty_cycle_dirty_any:
-		ptr=commit_opmasked_8(channel,cmds,ptr,CONSTS.CMD_DUC,duty_cycle_dirty,duty_cycles)
+		ptr=commit_opmasked_long(channel,cmds,ptr,CONSTS.CMD_DUC,duty_cycle_dirty,duty_cycles)
 		duty_cycle_dirty_any=false
 	if phase_dirty_any:
-		ptr=commit_opmasked_8(channel,cmds,ptr,CONSTS.CMD_PHI,phase_dirty,phases)
+		ptr=commit_opmasked_long(channel,cmds,ptr,CONSTS.CMD_PHI,phase_dirty,phases)
 		phase_dirty_any=false
 	if lfo_wave_dirty_any:
-		ptr=commit_lfos(cmds,ptr,CONSTS.CMD_LFO_WAVE,lfo_wave_dirty,lfo_waves)
+		ptr=commit_lfo_short(cmds,ptr,CONSTS.CMD_LFO_WAVE,lfo_wave_dirty,lfo_waves)
 		lfo_wave_dirty_any=false
 	if lfo_freq_dirty_any:
-		ptr=commit_lfo_freqs(cmds,ptr)
+		ptr=commit_lfo_long(cmds,ptr,CONSTS.CMD_LFO_FREQ,lfo_freq_dirty,lfo_freqs)
+		lfo_freq_dirty_any=false
 	if lfo_duty_cycle_dirty_any:
-		ptr=commit_lfos(cmds,ptr,CONSTS.CMD_LFO_DUC,lfo_duty_cycle_dirty,lfo_duty_cycles)
+		ptr=commit_lfo_long(cmds,ptr,CONSTS.CMD_LFO_DUC,lfo_duty_cycle_dirty,lfo_duty_cycles)
 		lfo_duty_cycle_dirty_any=false
 	if lfo_phase_dirty_any:
-		ptr=commit_lfos(cmds,ptr,CONSTS.CMD_LFO_PHI,lfo_phase_dirty,lfo_phases)
+		ptr=commit_lfo_long(cmds,ptr,CONSTS.CMD_LFO_PHI,lfo_phase_dirty,lfo_phases)
 		lfo_phase_dirty_any=false
 	return ptr
 
-func commit_lfo_freqs(cmds:Array,ptr:int)->int:
-	for i in range(4):
-		if lfo_freq_dirty[i]:
-			lfo_freq_dirty[i]=false
-			cmds[ptr]=CONSTS.CMD_LFO_FREQ
-			cmds[ptr+1]=i
-			cmds[ptr+2]=(lfo_freqs[i]>>8)&255
-			cmds[ptr+3]=lfo_freqs[i]&255
-			ptr+=4
-	lfo_freq_dirty_any=false
-	return ptr
-
-func commit_lfos(cmds:Array,ptr:int,cmd:int,dirties:Array,values:Array)->int:
+func commit_lfo_long(cmds:Array,ptr:int,cmd:int,dirties:Array,values:Array)->int:
 	for i in range(4):
 		if dirties[i]:
 			dirties[i]=false
-			cmds[ptr]=cmd
-			cmds[ptr+1]=i
-			cmds[ptr+2]=values[i]
-			ptr+=3
+			cmds[ptr]=cmd|(i<<8)
+			cmds[ptr+1]=values[i]
+			ptr+=2
+	return ptr
+
+func commit_lfo_short(cmds:Array,ptr:int,cmd:int,dirties:Array,values:Array)->int:
+	for i in range(4):
+		if dirties[i]:
+			dirties[i]=false
+			cmds[ptr]=cmd|(i<<8)|(values[i]<<16)
+			ptr+=1
 	return ptr
 
 func commit_output(channel:int,cmds:Array,ptr:int)->int:
 	for i in range(4):
 		if output_dirty[i]:
 			output_dirty[i]=false
-			cmds[ptr]=CONSTS.CMD_OUT
-			cmds[ptr+1]=channel
-			cmds[ptr+2]=1<<i
-			cmds[ptr+3]=routings[i][4]
-			ptr+=4
+			cmds[ptr]=CONSTS.CMD_OUT|(channel<<8)|(0x10000<<i)|(routings[i][4]<<24)
+			ptr+=1
 	output_dirty_any=false
 	return ptr
 
-func commit_fm_level(channel:int,cmds:Array,ptr:int,from:int,dirties:Array,values:Array)->int:
-	fm_level_dirty_any[from]=false
-	from<<=4
+func commit_pm_level(channel:int,cmds:Array,ptr:int,from:int,dirties:Array,values:Array)->int:
+	pm_level_dirty_any[from]=false
 	for i in range(4):
 		if dirties[i]:
 			dirties[i]=false
-			cmds[ptr]=CONSTS.CMD_PM
-			cmds[ptr+1]=channel
-			cmds[ptr+2]=from
-			cmds[ptr+3]=values[i]
-			ptr+=4
-		from+=1
+			cmds[ptr]=CONSTS.CMD_PM|(channel<<8)|(0x10000<<i)|(from<<24)
+			cmds[ptr+1]=values[i]
+			ptr+=2
 	return ptr
 
-func commit_opmasked_8(channel:int,cmds:Array,ptr:int,cmd:int,dirties:Array,values:Array)->int:
+func commit_opmasked_short(channel:int,cmds:Array,ptr:int,cmd:int,dirties:Array,values:Array)->int:
 	for i in range(4):
 		if dirties[i]:
 			dirties[i]=false
-			cmds[ptr]=cmd
-			cmds[ptr+1]=channel
-			cmds[ptr+2]=1<<i
-			cmds[ptr+3]=values[i]
-			ptr+=4
+			cmds[ptr]=cmd|(channel<<8)|(0x10000<<i)|(values[i]<<24)
+			ptr+=1
 	return ptr
 
-func commit_opmasked_16(channel:int,cmds:Array,ptr:int,cmd:int,dirties:Array,values:Array)->int:
+func commit_opmasked_long(channel:int,cmds:Array,ptr:int,cmd:int,dirties:Array,values:Array)->int:
 	for i in range(4):
 		if dirties[i]:
 			dirties[i]=false
-			cmds[ptr]=cmd
-			cmds[ptr+1]=channel
-			cmds[ptr+2]=1<<i
-			cmds[ptr+3]=(values[i]>>8)&255
-			cmds[ptr+4]=values[i]&255
-			ptr+=5
+			cmds[ptr]=cmd|(channel<<8)|(0x10000<<i)
+			cmds[ptr+1]=values[i]
+			ptr+=2
 	return ptr
 
 func commit_panning(channel:int,cmds:Array,ptr:int)->int:
-	cmds[ptr]=CONSTS.CMD_PAN
-	cmds[ptr+1]=channel
-	cmds[ptr+2]=panning
+	cmds[ptr]=CONSTS.CMD_PAN|(channel<<8)|(panning<<16)
 	panning_dirty=false
-	return ptr+3
+	return ptr+1
 
 func commit_velocity(channel:int,cmds:Array,ptr:int)->int:
-	cmds[ptr]=CONSTS.CMD_VEL
-	cmds[ptr+1]=channel
-	cmds[ptr+2]=velocity
+	cmds[ptr]=CONSTS.CMD_VEL|(channel<<8)|(velocity<<16)
 	velocity_dirty=false
-	return ptr+3
+	return ptr+1
 
 func commit_retrigger(channel:int,cmds:Array,ptr:int)->int:
 	if trigger==CONSTS.TRG_OFF:
-		cmds[ptr]=CONSTS.CMD_KEYOFF
-		cmds[ptr+1]=channel
-		cmds[ptr+2]=15
-		return ptr+3
+		cmds[ptr]=CONSTS.CMD_KEYOFF|(channel<<8)|0xFF0000
+		return ptr+1
 	elif trigger==CONSTS.TRG_STOP:
-		cmds[ptr]=CONSTS.CMD_STOP
-		cmds[ptr+1]=channel
-		cmds[ptr+2]=15
-		return ptr+3
+		cmds[ptr]=CONSTS.CMD_STOP|(channel<<8)|0xFF0000
+		return ptr+1
 	if freqs_dirty_any:
-		ptr=commit_opmasked_16(channel,cmds,ptr,CONSTS.CMD_FREQ,freqs_dirty,freqs)
+		ptr=commit_opmasked_long(channel,cmds,ptr,CONSTS.CMD_FREQ,freqs_dirty,freqs)
 		freqs_dirty_any=false
 	if legato==LG_MODE.STACCATO:
-		cmds[ptr]=CONSTS.CMD_STOP
-		cmds[ptr+1]=channel
-		cmds[ptr+2]=15
-		ptr+=3
-	cmds[ptr]=CONSTS.CMD_KEYON_LEGATO if legato==LG_MODE.LEGATO else CONSTS.CMD_KEYON
-	cmds[ptr+1]=channel
-	cmds[ptr+2]=op_mask
-	cmds[ptr+3]=velocity
+		cmds[ptr]=CONSTS.CMD_KEYON_STACCATO
+	elif legato==LG_MODE.LEGATO:
+		cmds[ptr]=CONSTS.CMD_KEYON_LEGATO
+	else:
+		cmds[ptr]=CONSTS.CMD_KEYON
+	cmds[ptr]|=(channel<<8)|(op_mask<<16)|(velocity<<24)
 	trigger=CONSTS.TRG_KEEP
 	velocity_dirty=false
-	return commit_panning(channel,cmds,ptr+4)
+	return commit_panning(channel,cmds,ptr+1)
 
 func commit_instrument(channel:int,cmds:Array,ptr:int)->int:
 	instrument_dirty=false
@@ -552,95 +528,41 @@ func commit_instrument(channel:int,cmds:Array,ptr:int)->int:
 		repeat_dirty[i]=false
 		ams_dirty[i]=false
 		aml_dirty[i]=false
-		fm_level_dirty_any[i]=false
+		pm_level_dirty_any[i]=false
 		output_dirty[i]=false
 		wave_dirty[i]=false
 		duty_cycle_dirty[i]=false
 		var opm:int=1<<i
-		cmds[ptr]=CONSTS.CMD_AR
-		cmds[ptr+1]=channel
-		cmds[ptr+2]=opm
-		cmds[ptr+3]=attacks[i]
-		cmds[ptr+4]=CONSTS.CMD_DR
-		cmds[ptr+5]=channel
-		cmds[ptr+6]=opm
-		cmds[ptr+7]=decays[i]
-		cmds[ptr+8]=CONSTS.CMD_SL
-		cmds[ptr+9]=channel
-		cmds[ptr+10]=opm
-		cmds[ptr+11]=sustain_levels[i]
-		cmds[ptr+12]=CONSTS.CMD_SR
-		cmds[ptr+13]=channel
-		cmds[ptr+14]=opm
-		cmds[ptr+15]=sustains[i]
-		cmds[ptr+16]=CONSTS.CMD_RR
-		cmds[ptr+17]=channel
-		cmds[ptr+18]=opm
-		cmds[ptr+19]=releases[i]
-		cmds[ptr+20]=CONSTS.CMD_RM
-		cmds[ptr+21]=channel
-		cmds[ptr+22]=opm
-		cmds[ptr+23]=repeats[i]
-		cmds[ptr+24]=CONSTS.CMD_WAV
-		cmds[ptr+25]=channel
-		cmds[ptr+26]=opm
-		cmds[ptr+27]=waveforms[i]
-		cmds[ptr+28]=CONSTS.CMD_DUC
-		cmds[ptr+29]=channel
-		cmds[ptr+30]=opm
-		cmds[ptr+31]=duty_cycles[i]
-		cmds[ptr+32]=CONSTS.CMD_MULT
-		cmds[ptr+33]=channel
-		cmds[ptr+34]=opm
-		cmds[ptr+35]=multipliers[i]
-		cmds[ptr+36]=CONSTS.CMD_DIV
-		cmds[ptr+37]=channel
-		cmds[ptr+38]=opm
-		cmds[ptr+39]=dividers[i]
-		cmds[ptr+40]=CONSTS.CMD_DET
-		cmds[ptr+41]=channel
-		cmds[ptr+42]=opm
-		cmds[ptr+43]=detunes[i]>>8
-		cmds[ptr+44]=detunes[i]&255
-		cmds[ptr+45]=CONSTS.CMD_FMS
-		cmds[ptr+46]=channel
-		cmds[ptr+47]=1<<i
-		cmds[ptr+48]=fm_intensity[i]>>8
-		cmds[ptr+49]=fm_intensity[i]&255
-		cmds[ptr+50]=CONSTS.CMD_FML
-		cmds[ptr+51]=channel
-		cmds[ptr+52]=1<<i
-		cmds[ptr+53]=fm_lfo[i]
-		cmds[ptr+54]=CONSTS.CMD_AMS
-		cmds[ptr+55]=channel
-		cmds[ptr+56]=1<<i
-		cmds[ptr+57]=am_intensity[i]
-		cmds[ptr+58]=CONSTS.CMD_AML
-		cmds[ptr+59]=channel
-		cmds[ptr+60]=1<<i
-		cmds[ptr+61]=am_lfo[i]
-		cmds[ptr+62]=CONSTS.CMD_KSR
-		cmds[ptr+63]=channel
-		cmds[ptr+64]=1<<i
-		cmds[ptr+65]=key_scalers[i]
-		ptr+=62
+		var chn_opm:int=(channel<<8)|(opm<<16)
+		cmds[ptr]=CONSTS.CMD_AR|chn_opm|(attacks[i]<<24)
+		cmds[ptr+1]=CONSTS.CMD_DR|chn_opm|(decays[i]<<24)
+		cmds[ptr+2]=CONSTS.CMD_SL|chn_opm|(sustain_levels[i]<<24)
+		cmds[ptr+3]=CONSTS.CMD_SR|chn_opm|(sustains[i]<<24)
+		cmds[ptr+4]=CONSTS.CMD_RR|chn_opm|(releases[i]<<24)
+		cmds[ptr+5]=CONSTS.CMD_RM|chn_opm|(repeats[i]<<24)
+		cmds[ptr+6]=CONSTS.CMD_WAV|chn_opm|(waveforms[i]<<24)
+		cmds[ptr+7]=CONSTS.CMD_DUC|chn_opm
+		cmds[ptr+8]=duty_cycles[i]<<16
+		cmds[ptr+9]=CONSTS.CMD_MULT|chn_opm|(multipliers[i]<<24)
+		cmds[ptr+10]=CONSTS.CMD_DIV|chn_opm|(dividers[i]<<24)
+		cmds[ptr+11]=CONSTS.CMD_DET|chn_opm
+		cmds[ptr+12]=detunes[i]
+		cmds[ptr+13]=CONSTS.CMD_FMS|chn_opm
+		cmds[ptr+14]=fm_intensity[i]
+		cmds[ptr+15]=CONSTS.CMD_FML|chn_opm|(fm_lfo[i]<<24)
+		cmds[ptr+16]=CONSTS.CMD_AMS|chn_opm|(am_intensity[i]<<24)
+		cmds[ptr+17]=CONSTS.CMD_AML|chn_opm|(am_lfo[i]<<24)
+		cmds[ptr+18]=CONSTS.CMD_KSR|chn_opm|(key_scalers[i]<<24)
+		ptr+=19
 		for j in range(4):
-			fm_level_dirty[i][j]=false
-			cmds[ptr]=CONSTS.CMD_PM
-			cmds[ptr+1]=channel
-			cmds[ptr+2]=(i<<4)|j
-			cmds[ptr+3]=routings[i][j]
-			ptr+=4
-		cmds[ptr]=CONSTS.CMD_OUT
-		cmds[ptr+1]=channel
-		cmds[ptr+2]=opm
-		cmds[ptr+3]=routings[i][4]
-		ptr+=4
-	cmds[ptr]=CONSTS.CMD_ENABLE
-	cmds[ptr+1]=channel
-	cmds[ptr+2]=15
-	cmds[ptr+3]=op_mask
-	return ptr+4
+			pm_level_dirty[i][j]=false
+			cmds[ptr]=CONSTS.CMD_PM|(channel<<8)|(j<<16)|(i<<24)
+			cmds[ptr+1]=routings[i][j]
+			ptr+=2
+		cmds[ptr]=CONSTS.CMD_OUT|chn_opm|(routings[i][4]<<24)
+		ptr+=1
+	cmds[ptr]=CONSTS.CMD_ENABLE|(channel<<8)|0xFF0000|(op_mask<<24)
+	return ptr+1
 
 #
 
@@ -703,10 +625,10 @@ func set_fm_level(value:int,from:int,op_mask:int)->void:
 		return
 	for i in range(4):
 		if op_mask&1:
-			fm_level_dirty[from][i]=true
+			pm_level_dirty[from][i]=true
 			routings[from][i]=value
 		op_mask>>=1
-	fm_level_dirty_any[from]=true
+	pm_level_dirty_any[from]=true
 
 func set_frequency(f,op_mask:int=-1)->void:
 	if (op_mask&15)==0:

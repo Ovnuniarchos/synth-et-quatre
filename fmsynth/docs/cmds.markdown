@@ -52,7 +52,7 @@ Set detune in voice `vv`, with operator mask `oo`, to `mils` millis. This value 
 
 ## `--:oo:vv:0B duty` (SET OP DUTY CYCLE)
 
-Set duty cycle in voice `vv`, with operator mask `oo`, to `duty`. `duty` is clamped to the range `0 - 16777215`, and the duty cycle is then `duty÷167772.16`%.
+Set duty cycle in voice `vv`, with operator mask `oo`, to `duty÷167772.16`%. Only the lower 24 bits of `duty` are read.
 
 The duty cycle marks the point when the generator output stops being negated, so it can be applied to any waveform.
 
@@ -148,9 +148,9 @@ Set wave `nn` for LFO number `ll`. Waves 0-3 are internal. Waves 4+ are user-def
 
 ## `--:--:ll:1E duty` (SET LFO DUTY CYCLE)
 
-Set LFO number `ll`'s duty cycle to `duty`.
+Set LFO number `ll`'s duty cycle to `duty÷167772.16`%.
 
-`ll` is clamped to the range `0 - 3`. `duty` is clamped to the range `0 - 16777215`, and the duty cycle is then `duty÷167772.16`%.
+`ll` is clamped to the range `0 - 3`. Only the lower 24 bits of `duty` are read.
 
 ## `--:--:ll:1F phi` (SET LFO WAVE PHASE)
 

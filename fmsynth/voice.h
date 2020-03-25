@@ -68,6 +68,7 @@ public:
 
 	void set_wave_mode(int op_mask,int mode);
 	void set_duty_cycle(int op_mask,FixedPoint duty_cycle);
+	void set_phase(int op_mask,FixedPoint phi);
 	void set_wave(int op_mask,UserWave **user_wave);
 
 	void set_volume(int vol);
@@ -95,8 +96,6 @@ public:
 	void set_panning(int panning,bool invert_left,bool invert_right);
 	_ALWAYS_INLINE_ int get_volume_left(){return vol_left;};
 	_ALWAYS_INLINE_ int get_volume_right(){return vol_right;};
-
-	void set_phase(int op_mask,int phi);
 };
 
 #endif

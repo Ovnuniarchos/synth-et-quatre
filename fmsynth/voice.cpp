@@ -47,6 +47,12 @@ void Voice::set_duty_cycle(int op_mask,FixedPoint duty_cycle){
 	}
 }
 
+void Voice::set_phase(int op_mask,FixedPoint phi){
+	for(int i=0;i<MAX_OPS;i++,op_mask>>=1){
+		if(op_mask&1) ops[i].set_phase(phi);
+	}
+}
+
 void Voice::set_wave(int op_mask,UserWave **user_wave){
 	for(int i=0;i<MAX_OPS;i++,op_mask>>=1){
 		if(op_mask&1) ops[i].set_wave(user_wave);
@@ -180,12 +186,5 @@ void Voice::set_panning(int panning,bool invert_left,bool invert_right){
 	vol_right+=(vol_right>0)?2:0;
 	if(invert_right){
 		vol_right=-vol_right;
-	}
-}
-
-
-void Voice::set_phase(int op_mask,int phi){
-	for(int i=0;i<MAX_OPS;i++,op_mask>>=1){
-		if(op_mask&1) ops[i].set_phase((FixedPoint)(phi&255)<<16);
 	}
 }

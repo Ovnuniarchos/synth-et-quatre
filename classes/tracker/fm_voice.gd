@@ -219,7 +219,8 @@ func process_tick_0(note:Array,song:Song,num_fxs:int)->int:
 			elif fx_cmd==CONSTS.FX_LFO_WAVE_SET:
 				lfo_wave_dirty_any=set_opmasked(fx_val,lfo_waves,lfo_wave_dirty,fx_opm)
 			elif fx_cmd==CONSTS.FX_LFO_DUC_SET:
-				lfo_duty_cycle_dirty_any=set_opmasked(fx_val,lfo_duty_cycles,lfo_duty_cycle_dirty,fx_opm)
+				lfo_duty_cycle_dirty_any=set_opmasked(fx_val,lfo_duty_cycles,
+						lfo_duty_cycle_dirty,fx_opm)
 			elif fx_cmd==CONSTS.FX_LFO_PHI_SET:
 				lfo_phase_dirty_any=set_opmasked(fx_val,lfo_phases,lfo_phase_dirty,fx_opm)
 			elif fx_cmd==CONSTS.FX_LFO_FREQ_SET:
@@ -320,9 +321,6 @@ func get_fx_val(v,note,cmd:int,cmd_col:int)->int:
 		fx_vals[cmd]=clamp(v,0,7)
 	elif cmd==CONSTS.FX_RPM_SET:
 		fx_vals[cmd]=clamp(v,0,4)
-	elif cmd==CONSTS.FX_DUC_SET or cmd==CONSTS.FX_PHI_SET\
-			or cmd==CONSTS.FX_LFO_DUC_SET or cmd==CONSTS.FX_LFO_PHI_SET:
-		fx_vals[cmd]=v<<16
 	else:
 		fx_vals[cmd]=v
 	fx_apply[cmd_col]=true
@@ -349,7 +347,8 @@ func commit(channel:int,cmds:Array,ptr:int)->int:
 		ptr=commit_opmasked_short(channel,cmds,ptr,CONSTS.CMD_FML,fml_dirty,fm_lfo)
 		fml_dirty_any=false
 	if multiplier_dirty_any:
-		ptr=commit_opmasked_short(channel,cmds,ptr,CONSTS.CMD_MULT,multiplier_dirty,multipliers)
+		ptr=commit_opmasked_short(channel,cmds,ptr,CONSTS.CMD_MULT,multiplier_dirty,
+				multipliers)
 		multiplier_dirty_any=false
 	if divider_dirty_any:
 		ptr=commit_opmasked_short(channel,cmds,ptr,CONSTS.CMD_DIV,divider_dirty,dividers)
@@ -393,10 +392,11 @@ func commit(channel:int,cmds:Array,ptr:int)->int:
 		ptr=commit_opmasked_short(channel,cmds,ptr,CONSTS.CMD_WAV,wave_dirty,waveforms)
 		wave_dirty_any=false
 	if duty_cycle_dirty_any:
-		ptr=commit_opmasked_long(channel,cmds,ptr,CONSTS.CMD_DUC,duty_cycle_dirty,duty_cycles)
+		ptr=commit_opmasked_long(channel,cmds,ptr,CONSTS.CMD_DUC,duty_cycle_dirty,
+				duty_cycles,16)
 		duty_cycle_dirty_any=false
 	if phase_dirty_any:
-		ptr=commit_opmasked_long(channel,cmds,ptr,CONSTS.CMD_PHI,phase_dirty,phases)
+		ptr=commit_opmasked_long(channel,cmds,ptr,CONSTS.CMD_PHI,phase_dirty,phases,16)
 		phase_dirty_any=false
 	if lfo_wave_dirty_any:
 		ptr=commit_lfo_short(cmds,ptr,CONSTS.CMD_LFO_WAVE,lfo_wave_dirty,lfo_waves)
@@ -405,19 +405,21 @@ func commit(channel:int,cmds:Array,ptr:int)->int:
 		ptr=commit_lfo_long(cmds,ptr,CONSTS.CMD_LFO_FREQ,lfo_freq_dirty,lfo_freqs)
 		lfo_freq_dirty_any=false
 	if lfo_duty_cycle_dirty_any:
-		ptr=commit_lfo_long(cmds,ptr,CONSTS.CMD_LFO_DUC,lfo_duty_cycle_dirty,lfo_duty_cycles)
+		ptr=commit_lfo_long(cmds,ptr,CONSTS.CMD_LFO_DUC,lfo_duty_cycle_dirty,
+				lfo_duty_cycles,16)
 		lfo_duty_cycle_dirty_any=false
 	if lfo_phase_dirty_any:
-		ptr=commit_lfo_long(cmds,ptr,CONSTS.CMD_LFO_PHI,lfo_phase_dirty,lfo_phases)
+		ptr=commit_lfo_long(cmds,ptr,CONSTS.CMD_LFO_PHI,lfo_phase_dirty,lfo_phases,16)
 		lfo_phase_dirty_any=false
 	return ptr
 
-func commit_lfo_long(cmds:Array,ptr:int,cmd:int,dirties:Array,values:Array)->int:
+func commit_lfo_long(cmds:Array,ptr:int,cmd:int,dirties:Array,values:Array,
+		shift:int=0)->int:
 	for i in range(4):
 		if dirties[i]:
 			dirties[i]=false
 			cmds[ptr]=cmd|(i<<8)
-			cmds[ptr+1]=values[i]
+			cmds[ptr+1]=values[i]<<shift
 			ptr+=2
 	return ptr
 
@@ -438,7 +440,8 @@ func commit_output(channel:int,cmds:Array,ptr:int)->int:
 	output_dirty_any=false
 	return ptr
 
-func commit_pm_level(channel:int,cmds:Array,ptr:int,from:int,dirties:Array,values:Array)->int:
+func commit_pm_level(channel:int,cmds:Array,ptr:int,from:int,dirties:Array,
+		values:Array)->int:
 	pm_level_dirty_any[from]=false
 	for i in range(4):
 		if dirties[i]:
@@ -448,7 +451,8 @@ func commit_pm_level(channel:int,cmds:Array,ptr:int,from:int,dirties:Array,value
 			ptr+=2
 	return ptr
 
-func commit_opmasked_short(channel:int,cmds:Array,ptr:int,cmd:int,dirties:Array,values:Array)->int:
+func commit_opmasked_short(channel:int,cmds:Array,ptr:int,cmd:int,dirties:Array,
+		values:Array)->int:
 	for i in range(4):
 		if dirties[i]:
 			dirties[i]=false
@@ -456,12 +460,13 @@ func commit_opmasked_short(channel:int,cmds:Array,ptr:int,cmd:int,dirties:Array,
 			ptr+=1
 	return ptr
 
-func commit_opmasked_long(channel:int,cmds:Array,ptr:int,cmd:int,dirties:Array,values:Array)->int:
+func commit_opmasked_long(channel:int,cmds:Array,ptr:int,cmd:int,dirties:Array,
+		values:Array,shift:int=0)->int:
 	for i in range(4):
 		if dirties[i]:
 			dirties[i]=false
 			cmds[ptr]=cmd|(channel<<8)|(0x10000<<i)
-			cmds[ptr+1]=values[i]
+			cmds[ptr+1]=values[i]<<shift
 			ptr+=2
 	return ptr
 
@@ -651,7 +656,8 @@ func slide_frequency(d,op_mask:int)->void:
 		if op_mask&1:
 			freqs_dirty[i]=true
 			pre_freqs[i]=clamp(pre_freqs[i]+d,-200,13000)
-			fx_vals[CONSTS.FX_FRQ_PORTA][1+i]=clamp(fx_vals[CONSTS.FX_FRQ_PORTA][1+i]+d,-200,13000)
+			fx_vals[CONSTS.FX_FRQ_PORTA][1+i]=clamp(
+					fx_vals[CONSTS.FX_FRQ_PORTA][1+i]+d,-200,13000)
 		op_mask>>=1
 	freqs_dirty_any=true
 

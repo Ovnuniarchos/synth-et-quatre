@@ -67,7 +67,7 @@ func set_fm_instrument(channel:int,instr:FmInstrument)->void:
 		synth.set_release_rate(channel,op_mask,instr.releases[i])
 		synth.set_repeat(channel,op_mask,instr.repeats[i])
 		synth.set_wave_mode(channel,op_mask,instr.waveforms[i])
-		synth.set_duty_cycle(channel,op_mask,instr.duty_cycles[i])
+		synth.set_duty_cycle(channel,op_mask,instr.duty_cycles[i]<<16)
 		synth.set_freq_mul(channel,op_mask,instr.multipliers[i])
 		synth.set_freq_div(channel,op_mask,instr.dividers[i])
 		synth.set_detune(channel,op_mask,instr.detunes[i])
@@ -88,7 +88,7 @@ func play_fm_note(channel:int,instr:FmInstrument,semi:int,legato:bool)->void:
 	synth.key_on(channel,instr.op_mask,255,legato)
 
 func set_lfo_duty_cycle(lfo_ix:int,duc:int)->void:
-	synth.set_lfo_duty_cycle(lfo_ix,duc)
+	synth.set_lfo_duty_cycle(lfo_ix,duc<<16)
 
 func set_lfo_wave(lfo_ix:int,wave_ix:int)->void:
 	synth.set_lfo_wave_mode(lfo_ix,wave_ix)

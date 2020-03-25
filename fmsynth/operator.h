@@ -121,6 +121,7 @@ public:
 
 	void set_wave_mode(int mode);
 	void set_duty_cycle(FixedPoint duty_cycle);
+	void set_phase(FixedPoint phi);
 	void set_wave(UserWave **user_wave);
 
 	void set_attack_rate(int rate);
@@ -137,8 +138,6 @@ public:
 	void key_on(bool legato);
 	void key_off();
 	void stop();
-
-	void set_phase(FixedPoint phi);
 };
 
 #endif

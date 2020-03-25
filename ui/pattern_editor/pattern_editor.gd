@@ -260,10 +260,24 @@ func process_keyboard(ev:InputEventKey)->bool:
 			selection.active=false
 		return true
 	#
-	if ev.scancode==GKBD.CLEAR and selection.active:
-		if ev.pressed:
-			selection.clear(collect_patterns(),curr_order,curr_channel)
-		return true
+	if selection.active:
+		if ev.scancode==GKBD.CLEAR:
+			if ev.pressed:
+				selection.clear(collect_patterns(),curr_order,curr_channel)
+			return true
+		if fscan in GKBD.COPY:
+			if ev.pressed:
+				selection.copy(collect_patterns())
+			return true
+		if fscan in GKBD.CUT:
+			if ev.pressed:
+				selection.cut(collect_patterns(),curr_order,curr_channel)
+			return true
+		if fscan in GKBD.VALUE_UP:
+			if !ev.pressed:
+				pass
+			return true
+	#
 	if ev.scancode==GKBD.INSERT:
 		if ev.pressed:
 			GLOBALS.song.insert_row(curr_order,curr_channel,curr_row)
@@ -271,14 +285,6 @@ func process_keyboard(ev:InputEventKey)->bool:
 	if fscan==GKBD.DELETE:
 		if ev.pressed:
 			GLOBALS.song.delete_row(curr_order,curr_channel,curr_row)
-		return true
-	if fscan in GKBD.COPY:
-		if ev.pressed and selection.active:
-			selection.copy(collect_patterns())
-		return true
-	if fscan in GKBD.CUT:
-		if ev.pressed and selection.active:
-			selection.cut(collect_patterns(),curr_order,curr_channel)
 		return true
 	if fscan in GKBD.PASTE:
 		if ev.pressed:

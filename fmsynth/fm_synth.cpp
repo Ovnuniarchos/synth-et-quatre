@@ -50,8 +50,12 @@ void FmSynth::set_wave_mode(int voice,int op_mask,int mode){
 	voices[voice&31].set_wave_mode(op_mask,mode);
 }
 
-void FmSynth::set_duty_cycle(int voice,int op_mask,int duty_cycle){
-	voices[voice&31].set_duty_cycle(op_mask,(duty_cycle&0xff)<<16);
+void FmSynth::set_duty_cycle(int voice,int op_mask,FixedPoint duty_cycle){
+	voices[voice&31].set_duty_cycle(op_mask,duty_cycle);
+}
+
+void FmSynth::set_phase(int voice,int op_mask,FixedPoint phi){
+	voices[voice&31].set_phase(op_mask,phi);
 }
 
 void FmSynth::set_wave(int wave_ix,godot::PoolRealArray wave){
@@ -157,11 +161,6 @@ void FmSynth::set_panning(int voice,int panning,bool invert_left,bool invert_rig
 }
 
 
-void FmSynth::set_phase(int voice,int op_mask,int phi){
-	voices[voice&31].set_phase(op_mask,phi);
-}
-
-
 void FmSynth::set_lfo_freq(int lfo,int freq8_8){
 	lfo=clamp(lfo,0,LAST_LFO);
 	float frequency=clamp(freq8_8,0,0xFFFF)/256.0;
@@ -178,14 +177,14 @@ void FmSynth::set_lfo_wave_mode(int lfo,int mode){
 	lfos[lfo].set_mode(mode);
 }
 
-void FmSynth::set_lfo_duty_cycle(int lfo,int duty_cycle){
+void FmSynth::set_lfo_duty_cycle(int lfo,FixedPoint duty_cycle){
 	lfo=clamp(lfo,0,LAST_LFO);
-	lfos[lfo].set_duty_cycle((duty_cycle&0xff)<<16);
+	lfos[lfo].set_duty_cycle(duty_cycle&FP_DEC_MASK);
 }
 
-void FmSynth::set_lfo_phase(int lfo,int phi){
+void FmSynth::set_lfo_phase(int lfo,FixedPoint phi){
 	lfo=clamp(lfo,0,LAST_LFO);
-	lfo_phis[lfo]=(phi&0xff)<<16;
+	lfo_phis[lfo]=phi&FP_DEC_MASK;
 }
 
 

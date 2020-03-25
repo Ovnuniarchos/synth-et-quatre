@@ -73,6 +73,7 @@ public:
 
 	void set_wave_mode(int voice,int op_mask,int mode);
 	void set_duty_cycle(int voice,int op_mask,FixedPoint duty_cycle);
+	void set_phase(int voice,int op_mask,FixedPoint phi);
 	void set_wave(int wave_ix,PoolRealArray wave);
 
 	void set_volume(int voice,int vel);
@@ -99,12 +100,10 @@ public:
 
 	void set_panning(int voice,int panning,bool invert_left,bool invert_right);
 
-	void set_phase(int voice,int op_mask,int phi);
-
 	void set_lfo_freq(int lfo,float frequency);
 	void set_lfo_wave_mode(int lfo,int mode);
-	void set_lfo_duty_cycle(int lfo,int duty_cycle);
-	void set_lfo_phase(int lfo,int phi);
+	void set_lfo_duty_cycle(int lfo,FixedPoint duty_cycle);
+	void set_lfo_phase(int lfo,FixedPoint phi);
 
 	void mute_voices(int mute_mask);
 };

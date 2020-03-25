@@ -463,6 +463,10 @@ void SynthTracker::set_duty_cycle(int voice,int op_mask,FixedPoint duty_cycle){
 	synth.set_duty_cycle(voice,op_mask,duty_cycle);
 }
 
+void SynthTracker::set_phase(int voice,int op_mask,FixedPoint phi){
+	synth.set_phase(voice,op_mask,phi);
+}
+
 void SynthTracker::set_wave(int wave_ix,PoolRealArray wave){
 	synth.set_wave(wave_ix,wave);
 }
@@ -549,11 +553,6 @@ void SynthTracker::set_panning(int voice,int panning,bool invert_left,bool inver
 }
 
 
-void SynthTracker::set_phase(int voice,int op_mask,int phi){
-	synth.set_phase(voice,op_mask,phi);
-}
-
-
 void SynthTracker::set_lfo_freq(int lfo,float frequency){
 	synth.set_lfo_freq(lfo,frequency*256.0);
 }
@@ -562,11 +561,11 @@ void SynthTracker::set_lfo_wave_mode(int lfo,int mode){
 	synth.set_lfo_wave_mode(lfo,mode);
 }
 
-void SynthTracker::set_lfo_duty_cycle(int lfo,int duty_cycle){
+void SynthTracker::set_lfo_duty_cycle(int lfo,FixedPoint duty_cycle){
 	synth.set_lfo_duty_cycle(lfo,duty_cycle);
 }
 
-void SynthTracker::set_lfo_phase(int lfo,int phi){
+void SynthTracker::set_lfo_phase(int lfo,FixedPoint phi){
 	synth.set_lfo_phase(lfo,phi);
 }
 

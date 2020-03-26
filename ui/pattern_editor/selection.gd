@@ -37,24 +37,48 @@ func set_end(chan:int,col:int,row:int)->void:
 	end_row=row
 	emit_signal("selection_changed")
 
-func correct_limits()->Array:
-	var rows:Array=[start_row,end_row]
-	if start_col>end_col:
-		data_col0=end_col
-		data_col1=start_col
+func correct_limits()->void:
+	if end_chan>=start_chan:
+		if start_col>end_col:
+			data_col0=end_col
+			data_col1=start_col
+		else:
+			data_col0=start_col
+			data_col1=end_col
 	else:
-		data_col0=start_col
-		data_col1=end_col
+		var t:int=end_chan
+		end_chan=start_chan
+		start_chan=t
 	if start_row>end_row:
-		rows[0]=end_row
-		rows[1]=start_row
-	return rows
+		var t:int=end_row
+		end_row=start_row
+		start_row=t
+
+func get_affected_cols()->Array:
+	correct_limits()
+	var chan_cols:Array=[]
+	if start_chan==end_chan:
+		for i in range(data_col0,data_col1+1):
+			chan_cols.append([start_chan,i])
+	else:
+		var rng:Array
+		for i in range(start_chan,end_chan+1):
+			if i==start_chan:
+				rng=range(data_col0,MAX_ATTR+1)
+			elif i==end_chan:
+				rng=range(data_col1+1)
+			else:
+				rng=range(0,MAX_ATTR+1)
+			for j in rng:
+				chan_cols.append([i,j])
+			i+=1
+	return chan_cols
 
 func copy(pats:Array)->void:
-	var rows:Array=correct_limits()
+	correct_limits()
 	data=[]
 	for pat in pats:
-		data.append(pat.notes.slice(rows[0],rows[1],1,true))
+		data.append(pat.notes.slice(start_row,end_row,1,true))
 	set_active(false)
 
 func cut(pats:Array,order:int,channel:int)->void:
@@ -62,24 +86,24 @@ func cut(pats:Array,order:int,channel:int)->void:
 	clear(pats,order,channel)
 
 func clear(pats:Array,order:int,channel:int)->void:
-	var rows:Array=correct_limits()
+	correct_limits()
 	var p_ix:int=0
 	var p_end:int=pats.size()-1
 	for pat in pats:
 		if p_end==0:
-			for i in range(rows[0],rows[1]+1):
+			for i in range(start_row,end_row+1):
 				for j in range(data_col0,data_col1+1):
 					pat.notes[i][j]=null
 		elif p_ix==0:
-			for i in range(rows[0],rows[1]+1):
+			for i in range(start_row,end_row+1):
 				for j in range(data_col0,MAX_ATTR+1):
 					pat.notes[i][j]=null
 		elif p_ix==p_end:
-			for i in range(rows[0],rows[1]+1):
+			for i in range(start_row,end_row+1):
 				for j in range(0,data_col1+1):
 					pat.notes[i][j]=null
 		else:
-			for i in range(rows[0],rows[1]+1):
+			for i in range(start_row,end_row+1):
 				for j in range(0,MAX_ATTR+1):
 					pat.notes[i][j]=null
 		GLOBALS.song.emit_signal("order_changed",order,channel)
@@ -126,3 +150,40 @@ func paste(song:Song,order:int,channel:int,row:int,column:int,mix:bool)->void:
 		song.emit_signal("order_changed",order,channel)
 		channel+=1
 		chn+=1
+
+func add_values(order:int,delta:int)->void:
+	var chan_col:Array=get_affected_cols()
+	var chan:int
+	var col:int
+	var oc:int=-1
+	var pat:Array
+	var d
+	for cc in chan_col:
+		chan=cc[0]
+		col=cc[1]
+		if chan!=oc:
+			oc=chan
+			pat=GLOBALS.song.pattern_list[chan][order].notes
+		if col==ATTRS.LG_MODE:
+			continue
+		for i in range(start_row,end_row+1):
+			d=pat[i][col]
+			if d==null and col!=ATTRS.FM0 and col!=ATTRS.FM1 and col!=ATTRS.FM2\
+					and col!=ATTRS.FM3:
+				continue
+			if col==ATTRS.NOTE:
+				d=clamp(d+delta,0,143)
+			elif col==ATTRS.PAN:
+				d=clamp((d&63)+delta,0,63)|(d&192)
+			elif col==ATTRS.FM0 or col==ATTRS.FM1 or col==ATTRS.FM2 or col==ATTRS.FM3:
+				if d==null:
+					d=0
+				d=(d+delta)&15
+			elif col==ATTRS.INSTR or col==ATTRS.VOL or col>=ATTRS.FX0:
+				d=clamp(d+delta,0,255)
+			pat[i][col]=d
+	oc=-1
+	for cc in chan_col:
+		if oc!=cc[0]:
+			oc=cc[0]
+			GLOBALS.song.emit_signal("order_changed",order,cc[0])

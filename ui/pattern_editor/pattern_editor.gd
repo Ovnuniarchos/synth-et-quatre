@@ -274,8 +274,12 @@ func process_keyboard(ev:InputEventKey)->bool:
 				selection.cut(collect_patterns(),curr_order,curr_channel)
 			return true
 		if fscan in GKBD.VALUE_UP:
-			if !ev.pressed:
-				pass
+			if ev.pressed:
+				selection.add_values(curr_order,1)
+			return true
+		if fscan in GKBD.VALUE_DOWN:
+			if ev.pressed:
+				selection.add_values(curr_order,-1)
 			return true
 	#
 	if ev.scancode==GKBD.INSERT:
@@ -287,11 +291,11 @@ func process_keyboard(ev:InputEventKey)->bool:
 			GLOBALS.song.delete_row(curr_order,curr_channel,curr_row)
 		return true
 	if fscan in GKBD.PASTE:
-		if ev.pressed:
+		if !ev.pressed:
 			selection.paste(GLOBALS.song,curr_order,curr_channel,curr_row,curr_column,false)
 		return true
 	if fscan in GKBD.MIX_PASTE:
-		if ev.pressed:
+		if !ev.pressed:
 			selection.paste(GLOBALS.song,curr_order,curr_channel,curr_row,curr_column,true)
 		return true
 	if fscan in GKBD.DUPLICATE:
@@ -309,11 +313,11 @@ func process_keyboard(ev:InputEventKey)->bool:
 				put_legato(Pattern.LEGATO_MODE.OFF)
 			return true
 		if ev.scancode in GKBD.VALUE_UP:
-			if !ev.pressed:
+			if ev.pressed:
 				put_legato(null,1,0)
 			return true
 		if ev.scancode in GKBD.VALUE_DOWN:
-			if !ev.pressed:
+			if ev.pressed:
 				put_legato(null,Pattern.LEGATO_MAX,0)
 			return true
 	if curr_column==ATTRS.NOTE:
@@ -331,11 +335,11 @@ func process_keyboard(ev:InputEventKey)->bool:
 				put_note(KEYCUT if ev.shift else KEYOFF,0,null)
 			return true
 		if ev.scancode in GKBD.VALUE_UP:
-			if !ev.pressed:
+			if ev.pressed:
 				put_note(null,0,null,12 if ev.shift else 1,0)
 			return true
 		if ev.scancode in GKBD.VALUE_DOWN:
-			if !ev.pressed:
+			if ev.pressed:
 				put_note(null,0,null,-12 if ev.shift else -1,0)
 			return true
 	if curr_column in [ATTRS.FM0,ATTRS.FM1,ATTRS.FM2,ATTRS.FM3]:
@@ -352,11 +356,11 @@ func process_keyboard(ev:InputEventKey)->bool:
 				put_opmask(GKBD.HEX_INPUT_KP.find(ev.scancode)/2)
 			return true
 		if ev.scancode in GKBD.VALUE_UP:
-			if !ev.pressed:
+			if ev.pressed:
 				put_opmask(0,1)
 			return true
 		if ev.scancode in GKBD.VALUE_DOWN:
-			if !ev.pressed:
+			if ev.pressed:
 				put_opmask(0,-1)
 			return true
 	if curr_column>ATTRS.NOTE:
@@ -373,11 +377,11 @@ func process_keyboard(ev:InputEventKey)->bool:
 				put_2_digits(GKBD.HEX_INPUT_KP.find(ev.scancode))
 			return true
 		if ev.scancode in GKBD.VALUE_UP:
-			if !ev.pressed:
+			if ev.pressed:
 				put_2_digits(0,16 if ev.shift else 1)
 			return true
 		if ev.scancode in GKBD.VALUE_DOWN:
-			if !ev.pressed:
+			if ev.pressed:
 				put_2_digits(0,-16 if ev.shift else -1)
 			return true
 	return false

@@ -168,9 +168,9 @@ void Voice::set_pm_factor(int op_from,int op_to,int factor){
 }
 
 void Voice::set_output(int op_mask,int vol){
-	volume=clamp(vol,0,255)+(vol<=0?0:1);
+	vol=clamp(vol,0,255)+(vol<=0?0:1);
 	for(int i=0;i<MAX_OPS;i++,op_mask>>=1){
-		if(op_mask&1) outs[i]=volume;
+		if(op_mask&1) outs[i]=vol;
 	}
 }
 

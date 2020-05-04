@@ -366,23 +366,23 @@ func process_keyboard(ev:InputEventKey)->bool:
 	if curr_column>ATTRS.NOTE:
 		if ev.scancode==GKBD.CLEAR:
 			if ev.pressed:
-				put_2_digits(null)
+				put_cmd_val(null)
 			return true
 		if ev.scancode in GKBD.HEX_INPUT:
 			if !ev.pressed:
-				put_2_digits(GKBD.HEX_INPUT.find(ev.scancode))
+				put_cmd_val(GKBD.HEX_INPUT.find(ev.scancode))
 			return true
 		if ev.scancode in GKBD.HEX_INPUT_KP:
 			if !ev.pressed:
-				put_2_digits(GKBD.HEX_INPUT_KP.find(ev.scancode))
+				put_cmd_val(GKBD.HEX_INPUT_KP.find(ev.scancode))
 			return true
 		if ev.scancode in GKBD.VALUE_UP:
 			if ev.pressed:
-				put_2_digits(0,16 if ev.shift else 1)
+				put_cmd_val(0,16 if ev.shift else 1)
 			return true
 		if ev.scancode in GKBD.VALUE_DOWN:
 			if ev.pressed:
-				put_2_digits(0,-16 if ev.shift else -1)
+				put_cmd_val(0,-16 if ev.shift else -1)
 			return true
 	return false
 
@@ -408,9 +408,12 @@ func put_opmask(val:int,add:int=0)->void:
 		val=(GLOBALS.nvl(song.get_note(curr_order,curr_channel,curr_row,curr_column),0)+add)&0xf
 	song.set_note(curr_order,curr_channel,curr_row,curr_column,val)
 	set_opmask(curr_row,channel_col0[curr_channel]+COLS[curr_column],val)
+	if add==0 and CONFIG.get_value(CONFIG.EDIT_HORIZ_FX):
+			set_column(curr_column+1)
+			return
 	advance(step if add==0 else 0)
 
-func put_2_digits(val,add:int=0)->void:
+func put_cmd_val(val,add:int=0)->void:
 	var song:Song=GLOBALS.song
 	if add!=0:
 		val=song.get_note(curr_order,curr_channel,curr_row,curr_column)
@@ -429,6 +432,12 @@ func put_2_digits(val,add:int=0)->void:
 		digit_ix=(digit_ix+1)%2
 	set_2_digits(curr_row,channel_col0[curr_channel]+COLS[curr_column],val)
 	if digit_ix==0 and add==0:
+		if CONFIG.get_value(CONFIG.EDIT_HORIZ_FX):
+			if curr_column<ATTRS.FX0+(GLOBALS.song.num_fxs[curr_channel]*3)-1:
+				set_column(curr_column+1)
+				return
+			elif !CONFIG.get_value(CONFIG.EDIT_FX_CRLF):
+				set_column(curr_column-2)
 		advance(step)
 
 func put_legato(lm,add:int=1,adv:int=step)->void:

@@ -5,7 +5,6 @@ TODO:	MIDI input
 			Flag?: MIDI Pitch bend
 			Flag?: MIDI modulation
 			Range?: MIDI modulation
-		FX edit mode selector
 		Make arpeggio last until new note?
 		Immediate note play skips notes (skips muted channels)
 		Can pass/reject filters

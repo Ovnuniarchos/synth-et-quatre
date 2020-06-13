@@ -4,3 +4,4 @@
 *.pdf
 /fmsynth/bin
 .songs
+api.json

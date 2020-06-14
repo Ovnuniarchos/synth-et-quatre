@@ -58,7 +58,6 @@ func set_coeffs()->void:
 	coeffs.resize((taps*2)+1)
 	var f:float=cutoff/wave_size
 	var o:float=TAU*f
-	var m:float=0.0
 	for i in range(-taps,taps+1):
 		var t:float
 		if i==0:
@@ -66,12 +65,6 @@ func set_coeffs()->void:
 		else:
 			t=-sin(o*i)/(PI*i)
 		coeffs[i+taps]=t
-		m+=t
-	if m<1e-10:
-		m=1.0
-	m=abs(m)
-	for i in range(0,coeffs.size()):
-		coeffs[i]/=m
 
 #
 

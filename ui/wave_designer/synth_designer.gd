@@ -3,12 +3,13 @@ extends VBoxContainer
 signal wave_calculated(wave_ix)
 signal name_changed(wave_ix,text)
 
-enum WAVE_TYPES{SIN,TRI,SAW,RECT,LPF,HPF,CLAMP,NORM}
+enum WAVE_TYPES{SIN,TRI,SAW,RECT,NOISE,LPF,HPF,CLAMP,NORM}
 const WAVES=[
 	["Sine",WAVE_TYPES.SIN,preload("wave_nodes/sine_wave.tscn")],
 	["Triangle",WAVE_TYPES.TRI,preload("wave_nodes/triangle_wave.tscn")],
 	["Saw",WAVE_TYPES.SAW,preload("wave_nodes/saw_wave.tscn")],
 	["Rectangle",WAVE_TYPES.RECT,preload("wave_nodes/rect_wave.tscn")],
+	["Noise",WAVE_TYPES.NOISE,preload("wave_nodes/noise_wave.tscn")],
 	["Low Pass",WAVE_TYPES.LPF,preload("wave_nodes/lpf_filter.tscn")],
 	["High Pass",WAVE_TYPES.HPF,preload("wave_nodes/hpf_filter.tscn")],
 	["Clamp",WAVE_TYPES.CLAMP,preload("wave_nodes/clamp_filter.tscn")],
@@ -99,6 +100,8 @@ func regen_editor_nodes(wave:Waveform)->void:
 			insert_component(WAVE_TYPES.SAW,wave,wc)
 		elif wc is RectangleWave:
 			insert_component(WAVE_TYPES.RECT,wave,wc)
+		elif wc is NoiseWave:
+			insert_component(WAVE_TYPES.NOISE,wave,wc)
 		elif wc is LpfFilter:
 			insert_component(WAVE_TYPES.LPF,wave,wc)
 		elif wc is HpfFilter:
@@ -123,6 +126,8 @@ func _on_New_id_pressed(id:int)->void:
 		wc=SawWave.new()
 	elif id==WAVE_TYPES.RECT:
 		wc=RectangleWave.new()
+	elif id==WAVE_TYPES.NOISE:
+		wc=NoiseWave.new()
 	elif id==WAVE_TYPES.LPF:
 		wc=LpfFilter.new()
 	elif id==WAVE_TYPES.HPF:

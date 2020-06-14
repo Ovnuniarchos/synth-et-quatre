@@ -8,7 +8,6 @@ TODO:	MIDI input
 		Make arpeggio last until new note?
 		Immediate note play skips notes (skips muted channels)
 		Can pass/reject filters
-		Power parameter for filters
 		Reordering of pattern rows
 
 FUTURE:	Translations

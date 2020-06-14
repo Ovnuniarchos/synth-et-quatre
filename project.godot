@@ -75,6 +75,11 @@ _global_script_classes=[ {
 "path": "res://classes/wave_components/lpf_filter.gd"
 }, {
 "base": "WaveComponent",
+"class": "NoiseWave",
+"language": "GDScript",
+"path": "res://classes/wave_components/noise_wave.gd"
+}, {
+"base": "WaveComponent",
 "class": "NormalizeFilter",
 "language": "GDScript",
 "path": "res://classes/wave_components/normalize_filter.gd"
@@ -183,6 +188,7 @@ _global_script_class_icons={
 "Instrument": "",
 "LabelSpinBox": "",
 "LpfFilter": "",
+"NoiseWave": "",
 "NormalizeFilter": "",
 "NumberedItemList": "",
 "OrderButton": "",

@@ -1,9 +1,10 @@
 extends WaveComponent
-class_name HpfFilter
+class_name BpfFilter
 
-const CHUNK_ID:String="hPFF"
+const CHUNK_ID:String="bPFF"
 
-var cutoff:float=1.0 setget set_cutoff
+var cutoff_lo:float=1.0 setget set_cutoff_lo
+var cutoff_hi:float=1.0 setget set_cutoff_hi
 var coeffs:Array=[]
 var taps:int=16 setget set_taps
 var wave_size:int=-1
@@ -11,13 +12,14 @@ var wave_size:int=-1
 func _init().()->void:
 	output_mode=OUT_MODE.REPLACE
 	input_comp=null
-	cutoff=1.0
+	cutoff_lo=1.0
 	taps=16
 
 func duplicate()->WaveComponent:
-	var nc:LpfFilter=.duplicate() as LpfFilter
+	var nc:BpfFilter=.duplicate() as BpfFilter
 	nc.set_taps(taps)
-	nc.set_cutoff(cutoff)
+	nc.set_cutoff_lo(cutoff_lo)
+	nc.set_cutoff_hi(cutoff_hi)
 	return nc
 
 func calculate(size:int,input:Array,caller:WaveComponent)->Array:
@@ -48,35 +50,47 @@ func set_taps(t:int)->void:
 	taps=t
 	set_coeffs()
 
-func set_cutoff(i:float)->void:
-	cutoff=i
+func set_cutoff_lo(c:float)->void:
+	cutoff_lo=c
+	set_coeffs()
+
+func set_cutoff_hi(c:float)->void:
+	cutoff_hi=c
 	set_coeffs()
 
 func set_coeffs()->void:
 	if wave_size<1:
 		return
 	coeffs.resize((taps*2)+1)
-	var f:float=cutoff/wave_size
-	var o:float=TAU*f
+	var fl:float=cutoff_lo/wave_size
+	var fh:float=cutoff_hi/wave_size
+	var ol:float=TAU*fl
+	var oh:float=TAU*fh
+	var sum:float=0.0
 	for i in range(-taps,taps+1):
 		var t:float
 		if i==0:
-			t=1.0-2.0*f
+			t=2.0*(fh-fl)
 		else:
-			t=-sin(o*i)/(PI*i)
+			t=(sin(oh*i)-sin(ol*i))/(PI*i)
 		coeffs[i+taps]=t
+		sum+=abs(t)
+	for i in range(coeffs.size()):
+		coeffs[i]/=sum
 
 #
 
 func serialize(out:ChunkedFile,components:Array)->void:
 	serialize_start(out,CHUNK_ID,components)
-	out.store_float(cutoff)
+	out.store_float(cutoff_lo)
+	out.store_float(cutoff_hi)
 	out.store_16(taps)
 	out.end_chunk()
 
 #
 
-func deserialize(inf:ChunkedFile,c:LpfFilter,components:Array)->void:
+func deserialize(inf:ChunkedFile,c:BpfFilter,components:Array)->void:
 	deserialize_start(inf,c,components)
-	c.cutoff=inf.get_float()
+	c.cutoff_lo=inf.get_float()
+	c.cutoff_hi=inf.get_float()
 	c.taps=inf.get_16()

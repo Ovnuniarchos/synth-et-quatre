@@ -7,7 +7,7 @@ TODO:	MIDI input
 			Range?: MIDI modulation
 		Make arpeggio last until new note?
 		Immediate note play skips notes (skips muted channels)
-		Can pass/reject filters
+		Automation
 		Reordering of pattern rows
 
 FUTURE:	Translations

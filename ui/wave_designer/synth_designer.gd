@@ -3,17 +3,20 @@ extends VBoxContainer
 signal wave_calculated(wave_ix)
 signal name_changed(wave_ix,text)
 
-enum WAVE_TYPES{SIN,TRI,SAW,RECT,NOISE,LPF,HPF,CLAMP,NORM}
+enum WAVE_TYPES{SIN,TRI,SAW,RECT,NOISE,LPF,HPF,BPF,BRF,CLAMP,NORM,QUANT}
 const WAVES=[
 	["Sine",WAVE_TYPES.SIN,preload("wave_nodes/sine_wave.tscn")],
 	["Triangle",WAVE_TYPES.TRI,preload("wave_nodes/triangle_wave.tscn")],
 	["Saw",WAVE_TYPES.SAW,preload("wave_nodes/saw_wave.tscn")],
 	["Rectangle",WAVE_TYPES.RECT,preload("wave_nodes/rect_wave.tscn")],
 	["Noise",WAVE_TYPES.NOISE,preload("wave_nodes/noise_wave.tscn")],
-	["Low Pass",WAVE_TYPES.LPF,preload("wave_nodes/lpf_filter.tscn")],
-	["High Pass",WAVE_TYPES.HPF,preload("wave_nodes/hpf_filter.tscn")],
-	["Clamp",WAVE_TYPES.CLAMP,preload("wave_nodes/clamp_filter.tscn")],
-	["Normalize",WAVE_TYPES.NORM,preload("wave_nodes/normalize_filter.tscn")],
+	["Low Pass",WAVE_TYPES.LPF,preload("filter_nodes/lpf_filter.tscn")],
+	["High Pass",WAVE_TYPES.HPF,preload("filter_nodes/hpf_filter.tscn")],
+	["Band Pass",WAVE_TYPES.BPF,preload("filter_nodes/bpf_filter.tscn")],
+	["Band Reject",WAVE_TYPES.BRF,preload("filter_nodes/brf_filter.tscn")],
+	["Clamp",WAVE_TYPES.CLAMP,preload("filter_nodes/clamp_filter.tscn")],
+	["Normalize",WAVE_TYPES.NORM,preload("filter_nodes/normalize_filter.tscn")],
+	["Quantize",WAVE_TYPES.QUANT,preload("filter_nodes/quantize_filter.tscn")],
 ]
 
 var curr_wave_ix:int=-1
@@ -106,9 +109,15 @@ func regen_editor_nodes(wave:Waveform)->void:
 			insert_component(WAVE_TYPES.LPF,wave,wc)
 		elif wc is HpfFilter:
 			insert_component(WAVE_TYPES.HPF,wave,wc)
+		elif wc is BpfFilter:
+			insert_component(WAVE_TYPES.BPF,wave,wc)
+		elif wc is BrfFilter:
+			insert_component(WAVE_TYPES.BRF,wave,wc)
 		elif wc is ClampFilter:
 			insert_component(WAVE_TYPES.CLAMP,wave,wc)
 		elif wc is NormalizeFilter:
+			insert_component(WAVE_TYPES.NORM,wave,wc)
+		elif wc is QuantizeFilter:
 			insert_component(WAVE_TYPES.NORM,wave,wc)
 	wave.readjust_inputs()
 	calculate()
@@ -132,10 +141,16 @@ func _on_New_id_pressed(id:int)->void:
 		wc=LpfFilter.new()
 	elif id==WAVE_TYPES.HPF:
 		wc=HpfFilter.new()
+	elif id==WAVE_TYPES.BPF:
+		wc=BpfFilter.new()
+	elif id==WAVE_TYPES.BRF:
+		wc=BrfFilter.new()
 	elif id==WAVE_TYPES.CLAMP:
 		wc=ClampFilter.new()
 	elif id==WAVE_TYPES.NORM:
 		wc=NormalizeFilter.new()
+	elif id==WAVE_TYPES.QUANT:
+		wc=QuantizeFilter.new()
 	wave.components.append(wc)
 	insert_component(id,wave,wc)
 	wave.readjust_inputs()

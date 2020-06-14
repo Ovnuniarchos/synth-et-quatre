@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://ui/wave_designer/wave_nodes/lpf_filter.gd" type="Script" id=1]
+[ext_resource path="res://ui/wave_designer/filter_nodes/hpf_filter.gd" type="Script" id=1]
 [ext_resource path="res://ui/wave_designer/wave_nodes/title_bar.tscn" type="PackedScene" id=2]
 
-[node name="LPFFilter" type="PanelContainer"]
+[node name="HPFFilter" type="PanelContainer"]
 margin_right = 170.0
 margin_bottom = 394.0
 size_flags_horizontal = 9
@@ -21,7 +21,7 @@ margin_bottom = 387.0
 
 [node name="Title" parent="VBC" instance=ExtResource( 2 )]
 margin_right = 156.0
-title = "LPF"
+title = "HPF"
 index = 0
 
 [node name="Params" type="GridContainer" parent="VBC"]

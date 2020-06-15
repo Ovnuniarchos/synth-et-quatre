@@ -108,14 +108,6 @@ void SynthTracker::_init(){
 #define VAR2INT(x) ((int32_t)x)
 #endif
 
-#ifndef DVAR2INT
-#define DVAR2INT(x,y) ((int16_t)((VAR2INT(x)<<8)|VAR2INT(y)))
-#endif
-
-#ifndef DVAR2UINT
-#define DVAR2UINT(x,y) ((uint16_t)((VAR2INT(x)<<8)|VAR2INT(y)))
-#endif
-
 Array SynthTracker::generate(int size,float volume,Array cmds){
 	buffer.resize(size);
 	volume/=FP_ONE;
@@ -467,8 +459,9 @@ void SynthTracker::set_phase(int voice,int op_mask,FixedPoint phi){
 	synth.set_phase(voice,op_mask,phi);
 }
 
-void SynthTracker::set_wave(int wave_ix,PoolRealArray wave){
+void SynthTracker::set_wave(int wave_ix,Array wave){
 	synth.set_wave(wave_ix,wave);
+	wave.clear();
 }
 
 
@@ -573,4 +566,3 @@ void SynthTracker::set_lfo_phase(int lfo,FixedPoint phi){
 void SynthTracker::mute_voices(int mute_mask){
 	synth.mute_voices(mute_mask);
 }
-

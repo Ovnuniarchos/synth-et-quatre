@@ -15,6 +15,7 @@ class SynthTracker : public Object{
 private:
 	FmSynth synth=FmSynth();
 	Array buffer=Array();
+
 	enum{
 		CMD_WAIT=0x00,
 		CMD_FREQ,
@@ -74,7 +75,7 @@ public:
 	void set_wave_mode(int voice,int op_mask,int mode);
 	void set_duty_cycle(int voice,int op_mask,FixedPoint duty_cycle);
 	void set_phase(int voice,int op_mask,FixedPoint phi);
-	void set_wave(int wave_ix,PoolRealArray wave);
+	void set_wave(int wave_ix,Array wave);
 
 	void set_volume(int voice,int vel);
 	void set_attack_rate(int voice,int op_mask,int rate);

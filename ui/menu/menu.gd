@@ -83,7 +83,7 @@ func _on_file_selected(path:String)->void:
 		synth.set_mix_rate(CONFIG.get_value(CONFIG.RECORD_SAMPLERATE))
 		if CONFIG.get_value(CONFIG.RECORD_SAVEMUTED):
 			synth.mute_voices(GLOBALS.muted_mask)
-		GLOBALS.song.sync_waves(synth)
+		GLOBALS.song.sync_waves(synth,0)
 		GLOBALS.song.sync_lfos(synth)
 		var thr:Thread=Thread.new()
 		thr.start(self,"export_thread",{

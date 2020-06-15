@@ -58,22 +58,27 @@ void FmSynth::set_phase(int voice,int op_mask,FixedPoint phi){
 	voices[voice&31].set_phase(op_mask,phi);
 }
 
-void FmSynth::set_wave(int wave_ix,godot::PoolRealArray wave){
+void FmSynth::set_wave(int wave_ix,godot::Array wave){
 	int size,mask,shift;
-	wave_ix=(wave_ix&255)-4;
-	if(wave.size()<1 || wave_ix<0){
+	UserWave *old_wave;
+	if(wave_ix<4){
 		return;
 	}
-	size=UserWave::correct_wave_size(wave.size(),mask,shift);
-	UserWave *new_wave=new UserWave();
-	new_wave->size_mask=mask;
-	new_wave->size_shift=shift;
-	new_wave->wave=(size==0)?NULL:new FixedPoint[size];
-	for(int i=0;i<size;i++){
-		new_wave->wave[i]=wave[i]*FP_ONE;
+	wave_ix=(wave_ix&255)-4;
+	old_wave=waves[wave_ix];
+	if(wave.size()>=1){
+		size=UserWave::correct_wave_size(wave.size(),mask,shift);
+		UserWave *new_wave=new UserWave();
+		new_wave->size_mask=mask;
+		new_wave->size_shift=shift;
+		new_wave->wave=(size==0)?NULL:new FixedPoint[size];
+		for(int i=0;i<size;i++){
+			new_wave->wave[i]=((float)wave[i])*FP_ONE;
+		}
+		waves[wave_ix]=new_wave;
+	}else{
+		waves[wave_ix]=NULL;
 	}
-	UserWave *old_wave=waves[wave_ix];
-	waves[wave_ix]=new_wave;
 	delete old_wave;
 }
 

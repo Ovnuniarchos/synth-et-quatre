@@ -21,7 +21,12 @@ func update_ui()->void:
 	wl.clear()
 	for w in GLOBALS.song.wave_list:
 		wl.add_item(w.name,null,w is SynthWave)
-	wl.select(curr_wave_ix)
+	var sz:int=GLOBALS.song.wave_list.size()
+	if curr_wave_ix<sz:
+		wl.call_deferred("select",curr_wave_ix)
+	elif sz>0:
+		wl.call_deferred("select",sz-1)
+	wl.call_deferred("ensure_current_is_visible")
 	set_buttons()
 
 func set_buttons()->void:
@@ -43,7 +48,6 @@ func _on_Del_pressed()->void:
 			GLOBALS.song.delete_wave(w)
 			GLOBALS.song.sync_waves(SYNTH,curr_wave_ix)
 			emit_signal("wave_deleted",curr_wave_ix)
-			$Waves.unselect_all()
 			if curr_wave_ix>=GLOBALS.song.wave_list.size():
 				curr_wave_ix=GLOBALS.song.wave_list.size()-1
 			emit_signal("wave_selected",curr_wave_ix)
@@ -54,13 +58,11 @@ func _on_Copy_pressed()->void:
 	if w!=null and GLOBALS.song.can_add_wave():
 		var cnt:int=$Waves.get_item_count()
 		var nw:Waveform=w.duplicate()
+		curr_wave_ix=cnt
 		$Waves.add_item(nw.name)
 		GLOBALS.song.add_wave(nw)
 		GLOBALS.song.send_wave(nw,SYNTH)
 		emit_signal("wave_added",cnt)
-		curr_wave_ix=cnt
-		$Waves.select(cnt)
-		$Waves.ensure_current_is_visible()
 		emit_signal("wave_selected",cnt)
 	set_buttons()
 
@@ -68,15 +70,13 @@ func _on_Add_pressed()->void:
 	if GLOBALS.song.can_add_wave():
 		var cnt:int=$Waves.get_item_count()
 		var nn:String="Wave %02X"%[cnt]
+		curr_wave_ix=cnt
 		$Waves.add_item(nn)
 		var nw:Waveform=SynthWave.new()
 		nw.name=nn
 		GLOBALS.song.add_wave(nw)
 		GLOBALS.song.send_wave(nw,SYNTH)
 		emit_signal("wave_added",cnt)
-		curr_wave_ix=cnt
-		$Waves.select(cnt)
-		$Waves.ensure_current_is_visible()
 		emit_signal("wave_selected",cnt)
 	set_buttons()
 

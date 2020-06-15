@@ -12,7 +12,7 @@ func _ready()->void:
 
 func _on_song_changed()->void:
 	reset(true)
-	GLOBALS.song.sync_waves(self)
+	GLOBALS.song.sync_waves(self,0)
 
 #
 

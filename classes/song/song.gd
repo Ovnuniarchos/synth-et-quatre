@@ -165,18 +165,18 @@ func find_wave_ref(wave:WeakRef)->int:
 func send_wave(wave:Waveform,synth:Synth,wave_ix:int=-1)->void:
 	wave_ix=wave_list.find(wave) if wave_ix==-1 else wave_ix
 	if wave_ix!=-1:
-		synth.synth.set_wave(wave_ix+MIN_CUSTOM_WAVE,wave.data)
+		synth.synth.set_wave(wave_ix+MIN_CUSTOM_WAVE,wave.data.duplicate())
 
-func sync_waves(synth:Synth,from:int=MIN_CUSTOM_WAVE)->void:
+func sync_waves(synth:Synth,from:int)->void:
 	if synth==null:
 		return
 	var wave_ix:int=from
 	for wave in wave_list:
-		synth.synth.set_wave(wave_ix,wave.data)
+		synth.synth.set_wave(wave_ix+MIN_CUSTOM_WAVE,wave.data.duplicate())
 		wave_ix+=1
 	var null_wave:Array=[]
-	while wave_ix<256:
-		synth.synth.set_wave(wave_ix,null_wave)
+	while wave_ix<MAX_WAVES:
+		synth.synth.set_wave(wave_ix+MIN_CUSTOM_WAVE,null_wave)
 		wave_ix+=1
 
 #

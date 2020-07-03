@@ -375,7 +375,7 @@ func serialize(out:ChunkedFile)->void:
 	# pattern_list
 	out.start_chunk(CHUNK_pattern_list)
 	for i in range(num_channels):
-		var chn:Pattern=pattern_list[i]
+		var chn:Array=pattern_list[i]
 		out.store_16(chn.size())
 		for pat in chn:
 			pat.serialize(out,pattern_length,num_fxs[i])

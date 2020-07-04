@@ -8,7 +8,6 @@ TODO:	MIDI input
 		Make arpeggio last until new note?
 		Immediate note play skips notes (skips muted channels)
 		Automation
-		Reordering of pattern rows
 
 FUTURE:	Translations
 		Themability

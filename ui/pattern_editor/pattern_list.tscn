@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://ui/pattern_editor/pattern_list.gd" type="Script" id=1]
+[ext_resource path="res://ui/widgets/icon_button.gd" type="Script" id=2]
 
 [node name="PatternList" type="PanelContainer"]
 anchor_right = 1.0
@@ -42,9 +43,31 @@ margin_right = 112.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 24, 0 )
 
-[node name="Del" type="Button" parent="VBC/HBC"]
+[node name="Up" type="Button" parent="VBC/HBC"]
 margin_left = 116.0
-margin_right = 150.0
+margin_right = 128.0
+margin_bottom = 20.0
+shortcut_in_tooltip = false
+script = ExtResource( 2 )
+icon_name = "Up"
+
+[node name="Down" type="Button" parent="VBC/HBC"]
+margin_left = 132.0
+margin_right = 144.0
+margin_bottom = 20.0
+shortcut_in_tooltip = false
+script = ExtResource( 2 )
+icon_name = "Down"
+
+[node name="S2" type="ReferenceRect" parent="VBC/HBC"]
+margin_left = 148.0
+margin_right = 172.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 24, 0 )
+
+[node name="Del" type="Button" parent="VBC/HBC"]
+margin_left = 176.0
+margin_right = 210.0
 margin_bottom = 20.0
 text = "Del"
 
@@ -64,4 +87,6 @@ custom_constants/vseparation = 0
 custom_constants/hseparation = 0
 [connection signal="pressed" from="VBC/HBC/Add" to="." method="_on_Add_pressed"]
 [connection signal="pressed" from="VBC/HBC/Copy" to="." method="_on_Copy_pressed"]
+[connection signal="pressed" from="VBC/HBC/Up" to="." method="_on_Up_pressed"]
+[connection signal="pressed" from="VBC/HBC/Down" to="." method="_on_Down_pressed"]
 [connection signal="pressed" from="VBC/HBC/Del" to="." method="_on_Del_pressed"]

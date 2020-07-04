@@ -113,3 +113,13 @@ func _on_Del_pressed():
 		curr_highlight=GLOBALS.curr_order
 		emit_signal("order_selected",GLOBALS.curr_order)
 	GLOBALS.song.delete_order(order)
+
+func _on_Up_pressed():
+	if GLOBALS.curr_order==0:
+		return
+	GLOBALS.song.swap_orders(GLOBALS.curr_order-1,GLOBALS.curr_order)
+
+func _on_Down_pressed():
+	if GLOBALS.curr_order>=GLOBALS.song.orders.size()-2:
+		return
+	GLOBALS.song.swap_orders(GLOBALS.curr_order+1,GLOBALS.curr_order)

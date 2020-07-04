@@ -321,6 +321,12 @@ func delete_order(order:int)->void:
 	orders.remove(order)
 	emit_signal("order_changed",order,-1)
 
+func swap_orders(o0:int,o1:int)->void:
+	var t:Array=orders[o0]
+	orders[o0]=orders[o1]
+	orders[o1]=t
+	emit_signal("order_changed",o0,-1)
+
 func delete_row(order:int,channel:int,row:int)->void:
 	pattern_list[channel][orders[order][channel]].remove_row(row)
 	emit_signal("order_changed",order,channel)

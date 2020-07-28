@@ -1,18 +1,22 @@
 extends Control
 
 """
-TODO:	MIDI input
-			Flag?: MIDI Pitch bend
-			Flag?: MIDI modulation
-			Range?: MIDI modulation
-		Make arpeggio last until new note?
-		Immediate note play skips notes (skips muted channels)
-		Automation
-		Reduce pops on volume changes.
-		Instrument I/O.
+FIXME
+	Export sometimes crashes. (Buffer freed before final write?)
+TODO:
+	MIDI input
+		Flag?: MIDI Pitch bend
+		Flag?: MIDI modulation
+		Range?: MIDI modulation
+	Make arpeggio last until new note?
+	Immediate note play skips notes (skips muted channels)
+	Automation
+	Reduce pops on volume changes.
+	Instrument I/O.
 
-FUTURE:	Translations
-		Themability
+FUTURE:
+	Translations
+	Themability
 """
 
 func _ready()->void:

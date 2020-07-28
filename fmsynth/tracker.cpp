@@ -113,14 +113,13 @@ Array SynthTracker::generate(int size,float volume,Array cmds){
 	volume/=FP_ONE;
 	int cmd_ptr=0;
 	int cmd_sz=cmds.size();
-	int time=0;
 	int next_time=0;
 	uint8_t command;
 	uint8_t voice;
 	uint8_t op_mask;
 	uint8_t data_8;
 	int data;
-	for(int i=0;size;i++,size--,time++){
+	for(int time=0;size;size--,time++){
 		while(cmd_ptr<cmd_sz && time==next_time){
 			command=VAR2INT(cmds[cmd_ptr]);
 			voice=VAR2INT(cmds[cmd_ptr])>>8;
@@ -284,7 +283,7 @@ Array SynthTracker::generate(int size,float volume,Array cmds){
 		}
 		FixedPoint left,right;
 		synth.generate(left,right);
-		buffer[i]=Vector2(left*volume,right*volume);
+		buffer[time]=Vector2(left*volume,right*volume);
 	}
 	TRACE("\n");
 	return buffer;

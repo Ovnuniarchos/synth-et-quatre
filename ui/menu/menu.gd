@@ -91,6 +91,11 @@ func _on_file_selected(path:String)->void:
 			"path":path,
 			"thread":thr
 		})
+		"""export_thread({
+			"synth":synth,
+			"path":path,
+			"thread":null
+		})"""
 
 func export_thread(data:Dictionary)->void:
 	var synth:Synth=data["synth"]
@@ -117,8 +122,10 @@ func export_thread(data:Dictionary)->void:
 	PROGRESS.end()
 	call_deferred("thread_kill",data["thread"])
 
+
 func thread_kill(thr:Thread)->void:
-	thr.wait_to_finish()
+	if thr!=null:
+		thr.wait_to_finish()
 
 
 func _on_FileDialog_visibility_changed()->void:

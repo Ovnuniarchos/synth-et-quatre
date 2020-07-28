@@ -73,35 +73,27 @@ func _on_song_changed()->void:
 
 #
 
-func gen_commands(song:Song,mix_rate:float,buf_size:int,cmds:Array)->bool:
+func gen_commands(song:Song,mix_rate:float,buffer_size:int,cmds:Array)->bool:
 	if !playing:
-		cmds[0]=255
+		cmds[0]=CONSTS.CMD_END
 		return false
+	var max_wait:int=min(CONSTS.MAX_WAIT_TIME,buffer_size)
 	var samples_tick:float=mix_rate/song.ticks_second
 	var ptr:int=0
-	var bs:float=0.0
-	var ibuf_size:int=buf_size
-	var last_wait:int=0
+	var optr:int=0
+	var buffer_left:float=buffer_size
+	var wait:int
 	# Should not insert more than buf_size
 	if curr_sample>=1.0:
-		bs=min(min(CONSTS.MAX_WAIT_TIME,ibuf_size),floor(curr_sample))
-		while bs>=1.0 and ibuf_size>0:
-			cmds[ptr]=CONSTS.CMD_WAIT
-			cmds[ptr+1]=bs-1
-			curr_sample-=bs
-			ibuf_size-=bs
-			ptr+=2
-			bs=min(min(CONSTS.MAX_WAIT_TIME,ibuf_size),floor(curr_sample))
-	if ibuf_size<=0:
-		cmds[last_wait]=CONSTS.CMD_END
-		return true
+		wait=floor(min(min(max_wait,samples_tick),curr_sample))
+		cmds[ptr]=CONSTS.CMD_WAIT
+		cmds[ptr+1]=wait-1
+		ptr+=2
+		buffer_left-=wait
 	#
-	var spt:float
-	var dbs:float
-	bs=ibuf_size
 	var sig_cmd:int
 	var sig:int
-	while bs>=1.0:
+	while buffer_left>=1.0:
 		for chn in range(song.num_channels):
 			sig=voices[chn].process_tick(song,chn,curr_order,curr_row,curr_tick)
 			sig_cmd=sig&CONSTS.SIG_CMD_MASK
@@ -112,6 +104,14 @@ func gen_commands(song:Song,mix_rate:float,buf_size:int,cmds:Array)->bool:
 			elif sig_cmd==CONSTS.SIG_GOTO_NEXT:
 				goto_next=sig&CONSTS.SIG_VAL_MASK
 			ptr=voices[chn].commit(chn,cmds,ptr)
+		#
+		optr=ptr
+		curr_sample+=samples_tick
+		wait=floor(min(min(max_wait,buffer_left),samples_tick))
+		cmds[ptr]=CONSTS.CMD_WAIT
+		cmds[ptr+1]=wait-1
+		ptr+=2
+		buffer_left-=wait
 		#
 		curr_tick+=1
 		if song_delay<=0:
@@ -143,20 +143,10 @@ func gen_commands(song:Song,mix_rate:float,buf_size:int,cmds:Array)->bool:
 				emit_signal("position_changed",curr_order,curr_row)
 		else:
 			song_delay-=1
-		#
-		spt=samples_tick
-		last_wait=ptr
-		while spt>=1.0 and bs>=1.0:
-			dbs=min(CONSTS.MAX_WAIT_TIME,spt)
-			cmds[ptr]=CONSTS.CMD_WAIT
-			cmds[ptr+1]=dbs-1
-			spt-=dbs
-			bs-=dbs
-			ptr+=2
-		if bs<1.0:
-			break
-	curr_sample=spt
-	cmds[last_wait]=CONSTS.CMD_END
+	if cmds[optr]==CONSTS.CMD_WAIT:
+		ptr=optr
+	cmds[ptr]=CONSTS.CMD_END
+	curr_sample-=buffer_size
 	return true
 
 func next_order(next:int)->void:

@@ -4,15 +4,15 @@
 [ext_resource path="res://theme/DejaVu10.tres" type="DynamicFontData" id=2]
 [ext_resource path="res://theme/editor.png" type="Texture" id=3]
 
-[sub_resource type="AtlasTexture" id=7]
+[sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 3 )
 region = Rect2( 56, 112, 8, 16 )
 
-[sub_resource type="AtlasTexture" id=8]
+[sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 3 )
 region = Rect2( 32, 112, 8, 16 )
 
-[sub_resource type="AtlasTexture" id=9]
+[sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 3 )
 region = Rect2( 48, 112, 8, 16 )
 
@@ -24,28 +24,28 @@ region = Rect2( 96, 112, 16, 16 )
 atlas = ExtResource( 3 )
 region = Rect2( 64, 112, 16, 16 )
 
-[sub_resource type="AtlasTexture" id=10]
+[sub_resource type="AtlasTexture" id=6]
 atlas = ExtResource( 3 )
 region = Rect2( 40, 112, 8, 16 )
 
-[sub_resource type="AtlasTexture" id=3]
+[sub_resource type="AtlasTexture" id=7]
 atlas = ExtResource( 3 )
-region = Rect2( 40, 112, 8, 16 )
+region = Rect2( 112, 112, 16, 16 )
 
-[sub_resource type="AtlasTexture" id=11]
+[sub_resource type="AtlasTexture" id=8]
 atlas = ExtResource( 3 )
 region = Rect2( 24, 112, 8, 16 )
 
-[sub_resource type="StyleBoxFlat" id=4]
+[sub_resource type="StyleBoxFlat" id=9]
 bg_color = Color( 0, 0, 0.12549, 1 )
 corner_detail = 1
 anti_aliasing = false
 
-[sub_resource type="DynamicFont" id=5]
+[sub_resource type="DynamicFont" id=10]
 size = 10
 font_data = ExtResource( 2 )
 
-[sub_resource type="StyleBoxFlat" id=6]
+[sub_resource type="StyleBoxFlat" id=11]
 bg_color = Color( 0.8, 0.8, 0.666667, 1 )
 border_width_left = 1
 border_width_top = 1
@@ -69,21 +69,21 @@ GridContainer/constants/hseparation = 0
 GridContainer/constants/vseparation = 0
 HBoxContainer/constants/separation = 0
 HSplitContainer/constants/autohide = 0
-Icons/icons/Close = SubResource( 7 )
-Icons/icons/Down = SubResource( 8 )
-Icons/icons/Left = SubResource( 9 )
+Icons/icons/Close = SubResource( 3 )
+Icons/icons/Down = SubResource( 4 )
+Icons/icons/Left = SubResource( 5 )
 Icons/icons/Play = SubResource( 1 )
 Icons/icons/PlayTrack = SubResource( 2 )
-Icons/icons/Right = SubResource( 10 )
-Icons/icons/Stop = SubResource( 3 )
-Icons/icons/Up = SubResource( 11 )
+Icons/icons/Right = SubResource( 6 )
+Icons/icons/Stop = SubResource( 7 )
+Icons/icons/Up = SubResource( 8 )
 Label/colors/font_color = Color( 0.752941, 0.752941, 0.752941, 1 )
-PlotPanel/styles/ = SubResource( 4 )
+PlotPanel/styles/ = SubResource( 9 )
 TooltipLabel/colors/font_color = Color( 0, 0, 0, 1 )
 TooltipLabel/colors/font_color_shadow = Color( 0, 0, 0, 0 )
 TooltipLabel/constants/shadow_offset_x = 0
 TooltipLabel/constants/shadow_offset_y = 0
-TooltipLabel/fonts/font = SubResource( 5 )
-TooltipPanel/styles/panel = SubResource( 6 )
+TooltipLabel/fonts/font = SubResource( 10 )
+TooltipPanel/styles/panel = SubResource( 11 )
 VBoxContainer/constants/separation = 0
 VSplitContainer/constants/autohide = 0

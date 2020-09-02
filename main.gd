@@ -8,11 +8,11 @@ TODO:
 		Flag?: MIDI Pitch bend
 		Flag?: MIDI modulation
 		Range?: MIDI modulation
+	Instrument I/O.
 	Make arpeggio last until new note?
 	Immediate note play skips notes (skips muted channels)
 	Automation
 	Reduce pops on volume changes.
-	Instrument I/O.
 
 FUTURE:
 	Translations

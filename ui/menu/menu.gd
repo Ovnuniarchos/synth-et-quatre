@@ -112,6 +112,7 @@ func export_thread(data:Dictionary)->void:
 		while tracker.gen_commands(GLOBALS.song,sample_rate,BUFFER_SIZE,cmds):
 			err=file.write_chunk(synth.generate(BUFFER_SIZE,cmds,1.0))
 			if err!=OK:
+				file.close()
 				ALERT.alert(file.get_error_message(err))
 				call_deferred("thread_kill",data["thread"])
 				return

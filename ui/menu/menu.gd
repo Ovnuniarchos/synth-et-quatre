@@ -1,8 +1,10 @@
 tool extends PanelContainer
 
-const BUFFER_SIZE=2048
 const FILES_SE4=PoolStringArray(["*.se4 ; SynthEtQuatre song"])
 const FILES_WAV=PoolStringArray(["*.wav ; WAV file"])
+
+var IO_SONG:IOSong=IOSong.new()
+var IO_WAV_EXPORT:IOWavExport=IOWavExport.new()
 
 
 enum FILE_MODE{LOAD,SAVE,SAVE_WAV}
@@ -22,7 +24,18 @@ func _ready()->void:
 	rect_size.y=0.0
 	base_height=$CC/HBC.rect_size.y
 
-func _on_New_pressed():
+#
+
+func _on_mouse_entered()->void:
+	var sb:StyleBox=real_theme.get_stylebox("panel","PanelContainer")
+	rect_size.y=base_height+sb.get_center_size().y
+
+func _on_mouse_exited()->void:
+	rect_size.y=0
+
+#
+
+func _on_New_pressed()->void:
 	var song:Song=Song.new()
 	AUDIO.tracker.stop()
 	SYNTH.mute_voices(0)
@@ -66,67 +79,11 @@ func adjust_base_dir()->void:
 func _on_file_selected(path:String)->void:
 	CONFIG.set_value(CONFIG.CURR_DIR,path.get_base_dir())
 	if file_mode==FILE_MODE.SAVE:
-		var f:ChunkedFile=ChunkedFile.new()
-		f.open(path,File.WRITE)
-		GLOBALS.song.serialize(f)
-		f.close()
+		IO_SONG.obj_save(path)
 	elif file_mode==FILE_MODE.LOAD:
-		var f:ChunkedFile=ChunkedFile.new()
-		f.open(path,File.READ)
-		var new_song:Song=GLOBALS.song.deserialize(f)
-		f.close()
-		if new_song!=null:
-			AUDIO.tracker.stop()
-			GLOBALS.song=new_song
+		IO_SONG.obj_load(path)
 	elif file_mode==FILE_MODE.SAVE_WAV:
-		var synth:Synth=Synth.new()
-		synth.set_mix_rate(CONFIG.get_value(CONFIG.RECORD_SAMPLERATE))
-		if CONFIG.get_value(CONFIG.RECORD_SAVEMUTED):
-			synth.mute_voices(GLOBALS.muted_mask)
-		GLOBALS.song.sync_waves(synth,0)
-		GLOBALS.song.sync_lfos(synth)
-		var thr:Thread=Thread.new()
-		thr.start(self,"export_thread",{
-			"synth":synth,
-			"path":path,
-			"thread":thr
-		})
-		"""export_thread({
-			"synth":synth,
-			"path":path,
-			"thread":null
-		})"""
-
-func export_thread(data:Dictionary)->void:
-	var synth:Synth=data["synth"]
-	var tracker:Tracker=Tracker.new(synth)
-	var file:WaveFile=WaveFile.new()
-	var sample_rate:int=CONFIG.get_value(CONFIG.RECORD_SAMPLERATE)
-	var cmds:Array=[]
-	cmds.resize(65536)
-	tracker.set_block_signals(true)
-	PROGRESS.start()
-	var err:int=file.start_file(data["path"],CONFIG.get_value(CONFIG.RECORD_FPSAMPLES),sample_rate)
-	if err==OK:
-		tracker.record(0)
-		while tracker.gen_commands(GLOBALS.song,sample_rate,BUFFER_SIZE,cmds):
-			err=file.write_chunk(synth.generate(BUFFER_SIZE,cmds,1.0))
-			if err!=OK:
-				file.close()
-				ALERT.alert(file.get_error_message(err))
-				call_deferred("thread_kill",data["thread"])
-				return
-			PROGRESS.set_value((tracker.curr_order*100)/GLOBALS.song.orders.size())
-		file.end_file()
-	else:
-		ALERT.alert(file.get_error_message(err))
-	PROGRESS.end()
-	call_deferred("thread_kill",data["thread"])
-
-
-func thread_kill(thr:Thread)->void:
-	if thr!=null:
-		thr.wait_to_finish()
+		IO_WAV_EXPORT.obj_save(path)
 
 
 func _on_FileDialog_visibility_changed()->void:
@@ -149,12 +106,3 @@ func _on_Cleanup_id_pressed(id:int)->void:
 		GLOBALS.song.clean_patterns()
 		GLOBALS.song.clean_instruments()
 		GLOBALS.song.clean_waveforms()
-
-#
-
-func _on_mouse_entered()->void:
-	var sb:StyleBox=real_theme.get_stylebox("panel","PanelContainer")
-	rect_size.y=base_height+sb.get_center_size().y
-
-func _on_mouse_exited()->void:
-	rect_size.y=0

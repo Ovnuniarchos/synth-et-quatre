@@ -29,7 +29,7 @@ const CHANNEL_FM4:String="CFM4"
 const CHUNK_INSTRUMENTS:String="INSL"
 const CHUNK_WAVES:String="WAVL"
 const CHUNK_ORDERS:String="ORDL"
-const CHUNK_pattern_list:String="PATL"
+const CHUNK_PATTERN_LIST:String="PATL"
 
 
 var title:String="Untitled"
@@ -114,8 +114,8 @@ func correct_wave(w:int)->int:
 		return WAVE.TRIANGLE
 	return w
 
-func can_add_wave()->bool:
-	if wave_list.size()<MAX_WAVES:
+func can_add_wave(count:int=1)->bool:
+	if wave_list.size()+count<MAX_WAVES:
 		return true
 	emit_signal("error","Limit of %d waveforms reached."%[MAX_WAVES])
 	return false
@@ -379,7 +379,7 @@ func serialize(out:ChunkedFile)->void:
 			out.store_8(ordr[chn])
 	out.end_chunk()
 	# pattern_list
-	out.start_chunk(CHUNK_pattern_list)
+	out.start_chunk(CHUNK_PATTERN_LIST)
 	for i in range(num_channels):
 		var chn:Array=pattern_list[i]
 		out.store_16(chn.size())
@@ -418,7 +418,7 @@ func deserialize(inf:ChunkedFile)->Song:
 				process_instrument_list(inf,song)
 			CHUNK_ORDERS:
 				process_order_list(inf,song)
-			CHUNK_pattern_list:
+			CHUNK_PATTERN_LIST:
 				process_pattern_list(inf,song)
 			_:
 				print("Unrecognized chunk [%s]"%[hdr[ChunkedFile.CHUNK_ID]])

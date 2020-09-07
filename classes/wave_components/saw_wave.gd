@@ -30,6 +30,21 @@ func duplicate()->WaveComponent:
 	nc.pm=pm
 	return nc
 
+func equals(other:WaveComponent)->bool:
+	if !.equals(other):
+		return false
+	if other.get("CHUNK_ID")!=CHUNK_ID:
+		return false
+	if halves[0]!=other.halves[0] or halves[1]!=other.halves[1]:
+		return false
+	if !are_equal_approx([
+				freq_mult,other.freq_mult,phi0,other.phi0,cycles,other.cycles,
+				pos0,other.pos0,pm,other.pm
+			]):
+		return false
+	return true
+
+
 func calculate(size:int,input:Array,caller:WaveComponent)->Array:
 	set_modulator(size,pm,input,caller)
 	var dphi:float=1.0/size

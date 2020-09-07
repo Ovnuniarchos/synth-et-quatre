@@ -30,6 +30,19 @@ func duplicate()->WaveComponent:
 	nc.xm=xm
 	return nc
 
+func are_equal_approx(a:Array)->bool:
+	for i in range(0,a.size(),2):
+		if !is_equal_approx(a[i],a[i+1]):
+			return false
+	return true
+
+func equals(other:WaveComponent)->bool:
+	# input_comp is compared by SynthWave
+	if output_mode!=other.output_mode\
+			or !are_equal_approx([vol,other.vol,am,other.am,xm,other.xm]):
+		return false
+	return true
+
 # warning-ignore:unused_argument
 # warning-ignore:unused_argument
 # warning-ignore:unused_argument

@@ -35,3 +35,7 @@ func duplicate()->Waveform:
 	nw.size_po2=size_po2
 	nw.data=data.duplicate()
 	return nw
+
+func equals(other:Waveform)->bool:
+	# Name is irrelevant
+	return size_po2!=other.size_po2

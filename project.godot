@@ -70,6 +70,11 @@ _global_script_classes=[ {
 "path": "res://classes/filter_components/hpf_filter.gd"
 }, {
 "base": "Reference",
+"class": "IOInstrument",
+"language": "GDScript",
+"path": "res://classes/io_modules/io_instrument.gd"
+}, {
+"base": "Reference",
 "class": "IOSong",
 "language": "GDScript",
 "path": "res://classes/io_modules/io_song.gd"
@@ -217,6 +222,7 @@ _global_script_class_icons={
 "FmInstrument": "",
 "FmVoice": "",
 "HpfFilter": "",
+"IOInstrument": "",
 "IOSong": "",
 "IOWavExport": "",
 "IconButton": "",

@@ -14,6 +14,13 @@ func duplicate()->WaveComponent:
 	var nc:NormalizeFilter=.duplicate() as NormalizeFilter
 	return nc
 
+func equals(other:WaveComponent)->bool:
+	if !.equals(other):
+		return false
+	if other.get("CHUNK_ID")!=CHUNK_ID:
+		return false
+	return keep_center==other.keep_center
+
 func calculate(size:int,input:Array,caller:WaveComponent)->Array:
 	if caller==null:
 		GLOBALS.array_fill(generated,0.0,size)

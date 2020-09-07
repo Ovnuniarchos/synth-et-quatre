@@ -22,6 +22,15 @@ func duplicate()->WaveComponent:
 	nc.set_cutoff_hi(cutoff_hi)
 	return nc
 
+func equals(other:WaveComponent)->bool:
+	if !.equals(other):
+		return false
+	if other.get("CHUNK_ID")!=CHUNK_ID:
+		return false
+	if taps!=other.taps or !are_equal_approx([cutoff_lo,other.cutoff_lo,cutoff_hi,other.cutoff_hi]):
+		return false
+	return true
+
 func calculate(size:int,input:Array,caller:WaveComponent)->Array:
 	if size!=wave_size:
 		wave_size=size

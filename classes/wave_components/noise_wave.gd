@@ -26,6 +26,16 @@ func duplicate()->WaveComponent:
 	nc.pos0=pos0
 	return nc
 
+func equals(other:WaveComponent)->bool:
+	if !.equals(other):
+		return false
+	if other.get("CHUNK_ID")!=CHUNK_ID:
+		return false
+	if rng_seed!=other.rng_seed\
+			or !are_equal_approx([tone,other.tone,pos0,other.pos0,length,other.length,pm,other.pm]):
+		return false
+	return true
+
 func calculate(size:int,input:Array,caller:WaveComponent)->Array:
 	set_modulator(size,pm,input,caller)
 	rng0.seed=rng_seed

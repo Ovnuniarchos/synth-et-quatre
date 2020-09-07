@@ -69,10 +69,6 @@ func duplicate()->Instrument:
 	ni.routings=routings.duplicate(true)
 	return ni
 
-# Deprecated
-func uses_wave(w_ix:int)->bool:
-	return w_ix in waveforms
-
 func delete_waveform(w_ix:int)->void:
 	for i in range(4):
 		if waveforms[i]>=w_ix:

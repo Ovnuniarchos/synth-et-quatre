@@ -20,6 +20,17 @@ func duplicate()->WaveComponent:
 	var nc:ClampFilter=.duplicate() as ClampFilter
 	return nc
 
+func equals(other:WaveComponent)->bool:
+	if !.equals(other):
+		return false
+	if other.get("CHUNK_ID")!=CHUNK_ID:
+		return false
+	if u_clamp_on!=other.u_clamp_on or l_clamp_on!=other.l_clamp_on\
+			or !are_equal_approx([u_clamp,other.u_clamp,l_clamp,other.l_clamp]):
+		return false
+	return true
+
+
 func calculate(size:int,input:Array,caller:WaveComponent)->Array:
 	if caller==null:
 		GLOBALS.array_fill(generated,0.0,size)

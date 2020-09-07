@@ -25,6 +25,20 @@ func duplicate()->Waveform:
 		nw.components[i].input_comp=null if ii==-1 else nw.components[ii]
 	return nw
 
+func equals(other:Waveform)->bool:
+	if !.equals(other):
+		return false
+	if other.get("CHUNK_ID")!=CHUNK_ID:
+		return false
+	if other.components.size()!=components.size():
+		return false
+	for i in range(components.size()):
+		var c0:WaveComponent=components[i]
+		var c1:WaveComponent=other.components[i]
+		if !c0.equals(c1) or components.find(c0.input_comp)!=other.components.find(c1.input_comp):
+			return false
+	return true
+
 func get_component(index:int)->WaveComponent:
 	if index<0 or index>=components.size():
 		return null

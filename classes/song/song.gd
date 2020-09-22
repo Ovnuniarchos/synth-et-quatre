@@ -167,10 +167,10 @@ func send_wave(wave:Waveform,synth:Synth,wave_ix:int=-1)->void:
 	if wave_ix!=-1:
 		synth.synth.set_wave(wave_ix+MIN_CUSTOM_WAVE,wave.data.duplicate())
 
-func sync_waves(synth:Synth,from:int)->void:
+func sync_waves(synth:Synth,_from:int)->void:
 	if synth==null:
 		return
-	var wave_ix:int=from
+	var wave_ix:int=0
 	for wave in wave_list:
 		synth.synth.set_wave(wave_ix+MIN_CUSTOM_WAVE,wave.data.duplicate())
 		wave_ix+=1

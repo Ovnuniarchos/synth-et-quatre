@@ -5,6 +5,7 @@
 #include <cstdio>
 
 #define FixedPoint int64_t
+#define FixedPointShort int32_t
 
 const FixedPoint FP_ONE=0x1000000L;
 const FixedPoint FP_NEARLY_TWO=0x1ffffffL;

@@ -76,6 +76,7 @@ public:
 	void set_duty_cycle(int voice,int op_mask,FixedPoint duty_cycle);
 	void set_phase(int voice,int op_mask,FixedPoint phi);
 	void set_wave(int wave_ix,Array wave);
+	void set_sample(int wave_ix,int loop_start,int loop_end,float rec_freq,float sam_freq,Array sample);
 
 	void set_volume(int voice,int vel);
 	void set_attack_rate(int voice,int op_mask,int rate);

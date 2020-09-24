@@ -27,10 +27,10 @@ public:
 
 	_ALWAYS_INLINE_ void generate(FixedPoint &left,FixedPoint &right){
 		FixedPoint lfo_vals[MAX_LFOS]={
-			lfos[0].generate(lfo_phis[0]),
-			lfos[1].generate(lfo_phis[1]),
-			lfos[2].generate(lfo_phis[2]),
-			lfos[3].generate(lfo_phis[3])
+			lfos[0].generate(lfo_phis[0],0L),
+			lfos[1].generate(lfo_phis[1],0L),
+			lfos[2].generate(lfo_phis[2],0L),
+			lfos[3].generate(lfo_phis[3],0L)
 		};
 		lfo_phis[0]+=lfo_deltas[0];
 		lfo_phis[1]+=lfo_deltas[1];
@@ -57,6 +57,7 @@ public:
 	void set_duty_cycle(int voice,int op_mask,FixedPoint duty_cycle);
 	void set_phase(int voice,int op_mask,FixedPoint phi);
 	void set_wave(int wave_ix,godot::Array wave);
+	void set_sample(int wave_ix,int loop_start,int loop_end,float rec_freq,float sam_freq,godot::Array sample);
 
 	void set_volume(int voice,int vel);
 	void set_attack_rate(int voice,int op_mask,int rate);

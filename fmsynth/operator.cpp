@@ -43,6 +43,7 @@ void Operator::set_detune(float detune){
 
 void Operator::set_wave_mode(int mode){
 	wave.set_mode(mode);
+	set_delta();
 }
 
 void Operator::set_duty_cycle(FixedPoint duty_cycle){
@@ -55,6 +56,7 @@ void Operator::set_phase(FixedPoint phi){
 
 void Operator::set_wave(UserWave **user_wave){
 	wave.set_wave(user_wave);
+	set_delta();
 }
 
 

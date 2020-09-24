@@ -98,19 +98,20 @@ public:
 			return 0L;
 		}
 		calculate_envelope();
-		FixedPoint sample=(wave.generate(phi+pm_in)*eg_vol)>>FP_INT_SHIFT;
+		FixedPoint sample=(wave.generate(phi,pm_in)*eg_vol)>>FP_INT_SHIFT;
 		// AM
 		FixedPoint mod=((am_lfo_in*am_level)>>FP_INT_SHIFT)+am_floor;
 		sample=(sample*mod)>>FP_INT_SHIFT;
 		// FM
 		mod=((fm_lfo_in*(fm_lfo_in>0?fm_max:fm_min))>>FP_INT_SHIFT)+FP_ONE;
-		phi+=(delta*mod)>>FP_INT_SHIFT;
+		phi=wave.fix_loop(phi,((delta*mod)>>FP_INT_SHIFT));
 		//
 		return sample;
 	};
 
 	_ALWAYS_INLINE_ void set_delta(){
-		delta=(frequency*freq_mul*detune*FP_ONE)/(freq_div*mix_rate);
+		delta=(frequency*freq_mul*detune*wave.get_recorded_freq()*FP_ONE)/(freq_div*mix_rate*wave.get_sample_freq());
+		// delta=(frequency*freq_mul*detune*FP_ONE)/(freq_div*mix_rate);
 	}
 
 	void set_mix_rate(float mix_rate);

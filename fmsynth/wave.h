@@ -5,9 +5,14 @@
 #include "common_defs.h"
 
 struct UserWave{
-	FixedPoint *wave=NULL;
+	FixedPointShort *wave=NULL;
+	bool sample=false;
 	int64_t size_mask=0;
 	int64_t size_shift=0;
+	int64_t loop_start=0;
+	int64_t loop_size=0;
+	float recorded_freq=0.0;
+	float sample_freq=0.0;
 
 	~UserWave(){
 		delete wave;
@@ -54,8 +59,8 @@ public:
 		return noise_gen;
 	};
 
-	_ALWAYS_INLINE_ FixedPoint generate(FixedPoint phi){
-		phi&=FP_DEC_MASK;
+	_ALWAYS_INLINE_ FixedPoint generate(FixedPoint phi,FixedPoint pm_in){
+		phi=(mode==USER)?phi:(phi+pm_in)&FP_DEC_MASK;
 		FixedPoint tmp;
 		switch(mode){
 			case RECTANGLE:
@@ -74,6 +79,11 @@ public:
 				return noise_latch;
 			case USER:
 				if(wave==NULL || (*wave)==NULL) return 0L;
+				if((*wave)->sample){
+					phi=(fix_loop(phi,pm_in)>>FP_INT_SHIFT)&FP_DEC_MASK;
+					return (*wave)->wave[phi];
+				}
+				phi=(phi+pm_in)&FP_DEC_MASK;
 				tmp=(*wave)->wave[(phi>>(*wave)->size_shift)&(*wave)->size_mask];
 				return phi>=duty_cycle?tmp:-tmp;
 			default:
@@ -92,6 +102,34 @@ public:
 	_ALWAYS_INLINE_ void set_wave(UserWave **user_wave){
 		wave=user_wave;
 	};
+
+	_ALWAYS_INLINE_ float get_recorded_freq(){
+		return is_sampled()?(*wave)->recorded_freq:1.0;
+	}
+
+	_ALWAYS_INLINE_ float get_sample_freq(){
+		return is_sampled()?(*wave)->sample_freq:1.0;
+	}
+
+	_ALWAYS_INLINE_ bool is_sampled(){
+		return (mode==USER)&&(wave!=NULL)&&(*wave!=NULL)&&((*wave)->sample);
+	}
+
+	_ALWAYS_INLINE_ FixedPoint fix_loop(FixedPoint phi,FixedPoint mod_in){
+		if(!is_sampled()){
+			return phi+mod_in;
+		}
+		int64_t ptr=phi>>FP_INT_SHIFT;
+		if(ptr<(*wave)->loop_start){
+			return phi+mod_in;
+		}
+		phi+=mod_in;
+		ptr=phi>>FP_INT_SHIFT;
+		if((*wave)->loop_size>0L){
+			ptr=((ptr-(*wave)->loop_start)%(*wave)->loop_size)+(*wave)->loop_start;
+		}
+		return (clamp(ptr,0L,(*wave)->size_mask)<<FP_INT_SHIFT)|(phi&FP_DEC_MASK);
+	}
 };
 
 #endif

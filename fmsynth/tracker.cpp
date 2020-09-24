@@ -463,6 +463,11 @@ void SynthTracker::set_wave(int wave_ix,Array wave){
 	wave.clear();
 }
 
+void SynthTracker::set_sample(int wave_ix,int loop_start,int loop_end,float rec_freq,float sam_freq,Array sample){
+	synth.set_sample(wave_ix,loop_start,loop_end,rec_freq,sam_freq,sample);
+	sample.clear();
+}
+
 
 void SynthTracker::set_volume(int voice,int vel){
 	synth.set_volume(voice,vel);

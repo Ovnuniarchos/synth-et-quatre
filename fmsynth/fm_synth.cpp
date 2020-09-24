@@ -71,9 +71,43 @@ void FmSynth::set_wave(int wave_ix,godot::Array wave){
 		UserWave *new_wave=new UserWave();
 		new_wave->size_mask=mask;
 		new_wave->size_shift=shift;
-		new_wave->wave=(size==0)?NULL:new FixedPoint[size];
+		new_wave->wave=(size==0)?NULL:new FixedPointShort[size];
 		for(int i=0;i<size;i++){
 			new_wave->wave[i]=((float)wave[i])*FP_ONE;
+		}
+		waves[wave_ix]=new_wave;
+	}else{
+		waves[wave_ix]=NULL;
+	}
+	delete old_wave;
+}
+
+void FmSynth::set_sample(int wave_ix,int loop_start,int loop_end,float rec_freq,float sam_freq,godot::Array sample){
+	UserWave *old_wave;
+	if(wave_ix<4){
+		return;
+	}
+	wave_ix=(wave_ix&255)-4;
+	old_wave=waves[wave_ix];
+	int size=sample.size();
+	if(size>=1){
+		loop_start=clamp(loop_start,0,size);
+		loop_end=clamp(loop_end,0,size);
+		if(loop_start>loop_end){
+			int t=loop_start;
+			loop_start=loop_end;
+			loop_end=t;
+		}
+		UserWave *new_wave=new UserWave();
+		new_wave->size_mask=size;
+		new_wave->sample=true;
+		new_wave->loop_start=loop_start;
+		new_wave->loop_size=loop_end-loop_start;
+		new_wave->wave=new FixedPointShort[size];
+		new_wave->recorded_freq=rec_freq;
+		new_wave->sample_freq=sam_freq;
+		for(int i=0;i<size;i++){
+			new_wave->wave[i]=((float)sample[i])*FP_ONE;
 		}
 		waves[wave_ix]=new_wave;
 	}else{

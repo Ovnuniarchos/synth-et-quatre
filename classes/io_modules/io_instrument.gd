@@ -13,13 +13,12 @@ func obj_save(path:String)->void:
 		if inst.waveforms[i]>FmInstrument.WAVE.NOISE and !wave_list.has(inst.waveforms[i]):
 			var w_new:int=wave_list.size()+FmInstrument.WAVE.NOISE+1
 			var w_old:int=inst.waveforms[i]
-			for j in range(4):
+			for _j in range(4):
 				if sinst.waveforms[i]==w_old:
 					sinst.waveforms[i]=-w_new
 			wave_list[w_old]=w_old
 	for i in range(4):
 		sinst.waveforms[i]=abs(sinst.waveforms[i])
-		print(sinst.waveforms[i])
 	var f:ChunkedFile=ChunkedFile.new()
 	f.open(path,File.WRITE)
 	# Signature: SFMM\0xc\0xa\0x1a\0xa
@@ -61,6 +60,10 @@ func obj_load(path:String)->void:
 		match hdr[ChunkedFile.CHUNK_ID]:
 			SynthWave.CHUNK_ID:
 				var n:SynthWave=SynthWave.new()
+				n.deserialize(f,n)
+				wav_l[i]=n
+			SampleWave.CHUNK_ID:
+				var n:SampleWave=SampleWave.new()
 				n.deserialize(f,n)
 				wav_l[i]=n
 			_:

@@ -1,11 +1,11 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://ui/wave_designer/wave_nodes/triangle_wave.gd" type="Script" id=1]
-[ext_resource path="res://ui/wave_designer/wave_nodes/title_bar.tscn" type="PackedScene" id=2]
+[ext_resource path="res://ui/wave_designer/synth_designer/wave_nodes/rect_wave.gd" type="Script" id=1]
+[ext_resource path="res://ui/wave_designer/synth_designer/wave_nodes/title_bar.tscn" type="PackedScene" id=2]
 
-[node name="TriangleWave" type="PanelContainer"]
-margin_right = 147.0
-margin_bottom = 374.0
+[node name="RectWave" type="PanelContainer"]
+margin_right = 148.0
+margin_bottom = 394.0
 size_flags_horizontal = 9
 size_flags_vertical = 9
 script = ExtResource( 1 )
@@ -16,41 +16,33 @@ __meta__ = {
 [node name="VBC" type="VBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 151.0
-margin_bottom = 367.0
-__meta__ = {
-
-}
+margin_right = 161.0
+margin_bottom = 387.0
 
 [node name="Title" parent="VBC" instance=ExtResource( 2 )]
-margin_right = 144.0
-title = "TRIANGLE"
+margin_right = 154.0
+title = "RECTANGLE"
+index = 0
 
 [node name="Params" type="GridContainer" parent="VBC"]
 margin_top = 24.0
-margin_right = 144.0
-margin_bottom = 360.0
+margin_right = 154.0
+margin_bottom = 380.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/vseparation = 2
 custom_constants/hseparation = 8
 columns = 2
-__meta__ = {
-
-}
 
 [node name="LabelMul" type="Label" parent="VBC/Params"]
 margin_top = 5.0
 margin_right = 52.0
 margin_bottom = 19.0
 text = "Freq"
-__meta__ = {
-
-}
 
 [node name="Mul" type="SpinBox" parent="VBC/Params"]
 margin_left = 60.0
-margin_right = 138.0
+margin_right = 134.0
 margin_bottom = 24.0
 focus_mode = 2
 max_value = 32.0
@@ -65,14 +57,11 @@ margin_top = 31.0
 margin_right = 52.0
 margin_bottom = 45.0
 text = "Offset"
-__meta__ = {
-
-}
 
 [node name="Ofs" type="SpinBox" parent="VBC/Params"]
 margin_left = 60.0
 margin_top = 26.0
-margin_right = 138.0
+margin_right = 134.0
 margin_bottom = 50.0
 focus_mode = 2
 min_value = -100.0
@@ -93,7 +82,7 @@ __meta__ = {
 [node name="Vol" type="SpinBox" parent="VBC/Params"]
 margin_left = 60.0
 margin_top = 52.0
-margin_right = 138.0
+margin_right = 134.0
 margin_bottom = 76.0
 focus_mode = 2
 min_value = -100.0
@@ -101,186 +90,126 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LabelH1" type="Label" parent="VBC/Params"]
-margin_top = 81.0
+[node name="LabelZStart" type="Label" parent="VBC/Params"]
+margin_top = 83.0
 margin_right = 52.0
-margin_bottom = 95.0
-text = "Half 1"
-__meta__ = {
+margin_bottom = 97.0
+text = "Z Start"
 
-}
-
-[node name="Half1" type="OptionButton" parent="VBC/Params"]
+[node name="ZStart" type="SpinBox" parent="VBC/Params"]
 margin_left = 60.0
 margin_top = 78.0
-margin_right = 138.0
-margin_bottom = 98.0
-text = "-1 > 1"
-items = [ "-1 > 1", null, false, 0, null, "1 > -1", null, false, 3, null, "0", null, false, 4, null, "+1", null, false, 5, null, "-1", null, false, 6, null ]
-selected = 0
-__meta__ = {
+margin_right = 134.0
+margin_bottom = 102.0
 
-}
-
-[node name="LabelH2" type="Label" parent="VBC/Params"]
-margin_top = 103.0
+[node name="LabelNStart" type="Label" parent="VBC/Params"]
+margin_top = 109.0
 margin_right = 52.0
-margin_bottom = 117.0
-text = "Half 2"
-__meta__ = {
+margin_bottom = 123.0
+text = "- Start"
 
-}
-
-[node name="Half2" type="OptionButton" parent="VBC/Params"]
+[node name="NStart" type="SpinBox" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 100.0
-margin_right = 138.0
-margin_bottom = 120.0
-text = "1 > -1"
-items = [ "-1 > 1", null, false, 0, null, "1 > -1", null, false, 3, null, "0", null, false, 4, null, "+1", null, false, 5, null, "-1", null, false, 6, null ]
-selected = 1
-__meta__ = {
-
-}
+margin_top = 104.0
+margin_right = 134.0
+margin_bottom = 128.0
 
 [node name="ReferenceRect" type="ReferenceRect" parent="VBC/Params"]
-margin_top = 122.0
+margin_top = 130.0
 margin_right = 52.0
-margin_bottom = 146.0
+margin_bottom = 154.0
 rect_min_size = Vector2( 0, 24 )
-__meta__ = {
-
-}
 
 [node name="ReferenceRect2" type="ReferenceRect" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 122.0
-margin_right = 138.0
-margin_bottom = 146.0
+margin_top = 130.0
+margin_right = 134.0
+margin_bottom = 154.0
 rect_min_size = Vector2( 0, 24 )
-__meta__ = {
-
-}
 
 [node name="LabelCycles" type="Label" parent="VBC/Params"]
-margin_top = 153.0
+margin_top = 161.0
 margin_right = 52.0
-margin_bottom = 167.0
+margin_bottom = 175.0
 text = "Cycles"
-__meta__ = {
-
-}
 
 [node name="Cycles" type="SpinBox" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 148.0
-margin_right = 138.0
-margin_bottom = 172.0
-__meta__ = {
-
-}
+margin_top = 156.0
+margin_right = 134.0
+margin_bottom = 180.0
 
 [node name="LabelPosition" type="Label" parent="VBC/Params"]
-margin_top = 179.0
+margin_top = 187.0
 margin_right = 52.0
-margin_bottom = 193.0
+margin_bottom = 201.0
 text = "Position"
-__meta__ = {
-
-}
 
 [node name="Position" type="SpinBox" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 174.0
-margin_right = 138.0
-margin_bottom = 198.0
+margin_top = 182.0
+margin_right = 134.0
+margin_bottom = 206.0
 step = 0.01
-__meta__ = {
-
-}
 
 [node name="LabelOutput" type="Label" parent="VBC/Params"]
-margin_top = 203.0
+margin_top = 211.0
 margin_right = 52.0
-margin_bottom = 217.0
+margin_bottom = 225.0
 text = "Output"
-__meta__ = {
-
-}
 
 [node name="Output" type="OptionButton" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 200.0
-margin_right = 138.0
-margin_bottom = 220.0
+margin_top = 208.0
+margin_right = 134.0
+margin_bottom = 228.0
 text = "Off"
 items = [ "Off", null, false, 0, null, "Replace", null, false, 1, null, "Add", null, false, 2, null, "AM", null, false, 3, null, "XM", null, false, 4, null ]
 selected = 0
-__meta__ = {
-
-}
 
 [node name="LabelFrom" type="Label" parent="VBC/Params"]
-margin_top = 227.0
+margin_top = 235.0
 margin_right = 52.0
-margin_bottom = 241.0
+margin_bottom = 249.0
 text = "From"
-__meta__ = {
-
-}
 
 [node name="From" type="SpinBox" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 222.0
-margin_right = 138.0
-margin_bottom = 246.0
+margin_top = 230.0
+margin_right = 134.0
+margin_bottom = 254.0
 min_value = -1.0
-__meta__ = {
-
-}
 
 [node name="LabelPM" type="Label" parent="VBC/Params"]
-margin_top = 253.0
+margin_top = 261.0
 margin_right = 52.0
-margin_bottom = 267.0
+margin_bottom = 275.0
 text = "PM"
-__meta__ = {
-
-}
 
 [node name="PM" type="SpinBox" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 248.0
-margin_right = 138.0
-margin_bottom = 272.0
+margin_top = 256.0
+margin_right = 134.0
+margin_bottom = 280.0
 min_value = -100.0
-__meta__ = {
-
-}
 
 [node name="LabelAM" type="Label" parent="VBC/Params"]
-margin_top = 279.0
+margin_top = 287.0
 margin_right = 52.0
-margin_bottom = 293.0
+margin_bottom = 301.0
 text = "AM"
-__meta__ = {
-
-}
 
 [node name="AM" type="SpinBox" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 274.0
-margin_right = 138.0
-margin_bottom = 298.0
+margin_top = 282.0
+margin_right = 134.0
+margin_bottom = 306.0
 min_value = -100.0
-__meta__ = {
-
-}
 
 [node name="LabelXM" type="Label" parent="VBC/Params"]
-margin_top = 305.0
+margin_top = 313.0
 margin_right = 52.0
-margin_bottom = 319.0
+margin_bottom = 327.0
 text = "XM"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -288,18 +217,15 @@ __meta__ = {
 
 [node name="XM" type="SpinBox" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 300.0
-margin_right = 138.0
-margin_bottom = 324.0
+margin_top = 308.0
+margin_right = 134.0
+margin_bottom = 332.0
 min_value = -100.0
-__meta__ = {
-
-}
 [connection signal="value_changed" from="VBC/Params/Mul" to="." method="_on_Mul_value_changed"]
 [connection signal="value_changed" from="VBC/Params/Ofs" to="." method="_on_Ofs_value_changed"]
 [connection signal="value_changed" from="VBC/Params/Vol" to="." method="_on_Vol_value_changed"]
-[connection signal="item_selected" from="VBC/Params/Half1" to="." method="_on_Half1_item_selected"]
-[connection signal="item_selected" from="VBC/Params/Half2" to="." method="_on_Half2_item_selected"]
+[connection signal="value_changed" from="VBC/Params/ZStart" to="." method="_on_ZStart_value_changed"]
+[connection signal="value_changed" from="VBC/Params/NStart" to="." method="_on_NStart_value_changed"]
 [connection signal="value_changed" from="VBC/Params/Cycles" to="." method="_on_Cycles_value_changed"]
 [connection signal="value_changed" from="VBC/Params/Position" to="." method="_on_Position_value_changed"]
 [connection signal="item_selected" from="VBC/Params/Output" to="." method="_on_Output_item_selected"]

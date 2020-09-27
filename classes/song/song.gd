@@ -164,15 +164,24 @@ func find_wave_ref(wave:WeakRef)->int:
 
 func send_wave(wave:Waveform,synth:Synth,wave_ix:int=-1)->void:
 	wave_ix=wave_list.find(wave) if wave_ix==-1 else wave_ix
-	if wave_ix!=-1:
+	if wave_ix==-1:
+		return
+	if wave is SynthWave:
 		synth.synth.set_wave(wave_ix+MIN_CUSTOM_WAVE,wave.data.duplicate())
+	elif wave is SampleWave:
+		synth.synth.set_sample(wave_ix+MIN_CUSTOM_WAVE,wave.loop_start,wave.loop_end,
+				wave.record_freq,wave.sample_freq,wave.data.duplicate())
 
 func sync_waves(synth:Synth,_from:int)->void:
 	if synth==null:
 		return
 	var wave_ix:int=0
 	for wave in wave_list:
-		synth.synth.set_wave(wave_ix+MIN_CUSTOM_WAVE,wave.data.duplicate())
+		if wave is SynthWave:
+			synth.synth.set_wave(wave_ix+MIN_CUSTOM_WAVE,wave.data.duplicate())
+		elif wave is SampleWave:
+			synth.synth.set_sample(wave_ix+MIN_CUSTOM_WAVE,wave.loop_start,wave.loop_end,
+					wave.record_freq,wave.sample_freq,wave.data.duplicate())
 		wave_ix+=1
 	var null_wave:Array=[]
 	while wave_ix<MAX_WAVES:
@@ -477,6 +486,10 @@ func process_instrument_list(inf:ChunkedFile,song:Song)->void:
 		match hdr[ChunkedFile.CHUNK_ID]:
 			SynthWave.CHUNK_ID:
 				var n:SynthWave=SynthWave.new()
+				n.deserialize(inf,n)
+				wav_l[i]=n
+			SampleWave.CHUNK_ID:
+				var n:SampleWave=SampleWave.new()
 				n.deserialize(inf,n)
 				wav_l[i]=n
 			_:

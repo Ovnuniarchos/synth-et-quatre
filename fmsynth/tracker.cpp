@@ -15,6 +15,7 @@ void SynthTracker::_register_methods(){
 	register_method("set_wave_mode",&SynthTracker::set_wave_mode);
 	register_method("set_duty_cycle",&SynthTracker::set_duty_cycle);
 	register_method("set_wave",&SynthTracker::set_wave);
+	register_method("set_sample",&SynthTracker::set_sample);
 
 	register_method("set_volume",&SynthTracker::set_volume);
 	register_method("set_attack_rate",&SynthTracker::set_attack_rate);

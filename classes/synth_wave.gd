@@ -3,7 +3,16 @@ class_name SynthWave
 
 const CHUNK_ID:String="sYNW"
 
+var size_po2:int=8 setget set_size_po2
 var components:Array=[]
+
+func _init()->void:
+	resize_data(1<<size_po2)
+
+func set_size_po2(s:int)->void:
+	size_po2=int(clamp(s,4.0,16.0))
+	size=1<<size_po2
+	resize_data(size)
 
 func calculate()->void:
 	var buf_size:int=data.size()
@@ -17,6 +26,7 @@ func calculate()->void:
 
 func duplicate()->Waveform:
 	var nw:SynthWave=.duplicate() as SynthWave
+	nw.size_po2=size_po2
 	nw.components=[]
 	for c in components:
 		nw.components.append(c.duplicate())

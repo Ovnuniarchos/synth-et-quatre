@@ -1,13 +1,12 @@
 extends Container
 
+enum {WT_NONE,WT_SYNTH,WT_SAMPLE}
+
 var sam:Array=Array()
+var wave:WeakRef=null
 
-func _ready():
+func _ready()->void:
 	_on_wave_calculated(-1)
-
-func change_sample(buf:Array)->void:
-	send_sample(buf,$Control/Frequency.value)
-	$Oscilloscope.plot_mono_buffer(buf)
 
 func _on_mouse_entered()->void:
 	$Control.modulate.a=1.0
@@ -26,10 +25,25 @@ func _on_Play_toggled(pressed:bool)->void:
 		$Player.stop()
 
 func _on_wave_deleted(_wave:WeakRef)->void:
+	wave=null
 	$Control/Play.pressed=false
 	_on_Play_toggled(false)
 
 #
+
+func get_wave()->Waveform:
+	return null if wave==null else wave.get_ref()
+
+func change_sample(w:Waveform)->void:
+	var d:Array
+	if w==null:
+		d=[0.0]
+		wave=null
+	else:
+		d=w.data
+		wave=weakref(w)
+	send_sample(d,$Control/Frequency.value)
+	$Oscilloscope.plot_mono_buffer(d)
 
 func send_sample(sample:Array,freq:float)->void:
 	var std:AudioStreamSample=$Player.stream as AudioStreamSample
@@ -37,19 +51,36 @@ func send_sample(sample:Array,freq:float)->void:
 	for i in range(0,sample.size()):
 		sam[i]=sample[i]*127.0
 	std.data=PoolByteArray(sam)
-	std.loop_end=sample.size()-1
+	var w:Waveform=get_wave()
+	if w is SynthWave:
+		std.loop_begin=0
+		std.loop_end=std.data.size()-1
+		std.loop_mode=AudioStreamSample.LOOP_FORWARD
+	elif w is SampleWave:
+		std.loop_mode=AudioStreamSample.LOOP_FORWARD
+		if w.loop_start>w.loop_end:
+			std.loop_begin=w.loop_end
+			std.loop_end=w.loop_start
+		elif w.loop_start<w.loop_end:
+			std.loop_begin=w.loop_start
+			std.loop_end=w.loop_end
+		else:
+			std.loop_begin=0
+			std.loop_end=std.data.size()-1
+			std.loop_mode=AudioStreamSample.LOOP_DISABLED
 	change_frequency(freq)
 
 func change_frequency(freq:float)->void:
 	var std:AudioStreamSample=$Player.stream as AudioStreamSample
 	if std.data.size()==0:
 		return
-	std.mix_rate=std.data.size()*freq
+	var w:Waveform=get_wave()
+	if w is SynthWave:
+		std.mix_rate=std.data.size()*freq
+	elif w is SampleWave:
+		std.mix_rate=w.record_freq*(freq/w.sample_freq)
 
 #
 
 func _on_wave_calculated(wave_ix:int)->void:
-	if wave_ix==-1:
-		change_sample([0.0])
-	else:
-		change_sample(GLOBALS.song.wave_list[wave_ix].data)
+	change_sample(GLOBALS.song.get_wave(wave_ix))

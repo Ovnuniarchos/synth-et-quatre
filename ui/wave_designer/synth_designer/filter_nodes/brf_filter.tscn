@@ -1,14 +1,14 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://ui/wave_designer/filter_nodes/lpf_filter.gd" type="Script" id=1]
-[ext_resource path="res://ui/wave_designer/wave_nodes/title_bar.tscn" type="PackedScene" id=2]
+[ext_resource path="res://ui/wave_designer/synth_designer/wave_nodes/title_bar.tscn" type="PackedScene" id=1]
+[ext_resource path="res://ui/wave_designer/synth_designer/filter_nodes/brf_filter.gd" type="Script" id=2]
 
-[node name="LPFFilter" type="PanelContainer"]
+[node name="BRFFilter" type="PanelContainer"]
 margin_right = 170.0
 margin_bottom = 394.0
 size_flags_horizontal = 9
 size_flags_vertical = 9
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -19,9 +19,9 @@ margin_top = 7.0
 margin_right = 163.0
 margin_bottom = 387.0
 
-[node name="Title" parent="VBC" instance=ExtResource( 2 )]
+[node name="Title" parent="VBC" instance=ExtResource( 1 )]
 margin_right = 156.0
-title = "LPF"
+title = "BRF"
 index = 0
 
 [node name="Params" type="GridContainer" parent="VBC"]
@@ -34,15 +34,15 @@ custom_constants/vseparation = 2
 custom_constants/hseparation = 8
 columns = 2
 
-[node name="LabelCutoff" type="Label" parent="VBC/Params"]
+[node name="LabelCutoffLo" type="Label" parent="VBC/Params"]
 margin_top = 5.0
-margin_right = 49.0
+margin_right = 56.0
 margin_bottom = 19.0
-text = "Cutoff"
+text = "Cutoff Lo"
 
-[node name="Cutoff" type="SpinBox" parent="VBC/Params"]
-margin_left = 57.0
-margin_right = 131.0
+[node name="CutoffLo" type="SpinBox" parent="VBC/Params"]
+margin_left = 64.0
+margin_right = 138.0
 margin_bottom = 24.0
 focus_mode = 2
 min_value = 1.0
@@ -53,17 +53,37 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LabelTaps" type="Label" parent="VBC/Params"]
+[node name="LabelCutoffHi" type="Label" parent="VBC/Params"]
 margin_top = 31.0
-margin_right = 49.0
+margin_right = 56.0
 margin_bottom = 45.0
+text = "Cutoff Hi"
+
+[node name="CutoffHi" type="SpinBox" parent="VBC/Params"]
+margin_left = 64.0
+margin_top = 26.0
+margin_right = 138.0
+margin_bottom = 50.0
+focus_mode = 2
+min_value = 1.0
+max_value = 1000.0
+step = 0.1
+value = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabelTaps" type="Label" parent="VBC/Params"]
+margin_top = 57.0
+margin_right = 56.0
+margin_bottom = 71.0
 text = "Taps"
 
 [node name="Taps" type="SpinBox" parent="VBC/Params"]
-margin_left = 57.0
-margin_top = 26.0
-margin_right = 131.0
-margin_bottom = 50.0
+margin_left = 64.0
+margin_top = 52.0
+margin_right = 138.0
+margin_bottom = 76.0
 focus_mode = 2
 min_value = 1.0
 max_value = 128.0
@@ -73,19 +93,19 @@ __meta__ = {
 }
 
 [node name="LabelVol" type="Label" parent="VBC/Params"]
-margin_top = 57.0
-margin_right = 49.0
-margin_bottom = 71.0
+margin_top = 83.0
+margin_right = 56.0
+margin_bottom = 97.0
 text = "Volume"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Vol" type="SpinBox" parent="VBC/Params"]
-margin_left = 57.0
-margin_top = 52.0
-margin_right = 131.0
-margin_bottom = 76.0
+margin_left = 64.0
+margin_top = 78.0
+margin_right = 138.0
+margin_bottom = 102.0
 focus_mode = 2
 min_value = -100.0
 __meta__ = {
@@ -93,75 +113,76 @@ __meta__ = {
 }
 
 [node name="ReferenceRect" type="ReferenceRect" parent="VBC/Params"]
-margin_top = 78.0
-margin_right = 49.0
-margin_bottom = 102.0
+margin_top = 104.0
+margin_right = 56.0
+margin_bottom = 128.0
 rect_min_size = Vector2( 0, 24 )
 
 [node name="ReferenceRect2" type="ReferenceRect" parent="VBC/Params"]
-margin_left = 57.0
-margin_top = 78.0
-margin_right = 131.0
-margin_bottom = 102.0
+margin_left = 64.0
+margin_top = 104.0
+margin_right = 138.0
+margin_bottom = 128.0
 rect_min_size = Vector2( 0, 24 )
 
 [node name="LabelOutput" type="Label" parent="VBC/Params"]
-margin_top = 107.0
-margin_right = 49.0
-margin_bottom = 121.0
+margin_top = 133.0
+margin_right = 56.0
+margin_bottom = 147.0
 text = "Output"
 
 [node name="Output" type="OptionButton" parent="VBC/Params"]
-margin_left = 57.0
-margin_top = 104.0
-margin_right = 131.0
-margin_bottom = 124.0
+margin_left = 64.0
+margin_top = 130.0
+margin_right = 138.0
+margin_bottom = 150.0
 text = "Off"
 items = [ "Off", null, false, 0, null, "Replace", null, false, 1, null, "Add", null, false, 2, null, "AM", null, false, 4, null, "XM", null, false, 5, null ]
 selected = 0
 
 [node name="LabelFrom" type="Label" parent="VBC/Params"]
-margin_top = 131.0
-margin_right = 49.0
-margin_bottom = 145.0
+margin_top = 157.0
+margin_right = 56.0
+margin_bottom = 171.0
 text = "From"
 
 [node name="From" type="SpinBox" parent="VBC/Params"]
-margin_left = 57.0
-margin_top = 126.0
-margin_right = 131.0
-margin_bottom = 150.0
+margin_left = 64.0
+margin_top = 152.0
+margin_right = 138.0
+margin_bottom = 176.0
 min_value = -1.0
 
 [node name="LabelAM" type="Label" parent="VBC/Params"]
-margin_top = 157.0
-margin_right = 49.0
-margin_bottom = 171.0
+margin_top = 183.0
+margin_right = 56.0
+margin_bottom = 197.0
 text = "AM"
 
 [node name="AM" type="SpinBox" parent="VBC/Params"]
-margin_left = 57.0
-margin_top = 152.0
-margin_right = 131.0
-margin_bottom = 176.0
+margin_left = 64.0
+margin_top = 178.0
+margin_right = 138.0
+margin_bottom = 202.0
 min_value = -100.0
 
 [node name="LabelXM" type="Label" parent="VBC/Params"]
-margin_top = 183.0
-margin_right = 49.0
-margin_bottom = 197.0
+margin_top = 209.0
+margin_right = 56.0
+margin_bottom = 223.0
 text = "XM"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="XM" type="SpinBox" parent="VBC/Params"]
-margin_left = 57.0
-margin_top = 178.0
-margin_right = 131.0
-margin_bottom = 202.0
+margin_left = 64.0
+margin_top = 204.0
+margin_right = 138.0
+margin_bottom = 228.0
 min_value = -100.0
-[connection signal="value_changed" from="VBC/Params/Cutoff" to="." method="_on_Cutoff_value_changed"]
+[connection signal="value_changed" from="VBC/Params/CutoffLo" to="." method="_on_CutoffLo_value_changed"]
+[connection signal="value_changed" from="VBC/Params/CutoffHi" to="." method="_on_CutoffHi_value_changed"]
 [connection signal="value_changed" from="VBC/Params/Taps" to="." method="_on_Taps_value_changed"]
 [connection signal="value_changed" from="VBC/Params/Vol" to="." method="_on_Vol_value_changed"]
 [connection signal="item_selected" from="VBC/Params/Output" to="." method="_on_Output_item_selected"]

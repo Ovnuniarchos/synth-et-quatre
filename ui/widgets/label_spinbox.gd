@@ -23,9 +23,9 @@ func set_label(t:String)->void:
 		$Label.text=t
 
 func set_value(v:float)->void:
-	if $Value:
-		$Value.value=v
 	value=stepify(clamp(v,min_value,max_value),step)
+	if $Value:
+		$Value.value=value
 	property_list_changed_notify()
 
 func set_min_value(v:float)->void:

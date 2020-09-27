@@ -8,6 +8,7 @@ var curr_wave_ix:int=-1
 
 func _ready()->void:
 	GLOBALS.connect("song_changed",self,"_on_song_changed")
+	$Buttons/Add.get_popup().connect("id_pressed",self,"_on_Add_id_pressed")
 	_on_song_changed()
 
 func _on_song_changed()->void:
@@ -20,7 +21,7 @@ func update_ui()->void:
 	var wl:ItemList=$Waves
 	wl.clear()
 	for w in GLOBALS.song.wave_list:
-		wl.add_item(w.name,null,w is SynthWave)
+		wl.add_item(w.name,null,w is Waveform)
 	var sz:int=GLOBALS.song.wave_list.size()
 	if curr_wave_ix<sz:
 		wl.call_deferred("select",curr_wave_ix)
@@ -66,13 +67,17 @@ func _on_Copy_pressed()->void:
 		emit_signal("wave_selected",cnt)
 	set_buttons()
 
-func _on_Add_pressed()->void:
+func _on_Add_id_pressed(id:int)->void:
 	if GLOBALS.song.can_add_wave():
 		var cnt:int=$Waves.get_item_count()
-		var nn:String="Wave %02X"%[cnt]
+		var nn:String=("Wave %02X" if id==0 else "Sample %02X")%[cnt]
 		curr_wave_ix=cnt
 		$Waves.add_item(nn)
-		var nw:Waveform=SynthWave.new()
+		var nw:Waveform
+		if id==0:
+			nw=SynthWave.new()
+		else:
+			nw=SampleWave.new()
 		nw.name=nn
 		GLOBALS.song.add_wave(nw)
 		GLOBALS.song.send_wave(nw,SYNTH)

@@ -17,8 +17,17 @@ margin_right = 34.0
 margin_bottom = 19.0
 text = "Label"
 
-[node name="Value" type="SpinBox" parent="."]
+[node name="S" type="ReferenceRect" parent="."]
 margin_left = 42.0
-margin_right = 116.0
+margin_right = 76.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Value" type="SpinBox" parent="."]
+margin_left = 84.0
+margin_right = 158.0
 margin_bottom = 24.0
 [connection signal="value_changed" from="Value" to="." method="_on_value_changed"]

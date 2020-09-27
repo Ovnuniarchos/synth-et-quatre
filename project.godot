@@ -144,6 +144,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://classes/wave_components/rectangle_wave.gd"
 }, {
+"base": "Waveform",
+"class": "SampleWave",
+"language": "GDScript",
+"path": "res://classes/sample_wave.gd"
+}, {
 "base": "WaveComponent",
 "class": "SawWave",
 "language": "GDScript",
@@ -197,12 +202,12 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "WaveController",
 "language": "GDScript",
-"path": "res://ui/wave_designer/wave_nodes/wave_controller.gd"
+"path": "res://ui/wave_designer/synth_designer/wave_nodes/wave_controller.gd"
 }, {
 "base": "File",
 "class": "WaveFile",
 "language": "GDScript",
-"path": "res://classes/wave_file.gd"
+"path": "res://classes/io_modules/wave_file.gd"
 }, {
 "base": "Reference",
 "class": "Waveform",
@@ -237,6 +242,7 @@ _global_script_class_icons={
 "PlayButton": "",
 "QuantizeFilter": "",
 "RectangleWave": "",
+"SampleWave": "",
 "SawWave": "",
 "Selection": "",
 "SineWave": "",

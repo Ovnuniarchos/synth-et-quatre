@@ -97,6 +97,77 @@ func end_file()->int:
 		return err
 	return OK
 
+#
+
+func obj_load(path:String)->Dictionary:
+	var err:int=open(path,READ)
+	if err!=OK:
+		return {"error":err}
+	var wave:Dictionary=do_load()
+	close()
+	return wave
+	
+
+func do_load()->Dictionary:
+	if get_buffer(4).get_string_from_ascii()!="RIFF":
+		return {"error":ERR_FILE_UNRECOGNIZED}
+	get_32()
+	if get_buffer(4).get_string_from_ascii()!="WAVE":
+		return {"error":ERR_FILE_UNRECOGNIZED}
+	var chunk_id:String
+	var size:int
+	var pos:int
+	var mode:int
+	var channels:int
+	var frequency:int
+	var bits_sample:int
+	var format:bool=false
+	var data:Array=[]
+	while !eof_reached():
+		chunk_id=get_buffer(4).get_string_from_ascii()
+		size=get_32()
+		pos=get_position()
+		if chunk_id=="fmt ":
+			mode=get_16()
+			channels=get_16()
+			frequency=get_32()
+			get_32()
+			get_16()
+			bits_sample=get_16()
+			if (mode!=1 and mode !=3) or (channels<1 and channels>2)\
+					or !bits_sample in [8,16,24,32]:
+				return {"error":0}
+			format=true
+		elif chunk_id=="data":
+			if !format:
+				return {"error":0}
+			size/=channels*(bits_sample>>3)
+			while size>0:
+				size-=1
+				if eof_reached():
+					break
+				if channels==1:
+					data.append(get_sample(bits_sample))
+				else:
+					data.append((get_sample(bits_sample)+get_sample(bits_sample))/2)
+		else:
+			seek(pos+size)
+	return {"error":OK,"bits":bits_sample,"freq":frequency,"data":data}
+
+func get_sample(bits_sample:int):
+	var t:int
+	if bits_sample==8:
+		return get_8()-0x80
+	elif bits_sample==16:
+		t=get_16()
+		return t if t<0x8000 else t-0x10000
+	elif bits_sample==32:
+		return get_float()
+	t=(get_8()<<16)|get_16()
+	return t if t<0x800000 else t-0x1000000
+
+#
+
 func get_error_message(err:int)->String:
 	if err in ERR_MESSAGES:
 		return ERR_MESSAGES[err]%[get_path(),err]

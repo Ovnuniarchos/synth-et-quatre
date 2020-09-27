@@ -52,7 +52,7 @@ func _on_Size_changed(value:float)->void:
 
 func set_size_bytes(size:int)->void:
 	if size>0:
-		$Info/HBC/LabelSizeSamples.text="%d samples"%[1<<size]
+		$Info/HBC/LabelSizeSamples.text="%d samples"%[size]
 	else:
 		$Info/HBC/LabelSizeSamples.text="-- samples"
 
@@ -70,14 +70,13 @@ func _on_wave_selected(wave:int)->void:
 		$Info/HBC/Name.text=w.name
 		$Info/HBC/Size.editable=true
 		$Info/HBC/Size.value=w.size_po2
-		set_size_bytes(w.size_po2)
+		set_size_bytes(w.size)
 		$Designer/SC.visible=true
 	if components!=null:
 		regen_editor_nodes(w)
 	calculate()
 
-# warning-ignore:unused_argument
-func _on_wave_deleted(wave:int)->void:
+func _on_wave_deleted(_wave:int)->void:
 	curr_wave_ix=-1
 	$Info/HBC/Name.editable=false
 	$Info/HBC/Name.text=""
@@ -88,13 +87,13 @@ func _on_wave_deleted(wave:int)->void:
 
 #
 
-func regen_editor_nodes(wave:Waveform)->void:
+func regen_editor_nodes(wave:SynthWave)->void:
 	for n in components.get_children():
 		if n is WaveController:
 			n.queue_free()
-	if !(wave is SynthWave):
+	if wave==null:
 		return
-	for wc in (wave as SynthWave).components:
+	for wc in wave.components:
 		if wc is SineWave:
 			insert_component(WAVE_TYPES.SIN,wave,wc)
 		elif wc is TriangleWave:

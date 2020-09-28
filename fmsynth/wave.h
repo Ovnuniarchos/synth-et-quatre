@@ -41,6 +41,7 @@ struct UserWave{
 class Wave{
 private:
 	const FixedPoint NOISE_BIT=FP_ONE>>8;
+	const int64_t SAMPLE_PM_FACTOR=16; // Ad-hoc value
 	enum{RECTANGLE,SAW,TRIANGLE,NOISE,USER};
 
 	int mode=RECTANGLE;
@@ -80,7 +81,7 @@ public:
 			case USER:
 				if(wave==NULL || (*wave)==NULL) return 0L;
 				if((*wave)->sample){
-					phi=(fix_loop(phi,pm_in)>>FP_INT_SHIFT)&FP_DEC_MASK;
+					phi=(fix_loop(phi,pm_in*SAMPLE_PM_FACTOR)>>FP_INT_SHIFT)&FP_DEC_MASK;
 					return (*wave)->wave[phi];
 				}
 				phi=(phi+pm_in)&FP_DEC_MASK;

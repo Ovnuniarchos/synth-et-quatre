@@ -4,8 +4,6 @@ extends Control
 FIXME
 	Export sometimes crashes. (Buffer freed before final write?)
 TODO:
-	Adjust LFO frequency control
-	Adjust modulation over samples
 	Clear wave editor on song changes
 	MIDI input
 		Flag?: MIDI Pitch bend

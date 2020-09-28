@@ -111,7 +111,6 @@ public:
 
 	_ALWAYS_INLINE_ void set_delta(){
 		delta=(frequency*freq_mul*detune*wave.get_recorded_freq()*FP_ONE)/(freq_div*mix_rate*wave.get_sample_freq());
-		// delta=(frequency*freq_mul*detune*FP_ONE)/(freq_div*mix_rate);
 	}
 
 	void set_mix_rate(float mix_rate);

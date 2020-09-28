@@ -103,6 +103,10 @@ public:
 		wave=user_wave;
 	};
 
+	_ALWAYS_INLINE_ int64_t get_size_mask(){
+		return is_sampled()?(*wave)->size_mask:0L;
+	}
+
 	_ALWAYS_INLINE_ float get_recorded_freq(){
 		return is_sampled()?(*wave)->recorded_freq:1.0;
 	}

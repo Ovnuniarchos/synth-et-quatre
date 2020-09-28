@@ -16,7 +16,7 @@ private:
 	bool mute_voice[MAX_VOICES];
 
 	Wave lfos[MAX_LFOS];
-	float lfo_mix_rates[MAX_LFOS]={DEFAULT_MIX_RATE,DEFAULT_MIX_RATE,DEFAULT_MIX_RATE,DEFAULT_MIX_RATE};
+	float lfo_mix_rate=DEFAULT_MIX_RATE;
 	float lfo_freqs[MAX_LFOS]={1.0,1.0,1.0,1.0};
 	FixedPoint lfo_deltas[MAX_LFOS]={0L,0L,0L,0L};
 	FixedPoint lfo_phis[MAX_LFOS]={0L,0L,0L,0L};
@@ -85,6 +85,7 @@ public:
 	void set_volume_right(int voice,int volume);
 
 	void set_lfo_freq(int lfo,int freq8_8);
+	void set_lfo_delta(int lfo);
 	void set_lfo_wave_mode(int lfo,int mode);
 	void set_lfo_duty_cycle(int lfo,FixedPoint duty_cycle);
 	void set_lfo_phase(int lfo,FixedPoint phi);

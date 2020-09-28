@@ -15,10 +15,7 @@ void FmSynth::set_mix_rate(float mix_rate){
 	for(int i=0;i<MAX_VOICES;i++){
 		voices[i].set_mix_rate(mix_rate);
 	}
-	lfo_mix_rates[0]=mix_rate;
-	lfo_mix_rates[1]=mix_rate;
-	lfo_mix_rates[2]=mix_rate;
-	lfo_mix_rates[3]=mix_rate;
+	lfo_mix_rate=mix_rate;
 	set_lfo_freq(0,lfo_freqs[0]);
 	set_lfo_freq(1,lfo_freqs[1]);
 	set_lfo_freq(2,lfo_freqs[2]);
@@ -204,7 +201,11 @@ void FmSynth::set_lfo_freq(int lfo,int freq8_8){
 	lfo=clamp(lfo,0,LAST_LFO);
 	float frequency=clamp(freq8_8,0,0xFFFF)/256.0;
 	lfo_freqs[lfo]=frequency;
-	lfo_deltas[lfo]=(frequency*FP_ONE)/lfo_mix_rates[lfo];
+	set_lfo_delta(lfo);
+}
+
+void FmSynth::set_lfo_delta(int lfo){
+	lfo_deltas[lfo]=(lfo_freqs[lfo]*lfos[lfo].get_recorded_freq()*FP_ONE)/(lfo_mix_rate*lfos[lfo].get_sample_freq());
 }
 
 void FmSynth::set_lfo_wave_mode(int lfo,int mode){
@@ -214,6 +215,7 @@ void FmSynth::set_lfo_wave_mode(int lfo,int mode){
 		lfos[lfo].set_wave(&waves[mode-4]);
 	}
 	lfos[lfo].set_mode(mode);
+	set_lfo_delta(lfo);
 }
 
 void FmSynth::set_lfo_duty_cycle(int lfo,FixedPoint duty_cycle){
@@ -223,7 +225,12 @@ void FmSynth::set_lfo_duty_cycle(int lfo,FixedPoint duty_cycle){
 
 void FmSynth::set_lfo_phase(int lfo,FixedPoint phi){
 	lfo=clamp(lfo,0,LAST_LFO);
-	lfo_phis[lfo]=phi&FP_DEC_MASK;
+	phi&=FP_DEC_MASK;
+	if(lfos[lfo].is_sampled()){
+		lfo_phis[lfo]=phi*lfos[lfo].get_size_mask();
+	}else{
+		lfo_phis[lfo]=phi;
+	}
 }
 
 

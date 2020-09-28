@@ -4,7 +4,6 @@ extends Control
 FIXME
 	Export sometimes crashes. (Buffer freed before final write?)
 TODO:
-	Clear wave editor on song changes
 	MIDI input
 		Flag?: MIDI Pitch bend
 		Flag?: MIDI modulation

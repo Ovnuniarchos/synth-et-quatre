@@ -507,9 +507,9 @@ func process_channel_list(inf:ChunkedFile,song:Song)->void:
 	for i in range(nc):
 		inf.get_ascii(4) # Unused
 		var nfx:int=inf.get_8()
-		pattern_list[i]=[]
-		orders[0][i]=0
-		num_fxs[i]=nfx
+		song.pattern_list[i]=[]
+		song.orders[0][i]=0
+		song.num_fxs[i]=nfx
 
 #
 

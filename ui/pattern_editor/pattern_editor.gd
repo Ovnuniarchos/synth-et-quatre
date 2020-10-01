@@ -273,13 +273,13 @@ func process_keyboard(ev:InputEventKey)->bool:
 			if ev.pressed:
 				selection.cut(collect_patterns(),curr_order,curr_channel)
 			return true
-		if fscan in GKBD.VALUE_UP:
+		if ev.scancode in GKBD.VALUE_UP:
 			if ev.pressed:
-				selection.add_values(curr_order,1)
+				selection.add_values(curr_order,1,ev.shift)
 			return true
-		if fscan in GKBD.VALUE_DOWN:
+		if ev.scancode in GKBD.VALUE_DOWN:
 			if ev.pressed:
-				selection.add_values(curr_order,-1)
+				selection.add_values(curr_order,-1,ev.shift)
 			return true
 	#
 	if ev.scancode==GKBD.INSERT:

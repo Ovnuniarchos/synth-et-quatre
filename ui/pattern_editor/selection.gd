@@ -151,19 +151,21 @@ func paste(song:Song,order:int,channel:int,row:int,column:int,mix:bool)->void:
 		channel+=1
 		chn+=1
 
-func add_values(order:int,delta:int)->void:
+func add_values(order:int,delta:int,fast:bool)->void:
 	var chan_col:Array=get_affected_cols()
 	var chan:int
 	var col:int
 	var oc:int=-1
 	var pat:Array
+	var delta_note:int=delta*(12 if fast else 1)
+	var delta_num:int=delta*(16 if fast else 1)
 	var d
 	for cc in chan_col:
 		chan=cc[0]
 		col=cc[1]
 		if chan!=oc:
 			oc=chan
-			pat=GLOBALS.song.pattern_list[chan][order].notes
+			pat=GLOBALS.song.get_order_pattern(order,chan).notes
 		if col==ATTRS.LG_MODE:
 			continue
 		for i in range(start_row,end_row+1):
@@ -172,15 +174,15 @@ func add_values(order:int,delta:int)->void:
 					and col!=ATTRS.FM3:
 				continue
 			if col==ATTRS.NOTE:
-				d=clamp(d+delta,0,143)
+				d=clamp(d+delta_note,0,143)
 			elif col==ATTRS.PAN:
-				d=clamp((d&63)+delta,0,63)|(d&192)
+				d=clamp((d&63)+delta_num,0,63)|(d&192)
 			elif col==ATTRS.FM0 or col==ATTRS.FM1 or col==ATTRS.FM2 or col==ATTRS.FM3:
 				if d==null:
 					d=0
 				d=(d+delta)&15
 			elif col==ATTRS.INSTR or col==ATTRS.VOL or col>=ATTRS.FX0:
-				d=clamp(d+delta,0,255)
+				d=clamp(d+delta_num,0,255)
 			pat[i][col]=d
 	oc=-1
 	for cc in chan_col:

@@ -4,6 +4,7 @@ extends Control
 FIXME
 	Export sometimes crashes. (Buffer freed before final write?)
 TODO:
+	Independent config values for every save/loadable item.
 	MIDI input
 		Flag?: MIDI Pitch bend
 		Flag?: MIDI modulation

@@ -79,9 +79,6 @@ margin_right = 1024.0
 margin_bottom = 600.0
 rect_min_size = Vector2( 0, 64 )
 bg_color = Color( 0, 0, 0.12549, 1 )
-left_color = Color( 1, 0, 0, 1 )
-right_color = Color( 0, 1, 0, 1 )
-dc_line = false
 dc_line_color = Color( 1, 1, 1, 0.25098 )
 
 [node name="Menu" parent="." instance=ExtResource( 10 )]
@@ -119,8 +116,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 accent_color = Color( 1, 2, 1, 1 )
-pressed_icon = "Stop"
-unpressed_icon = "Play"
 
 [node name="PlayTrack" type="Button" parent="PlayControls/PC/HBC"]
 margin_left = 44.0
@@ -133,7 +128,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 accent_color = Color( 1, 2, 1, 1 )
-pressed_icon = "Stop"
 unpressed_icon = "PlayTrack"
 [connection signal="tab_changed" from="Main/Tabs" to="." method="_on_tab_changed"]
 [connection signal="toggled" from="PlayControls/PC/HBC/Play" to="." method="_on_Play_toggled"]

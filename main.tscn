@@ -11,11 +11,11 @@
 [ext_resource path="res://ui/wave_designer/waveforms_tab.tscn" type="PackedScene" id=9]
 [ext_resource path="res://ui/menu/menu.tscn" type="PackedScene" id=10]
 
-[sub_resource type="AtlasTexture" id=1]
+[sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 2 )
 region = Rect2( 96, 112, 16, 16 )
 
-[sub_resource type="AtlasTexture" id=2]
+[sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 2 )
 region = Rect2( 64, 112, 16, 16 )
 
@@ -79,6 +79,9 @@ margin_right = 1024.0
 margin_bottom = 600.0
 rect_min_size = Vector2( 0, 64 )
 bg_color = Color( 0, 0, 0.12549, 1 )
+left_color = Color( 1, 0, 0, 1 )
+right_color = Color( 0, 1, 0, 1 )
+dc_line = false
 dc_line_color = Color( 1, 1, 1, 0.25098 )
 
 [node name="Menu" parent="." instance=ExtResource( 10 )]
@@ -110,7 +113,7 @@ custom_constants/separation = 16
 margin_right = 28.0
 margin_bottom = 23.0
 toggle_mode = true
-icon = SubResource( 1 )
+icon = SubResource( 4 )
 script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -124,7 +127,7 @@ margin_left = 44.0
 margin_right = 72.0
 margin_bottom = 23.0
 toggle_mode = true
-icon = SubResource( 2 )
+icon = SubResource( 5 )
 script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false

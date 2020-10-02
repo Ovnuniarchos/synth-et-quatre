@@ -57,6 +57,7 @@ func _on_channels_changed()->void:
 		nb.connect("cycled",self,"_on_Channel_cycled",[i])
 		channels.add_child(nb)
 		channels.add_child(sep.duplicate())
+	editor.set_bg_rows(song.pattern_length)
 
 func _on_editor_horizontal_scroll(offset:float)->void:
 	channels.margin_left=offset

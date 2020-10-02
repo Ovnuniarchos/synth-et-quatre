@@ -214,6 +214,10 @@ func process_keyboard(ev:InputEventKey)->bool:
 		if ev.pressed:
 			advance(1)
 			moved=true
+	if ev.scancode==GKBD.STEP:
+		if ev.pressed:
+			advance(step)
+			moved=true
 	if ev.scancode==GKBD.UP:
 		if ev.pressed:
 			advance(-1)
@@ -304,10 +308,6 @@ func process_keyboard(ev:InputEventKey)->bool:
 		return true
 	#
 	if curr_column==ATTRS.LG_MODE:
-		if ev.is_action_released("ui_select"):
-			if !ev.pressed:
-				put_legato(null)
-			return true
 		if ev.scancode==GKBD.CLEAR:
 			if ev.pressed:
 				put_legato(Pattern.LEGATO_MODE.OFF)
@@ -586,6 +586,9 @@ func set_note_cells(row:int,col:int,note)->void:
 		editor.set_cell(col+4,row,int(abs(oc))%10)
 
 #
+
+func set_bg_rows(rows:int)->void:
+	$BG.rows=rows
 
 func advance(f:int)->void:
 	set_row(curr_row+f)

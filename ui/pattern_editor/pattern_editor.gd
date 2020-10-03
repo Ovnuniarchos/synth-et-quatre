@@ -420,25 +420,30 @@ func put_cmd_val(val,add:int=0)->void:
 		if val==null:
 			return
 		val=(val+add)&0xff
+		if val==0 and curr_column in [ATTRS.FX0,ATTRS.FX1,ATTRS.FX2,ATTRS.FX3]:
+			val=null
 		song.set_note(curr_order,curr_channel,curr_row,curr_column,val)
 		digit_ix=0
 	elif val==null:
 		song.set_note(curr_order,curr_channel,curr_row,curr_column,null)
 		digit_ix=0
+		add=1
 	else:
 		var n_val=GLOBALS.nvl(song.get_note(curr_order,curr_channel,curr_row,curr_column),0)<<4
 		val=(n_val|(val&0xf))&0xff
-		song.set_note(curr_order,curr_channel,curr_row,curr_column,val)
 		digit_ix=(digit_ix+1)%2
+		if digit_ix==0 and val==0 and curr_column in [ATTRS.FX0,ATTRS.FX1,ATTRS.FX2,ATTRS.FX3]:
+			val=null
+		song.set_note(curr_order,curr_channel,curr_row,curr_column,val)
 	set_2_digits(curr_row,channel_col0[curr_channel]+COLS[curr_column],val)
 	if digit_ix==0 and add==0:
 		if CONFIG.get_value(CONFIG.EDIT_HORIZ_FX):
 			if curr_column<ATTRS.FX0+(GLOBALS.song.num_fxs[curr_channel]*3)-1:
 				set_column(curr_column+1)
-				return
 			elif !CONFIG.get_value(CONFIG.EDIT_FX_CRLF):
 				set_column(curr_column-2)
-		advance(step)
+		else:
+			advance(step)
 
 func put_legato(lm,add:int=1,adv:int=step)->void:
 	var song:Song=GLOBALS.song

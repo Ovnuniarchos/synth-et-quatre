@@ -72,6 +72,7 @@ func _on_order_changed(order:int,channel:int)->void:
 		GLOBALS.curr_order=order
 	if channel==-1:
 		update_list(order)
+	emit_signal("order_selected",order)
 
 func _on_button_gui_input(ev:InputEvent,order:int,channel:int,button:Button)->void:
 	ev=ev as InputEventMouseButton

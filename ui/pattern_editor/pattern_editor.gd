@@ -605,7 +605,8 @@ func set_row(r:int)->void:
 	sel_rect.position.y=dy
 
 func set_channel(c:int)->void:
-	curr_channel=0 if c<0 else 31 if c>31 else c
+	var nc:int=GLOBALS.song.num_channels-1
+	curr_channel=0 if c<0 else nc if c>nc else c
 	set_cursor()
 
 func set_column(c:int)->void:

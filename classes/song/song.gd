@@ -55,11 +55,11 @@ func _init(max_channels:int=MAX_CHANNELS,pat_length:int=DFL_PAT_LENGTH,fx_length
 	ticks_row=max(tks_row,1.0)
 	var nfx:int=clamp(fx_length,MIN_FX_LENGTH,MAX_FX_LENGTH)
 	pattern_list=[]
-	pattern_list.resize(num_channels)
+	pattern_list.resize(MAX_CHANNELS)
 	orders=[[]]
-	orders[0].resize(num_channels)
-	num_fxs.resize(num_channels)
-	for i in range(num_channels):
+	orders[0].resize(MAX_CHANNELS)
+	num_fxs.resize(MAX_CHANNELS)
+	for i in range(MAX_CHANNELS):
 		pattern_list[i]=[Pattern.new(MAX_PAT_LENGTH)]
 		orders[0][i]=0
 		num_fxs[i]=nfx
@@ -314,12 +314,12 @@ func add_order(copy_from:int=-1)->void:
 	if orders.size()>=255:
 		return
 	var no:Array=[]
-	no.resize(num_channels)
+	no.resize(MAX_CHANNELS)
 	if copy_from<0:
-		for i in range(num_channels):
+		for i in range(MAX_CHANNELS):
 			no[i]=0
 	else:
-		for i in range(num_channels):
+		for i in range(MAX_CHANNELS):
 			no[i]=orders[copy_from][i]
 	orders.append(no)
 	emit_signal("order_changed",orders.size()-1,-1)
@@ -438,7 +438,7 @@ func deserialize(inf:ChunkedFile)->Song:
 
 func process_pattern_list(inf:ChunkedFile,song:Song)->void:
 	var pat_l:Array=[]
-	pat_l.resize(song.num_channels)
+	pat_l.resize(MAX_CHANNELS)
 	for i in range(song.num_channels):
 		pat_l[i]=[]
 		pat_l[i].resize(inf.get_16())
@@ -446,6 +446,8 @@ func process_pattern_list(inf:ChunkedFile,song:Song)->void:
 			var n:Pattern=Pattern.new(MAX_PAT_LENGTH)
 			n.deserialize(inf,n,song.pattern_length)
 			pat_l[i][j]=n
+	for i in range(song.num_channels,MAX_CHANNELS):
+		pat_l[i]=[Pattern.new(MAX_PAT_LENGTH)]
 	song.pattern_list=pat_l
 
 func process_order_list(inf:ChunkedFile,song:Song)->void:
@@ -453,9 +455,11 @@ func process_order_list(inf:ChunkedFile,song:Song)->void:
 	ord_l.resize(inf.get_16())
 	for i in range(ord_l.size()):
 		ord_l[i]=[]
-		ord_l[i].resize(song.num_channels)
+		ord_l[i].resize(MAX_CHANNELS)
 		for j in range(song.num_channels):
 			ord_l[i][j]=inf.get_8()
+		for j in range(song.num_channels,MAX_CHANNELS):
+			ord_l[i][j]=0
 	song.orders=ord_l
 
 func process_instrument_list(inf:ChunkedFile,song:Song)->void:
@@ -501,9 +505,9 @@ func process_instrument_list(inf:ChunkedFile,song:Song)->void:
 func process_channel_list(inf:ChunkedFile,song:Song)->void:
 	var nc:int=inf.get_16()
 	song.num_channels=nc
-	song.pattern_list.resize(nc)
-	song.orders[0].resize(nc)
-	song.num_fxs.resize(nc)
+	song.pattern_list.resize(MAX_CHANNELS)
+	song.orders[0].resize(MAX_CHANNELS)
+	song.num_fxs.resize(MAX_CHANNELS)
 	for i in range(nc):
 		inf.get_ascii(4) # Unused
 		var nfx:int=inf.get_8()

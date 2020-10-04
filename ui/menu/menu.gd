@@ -68,18 +68,24 @@ func _on_New_pressed()->void:
 #
 
 func _on_file_selected(path:String)->void:
-	CONFIG.set_value(CONFIG.CURR_DIR,path.get_base_dir())
+	var cfg_dir:Array
 	match file_mode:
 		FILE_MODE.LOAD_SONG:
+			cfg_dir=CONFIG.CURR_SONG_DIR
 			IO_SONG.obj_load(path)
 		FILE_MODE.LOAD_INST:
+			cfg_dir=CONFIG.CURR_INST_DIR
 			IO_INSTRUMENT.obj_load(path)
 		FILE_MODE.SAVE_SONG:
+			cfg_dir=CONFIG.CURR_SONG_DIR
 			IO_SONG.obj_save(path)
 		FILE_MODE.SAVE_WAV:
+			cfg_dir=CONFIG.CURR_EXPORT_DIR
 			IO_WAV_EXPORT.obj_save(path)
 		FILE_MODE.SAVE_INST:
+			cfg_dir=CONFIG.CURR_INST_DIR
 			IO_INSTRUMENT.obj_save(path)
+	CONFIG.set_value(cfg_dir,path.get_base_dir())
 
 func _on_FileDialog_visibility_changed()->void:
 	if $FileDialog.visible:
@@ -100,7 +106,7 @@ func _on_Load_id_pressed(id:int)->void:
 
 func load_song()->void:
 	file_mode=FILE_MODE.LOAD_SONG
-	$FileDialog.current_dir=CONFIG.get_value(CONFIG.CURR_DIR)
+	$FileDialog.current_dir=CONFIG.get_value(CONFIG.CURR_SONG_DIR)
 	$FileDialog.window_title="Load Song"
 	$FileDialog.mode=FileDialog.MODE_OPEN_FILE
 	$FileDialog.filters=FILES_SE4
@@ -108,7 +114,7 @@ func load_song()->void:
 
 func load_instrument()->void:
 	file_mode=FILE_MODE.LOAD_INST
-	$FileDialog.current_dir=CONFIG.get_value(CONFIG.CURR_DIR)
+	$FileDialog.current_dir=CONFIG.get_value(CONFIG.CURR_INST_DIR)
 	$FileDialog.window_title="Load Instrument"
 	$FileDialog.mode=FileDialog.MODE_OPEN_FILE
 	$FileDialog.filters=FILES_SI4
@@ -129,7 +135,7 @@ func _on_Save_id_pressed(id:int)->void:
 
 func save_song()->void:
 	file_mode=FILE_MODE.SAVE_SONG
-	$FileDialog.current_dir=CONFIG.get_value(CONFIG.CURR_DIR)
+	$FileDialog.current_dir=CONFIG.get_value(CONFIG.CURR_SONG_DIR)
 	$FileDialog.window_title="Save Song"
 	$FileDialog.mode=FileDialog.MODE_SAVE_FILE
 	$FileDialog.filters=FILES_SE4
@@ -137,7 +143,7 @@ func save_song()->void:
 
 func save_wave()->void:
 	file_mode=FILE_MODE.SAVE_WAV
-	$FileDialog.current_dir=CONFIG.get_value(CONFIG.CURR_DIR)
+	$FileDialog.current_dir=CONFIG.get_value(CONFIG.CURR_EXPORT_DIR)
 	$FileDialog.window_title="Export as Wave"
 	$FileDialog.mode=FileDialog.MODE_SAVE_FILE
 	$FileDialog.filters=FILES_WAV
@@ -145,7 +151,7 @@ func save_wave()->void:
 
 func save_instrument()->void:
 	file_mode=FILE_MODE.SAVE_INST
-	$FileDialog.current_dir=CONFIG.get_value(CONFIG.CURR_DIR)
+	$FileDialog.current_dir=CONFIG.get_value(CONFIG.CURR_INST_DIR)
 	$FileDialog.window_title="Save Instrument"
 	$FileDialog.mode=FileDialog.MODE_SAVE_FILE
 	$FileDialog.filters=FILES_SI4

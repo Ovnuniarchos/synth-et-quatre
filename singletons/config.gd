@@ -2,7 +2,9 @@ extends Node
 
 const TYPE_ENUM=TYPE_MAX
 const CFG_PATH="user://se4.ini"
-const CURR_DIR=["","current_dir","",TYPE_STRING]
+const CURR_SONG_DIR=["Files","current_song_dir","",TYPE_STRING]
+const CURR_INST_DIR=["Files","current_inst_dir","",TYPE_STRING]
+const CURR_EXPORT_DIR=["Files","current_export_dir","",TYPE_STRING]
 const AUDIO_SAMPLERATE=["Audio","sample_rate",48000,TYPE_INT,8000,192000,1]
 const AUDIO_BUFFERLENGTH=["Audio","buffer_length",TYPE_REAL,0.1,0.1,1,0.1,TYPE_REAL]
 const RECORD_SAMPLERATE=["Record","sample_rate",TYPE_INT,48000,8000,192000,1]
@@ -20,7 +22,7 @@ const EDIT_HORIZ_FX=["Editor","horizontal_fx_edit",false,TYPE_BOOL]
 const EDIT_FX_CRLF=["Editor","horizontal_cr_lf",false,TYPE_BOOL]
 
 const COPIES=[
-	CURR_DIR,
+	CURR_SONG_DIR,CURR_INST_DIR,CURR_EXPORT_DIR,
 	AUDIO_SAMPLERATE,AUDIO_BUFFERLENGTH,
 	RECORD_SAMPLERATE,RECORD_FPSAMPLES,RECORD_SAVEMUTED,
 	MIDI_NOTEOFF,MIDI_VELOCITYSRC,MIDI_VOLUME,MIDI_AFTERTOUCH,

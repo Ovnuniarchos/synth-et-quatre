@@ -173,7 +173,7 @@ func add_values(order:int,delta:int,fast:bool)->void:
 			if d==null and col!=ATTRS.FM0 and col!=ATTRS.FM1 and col!=ATTRS.FM2\
 					and col!=ATTRS.FM3:
 				continue
-			if col==ATTRS.NOTE:
+			if col==ATTRS.NOTE and d>=0:
 				d=clamp(d+delta_note,0,143)
 			elif col==ATTRS.PAN:
 				d=clamp((d&63)+delta_num,0,63)|(d&192)

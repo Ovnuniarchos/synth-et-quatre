@@ -462,7 +462,8 @@ func put_note(semitone,octave:int,instrument,add:int=0,adv:int=step)->void:
 	if add!=0:
 		note=song.get_note(curr_order,curr_channel,curr_row,ATTRS.NOTE)
 		if note!=null:
-			note=clamp(note+add,0,143)
+			if note!=KEYCUT and note!=KEYOFF:
+				note=clamp(note+add,0,143)
 		else:
 			note=null
 		instrument=song.get_note(curr_order,curr_channel,curr_row,ATTRS.INSTR)

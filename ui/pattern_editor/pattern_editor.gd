@@ -2,6 +2,7 @@ extends PanelContainer
 
 signal horizontal_scroll(offset)
 signal step_changed(step)
+signal velocity_changed(velocity)
 
 const ATTRS=Pattern.ATTRS
 
@@ -61,6 +62,8 @@ func _on_song_changed()->void:
 	set_column(0)
 	selection.active=false
 	_on_channels_changed()
+	emit_signal("step_changed",step)
+	emit_signal("velocity_changed",dflt_velocity)
 
 func _input(event:InputEvent)->void:
 	if !is_visible_in_tree() or FADER.active:

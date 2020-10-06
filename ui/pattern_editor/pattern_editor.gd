@@ -1,6 +1,7 @@
 extends PanelContainer
 
 signal horizontal_scroll(offset)
+signal step_changed(step)
 
 const ATTRS=Pattern.ATTRS
 
@@ -681,6 +682,7 @@ func _on_order_selected(order:int)->void:
 
 func _on_Info_step_changed(s:int)->void:
 	step=max(0.0,s)
+	emit_signal("step_changed",step)
 
 func _on_Info_velocity_changed(vel:int):
 	dflt_velocity=vel

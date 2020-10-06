@@ -22,3 +22,6 @@ func _on_Info_step_changed(step:int)->void:
 
 func _on_speed_changed()->void:
 	$Tempo.text="Tempo: %-3.2f rows/s"%[GLOBALS.song.ticks_second/float(GLOBALS.song.ticks_row)]
+
+func _on_step_changed(step:int)->void:
+	$Step.text="Step: %-3d"%[step]

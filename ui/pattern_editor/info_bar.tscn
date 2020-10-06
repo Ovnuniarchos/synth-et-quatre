@@ -1,0 +1,41 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://ui/pattern_editor/info_bar.gd" type="Script" id=1]
+
+[node name="InfoBar" type="HBoxContainer"]
+margin_right = 1024.0
+margin_bottom = 14.0
+custom_constants/separation = 16
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Octave" type="Label" parent="."]
+margin_right = 69.0
+margin_bottom = 14.0
+text = "Octave: 00"
+
+[node name="Step" type="Label" parent="."]
+margin_left = 85.0
+margin_right = 145.0
+margin_bottom = 14.0
+text = "Step: 000"
+
+[node name="Velocity" type="Label" parent="."]
+margin_left = 161.0
+margin_right = 244.0
+margin_bottom = 14.0
+text = "Velocity: 000"
+
+[node name="Tempo" type="Label" parent="."]
+margin_left = 260.0
+margin_right = 402.0
+margin_bottom = 14.0
+text = "Tempo: 000.00 rows/s"
+
+[node name="Instrument" type="Label" parent="."]
+margin_left = 418.0
+margin_right = 494.0
+margin_bottom = 14.0
+text = "Instrument:"

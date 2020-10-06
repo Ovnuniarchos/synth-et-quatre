@@ -1,7 +1,5 @@
 extends Node
 
-signal octave_changed(oct)
-
 const KEYBOARD=[
 	KEY_Z,KEY_S,KEY_X,KEY_D,KEY_C,KEY_V,KEY_G,KEY_B,KEY_H,KEY_N,KEY_J,KEY_M,
 	KEY_Q,KEY_2,KEY_W,KEY_3,KEY_E,KEY_R,KEY_5,KEY_T,KEY_6,KEY_Y,KEY_7,KEY_U
@@ -75,12 +73,10 @@ func handle_keys(event:InputEventKey)->bool:
 	if fscan in OCTAVE_UP:
 		if !event.pressed:
 			GLOBALS.curr_octave+=1
-			emit_signal("octave_changed",GLOBALS.curr_octave)
 		return true
 	if fscan in OCTAVE_DOWN:
 		if !event.pressed:
 			GLOBALS.curr_octave-=1
-			emit_signal("octave_changed",GLOBALS.curr_octave)
 		return true
 	return false
 

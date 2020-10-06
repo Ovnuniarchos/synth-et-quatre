@@ -4,8 +4,8 @@ signal step_changed(step)
 signal velocity_changed(velocity)
 
 func _ready()->void:
-	GKBD.connect("octave_changed",self,"_on_octave_changed")
 	GLOBALS.connect("song_changed",self,"_on_song_changed")
+	GLOBALS.connect("octave_changed",self,"_on_octave_changed")
 	_on_song_changed()
 	$SC/VBC/GC/Step.value=1
 

@@ -6,6 +6,7 @@ signal wave_list_changed
 signal instrument_list_changed
 signal channels_changed
 signal order_changed(order_ix,channel_ix)
+signal speed_changed
 signal error(message)
 
 
@@ -69,6 +70,7 @@ func _init(max_channels:int=MAX_CHANNELS,pat_length:int=DFL_PAT_LENGTH,fx_length
 	emit_signal("wave_list_changed")
 	emit_signal("instrument_list_changed")
 	emit_signal("channels_changed")
+	emit_signal("speed_changed")
 
 #
 
@@ -274,9 +276,11 @@ func set_pattern_length(l:int)->void:
 
 func set_ticks_second(ts:int)->void:
 	ticks_second=ts
+	emit_signal("speed_changed")
 
 func set_ticks_row(tr:int)->void:
 	ticks_row=tr
+	emit_signal("speed_changed")
 
 #
 

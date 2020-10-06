@@ -4,7 +4,7 @@ extends Control
 FIXME
 	Export sometimes crashes. (Buffer freed before final write?)
 	Selection start is never reset. When there is no sel. rectangle, there must not be any selection.
-	Velocity, rows/s, and instrument are not updated on info bar.
+	Velocity, step, and instrument are not updated on info bar.
 TODO:
 	Instrument up/down hotkeys.
 	Step up/down hotkeys.

@@ -509,6 +509,7 @@ func calculate_velocity(base:int,vel:int,vol:int)->int:
 	elif vel_mode==CONFIG.VELMODE_VELVOL:
 		return int(floor((vel*vol)/63.25))
 	return (base*vel*vol)/16129
+
 #
 
 func _on_channels_changed()->void:

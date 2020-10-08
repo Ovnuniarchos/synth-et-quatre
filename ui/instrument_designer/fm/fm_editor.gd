@@ -21,8 +21,7 @@ func _on_Name_changed(text:String)->void:
 	ci.name=text
 	emit_signal("instrument_name_changed",GLOBALS.curr_instrument,text)
 
-# warning-ignore:unused_argument
-func _on_instrument_selected(idx:int)->void:
+func _on_instrument_selected(_idx:int)->void:
 	update_instrument()
 
 func _on_instrument_changed():

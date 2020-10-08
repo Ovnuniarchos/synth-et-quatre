@@ -148,7 +148,7 @@ Array SynthTracker::generate(int size,float volume,Array cmds){
 				case CMD_KEYON_STA:
 					TRACE(TRACE_KEYON_STA,voice,op_mask,data_8);
 					synth.stop(voice,op_mask);
-					synth.key_on(voice,op_mask,data,false);
+					synth.key_on(voice,op_mask,data_8,false);
 					break;
 				case CMD_KEYOFF:
 					TRACE(TRACE_KEYOFF,voice,op_mask);

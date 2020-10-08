@@ -264,10 +264,6 @@ config/name="SynthEtQuatre"
 run/main_scene="res://main.tscn"
 config/icon="res://icon.png"
 
-[audio]
-
-default_bus_layout=""
-
 [autoload]
 
 GLOBALS="*res://singletons/globals.gd"

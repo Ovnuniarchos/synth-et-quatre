@@ -3,6 +3,8 @@ tool extends Panel
 var buffer:Array
 var points:PoolVector2Array=PoolVector2Array()
 var y_scale:float=1.0
+var draw_fft:bool=false
+var fft:AudioEffectSpectrumAnalyzerInstance
 
 export (Color) var bg_color=Color8(0,0,32) setget set_bg_color
 export (Color) var left_color=Color8(255,0,0) setget set_left_color
@@ -10,11 +12,16 @@ export (Color) var right_color=Color8(0,255,0) setget set_right_color
 export (bool) var dc_line=false setget set_dc_line
 export (Color) var dc_line_color=Color8(255,255,255,64) setget set_dc_line_color
 
+func _ready()->void:
+	fft=AudioServer.get_bus_effect_instance(0,0)
+
 func draw_music(buf:Array)->void:
+	draw_fft=true
 	buffer=buf
 	update()
 
 func draw_waveform(buf:Array)->void:
+	draw_fft=false
 	buffer=buf
 	update()
 
@@ -44,6 +51,22 @@ func _draw()->void:
 		for x in range(points.size()):
 			points[x]=Vector2(x,buffer[floor(i)].y)
 			i+=step
+		draw_polyline(points,right_color)
+	if draw_fft:
+		draw_set_transform(Vector2(0,rect_size.y),0.0,Vector2(1.0,-rect_size.y*y_scale))
+		var f:float=0.0
+		var v:float
+		step=CONFIG.get_value(CONFIG.AUDIO_SAMPLERATE)/(rect_size.x*4.0)
+		for x in range(points.size()):
+			v=fft.get_magnitude_for_frequency_range(f,f+step,0).x
+			points[x]=Vector2(x,clamp((60.0 + linear2db(v))/60.0,0.0,1.0))
+			f+=step
+		draw_polyline(points,left_color)
+		f=0.0
+		for x in range(points.size()):
+			v=fft.get_magnitude_for_frequency_range(f,f+step,0).y
+			points[x]=Vector2(x,clamp((60.0 + linear2db(v))/60.0,0.0,1.0))
+			f+=step
 		draw_polyline(points,right_color)
 
 func set_bg_color(c:Color)->void:

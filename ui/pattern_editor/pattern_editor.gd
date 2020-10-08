@@ -515,9 +515,10 @@ func _on_channels_changed()->void:
 	var song:Song=GLOBALS.song
 	channel_col0.resize(song.num_channels)
 	var col0:int=0
-	for i in range(0,song.num_channels):
+	for i in range(channel_col0.size()):
 		channel_col0[i]=col0
 		col0+=16+song.num_fxs[i]*6
+	channel_col0.append(col0)
 	update_tilemap()
 	$Selection.update()
 

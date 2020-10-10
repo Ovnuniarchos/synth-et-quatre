@@ -375,23 +375,23 @@ func process_keyboard(ev:InputEventKey)->bool:
 	if curr_column>ATTRS.NOTE:
 		if ev.scancode==GKBD.CLEAR:
 			if ev.pressed:
-				put_cmd_val(null)
+				put_cmd_or_val(null)
 			return true
 		if ev.scancode in GKBD.HEX_INPUT:
 			if !ev.pressed:
-				put_cmd_val(GKBD.HEX_INPUT.find(ev.scancode))
+				put_cmd_or_val(GKBD.HEX_INPUT.find(ev.scancode))
 			return true
 		if ev.scancode in GKBD.HEX_INPUT_KP:
 			if !ev.pressed:
-				put_cmd_val(GKBD.HEX_INPUT_KP.find(ev.scancode))
+				put_cmd_or_val(GKBD.HEX_INPUT_KP.find(ev.scancode))
 			return true
 		if ev.scancode in GKBD.VALUE_UP:
 			if ev.pressed:
-				put_cmd_val(0,16 if ev.shift else 1)
+				put_cmd_or_val(0,16 if ev.shift else 1)
 			return true
 		if ev.scancode in GKBD.VALUE_DOWN:
 			if ev.pressed:
-				put_cmd_val(0,-16 if ev.shift else -1)
+				put_cmd_or_val(0,-16 if ev.shift else -1)
 			return true
 	return false
 
@@ -422,15 +422,13 @@ func put_opmask(val:int,add:int=0)->void:
 			return
 	advance(step if add==0 else 0)
 
-func put_cmd_val(val,add:int=0)->void:
+func put_cmd_or_val(val,add:int=0)->void:
 	var song:Song=GLOBALS.song
 	if add!=0:
 		val=song.get_note(curr_order,curr_channel,curr_row,curr_column)
 		if val==null:
 			return
 		val=(val+add)&0xff
-		if val==0 and curr_column in [ATTRS.FX0,ATTRS.FX1,ATTRS.FX2,ATTRS.FX3]:
-			val=null
 		song.set_note(curr_order,curr_channel,curr_row,curr_column,val)
 		digit_ix=0
 	elif val==null:
@@ -441,8 +439,6 @@ func put_cmd_val(val,add:int=0)->void:
 		var n_val=GLOBALS.nvl(song.get_note(curr_order,curr_channel,curr_row,curr_column),0)<<4
 		val=(n_val|(val&0xf))&0xff
 		digit_ix=(digit_ix+1)%2
-		if digit_ix==0 and val==0 and curr_column in [ATTRS.FX0,ATTRS.FX1,ATTRS.FX2,ATTRS.FX3]:
-			val=null
 		song.set_note(curr_order,curr_channel,curr_row,curr_column,val)
 	set_2_digits(curr_row,channel_col0[curr_channel]+COLS[curr_column],val)
 	if digit_ix==0 and add==0:

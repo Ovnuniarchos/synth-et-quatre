@@ -115,7 +115,6 @@ func gen_commands(song:Song,mix_rate:float,buffer_size:int,cmds:Array)->bool:
 		#
 		curr_tick+=1
 		if song_delay<=0:
-			 # FUTURE: uniorder play
 			if goto_order!=-1:
 				curr_tick=0
 				curr_row=0

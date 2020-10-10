@@ -137,7 +137,7 @@ func process_tick_0(note:Array,song:Song,num_fxs:int)->int:
 	if note[ATTRS.NOTE]!=null:
 		if note[ATTRS.NOTE]>=0:
 			trigger=CONSTS.TRG_ON
-			set_frequency(note[ATTRS.NOTE]*100)
+			set_frequency(note[ATTRS.NOTE]*100,15)
 		elif note[ATTRS.NOTE]==-1:
 			trigger=CONSTS.TRG_OFF
 		else:
@@ -635,17 +635,15 @@ func set_fm_level(value:int,from:int,op_mask:int)->void:
 		op_mask>>=1
 	pm_level_dirty_any[from]=true
 
-func set_frequency(f,op_mask:int=-1)->void:
+func set_frequency(f,op_mask:int)->void:
 	if (op_mask&15)==0:
 		return
-	var set_now:bool=op_mask==-1
 	f=clamp(f,-200,13000)
 	for i in range(4):
 		if op_mask&1:
 			freqs_dirty[i]=true
 			fx_vals[CONSTS.FX_FRQ_PORTA][1+i]=f
-			if set_now:
-				pre_freqs[i]=f
+			pre_freqs[i]=f
 		op_mask>>=1
 	freqs_dirty_any=true
 

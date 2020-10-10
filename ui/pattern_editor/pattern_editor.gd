@@ -43,6 +43,7 @@ var selection:Selection=Selection.new()
 var dragging:bool=false
 var drag_start:Vector2
 var kbd_drag:bool=false
+var scroll_lock:bool=false
 
 
 func _ready()->void:
@@ -209,11 +210,15 @@ func process_keyboard(ev:InputEventKey)->bool:
 	if ev==null or !focused:
 		return false
 	var fscan:int=ev.get_scancode_with_modifiers()
-	#
+	# Movement
 	var moved:bool=false
 	var old_channel:int=curr_channel
 	var old_column:int=curr_column
 	var old_row:int=curr_row
+	if ev.scancode==GKBD.SCROLL_LOCK:
+		if !ev.pressed:
+			scroll_lock=not scroll_lock
+		return true
 	if ev.scancode==GKBD.DOWN:
 		if ev.pressed:
 			advance(1)
@@ -267,7 +272,7 @@ func process_keyboard(ev:InputEventKey)->bool:
 			kbd_drag=false
 			selection.active=false
 		return true
-	#
+	# Selection
 	if selection.active:
 		if ev.scancode==GKBD.CLEAR:
 			if !ev.pressed:
@@ -289,7 +294,7 @@ func process_keyboard(ev:InputEventKey)->bool:
 			if !ev.pressed:
 				selection.add_values(curr_order,-1,ev.shift)
 			return true
-	#
+	# Ins/del, C/P
 	if ev.scancode==GKBD.INSERT:
 		if ev.pressed:
 			GLOBALS.song.insert_row(curr_order,curr_channel,curr_row)
@@ -310,7 +315,7 @@ func process_keyboard(ev:InputEventKey)->bool:
 		if ev.pressed and curr_row>0:
 			copy_last()
 		return true
-	#
+	# Input
 	if curr_column==ATTRS.LG_MODE:
 		if ev.scancode==GKBD.CLEAR:
 			if ev.pressed:
@@ -524,6 +529,8 @@ func _on_channels_changed()->void:
 	$Selection.update()
 
 func _on_playing_pos_changed(order:int,row:int)->void:
+	if scroll_lock:
+		return
 	if order!=curr_order:
 		curr_order=order
 		update_tilemap()

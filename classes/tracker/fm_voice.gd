@@ -287,7 +287,7 @@ func get_fx_val(v,note,cmd:int,cmd_col:int)->int:
 	if v==null:
 		return fx_vals[cmd]
 	if cmd==CONSTS.FX_FRQ_SET:
-		fx_vals[cmd]=clamp(v*50,-200,13000)
+		fx_vals[cmd]=clamp(v*50,-200,13000)-200
 	elif cmd==CONSTS.FX_DET_SET:
 		fx_vals[cmd]=clamp((v-128)*100,-12000,12000)
 	elif cmd==CONSTS.FX_FRQ_ADJ or cmd==CONSTS.FX_FRQ_SLIDE\

@@ -4,6 +4,9 @@
 #include <cstddef>
 #include "common_defs.h"
 
+#define NOISE_SIZE 0x1000
+#define NOISE_MASK 0xfff
+
 struct UserWave{
 	FixedPointShort *wave=NULL;
 	bool sample=false;
@@ -40,44 +43,61 @@ struct UserWave{
 
 class Wave{
 private:
-	const FixedPoint NOISE_BIT=FP_ONE>>8;
 	const int64_t SAMPLE_PM_FACTOR=16; // Ad-hoc value
 	enum{RECTANGLE,SAW,TRIANGLE,NOISE,USER};
 
 	int mode=RECTANGLE;
 
 	int noise_gen=0;
-	FixedPoint noise_latch=0L;
-	FixedPoint noise_switch=NOISE_BIT;
 
 	FixedPoint duty_cycle=FP_HALF;
 
 	UserWave **wave=NULL;
 
+	uint8_t *noiz;
+
 public:
+	Wave(){
+		noiz=new uint8_t[NOISE_SIZE];
+		for(int i=0;i<NOISE_SIZE;i++){
+			int j=fast_rand()&NOISE_MASK;
+			noiz[i]=j&0xff;
+			noiz[j]=i&0xff;
+		}
+	}
+	~Wave(){
+		delete noiz;
+	}
 	_ALWAYS_INLINE_ FixedPoint fast_rand(){
 		noise_gen=((noise_gen&1)<<24)|(noise_gen>>1)^((~noise_gen&0x4000)>>4)^((~noise_gen&0x200)<<9);
 		return noise_gen;
 	};
 
 	_ALWAYS_INLINE_ FixedPoint generate(FixedPoint phi,FixedPoint pm_in){
-		phi=(mode==USER)?phi:(phi+pm_in)&FP_DEC_MASK;
 		FixedPoint tmp;
 		switch(mode){
 			case RECTANGLE:
+				phi=(phi+pm_in)&FP_DEC_MASK;
 				return phi>=duty_cycle?FP_ONE:-FP_ONE;
 			case SAW:
+				phi=(phi+pm_in)&FP_DEC_MASK;
 				tmp=(phi<<1)-FP_ONE;
 				return phi>=duty_cycle?tmp:-tmp;
 			case TRIANGLE:
+				phi=(phi+pm_in)&FP_DEC_MASK;
 				tmp=phi<FP_HALF?(FP_ONE-(phi<<2)):((phi-FP_HALF)<<2)-FP_ONE;
 				return phi>=duty_cycle?tmp:-tmp;
 			case NOISE:
-				if((phi&NOISE_BIT)==noise_switch){
-					noise_switch^=NOISE_BIT;
-					noise_latch=(fast_rand()&FP_NEARLY_TWO)-FP_ONE;
-				}
-				return noise_latch;
+				phi+=pm_in;
+				tmp=(noiz[(phi>>19)&NOISE_MASK]<<20)+
+					(noiz[(phi>>20)&NOISE_MASK]<<19)+
+					(noiz[(phi>>21)&NOISE_MASK]<<18)+
+					(noiz[(phi>>22)&NOISE_MASK]<<17)+
+					(noiz[(phi>>23)&NOISE_MASK]<<16)+
+					(noiz[(phi>>24)&NOISE_MASK]<<15)+
+					(noiz[(phi>>25)&NOISE_MASK]<<14)+
+					(noiz[(phi>>26)&NOISE_MASK]<<13);
+				return (tmp&FP_NEARLY_TWO)-FP_ONE;
 			case USER:
 				if(wave==NULL || (*wave)==NULL) return 0L;
 				if((*wave)->sample){

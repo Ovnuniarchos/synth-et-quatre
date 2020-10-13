@@ -169,9 +169,9 @@ func send_wave(wave:Waveform,synth:Synth,wave_ix:int=-1)->void:
 	if wave_ix==-1:
 		return
 	if wave is SynthWave:
-		synth.synth.set_wave(wave_ix+MIN_CUSTOM_WAVE,wave.data.duplicate())
+		synth.synth.define_wave(wave_ix+MIN_CUSTOM_WAVE,wave.data.duplicate())
 	elif wave is SampleWave:
-		synth.synth.set_sample(wave_ix+MIN_CUSTOM_WAVE,wave.loop_start,wave.loop_end,
+		synth.synth.define_sample(wave_ix+MIN_CUSTOM_WAVE,wave.loop_start,wave.loop_end,
 				wave.record_freq,wave.sample_freq,wave.data.duplicate())
 
 func sync_waves(synth:Synth,_from:int)->void:
@@ -180,14 +180,14 @@ func sync_waves(synth:Synth,_from:int)->void:
 	var wave_ix:int=0
 	for wave in wave_list:
 		if wave is SynthWave:
-			synth.synth.set_wave(wave_ix+MIN_CUSTOM_WAVE,wave.data.duplicate())
+			synth.synth.define_wave(wave_ix+MIN_CUSTOM_WAVE,wave.data.duplicate())
 		elif wave is SampleWave:
-			synth.synth.set_sample(wave_ix+MIN_CUSTOM_WAVE,wave.loop_start,wave.loop_end,
+			synth.synth.define_sample(wave_ix+MIN_CUSTOM_WAVE,wave.loop_start,wave.loop_end,
 					wave.record_freq,wave.sample_freq,wave.data.duplicate())
 		wave_ix+=1
 	var null_wave:Array=[]
 	while wave_ix<MAX_WAVES:
-		synth.synth.set_wave(wave_ix+MIN_CUSTOM_WAVE,null_wave)
+		synth.synth.define_wave(wave_ix+MIN_CUSTOM_WAVE,null_wave)
 		wave_ix+=1
 
 #

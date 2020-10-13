@@ -32,7 +32,7 @@ func reset(full:bool=false)->void:
 		synth.set_sustain_rate(i,15,0)
 		synth.set_release_rate(i,15,32)
 		synth.set_repeat(i,15,FmInstrument.REPEAT.OFF)
-		synth.set_wave_mode(i,15,FmInstrument.WAVE.TRIANGLE)
+		synth.set_wave(i,15,FmInstrument.WAVE.TRIANGLE)
 		synth.set_duty_cycle(i,15,0)
 		synth.set_freq_mul(i,15,0)
 		synth.set_freq_div(i,15,0)
@@ -66,7 +66,7 @@ func set_fm_instrument(channel:int,instr:FmInstrument)->void:
 		synth.set_sustain_rate(channel,op_mask,instr.sustains[i])
 		synth.set_release_rate(channel,op_mask,instr.releases[i])
 		synth.set_repeat(channel,op_mask,instr.repeats[i])
-		synth.set_wave_mode(channel,op_mask,instr.waveforms[i])
+		synth.set_wave(channel,op_mask,instr.waveforms[i])
 		synth.set_duty_cycle(channel,op_mask,instr.duty_cycles[i]<<16)
 		synth.set_freq_mul(channel,op_mask,instr.multipliers[i])
 		synth.set_freq_div(channel,op_mask,instr.dividers[i])
@@ -91,7 +91,7 @@ func set_lfo_duty_cycle(lfo_ix:int,duc:int)->void:
 	synth.set_lfo_duty_cycle(lfo_ix,duc<<16)
 
 func set_lfo_wave(lfo_ix:int,wave_ix:int)->void:
-	synth.set_lfo_wave_mode(lfo_ix,wave_ix)
+	synth.set_lfo_wave(lfo_ix,wave_ix)
 
 func set_lfo_frequency(lfo_ix:int,freq:float)->void:
 	synth.set_lfo_freq(lfo_ix,freq)

@@ -1,17 +1,33 @@
 #include "fm_synth.h"
 
-FmSynth::FmSynth(){
-	for(int i=0;i<MAX_WAVES;i++) waves[i]=NULL;
-	for(int i=0;i<MAX_VOICES;i++) mute_voice[i]=false;
+_ALWAYS_INLINE_ FixedPoint FmSynth::generate_lfo(int ix,FixedPoint phi,FixedPoint duty_cycle){
+	return waves[ix]==NULL?0L:waves[ix]->generate(phi,0L,duty_cycle);
 }
 
-FmSynth::~FmSynth(){
-	for(int i=0;i<MAX_WAVES;i++) delete waves[i];
-}
-
+void FmSynth::generate(FixedPoint &left,FixedPoint &right){
+	FixedPoint lfo_vals[MAX_LFOS]={
+		generate_lfo(0,lfo_phis[0],lfo_duties[0]),
+		generate_lfo(1,lfo_phis[1],lfo_duties[0]),
+		generate_lfo(2,lfo_phis[2],lfo_duties[0]),
+		generate_lfo(3,lfo_phis[3],lfo_duties[0])
+	};
+	lfo_phis[0]+=lfo_deltas[0];
+	lfo_phis[1]+=lfo_deltas[1];
+	lfo_phis[2]+=lfo_deltas[2];
+	lfo_phis[3]+=lfo_deltas[3];
+	left=right=0;
+	for(int i=0;i<MAX_VOICES;i++){
+		FixedPoint s=voices[i].generate(lfo_vals);
+		if(mute_voice[i]){
+			continue;
+		}
+		left+=(s*voices[i].get_volume_left())>>6;
+		right+=(s*voices[i].get_volume_right())>>6;
+	}
+};
 
 void FmSynth::set_mix_rate(float mix_rate){
-	mix_rate=mix_rate<1.0?1.0:mix_rate;
+	mix_rate=max(mix_rate,1.0f);
 	for(int i=0;i<MAX_VOICES;i++){
 		voices[i].set_mix_rate(mix_rate);
 	}
@@ -39,12 +55,9 @@ void FmSynth::set_detune(int voice,int op_mask,int millis){
 }
 
 
-void FmSynth::set_wave_mode(int voice,int op_mask,int mode){
-	mode&=255;
-	if(mode>=4){
-		voices[voice&31].set_wave(op_mask,&waves[mode-4]);
-	}
-	voices[voice&31].set_wave_mode(op_mask,mode);
+void FmSynth::set_wave(int voice,int op_mask,int wave_num){
+	wave_num&=255;
+	voices[voice&31].set_wave(op_mask,wave_num);
 }
 
 void FmSynth::set_duty_cycle(int voice,int op_mask,FixedPoint duty_cycle){
@@ -55,60 +68,30 @@ void FmSynth::set_phase(int voice,int op_mask,FixedPoint phi){
 	voices[voice&31].set_phase(op_mask,phi);
 }
 
-void FmSynth::set_wave(int wave_ix,godot::Array wave){
-	int size,mask,shift;
-	UserWave *old_wave;
-	if(wave_ix<4){
+void FmSynth::define_wave(int wave_num,godot::Array wave){
+	wave_num%=MAX_WAVES;
+	if(wave_num<4){
 		return;
 	}
-	wave_ix=(wave_ix&255)-4;
-	old_wave=waves[wave_ix];
+	Wave *old_wave=waves[wave_num];
 	if(wave.size()>=1){
-		size=UserWave::correct_wave_size(wave.size(),mask,shift);
-		UserWave *new_wave=new UserWave();
-		new_wave->size_mask=mask;
-		new_wave->size_shift=shift;
-		new_wave->wave=(size==0)?NULL:new FixedPointShort[size];
-		for(int i=0;i<size;i++){
-			new_wave->wave[i]=((float)wave[i])*FP_ONE;
-		}
-		waves[wave_ix]=new_wave;
+		waves[wave_num]=new UserWave(wave);
 	}else{
-		waves[wave_ix]=NULL;
+		waves[wave_num]=NULL;
 	}
 	delete old_wave;
 }
 
-void FmSynth::set_sample(int wave_ix,int loop_start,int loop_end,float rec_freq,float sam_freq,godot::Array sample){
-	UserWave *old_wave;
-	if(wave_ix<4){
+void FmSynth::define_sample(int wave_num,int loop_start,int loop_end,float rec_freq,float sam_freq,godot::Array sample){
+	wave_num%=MAX_WAVES;
+	if(wave_num<4){
 		return;
 	}
-	wave_ix=(wave_ix&255)-4;
-	old_wave=waves[wave_ix];
-	int size=sample.size();
-	if(size>=1){
-		loop_start=clamp(loop_start,0,size);
-		loop_end=clamp(loop_end,0,size);
-		if(loop_start>loop_end){
-			int t=loop_start;
-			loop_start=loop_end;
-			loop_end=t;
-		}
-		UserWave *new_wave=new UserWave();
-		new_wave->size_mask=size;
-		new_wave->sample=true;
-		new_wave->loop_start=loop_start;
-		new_wave->loop_size=loop_end-loop_start;
-		new_wave->wave=new FixedPointShort[size];
-		new_wave->recorded_freq=rec_freq;
-		new_wave->sample_freq=sam_freq;
-		for(int i=0;i<size;i++){
-			new_wave->wave[i]=((float)sample[i])*FP_ONE;
-		}
-		waves[wave_ix]=new_wave;
+	Wave *old_wave=waves[wave_num];
+	if(sample.size()>=1){
+		waves[wave_num]=new SampleWave(sample,loop_start,loop_end,rec_freq,sam_freq);
 	}else{
-		waves[wave_ix]=NULL;
+		waves[wave_num]=NULL;
 	}
 	delete old_wave;
 }
@@ -197,39 +180,39 @@ void FmSynth::set_panning(int voice,int panning,bool invert_left,bool invert_rig
 }
 
 
-void FmSynth::set_lfo_freq(int lfo,int freq8_8){
+void FmSynth::set_lfo_freq(int lfo,float freq){
 	lfo=clamp(lfo,0,LAST_LFO);
-	float frequency=clamp(freq8_8,0,0xFFFF)/256.0;
-	lfo_freqs[lfo]=frequency;
+	lfo_freqs[lfo]=max(freq,0.0f);
 	set_lfo_delta(lfo);
 }
 
 void FmSynth::set_lfo_delta(int lfo){
-	lfo_deltas[lfo]=(lfo_freqs[lfo]*lfos[lfo].get_recorded_freq()*FP_ONE)/(lfo_mix_rate*lfos[lfo].get_sample_freq());
+	if(waves==NULL || waves[lfo_waves[lfo]]==NULL){
+		lfo_deltas[lfo]=(lfo_freqs[lfo]*FP_ONE)/lfo_mix_rate;
+	}else{
+		lfo_deltas[lfo]=(lfo_freqs[lfo]*waves[lfo_waves[lfo]]->get_recorded_freq()*FP_ONE)/(lfo_mix_rate*waves[lfo_waves[lfo]]->get_sample_freq());
+	}
 }
 
-void FmSynth::set_lfo_wave_mode(int lfo,int mode){
+void FmSynth::set_lfo_wave(int lfo,int wave_num){
 	lfo=clamp(lfo,0,LAST_LFO);
-	mode&=255;
-	if(mode>=4){
-		lfos[lfo].set_wave(&waves[mode-4]);
-	}
-	lfos[lfo].set_mode(mode);
+	wave_num&=255;
+	lfo_waves[lfo]=wave_num;
 	set_lfo_delta(lfo);
 }
 
 void FmSynth::set_lfo_duty_cycle(int lfo,FixedPoint duty_cycle){
 	lfo=clamp(lfo,0,LAST_LFO);
-	lfos[lfo].set_duty_cycle(duty_cycle&FP_DEC_MASK);
+	lfo_duties[lfo]=duty_cycle&FP_DEC_MASK;
 }
 
 void FmSynth::set_lfo_phase(int lfo,FixedPoint phi){
 	lfo=clamp(lfo,0,LAST_LFO);
 	phi&=FP_DEC_MASK;
-	if(lfos[lfo].is_sampled()){
-		lfo_phis[lfo]=phi*lfos[lfo].get_size_mask();
-	}else{
+	if(waves==NULL || waves[lfo_waves[lfo]]==NULL){
 		lfo_phis[lfo]=phi;
+	}else{
+		lfo_phis[lfo]=phi*(waves[lfo_waves[lfo]]->get_size()>>FP_INT_SHIFT);
 	}
 }
 

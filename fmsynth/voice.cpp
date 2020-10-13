@@ -1,4 +1,23 @@
+#include <cmath>
 #include "voice.h"
+
+void Voice::set_wave_list(Wave **list){
+	for(int i=0;i<MAX_OPS;i++) ops[i].set_wave_list(list);
+}
+
+FixedPoint Voice::generate(FixedPoint* lfo_ins){
+	FixedPoint out=0L;
+	for(int i=0;i<MAX_OPS;i++){
+		FixedPoint pm=0L;
+		for(int j=0;j<MAX_OPS;j++){
+			pm+=last_samples[j]*pms[j][i];
+		}
+		pm>>=8;
+		last_samples[i]=ops[i].generate(pm,lfo_ins[am_lfos[i]],lfo_ins[fm_lfos[i]]);
+		out+=last_samples[i]*outs[i];
+	}
+	return (out*volume)>>16;
+};
 
 void Voice::set_mix_rate(float mix_rate){
 	for(int i=0;i<MAX_OPS;i++){
@@ -35,9 +54,9 @@ void Voice::set_detune(int op_mask,int millis){
 }
 
 
-void Voice::set_wave_mode(int op_mask,int mode){
+void Voice::set_wave(int op_mask,int wave_num){
 	for(int i=0;i<MAX_OPS;i++,op_mask>>=1){
-		if(op_mask&1) ops[i].set_wave_mode(mode);
+		if(op_mask&1) ops[i].set_wave(wave_num);
 	}
 }
 
@@ -50,12 +69,6 @@ void Voice::set_duty_cycle(int op_mask,FixedPoint duty_cycle){
 void Voice::set_phase(int op_mask,FixedPoint phi){
 	for(int i=0;i<MAX_OPS;i++,op_mask>>=1){
 		if(op_mask&1) ops[i].set_phase(phi);
-	}
-}
-
-void Voice::set_wave(int op_mask,UserWave **user_wave){
-	for(int i=0;i<MAX_OPS;i++,op_mask>>=1){
-		if(op_mask&1) ops[i].set_wave(user_wave);
 	}
 }
 

@@ -2,7 +2,81 @@
 
 #include "operator.h"
 
-FixedPoint Operator::get_rate(int rate,int &var){
+void Operator::set_wave_list(Wave **list){
+	waves=list;
+}
+
+_ALWAYS_INLINE_ void Operator::calculate_envelope(){
+	if(eg_counter){
+		eg_counter--;
+		return;
+	}
+	eg_counter=EG_DIVIDER;
+	switch(eg_phase){
+		case ATTACK:
+			eg_vol+=eg_ar;
+			if(eg_vol>=FP_ONE){
+				eg_vol=eg_repeat==ATTACK?0L:FP_ONE;
+				eg_phase=eg_repeat==ATTACK?ATTACK:DECAY;
+			}
+			break;
+		case DECAY:
+			eg_vol-=eg_dr;
+			if(eg_vol<=eg_sl){
+				eg_vol=eg_sl;
+				eg_phase=eg_repeat==DECAY?ATTACK:SUSTAIN;
+			}
+			break;
+		case SUSTAIN:
+			eg_vol-=eg_sr;
+			if(!on){
+				eg_phase=eg_repeat==SUSTAIN?ATTACK:RELEASE;
+			}else if(eg_vol<=0L){
+				eg_vol=0L;
+				eg_phase=eg_repeat==SUSTAIN?ATTACK:OFF;
+			}
+			break;
+		case RELEASE:
+			eg_vol-=eg_rr;
+			if(eg_vol<=0L){
+				eg_vol=0L;
+				eg_phase=eg_repeat==RELEASE?ATTACK:OFF;
+			}
+			break;
+		default:
+			eg_vol=0L;
+			enabled=false;
+			on=false;
+	}
+};
+
+_ALWAYS_INLINE_ bool Operator::is_invalid_wave(int ix){
+	return (waves==NULL || waves[ix]==NULL);
+}
+
+_ALWAYS_INLINE_ void Operator::set_delta(){
+	float rec_freq=is_invalid_wave(wave_ix)?1.0:waves[wave_ix]->get_recorded_freq();
+	float sam_freq=is_invalid_wave(wave_ix)?1.0:waves[wave_ix]->get_sample_freq();
+	delta=(frequency*freq_mul*detune*rec_freq*FP_ONE)/(freq_div*mix_rate*sam_freq);
+}
+
+FixedPoint Operator::generate(FixedPoint pm_in,FixedPoint am_lfo_in,FixedPoint fm_lfo_in){
+	if(!enabled || is_invalid_wave(wave_ix)){
+		return 0L;
+	}
+	calculate_envelope();
+	FixedPoint sample=(waves[wave_ix]->generate(phi,pm_in,duty_cycle)*eg_vol)>>FP_INT_SHIFT;
+	// AM
+	FixedPoint mod=((am_lfo_in*am_level)>>FP_INT_SHIFT)+am_floor;
+	sample=(sample*mod)>>FP_INT_SHIFT;
+	// FM
+	mod=((fm_lfo_in*(fm_lfo_in>0?fm_max:fm_min))>>FP_INT_SHIFT)+FP_ONE;
+	phi=waves[wave_ix]->fix_loop(phi,((delta*mod)>>FP_INT_SHIFT));
+	//
+	return sample;
+}
+
+_ALWAYS_INLINE_ FixedPoint Operator::get_rate(int rate,int &var){
 	var=clamp(rate,0,255);
 	float ivar=256.0-var;
 	ivar=(ivar*ivar/24.0)+1.0;
@@ -19,8 +93,8 @@ void Operator::set_mix_rate(float m){
 	set_release_rate(release_rate);
 }
 
-void Operator::set_frequency(int cents,float frequency){
-	this->frequency=frequency;
+void Operator::set_frequency(int cents,float _frequency){
+	frequency=_frequency;
 	key_cents=cents;
 	set_delta();
 }
@@ -35,28 +109,23 @@ void Operator::set_freq_div(int divider){
 	set_delta();
 }
 
-void Operator::set_detune(float detune){
-	this->detune=detune;
+void Operator::set_detune(float _detune){
+	detune=_detune;
 	set_delta();
 }
 
 
-void Operator::set_wave_mode(int mode){
-	wave.set_mode(mode);
+void Operator::set_wave(int wave_num){
+	wave_ix=wave_num;
 	set_delta();
 }
 
-void Operator::set_duty_cycle(FixedPoint duty_cycle){
-	wave.set_duty_cycle(duty_cycle);
+void Operator::set_duty_cycle(FixedPoint _duty_cycle){
+	duty_cycle=_duty_cycle;
 }
 
-void Operator::set_phase(FixedPoint phi){
-	this->phi=phi;
-}
-
-void Operator::set_wave(UserWave **user_wave){
-	wave.set_wave(user_wave);
-	set_delta();
+void Operator::set_phase(FixedPoint _phi){
+	phi=_phi;
 }
 
 
@@ -138,9 +207,9 @@ void Operator::key_off(){
 }
 
 void Operator::stop(){
+	enabled=false;
 	eg_phase=OFF;
 	eg_vol=0L;
 	phi=0L;
-	enabled=false;
 	on=false;
 }

@@ -1,16 +1,14 @@
-#ifndef TRACKER_H
-#define TRACKER_H
+#ifndef TRACKER
+#define TRACKER
 
-#include <vector>
 #include <Godot.hpp>
-#include <PoolArrays.hpp>
 
 #include "fm_synth.h"
 
 
 namespace godot{
 
-class SynthTracker : public Object{
+class SynthTracker:public Object{
 	GODOT_CLASS(SynthTracker,Object)
 private:
 	FmSynth synth=FmSynth();
@@ -72,11 +70,11 @@ public:
 	void set_freq_div(int voice,int op_mask,int divider);
 	void set_detune(int voice,int op_mask,int millis);
 
-	void set_wave_mode(int voice,int op_mask,int mode);
+	void set_wave(int voice,int op_mask,int wave_num);
 	void set_duty_cycle(int voice,int op_mask,FixedPoint duty_cycle);
 	void set_phase(int voice,int op_mask,FixedPoint phi);
-	void set_wave(int wave_ix,Array wave);
-	void set_sample(int wave_ix,int loop_start,int loop_end,float rec_freq,float sam_freq,Array sample);
+	void define_wave(int wave_num,Array wave);
+	void define_sample(int wave_num,int loop_start,int loop_end,float rec_freq,float sam_freq,Array sample);
 
 	void set_volume(int voice,int vel);
 	void set_attack_rate(int voice,int op_mask,int rate);
@@ -103,7 +101,7 @@ public:
 	void set_panning(int voice,int panning,bool invert_left,bool invert_right);
 
 	void set_lfo_freq(int lfo,float frequency);
-	void set_lfo_wave_mode(int lfo,int mode);
+	void set_lfo_wave(int lfo,int wave_num);
 	void set_lfo_duty_cycle(int lfo,FixedPoint duty_cycle);
 	void set_lfo_phase(int lfo,FixedPoint phi);
 

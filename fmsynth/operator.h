@@ -1,5 +1,5 @@
-#ifndef OPERATOR_H
-#define OPERATOR_H
+#ifndef OPERATOR
+#define OPERATOR
 
 #include "wave.h"
 
@@ -19,8 +19,10 @@ private:
 	float detune=1.0;
 	FixedPoint delta=0L;
 
-	Wave wave=Wave();
+	Wave **waves=NULL;
+	int wave_ix;
 	FixedPoint phi=0L;
+	FixedPoint duty_cycle=0L;
 
 	bool on=false;
 	ADSR eg_phase=OFF;
@@ -44,74 +46,20 @@ private:
 	FixedPoint fm_max=0L;
 	FixedPoint fm_min=0L;
 
-	FixedPoint get_rate(int rate,int &var);
+	_ALWAYS_INLINE_ void calculate_envelope();
+
+	_ALWAYS_INLINE_ FixedPoint get_rate(int rate,int &var);
+
+	_ALWAYS_INLINE_ void set_delta();
+
+	_ALWAYS_INLINE_ bool is_invalid_wave(int ix);
 
 public:
 	bool enabled=false;
 
-	_ALWAYS_INLINE_ void calculate_envelope(){
-		if(eg_counter){
-			eg_counter--;
-			return;
-		}
-		eg_counter=EG_DIVIDER;
-		switch(eg_phase){
-			case ATTACK:
-				eg_vol+=eg_ar;
-				if(eg_vol>=FP_ONE){
-					eg_vol=eg_repeat==ATTACK?0L:FP_ONE;
-					eg_phase=eg_repeat==ATTACK?ATTACK:DECAY;
-				}
-				break;
-			case DECAY:
-				eg_vol-=eg_dr;
-				if(eg_vol<=eg_sl){
-					eg_vol=eg_sl;
-					eg_phase=eg_repeat==DECAY?ATTACK:SUSTAIN;
-				}
-				break;
-			case SUSTAIN:
-				eg_vol-=eg_sr;
-				if(!on){
-					eg_phase=eg_repeat==SUSTAIN?ATTACK:RELEASE;
-				}else if(eg_vol<=0L){
-					eg_vol=0L;
-					eg_phase=eg_repeat==SUSTAIN?ATTACK:OFF;
-				}
-				break;
-			case RELEASE:
-				eg_vol-=eg_rr;
-				if(eg_vol<=0L){
-					eg_vol=0L;
-					eg_phase=eg_repeat==RELEASE?ATTACK:OFF;
-				}
-				break;
-			default:
-				eg_vol=0L;
-				enabled=false;
-				on=false;
-		}
-	}
+	void set_wave_list(Wave **list);
 
-	_ALWAYS_INLINE_ FixedPoint generate(FixedPoint pm_in,FixedPoint am_lfo_in,FixedPoint fm_lfo_in){
-		if(!enabled){
-			return 0L;
-		}
-		calculate_envelope();
-		FixedPoint sample=(wave.generate(phi,pm_in)*eg_vol)>>FP_INT_SHIFT;
-		// AM
-		FixedPoint mod=((am_lfo_in*am_level)>>FP_INT_SHIFT)+am_floor;
-		sample=(sample*mod)>>FP_INT_SHIFT;
-		// FM
-		mod=((fm_lfo_in*(fm_lfo_in>0?fm_max:fm_min))>>FP_INT_SHIFT)+FP_ONE;
-		phi=wave.fix_loop(phi,((delta*mod)>>FP_INT_SHIFT));
-		//
-		return sample;
-	};
-
-	_ALWAYS_INLINE_ void set_delta(){
-		delta=(frequency*freq_mul*detune*wave.get_recorded_freq()*FP_ONE)/(freq_div*mix_rate*wave.get_sample_freq());
-	}
+	FixedPoint generate(FixedPoint pm_in,FixedPoint am_lfo_in,FixedPoint fm_lfo_in);
 
 	void set_mix_rate(float mix_rate);
 	void set_frequency(int cents,float frequency);
@@ -119,10 +67,9 @@ public:
 	void set_freq_div(int divider);
 	void set_detune(float detune);
 
-	void set_wave_mode(int mode);
+	void set_wave(int wave_num);
 	void set_duty_cycle(FixedPoint duty_cycle);
 	void set_phase(FixedPoint phi);
-	void set_wave(UserWave **user_wave);
 
 	void set_attack_rate(int rate);
 	void set_decay_rate(int rate);

@@ -4,6 +4,19 @@
 
 using namespace godot;
 
+extern "C" void GDN_EXPORT godot_gdnative_init(godot_gdnative_init_options *o){
+	Godot::gdnative_init(o);
+}
+
+extern "C" void GDN_EXPORT godot_gdnative_terminate(godot_gdnative_terminate_options *o){
+	Godot::gdnative_terminate(o);
+}
+
+extern "C" void GDN_EXPORT godot_nativescript_init(void *handle){
+	Godot::nativescript_init(handle);
+	register_class<SynthTracker>();
+}
+
 void SynthTracker::_register_methods(){
 	register_method("generate", &SynthTracker::generate);
 	register_method("set_mix_rate",&SynthTracker::set_mix_rate);
@@ -12,10 +25,10 @@ void SynthTracker::_register_methods(){
 	register_method("set_freq_div",&SynthTracker::set_freq_div);
 	register_method("set_detune",&SynthTracker::set_detune);
 
-	register_method("set_wave_mode",&SynthTracker::set_wave_mode);
-	register_method("set_duty_cycle",&SynthTracker::set_duty_cycle);
 	register_method("set_wave",&SynthTracker::set_wave);
-	register_method("set_sample",&SynthTracker::set_sample);
+	register_method("set_duty_cycle",&SynthTracker::set_duty_cycle);
+	register_method("define_wave",&SynthTracker::define_wave);
+	register_method("define_sample",&SynthTracker::define_sample);
 
 	register_method("set_volume",&SynthTracker::set_volume);
 	register_method("set_attack_rate",&SynthTracker::set_attack_rate);
@@ -43,7 +56,7 @@ void SynthTracker::_register_methods(){
 
 	register_method("set_phase",&SynthTracker::set_phase);
 
-	register_method("set_lfo_wave_mode",&SynthTracker::set_lfo_wave_mode);
+	register_method("set_lfo_wave",&SynthTracker::set_lfo_wave);
 	register_method("set_lfo_duty_cycle",&SynthTracker::set_lfo_duty_cycle);
 	register_method("set_lfo_freq",&SynthTracker::set_lfo_freq);
 
@@ -182,7 +195,7 @@ Array SynthTracker::generate(int size,float volume,Array cmds){
 					break;
 				case CMD_WAVE:
 					TRACE(TRACE_WAVE,voice,op_mask,data_8);
-					synth.set_wave_mode(voice,op_mask,data_8);
+					synth.set_wave(voice,op_mask,data_8);
 					break;
 				case CMD_VOL:
 					TRACE(TRACE_VOLUME,voice,op_mask);
@@ -252,12 +265,12 @@ Array SynthTracker::generate(int size,float volume,Array cmds){
 					break;
 				case CMD_LFO_FREQ:
 					data=VAR2INT(cmds[cmd_ptr++]);
-					TRACE(TRACE_LFO_FREQUENCY,voice,op_mask,data);
+					TRACE(TRACE_LFO_FREQUENCY,voice,op_mask,data/256.0f);
 					synth.set_lfo_freq(voice,data);
 					break;
 				case CMD_LFO_WAVE:
 					TRACE(TRACE_LFO_WAVE,voice,op_mask);
-					synth.set_lfo_wave_mode(voice,op_mask);
+					synth.set_lfo_wave(voice,op_mask);
 					break;
 				case CMD_LFO_DUC:
 					data=VAR2INT(cmds[cmd_ptr++]);
@@ -447,8 +460,8 @@ void SynthTracker::set_detune(int voice,int op_mask,int millis){
 }
 
 
-void SynthTracker::set_wave_mode(int voice,int op_mask,int mode){
-	synth.set_wave_mode(voice,op_mask,mode);
+void SynthTracker::set_wave(int voice,int op_mask,int wave_num){
+	synth.set_wave(voice,op_mask,wave_num);
 }
 
 void SynthTracker::set_duty_cycle(int voice,int op_mask,FixedPoint duty_cycle){
@@ -459,13 +472,13 @@ void SynthTracker::set_phase(int voice,int op_mask,FixedPoint phi){
 	synth.set_phase(voice,op_mask,phi);
 }
 
-void SynthTracker::set_wave(int wave_ix,Array wave){
-	synth.set_wave(wave_ix,wave);
+void SynthTracker::define_wave(int wave_num,Array wave){
+	synth.define_wave(wave_num,wave);
 	wave.clear();
 }
 
-void SynthTracker::set_sample(int wave_ix,int loop_start,int loop_end,float rec_freq,float sam_freq,Array sample){
-	synth.set_sample(wave_ix,loop_start,loop_end,rec_freq,sam_freq,sample);
+void SynthTracker::define_sample(int wave_num,int loop_start,int loop_end,float rec_freq,float sam_freq,Array sample){
+	synth.define_sample(wave_num,loop_start,loop_end,rec_freq,sam_freq,sample);
 	sample.clear();
 }
 
@@ -555,8 +568,8 @@ void SynthTracker::set_lfo_freq(int lfo,float frequency){
 	synth.set_lfo_freq(lfo,frequency*256.0);
 }
 
-void SynthTracker::set_lfo_wave_mode(int lfo,int mode){
-	synth.set_lfo_wave_mode(lfo,mode);
+void SynthTracker::set_lfo_wave(int lfo,int wave_num){
+	synth.set_lfo_wave(lfo,wave_num);
 }
 
 void SynthTracker::set_lfo_duty_cycle(int lfo,FixedPoint duty_cycle){

@@ -329,10 +329,23 @@ func process_keyboard(ev:InputEventKey)->bool:
 			if ev.pressed:
 				put_legato(null,Pattern.LEGATO_MAX,0)
 			return true
+		if ev.scancode in GKBD.KEYBOARD:
+			if !ev.pressed:
+				var semi:int=GKBD.KEYBOARD.find(ev.scancode)
+				if ev.shift:
+					put_legato(Pattern.LEGATO_MODE.LEGATO,0,0)
+				elif ev.control:
+					put_legato(Pattern.LEGATO_MODE.STACCATO,0,0)
+				put_note(semi%12,GLOBALS.curr_octave+(semi/12),GLOBALS.curr_instrument)
+			return true
 	if curr_column==ATTRS.NOTE:
 		if ev.scancode in GKBD.KEYBOARD:
 			if !ev.pressed:
 				var semi:int=GKBD.KEYBOARD.find(ev.scancode)
+				if ev.shift:
+					put_legato(Pattern.LEGATO_MODE.LEGATO,0,0)
+				elif ev.control:
+					put_legato(Pattern.LEGATO_MODE.STACCATO,0,0)
 				put_note(semi%12,GLOBALS.curr_octave+(semi/12),GLOBALS.curr_instrument)
 			return true
 		if ev.scancode==GKBD.CLEAR:

@@ -25,9 +25,9 @@ func _on_wave_selected(wave_ix:int)->void:
 	if tabs==null:
 		return
 	var w:Waveform=GLOBALS.song.get_wave(wave_ix)
+	synth._on_wave_selected(wave_ix)
+	sample._on_wave_selected(wave_ix)
 	if w is SynthWave:
 		tabs.current_tab=0
-		synth._on_wave_selected(wave_ix)
 	elif w is SampleWave:
 		tabs.current_tab=1
-		sample._on_wave_selected(wave_ix)

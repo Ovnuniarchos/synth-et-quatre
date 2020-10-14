@@ -1,5 +1,7 @@
 extends Node
 
+signal step_changed(delta)
+
 const KEYBOARD=[
 	KEY_Z,KEY_S,KEY_X,KEY_D,KEY_C,KEY_V,KEY_G,KEY_B,KEY_H,KEY_N,KEY_J,KEY_M,
 	KEY_Q,KEY_2,KEY_W,KEY_3,KEY_E,KEY_R,KEY_5,KEY_T,KEY_6,KEY_Y,KEY_7,KEY_U
@@ -15,6 +17,10 @@ const HEX_INPUT_KP=[
 const NOTE_OFF=KEY_BACKSPACE
 const OCTAVE_UP=[KEY_KP_MULTIPLY]
 const OCTAVE_DOWN=[KEY_KP_DIVIDE]
+const INSTRUMENT_UP=[KEY_KP_MULTIPLY|KEY_MASK_SHIFT]
+const INSTRUMENT_DOWN=[KEY_KP_DIVIDE|KEY_MASK_SHIFT]
+const STEP_UP=[KEY_KP_MULTIPLY|KEY_MASK_CTRL]
+const STEP_DOWN=[KEY_KP_DIVIDE|KEY_MASK_CTRL]
 const UP=KEY_UP
 const DOWN=KEY_DOWN
 const STEP=KEY_SPACE
@@ -65,7 +71,7 @@ func handle_keys(event:InputEventKey)->bool:
 	if event==null or event.is_echo():
 		return false
 	var fscan:int=event.get_scancode_with_modifiers()
-	if (fscan&~KEY_MASK_SHIFT) in KEYBOARD:
+	if (event.scancode) in KEYBOARD:
 		play_note(event.pressed,
 				event.shift,
 				KEYBOARD.find(event.scancode)+(GLOBALS.curr_octave*12)
@@ -75,9 +81,25 @@ func handle_keys(event:InputEventKey)->bool:
 		if !event.pressed:
 			GLOBALS.curr_octave+=1
 		return true
-	if fscan in OCTAVE_DOWN:
+	elif fscan in OCTAVE_DOWN:
 		if !event.pressed:
 			GLOBALS.curr_octave-=1
+		return true
+	elif fscan in INSTRUMENT_UP:
+		if !event.pressed:
+			GLOBALS.set_instrument(GLOBALS.curr_instrument+1)
+		return true
+	elif fscan in INSTRUMENT_DOWN:
+		if !event.pressed:
+			GLOBALS.set_instrument(GLOBALS.curr_instrument-1)
+		return true
+	elif fscan in STEP_UP:
+		if !event.pressed:
+			emit_signal("step_changed",1)
+		return true
+	elif fscan in STEP_DOWN:
+		if !event.pressed:
+			emit_signal("step_changed",-1)
 		return true
 	return false
 

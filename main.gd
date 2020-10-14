@@ -4,8 +4,7 @@ extends Control
 FIXME
 	Export sometimes crashes. (Buffer freed before final write?)
 TODO:
-	Instrument up/down hotkeys.
-	Step up/down hotkeys.
+	Change row highlights. Save in song.
 	MIDI input
 		Flag?: MIDI Pitch bend
 		Flag?: MIDI modulation

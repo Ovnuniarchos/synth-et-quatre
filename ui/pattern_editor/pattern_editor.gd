@@ -47,6 +47,7 @@ var scroll_lock:bool=false
 
 
 func _ready()->void:
+	GKBD.connect("step_changed",self,"_on_Gkbd_step_changed")
 	GLOBALS.connect("song_changed",self,"_on_song_changed")
 	AUDIO.tracker.connect("position_changed",self,"_on_playing_pos_changed")
 	_on_song_changed()
@@ -702,6 +703,9 @@ func _on_resized()->void:
 func _on_order_selected(order:int)->void:
 	curr_order=order
 	update_tilemap()
+
+func _on_Gkbd_step_changed(delta:int)->void:
+	_on_Info_step_changed(step+delta)
 
 func _on_Info_step_changed(s:int)->void:
 	step=max(0.0,s)

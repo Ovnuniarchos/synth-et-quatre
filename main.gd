@@ -3,7 +3,6 @@ extends Control
 """
 FIXME
 	Export sometimes crashes. (Buffer freed before final write?)
-	Selection start is never reset. When there is no sel. rectangle, there must not be any selection.
 TODO:
 	Instrument up/down hotkeys.
 	Step up/down hotkeys.

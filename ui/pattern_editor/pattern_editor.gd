@@ -272,6 +272,8 @@ func process_keyboard(ev:InputEventKey)->bool:
 			kbd_drag=false
 			selection.active=false
 		return true
+	elif !ev.shift:
+		kbd_drag=false
 	# Selection
 	if selection.active:
 		if ev.scancode==GKBD.CLEAR:
@@ -710,9 +712,6 @@ func _on_Info_velocity_changed(vel:int):
 
 func _on_Editor_mouse_entered():
 	_on_focus_entered()
-
-func _on_Editor_mouse_exited():
-	_on_focus_exited()
 
 func _on_Selection_ready():
 	$Selection.set_arrays(COL_WIDTH,COLS,channel_col0)

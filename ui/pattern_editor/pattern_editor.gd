@@ -538,6 +538,8 @@ func _on_channels_changed()->void:
 		col0+=16+song.num_fxs[i]*6
 	channel_col0.append(col0)
 	update_tilemap()
+	set_channel(curr_channel)
+	set_column(curr_column)
 	$Selection.update()
 
 func _on_playing_pos_changed(order:int,row:int)->void:
@@ -649,7 +651,7 @@ func set_column(c:int)->void:
 		else:
 			curr_column=0
 	elif c>ATTRS.FX0+(GLOBALS.song.num_fxs[curr_channel]*3)-1:
-		if curr_channel<31:
+		if curr_channel<GLOBALS.song.num_channels-1:
 			curr_column=0
 			set_channel(curr_channel+1)
 		else:

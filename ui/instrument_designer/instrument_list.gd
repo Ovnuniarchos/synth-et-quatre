@@ -8,6 +8,7 @@ var inst_l:ItemList
 
 func _ready()->void:
 	GLOBALS.connect("song_changed",self,"_on_song_changed")
+	GLOBALS.connect("instrument_changed",self,"_on_instrument_changed")
 	_on_song_changed()
 
 func _on_song_changed()->void:
@@ -73,6 +74,11 @@ func _on_Copy_pressed()->void:
 		GLOBALS.curr_instrument=cnt
 		select_item(cnt)
 	set_buttons()
+
+func _on_instrument_changed(index:int,_name:String)->void:
+	$Instruments.set_block_signals(true)
+	$Instruments.select(index)
+	$Instruments.set_block_signals(false)
 
 func _on_item_selected(index:int)->void:
 	var inst:Instrument=GLOBALS.song.get_instrument(index)

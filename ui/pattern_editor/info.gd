@@ -6,6 +6,7 @@ signal velocity_changed(velocity)
 func _ready()->void:
 	GLOBALS.connect("song_changed",self,"_on_song_changed")
 	GLOBALS.connect("octave_changed",self,"_on_octave_changed")
+	GKBD.connect("step_changed",self,"_on_step_changed")
 	_on_song_changed()
 	$SC/VBC/GC/Step.value=1
 
@@ -55,3 +56,10 @@ func _on_Title_text_changed(t:String)->void:
 
 func _on_Author_text_changed(t:String)->void:
 	GLOBALS.song.set_author(t)
+
+
+func _on_Editor_step_changed(step:int)->void:
+	$SC/VBC/GC/Step.set_block_signals(true)
+	$SC/VBC/GC/Step.value=step
+	$SC/VBC/GC/Step.set_block_signals(false)
+

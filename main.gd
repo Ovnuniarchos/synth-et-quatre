@@ -3,6 +3,8 @@ extends Control
 """
 FIXME
 	Export sometimes crashes. (Buffer freed before final write?)
+	Cursor wraps to s/l column on last channel, instead of last cmd column.
+	Pasting on FX columns tries to paste to the original column, instead of the current one.
 TODO:
 	Change row highlights. Save in song.
 	MIDI input

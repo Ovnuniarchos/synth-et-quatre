@@ -554,11 +554,12 @@ func clean_patterns()->void:
 			if pats_xform[chan][oldp]!=null:
 				npl.append(pattern_list[chan][oldp])
 		pattern_list[chan]=npl
-	# Cleanup unused channels
+	# Cleanup unused channels BREAKS
 	for i in range(num_channels,MAX_CHANNELS):
 		pattern_list[i]=[Pattern.new(MAX_PAT_LENGTH)]
-		orders[0][i]=0
 		num_fxs[i]=1
+		for order in orders:
+			order[i]=0
 	emit_signal("order_changed",-1,-1)
 
 func clean_instruments()->void:
@@ -579,6 +580,7 @@ func clean_instruments()->void:
 		instrument_list.resize(1)
 		emit_signal("instrument_list_changed")
 		return
+	inst_xform.sort()
 	# Scan the patterns to change old->new
 	for chan in pattern_list:
 		for pat in chan:

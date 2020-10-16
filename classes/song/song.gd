@@ -554,6 +554,11 @@ func clean_patterns()->void:
 			if pats_xform[chan][oldp]!=null:
 				npl.append(pattern_list[chan][oldp])
 		pattern_list[chan]=npl
+	# Cleanup unused channels
+	for i in range(num_channels,MAX_CHANNELS):
+		pattern_list[i]=[Pattern.new(MAX_PAT_LENGTH)]
+		orders[0][i]=0
+		num_fxs[i]=1
 	emit_signal("order_changed",-1,-1)
 
 func clean_instruments()->void:

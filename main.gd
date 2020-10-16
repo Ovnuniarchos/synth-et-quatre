@@ -4,11 +4,9 @@ extends Control
 FIXME
 	Export sometimes crashes. (Buffer freed before final write?)
 	Pasting on FX columns tries to paste to the original column, instead of the current one.
-	Pattern up/down shouldn't change order.
 TODO:
 	Change row highlights. Save in song.
 	Reset per channel parameters?
-	Mousewheel over button for patter up/down?
 	MIDI input
 		Flag?: MIDI Pitch bend
 		Flag?: MIDI modulation

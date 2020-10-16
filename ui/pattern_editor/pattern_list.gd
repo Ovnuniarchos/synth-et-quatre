@@ -76,16 +76,20 @@ func _on_order_changed(order:int,channel:int)->void:
 
 func _on_button_gui_input(ev:InputEvent,order:int,channel:int,button:Button)->void:
 	ev=ev as InputEventMouseButton
-	if ev==null or ev.is_pressed() or\
-			(ev.button_index!=BUTTON_MASK_LEFT and ev.button_index!=BUTTON_MASK_RIGHT):
+	if ev==null or !(ev.button_index in [
+				BUTTON_MASK_LEFT,BUTTON_MASK_RIGHT,BUTTON_WHEEL_UP,BUTTON_WHEEL_DOWN
+			]):
 		return
-	if order!=GLOBALS.curr_order:
+	get_tree().set_input_as_handled()
+	if !ev.is_pressed():
+		return
+	if order!=GLOBALS.curr_order and ev.button_index in [BUTTON_LEFT,BUTTON_RIGHT]:
 		GLOBALS.goto_order(order)
 		_on_playing_pos_changed(order,0)
 		emit_signal("order_selected",order)
 		return
 	var song:Song=GLOBALS.song
-	if ev.button_index==BUTTON_LEFT:
+	if ev.button_index in [BUTTON_LEFT,BUTTON_WHEEL_UP]:
 		var o:int=song.orders[order][channel]+1
 		if ev.shift:
 			o=song.add_pattern(channel,-1)

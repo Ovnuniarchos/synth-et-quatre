@@ -30,5 +30,5 @@ func _on_step_changed(step:int)->void:
 func _on_velocity_changed(velocity:int)->void:
 	$Velocity.text="Velocity: %-3d"%[velocity]
 
-func _on_instrument_changed(_inst:int,inst_name:String)->void:
-	$Instrument.text="Instrument: %s"%[inst_name]
+func _on_instrument_changed(inst:int,inst_name:String)->void:
+	$Instrument.text="Instrument: %s (%02X)"%[inst_name,inst]

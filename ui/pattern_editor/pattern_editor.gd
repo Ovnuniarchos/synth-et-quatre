@@ -498,6 +498,10 @@ func put_note(semitone,octave:int,instrument,add:int=0,adv:int=step)->void:
 		else:
 			note=semitone+(octave*12)
 	song.set_note(curr_order,curr_channel,curr_row,ATTRS.NOTE,note)
+	if add!=0:
+		set_note_cells(curr_row,channel_col0[curr_channel],note)
+		advance(adv)
+		return
 	song.set_note(curr_order,curr_channel,curr_row,ATTRS.INSTR,instrument)
 # warning-ignore:incompatible_ternary
 # warning-ignore:incompatible_ternary

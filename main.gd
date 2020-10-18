@@ -6,7 +6,7 @@ FIXME
 	Pasting on FX columns tries to paste to the original column, instead of the current one.
 TODO:
 	Change row highlights. Save in song.
-	Reset per channel parameters?
+	Reset per channel parameters (as a command|button|on export)
 	MIDI input
 		Flag?: MIDI Pitch bend
 		Flag?: MIDI modulation

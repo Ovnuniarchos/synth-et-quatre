@@ -89,6 +89,8 @@ func _on_button_gui_input(ev:InputEvent,order:int,channel:int,button:Button)->vo
 		emit_signal("order_selected",order)
 		return
 	var song:Song=GLOBALS.song
+	if order!=GLOBALS.curr_order:
+		song.set_block_signals(true)
 	if ev.button_index in [BUTTON_LEFT,BUTTON_WHEEL_UP]:
 		var o:int=song.orders[order][channel]+1
 		if ev.shift:
@@ -97,11 +99,10 @@ func _on_button_gui_input(ev:InputEvent,order:int,channel:int,button:Button)->vo
 			o=song.add_pattern(channel,song.orders[order][channel])
 		song.set_pattern(order,channel,o)
 		button.text="%03d"%[song.orders[order][channel]]
-		return
 	else:
 		song.set_pattern(order,channel,song.orders[order][channel]-1)
 		button.text="%03d"%[song.orders[order][channel]]
-		return
+	song.set_block_signals(false)
 
 #
 

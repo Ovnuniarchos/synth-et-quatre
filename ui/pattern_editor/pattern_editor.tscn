@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://theme/pattern.tres" type="TileSet" id=1]
 [ext_resource path="res://ui/pattern_editor/pattern_editor.gd" type="Script" id=2]
 [ext_resource path="res://ui/pattern_editor/pattern_bg.gd" type="Script" id=3]
 [ext_resource path="res://ui/pattern_editor/selection_rect.gd" type="Script" id=4]
+[ext_resource path="res://ui/pattern_editor/cursor.gd" type="Script" id=5]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.0666667, 0, 0, 1 )
@@ -12,7 +13,7 @@ bg_color = Color( 0.0666667, 0, 0, 1 )
 length = 2.0
 loop = true
 tracks/0/type = "value"
-tracks/0/path = NodePath(".:color")
+tracks/0/path = NodePath(".:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -57,8 +58,8 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Cursor" type="Polygon2D" parent="."]
-polygon = PoolVector2Array( 0, 12, 8, 12, 8, 16, 0, 16 )
+[node name="Cursor" type="Node2D" parent="."]
+script = ExtResource( 5 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Cursor"]
 autoplay = "Blink"

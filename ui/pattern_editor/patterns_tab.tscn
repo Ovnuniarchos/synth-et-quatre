@@ -176,6 +176,7 @@ margin_top = 38.0
 margin_right = 1024.0
 margin_bottom = 294.0
 rect_min_size = Vector2( 0, 48 )
+
 [connection signal="order_selected" from="VSC/CCHSC/HSC/CCPatternList/PatternList" to="VSC/CCVBC/VBC/Editor" method="_on_order_selected"]
 [connection signal="step_changed" from="VSC/CCHSC/HSC/CCInfo/Info" to="VSC/CCVBC/VBC/Editor" method="_on_Info_step_changed"]
 [connection signal="velocity_changed" from="VSC/CCHSC/HSC/CCInfo/Info" to="VSC/CCVBC/VBC/Editor" method="_on_Info_velocity_changed"]

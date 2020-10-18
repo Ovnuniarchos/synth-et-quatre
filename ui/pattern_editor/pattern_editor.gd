@@ -665,11 +665,10 @@ func set_column(c:int)->void:
 	set_cursor()
 
 func set_cursor()->void:
-	var c:Polygon2D=$Cursor
+	var c:Node2D=$Cursor
 	if !focused:
 		c.hide()
 		return
-	c.show()
 	var x:float=32+((channel_col0[curr_channel]+COLS[curr_column])*8.0)+ofs_chan
 	while x+(COL_WIDTH[curr_column]*8.0)>container_size.x:
 		x-=144.0
@@ -681,7 +680,8 @@ func set_cursor()->void:
 	editor.position.x=ofs_chan+32.0
 	sel_rect.position.x=ofs_chan+32.0
 	c.position=Vector2(x,rect_size.y*0.5)
-	c.scale.x=COL_WIDTH[curr_column]
+	c.cell_size=editor.cell_size*Vector2(COL_WIDTH[curr_column],1.0)
+	c.show()
 
 #
 

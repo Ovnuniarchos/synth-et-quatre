@@ -11,11 +11,11 @@
 [ext_resource path="res://ui/wave_designer/waveforms_tab.tscn" type="PackedScene" id=9]
 [ext_resource path="res://ui/menu/menu.tscn" type="PackedScene" id=10]
 
-[sub_resource type="AtlasTexture" id=4]
+[sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 2 )
 region = Rect2( 96, 112, 16, 16 )
 
-[sub_resource type="AtlasTexture" id=5]
+[sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 2 )
 region = Rect2( 64, 112, 16, 16 )
 
@@ -113,7 +113,7 @@ custom_constants/separation = 16
 margin_right = 28.0
 margin_bottom = 23.0
 toggle_mode = true
-icon = SubResource( 4 )
+icon = SubResource( 1 )
 script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -127,7 +127,7 @@ margin_left = 44.0
 margin_right = 72.0
 margin_bottom = 23.0
 toggle_mode = true
-icon = SubResource( 5 )
+icon = SubResource( 2 )
 script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -135,6 +135,7 @@ __meta__ = {
 accent_color = Color( 1, 2, 1, 1 )
 pressed_icon = "Stop"
 unpressed_icon = "PlayTrack"
+
 [connection signal="tab_changed" from="Main/Tabs" to="." method="_on_tab_changed"]
 [connection signal="toggled" from="PlayControls/PC/HBC/Play" to="." method="_on_Play_toggled"]
 [connection signal="toggled" from="PlayControls/PC/HBC/PlayTrack" to="." method="_on_PlayTrack_toggled"]

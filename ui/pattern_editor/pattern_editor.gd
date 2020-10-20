@@ -58,12 +58,14 @@ func _ready()->void:
 func _on_song_changed()->void:
 	GLOBALS.song.connect("channels_changed",self,"_on_channels_changed")
 	GLOBALS.song.connect("order_changed",self,"_on_order_changed")
+	GLOBALS.song.connect("highlights_changed",self,"_on_highlights_changed")
 	curr_order=0
 	set_row(0)
 	set_channel(0)
 	set_column(0)
 	selection.active=false
 	_on_channels_changed()
+	_on_highlights_changed()
 	emit_signal("step_changed",step)
 	emit_signal("velocity_changed",dflt_velocity)
 
@@ -717,11 +719,15 @@ func _on_Info_step_changed(s:int)->void:
 	step=max(0.0,s)
 	emit_signal("step_changed",step)
 
-func _on_Info_velocity_changed(vel:int):
+func _on_Info_velocity_changed(vel:int)->void:
 	dflt_velocity=vel
 
-func _on_Editor_mouse_entered():
+func _on_Editor_mouse_entered()->void:
 	_on_focus_entered()
 
-func _on_Selection_ready():
+func _on_Selection_ready()->void:
 	$Selection.set_arrays(COL_WIDTH,COLS,channel_col0)
+
+func _on_highlights_changed()->void:
+	$BG.every_min=GLOBALS.song.minor_highlight
+	$BG.every_maj=GLOBALS.song.major_highlight

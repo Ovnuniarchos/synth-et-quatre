@@ -7,6 +7,7 @@ signal instrument_list_changed
 signal channels_changed
 signal order_changed(order_ix,channel_ix)
 signal speed_changed
+signal highlights_changed
 signal error(message)
 
 
@@ -25,6 +26,7 @@ const MAX_WAVES:int=256-MIN_CUSTOM_WAVE
 const MAX_INSTRUMENTS:int=256
 const FILE_SIGNATURE:String="SFMM\u000d\u000a\u001a\u000a"
 const CHUNK_HEADER:String="MHDR"
+const CHUNK_HIGHLIGHTS:String="hIGH"
 const CHUNK_CHANNELS:String="CHAL"
 const CHANNEL_FM4:String="CFM4"
 const CHUNK_INSTRUMENTS:String="INSL"
@@ -44,6 +46,8 @@ var num_fxs:Array
 var pattern_length:int
 var ticks_second:int
 var ticks_row:int
+var minor_highlight:int
+var major_highlight:int
 var lfo_frequencies:Array=[4.0,2.0,1.0,0.5]
 var lfo_waves:Array=[WAVE.TRIANGLE,WAVE.SAW,WAVE.RECTANGLE,WAVE.NOISE]
 var lfo_duty_cycles:Array=[0,0,128,0]
@@ -54,6 +58,8 @@ func _init(max_channels:int=MAX_CHANNELS,pat_length:int=DFL_PAT_LENGTH,fx_length
 	pattern_length=clamp(pat_length,MIN_PAT_LENGTH,MAX_PAT_LENGTH)
 	ticks_second=max(tks_sec,1.0)
 	ticks_row=max(tks_row,1.0)
+	minor_highlight=4
+	major_highlight=16
 	var nfx:int=clamp(fx_length,MIN_FX_LENGTH,MAX_FX_LENGTH)
 	pattern_list=[]
 	pattern_list.resize(MAX_CHANNELS)
@@ -71,11 +77,21 @@ func _init(max_channels:int=MAX_CHANNELS,pat_length:int=DFL_PAT_LENGTH,fx_length
 	emit_signal("instrument_list_changed")
 	emit_signal("channels_changed")
 	emit_signal("speed_changed")
+	emit_signal("highlights_changed")
 
 #
 
-# warning-ignore:unused_argument
-func _on_wave_name_changed(wave:Waveform,name:String)->void:
+func set_minor_highlight(m:int)->void:
+	minor_highlight=m if m<=pattern_length else pattern_length
+	emit_signal("highlights_changed")
+
+func set_major_highlight(m:int)->void:
+	major_highlight=m if m<=pattern_length else pattern_length
+	emit_signal("highlights_changed")
+
+#
+
+func _on_wave_name_changed(wave:Waveform,_name:String)->void:
 	var ix:int=wave_list.find(wave)
 	if ix!=-1:
 		emit_signal("wave_changed",wave,ix)
@@ -361,6 +377,11 @@ func serialize(out:ChunkedFile)->void:
 	out.store_pascal_string(title)
 	out.store_pascal_string(author)
 	out.end_chunk()
+	# Highlights
+	out.start_chunk(CHUNK_HIGHLIGHTS)
+	out.store_16(minor_highlight)
+	out.store_16(major_highlight)
+	out.end_chunk()
 	# Channels
 	out.start_chunk(CHUNK_CHANNELS)
 	out.store_16(num_channels)
@@ -424,6 +445,8 @@ func deserialize(inf:ChunkedFile)->Song:
 		if inf.eof_reached():
 			break
 		match hdr[ChunkedFile.CHUNK_ID]:
+			CHUNK_HIGHLIGHTS:
+				process_highlights(inf,song)
 			CHUNK_CHANNELS:
 				process_channel_list(inf,song)
 				mandatory_CHAL=true
@@ -439,6 +462,10 @@ func deserialize(inf:ChunkedFile)->Song:
 	if !mandatory_CHAL:
 		return null
 	return song
+
+func process_highlights(inf:ChunkedFile,song:Song)->void:
+	song.minor_highlight=inf.get_16()
+	song.major_highlight=inf.get_16()
 
 func process_pattern_list(inf:ChunkedFile,song:Song)->void:
 	var pat_l:Array=[]

@@ -5,7 +5,6 @@ FIXME
 	Export sometimes crashes. (Buffer freed before final write?)
 	Pasting on FX columns tries to paste to the original column, instead of the current one.
 TODO:
-	Change row highlights. Save in song.
 	Reset per channel parameters (as a command|button|on export)
 	MIDI input
 		Flag?: MIDI Pitch bend
@@ -20,9 +19,6 @@ FUTURE:
 	Translations
 	Themability
 """
-
-func _ready()->void:
-	AUDIO.connect("buffer_sent",$Main/Oscilloscope,"draw_music")
 
 func _on_tab_changed(tab:int)->void:
 	var t:Tabs=$Main/Tabs.get_tab_control(tab)

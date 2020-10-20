@@ -18,6 +18,8 @@ func _on_song_changed()->void:
 	$SC/VBC/GC/TicksRow.value=GLOBALS.song.ticks_row
 	$SC/VBC/GC/RowsPat.value=GLOBALS.song.pattern_length
 	$SC/VBC/GC/Channels.value=GLOBALS.song.num_channels
+	$SC/VBC/GC/MinHlite.value=GLOBALS.song.minor_highlight
+	$SC/VBC/GC/MajHlite.value=GLOBALS.song.major_highlight
 	set_block_signals(false)
 
 #
@@ -46,6 +48,8 @@ func _on_Velocity_value_changed(value:float)->void:
 
 func _on_RowsPat_value_changed(value:float)->void:
 	GLOBALS.song.set_pattern_length(value)
+	$SC/VBC/GC/MinHlite.max_value=value
+	$SC/VBC/GC/MajHlite.max_value=value
 
 func _on_Channels_value_changed(value:float)->void:
 	GLOBALS.song.set_num_channels(value)
@@ -56,9 +60,13 @@ func _on_Title_text_changed(t:String)->void:
 func _on_Author_text_changed(t:String)->void:
 	GLOBALS.song.set_author(t)
 
-
 func _on_Editor_step_changed(step:int)->void:
 	$SC/VBC/GC/Step.set_block_signals(true)
 	$SC/VBC/GC/Step.value=step
 	$SC/VBC/GC/Step.set_block_signals(false)
 
+func _on_MinHlite_value_changed(value:int)->void:
+	GLOBALS.song.set_minor_highlight(value)
+
+func _on_MajHlite_value_changed(value:int)->void:
+	GLOBALS.song.set_major_highlight(value)

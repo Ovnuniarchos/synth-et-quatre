@@ -14,6 +14,7 @@ export (Color) var dc_line_color=Color8(255,255,255,64) setget set_dc_line_color
 
 func _ready()->void:
 	fft=AudioServer.get_bus_effect_instance(0,0)
+	AUDIO.connect("buffer_sent",self,"draw_music")
 
 func draw_music(buf:Array)->void:
 	draw_fft=true

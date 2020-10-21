@@ -61,10 +61,13 @@ _ALWAYS_INLINE_ void Operator::set_delta(){
 }
 
 FixedPoint Operator::generate(FixedPoint pm_in,FixedPoint am_lfo_in,FixedPoint fm_lfo_in){
-	if(!enabled || is_invalid_wave(wave_ix)){
+	if(!enabled){
 		return 0L;
 	}
 	calculate_envelope();
+	if(is_invalid_wave(wave_ix)){
+		return 0L;
+	}
 	FixedPoint sample=(waves[wave_ix]->generate(phi,pm_in,duty_cycle)*eg_vol)>>FP_INT_SHIFT;
 	// AM
 	FixedPoint mod=((am_lfo_in*am_level)>>FP_INT_SHIFT)+am_floor;

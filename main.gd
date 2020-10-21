@@ -4,6 +4,8 @@ extends Control
 FIXME
 	Export sometimes crashes. (Buffer freed before final write?)
 	Pasting on FX columns tries to paste to the original column, instead of the current one.
+	LFOs are not applied.
+	Waveform editor shows oscilloscope instead of waveform.
 TODO:
 	Reset per channel parameters (as a command|button|on export)
 	MIDI input

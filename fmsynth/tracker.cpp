@@ -266,7 +266,7 @@ Array SynthTracker::generate(int size,float volume,Array cmds){
 				case CMD_LFO_FREQ:
 					data=VAR2INT(cmds[cmd_ptr++]);
 					TRACE(TRACE_LFO_FREQUENCY,voice,op_mask,data/256.0f);
-					synth.set_lfo_freq(voice,data);
+					synth.set_lfo_freq(voice,data/256.0f);
 					break;
 				case CMD_LFO_WAVE:
 					TRACE(TRACE_LFO_WAVE,voice,op_mask);
@@ -412,7 +412,7 @@ void SynthTracker::debug(Array cmds,int end_ix){
 				break;
 			case CMD_LFO_FREQ:
 				data=VAR2INT(cmds[cmd_ptr++]);
-				printf(TRACE_LFO_FREQUENCY,voice,op_mask,data);
+				printf(TRACE_LFO_FREQUENCY,voice,op_mask,data/256.0f);
 				break;
 			case CMD_LFO_WAVE:
 				printf(TRACE_LFO_WAVE,voice,op_mask);
@@ -565,7 +565,7 @@ void SynthTracker::set_panning(int voice,int panning,bool invert_left,bool inver
 
 
 void SynthTracker::set_lfo_freq(int lfo,float frequency){
-	synth.set_lfo_freq(lfo,frequency*256.0);
+	synth.set_lfo_freq(lfo,frequency);
 }
 
 void SynthTracker::set_lfo_wave(int lfo,int wave_num){

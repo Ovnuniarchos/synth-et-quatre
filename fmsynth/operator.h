@@ -20,7 +20,7 @@ private:
 	FixedPoint delta=0L;
 
 	Wave **waves=NULL;
-	int wave_ix;
+	int wave_ix=0;
 	FixedPoint phi=0L;
 	FixedPoint duty_cycle=0L;
 

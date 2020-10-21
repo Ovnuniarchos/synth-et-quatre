@@ -16,7 +16,7 @@ private:
 	Wave *waves[MAX_WAVES];
 	bool mute_voice[MAX_VOICES];
 
-	int lfo_waves[MAX_LFOS];
+	int lfo_waves[MAX_LFOS]={0,0,0,0};
 	float lfo_mix_rate=DEFAULT_MIX_RATE;
 	float lfo_freqs[MAX_LFOS]={1.0,1.0,1.0,1.0};
 	FixedPoint lfo_deltas[MAX_LFOS]={0L,0L,0L,0L};
@@ -33,7 +33,10 @@ public:
 		waves[1]=new SawWave();
 		waves[2]=new TriangleWave();
 		waves[3]=new NoiseWave();
-		for(i=0;i<MAX_VOICES;i++) voices[i].set_wave_list(waves);
+		for(i=0;i<MAX_VOICES;i++){
+			voices[i].set_wave_list(waves);
+			mute_voice[i]=false;
+		}
 	};
 
 	~FmSynth(){

@@ -1,3 +1,4 @@
+#include <cstdio>
 #include <cmath>
 
 #include "operator.h"
@@ -74,7 +75,7 @@ FixedPoint Operator::generate(FixedPoint pm_in,FixedPoint am_lfo_in,FixedPoint f
 	sample=(sample*mod)>>FP_INT_SHIFT;
 	// FM
 	mod=((fm_lfo_in*(fm_lfo_in>0?fm_max:fm_min))>>FP_INT_SHIFT)+FP_ONE;
-	phi=waves[wave_ix]->fix_loop(phi,((delta*mod)>>FP_INT_SHIFT));
+	phi=waves[wave_ix]->fix_loop(phi,(delta*mod)>>FP_INT_SHIFT);
 	//
 	return sample;
 }

@@ -4,8 +4,6 @@ extends Control
 FIXME
 	Export sometimes crashes. (Buffer freed before final write?)
 	Pasting on FX columns tries to paste to the original column, instead of the current one.
-	LFOs are not applied.
-	Waveform editor shows oscilloscope instead of waveform.
 TODO:
 	Reset per channel parameters (as a command|button|on export)
 	MIDI input
@@ -21,6 +19,9 @@ FUTURE:
 	Translations
 	Themability
 """
+
+func _ready()->void:
+	AUDIO.connect("buffer_sent",$Main/Oscilloscope,"draw_music")
 
 func _on_tab_changed(tab:int)->void:
 	var t:Tabs=$Main/Tabs.get_tab_control(tab)

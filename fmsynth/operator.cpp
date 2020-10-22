@@ -58,7 +58,11 @@ _ALWAYS_INLINE_ bool Operator::is_invalid_wave(int ix){
 _ALWAYS_INLINE_ void Operator::set_delta(){
 	float rec_freq=is_invalid_wave(wave_ix)?1.0:waves[wave_ix]->get_recorded_freq();
 	float sam_freq=is_invalid_wave(wave_ix)?1.0:waves[wave_ix]->get_sample_freq();
-	delta=(frequency*freq_mul*detune*rec_freq*FP_ONE)/(freq_div*mix_rate*sam_freq);
+	if(freq_mul){
+		delta=(frequency*freq_mul*detune*rec_freq*FP_ONE)/(freq_div*mix_rate*sam_freq);
+	}else{
+		delta=(fixed_freq*rec_freq*FP_ONE)/(freq_div*mix_rate*sam_freq);
+	}
 }
 
 FixedPoint Operator::generate(FixedPoint pm_in,FixedPoint am_lfo_in,FixedPoint fm_lfo_in){
@@ -104,7 +108,7 @@ void Operator::set_frequency(int cents,float _frequency){
 }
 
 void Operator::set_freq_mul(int multiplier){
-	freq_mul=clamp(multiplier,0,31)+1;
+	freq_mul=clamp(multiplier,0,32);
 	set_delta();
 }
 
@@ -113,8 +117,9 @@ void Operator::set_freq_div(int divider){
 	set_delta();
 }
 
-void Operator::set_detune(float _detune){
+void Operator::set_detune(int frequency,float _detune){
 	detune=_detune;
+	fixed_freq=frequency<0?-frequency:frequency;
 	set_delta();
 }
 

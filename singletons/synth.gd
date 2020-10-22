@@ -34,7 +34,7 @@ func reset(full:bool=false)->void:
 		synth.set_repeat(i,15,FmInstrument.REPEAT.OFF)
 		synth.set_wave(i,15,FmInstrument.WAVE.TRIANGLE)
 		synth.set_duty_cycle(i,15,0)
-		synth.set_freq_mul(i,15,0)
+		synth.set_freq_mul(i,15,1)
 		synth.set_freq_div(i,15,0)
 		synth.set_detune(i,15,0)
 		synth.set_output(i,1,255)

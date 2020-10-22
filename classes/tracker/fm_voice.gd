@@ -309,7 +309,9 @@ func get_fx_val(v,note,cmd:int,cmd_col:int)->int:
 		fx_vals[cmd]=clamp(v*50,0,12000)
 	elif cmd==CONSTS.FX_FMS_LFO or cmd==CONSTS.FX_AMS_LFO:
 		fx_vals[cmd]=clamp(v,0,3)
-	elif cmd==CONSTS.FX_MUL_SET or cmd==CONSTS.FX_DIV_SET:
+	elif cmd==CONSTS.FX_MUL_SET:
+		fx_vals[cmd]=clamp(v,0,32)
+	elif cmd==CONSTS.FX_DIV_SET:
 		fx_vals[cmd]=clamp(v,0,31)
 	elif cmd==CONSTS.FX_DELAY or cmd==CONSTS.FX_DELAY_SONG:
 		fx_apply[cmd_col]=false

@@ -396,7 +396,6 @@ margin_right = 480.0
 margin_bottom = 16.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
-min_value = 1.0
 max_value = 32.0
 value = 1.0
 script = ExtResource( 2 )
@@ -579,6 +578,7 @@ size_flags_horizontal = 3
 text = "1"
 items = [ "1", null, false, 0, null, "2", null, false, 4, null, "3", null, false, 3, null, "4", null, false, 2, null ]
 selected = 0
+
 [connection signal="toggled" from="Params/Switch" to="." method="_on_Switch_toggled"]
 [connection signal="value_changed" from="Params/Wave/DUCSlider" to="." method="_on_DUCSlider_value_changed"]
 [connection signal="item_selected" from="Params/Wave/WAVButton" to="." method="_on_WAVButton_item_selected"]

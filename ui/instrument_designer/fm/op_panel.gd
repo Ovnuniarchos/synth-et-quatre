@@ -68,7 +68,8 @@ func _on_FreqLFO_item_selected(idx:int)->void:
 	emit_signal("instrument_changed")
 
 func _on_MULSlider_value_changed(value:float)->void:
-	GLOBALS.get_instrument().multipliers[operator]=int(value)-1
+	GLOBALS.get_instrument().multipliers[operator]=int(value)
+	$Params/Detune/DETLabel.text="DET" if int(value)>0 else "FFR"
 	emit_signal("instrument_changed")
 
 func _on_DIVSlider_value_changed(value:float)->void:
@@ -95,7 +96,7 @@ func set_sliders(inst:FmInstrument)->void:
 	$Params/ADSR/SRSlider.value=inst.sustains[operator]
 	$Params/ADSR/RRSlider.value=inst.releases[operator]
 	$Params/ADSR/Repeat.select($Params/ADSR/Repeat.get_item_index(inst.repeats[operator]))
-	$Params/Frequency/MULSlider.value=inst.multipliers[operator]+1
+	$Params/Frequency/MULSlider.value=inst.multipliers[operator]
 	$Params/Frequency/DIVSlider.value=inst.dividers[operator]+1
 	$Params/Detune/DETSlider.value=inst.detunes[operator]
 	$Params/Wave/DUCSlider.value=inst.duty_cycles[operator]
@@ -105,5 +106,6 @@ func set_sliders(inst:FmInstrument)->void:
 	$Params/ADSR/KSRSlider.value=inst.key_scalers[operator]
 	$Params/FMS/FMSSlider.value=inst.fm_intensity[operator]
 	$Params/LFOs/FreqLFO.select($Params/LFOs/FreqLFO.get_item_index(inst.fm_lfo[operator]))
+	$Params/Detune/DETLabel.text="DET" if inst.multipliers[operator]>0 else "FFR"
 	set_block_signals(false)
 	emit_signal("instrument_changed")

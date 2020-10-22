@@ -17,6 +17,7 @@ private:
 	float freq_mul=1.0;
 	float freq_div=1.0;
 	float detune=1.0;
+	FixedPoint fixed_freq=0L;
 	FixedPoint delta=0L;
 
 	Wave **waves=NULL;
@@ -65,7 +66,7 @@ public:
 	void set_frequency(int cents,float frequency);
 	void set_freq_mul(int multiplier);
 	void set_freq_div(int divider);
-	void set_detune(float detune);
+	void set_detune(int frequency,float detune);
 
 	void set_wave(int wave_num);
 	void set_duty_cycle(FixedPoint duty_cycle);

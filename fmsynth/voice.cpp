@@ -49,7 +49,7 @@ void Voice::set_detune(int op_mask,int millis){
 	millis=clamp(millis,-12000,12000);
 	float detune=pow(2.0,millis/12000.0);
 	for(int i=0;i<MAX_OPS;i++,op_mask>>=1){
-		if(op_mask&1) ops[i].set_detune(detune);
+		if(op_mask&1) ops[i].set_detune(millis,detune);
 	}
 }
 

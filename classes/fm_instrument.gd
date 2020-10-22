@@ -22,7 +22,7 @@ var key_scalers:Array=[0,0,0,0]
 
 var repeats:Array=[REPEAT.OFF,REPEAT.OFF,REPEAT.OFF,REPEAT.OFF]
 
-var multipliers:Array=[0,0,0,0]
+var multipliers:Array=[1,1,1,1]
 
 var dividers:Array=[0,0,0,0]
 

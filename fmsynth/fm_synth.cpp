@@ -161,8 +161,8 @@ void FmSynth::stop(int voice,int op_mask){
 	voices[voice&31].stop(op_mask);
 }
 
-void FmSynth::set_enable(int voice,int op_mask,bool enable){
-	voices[voice&31].set_enable(op_mask,enable);
+void FmSynth::set_enable(int voice,int op_mask,int enable_bits){
+	voices[voice&31].set_enable(op_mask,enable_bits);
 }
 
 

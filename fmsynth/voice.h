@@ -53,7 +53,7 @@ public:
 	void key_on(int op_mask,int volume,bool legato);
 	void key_off(int op_mask);
 	void stop(int op_mask);
-	void set_enable(int op_mask,bool enable);
+	void set_enable(int op_mask,int enable_bits);
 
 	void set_pm_factor(int op_from,int op_to,int factor);
 	void set_output(int op_mask,int volume);

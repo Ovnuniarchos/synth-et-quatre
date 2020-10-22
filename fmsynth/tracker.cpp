@@ -545,8 +545,8 @@ void SynthTracker::stop(int voice,int op_mask){
 	synth.stop(voice,op_mask);
 }
 
-void SynthTracker::set_enable(int voice,int op_mask,bool enable){
-	synth.set_enable(voice,op_mask,enable);
+void SynthTracker::set_enable(int voice,int op_mask,int enable_bits){
+	synth.set_enable(voice,op_mask,enable_bits);
 }
 
 

@@ -76,7 +76,7 @@ public:
 	void key_on(int voice,int op_mask,int velocity,bool legato);
 	void key_off(int voice,int op_mask);
 	void stop(int voice,int op_mask);
-	void set_enable(int voice,int op_mask,bool enable);
+	void set_enable(int voice,int op_mask,int enable_bits);
 
 	void set_pm_factor(int voice,int op_from,int op_to,int pm_factor);
 	void set_output(int voice,int op_mask,int volume);

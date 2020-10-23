@@ -110,6 +110,7 @@ func load_song()->void:
 	$FileDialog.window_title="Load Song"
 	$FileDialog.mode=FileDialog.MODE_OPEN_FILE
 	$FileDialog.filters=FILES_SE4
+	$FileDialog.toplevel=true
 	$FileDialog.popup_centered_ratio()
 
 func load_instrument()->void:
@@ -118,6 +119,7 @@ func load_instrument()->void:
 	$FileDialog.window_title="Load Instrument"
 	$FileDialog.mode=FileDialog.MODE_OPEN_FILE
 	$FileDialog.filters=FILES_SI4
+	$FileDialog.toplevel=true
 	$FileDialog.popup_centered_ratio()
 
 #
@@ -139,6 +141,7 @@ func save_song()->void:
 	$FileDialog.window_title="Save Song"
 	$FileDialog.mode=FileDialog.MODE_SAVE_FILE
 	$FileDialog.filters=FILES_SE4
+	$FileDialog.toplevel=true
 	$FileDialog.popup_centered_ratio()
 
 func save_wave()->void:
@@ -147,6 +150,7 @@ func save_wave()->void:
 	$FileDialog.window_title="Export as Wave"
 	$FileDialog.mode=FileDialog.MODE_SAVE_FILE
 	$FileDialog.filters=FILES_WAV
+	$FileDialog.toplevel=true
 	$FileDialog.popup_centered_ratio()
 
 func save_instrument()->void:
@@ -155,6 +159,7 @@ func save_instrument()->void:
 	$FileDialog.window_title="Save Instrument"
 	$FileDialog.mode=FileDialog.MODE_SAVE_FILE
 	$FileDialog.filters=FILES_SI4
+	$FileDialog.toplevel=true
 	$FileDialog.popup_centered_ratio()
 
 #

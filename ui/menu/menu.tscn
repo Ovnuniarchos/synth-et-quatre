@@ -78,6 +78,7 @@ items = [ "Clean patterns", null, 0, false, false, 0, 0, null, "", false, "Clean
 switch_on_hover = true
 
 [node name="FileDialog" type="FileDialog" parent="."]
+toplevel = false
 margin_right = 362.0
 margin_bottom = 138.0
 window_title = "Guardar un Archivo"
@@ -86,6 +87,7 @@ access = 2
 filters = PoolStringArray( "*.se4 ; SynthEtQuatre song" )
 current_dir = "/home/jordi/godot/SynthEtQuatre"
 current_path = "/home/jordi/godot/SynthEtQuatre/"
+
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
 [connection signal="mouse_entered" from="CC" to="." method="_on_mouse_entered"]

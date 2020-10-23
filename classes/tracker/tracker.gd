@@ -118,6 +118,8 @@ func gen_commands(song:Song,mix_rate:float,buffer_size:int,cmds:Array)->bool:
 			if goto_order!=-1:
 				curr_tick=0
 				curr_row=0
+				if recording and goto_order<=curr_order:
+					return false
 				next_order(goto_order)
 				goto_order=-1
 				if needs_stop(song):

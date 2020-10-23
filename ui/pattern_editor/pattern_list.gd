@@ -40,7 +40,10 @@ func update_list(from:int=0,to:int=-1)->void:
 		l.connect("pressed",self,"_on_order_pressed",[order])
 		order_labels[order]=l
 		for chn in range(song.num_channels):
-			l=OrderButton.new(list_scroll)
+			l=Button.new()
+			l.focus_mode=FOCUS_NONE
+			l.mouse_filter=Control.MOUSE_FILTER_STOP
+			l.button_mask=BUTTON_MASK_LEFT|BUTTON_MASK_RIGHT
 			l.name="ord%03dchn%02d"%[order,chn]
 			l.text="%03d"%[song.orders[order][chn]]
 			l.connect("gui_input",self,"_on_button_gui_input",[order,chn,l])
@@ -80,7 +83,7 @@ func _on_button_gui_input(ev:InputEvent,order:int,channel:int,button:Button)->vo
 				BUTTON_MASK_LEFT,BUTTON_MASK_RIGHT,BUTTON_WHEEL_UP,BUTTON_WHEEL_DOWN
 			]):
 		return
-	get_tree().set_input_as_handled()
+	accept_event()
 	if !ev.is_pressed():
 		return
 	if order!=GLOBALS.curr_order and ev.button_index in [BUTTON_LEFT,BUTTON_RIGHT]:

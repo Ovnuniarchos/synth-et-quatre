@@ -119,11 +119,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://ui/widgets/numbered_item_list.gd"
 }, {
-"base": "Button",
-"class": "OrderButton",
-"language": "GDScript",
-"path": "res://ui/pattern_editor/order_button.gd"
-}, {
 "base": "Reference",
 "class": "Pattern",
 "language": "GDScript",
@@ -237,7 +232,6 @@ _global_script_class_icons={
 "NoiseWave": "",
 "NormalizeFilter": "",
 "NumberedItemList": "",
-"OrderButton": "",
 "Pattern": "",
 "PlayButton": "",
 "QuantizeFilter": "",

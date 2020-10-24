@@ -28,4 +28,4 @@ func duplicate()->Waveform:
 
 func equals(other:Waveform)->bool:
 	# Name is irrelevant
-	return size!=other.size
+	return size==other.size

@@ -3,6 +3,7 @@ extends PanelContainer
 signal horizontal_scroll(offset)
 signal step_changed(step)
 signal velocity_changed(velocity)
+signal order_changed(order)
 
 const ATTRS=Pattern.ATTRS
 
@@ -226,38 +227,46 @@ func process_keyboard(ev:InputEventKey)->bool:
 		if ev.pressed:
 			advance(1)
 			moved=true
-	if ev.scancode==GKBD.STEP:
+	elif ev.scancode==GKBD.STEP:
 		if ev.pressed:
 			advance(step)
 			moved=true
-	if ev.scancode==GKBD.UP:
+	elif ev.scancode==GKBD.UP:
 		if ev.pressed:
 			advance(-1)
 			moved=true
-	if ev.scancode==GKBD.FAST_UP:
-		if ev.pressed:
+	elif ev.scancode==GKBD.FAST_UP:
+		if ev.control:
+			if !ev.pressed:
+				GLOBALS.goto_order(GLOBALS.curr_order-1)
+				emit_signal("order_changed",GLOBALS.curr_order)
+		elif ev.pressed:
 			advance(-4*step)
 			moved=true
-	if ev.scancode==GKBD.FAST_DOWN:
-		if ev.pressed:
+	elif ev.scancode==GKBD.FAST_DOWN:
+		if ev.control:
+			if !ev.pressed:
+				GLOBALS.goto_order(GLOBALS.curr_order+1)
+				emit_signal("order_changed",GLOBALS.curr_order)
+		elif ev.pressed:
 			advance(4*step)
 			moved=true
-	if ev.scancode==GKBD.HOME:
+	elif ev.scancode==GKBD.HOME:
 		if ev.pressed:
 			set_row(0)
 			moved=true
-	if ev.scancode==GKBD.END:
+	elif ev.scancode==GKBD.END:
 		if ev.pressed:
 			set_row(GLOBALS.song.pattern_length-1)
 			moved=true
-	if ev.scancode==GKBD.RIGHT:
+	elif ev.scancode==GKBD.RIGHT:
 		if ev.pressed:
 			if ev.control or ev.command:
 				set_channel(curr_channel+1)
 			else:
 				set_column(curr_column+1)
 			moved=true
-	if ev.scancode==GKBD.LEFT:
+	elif ev.scancode==GKBD.LEFT:
 		if ev.pressed:
 			if ev.control or ev.command:
 				set_channel(curr_channel-1)

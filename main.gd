@@ -5,7 +5,6 @@ FIXME
 	Export sometimes crashes. (Buffer freed before final write?)
 	Pasting on FX columns tries to paste to the original column, instead of the current one.
 TODO:
-	Advance order keys.
 	Reset per channel parameters (as a command|button|on export)
 	MIDI input
 		Flag?: MIDI Pitch bend

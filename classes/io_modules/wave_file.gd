@@ -68,6 +68,23 @@ func write_chunk(data:Array)->int:
 		return err
 	return OK
 
+func write_cue_points(offsets:Array)->int:
+	if !is_open():
+		return ERR_FILE_NOT_OPEN
+	if offsets.empty():
+		return OK
+	store_string("cue ")
+	store_32(4+offsets.size()*24)
+	store_32(offsets.size())
+	for i in range(offsets.size()):
+		store_32(i)
+		store_32(offsets[i])
+		store_string("data")
+		store_32(0)
+		store_32(offsets[i]*block_bytes)
+		store_32(0)
+	return OK
+
 func end_file()->int:
 	if !is_open():
 		return ERR_FILE_NOT_OPEN

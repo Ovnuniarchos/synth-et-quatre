@@ -73,7 +73,7 @@ func _on_song_changed()->void:
 
 #
 
-func gen_commands(song:Song,mix_rate:float,buffer_size:int,cmds:Array)->bool:
+func gen_commands(song:Song,mix_rate:float,buffer_size:int,cmds:Array,order_start:Array=[])->bool:
 	if !playing:
 		cmds[0]=CONSTS.CMD_END
 		return false
@@ -82,7 +82,8 @@ func gen_commands(song:Song,mix_rate:float,buffer_size:int,cmds:Array)->bool:
 	var ptr:int=0
 	var optr:int=0
 	var buffer_left:float=buffer_size
-	var wait:int
+	var buffer_pos:int=0
+	var wait:int=0
 	# Should not insert more than buf_size
 	if curr_sample>=1.0:
 		wait=floor(min(min(max_wait,samples_tick),curr_sample))
@@ -90,6 +91,7 @@ func gen_commands(song:Song,mix_rate:float,buffer_size:int,cmds:Array)->bool:
 		cmds[ptr+1]=wait-1
 		ptr+=2
 		buffer_left-=wait
+	buffer_pos+=wait
 	#
 	var sig_cmd:int
 	var sig:int
@@ -112,10 +114,12 @@ func gen_commands(song:Song,mix_rate:float,buffer_size:int,cmds:Array)->bool:
 		cmds[ptr+1]=wait-1
 		ptr+=2
 		buffer_left-=wait
+		buffer_pos+=wait
 		#
 		curr_tick+=1
 		if song_delay<=0:
 			if goto_order!=-1:
+				order_start.append(buffer_pos)
 				curr_tick=0
 				curr_row=0
 				if recording and goto_order<=curr_order:
@@ -126,6 +130,7 @@ func gen_commands(song:Song,mix_rate:float,buffer_size:int,cmds:Array)->bool:
 					return false
 				emit_signal("position_changed",curr_order,curr_row)
 			elif goto_next!=-1:
+				order_start.append(buffer_pos)
 				curr_tick=0
 				curr_row=0 if goto_next>=song.pattern_length else goto_next
 				next_order(curr_order+1)
@@ -137,6 +142,7 @@ func gen_commands(song:Song,mix_rate:float,buffer_size:int,cmds:Array)->bool:
 				curr_tick=0
 				curr_row=curr_row+1
 				if curr_row>=song.pattern_length:
+					order_start.append(buffer_pos)
 					curr_row=0
 					next_order(curr_order+1)
 					if needs_stop(song):

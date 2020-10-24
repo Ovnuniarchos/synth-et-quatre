@@ -4,23 +4,23 @@
 [ext_resource path="res://theme/DejaVu10.tres" type="DynamicFontData" id=2]
 [ext_resource path="res://theme/editor.png" type="Texture" id=3]
 
-[sub_resource type="AtlasTexture" id=1]
+[sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 3 )
 region = Rect2( 56, 112, 8, 16 )
 
-[sub_resource type="AtlasTexture" id=2]
+[sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 3 )
 region = Rect2( 32, 112, 8, 16 )
 
-[sub_resource type="AtlasTexture" id=3]
+[sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 3 )
 region = Rect2( 48, 112, 8, 16 )
 
-[sub_resource type="AtlasTexture" id=4]
+[sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 3 )
 region = Rect2( 96, 112, 16, 16 )
 
-[sub_resource type="AtlasTexture" id=5]
+[sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 3 )
 region = Rect2( 64, 112, 16, 16 )
 
@@ -69,11 +69,11 @@ GridContainer/constants/hseparation = 0
 GridContainer/constants/vseparation = 0
 HBoxContainer/constants/separation = 0
 HSplitContainer/constants/autohide = 0
-Icons/icons/Close = SubResource( 1 )
-Icons/icons/Down = SubResource( 2 )
-Icons/icons/Left = SubResource( 3 )
-Icons/icons/Play = SubResource( 4 )
-Icons/icons/PlayTrack = SubResource( 5 )
+Icons/icons/Close = SubResource( 3 )
+Icons/icons/Down = SubResource( 4 )
+Icons/icons/Left = SubResource( 5 )
+Icons/icons/Play = SubResource( 1 )
+Icons/icons/PlayTrack = SubResource( 2 )
 Icons/icons/Right = SubResource( 6 )
 Icons/icons/Stop = SubResource( 7 )
 Icons/icons/Up = SubResource( 8 )

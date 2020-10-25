@@ -4,6 +4,7 @@ extends Control
 FIXME
 	Export sometimes crashes. (Buffer freed before final write?)
 	Pasting on FX columns tries to paste to the original column, instead of the current one.
+	Copied selection is affected by last selection.
 TODO:
 	Reset per channel parameters (as a command|button|on export)
 	MIDI input

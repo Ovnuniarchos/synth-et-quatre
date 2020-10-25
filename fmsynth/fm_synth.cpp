@@ -7,9 +7,9 @@ _ALWAYS_INLINE_ FixedPoint FmSynth::generate_lfo(int ix,FixedPoint phi,FixedPoin
 void FmSynth::generate(FixedPoint &left,FixedPoint &right){
 	FixedPoint lfo_vals[MAX_LFOS]={
 		generate_lfo(0,lfo_phis[0],lfo_duties[0]),
-		generate_lfo(1,lfo_phis[1],lfo_duties[0]),
-		generate_lfo(2,lfo_phis[2],lfo_duties[0]),
-		generate_lfo(3,lfo_phis[3],lfo_duties[0])
+		generate_lfo(1,lfo_phis[1],lfo_duties[1]),
+		generate_lfo(2,lfo_phis[2],lfo_duties[2]),
+		generate_lfo(3,lfo_phis[3],lfo_duties[3])
 	};
 	lfo_phis[0]+=lfo_deltas[0];
 	lfo_phis[1]+=lfo_deltas[1];

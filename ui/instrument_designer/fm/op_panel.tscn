@@ -553,7 +553,7 @@ margin_right = 494.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 text = "1"
-items = [ "1", null, false, 0, null, "2", null, false, 4, null, "3", null, false, 3, null, "4", null, false, 2, null ]
+items = [ "1", null, false, 0, null, "2", null, false, 1, null, "3", null, false, 2, null, "4", null, false, 3, null ]
 selected = 0
 
 [node name="Sep" type="ReferenceRect" parent="Params/LFOs"]
@@ -576,7 +576,7 @@ margin_right = 1010.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 text = "1"
-items = [ "1", null, false, 0, null, "2", null, false, 4, null, "3", null, false, 3, null, "4", null, false, 2, null ]
+items = [ "1", null, false, 0, null, "2", null, false, 1, null, "3", null, false, 2, null, "4", null, false, 3, null ]
 selected = 0
 
 [connection signal="toggled" from="Params/Switch" to="." method="_on_Switch_toggled"]

@@ -121,6 +121,7 @@ operator = 3
 margin_top = 776.0
 margin_right = 1012.0
 margin_bottom = 922.0
+
 [connection signal="text_changed" from="Info/HBC/Name" to="." method="_on_Name_changed"]
 [connection signal="instrument_changed" from="Params/VBC/OPS/OP1" to="." method="_on_instrument_changed"]
 [connection signal="instrument_changed" from="Params/VBC/OPS/OP2" to="." method="_on_instrument_changed"]

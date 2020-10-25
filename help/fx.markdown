@@ -1,6 +1,6 @@
 # Tone commands
 
-All frequencies are affected by MUL÷DIV÷DET.
+All frequencies are affected by MUL/DIV/DET.
 
 ## 00xx
 
@@ -12,11 +12,11 @@ Adjust frequency by `xx-128` cents. This affects the ending note of a portamento
 
 ## 02xx
 
-Slide frequency by `xx-128` cents÷tick. This affects the ending note of a portamento (0x03).
+Slide frequency by `xx-128` cents/tick. This affects the ending note of a portamento (0x03).
 
 ## 03xx
 
-Slide frequency to current note by `xx` cents÷tick.
+Slide frequency to current note by `xx` cents/tick.
 
 ##04xy
 
@@ -32,7 +32,7 @@ Adjust vibrato intensity by `xx-128` millis.
 
 ## 07xx
 
-Slide vibrato intensity by `xx-128` millis÷tick.
+Slide vibrato intensity by `xx-128` millis/tick.
 
 ## 08xx
 
@@ -56,7 +56,7 @@ Adjust detune by `xx-128` millis.
 
 ## 0Dxx
 
-Slide detune by `xx-128` millis÷tick.
+Slide detune by `xx-128` millis/tick.
 
 
 
@@ -114,7 +114,7 @@ Trigger note cut after `xx` ticks.
 
 ## 23xx
 
-Trigger note on after `xx` ticks. This note on is neither legato nor staccato, and supersedes the legato÷staccato column value.
+Trigger note on after `xx` ticks. This note on is neither legato nor staccato, and supersedes the legato/staccato column value.
 
 This command does not delay the natural note on, just retriggers it.
 
@@ -194,7 +194,7 @@ Set LFO frequency decimal part to `xx÷256`Hz.
 
 # Play commands
 
-Save for `40xx`, only the last command (in channel order) will be used, and any further delay÷repeat will be relative to the end of it.
+Save for `40xx`, only the last command (in channel order) will be used, and any further delay/repeat will be relative to the end of it.
 
 Delays are executed before jumps.
 
@@ -218,8 +218,8 @@ Jump to next order, row `xx`.
 
 ## 44xx
 
-Set song speed to `xx+1` ticks÷row.
+Set song speed to `xx+1` ticks/row.
 
 ## 45xx
 
-Set song speed to `xx+1` ticks÷second.
+Set song speed to `xx+1` ticks/second.

@@ -1,6 +1,7 @@
 extends PanelContainer
 
 signal instrument_changed
+signal operator_changed(op)
 
 export (int) var operator:int=0 setget set_op
 
@@ -8,11 +9,21 @@ var op_mask:int
 
 func _ready()->void:
 	set_op(operator)
+	var ops:Array=[(operator+1)&3,(operator+2)&3,(operator+3)&3]
+	ops.sort()
+	for i in range(3):
+		var b:Button=get_node("Params/Switches/Copy%d"%[i+1])
+		b.text="> OP%d"%[ops[i]+1]
+		b.connect("pressed",self,"_on_channel_copy",[operator,ops[i]])
 
 func set_op(v:int)->void:
 	operator=v&3
-	$Params/Switch.text="OP%d"%(operator+1)
+	$Params/Switches/Switch.text="OP%d"%(operator+1)
 	op_mask=1<<operator
+
+func _on_channel_copy(from:int,to:int)->void:
+	GLOBALS.get_instrument().copy_op(from,to)
+	emit_signal("operator_changed",to)
 
 func _on_DUCSlider_value_changed(value:float)->void:
 	GLOBALS.get_instrument().duty_cycles[operator]=int(value)
@@ -89,7 +100,7 @@ func _on_Switch_toggled(on:bool)->void:
 
 func set_sliders(inst:FmInstrument)->void:
 	set_block_signals(true)
-	$Params/Switch.pressed=bool(inst.op_mask&op_mask)
+	$Params/Switches/Switch.pressed=bool(inst.op_mask&op_mask)
 	$Params/ADSR/ARSlider.value=inst.attacks[operator]
 	$Params/ADSR/DRSlider.value=inst.decays[operator]
 	$Params/ADSR/SLSlider.value=inst.sustain_levels[operator]

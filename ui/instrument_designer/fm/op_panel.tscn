@@ -21,7 +21,12 @@ margin_right = 1017.0
 margin_bottom = 371.0
 size_flags_vertical = 0
 
-[node name="Switch" type="Button" parent="Params"]
+[node name="Switches" type="HBoxContainer" parent="Params"]
+margin_right = 1010.0
+margin_bottom = 20.0
+custom_constants/separation = 16
+
+[node name="Switch" type="Button" parent="Params/Switches"]
 modulate = Color( 1, 2, 1, 1 )
 margin_right = 96.0
 margin_bottom = 20.0
@@ -32,6 +37,27 @@ pressed = true
 text = "OPX"
 script = ExtResource( 1 )
 accent_color = Color( 1, 2, 1, 1 )
+
+[node name="Sep" type="ReferenceRect" parent="Params/Switches"]
+margin_left = 112.0
+margin_right = 176.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 64, 16 )
+
+[node name="Copy1" type="Button" parent="Params/Switches"]
+margin_left = 192.0
+margin_right = 204.0
+margin_bottom = 20.0
+
+[node name="Copy2" type="Button" parent="Params/Switches"]
+margin_left = 220.0
+margin_right = 232.0
+margin_bottom = 20.0
+
+[node name="Copy3" type="Button" parent="Params/Switches"]
+margin_left = 248.0
+margin_right = 260.0
+margin_bottom = 20.0
 
 [node name="Sep" type="ReferenceRect" parent="Params"]
 margin_top = 24.0
@@ -579,7 +605,7 @@ text = "1"
 items = [ "1", null, false, 0, null, "2", null, false, 1, null, "3", null, false, 2, null, "4", null, false, 3, null ]
 selected = 0
 
-[connection signal="toggled" from="Params/Switch" to="." method="_on_Switch_toggled"]
+[connection signal="toggled" from="Params/Switches/Switch" to="." method="_on_Switch_toggled"]
 [connection signal="value_changed" from="Params/Wave/DUCSlider" to="." method="_on_DUCSlider_value_changed"]
 [connection signal="item_selected" from="Params/Wave/WAVButton" to="." method="_on_WAVButton_item_selected"]
 [connection signal="value_changed" from="Params/ADSR/ARSlider" to="." method="_on_ARSlider_value_changed"]

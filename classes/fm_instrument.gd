@@ -76,6 +76,25 @@ func delete_waveform(w_ix:int)->void:
 			if waveforms[i]==WAVE.NOISE:
 				waveforms[i]=WAVE.TRIANGLE
 
+func copy_op(from:int,to:int)->void:
+	attacks[to]=attacks[from]
+	decays[to]=decays[from]
+	sustains[to]=sustains[from]
+	sustain_levels[to]=sustain_levels[from]
+	releases[to]=releases[from]
+	key_scalers[to]=key_scalers[from]
+	repeats[to]=repeats[from]
+	multipliers[to]=multipliers[from]
+	dividers[to]=dividers[from]
+	detunes[to]=detunes[from]
+	duty_cycles[to]=duty_cycles[from]
+	waveforms[to]=waveforms[from]
+	am_intensity[to]=am_intensity[from]
+	am_lfo[to]=am_lfo[from]
+	fm_intensity[to]=fm_intensity[from]
+	fm_lfo[to]=fm_lfo[from]
+	routings[to]=routings[from].duplicate()
+
 #
 
 func serialize(out:ChunkedFile)->void:

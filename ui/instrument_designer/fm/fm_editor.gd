@@ -24,5 +24,12 @@ func _on_Name_changed(text:String)->void:
 func _on_instrument_selected(_idx:int)->void:
 	update_instrument()
 
-func _on_instrument_changed():
+func _on_instrument_changed()->void:
 	emit_signal("instrument_changed")
+
+func _on_operator_changed(op:int)->void:
+	var ci:Instrument=GLOBALS.get_instrument()
+	if ci==null:
+		return
+	get_node("Params/VBC/OPS/OP%d"%[op+1]).set_sliders(ci)
+	$Params/VBC/Routing.set_sliders(ci.routings)

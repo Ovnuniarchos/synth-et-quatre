@@ -6,6 +6,7 @@ onready var list_scroll:ScrollContainer=$VBC/SC
 onready var list:GridContainer=$VBC/SC/List
 var order_labels:Array
 var curr_highlight:int
+var scroll_lock:bool=false
 
 func _ready()->void:
 	GLOBALS.connect("song_changed",self,"_on_song_changed")
@@ -55,8 +56,9 @@ func highlight_current_order()->void:
 	for i in range(song.orders.size()):
 		list.get_child(i*list.columns).modulate=Color8(0,255,0) if i==GLOBALS.curr_order else Color8(255,255,255)
 
-# warning-ignore:unused_argument
-func _on_playing_pos_changed(order:int,row:int)->void:
+func _on_playing_pos_changed(order:int,_row:int)->void:
+	if scroll_lock:
+		return
 	order_labels[curr_highlight].modulate=Color8(255,255,255)
 	order_labels[order].modulate=Color8(0,255,0)
 	curr_highlight=order
@@ -109,13 +111,13 @@ func _on_button_gui_input(ev:InputEvent,order:int,channel:int,button:Button)->vo
 
 #
 
-func _on_Add_pressed():
+func _on_Add_pressed()->void:
 	GLOBALS.song.add_order()
 
-func _on_Copy_pressed():
+func _on_Copy_pressed()->void:
 	GLOBALS.song.add_order(GLOBALS.curr_order)
 
-func _on_Del_pressed():
+func _on_Del_pressed()->void:
 	var order:int=GLOBALS.curr_order
 	if order>=GLOBALS.song.orders.size()-1:
 		GLOBALS.curr_order=max(0,GLOBALS.song.orders.size()-2)
@@ -123,12 +125,15 @@ func _on_Del_pressed():
 		emit_signal("order_selected",GLOBALS.curr_order)
 	GLOBALS.song.delete_order(order)
 
-func _on_Up_pressed():
+func _on_Up_pressed()->void:
 	if GLOBALS.curr_order==0:
 		return
 	GLOBALS.song.swap_orders(GLOBALS.curr_order-1,GLOBALS.curr_order)
 
-func _on_Down_pressed():
+func _on_Down_pressed()->void:
 	if GLOBALS.curr_order>=GLOBALS.song.orders.size()-2:
 		return
 	GLOBALS.song.swap_orders(GLOBALS.curr_order+1,GLOBALS.curr_order)
+
+func _on_Editor_scroll_locked(lock:bool)->void:
+	scroll_lock=lock

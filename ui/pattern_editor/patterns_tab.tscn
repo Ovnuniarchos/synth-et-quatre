@@ -183,6 +183,7 @@ rect_min_size = Vector2( 0, 48 )
 [connection signal="sort_children" from="VSC/CCVBC/VBC/CNT" to="VSC/CCVBC/VBC/CNT" method="_on_sort_children"]
 [connection signal="horizontal_scroll" from="VSC/CCVBC/VBC/Editor" to="." method="_on_editor_horizontal_scroll"]
 [connection signal="order_changed" from="VSC/CCVBC/VBC/Editor" to="VSC/CCHSC/HSC/CCPatternList/PatternList" method="_on_order_changed" binds= [ -1 ]]
+[connection signal="scroll_locked" from="VSC/CCVBC/VBC/Editor" to="VSC/CCHSC/HSC/CCPatternList/PatternList" method="_on_Editor_scroll_locked"]
 [connection signal="step_changed" from="VSC/CCVBC/VBC/Editor" to="VSC/CCVBC/VBC/InfoBar" method="_on_step_changed"]
 [connection signal="step_changed" from="VSC/CCVBC/VBC/Editor" to="VSC/CCHSC/HSC/CCInfo/Info" method="_on_Editor_step_changed"]
 [connection signal="velocity_changed" from="VSC/CCVBC/VBC/Editor" to="VSC/CCVBC/VBC/InfoBar" method="_on_velocity_changed"]

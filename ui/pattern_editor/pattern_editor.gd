@@ -4,6 +4,7 @@ signal horizontal_scroll(offset)
 signal step_changed(step)
 signal velocity_changed(velocity)
 signal order_changed(order)
+signal scroll_locked(lock)
 
 const ATTRS=Pattern.ATTRS
 
@@ -222,6 +223,7 @@ func process_keyboard(ev:InputEventKey)->bool:
 	if ev.scancode==GKBD.SCROLL_LOCK:
 		if !ev.pressed:
 			scroll_lock=not scroll_lock
+			emit_signal("scroll_locked",scroll_lock)
 		return true
 	if ev.scancode==GKBD.DOWN:
 		if ev.pressed:

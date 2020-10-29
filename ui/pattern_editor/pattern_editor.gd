@@ -358,7 +358,7 @@ func process_keyboard(ev:InputEventKey)->bool:
 				var semi:int=GKBD.KEYBOARD.find(ev.scancode)
 				if ev.shift:
 					put_legato(Pattern.LEGATO_MODE.LEGATO,0,0)
-				elif ev.control:
+				elif ev.alt:
 					put_legato(Pattern.LEGATO_MODE.STACCATO,0,0)
 				put_note(semi%12,GLOBALS.curr_octave+(semi/12),GLOBALS.curr_instrument)
 			return true

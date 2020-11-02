@@ -49,24 +49,28 @@ func update_list(from:int=0,to:int=-1)->void:
 			l.text="%03d"%[song.orders[order][chn]]
 			l.connect("gui_input",self,"_on_button_gui_input",[order,chn,l])
 			list.add_child(l)
-	highlight_current_order()
+	highlight_current_order(true)
 
-func highlight_current_order()->void:
-	var song:Song=GLOBALS.song
-	for i in range(song.orders.size()):
-		list.get_child(i*list.columns).modulate=Color8(0,255,0) if i==GLOBALS.curr_order else Color8(255,255,255)
+func highlight_current_order(full:bool)->void:
+	var order:int=GLOBALS.curr_order
+	if full:
+		var song:Song=GLOBALS.song
+		for i in range(song.orders.size()):
+			list.get_child(i*list.columns).modulate=Color8(0,255,0) if i==order else Color8(255,255,255)
+	else:
+		order_labels[curr_highlight].modulate=Color8(255,255,255)
+		order_labels[order].modulate=Color8(0,255,0)
+		curr_highlight=order
 
 func _on_playing_pos_changed(order:int,_row:int)->void:
 	if scroll_lock:
 		return
-	order_labels[curr_highlight].modulate=Color8(255,255,255)
-	order_labels[order].modulate=Color8(0,255,0)
-	curr_highlight=order
 	GLOBALS.curr_order=order
+	highlight_current_order(false)
 
 func _on_order_pressed(order:int)->void:
 	GLOBALS.curr_order=order
-	_on_playing_pos_changed(order,-1)
+	highlight_current_order(false)
 	emit_signal("order_selected",order)
 
 func _on_order_changed(order:int,channel:int)->void:

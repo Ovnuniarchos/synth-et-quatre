@@ -265,6 +265,8 @@ func process_keyboard(ev:InputEventKey)->bool:
 		if ev.pressed:
 			if ev.control or ev.command:
 				set_channel(curr_channel+1)
+			elif ev.alt:
+				GLOBALS.song.swap_pattern(curr_order,curr_order,curr_channel,curr_channel+1)
 			else:
 				set_column(curr_column+1)
 			moved=true
@@ -272,6 +274,8 @@ func process_keyboard(ev:InputEventKey)->bool:
 		if ev.pressed:
 			if ev.control or ev.command:
 				set_channel(curr_channel-1)
+			elif ev.alt:
+				GLOBALS.song.swap_pattern(curr_order,curr_order,curr_channel,curr_channel-1)
 			else:
 				set_column(curr_column-1)
 			moved=true

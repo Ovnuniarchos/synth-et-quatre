@@ -328,6 +328,19 @@ func add_pattern(channel:int,copy_from:int=-1)->int:
 		pattern_list[channel].append(pattern_list[channel][copy_from].duplicate())
 	return pattern_list[channel].size()-1
 
+func swap_pattern(order_from:int,order_to:int,channel_from:int,channel_to:int)->void:
+	if order_from<0 or order_to<0 or channel_from<0 or channel_to<0\
+			or order_from>=orders.size() or order_to>=orders.size()\
+			or channel_from>=num_channels or channel_to>=num_channels:
+		return
+	var of:int=orders[order_from][channel_from]
+	var ot:int=orders[order_to][channel_to]
+	var pats:Array=[pattern_list[channel_from][of],pattern_list[channel_to][ot]]
+	pattern_list[channel_from][of]=pats[1]
+	pattern_list[channel_to][ot]=pats[0]
+	emit_signal("order_changed",order_from,channel_from)
+	emit_signal("order_changed",order_to,channel_to)
+
 #
 
 func add_order(copy_from:int=-1)->void:

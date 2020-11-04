@@ -33,6 +33,11 @@ func _init(syn:Synth)->void:
 	synth=syn
 	for i in range(Song.MAX_CHANNELS):
 		voices[i]=FmVoice.new()
+	reset()
+
+func reset()->void:
+	for i in range(Song.MAX_CHANNELS):
+		voices[i].reset()
 
 func play(from:int=-1)->void:
 	if from!=-1:

@@ -4,7 +4,7 @@ signal song_changed
 signal octave_changed(octave)
 signal instrument_changed(instrument,inst_name)
 
-var song:Song setget set_song
+var song:Song
 var curr_instrument:int setget set_instrument
 var curr_octave:int setget set_octave
 var curr_order:int setget goto_order

@@ -9,7 +9,8 @@ func obj_load(path:String)->void:
 	f.close()
 	if new_song!=null:
 		AUDIO.tracker.stop()
-		GLOBALS.song=new_song
+		AUDIO.tracker.reset()
+		GLOBALS.set_song(new_song)
 
 
 func obj_save(path:String)->void:

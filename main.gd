@@ -6,7 +6,9 @@ FIXME
 	Pasting on FX columns tries to paste to the original column, instead of the current one.
 	Copied selection is affected by last selection.
 TODO:
-	Reset per channel parameters (as a command|button|on export)
+	MIDI on/off indicator
+	Interpolate value hotkey
+	Reset per channel parameters (as a command|button)
 	MIDI input
 		Flag?: MIDI Pitch bend
 		Flag?: MIDI modulation
@@ -29,15 +31,15 @@ func _on_tab_changed(tab:int)->void:
 	if t.has_method("update_ui"):
 		t.update_ui()
 
-func _on_Play_toggled(button_pressed:bool)->void:
-	if button_pressed:
+func _on_PlayControls_play_all(on:bool)->void:
+	if on:
 		$PlayControls/PC/HBC/PlayTrack.pressed=false
 		AUDIO.tracker.play(GLOBALS.curr_order)
 	else:
 		AUDIO.tracker.stop()
 
-func _on_PlayTrack_toggled(button_pressed):
-	if button_pressed:
+func _on_PlayControls_play_track(on:bool)->void:
+	if on:
 		$PlayControls/PC/HBC/Play.pressed=false
 		AUDIO.tracker.play_track(GLOBALS.curr_order)
 	else:

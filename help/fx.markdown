@@ -130,7 +130,9 @@ Resets the wave generator phase after `xx` ticks.
 
 ## 26xx
 
-Send note on every `xx` ticks.
+Send note on every `xx` ticks. Further commands, with no value, can be used to set a retrigger period greater than a row.
+
+This applies also to 27xx and 28xx.
 
 ## 27xx
 

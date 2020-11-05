@@ -184,8 +184,6 @@ func process_tick(song:Song,channel:int,curr_order:int,curr_row:int,curr_tick:in
 		# Reset delay counters
 		for i in range(CONSTS.FX_DLY_OFF,CONSTS.FX_DLY_RETRIG+1):
 			fx_vals[i]=0
-		fx_vals[CONSTS.FX_RPT_ON][0]=0
-		fx_vals[CONSTS.FX_RPT_RETRIG][0]=0
 		fx_vals[CONSTS.FX_DELAY]=0
 		fx_vals[CONSTS.FX_DELAY_SONG]=0
 		internal_tick=0

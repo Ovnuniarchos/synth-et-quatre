@@ -86,10 +86,11 @@ func _on_order_changed(order:int,channel:int)->void:
 func _on_button_gui_input(ev:InputEvent,order:int,channel:int,button:Button)->void:
 	ev=ev as InputEventMouseButton
 	if ev==null or !(ev.button_index in [
-				BUTTON_MASK_LEFT,BUTTON_MASK_RIGHT,BUTTON_WHEEL_UP,BUTTON_WHEEL_DOWN
+				BUTTON_LEFT,BUTTON_RIGHT,BUTTON_WHEEL_UP,BUTTON_WHEEL_DOWN
 			]):
 		return
-	accept_event()
+	if ev.button_index in [BUTTON_LEFT,BUTTON_RIGHT] or ev.shift or ev.control or ev.alt:
+		accept_event()
 	if !ev.is_pressed():
 		return
 	if order!=GLOBALS.curr_order and ev.button_index in [BUTTON_LEFT,BUTTON_RIGHT]:
@@ -100,7 +101,7 @@ func _on_button_gui_input(ev:InputEvent,order:int,channel:int,button:Button)->vo
 	var song:Song=GLOBALS.song
 	if order!=GLOBALS.curr_order:
 		song.set_block_signals(true)
-	if ev.button_index in [BUTTON_LEFT,BUTTON_WHEEL_UP]:
+	if ev.button_index==BUTTON_LEFT:
 		var o:int=song.orders[order][channel]+1
 		if ev.shift:
 			o=song.add_pattern(channel,-1)
@@ -108,7 +109,17 @@ func _on_button_gui_input(ev:InputEvent,order:int,channel:int,button:Button)->vo
 			o=song.add_pattern(channel,song.orders[order][channel])
 		song.set_pattern(order,channel,o)
 		button.text="%03d"%[song.orders[order][channel]]
-	else:
+	elif ev.button_index==BUTTON_WHEEL_UP:
+		var o:int=song.orders[order][channel]
+		if ev.shift:
+			o=song.add_pattern(channel,-1)
+		elif ev.control:
+			o=song.add_pattern(channel,song.orders[order][channel])
+		elif ev.alt:
+			o+=1
+		song.set_pattern(order,channel,o)
+		button.text="%03d"%[song.orders[order][channel]]
+	elif ev.button_index==BUTTON_RIGHT or (ev.button_index==BUTTON_WHEEL_DOWN and ev.alt):
 		song.set_pattern(order,channel,song.orders[order][channel]-1)
 		button.text="%03d"%[song.orders[order][channel]]
 	song.set_block_signals(false)

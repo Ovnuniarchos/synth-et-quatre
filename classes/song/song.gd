@@ -316,8 +316,9 @@ func get_pattern(index:int,channel:int)->Pattern:
 
 func set_pattern(order:int,channel:int,pattern:int)->void:
 	if pattern>-1 and pattern<pattern_list[channel].size():
-		orders[order][channel]=pattern
-		emit_signal("order_changed",order,channel)
+		if pattern!=orders[order][channel]:
+			orders[order][channel]=pattern
+			emit_signal("order_changed",order,channel)
 
 func add_pattern(channel:int,copy_from:int=-1)->int:
 	if pattern_list[channel].size()>=255:

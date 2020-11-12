@@ -47,6 +47,7 @@ var dragging:bool=false
 var drag_start:Vector2
 var kbd_drag:bool=false
 var scroll_lock:bool=false
+var last_entered:Array=[]
 
 
 func _ready()->void:
@@ -57,6 +58,7 @@ func _ready()->void:
 	_on_resized()
 	selection.active=false
 	sel_rect.selection=selection
+	last_entered.resize(Pattern.MAX_ATTR)
 
 func _on_song_changed()->void:
 	GLOBALS.song.connect("channels_changed",self,"_on_channels_changed")
@@ -334,9 +336,13 @@ func process_keyboard(ev:InputEventKey)->bool:
 		if !ev.pressed:
 			copy_buffer.paste(GLOBALS.song,curr_order,curr_channel,curr_row,curr_column,true)
 		return true
-	if fscan in GKBD.DUPLICATE:
+	if fscan in GKBD.DUPLICATE_ENTERED:
 		if ev.pressed and curr_row>0:
-			copy_last()
+			copy_last(true)
+		return true
+	if fscan in GKBD.DUPLICATE_LAST:
+		if ev.pressed and curr_row>0:
+			copy_last(false)
 		return true
 	# Input
 	if curr_column==ATTRS.LG_MODE:
@@ -433,9 +439,20 @@ func process_keyboard(ev:InputEventKey)->bool:
 
 #
 
-func copy_last()->void:
+func find_last():
 	var song:Song=GLOBALS.song
-	var val=song.get_note(curr_order,curr_channel,curr_row-1,curr_column)
+	var row:int=curr_row-1
+	var data
+	while row>-1:
+		data=song.get_note(curr_order,curr_channel,row,curr_column)
+		if data!=null:
+			return data
+		row-=1
+	return null
+
+func copy_last(entered:bool)->void:
+	var song:Song=GLOBALS.song
+	var val=last_entered[curr_column] if entered else find_last()
 	song.set_note(curr_order,curr_channel,curr_row,curr_column,val)
 	if curr_column==ATTRS.LG_MODE:
 		set_legato_cell(curr_row,channel_col0[curr_channel],val)
@@ -452,6 +469,7 @@ func put_opmask(val:int,add:int=0)->void:
 	if add!=0:
 		val=(GLOBALS.nvl(song.get_note(curr_order,curr_channel,curr_row,curr_column),0)+add)&0xf
 	song.set_note(curr_order,curr_channel,curr_row,curr_column,val)
+	last_entered[curr_column]=val
 	set_opmask(curr_row,channel_col0[curr_channel]+COLS[curr_column],val)
 	if add==0 and CONFIG.get_value(CONFIG.EDIT_HORIZ_FX):
 			set_column(curr_column+1)
@@ -476,6 +494,7 @@ func put_cmd_or_val(val,add:int=0)->void:
 		val=(n_val|(val&0xf))&0xff
 		digit_ix=(digit_ix+1)%2
 		song.set_note(curr_order,curr_channel,curr_row,curr_column,val)
+		last_entered[curr_column]=val
 	set_2_digits(curr_row,channel_col0[curr_channel]+COLS[curr_column],val)
 	if digit_ix==0 and add==0:
 		if CONFIG.get_value(CONFIG.EDIT_HORIZ_FX):
@@ -494,6 +513,7 @@ func put_legato(lm,add:int=1,adv:int=step)->void:
 	else:
 		legato=clamp(lm,Pattern.LEGATO_MIN,Pattern.LEGATO_MAX)
 	song.set_note(curr_order,curr_channel,curr_row,ATTRS.LG_MODE,legato)
+	last_entered[ATTRS.LG_MODE]=legato
 	set_legato_cell(curr_row,channel_col0[curr_channel],legato)
 	advance(adv)
 
@@ -518,15 +538,19 @@ func put_note(semitone,octave:int,instrument,add:int=0,adv:int=step)->void:
 		else:
 			note=semitone+(octave*12)
 	song.set_note(curr_order,curr_channel,curr_row,ATTRS.NOTE,note)
+	last_entered[ATTRS.NOTE]=note
 	if add!=0:
 		set_note_cells(curr_row,channel_col0[curr_channel],note)
 		advance(adv)
 		return
 	song.set_note(curr_order,curr_channel,curr_row,ATTRS.INSTR,instrument)
+	last_entered[ATTRS.INSTR]=instrument
 # warning-ignore:incompatible_ternary
 # warning-ignore:incompatible_ternary
 	var velocity:int=calculate_velocity(dflt_velocity,midi_vel,midi_vol)
 	song.set_note(curr_order,curr_channel,curr_row,ATTRS.VOL,velocity if instrument!=null else null)
+# warning-ignore:incompatible_ternary
+	last_entered[ATTRS.VOL]=velocity if instrument!=null else null
 	set_note_cells(curr_row,channel_col0[curr_channel],note)
 	set_2_digits(curr_row,COLS[ATTRS.INSTR]+channel_col0[curr_channel],instrument)
 	if instrument==null:

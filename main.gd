@@ -3,7 +3,6 @@ extends Control
 """
 FIXME
 	Export sometimes crashes. (Buffer freed before final write?)
-	Pasting on FX columns tries to paste to the original column, instead of the current one.
 TODO:
 	MIDI on/off indicator
 	Interpolate value hotkey

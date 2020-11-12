@@ -42,6 +42,7 @@ var focused:bool=false
 var digit_ix:int=0
 var dflt_velocity:int=128
 var selection:Selection=Selection.new()
+var copy_buffer:Selection=Selection.new()
 var dragging:bool=false
 var drag_start:Vector2
 var kbd_drag:bool=false
@@ -279,6 +280,7 @@ func process_keyboard(ev:InputEventKey)->bool:
 			else:
 				set_column(curr_column-1)
 			moved=true
+	# Selection
 	if moved:
 		if ev.shift:
 			if !kbd_drag:
@@ -292,7 +294,6 @@ func process_keyboard(ev:InputEventKey)->bool:
 		return true
 	elif !ev.shift:
 		kbd_drag=false
-	# Selection
 	if selection.active:
 		if ev.scancode==GKBD.CLEAR:
 			if !ev.pressed:
@@ -301,10 +302,12 @@ func process_keyboard(ev:InputEventKey)->bool:
 		if fscan in GKBD.COPY:
 			if !ev.pressed:
 				selection.copy(collect_patterns())
+				copy_buffer=selection.duplicate()
 			return true
 		if fscan in GKBD.CUT:
 			if !ev.pressed:
 				selection.cut(collect_patterns(),curr_order,curr_channel)
+				copy_buffer=selection.duplicate()
 			return true
 		if ev.scancode in GKBD.VALUE_UP:
 			if !ev.pressed:
@@ -325,11 +328,11 @@ func process_keyboard(ev:InputEventKey)->bool:
 		return true
 	if fscan in GKBD.PASTE:
 		if !ev.pressed:
-			selection.paste(GLOBALS.song,curr_order,curr_channel,curr_row,curr_column,false)
+			copy_buffer.paste(GLOBALS.song,curr_order,curr_channel,curr_row,curr_column,false)
 		return true
 	if fscan in GKBD.MIX_PASTE:
 		if !ev.pressed:
-			selection.paste(GLOBALS.song,curr_order,curr_channel,curr_row,curr_column,true)
+			copy_buffer.paste(GLOBALS.song,curr_order,curr_channel,curr_row,curr_column,true)
 		return true
 	if fscan in GKBD.DUPLICATE:
 		if ev.pressed and curr_row>0:

@@ -21,6 +21,20 @@ var data:Array
 func _init()->void:
 	active=false
 
+func duplicate()->Selection:
+	var ns:Selection=get_script().new()
+	ns.start_chan=start_chan
+	ns.end_chan=end_chan
+	ns.start_col=start_col
+	ns.end_col=end_col
+	ns.start_row=start_row
+	ns.end_row=end_row
+	ns.active=active
+	ns.data_col0=data_col0
+	ns.data_col1=data_col1
+	ns.data=data.duplicate(true)
+	return ns
+
 func set_active(act:bool)->void:
 	active=act
 	emit_signal("selection_changed")
@@ -79,11 +93,11 @@ func copy(pats:Array)->void:
 	data=[]
 	for pat in pats:
 		data.append(pat.notes.slice(start_row,end_row,1,true))
-	set_active(false)
 
 func cut(pats:Array,order:int,channel:int)->void:
 	copy(pats)
 	clear(pats,order,channel)
+	set_active(false)
 
 func clear(pats:Array,order:int,channel:int)->void:
 	correct_limits()
@@ -108,7 +122,6 @@ func clear(pats:Array,order:int,channel:int)->void:
 					pat.notes[i][j]=null
 		GLOBALS.song.emit_signal("order_changed",order,channel)
 		p_ix+=1
-	set_active(false)
 
 func paste_loop(pat:Pattern,pat_len:int,chn:int,row:int,col0:int,col1:int,mix:bool,dcol:int=0)->void:
 	for col in range(col0,col1+1):

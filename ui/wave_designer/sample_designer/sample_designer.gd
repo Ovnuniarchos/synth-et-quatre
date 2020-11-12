@@ -58,9 +58,11 @@ func calculate()->void:
 #
 
 func _on_Load_pressed()->void:
+	$FileDialog.current_dir=CONFIG.get_value(CONFIG.CURR_SAMPLE_DIR)
 	$FileDialog.popup_centered_ratio()
 
 func _on_file_selected(path:String)->void:
+	CONFIG.set_value(CONFIG.CURR_SAMPLE_DIR,path.get_base_dir())
 	var w:SampleWave=GLOBALS.song.get_wave(curr_wave_ix) as SampleWave
 	w.load_wave(path)
 	calculate()

@@ -203,7 +203,7 @@ func process_mouse_button(ev:InputEventMouseButton)->bool:
 		return true
 	return false
 
-func collect_patterns()->Array:
+"""func collect_patterns()->Array:
 	var pats:Array=[]
 	var song:Song=GLOBALS.song
 	if selection.start_chan>selection.end_chan:
@@ -212,7 +212,7 @@ func collect_patterns()->Array:
 	else:
 		for i in range(selection.start_chan,selection.end_chan+1):
 			pats.append(song.get_order_pattern(curr_order,i))
-	return pats
+	return pats"""
 
 func process_keyboard(ev:InputEventKey)->bool:
 	if ev==null or !focused:
@@ -299,25 +299,25 @@ func process_keyboard(ev:InputEventKey)->bool:
 	if selection.active:
 		if ev.scancode==GKBD.CLEAR:
 			if !ev.pressed:
-				selection.clear(collect_patterns(),curr_order,curr_channel)
+				selection.clear(GLOBALS.song,curr_order)
 			return true
 		if fscan in GKBD.COPY:
 			if !ev.pressed:
-				selection.copy(collect_patterns())
+				selection.copy(GLOBALS.song,curr_order)
 				copy_buffer=selection.duplicate()
 			return true
 		if fscan in GKBD.CUT:
 			if !ev.pressed:
-				selection.cut(collect_patterns(),curr_order,curr_channel)
+				selection.cut(GLOBALS.song,curr_order)
 				copy_buffer=selection.duplicate()
 			return true
 		if ev.scancode in GKBD.VALUE_UP:
 			if !ev.pressed:
-				selection.add_values(curr_order,1,ev.shift)
+				selection.add_values(GLOBALS.song,curr_order,1,ev.shift)
 			return true
 		if ev.scancode in GKBD.VALUE_DOWN:
 			if !ev.pressed:
-				selection.add_values(curr_order,-1,ev.shift)
+				selection.add_values(GLOBALS.song,curr_order,-1,ev.shift)
 			return true
 	# Ins/del, C/P
 	if ev.scancode==GKBD.INSERT:

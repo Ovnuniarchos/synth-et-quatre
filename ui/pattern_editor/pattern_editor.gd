@@ -203,17 +203,6 @@ func process_mouse_button(ev:InputEventMouseButton)->bool:
 		return true
 	return false
 
-"""func collect_patterns()->Array:
-	var pats:Array=[]
-	var song:Song=GLOBALS.song
-	if selection.start_chan>selection.end_chan:
-		for i in range(selection.end_chan,selection.start_chan+1):
-			pats.append(song.get_order_pattern(curr_order,i))
-	else:
-		for i in range(selection.start_chan,selection.end_chan+1):
-			pats.append(song.get_order_pattern(curr_order,i))
-	return pats"""
-
 func process_keyboard(ev:InputEventKey)->bool:
 	if ev==null or !focused:
 		return false
@@ -301,6 +290,10 @@ func process_keyboard(ev:InputEventKey)->bool:
 			if !ev.pressed:
 				selection.clear(GLOBALS.song,curr_order)
 			return true
+		if fscan==GKBD.INTERPOLATE:
+			if !ev.pressed:
+				selection.interpolate(GLOBALS.song,curr_order)
+			return true
 		if fscan in GKBD.COPY:
 			if !ev.pressed:
 				selection.copy(GLOBALS.song,curr_order)
@@ -344,7 +337,7 @@ func process_keyboard(ev:InputEventKey)->bool:
 		if ev.pressed and curr_row>0:
 			copy_last(false)
 		return true
-	# Input
+	# Data input
 	if curr_column==ATTRS.LG_MODE:
 		if ev.scancode==GKBD.CLEAR:
 			if ev.pressed:

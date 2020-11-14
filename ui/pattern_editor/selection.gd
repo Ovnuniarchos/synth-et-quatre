@@ -116,6 +116,13 @@ func copy(song:Song,order:int)->void:
 		for r in range(data_row0,data_row1+1):
 			data[-1][r-data_row0]=pat.notes[r][col[1]]
 
+func signal_changed(order:int)->void:
+	var chan:int=-1
+	for col in data_cols:
+		if chan!=col[0]:
+			chan=col[0]
+			GLOBALS.song.emit_signal("order_changed",order,chan)
+
 func cut(song:Song,order:int)->void:
 	copy(song,order)
 	clear(song,order)
@@ -131,11 +138,7 @@ func clear(song:Song,order:int)->void:
 			pat=song.get_order_pattern(order,chan)
 		for r in range(data_row0,data_row1+1):
 			pat.notes[r][col[1]]=null
-	chan=-1
-	for col in data_cols:
-		if chan!=col[0]:
-			chan=col[0]
-			GLOBALS.song.emit_signal("order_changed",order,chan)
+	signal_changed(order)
 
 func paste(song:Song,order:int,channel:int,row:int,column:int,mix:bool)->void:
 	if data_cols.empty():
@@ -167,12 +170,7 @@ func paste(song:Song,order:int,channel:int,row:int,column:int,mix:bool)->void:
 			if not mix or data[i][r]!=null\
 					or col in [ATTRS.LG_MODE,ATTRS.FM0,ATTRS.FM1,ATTRS.FM2,ATTRS.FM3]:
 				pat.notes[r+row][col]=data[i][r]
-	#
-	chan=-1
-	for c in data_cols:
-		if chan!=c[0]:
-			chan=c[0]
-			GLOBALS.song.emit_signal("order_changed",order,chan)
+	signal_changed(order)
 
 func add_values(song:Song,order:int,delta:int,fast:bool)->void:
 	get_affected_cols(song)
@@ -204,8 +202,39 @@ func add_values(song:Song,order:int,delta:int,fast:bool)->void:
 			elif col==ATTRS.INSTR or col==ATTRS.VOL or col>=ATTRS.FX0:
 				d=clamp(d+delta_num,0,255)
 			pat.notes[r][col]=d
-	chan=-1
+	signal_changed(order)
+
+func interpolate(song:Song,order:int)->void:
+	get_affected_cols(song)
+	var d:int=(data_row1-data_row0)
+	if d==0:
+		return
+	var pat:Pattern
+	var chan:int=-1
+	var col:int
+	var r0:int
+	var r1:int
+	var d0:int
+	var d1:int
 	for dc in data_cols:
+		col=dc[1]
 		if chan!=dc[0]:
 			chan=dc[0]
-			GLOBALS.song.emit_signal("order_changed",order,chan)
+			pat=song.get_order_pattern(order,chan)
+		if col==ATTRS.LG_MODE:
+			continue
+		r0=-1
+		r1=-1
+		for r in range(data_row0,data_row1+1):
+			if pat.notes[r][col]!=null:
+				r0=r
+				break
+		for r in range(data_row1,data_row0-1,-1):
+			if pat.notes[r][col]!=null:
+				r1=r
+				break
+		d0=pat.notes[r0][col]
+		d1=pat.notes[r1][col]
+		for r in range(data_row0,data_row1+1):
+			pat.notes[r][col]=int(lerp(d0,d1,float(r-data_row0)/float(d)))
+	signal_changed(order)

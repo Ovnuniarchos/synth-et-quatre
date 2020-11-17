@@ -104,41 +104,41 @@ Set tremolo to use LFO # `xx`. This value is clamped to the range 0-3.
 
 Any command that triggers after a delay will not trigger if that delay puts it after the current row, but any other effect in the same row will be registered anyways. These commands ignore the operator mask.
 
-## 21xx
+## 20xx
 
 Trigger note off after `xx` ticks.
 
-## 22xx
+## 21xx
 
 Trigger note cut after `xx` ticks.
 
-## 23xx
+## 22xx
 
 Trigger note on after `xx` ticks. This note on is neither legato nor staccato, and supersedes the legato/staccato column value.
 
 This command does not delay the natural note on, just retriggers it.
 
-## 24xx
+## 23xx
 
 Fully retriggers the note, envelope and wave generators, after `xx` ticks.
 
 This command does not delay the natural note on, just retriggers it.
 
-## 25xx
+## 24xx
 
 Resets the wave generator phase after `xx` ticks.
 
-## 26xx
+## 25xx
 
 Send note on every `xx` ticks. Further commands, with no value, can be used to set a retrigger period greater than a row.
 
 This applies also to 27xx and 28xx.
 
-## 27xx
+## 26xx
 
 Fully retriggers the note, envelope and wave generators, every `xx` ticks.
 
-## 28xx
+## 27xx
 
 Resets the wave generator phase every `xx` ticks.
 

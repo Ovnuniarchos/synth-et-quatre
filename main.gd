@@ -3,6 +3,7 @@ extends Control
 """
 FIXME
 	Export sometimes crashes. (Buffer freed before final write?)
+	Wrong operator enable on note on.
 TODO:
 	Implement version numbers for files/chunks
 	MIDI on/off indicator

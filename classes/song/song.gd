@@ -383,8 +383,9 @@ func insert_row(order:int,channel:int,row:int)->void:
 func serialize(out:ChunkedFile)->void:
 	# Signature: SFMM\0xc\0xa\0x1a\0xa
 	out.store_string(FILE_SIGNATURE)
+	out.store_16(0)
 	# Header
-	out.start_chunk(CHUNK_HEADER)
+	out.start_chunk(CHUNK_HEADER,0)
 	out.store_16(pattern_length)
 	out.store_16(ticks_second)
 	out.store_16(ticks_row)
@@ -392,19 +393,19 @@ func serialize(out:ChunkedFile)->void:
 	out.store_pascal_string(author)
 	out.end_chunk()
 	# Highlights
-	out.start_chunk(CHUNK_HIGHLIGHTS)
+	out.start_chunk(CHUNK_HIGHLIGHTS,0)
 	out.store_16(minor_highlight)
 	out.store_16(major_highlight)
 	out.end_chunk()
 	# Channels
-	out.start_chunk(CHUNK_CHANNELS)
+	out.start_chunk(CHUNK_CHANNELS,0)
 	out.store_16(num_channels)
 	for i in range(num_channels):
 		out.store_string(CHANNEL_FM4)
 		out.store_8(num_fxs[i])
 	out.end_chunk()
 	# Instruments
-	out.start_chunk(CHUNK_INSTRUMENTS)
+	out.start_chunk(CHUNK_INSTRUMENTS,0)
 	for i in range(4):
 		out.store_16(lfo_frequencies[i]*256.0)
 		out.store_8(lfo_waves[i])
@@ -413,21 +414,21 @@ func serialize(out:ChunkedFile)->void:
 	for inst in instrument_list:
 		inst.serialize(out)
 	# Waveforms
-	out.start_chunk(CHUNK_WAVES)
+	out.start_chunk(CHUNK_WAVES,0)
 	out.store_16(wave_list.size())
 	for wave in wave_list:
 		wave.serialize(out)
 	out.end_chunk()
 	out.end_chunk()
 	# Orders
-	out.start_chunk(CHUNK_ORDERS)
+	out.start_chunk(CHUNK_ORDERS,0)
 	out.store_16(orders.size())
 	for ordr in orders:
 		for chn in range(num_channels):
 			out.store_8(ordr[chn])
 	out.end_chunk()
 	# pattern_list
-	out.start_chunk(CHUNK_PATTERN_LIST)
+	out.start_chunk(CHUNK_PATTERN_LIST,0)
 	for i in range(num_channels):
 		var chn:Array=pattern_list[i]
 		out.store_16(chn.size())
@@ -440,6 +441,7 @@ func deserialize(inf:ChunkedFile)->Song:
 	var song:Song=get_script().new()
 	# Signature
 	var sig:String=inf.get_ascii(8)
+	var file_version:int=inf.get_16()
 	if sig!=FILE_SIGNATURE:
 		return null
 	# Header

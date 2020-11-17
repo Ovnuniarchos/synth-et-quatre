@@ -54,7 +54,7 @@ func insert_row(row:int)->void:
 #
 
 func serialize(out:ChunkedFile,length:int,num_fx:int)->void:
-	out.start_chunk(CHUNK_ID)
+	out.start_chunk(CHUNK_ID,0)
 	for j in range(length):
 		var n=notes[j]
 		var mask:int=0

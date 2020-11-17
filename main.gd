@@ -4,7 +4,6 @@ extends Control
 FIXME
 	Export sometimes crashes. (Buffer freed before final write?)
 TODO:
-	Implement version numbers for files/chunks
 	MIDI on/off indicator
 	Reset per channel parameters (as a command|button)
 	MIDI input

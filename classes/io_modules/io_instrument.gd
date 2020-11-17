@@ -23,10 +23,11 @@ func obj_save(path:String)->void:
 	f.open(path,File.WRITE)
 	# Signature: SFMM\0xc\0xa\0x1a\0xa
 	f.store_string(FILE_SIGNATURE)
+	f.store_16(0)
 	# Serialize instrument
 	sinst.serialize(f)
 	# Serialize waveforms
-	f.start_chunk(Song.CHUNK_WAVES)
+	f.start_chunk(Song.CHUNK_WAVES,0)
 	f.store_16(wave_list.size())
 	for wi in wave_list:
 		GLOBALS.song.wave_list[wi-FmInstrument.WAVE.NOISE-1].serialize(f)
@@ -41,6 +42,7 @@ func obj_load(path:String)->void:
 	f.open(path,File.READ)
 	# Signature
 	var sig:String=f.get_ascii(8)
+	var file_version:int=f.get_16()
 	if sig!=FILE_SIGNATURE:
 		return
 	# Instrument data

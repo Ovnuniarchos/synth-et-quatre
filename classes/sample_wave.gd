@@ -38,7 +38,7 @@ func equals(other:Waveform)->bool:
 #
 
 func serialize(out:ChunkedFile)->void:
-	out.start_chunk(CHUNK_ID)
+	out.start_chunk(CHUNK_ID,0)
 	out.store_32(original_data.size())
 	out.store_8(bits_sample)
 	out.store_32(loop_start)

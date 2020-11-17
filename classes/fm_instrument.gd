@@ -98,7 +98,7 @@ func copy_op(from:int,to:int)->void:
 #
 
 func serialize(out:ChunkedFile)->void:
-	out.start_chunk(CHUNK_ID)
+	out.start_chunk(CHUNK_ID,0)
 	out.store_8(op_mask)
 	for i in range(4):
 		out.store_8(attacks[i])

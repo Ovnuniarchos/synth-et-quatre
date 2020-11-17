@@ -64,7 +64,7 @@ func readjust_inputs()->void:
 #
 
 func serialize(out:ChunkedFile)->void:
-	out.start_chunk(CHUNK_ID)
+	out.start_chunk(CHUNK_ID,0)
 	out.store_8(size_po2)
 	out.store_pascal_string(name)
 	out.store_16(components.size())

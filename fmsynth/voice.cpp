@@ -171,7 +171,7 @@ void Voice::stop(int op_mask){
 
 void Voice::set_enable(int op_mask,int enable_bits){
 	for(int i=0;i<MAX_OPS;i++,op_mask>>=1,enable_bits>>=1){
-		if(op_mask&1) ops[i].enabled=(bool)enable_bits&1;
+		if(op_mask&1) ops[i].enabled=(bool)(enable_bits&1);
 	}
 }
 

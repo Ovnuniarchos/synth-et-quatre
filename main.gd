@@ -2,7 +2,7 @@ extends Control
 
 """
 FIXME
-	Export sometimes crashes. (Buffer freed before final write?)
+	Immediate note play skips notes (skips muted channels)
 TODO:
 	MIDI on/off indicator
 	Reset per channel parameters (as a command|button)
@@ -11,7 +11,6 @@ TODO:
 		Flag?: MIDI modulation
 		Range?: MIDI modulation
 	Make arpeggio last until new note?
-	Immediate note play skips notes (skips muted channels)
 	Automation
 	Reduce pops on volume changes.
 

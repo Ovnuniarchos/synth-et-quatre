@@ -5,3 +5,4 @@
 /fmsynth/bin
 .songs
 api.json
+*.sublime-*

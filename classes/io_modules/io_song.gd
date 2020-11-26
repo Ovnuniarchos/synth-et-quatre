@@ -8,6 +8,7 @@ func obj_load(path:String)->void:
 	var new_song:Song=GLOBALS.song.deserialize(f)
 	f.close()
 	if new_song!=null:
+		new_song.file_name=path.get_file()
 		AUDIO.tracker.stop()
 		AUDIO.tracker.reset()
 		GLOBALS.set_song(new_song)

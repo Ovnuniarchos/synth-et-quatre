@@ -98,4 +98,5 @@ func obj_load(path:String)->void:
 				if ni.waveforms[inst_w]==in_w:
 					ni.waveforms[inst_w]=wav_l[in_w]
 	# Add instrument
+	ni.file_name=path.get_file()
 	GLOBALS.song.add_instrument(ni)

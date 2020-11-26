@@ -51,6 +51,8 @@ var major_highlight:int
 var lfo_frequencies:Array=[4.0,2.0,1.0,0.5]
 var lfo_waves:Array=[WAVE.TRIANGLE,WAVE.SAW,WAVE.RECTANGLE,WAVE.NOISE]
 var lfo_duty_cycles:Array=[0,0,128,0]
+# Transient
+var file_name:String=""
 
 
 func _init(max_channels:int=MAX_CHANNELS,pat_length:int=DFL_PAT_LENGTH,fx_length:int=1,tks_sec:int=50,tks_row:int=6)->void:

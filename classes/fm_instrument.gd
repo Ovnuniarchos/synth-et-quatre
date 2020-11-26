@@ -7,45 +7,30 @@ const TYPE:String="FmInstrument"
 const CHUNK_ID:String="fM4I"
 
 var op_mask:int=1
-
 var attacks:Array=[240,240,240,240]
-
 var decays:Array=[192,192,192,192]
-
 var sustains:Array=[0,0,0,0]
-
 var sustain_levels:Array=[192,192,192,192]
-
 var releases:Array=[32,32,32,32]
-
 var key_scalers:Array=[0,0,0,0]
-
 var repeats:Array=[REPEAT.OFF,REPEAT.OFF,REPEAT.OFF,REPEAT.OFF]
-
 var multipliers:Array=[1,1,1,1]
-
 var dividers:Array=[0,0,0,0]
-
 var detunes:Array=[0,0,0,0]
-
 var duty_cycles:Array=[0,0,0,0]
-
 var waveforms:Array=[WAVE.TRIANGLE,WAVE.TRIANGLE,WAVE.TRIANGLE,WAVE.TRIANGLE]
-
 var am_intensity:Array=[0,0,0,0]
-
 var am_lfo:Array=[0,0,0,0]
-
 var fm_intensity:Array=[0,0,0,0]
-
 var fm_lfo:Array=[0,0,0,0]
-
 var routings:Array=[
 	[16,0,0,0,255],
 	[0,0,0,0,0],
 	[0,0,0,0,0],
 	[0,0,0,0,0]
 ]
+# Transient
+var file_name:String=""
 
 func _init()->void:
 	name=TYPE

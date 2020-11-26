@@ -1,7 +1,7 @@
 extends Instrument
 class_name FmInstrument
 
-enum WAVE{RECTANGLE,SAW,TRIANGLE,NOISE}
+enum WAVE{RECTANGLE,SAW,TRIANGLE,NOISE,CUSTOM}
 enum REPEAT{OFF,RELEASE,SUSTAIN,DECAY,ATTACK}
 const TYPE:String="FmInstrument"
 const CHUNK_ID:String="fM4I"

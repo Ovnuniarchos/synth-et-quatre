@@ -3,7 +3,7 @@ extends Control
 """
 FIXME
 	Immediate note play skips notes (skips muted channels)
-	Load instrument sets wrong wave (when samples present?)
+	Load instrument sets wrong wave when other waves present
 TODO:
 	Special behavior of ±value key for pan column
 	Channel invert cycle for pan column

@@ -11,7 +11,7 @@ func obj_save(path:String)->void:
 	var wave_list:Dictionary={}
 	for i in range(4):
 		if inst.waveforms[i]>FmInstrument.WAVE.NOISE and !wave_list.has(inst.waveforms[i]):
-			var w_new:int=wave_list.size()+FmInstrument.WAVE.NOISE+1
+			var w_new:int=wave_list.size()+FmInstrument.WAVE.CUSTOM
 			var w_old:int=inst.waveforms[i]
 			for _j in range(4):
 				if sinst.waveforms[i]==w_old:
@@ -77,26 +77,28 @@ func obj_load(path:String)->void:
 	for in_w in range(wav_l.size()):
 		for song_w in range(GLOBALS.song.wave_list.size()):
 			if GLOBALS.song.wave_list[song_w].equals(wav_l[in_w]):
-				wav_l[in_w]=song_w
+				wav_l[in_w]=song_w+FmInstrument.WAVE.CUSTOM
 				waves_add-=1
 				break
 	if !GLOBALS.song.can_add_wave(waves_add):
 		return
 	# Add waveforms
 	var new_wave_i:int
-	for in_w in range(wav_l.size()):
-		if typeof(wav_l[in_w])==TYPE_OBJECT:
-			new_wave_i=GLOBALS.song.wave_list.size()
-			GLOBALS.song.add_wave(wav_l[in_w])
-			wav_l[in_w].calculate()
-			GLOBALS.song.send_wave(wav_l[in_w],SYNTH)
+	var in_w:int=FmInstrument.WAVE.CUSTOM
+	for wav in wav_l:
+		if typeof(wav)==TYPE_OBJECT:
+			new_wave_i=GLOBALS.song.wave_list.size()+FmInstrument.WAVE.CUSTOM
+			GLOBALS.song.add_wave(wav)
+			wav.calculate()
+			GLOBALS.song.send_wave(wav,SYNTH)
 			for inst_w in range(4):
 				if ni.waveforms[inst_w]==in_w:
 					ni.waveforms[inst_w]=new_wave_i
 		else:
 			for inst_w in range(4):
 				if ni.waveforms[inst_w]==in_w:
-					ni.waveforms[inst_w]=wav_l[in_w]
+					ni.waveforms[inst_w]=wav_l[wav-FmInstrument.WAVE.CUSTOM]
+		in_w+=1
 	# Add instrument
 	ni.file_name=path.get_file()
 	GLOBALS.song.add_instrument(ni)

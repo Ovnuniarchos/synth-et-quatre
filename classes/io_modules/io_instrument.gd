@@ -32,6 +32,7 @@ func obj_save(path:String)->void:
 	for wi in wave_list:
 		GLOBALS.song.wave_list[wi-FmInstrument.WAVE.NOISE-1].serialize(f)
 	#
+	inst.file_name=path.get_file()
 	f.close()
 
 

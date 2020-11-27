@@ -18,4 +18,5 @@ func obj_save(path:String)->void:
 	var f:ChunkedFile=ChunkedFile.new()
 	f.open(path,File.WRITE)
 	GLOBALS.song.serialize(f)
+	GLOBALS.song.file_name=path.get_file()
 	f.close()

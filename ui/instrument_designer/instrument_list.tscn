@@ -51,7 +51,9 @@ anchor_bottom = 0.0
 margin_top = 24.0
 margin_right = 162.0
 margin_bottom = 561.0
+
 [connection signal="pressed" from="Buttons/Add" to="." method="_on_Add_pressed"]
 [connection signal="pressed" from="Buttons/Copy" to="." method="_on_Copy_pressed"]
 [connection signal="pressed" from="Buttons/Del" to="." method="_on_Del_pressed"]
+[connection signal="gui_input" from="Instruments" to="." method="_on_Instruments_gui_input"]
 [connection signal="item_selected" from="Instruments" to="." method="_on_item_selected"]

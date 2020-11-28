@@ -5,6 +5,7 @@ signal instrument_deleted(idx)
 signal instrument_added(idx)
 
 var inst_l:ItemList
+var copy_buffer:Instrument=null
 
 func _ready()->void:
 	GLOBALS.connect("song_changed",self,"_on_song_changed")
@@ -86,6 +87,18 @@ func _on_item_selected(index:int)->void:
 	set_buttons()
 	emit_signal("instrument_selected",GLOBALS.curr_instrument)
 
-
 func _on_instrument_name_changed(index:int,text:String)->void:
 	inst_l.set_item_text(index,text)
+
+func _on_Instruments_gui_input(ev:InputEvent)->void:
+	if not (ev is InputEventKey):
+		return
+	if ev.get_scancode_with_modifiers() in GKBD.COPY:
+		if not ev.is_pressed():
+			copy_buffer=GLOBALS.get_instrument(-1).duplicate()
+		accept_event()
+	if ev.get_scancode_with_modifiers() in GKBD.PASTE:
+		if not ev.is_pressed():
+			GLOBALS.get_instrument(-1).copy(copy_buffer)
+			emit_signal("instrument_selected",GLOBALS.curr_instrument)
+		accept_event()

@@ -29,8 +29,6 @@ var routings:Array=[
 	[0,0,0,0,0],
 	[0,0,0,0,0]
 ]
-# Transient
-var file_name:String=""
 
 func _init()->void:
 	name=TYPE
@@ -53,6 +51,25 @@ func duplicate()->Instrument:
 	ni.fm_intensity=fm_intensity.duplicate()
 	ni.routings=routings.duplicate(true)
 	return ni
+
+func copy(from:Instrument,full:bool=false)->void:
+	.copy(from,full)
+	if from.get("TYPE")=="FmInstrument":
+		op_mask=from.op_mask
+		attacks=from.attacks.duplicate()
+		decays=from.decays.duplicate()
+		sustains=from.sustains.duplicate()
+		sustain_levels=from.sustain_levels.duplicate()
+		releases=from.releases.duplicate()
+		repeats=from.repeats.duplicate()
+		multipliers=from.multipliers.duplicate()
+		dividers=from.dividers.duplicate()
+		detunes=from.detunes.duplicate()
+		duty_cycles=from.duty_cycles.duplicate()
+		waveforms=from.waveforms.duplicate()
+		am_intensity=from.am_intensity.duplicate()
+		fm_intensity=from.fm_intensity.duplicate()
+		routings=from.routings.duplicate(true)
 
 func delete_waveform(w_ix:int)->void:
 	for i in range(4):

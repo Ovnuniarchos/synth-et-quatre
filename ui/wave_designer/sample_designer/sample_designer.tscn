@@ -127,6 +127,7 @@ filters = PoolStringArray( "*.wav ; WAV file" )
 current_dir = "/home/jordi/godot/SynthEtQuatre"
 current_path = "/home/jordi/godot/SynthEtQuatre/"
 
+[connection signal="text_changed" from="Info/HBC/Name" to="." method="_on_Name_changed"]
 [connection signal="pressed" from="Designer/SC/VBC/Load" to="." method="_on_Load_pressed"]
 [connection signal="value_changed" from="Designer/SC/VBC/RecFreq" to="." method="_on_values_changed"]
 [connection signal="value_changed" from="Designer/SC/VBC/SamFreq" to="." method="_on_values_changed"]

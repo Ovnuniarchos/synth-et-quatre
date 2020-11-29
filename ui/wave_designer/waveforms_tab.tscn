@@ -54,6 +54,7 @@ anchor_bottom = 0.0
 margin_top = 306.0
 margin_right = 862.0
 margin_bottom = 600.0
+
 [connection signal="wave_deleted" from="HS/WaveList" to="." method="_on_wave_deleted"]
 [connection signal="wave_selected" from="HS/WaveList" to="." method="_on_wave_selected"]
 [connection signal="name_changed" from="HS/VS/Tabs/SynthDesigner" to="HS/WaveList" method="_on_name_changed"]

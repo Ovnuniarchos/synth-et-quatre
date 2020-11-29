@@ -92,5 +92,6 @@ margin_bottom = 284.0
 size_flags_vertical = 4
 text = "+"
 flat = false
+
 [connection signal="text_changed" from="Info/HBC/Name" to="." method="_on_Name_changed"]
 [connection signal="value_changed" from="Info/HBC/Size" to="." method="_on_Size_changed"]

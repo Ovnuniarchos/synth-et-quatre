@@ -52,7 +52,7 @@ func _on_channels_changed()->void:
 		channels.add_child(nb)
 		nb=chan_but.duplicate()
 		nb.rect_min_size.x=64.0+(song.num_fxs[i]*48.0)
-		nb.text=("F%d" if song.num_fxs[i]<1 else "FM %d")%[i+1]
+		nb.text=("#%d" if song.num_fxs[i]<1 else "CHN %d")%[i+1]
 		nb.status=mute_status[i]
 		nb.connect("cycled",self,"_on_Channel_cycled",[i])
 		channels.add_child(nb)

@@ -219,15 +219,23 @@ func process_keyboard(ev:InputEventKey)->bool:
 		return true
 	if ev.scancode==GKBD.DOWN:
 		if ev.pressed:
+			if ev.alt:
+				GLOBALS.song.swap_notes(curr_order,curr_channel,curr_row,1)
+				update_row(curr_row,curr_channel)
+				update_row(curr_row+1,curr_channel)
 			advance(1)
+			moved=true
+	elif ev.scancode==GKBD.UP:
+		if ev.pressed:
+			if ev.alt:
+				GLOBALS.song.swap_notes(curr_order,curr_channel,curr_row,-1)
+				update_row(curr_row,curr_channel)
+				update_row(curr_row-1,curr_channel)
+			advance(-1)
 			moved=true
 	elif ev.scancode==GKBD.STEP:
 		if ev.pressed:
 			advance(step)
-			moved=true
-	elif ev.scancode==GKBD.UP:
-		if ev.pressed:
-			advance(-1)
 			moved=true
 	elif ev.scancode==GKBD.FAST_UP:
 		if ev.control:
@@ -626,6 +634,30 @@ func update_tilemap(channel:int=-1)->void:
 				set_opmask(row,col+COLS[ATTRS.FM0+fx],note[ATTRS.FM0+fx])
 				set_2_digits(row,col+COLS[ATTRS.FV0+fx],note[ATTRS.FV0+fx])
 			row+=1
+
+func update_row(row:int,channel:int=-1)->void:
+	var song:Song=GLOBALS.song
+	if row<0 or row>=song.pattern_length:
+		return
+	var col:int
+	var ch_min:int=0
+	var ch_max:int=song.num_channels
+	if channel>=0:
+		ch_min=channel
+		ch_max=channel+1
+	for chan in range(ch_min,ch_max):
+		var pat:Pattern=song.get_order_pattern(curr_order,chan)
+		col=channel_col0[chan]
+		var note:Array=pat.notes[row]
+		set_legato_cell(row,col,note[ATTRS.LG_MODE])
+		set_note_cells(row,col,note[ATTRS.NOTE])
+		set_2_digits(row,col+COLS[ATTRS.VOL],note[ATTRS.VOL])
+		set_2_digits(row,col+COLS[ATTRS.PAN],note[ATTRS.PAN])
+		set_2_digits(row,col+COLS[ATTRS.INSTR],note[ATTRS.INSTR])
+		for fx in range(0,song.num_fxs[chan]*3,3):
+			set_2_digits(row,col+COLS[ATTRS.FX0+fx],note[ATTRS.FX0+fx])
+			set_opmask(row,col+COLS[ATTRS.FM0+fx],note[ATTRS.FM0+fx])
+			set_2_digits(row,col+COLS[ATTRS.FV0+fx],note[ATTRS.FV0+fx])
 
 func set_opmask(row:int,col:int,value)->void:
 	if value==null or value==0:

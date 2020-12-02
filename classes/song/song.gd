@@ -274,6 +274,15 @@ func set_note(order:int,channel:int,row:int,attr:int,value)->void:
 func get_note(order:int,channel:int,row:int,attr:int)->int:
 	return pattern_list[channel][orders[order][channel]].notes[row][attr]
 
+func swap_notes(order:int,channel:int,row:int,dir:int)->void:
+	var next:int=row+dir
+	if next<0 or next>=pattern_length:
+		return
+	var rows:Array=pattern_list[channel][orders[order][channel]].notes
+	var t:Array=rows[row]
+	rows[row]=rows[next]
+	rows[next]=t
+
 #
 
 func set_title(t:String)->void:

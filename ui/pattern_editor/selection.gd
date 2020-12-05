@@ -185,16 +185,16 @@ func add_values(song:Song,order:int,delta:int,fast:bool)->void:
 		if chan!=dc[0]:
 			chan=dc[0]
 			pat=song.get_order_pattern(order,chan)
-		if col==ATTRS.LG_MODE:
-			continue
 		for r in range(data_row0,data_row1+1):
 			d=pat.notes[r][col]
-			if d==null and (col<ATTRS.FX0 or (col-ATTRS.FX0)%3!=1):
+			if col==ATTRS.LG_MODE and pat.notes[r][ATTRS.NOTE]!=null:
+				d=(GLOBALS.nvl(d,0)+1 if delta>0 else Pattern.LEGATO_MAX)%(Pattern.LEGATO_MAX+1)
+			elif d==null and (col<ATTRS.FX0 or (col-ATTRS.FX0)%3!=1):
 				continue
 			elif col==ATTRS.NOTE and d>=0:
 				d=clamp(d+delta_note,0,143)
 			elif col==ATTRS.PAN:
-				d=clamp((d&63)+delta_num,0,63)|(d&192)
+				d=clamp((d&0x3f)+delta_num,0,63)|(d&0xc0)
 			elif col>=ATTRS.FX0 and (col-ATTRS.FX0)%3==1:
 				if d==null:
 					d=0

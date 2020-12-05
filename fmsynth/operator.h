@@ -53,7 +53,7 @@ private:
 
 	_ALWAYS_INLINE_ void set_delta();
 
-	_ALWAYS_INLINE_ bool is_invalid_wave(int ix);
+	_ALWAYS_INLINE_ bool is_valid_wave(int ix);
 
 public:
 	bool enabled=false;

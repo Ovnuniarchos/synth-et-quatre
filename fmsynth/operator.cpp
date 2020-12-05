@@ -51,13 +51,13 @@ _ALWAYS_INLINE_ void Operator::calculate_envelope(){
 	}
 };
 
-_ALWAYS_INLINE_ bool Operator::is_invalid_wave(int ix){
-	return (waves==NULL || waves[ix]==NULL);
+_ALWAYS_INLINE_ bool Operator::is_valid_wave(int ix){
+	return waves!=NULL && waves[ix]!=NULL;
 }
 
 _ALWAYS_INLINE_ void Operator::set_delta(){
-	float rec_freq=is_invalid_wave(wave_ix)?1.0:waves[wave_ix]->get_recorded_freq();
-	float sam_freq=is_invalid_wave(wave_ix)?1.0:waves[wave_ix]->get_sample_freq();
+	float rec_freq=is_valid_wave(wave_ix)?waves[wave_ix]->recorded_freq:1.0;
+	float sam_freq=is_valid_wave(wave_ix)?waves[wave_ix]->sample_freq:1.0;
 	if(freq_mul){
 		delta=(frequency*freq_mul*detune*rec_freq*FP_ONE)/(freq_div*mix_rate*sam_freq);
 	}else{
@@ -70,7 +70,7 @@ FixedPoint Operator::generate(FixedPoint pm_in,FixedPoint am_lfo_in,FixedPoint f
 		return 0L;
 	}
 	calculate_envelope();
-	if(is_invalid_wave(wave_ix)){
+	if(!is_valid_wave(wave_ix)){
 		return 0L;
 	}
 	FixedPoint sample=(waves[wave_ix]->generate(phi,pm_in,duty_cycle)*eg_vol)>>FP_INT_SHIFT;

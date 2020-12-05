@@ -190,7 +190,7 @@ void FmSynth::set_lfo_delta(int lfo){
 	if(waves==NULL || waves[lfo_waves[lfo]]==NULL){
 		lfo_deltas[lfo]=(lfo_freqs[lfo]*FP_ONE)/lfo_mix_rate;
 	}else{
-		lfo_deltas[lfo]=(lfo_freqs[lfo]*waves[lfo_waves[lfo]]->get_recorded_freq()*FP_ONE)/(lfo_mix_rate*waves[lfo_waves[lfo]]->get_sample_freq());
+		lfo_deltas[lfo]=(lfo_freqs[lfo]*waves[lfo_waves[lfo]]->recorded_freq*FP_ONE)/(lfo_mix_rate*waves[lfo_waves[lfo]]->sample_freq);
 	}
 }
 
@@ -212,7 +212,7 @@ void FmSynth::set_lfo_phase(int lfo,FixedPoint phi){
 	if(waves==NULL || waves[lfo_waves[lfo]]==NULL){
 		lfo_phis[lfo]=phi;
 	}else{
-		lfo_phis[lfo]=phi*(waves[lfo_waves[lfo]]->get_size()>>FP_INT_SHIFT);
+		lfo_phis[lfo]=phi*waves[lfo_waves[lfo]]->size;
 	}
 }
 

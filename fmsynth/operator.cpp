@@ -1,6 +1,6 @@
-#include <cstdio>
 #include <cmath>
 
+#include <cstdio>
 #include "operator.h"
 
 void Operator::set_wave_list(Wave **list){
@@ -199,6 +199,9 @@ void Operator::key_on(bool legato){
 		on=true;
 	}
 	if(!legato){
+		if(is_valid_wave(wave_ix) && waves[wave_ix]->resets_on_keyon()) {
+			phi=0L;
+		}
 		eg_phase=ATTACK;
 		on=true;
 	}

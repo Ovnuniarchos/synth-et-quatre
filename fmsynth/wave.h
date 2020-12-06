@@ -14,6 +14,8 @@ public:
 	virtual FixedPoint generate(FixedPoint phi,FixedPoint pm_in,FixedPoint duty_cycle){return 0L;};
 
 	virtual FixedPoint fix_loop(FixedPoint phi,FixedPoint mod_in){return phi+mod_in;};
+
+	virtual inline bool resets_on_keyon(){return false;};
 };
 
 #endif

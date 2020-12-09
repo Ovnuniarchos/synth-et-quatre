@@ -40,6 +40,7 @@ func _on_wave_selected(wave:int)->void:
 		$Info/HBC/Name.text=w.name
 		set_size_bytes(w.size)
 		$Designer/SC.visible=true
+		update_values(w)
 	calculate()
 
 func _on_wave_deleted(_wave:int)->void:
@@ -66,6 +67,9 @@ func _on_file_selected(path:String)->void:
 	var w:SampleWave=GLOBALS.song.get_wave(curr_wave_ix) as SampleWave
 	w.load_wave(path)
 	calculate()
+	update_values(w)
+
+func update_values(w:SampleWave)->void:
 	$Designer/SC/VBC/RecFreq.set_block_signals(true)
 	$Designer/SC/VBC/SamFreq.set_block_signals(true)
 	$Designer/SC/VBC/Start.set_block_signals(true)

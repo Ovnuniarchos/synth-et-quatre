@@ -15,17 +15,18 @@ private:
 	int64_t loop_size=0;
 	bool reset_on_keyon;
 
-	_ALWAYS_INLINE_ FixedPoint _fix_loop(FixedPoint phi,FixedPoint mod_in){
+	_ALWAYS_INLINE_ FixedPoint _fix_loop(FixedPoint phi,FixedPoint mod_in,bool& finished){
 		uint64_t ptr=phi>>FP_INT_SHIFT;
 		if(ptr<loop_start){
 			return phi+mod_in;
 		}
+		finished=ptr>=size && loop_size==0L;
 		phi+=mod_in;
 		ptr=phi>>FP_INT_SHIFT;
 		if(loop_size>0L){
 			ptr=((ptr-loop_start)%loop_size)+loop_start;
 		}
-		return (clamp(ptr,(uint64_t)0L,(uint64_t)size)<<FP_INT_SHIFT)|(phi&FP_DEC_MASK);
+		return (clamp(ptr,(uint64_t)0L,(uint64_t)size-1)<<FP_INT_SHIFT)|(phi&FP_DEC_MASK);
 	};
 
 public:
@@ -53,12 +54,15 @@ public:
 	};
 
 	FixedPoint fix_loop(FixedPoint phi,FixedPoint mod_in) override{
-		return _fix_loop(phi,mod_in);
+		bool _dummy;
+		return _fix_loop(phi,mod_in,_dummy);
 	};
 
 	FixedPoint generate(FixedPoint phi,FixedPoint pm_in,FixedPoint duty_cycle) override{
 		if(sample==NULL || size==0) return 0L;
-		return sample[(_fix_loop(phi,pm_in*SAMPLE_PM_FACTOR)>>FP_INT_SHIFT)&FP_DEC_MASK];
+		bool finished;
+		phi=_fix_loop(phi,pm_in*SAMPLE_PM_FACTOR,finished);
+		return sample[(phi>>FP_INT_SHIFT)&FP_DEC_MASK];
 	};
 
 	inline bool resets_on_keyon() override{return reset_on_keyon;};

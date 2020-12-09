@@ -488,6 +488,8 @@ func deserialize(inf:ChunkedFile)->Song:
 		inf.skip_chunk(hdr)
 	if !mandatory_CHAL:
 		return null
+	for w in song.wave_list:
+		w.connect("name_changed",song,"_on_wave_name_changed")
 	return song
 
 func process_highlights(inf:ChunkedFile,song:Song)->void:

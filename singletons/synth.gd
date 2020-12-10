@@ -96,6 +96,12 @@ func set_lfo_wave(lfo_ix:int,wave_ix:int)->void:
 func set_lfo_frequency(lfo_ix:int,freq:float)->void:
 	synth.set_lfo_freq(lfo_ix,freq)
 
-func mute_voices(mask:int)->void:
+func mute_voices(mask:int)->int:
 	mute_mask=mask
 	synth.mute_voices(mask)
+	var count:int=GLOBALS.song.num_channels
+	for _i in range(GLOBALS.song.num_channels):
+		if bool(mask&1):
+			count-=1
+		mask>>=1
+	return count

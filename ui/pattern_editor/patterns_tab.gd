@@ -27,6 +27,8 @@ func _ready()->void:
 func _on_song_changed()->void:
 	for i in range(Song.MAX_CHANNELS):
 		mute_status[i]=ENABLED
+	GLOBALS.muted_mask=0
+	SYNTH.mute_voices(0)
 	GLOBALS.song.connect("channels_changed",self,"_on_channels_changed")
 	_on_channels_changed()
 

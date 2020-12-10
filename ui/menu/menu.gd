@@ -63,7 +63,6 @@ func _on_New_pressed()->void:
 	var song:Song=Song.new()
 	AUDIO.tracker.stop()
 	AUDIO.tracker.reset()
-	SYNTH.mute_voices(0)
 	GLOBALS.set_song(song)
 
 #

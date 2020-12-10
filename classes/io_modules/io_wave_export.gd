@@ -8,20 +8,30 @@ const BUFFER_SIZE=2048
 func obj_save(path:String)->void:
 		var synth:Synth=Synth.new()
 		synth.set_mix_rate(CONFIG.get_value(CONFIG.RECORD_SAMPLERATE))
-		if CONFIG.get_value(CONFIG.RECORD_SAVEMUTED):
-			synth.mute_voices(GLOBALS.muted_mask)
+		var volume:float=0.0
+		if CONFIG.get_value(CONFIG.RECORD_FPSAMPLES):
+			volume=1.0
+			if not CONFIG.get_value(CONFIG.RECORD_SAVEMUTED):
+				synth.mute_voices(GLOBALS.muted_mask)
+		else:
+			if CONFIG.get_value(CONFIG.RECORD_SAVEMUTED):
+				volume=1.0/GLOBALS.song.num_channels
+			else:
+				volume=1.0/synth.mute_voices(GLOBALS.muted_mask)
 		GLOBALS.song.sync_waves(synth,0)
 		GLOBALS.song.sync_lfos(synth)
 		var thr:Thread=Thread.new()
 		thr.start(self,"export_thread",{
 			"synth":synth,
 			"path":path,
-			"thread":thr
+			"thread":thr,
+			"volume":volume
 		})
 		"""export_thread({
 			"synth":synth,
 			"path":path,
-			"thread":null
+			"thread":null,
+			"volume":volume
 		})"""
 
 func export_thread(data:Dictionary)->void:
@@ -47,7 +57,7 @@ func export_thread(data:Dictionary)->void:
 					orders.append(op+buffer_pos)
 				buffer_pos+=order_pos[-1]
 				order_pos.clear()
-			err=file.write_chunk(synth.generate(BUFFER_SIZE,cmds,1.0))
+			err=file.write_chunk(synth.generate(BUFFER_SIZE,cmds,data["volume"]))
 			if err!=OK:
 				file.close()
 				ALERT.alert(file.get_error_message(err))

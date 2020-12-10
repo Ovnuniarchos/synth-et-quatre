@@ -2,16 +2,16 @@ extends CanvasLayer
 
 
 func _ready()->void:
-	$Bar.hide()
+	$C/Bar.hide()
 
 func start()->void:
-	$Bar.value=0.0
+	$C/Bar.value=0.0
 	FADER.show(self)
-	$Bar.show()
+	$C/Bar.show()
 
 func end()->void:
-	$Bar.hide()
+	$C/Bar.hide()
 	FADER.hide(self)
 
 func set_value(v:float)->void:
-	$Bar.value=v
+	$C/Bar.value=v

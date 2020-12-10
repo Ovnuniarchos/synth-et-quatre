@@ -3,14 +3,6 @@ extends Control
 """
 FIXME
 	Immediate note play skips notes (skips muted channels)
-	Exprte wave exports at maximum volume. Can overflow.
-		Divide by max_channels/max_active_channels (depending on RECORD_SAVEMUTED/RECORD_FPSAMPLES)
-			if FPSAMPLES:
-				div=1.0
-			elif SAVEMUTED:
-				div=1.0/max_active
-			else:
-				div=1.0/max_chan
 TODO:
 	Special behavior of ±value key for pan column
 	Channel invert cycle for pan column

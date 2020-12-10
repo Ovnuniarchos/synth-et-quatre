@@ -6,10 +6,20 @@
 layer = 32
 script = ExtResource( 1 )
 
-[node name="Bar" type="ProgressBar" parent="."]
+[node name="C" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Bar" type="ProgressBar" parent="C"]
 margin_top = 293.0
 margin_right = 1024.0
 margin_bottom = 307.0
 size_flags_horizontal = 7
 size_flags_vertical = 4
 step = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}

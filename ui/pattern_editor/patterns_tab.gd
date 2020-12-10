@@ -41,7 +41,7 @@ func _on_channels_changed()->void:
 	delfx_but.disabled=song.num_fxs[0]==song.MIN_FX_LENGTH
 	addfx_but.disabled=song.num_fxs[0]==song.MAX_FX_LENGTH
 	chan_but.rect_min_size.x=64.0+(song.num_fxs[0]*48.0)
-	chan_but.text=("F%d" if song.num_fxs[0]<1 else "FM %d")%[1]
+	chan_but.text=("#%d" if song.num_fxs[0]<1 else "CHN %d")%[1]
 	chan_but.status=mute_status[0]
 	for i in range(1,song.num_channels):
 		var nb:Button=delfx_but.duplicate()

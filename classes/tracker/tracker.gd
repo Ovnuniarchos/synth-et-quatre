@@ -78,10 +78,10 @@ func _on_song_changed()->void:
 
 #
 
-func gen_commands(song:Song,mix_rate:float,buffer_size:int,cmds:Array,order_start:Array=[])->bool:
+func gen_commands(song:Song,mix_rate:float,buffer_size:int,cmds:Array,order_start:Array=[])->Dictionary:
 	if !playing:
 		cmds[0]=CONSTS.CMD_END
-		return false
+		return {"play":false,"loop":-1}
 	var max_wait:int=min(CONSTS.MAX_WAIT_TIME,buffer_size)
 	var samples_tick:float=mix_rate/song.ticks_second
 	var ptr:int=0
@@ -128,11 +128,11 @@ func gen_commands(song:Song,mix_rate:float,buffer_size:int,cmds:Array,order_star
 				curr_tick=0
 				curr_row=0
 				if recording and goto_order<=curr_order:
-					return false
+					return {"play":false,"loop":goto_order}
 				next_order(goto_order)
 				goto_order=-1
 				if needs_stop(song):
-					return false
+					return {"play":false,"loop":-1}
 				emit_signal("position_changed",curr_order,curr_row)
 			elif goto_next!=-1:
 				order_start.append(buffer_pos)
@@ -141,7 +141,7 @@ func gen_commands(song:Song,mix_rate:float,buffer_size:int,cmds:Array,order_star
 				next_order(curr_order+1)
 				goto_next=-1
 				if needs_stop(song):
-					return false
+					return {"play":false,"loop":-1}
 				emit_signal("position_changed",curr_order,curr_row)
 			if curr_tick>=song.ticks_row:
 				curr_tick=0
@@ -151,7 +151,7 @@ func gen_commands(song:Song,mix_rate:float,buffer_size:int,cmds:Array,order_star
 					curr_row=0
 					next_order(curr_order+1)
 					if needs_stop(song):
-						return false
+						return {"play":false,"loop":-1}
 				emit_signal("position_changed",curr_order,curr_row)
 		else:
 			song_delay-=1
@@ -159,7 +159,7 @@ func gen_commands(song:Song,mix_rate:float,buffer_size:int,cmds:Array,order_star
 		ptr=optr
 	cmds[ptr]=CONSTS.CMD_END
 	curr_sample-=buffer_size
-	return true
+	return {"play":true,"loop":-1.0}
 
 func next_order(next:int)->void:
 	if not loop_track:

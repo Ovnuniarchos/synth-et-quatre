@@ -49,7 +49,8 @@ func export_thread(data:Dictionary)->void:
 	var orders:Array=[]
 	if err==OK:
 		tracker.record(0)
-		while tracker.gen_commands(GLOBALS.song,sample_rate,BUFFER_SIZE,cmds,order_pos):
+		var play_info:Dictionary=tracker.gen_commands(GLOBALS.song,sample_rate,BUFFER_SIZE,cmds,order_pos)
+		while play_info["play"]:
 			if order_pos.empty():
 				buffer_pos+=BUFFER_SIZE
 			else:
@@ -64,11 +65,18 @@ func export_thread(data:Dictionary)->void:
 				call_deferred("thread_kill",data["thread"])
 				return
 			PROGRESS.set_value((tracker.curr_order*100)/GLOBALS.song.orders.size())
+			play_info=tracker.gen_commands(GLOBALS.song,sample_rate,BUFFER_SIZE,cmds,order_pos)
 		file.write_cue_points(orders)
 		file.end_file()
 		var cue:File=File.new()
 		cue.open(data["path"].get_basename()+".cue",File.WRITE)
 		cue.store_line("FILE %s WAVE"%data["path"])
+		var loop:int=play_info["loop"]
+		if loop!=-1 and loop<orders.size():
+			if loop==0:
+				cue.store_line("REM Loop point: 0.000000")
+			else:
+				cue.store_line("REM Loop point: %f"%(float(orders[loop-1])/sample_rate))
 		for i in range(orders.size()):
 			var o:int=orders[i]
 			cue.store_line("	TRACK %d AUDIO"%(i+1))

@@ -87,6 +87,15 @@ func _on_file_selected(path:String)->void:
 			IO_INSTRUMENT.obj_save(path)
 	CONFIG.set_value(cfg_dir,path.get_base_dir())
 
+func _on_files_selected(paths:PoolStringArray)->void:
+	var cfg_dir:Array
+	match file_mode:
+		FILE_MODE.LOAD_INST:
+			cfg_dir=CONFIG.CURR_INST_DIR
+			for path in paths:
+				IO_INSTRUMENT.obj_load(path)
+	CONFIG.set_value(cfg_dir,paths[0].get_base_dir())
+
 func _on_FileDialog_visibility_changed()->void:
 	if $FileDialog.visible:
 		FADER.open_dialog($FileDialog)
@@ -118,7 +127,7 @@ func load_instrument()->void:
 	file_mode=FILE_MODE.LOAD_INST
 	$FileDialog.current_dir=CONFIG.get_value(CONFIG.CURR_INST_DIR)
 	$FileDialog.window_title="Load Instrument"
-	$FileDialog.mode=FileDialog.MODE_OPEN_FILE
+	$FileDialog.mode=FileDialog.MODE_OPEN_FILES
 	$FileDialog.filters=FILES_SI4
 	$FileDialog.current_file=""
 	$FileDialog.set_as_toplevel(true)

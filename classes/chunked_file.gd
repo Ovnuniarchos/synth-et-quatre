@@ -28,7 +28,6 @@ func get_ascii(length:int)->String:
 
 func get_chunk_header()->Dictionary:
 	var d:Dictionary={CHUNK_ID:get_ascii(4),CHUNK_VERSION:get_16(),CHUNK_NEXT:get_64()}
-	print(d)
 	return d
 
 func get_signed_16()->int:

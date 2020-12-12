@@ -15,7 +15,7 @@ func start_chunk(name:String,version:int)->void:
 
 func end_chunk()->void:
 	var pos:int=get_position()
-	seek(chunk_start.pop_back()+4)
+	seek(chunk_start.pop_back()+6)
 	store_64(pos)
 	seek(pos)
 
@@ -27,7 +27,9 @@ func get_ascii(length:int)->String:
 	return get_buffer(length).get_string_from_ascii()
 
 func get_chunk_header()->Dictionary:
-	return {CHUNK_ID:get_ascii(4),CHUNK_VERSION:get_16(),CHUNK_NEXT:get_64()}
+	var d:Dictionary={CHUNK_ID:get_ascii(4),CHUNK_VERSION:get_16(),CHUNK_NEXT:get_64()}
+	print(d)
+	return d
 
 func get_signed_16()->int:
 	var v:int=get_16()

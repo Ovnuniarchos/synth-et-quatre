@@ -102,8 +102,8 @@ func deserialize(inf:ChunkedFile,w:SynthWave)->void:
 			_:
 				print("Unrecognized chunk [%s]"%[hdr[ChunkedFile.CHUNK_ID]])
 		if nw!=null:
-			nw.deserialize(inf,nw,w.components)
 			w.components[i]=nw
+			nw.deserialize(inf,nw,w.components)
 		inf.skip_chunk(hdr)
 	w.resize_data(1<<w.size_po2)
 	w.calculate()

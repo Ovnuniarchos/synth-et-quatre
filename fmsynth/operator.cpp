@@ -84,12 +84,12 @@ FixedPoint Operator::generate(FixedPoint pm_in,FixedPoint am_lfo_in,FixedPoint f
 	return sample;
 }
 
-_ALWAYS_INLINE_ FixedPoint Operator::get_rate(int rate,int &var){
-	var=clamp(rate,0,255);
-	float ivar=256.0-var;
-	ivar=(ivar*ivar/24.0)+1.0;
-	float iksr=(key_scale==0)?1.0:1.0-(((key_cents+200)*key_scale)*0.000009); // This 0.000009 is (partially) calculated by ear
-	return ENVELOPE_RATE_1S/(mix_rate*ivar*iksr);
+_ALWAYS_INLINE_ FixedPoint Operator::get_rate(int rate,int &dst_rate){
+	dst_rate=clamp(rate,0,255);
+	float inv_rate=256.0-dst_rate;
+	inv_rate=(inv_rate*inv_rate/24.0)+1.0;
+	float inv_ksr=1.0-((key_cents+200)*key_scale*0.000009); // 0.000009 ≃ 1.0/(key_scale_max(14300)+200)*max_ksr(7)
+	return ENVELOPE_RATE_1S/(mix_rate*inv_rate*inv_ksr);
 };
 
 void Operator::set_mix_rate(float m){

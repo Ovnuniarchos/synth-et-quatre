@@ -16,7 +16,8 @@ FixedPoint Voice::generate(FixedPoint* lfo_ins){
 		last_samples[i]=ops[i].generate(pm,lfo_ins[am_lfos[i]],lfo_ins[fm_lfos[i]]);
 		out+=last_samples[i]*outs[i];
 	}
-	return (out*volume)>>16;
+	out=(out*volume)>>16;
+	return clip?clamp(out,-FP_ONE,FP_ONE):out;
 };
 
 void Voice::set_mix_rate(float mix_rate){

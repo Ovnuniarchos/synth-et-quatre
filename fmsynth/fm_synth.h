@@ -10,8 +10,8 @@ class FmSynth{
 private:
 	static const int MAX_VOICES=32;
 	static const int MAX_WAVES=256;
+	static const int MIN_USR_WAVE=4;
 	static const int MAX_LFOS=4;
-	static const int LAST_LFO=MAX_LFOS-1;
 	Voice voices[MAX_VOICES];
 	Wave *waves[MAX_WAVES];
 	bool mute_voice[MAX_VOICES];
@@ -28,7 +28,7 @@ private:
 public:
 	FmSynth(){
 		int i;
-		for(i=4;i<MAX_WAVES;i++) waves[i]=NULL;
+		for(i=MIN_USR_WAVE;i<MAX_WAVES;i++) waves[i]=NULL;
 		waves[0]=new RectangleWave();
 		waves[1]=new SawWave();
 		waves[2]=new TriangleWave();
@@ -77,6 +77,7 @@ public:
 	void key_off(int voice,int op_mask);
 	void stop(int voice,int op_mask);
 	void set_enable(int voice,int op_mask,int enable_bits);
+	void set_clip(int voice,bool clip_bits);
 
 	void set_pm_factor(int voice,int op_from,int op_to,int pm_factor);
 	void set_output(int voice,int op_mask,int volume);

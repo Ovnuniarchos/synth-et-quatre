@@ -48,6 +48,7 @@ void SynthTracker::_register_methods(){
 	register_method("key_off",&SynthTracker::key_off);
 	register_method("stop",&SynthTracker::stop);
 	register_method("set_enable",&SynthTracker::set_enable);
+	register_method("set_clip",&SynthTracker::set_clip);
 
 	register_method("set_pm_factor",&SynthTracker::set_pm_factor);
 	register_method("set_output",&SynthTracker::set_output);
@@ -547,6 +548,10 @@ void SynthTracker::stop(int voice,int op_mask){
 
 void SynthTracker::set_enable(int voice,int op_mask,int enable_bits){
 	synth.set_enable(voice,op_mask,enable_bits);
+}
+
+void SynthTracker::set_clip(int voice,bool clip){
+	synth.set_clip(voice,clip);
 }
 
 

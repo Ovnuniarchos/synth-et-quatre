@@ -22,6 +22,8 @@ private:
 	int fm_lfos[MAX_OPS]={0,0,0,0};
 
 public:
+	bool clip=false;
+
 	void set_wave_list(Wave **list);
 
 	FixedPoint generate(FixedPoint* lfo_ins);

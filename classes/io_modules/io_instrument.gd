@@ -31,6 +31,7 @@ func obj_save(path:String)->void:
 	f.store_16(wave_list.size())
 	for wi in wave_list:
 		GLOBALS.song.wave_list[wi-FmInstrument.WAVE.NOISE-1].serialize(f)
+	f.end_chunk()
 	#
 	inst.file_name=path.get_file()
 	f.close()
@@ -86,6 +87,7 @@ func obj_load(path:String)->void:
 	# Add waveforms
 	var new_wave_i:int
 	var in_w:int=FmInstrument.WAVE.CUSTOM
+	var tmp_waves:Array=ni.waveforms.duplicate()
 	for wav in wav_l:
 		if typeof(wav)==TYPE_OBJECT:
 			new_wave_i=GLOBALS.song.wave_list.size()+FmInstrument.WAVE.CUSTOM
@@ -93,12 +95,12 @@ func obj_load(path:String)->void:
 			wav.calculate()
 			GLOBALS.song.send_wave(wav,SYNTH)
 			for inst_w in range(4):
-				if ni.waveforms[inst_w]==in_w:
+				if tmp_waves[inst_w]==in_w:
 					ni.waveforms[inst_w]=new_wave_i
 		else:
 			for inst_w in range(4):
-				if ni.waveforms[inst_w]==in_w:
-					ni.waveforms[inst_w]=wav_l[wav-FmInstrument.WAVE.CUSTOM]
+				if tmp_waves[inst_w]==in_w:
+					ni.waveforms[inst_w]=wav
 		in_w+=1
 	# Add instrument
 	ni.file_name=path.get_file()

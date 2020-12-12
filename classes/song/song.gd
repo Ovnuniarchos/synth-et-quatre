@@ -445,6 +445,7 @@ func serialize(out:ChunkedFile)->void:
 		out.store_16(chn.size())
 		for pat in chn:
 			pat.serialize(out,pattern_length,num_fxs[i])
+	out.end_chunk()
 
 #
 

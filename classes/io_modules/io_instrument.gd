@@ -3,6 +3,7 @@ class_name IOInstrument
 
 
 const FILE_SIGNATURE:String="SFID\u000d\u000a\u001a\u000a"
+const FILE_VERSION:int=0
 
 
 func obj_save(path:String)->void:
@@ -22,8 +23,7 @@ func obj_save(path:String)->void:
 	var f:ChunkedFile=ChunkedFile.new()
 	f.open(path,File.WRITE)
 	# Signature: SFMM\0xc\0xa\0x1a\0xa
-	f.store_string(FILE_SIGNATURE)
-	f.store_16(0)
+	f.start_file(FILE_SIGNATURE,FILE_VERSION)
 	# Serialize instrument
 	sinst.serialize(f)
 	# Serialize waveforms
@@ -43,9 +43,7 @@ func obj_load(path:String)->void:
 	var f:ChunkedFile=ChunkedFile.new()
 	f.open(path,File.READ)
 	# Signature
-	var sig:String=f.get_ascii(8)
-	var file_version:int=f.get_16()
-	if sig!=FILE_SIGNATURE:
+	if f.start_file(FILE_SIGNATURE,FILE_VERSION)!=OK:
 		return
 	# Instrument data
 	var hdr:Dictionary=f.get_chunk_header()

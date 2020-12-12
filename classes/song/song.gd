@@ -25,6 +25,7 @@ const MIN_CUSTOM_WAVE:int=4
 const MAX_WAVES:int=256-MIN_CUSTOM_WAVE
 const MAX_INSTRUMENTS:int=256
 const FILE_SIGNATURE:String="SFMM\u000d\u000a\u001a\u000a"
+const FILE_VERSION:int=0
 const CHUNK_HEADER:String="MHDR"
 const CHUNK_HIGHLIGHTS:String="hIGH"
 const CHUNK_CHANNELS:String="CHAL"
@@ -393,8 +394,7 @@ func insert_row(order:int,channel:int,row:int)->void:
 
 func serialize(out:ChunkedFile)->void:
 	# Signature: SFMM\0xc\0xa\0x1a\0xa
-	out.store_string(FILE_SIGNATURE)
-	out.store_16(0)
+	out.start_file(FILE_SIGNATURE,FILE_VERSION)
 	# Header
 	out.start_chunk(CHUNK_HEADER,0)
 	out.store_16(pattern_length)
@@ -452,9 +452,7 @@ func serialize(out:ChunkedFile)->void:
 func deserialize(inf:ChunkedFile)->Song:
 	var song:Song=get_script().new()
 	# Signature
-	var sig:String=inf.get_ascii(8)
-	var file_version:int=inf.get_16()
-	if sig!=FILE_SIGNATURE:
+	if inf.start_file(FILE_SIGNATURE,FILE_VERSION)!=OK:
 		return null
 	# Header
 	var hdr:Dictionary=inf.get_chunk_header()

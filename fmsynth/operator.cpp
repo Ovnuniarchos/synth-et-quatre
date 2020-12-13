@@ -73,7 +73,7 @@ FixedPoint Operator::generate(FixedPoint pm_in,FixedPoint am_lfo_in,FixedPoint f
 	if(!is_valid_wave(wave_ix)){
 		return 0L;
 	}
-	FixedPoint sample=(waves[wave_ix]->generate(phi,pm_in,duty_cycle)*eg_vol)>>FP_INT_SHIFT;
+	FixedPoint sample=(waves[wave_ix]->generate(phi,pm_in,duty_cycle,wave_state)*eg_vol)>>FP_INT_SHIFT;
 	// AM
 	FixedPoint mod=((am_lfo_in*am_level)>>FP_INT_SHIFT)+am_floor;
 	sample=(sample*mod)>>FP_INT_SHIFT;

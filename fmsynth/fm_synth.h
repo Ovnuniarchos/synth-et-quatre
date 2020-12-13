@@ -24,6 +24,7 @@ private:
 	FixedPoint lfo_duties[MAX_LFOS]={0L,0L,0L,0L};
 
 	_ALWAYS_INLINE_ FixedPoint generate_lfo(int ix,FixedPoint phi,FixedPoint duty_cycle);
+	WaveState wave_state[MAX_LFOS];
 
 public:
 	FmSynth(){

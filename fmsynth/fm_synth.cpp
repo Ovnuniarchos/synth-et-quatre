@@ -1,7 +1,7 @@
 #include "fm_synth.h"
 
 _ALWAYS_INLINE_ FixedPoint FmSynth::generate_lfo(int ix,FixedPoint phi,FixedPoint duty_cycle){
-	return waves[lfo_waves[ix]]==NULL?0L:waves[lfo_waves[ix]]->generate(phi,0L,duty_cycle);
+	return waves[lfo_waves[ix]]==NULL?0L:waves[lfo_waves[ix]]->generate(phi,0L,duty_cycle,wave_state[ix]);
 }
 
 void FmSynth::generate(FixedPoint &left,FixedPoint &right){

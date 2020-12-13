@@ -1,40 +1,25 @@
 #ifndef NOISE_WAVE
 #define NOISE_WAVE
 
-#include <cstdlib>
 #include "wave.h"
 
 class NoiseWave:public Wave{
-private:
-	const int NOISE_SIZE=0x1000;
-	const int NOISE_MASK=NOISE_SIZE-1;
-	uint8_t *noiz;
-
 public:
-	NoiseWave(){
-		noiz=new uint8_t[NOISE_SIZE];
-		for(int i=0;i<NOISE_SIZE;i++){
-			int j=rand()&NOISE_MASK;
-			noiz[i]=j&0xff;
-			noiz[j]=i&0xff;
+	const int ST_NOISE_LSFR=0;
+	const int ST_NOISE_LATCH=1;
+	const int ST_NOISE_SWITCH=2;
+	const FixedPoint NOISE_BIT=FP_ONE>>3;
+
+	FixedPoint generate(FixedPoint phi,FixedPoint pm_in,FixedPoint duty_cycle,WaveState& st) override{
+		uint64_t& nlsfr=(uint64_t&)st.state[ST_NOISE_LSFR];
+		FixedPoint& nlatch=st.state[ST_NOISE_LATCH];
+		FixedPoint& nswitch=st.state[ST_NOISE_SWITCH];
+		if((phi&NOISE_BIT)==nswitch){
+			nswitch^=NOISE_BIT;
+			nlsfr=((nlsfr&1UL)<<63) | ((nlsfr>>1)&0x7fffffffffffffffUL) ^ ((~nlsfr&0x4020000000UL)>>26) ^ ((~nlsfr&0x200UL)<<19) ^ ((~nlsfr&0x1000UL)<<29);
+			nlatch=(nlsfr&FP_NEARLY_TWO)-FP_ONE;
 		}
-	};
-
-	~NoiseWave(){
-		delete noiz;
-	};
-
-	FixedPoint generate(FixedPoint phi,FixedPoint pm_in,FixedPoint duty_cycle) override{
-		phi+=pm_in;
-		FixedPoint tmp=(noiz[(phi>>19)&NOISE_MASK]<<20)+
-			(noiz[(phi>>20)&NOISE_MASK]<<19)+
-			(noiz[(phi>>21)&NOISE_MASK]<<18)+
-			(noiz[(phi>>22)&NOISE_MASK]<<17)+
-			(noiz[(phi>>23)&NOISE_MASK]<<16)+
-			(noiz[(phi>>24)&NOISE_MASK]<<15)+
-			(noiz[(phi>>25)&NOISE_MASK]<<14)+
-			(noiz[(phi>>26)&NOISE_MASK]<<13);
-		return (tmp&FP_NEARLY_TWO)-FP_ONE;
+		return nlatch;
 	};
 };
 

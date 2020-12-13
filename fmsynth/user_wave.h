@@ -27,7 +27,7 @@ public:
 		delete[] wave;
 	};
 
-	FixedPoint generate(FixedPoint phi,FixedPoint pm_in,FixedPoint duty_cycle) override{
+	FixedPoint generate(FixedPoint phi,FixedPoint pm_in,FixedPoint duty_cycle,WaveState& st) override{
 		if(wave==NULL) return 0L;
 		phi=(phi+pm_in)&FP_DEC_MASK;
 		FixedPoint tmp=wave[(phi>>size_shift)&size_mask];

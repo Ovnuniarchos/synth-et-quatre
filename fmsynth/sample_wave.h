@@ -58,7 +58,7 @@ public:
 		return _fix_loop(phi,mod_in,_dummy);
 	};
 
-	FixedPoint generate(FixedPoint phi,FixedPoint pm_in,FixedPoint duty_cycle) override{
+	FixedPoint generate(FixedPoint phi,FixedPoint pm_in,FixedPoint duty_cycle,WaveState& st) override{
 		if(sample==NULL || size==0) return 0L;
 		bool finished;
 		phi=_fix_loop(phi,pm_in*SAMPLE_PM_FACTOR,finished);

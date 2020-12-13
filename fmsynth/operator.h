@@ -24,6 +24,7 @@ private:
 	int wave_ix=0;
 	FixedPoint phi=0L;
 	FixedPoint duty_cycle=0L;
+	WaveState wave_state;
 
 	bool on=false;
 	ADSR eg_phase=OFF;

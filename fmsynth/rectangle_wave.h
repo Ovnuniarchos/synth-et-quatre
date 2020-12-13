@@ -5,7 +5,7 @@
 
 class RectangleWave:public Wave{
 public:
-	FixedPoint generate(FixedPoint phi,FixedPoint pm_in,FixedPoint duty_cycle) override{
+	FixedPoint generate(FixedPoint phi,FixedPoint pm_in,FixedPoint duty_cycle,WaveState& st) override{
 		return ((phi+pm_in)&FP_DEC_MASK)>=duty_cycle?FP_ONE:-FP_ONE;
 	};
 };

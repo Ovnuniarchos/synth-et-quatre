@@ -50,7 +50,7 @@ func obj_load(path:String)->void:
 	if hdr[ChunkedFile.CHUNK_ID]!=FmInstrument.CHUNK_ID:
 		return
 	var ni:FmInstrument=FmInstrument.new()
-	ni.deserialize(f,ni)
+	ni.deserialize(f,ni,hdr[ChunkedFile.CHUNK_VERSION])
 	# Waveforms
 	hdr=f.get_chunk_header()
 	if hdr[ChunkedFile.CHUNK_ID]!=Song.CHUNK_WAVES:

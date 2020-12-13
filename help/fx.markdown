@@ -192,6 +192,9 @@ Set LFO frequency integral part to `xx`Hz.
 
 Set LFO frequency decimal part to `xx÷256`Hz.
 
+## 3Exx
+
+Set clipping on/off. 0 deactivates clipping, anything else activates it.
 
 
 # Play commands

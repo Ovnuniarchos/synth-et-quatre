@@ -48,6 +48,7 @@ private:
 		CMD_LFO_WAVE,
 		CMD_LFO_DUC,
 		CMD_LFO_PHI,
+		CMD_CLIP=0x21,
 		CMD_DEBUG=0xfe,
 		CMD_END=0xff
 	};

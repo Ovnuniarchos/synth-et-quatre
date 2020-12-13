@@ -79,7 +79,7 @@ scroll_horizontal_enabled = false
 
 [node name="VBC" type="VBoxContainer" parent="Params"]
 margin_right = 1012.0
-margin_bottom = 922.0
+margin_bottom = 909.0
 size_flags_horizontal = 3
 
 [node name="OPS" type="GridContainer" parent="Params/VBC"]
@@ -120,7 +120,7 @@ operator = 3
 [node name="Routing" parent="Params/VBC" instance=ExtResource( 2 )]
 margin_top = 776.0
 margin_right = 1012.0
-margin_bottom = 922.0
+margin_bottom = 909.0
 
 [connection signal="text_changed" from="Info/HBC/Name" to="." method="_on_Name_changed"]
 [connection signal="instrument_changed" from="Params/VBC/OPS/OP1" to="." method="_on_instrument_changed"]

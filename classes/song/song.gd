@@ -534,7 +534,7 @@ func process_instrument_list(inf:ChunkedFile,song:Song)->void:
 		match hdr[ChunkedFile.CHUNK_ID]:
 			FmInstrument.CHUNK_ID:
 				var n:FmInstrument=FmInstrument.new()
-				n.deserialize(inf,n)
+				n.deserialize(inf,n,hdr[ChunkedFile.CHUNK_VERSION])
 				inst_l[i]=n
 			_:
 				print("Unrecognized chunk [%s]"%[hdr[ChunkedFile.CHUNK_ID]])

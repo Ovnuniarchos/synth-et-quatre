@@ -1,5 +1,7 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
+[ext_resource path="res://theme/theme.tres" type="Theme" id=1]
+[ext_resource path="res://ui/widgets/accent_button.gd" type="Script" id=2]
 [ext_resource path="res://ui/instrument_designer/fm/routing.gd" type="Script" id=3]
 [ext_resource path="res://ui/widgets/slider.gd" type="Script" id=4]
 
@@ -7,6 +9,8 @@
 margin_top = -0.463303
 margin_right = 829.0
 margin_bottom = 145.537
+size_flags_vertical = 0
+theme = ExtResource( 1 )
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -16,24 +20,25 @@ __meta__ = {
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 822.0
-margin_bottom = 139.0
+margin_bottom = 157.0
+size_flags_horizontal = 3
 size_flags_vertical = 0
 
 [node name="Title" type="Label" parent="Routings"]
 margin_right = 815.0
-margin_bottom = 14.0
+margin_bottom = 17.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Routing"
 
 [node name="Titles" type="HBoxContainer" parent="Routings"]
-margin_top = 18.0
+margin_top = 17.0
 margin_right = 815.0
-margin_bottom = 32.0
+margin_bottom = 34.0
 custom_constants/separation = 24
 
 [node name="OP1" type="Label" parent="Routings/Titles"]
 margin_right = 185.0
-margin_bottom = 14.0
+margin_bottom = 17.0
 size_flags_horizontal = 3
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "OP1"
@@ -41,53 +46,52 @@ align = 1
 
 [node name="OP2" type="Label" parent="Routings/Titles"]
 margin_left = 209.0
-margin_right = 394.0
-margin_bottom = 14.0
+margin_right = 395.0
+margin_bottom = 17.0
 size_flags_horizontal = 3
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "OP2"
 align = 1
 
 [node name="OP3" type="Label" parent="Routings/Titles"]
-margin_left = 418.0
-margin_right = 603.0
-margin_bottom = 14.0
+margin_left = 419.0
+margin_right = 605.0
+margin_bottom = 17.0
 size_flags_horizontal = 3
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "OP3"
 align = 1
 
 [node name="OP4" type="Label" parent="Routings/Titles"]
-margin_left = 627.0
+margin_left = 629.0
 margin_right = 815.0
-margin_bottom = 14.0
+margin_bottom = 17.0
 size_flags_horizontal = 3
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "OP4"
 align = 1
 
 [node name="Params" type="HBoxContainer" parent="Routings"]
-margin_top = 36.0
+margin_top = 34.0
 margin_right = 815.0
-margin_bottom = 132.0
+margin_bottom = 119.0
 custom_constants/separation = 24
 
 [node name="OP1" type="GridContainer" parent="Routings/Params"]
 margin_right = 185.0
-margin_bottom = 96.0
+margin_bottom = 85.0
 size_flags_horizontal = 3
 size_flags_vertical = 8
 columns = 3
 
 [node name="OP1Label" type="Label" parent="Routings/Params/OP1"]
-margin_top = 1.0
-margin_right = 27.0
-margin_bottom = 15.0
+margin_right = 24.0
+margin_bottom = 17.0
 text = "OP1"
 
 [node name="OP1Slider" type="HSlider" parent="Routings/Params/OP1"]
-margin_left = 31.0
-margin_right = 157.0
+margin_left = 24.0
+margin_right = 161.0
 margin_bottom = 16.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -97,23 +101,22 @@ label = NodePath("../OP1Value")
 
 [node name="OP1Value" type="Label" parent="Routings/Params/OP1"]
 margin_left = 161.0
-margin_top = 1.0
 margin_right = 185.0
-margin_bottom = 15.0
+margin_bottom = 17.0
 size_flags_horizontal = 0
 text = "888"
 
 [node name="OP2Label" type="Label" parent="Routings/Params/OP1"]
-margin_top = 21.0
-margin_right = 27.0
-margin_bottom = 35.0
+margin_top = 17.0
+margin_right = 24.0
+margin_bottom = 34.0
 text = "OP2"
 
 [node name="OP2Slider" type="HSlider" parent="Routings/Params/OP1"]
-margin_left = 31.0
-margin_top = 20.0
-margin_right = 157.0
-margin_bottom = 36.0
+margin_left = 24.0
+margin_top = 17.0
+margin_right = 161.0
+margin_bottom = 33.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 max_value = 255.0
@@ -122,23 +125,23 @@ label = NodePath("../OP2Value")
 
 [node name="OP2Value" type="Label" parent="Routings/Params/OP1"]
 margin_left = 161.0
-margin_top = 21.0
+margin_top = 17.0
 margin_right = 185.0
-margin_bottom = 35.0
+margin_bottom = 34.0
 size_flags_horizontal = 0
 text = "888"
 
 [node name="OP3Label" type="Label" parent="Routings/Params/OP1"]
-margin_top = 41.0
-margin_right = 27.0
-margin_bottom = 55.0
+margin_top = 34.0
+margin_right = 24.0
+margin_bottom = 51.0
 text = "OP3"
 
 [node name="OP3Slider" type="HSlider" parent="Routings/Params/OP1"]
-margin_left = 31.0
-margin_top = 40.0
-margin_right = 157.0
-margin_bottom = 56.0
+margin_left = 24.0
+margin_top = 34.0
+margin_right = 161.0
+margin_bottom = 50.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 max_value = 255.0
@@ -147,23 +150,23 @@ label = NodePath("../OP3Value")
 
 [node name="OP3Value" type="Label" parent="Routings/Params/OP1"]
 margin_left = 161.0
-margin_top = 41.0
+margin_top = 34.0
 margin_right = 185.0
-margin_bottom = 55.0
+margin_bottom = 51.0
 size_flags_horizontal = 0
 text = "888"
 
 [node name="OP4Label" type="Label" parent="Routings/Params/OP1"]
-margin_top = 61.0
-margin_right = 27.0
-margin_bottom = 75.0
+margin_top = 51.0
+margin_right = 24.0
+margin_bottom = 68.0
 text = "OP4"
 
 [node name="OP4Slider" type="HSlider" parent="Routings/Params/OP1"]
-margin_left = 31.0
-margin_top = 60.0
-margin_right = 157.0
-margin_bottom = 76.0
+margin_left = 24.0
+margin_top = 51.0
+margin_right = 161.0
+margin_bottom = 67.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 max_value = 255.0
@@ -172,23 +175,23 @@ label = NodePath("../OP4Value")
 
 [node name="OP4Value" type="Label" parent="Routings/Params/OP1"]
 margin_left = 161.0
-margin_top = 61.0
+margin_top = 51.0
 margin_right = 185.0
-margin_bottom = 75.0
+margin_bottom = 68.0
 size_flags_horizontal = 0
 text = "888"
 
 [node name="OutLabel" type="Label" parent="Routings/Params/OP1"]
-margin_top = 81.0
-margin_right = 27.0
-margin_bottom = 95.0
+margin_top = 68.0
+margin_right = 24.0
+margin_bottom = 85.0
 text = "Out"
 
 [node name="OutSlider" type="HSlider" parent="Routings/Params/OP1"]
-margin_left = 31.0
-margin_top = 80.0
-margin_right = 157.0
-margin_bottom = 96.0
+margin_left = 24.0
+margin_top = 68.0
+margin_right = 161.0
+margin_bottom = 84.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 max_value = 255.0
@@ -197,29 +200,28 @@ label = NodePath("../OutValue")
 
 [node name="OutValue" type="Label" parent="Routings/Params/OP1"]
 margin_left = 161.0
-margin_top = 81.0
+margin_top = 68.0
 margin_right = 185.0
-margin_bottom = 95.0
+margin_bottom = 85.0
 size_flags_horizontal = 0
 text = "888"
 
 [node name="OP2" type="GridContainer" parent="Routings/Params"]
 margin_left = 209.0
-margin_right = 394.0
-margin_bottom = 96.0
+margin_right = 395.0
+margin_bottom = 85.0
 size_flags_horizontal = 3
 size_flags_vertical = 8
 columns = 3
 
 [node name="OP1Label" type="Label" parent="Routings/Params/OP2"]
-margin_top = 1.0
-margin_right = 27.0
-margin_bottom = 15.0
+margin_right = 24.0
+margin_bottom = 17.0
 text = "OP1"
 
 [node name="OP1Slider" type="HSlider" parent="Routings/Params/OP2"]
-margin_left = 31.0
-margin_right = 157.0
+margin_left = 24.0
+margin_right = 162.0
 margin_bottom = 16.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -228,24 +230,23 @@ script = ExtResource( 4 )
 label = NodePath("../OP1Value")
 
 [node name="OP1Value" type="Label" parent="Routings/Params/OP2"]
-margin_left = 161.0
-margin_top = 1.0
-margin_right = 185.0
-margin_bottom = 15.0
+margin_left = 162.0
+margin_right = 186.0
+margin_bottom = 17.0
 size_flags_horizontal = 0
 text = "888"
 
 [node name="OP2Label" type="Label" parent="Routings/Params/OP2"]
-margin_top = 21.0
-margin_right = 27.0
-margin_bottom = 35.0
+margin_top = 17.0
+margin_right = 24.0
+margin_bottom = 34.0
 text = "OP2"
 
 [node name="OP2Slider" type="HSlider" parent="Routings/Params/OP2"]
-margin_left = 31.0
-margin_top = 20.0
-margin_right = 157.0
-margin_bottom = 36.0
+margin_left = 24.0
+margin_top = 17.0
+margin_right = 162.0
+margin_bottom = 33.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 max_value = 255.0
@@ -253,24 +254,24 @@ script = ExtResource( 4 )
 label = NodePath("../OP2Value")
 
 [node name="OP2Value" type="Label" parent="Routings/Params/OP2"]
-margin_left = 161.0
-margin_top = 21.0
-margin_right = 185.0
-margin_bottom = 35.0
+margin_left = 162.0
+margin_top = 17.0
+margin_right = 186.0
+margin_bottom = 34.0
 size_flags_horizontal = 0
 text = "888"
 
 [node name="OP3Label" type="Label" parent="Routings/Params/OP2"]
-margin_top = 41.0
-margin_right = 27.0
-margin_bottom = 55.0
+margin_top = 34.0
+margin_right = 24.0
+margin_bottom = 51.0
 text = "OP3"
 
 [node name="OP3Slider" type="HSlider" parent="Routings/Params/OP2"]
-margin_left = 31.0
-margin_top = 40.0
-margin_right = 157.0
-margin_bottom = 56.0
+margin_left = 24.0
+margin_top = 34.0
+margin_right = 162.0
+margin_bottom = 50.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 max_value = 255.0
@@ -278,24 +279,24 @@ script = ExtResource( 4 )
 label = NodePath("../OP3Value")
 
 [node name="OP3Value" type="Label" parent="Routings/Params/OP2"]
-margin_left = 161.0
-margin_top = 41.0
-margin_right = 185.0
-margin_bottom = 55.0
+margin_left = 162.0
+margin_top = 34.0
+margin_right = 186.0
+margin_bottom = 51.0
 size_flags_horizontal = 0
 text = "888"
 
 [node name="OP4Label" type="Label" parent="Routings/Params/OP2"]
-margin_top = 61.0
-margin_right = 27.0
-margin_bottom = 75.0
+margin_top = 51.0
+margin_right = 24.0
+margin_bottom = 68.0
 text = "OP4"
 
 [node name="OP4Slider" type="HSlider" parent="Routings/Params/OP2"]
-margin_left = 31.0
-margin_top = 60.0
-margin_right = 157.0
-margin_bottom = 76.0
+margin_left = 24.0
+margin_top = 51.0
+margin_right = 162.0
+margin_bottom = 67.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 max_value = 255.0
@@ -303,24 +304,24 @@ script = ExtResource( 4 )
 label = NodePath("../OP4Value")
 
 [node name="OP4Value" type="Label" parent="Routings/Params/OP2"]
-margin_left = 161.0
-margin_top = 61.0
-margin_right = 185.0
-margin_bottom = 75.0
+margin_left = 162.0
+margin_top = 51.0
+margin_right = 186.0
+margin_bottom = 68.0
 size_flags_horizontal = 0
 text = "888"
 
 [node name="OutLabel" type="Label" parent="Routings/Params/OP2"]
-margin_top = 81.0
-margin_right = 27.0
-margin_bottom = 95.0
+margin_top = 68.0
+margin_right = 24.0
+margin_bottom = 85.0
 text = "Out"
 
 [node name="OutSlider" type="HSlider" parent="Routings/Params/OP2"]
-margin_left = 31.0
-margin_top = 80.0
-margin_right = 157.0
-margin_bottom = 96.0
+margin_left = 24.0
+margin_top = 68.0
+margin_right = 162.0
+margin_bottom = 84.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 max_value = 255.0
@@ -328,30 +329,29 @@ script = ExtResource( 4 )
 label = NodePath("../OutValue")
 
 [node name="OutValue" type="Label" parent="Routings/Params/OP2"]
-margin_left = 161.0
-margin_top = 81.0
-margin_right = 185.0
-margin_bottom = 95.0
+margin_left = 162.0
+margin_top = 68.0
+margin_right = 186.0
+margin_bottom = 85.0
 size_flags_horizontal = 0
 text = "888"
 
 [node name="OP3" type="GridContainer" parent="Routings/Params"]
-margin_left = 418.0
-margin_right = 603.0
-margin_bottom = 96.0
+margin_left = 419.0
+margin_right = 605.0
+margin_bottom = 85.0
 size_flags_horizontal = 3
 size_flags_vertical = 8
 columns = 3
 
 [node name="OP1Label" type="Label" parent="Routings/Params/OP3"]
-margin_top = 1.0
-margin_right = 27.0
-margin_bottom = 15.0
+margin_right = 24.0
+margin_bottom = 17.0
 text = "OP1"
 
 [node name="OP1Slider" type="HSlider" parent="Routings/Params/OP3"]
-margin_left = 31.0
-margin_right = 157.0
+margin_left = 24.0
+margin_right = 162.0
 margin_bottom = 16.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -360,24 +360,23 @@ script = ExtResource( 4 )
 label = NodePath("../OP1Value")
 
 [node name="OP1Value" type="Label" parent="Routings/Params/OP3"]
-margin_left = 161.0
-margin_top = 1.0
-margin_right = 185.0
-margin_bottom = 15.0
+margin_left = 162.0
+margin_right = 186.0
+margin_bottom = 17.0
 size_flags_horizontal = 0
 text = "888"
 
 [node name="OP2Label" type="Label" parent="Routings/Params/OP3"]
-margin_top = 21.0
-margin_right = 27.0
-margin_bottom = 35.0
+margin_top = 17.0
+margin_right = 24.0
+margin_bottom = 34.0
 text = "OP2"
 
 [node name="OP2Slider" type="HSlider" parent="Routings/Params/OP3"]
-margin_left = 31.0
-margin_top = 20.0
-margin_right = 157.0
-margin_bottom = 36.0
+margin_left = 24.0
+margin_top = 17.0
+margin_right = 162.0
+margin_bottom = 33.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 max_value = 255.0
@@ -385,24 +384,24 @@ script = ExtResource( 4 )
 label = NodePath("../OP2Value")
 
 [node name="OP2Value" type="Label" parent="Routings/Params/OP3"]
-margin_left = 161.0
-margin_top = 21.0
-margin_right = 185.0
-margin_bottom = 35.0
+margin_left = 162.0
+margin_top = 17.0
+margin_right = 186.0
+margin_bottom = 34.0
 size_flags_horizontal = 0
 text = "888"
 
 [node name="OP3Label" type="Label" parent="Routings/Params/OP3"]
-margin_top = 41.0
-margin_right = 27.0
-margin_bottom = 55.0
+margin_top = 34.0
+margin_right = 24.0
+margin_bottom = 51.0
 text = "OP3"
 
 [node name="OP3Slider" type="HSlider" parent="Routings/Params/OP3"]
-margin_left = 31.0
-margin_top = 40.0
-margin_right = 157.0
-margin_bottom = 56.0
+margin_left = 24.0
+margin_top = 34.0
+margin_right = 162.0
+margin_bottom = 50.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 max_value = 255.0
@@ -410,24 +409,24 @@ script = ExtResource( 4 )
 label = NodePath("../OP3Value")
 
 [node name="OP3Value" type="Label" parent="Routings/Params/OP3"]
-margin_left = 161.0
-margin_top = 41.0
-margin_right = 185.0
-margin_bottom = 55.0
+margin_left = 162.0
+margin_top = 34.0
+margin_right = 186.0
+margin_bottom = 51.0
 size_flags_horizontal = 0
 text = "888"
 
 [node name="OP4Label" type="Label" parent="Routings/Params/OP3"]
-margin_top = 61.0
-margin_right = 27.0
-margin_bottom = 75.0
+margin_top = 51.0
+margin_right = 24.0
+margin_bottom = 68.0
 text = "OP4"
 
 [node name="OP4Slider" type="HSlider" parent="Routings/Params/OP3"]
-margin_left = 31.0
-margin_top = 60.0
-margin_right = 157.0
-margin_bottom = 76.0
+margin_left = 24.0
+margin_top = 51.0
+margin_right = 162.0
+margin_bottom = 67.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 max_value = 255.0
@@ -435,24 +434,24 @@ script = ExtResource( 4 )
 label = NodePath("../OP4Value")
 
 [node name="OP4Value" type="Label" parent="Routings/Params/OP3"]
-margin_left = 161.0
-margin_top = 61.0
-margin_right = 185.0
-margin_bottom = 75.0
+margin_left = 162.0
+margin_top = 51.0
+margin_right = 186.0
+margin_bottom = 68.0
 size_flags_horizontal = 0
 text = "888"
 
 [node name="OutLabel" type="Label" parent="Routings/Params/OP3"]
-margin_top = 81.0
-margin_right = 27.0
-margin_bottom = 95.0
+margin_top = 68.0
+margin_right = 24.0
+margin_bottom = 85.0
 text = "Out"
 
 [node name="OutSlider" type="HSlider" parent="Routings/Params/OP3"]
-margin_left = 31.0
-margin_top = 80.0
-margin_right = 157.0
-margin_bottom = 96.0
+margin_left = 24.0
+margin_top = 68.0
+margin_right = 162.0
+margin_bottom = 84.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 max_value = 255.0
@@ -460,30 +459,29 @@ script = ExtResource( 4 )
 label = NodePath("../OutValue")
 
 [node name="OutValue" type="Label" parent="Routings/Params/OP3"]
-margin_left = 161.0
-margin_top = 81.0
-margin_right = 185.0
-margin_bottom = 95.0
+margin_left = 162.0
+margin_top = 68.0
+margin_right = 186.0
+margin_bottom = 85.0
 size_flags_horizontal = 0
 text = "888"
 
 [node name="OP4" type="GridContainer" parent="Routings/Params"]
-margin_left = 627.0
+margin_left = 629.0
 margin_right = 815.0
-margin_bottom = 96.0
+margin_bottom = 85.0
 size_flags_horizontal = 3
 size_flags_vertical = 8
 columns = 3
 
 [node name="OP1Label" type="Label" parent="Routings/Params/OP4"]
-margin_top = 1.0
-margin_right = 27.0
-margin_bottom = 15.0
+margin_right = 24.0
+margin_bottom = 17.0
 text = "OP1"
 
 [node name="OP1Slider" type="HSlider" parent="Routings/Params/OP4"]
-margin_left = 31.0
-margin_right = 160.0
+margin_left = 24.0
+margin_right = 162.0
 margin_bottom = 16.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -492,24 +490,23 @@ script = ExtResource( 4 )
 label = NodePath("../OP1Value")
 
 [node name="OP1Value" type="Label" parent="Routings/Params/OP4"]
-margin_left = 164.0
-margin_top = 1.0
-margin_right = 188.0
-margin_bottom = 15.0
+margin_left = 162.0
+margin_right = 186.0
+margin_bottom = 17.0
 size_flags_horizontal = 0
 text = "888"
 
 [node name="OP2Label" type="Label" parent="Routings/Params/OP4"]
-margin_top = 21.0
-margin_right = 27.0
-margin_bottom = 35.0
+margin_top = 17.0
+margin_right = 24.0
+margin_bottom = 34.0
 text = "OP2"
 
 [node name="OP2Slider" type="HSlider" parent="Routings/Params/OP4"]
-margin_left = 31.0
-margin_top = 20.0
-margin_right = 160.0
-margin_bottom = 36.0
+margin_left = 24.0
+margin_top = 17.0
+margin_right = 162.0
+margin_bottom = 33.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 max_value = 255.0
@@ -517,24 +514,24 @@ script = ExtResource( 4 )
 label = NodePath("../OP2Value")
 
 [node name="OP2Value" type="Label" parent="Routings/Params/OP4"]
-margin_left = 164.0
-margin_top = 21.0
-margin_right = 188.0
-margin_bottom = 35.0
+margin_left = 162.0
+margin_top = 17.0
+margin_right = 186.0
+margin_bottom = 34.0
 size_flags_horizontal = 0
 text = "888"
 
 [node name="OP3Label" type="Label" parent="Routings/Params/OP4"]
-margin_top = 41.0
-margin_right = 27.0
-margin_bottom = 55.0
+margin_top = 34.0
+margin_right = 24.0
+margin_bottom = 51.0
 text = "OP3"
 
 [node name="OP3Slider" type="HSlider" parent="Routings/Params/OP4"]
-margin_left = 31.0
-margin_top = 40.0
-margin_right = 160.0
-margin_bottom = 56.0
+margin_left = 24.0
+margin_top = 34.0
+margin_right = 162.0
+margin_bottom = 50.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 max_value = 255.0
@@ -542,24 +539,24 @@ script = ExtResource( 4 )
 label = NodePath("../OP3Value")
 
 [node name="OP3Value" type="Label" parent="Routings/Params/OP4"]
-margin_left = 164.0
-margin_top = 41.0
-margin_right = 188.0
-margin_bottom = 55.0
+margin_left = 162.0
+margin_top = 34.0
+margin_right = 186.0
+margin_bottom = 51.0
 size_flags_horizontal = 0
 text = "888"
 
 [node name="OP4Label" type="Label" parent="Routings/Params/OP4"]
-margin_top = 61.0
-margin_right = 27.0
-margin_bottom = 75.0
+margin_top = 51.0
+margin_right = 24.0
+margin_bottom = 68.0
 text = "OP4"
 
 [node name="OP4Slider" type="HSlider" parent="Routings/Params/OP4"]
-margin_left = 31.0
-margin_top = 60.0
-margin_right = 160.0
-margin_bottom = 76.0
+margin_left = 24.0
+margin_top = 51.0
+margin_right = 162.0
+margin_bottom = 67.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 max_value = 255.0
@@ -567,24 +564,24 @@ script = ExtResource( 4 )
 label = NodePath("../OP4Value")
 
 [node name="OP4Value" type="Label" parent="Routings/Params/OP4"]
-margin_left = 164.0
-margin_top = 61.0
-margin_right = 188.0
-margin_bottom = 75.0
+margin_left = 162.0
+margin_top = 51.0
+margin_right = 186.0
+margin_bottom = 68.0
 size_flags_horizontal = 0
 text = "888"
 
 [node name="OutLabel" type="Label" parent="Routings/Params/OP4"]
-margin_top = 81.0
-margin_right = 27.0
-margin_bottom = 95.0
+margin_top = 68.0
+margin_right = 24.0
+margin_bottom = 85.0
 text = "Out"
 
 [node name="OutSlider" type="HSlider" parent="Routings/Params/OP4"]
-margin_left = 31.0
-margin_top = 80.0
-margin_right = 160.0
-margin_bottom = 96.0
+margin_left = 24.0
+margin_top = 68.0
+margin_right = 162.0
+margin_bottom = 84.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
 max_value = 255.0
@@ -592,12 +589,30 @@ script = ExtResource( 4 )
 label = NodePath("../OutValue")
 
 [node name="OutValue" type="Label" parent="Routings/Params/OP4"]
-margin_left = 164.0
-margin_top = 81.0
-margin_right = 188.0
-margin_bottom = 95.0
+margin_left = 162.0
+margin_top = 68.0
+margin_right = 186.0
+margin_bottom = 85.0
 size_flags_horizontal = 0
 text = "888"
+
+[node name="S" type="ReferenceRect" parent="Routings"]
+margin_top = 119.0
+margin_right = 815.0
+margin_bottom = 127.0
+rect_min_size = Vector2( 0, 8 )
+
+[node name="Clip" type="Button" parent="Routings"]
+margin_top = 127.0
+margin_right = 44.0
+margin_bottom = 150.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+toggle_mode = true
+text = "Clip"
+script = ExtResource( 2 )
+accent_color = Color( 1, 2, 1, 1 )
+
 [connection signal="value_changed" from="Routings/Params/OP1/OP1Slider" to="." method="_on_OP1Slider_value_changed" binds= [ 0 ]]
 [connection signal="value_changed" from="Routings/Params/OP1/OP2Slider" to="." method="_on_OP2Slider_value_changed" binds= [ 0 ]]
 [connection signal="value_changed" from="Routings/Params/OP1/OP3Slider" to="." method="_on_OP3Slider_value_changed" binds= [ 0 ]]
@@ -618,3 +633,4 @@ text = "888"
 [connection signal="value_changed" from="Routings/Params/OP4/OP3Slider" to="." method="_on_OP3Slider_value_changed" binds= [ 3 ]]
 [connection signal="value_changed" from="Routings/Params/OP4/OP4Slider" to="." method="_on_OP4Slider_value_changed" binds= [ 3 ]]
 [connection signal="value_changed" from="Routings/Params/OP4/OutSlider" to="." method="_on_OutSlider_value_changed" binds= [ 3 ]]
+[connection signal="toggled" from="Routings/Clip" to="." method="_on_Clip_toggled"]

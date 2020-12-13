@@ -5,8 +5,10 @@ enum WAVE{RECTANGLE,SAW,TRIANGLE,NOISE,CUSTOM}
 enum REPEAT{OFF,RELEASE,SUSTAIN,DECAY,ATTACK}
 const TYPE:String="FmInstrument"
 const CHUNK_ID:String="fM4I"
+const CHUNK_VERSION:int=1
 
 var op_mask:int=1
+var clip:bool=false
 var attacks:Array=[240,240,240,240]
 var decays:Array=[192,192,192,192]
 var sustains:Array=[0,0,0,0]
@@ -36,6 +38,7 @@ func _init()->void:
 func duplicate()->Instrument:
 	var ni:FmInstrument=.duplicate() as FmInstrument
 	ni.op_mask=op_mask
+	ni.clip=clip
 	ni.attacks=attacks.duplicate()
 	ni.decays=decays.duplicate()
 	ni.sustains=sustains.duplicate()
@@ -56,6 +59,7 @@ func copy(from:Instrument,full:bool=false)->void:
 	.copy(from,full)
 	if from.get("TYPE")=="FmInstrument":
 		op_mask=from.op_mask
+		clip=from.clip
 		attacks=from.attacks.duplicate()
 		decays=from.decays.duplicate()
 		sustains=from.sustains.duplicate()
@@ -102,6 +106,7 @@ func copy_op(from:int,to:int)->void:
 func serialize(out:ChunkedFile)->void:
 	out.start_chunk(CHUNK_ID,0)
 	out.store_8(op_mask)
+	out.store_8(int(clip))
 	for i in range(4):
 		out.store_8(attacks[i])
 		out.store_8(decays[i])
@@ -127,8 +132,12 @@ func serialize(out:ChunkedFile)->void:
 
 #
 
-func deserialize(inf:ChunkedFile,ins:FmInstrument)->void:
+func deserialize(inf:ChunkedFile,ins:FmInstrument,version:int)->void:
 	ins.op_mask=inf.get_8()
+	if version>0:
+		ins.clip=bool(inf.get_8())
+	else:
+		ins.clip=0
 	for i in range(4):
 		ins.attacks[i]=inf.get_8()
 		ins.decays[i]=inf.get_8()

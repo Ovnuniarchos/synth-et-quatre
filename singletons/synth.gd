@@ -58,6 +58,7 @@ func set_mix_rate(mix_rate:float)->void:
 	synth.set_mix_rate(mix_rate)
 
 func set_fm_instrument(channel:int,instr:FmInstrument)->void:
+	synth.set_clip(channel,instr.clip)
 	for i in range(4):
 		var op_mask:int=1<<i
 		synth.set_attack_rate(channel,op_mask,instr.attacks[i])

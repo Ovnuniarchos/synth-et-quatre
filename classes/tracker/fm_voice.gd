@@ -25,6 +25,7 @@ var velocity:int=255
 var panning:int=0x1F
 
 var instrument_dirty:bool=false
+var clip_dirty:bool=true
 var freqs_dirty_any:bool=true
 var freqs_dirty:Array=[false,false,false,false]
 var fms_dirty_any:bool=true
@@ -115,6 +116,7 @@ func reset()->void:
 	velocity=255
 	panning=0x1F
 	instrument_dirty=false
+	clip_dirty=true
 	freqs_dirty_any=true
 	freqs_dirty=[false,false,false,false]
 	fms_dirty_any=true
@@ -305,6 +307,8 @@ func process_tick_0(note:Array,song:Song,num_fxs:int)->int:
 				lfo_freq_dirty_any=set_lfo_freq(fx_val,fx_opm,0xFF,8)
 			elif fx_cmd==CONSTS.FX_LFO_FREQ_SET_LO:
 				lfo_freq_dirty_any=set_lfo_freq(fx_val,fx_opm,0xFF00,0)
+			elif fx_cmd==CONSTS.FX_CLIP_SET:
+				clip_dirty=set_clip(fx_val)
 			elif fx_cmd==CONSTS.FX_GOTO_ORDER:
 				tracker_cmd=fx_val|TRCK.SIG_GOTO_ORDER
 			elif fx_cmd==CONSTS.FX_GOTO_NEXT and tracker_cmd==0:
@@ -411,6 +415,8 @@ func commit(channel:int,cmds:Array,ptr:int)->int:
 		ptr=commit_instrument(channel,cmds,ptr)
 	if trigger>CONSTS.TRG_KEEP:
 		ptr=commit_retrigger(channel,cmds,ptr)
+	if clip_dirty:
+		ptr=commit_clip(channel,cmds,ptr)
 	if freqs_dirty_any:
 		ptr=commit_opmasked_long(channel,cmds,ptr,CONSTS.CMD_FREQ,freqs_dirty,freqs)
 		freqs_dirty_any=false
@@ -553,6 +559,12 @@ func commit_panning(channel:int,cmds:Array,ptr:int)->int:
 	panning_dirty=false
 	return ptr+1
 
+func commit_clip(channel:int,cmds:Array,ptr:int)->int:
+	cmds[ptr]=CONSTS.CMD_CLIP|(channel<<8)|(int(clip)<<24)
+	clip_dirty=false
+	return ptr+1
+
+
 func commit_velocity(channel:int,cmds:Array,ptr:int)->int:
 	cmds[ptr]=CONSTS.CMD_VEL|(channel<<8)|(velocity<<16)
 	velocity_dirty=false
@@ -581,6 +593,7 @@ func commit_retrigger(channel:int,cmds:Array,ptr:int)->int:
 
 func commit_instrument(channel:int,cmds:Array,ptr:int)->int:
 	instrument_dirty=false
+	clip_dirty=false
 	fms_dirty_any=false
 	fml_dirty_any=false
 	multiplier_dirty_any=false
@@ -597,6 +610,8 @@ func commit_instrument(channel:int,cmds:Array,ptr:int)->int:
 	output_dirty_any=false
 	wave_dirty_any=false
 	duty_cycle_dirty_any=false
+	cmds[ptr]=CONSTS.CMD_CLIP|(channel<<8)|(int(clip)<<24)
+	ptr+=1
 	for i in range(4):
 		fms_dirty[i]=false
 		fml_dirty[i]=false
@@ -652,26 +667,14 @@ func commit_instrument(channel:int,cmds:Array,ptr:int)->int:
 func set_instrument(inst:FmInstrument)->void:
 	if inst==null:
 		return
+	copy(inst)
 	instrument_dirty=true
-	op_mask=inst.op_mask
-	attacks=inst.attacks.duplicate()
-	decays=inst.decays.duplicate()
-	sustains=inst.sustains.duplicate()
-	sustain_levels=inst.sustain_levels.duplicate()
-	releases=inst.releases.duplicate()
-	repeats=inst.repeats.duplicate()
-	multipliers=inst.multipliers.duplicate()
-	dividers=inst.dividers.duplicate()
-	detunes=inst.detunes.duplicate()
-	duty_cycles=inst.duty_cycles.duplicate()
-	waveforms=inst.waveforms.duplicate()
-	am_intensity=inst.am_intensity.duplicate()
-	am_lfo=inst.am_lfo.duplicate()
-	fm_intensity=inst.fm_intensity.duplicate()
-	fm_lfo=inst.fm_lfo.duplicate()
-	routings=inst.routings.duplicate(true)
 
 #
+
+func set_clip(value:int)->bool:
+	clip=bool(value)
+	return true
 
 func set_lfo_freq(value:int,lfo_mask:int,val_mask:int,val_shift:int)->bool:
 	if (lfo_mask&15)==0:

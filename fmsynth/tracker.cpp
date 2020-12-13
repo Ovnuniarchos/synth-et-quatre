@@ -108,6 +108,7 @@ void SynthTracker::_init(){
 #define TRACE_LFO_WAVE "LFW[%d %d] "
 #define TRACE_LFO_DUTY_CYCLE "LFD[%d %d] "
 #define TRACE_LFO_PHI "LFP[%d %d] "
+#define TRACE_CLIP "CLIP[%d %02x] "
 #define TRACE_DEBUG "DEBUG@%d "
 #define TRACE_END "END@%d "
 #define TRACE_UNKNOWN "???[%08x] "
@@ -283,6 +284,10 @@ Array SynthTracker::generate(int size,float volume,Array cmds){
 					TRACE(TRACE_LFO_PHI,voice,data);
 					synth.set_lfo_phase(voice,data);
 					break;
+				case CMD_CLIP:
+					TRACE(TRACE_CLIP,voice,data_8);
+					synth.set_clip(voice,data_8);
+					break;
 				case CMD_DEBUG:
 					TRACE(TRACE_DEBUG,cmd_ptr-1);
 					debug(cmds,cmd_ptr-1);
@@ -425,6 +430,9 @@ void SynthTracker::debug(Array cmds,int end_ix){
 			case CMD_LFO_PHI:
 				data=VAR2INT(cmds[cmd_ptr++]);
 				printf(TRACE_LFO_PHI,VAR2INT(cmds[cmd_ptr]),VAR2INT(cmds[cmd_ptr+1]));
+				break;
+			case CMD_CLIP:
+				printf(TRACE_CLIP,voice,data_8);
 				break;
 			case CMD_DEBUG:
 				printf(TRACE_DEBUG,cmd_ptr-1);

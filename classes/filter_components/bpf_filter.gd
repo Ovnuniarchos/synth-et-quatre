@@ -99,8 +99,8 @@ func serialize(out:ChunkedFile,components:Array)->void:
 
 #
 
-func deserialize(inf:ChunkedFile,c:BpfFilter,components:Array)->void:
-	deserialize_start(inf,c,components)
+func deserialize(inf:ChunkedFile,c:BpfFilter,components:Array,version:int)->void:
+	deserialize_start(inf,c,components,version)
 	c.cutoff_lo=inf.get_float()
 	c.cutoff_hi=inf.get_float()
 	c.taps=inf.get_16()

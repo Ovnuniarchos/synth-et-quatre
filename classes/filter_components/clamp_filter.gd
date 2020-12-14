@@ -60,8 +60,8 @@ func serialize(out:ChunkedFile,components:Array)->void:
 
 #
 
-func deserialize(inf:ChunkedFile,c:ClampFilter,components:Array)->void:
-	deserialize_start(inf,c,components)
+func deserialize(inf:ChunkedFile,c:ClampFilter,components:Array,version:int)->void:
+	deserialize_start(inf,c,components,version)
 	c.u_clamp_on=bool(inf.get_8())
 	c.l_clamp_on=bool(inf.get_8())
 	c.u_clamp=inf.get_float()

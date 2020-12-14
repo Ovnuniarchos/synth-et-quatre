@@ -78,8 +78,8 @@ func serialize(out:ChunkedFile,components:Array)->void:
 
 #
 
-func deserialize(inf:ChunkedFile,c:RectangleWave,components:Array)->void:
-	deserialize_start(inf,c,components)
+func deserialize(inf:ChunkedFile,c:RectangleWave,components:Array,version:int)->void:
+	deserialize_start(inf,c,components,version)
 	c.freq_mult=inf.get_float()
 	c.phi0=inf.get_float()
 	c.z_start=inf.get_float()

@@ -93,7 +93,7 @@ func serialize_start(out:ChunkedFile,tag:String,version:int,components:Array)->v
 	out.store_float(xm)
 	out.store_16(components.find(input_comp))
 
-func deserialize_start(inf:ChunkedFile,c:WaveComponent,components:Array)->void:
+func deserialize_start(inf:ChunkedFile,c:WaveComponent,components:Array,version:int)->void:
 	c.output_mode=inf.get_8()
 	c.vol=inf.get_float()
 	c.am=inf.get_float()

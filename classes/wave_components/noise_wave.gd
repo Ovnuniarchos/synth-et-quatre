@@ -79,8 +79,8 @@ func serialize(out:ChunkedFile,components:Array)->void:
 
 #
 
-func deserialize(inf:ChunkedFile,c:NoiseWave,components:Array)->void:
-	deserialize_start(inf,c,components)
+func deserialize(inf:ChunkedFile,c:NoiseWave,components:Array,version:int)->void:
+	deserialize_start(inf,c,components,version)
 	c.rng_seed=inf.get_32()
 	c.tone=inf.get_float()
 	c.pos0=inf.get_float()

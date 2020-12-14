@@ -48,6 +48,6 @@ func serialize(out:ChunkedFile,components:Array)->void:
 
 #
 
-func deserialize(inf:ChunkedFile,c:QuantizeFilter,components:Array)->void:
-	deserialize_start(inf,c,components)
+func deserialize(inf:ChunkedFile,c:QuantizeFilter,components:Array,version:int)->void:
+	deserialize_start(inf,c,components,version)
 	c.steps=inf.get_8()

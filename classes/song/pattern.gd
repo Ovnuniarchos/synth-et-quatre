@@ -75,8 +75,7 @@ func serialize(out:ChunkedFile,length:int,num_fx:int)->void:
 
 #
 
-func deserialize(inf:ChunkedFile,pat:Pattern,length:int)->void:
-	inf.get_chunk_header()
+func deserialize(inf:ChunkedFile,pat:Pattern,length:int,version:int)->void:
 	for j in range(length):
 		var n:Array=pat.notes[j]
 		var mask:int=inf.get_32()

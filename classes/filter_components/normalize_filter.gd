@@ -52,6 +52,6 @@ func serialize(out:ChunkedFile,components:Array)->void:
 
 #
 
-func deserialize(inf:ChunkedFile,c:NormalizeFilter,components:Array)->void:
-	deserialize_start(inf,c,components)
+func deserialize(inf:ChunkedFile,c:NormalizeFilter,components:Array,version:int)->void:
+	deserialize_start(inf,c,components,version)
 	c.keep_center=bool(inf.get_8())

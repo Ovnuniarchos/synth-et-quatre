@@ -75,7 +75,7 @@ func serialize(out:ChunkedFile)->void:
 
 #
 
-func deserialize(inf:ChunkedFile,w:SynthWave)->void:
+func deserialize(inf:ChunkedFile,w:SynthWave,version:int)->void:
 	w.size_po2=inf.get_8()
 	w.name=inf.get_pascal_string()
 	w.components=[]
@@ -92,19 +92,27 @@ func deserialize(inf:ChunkedFile,w:SynthWave)->void:
 				nw=SawWave.new()
 			RectangleWave.CHUNK_ID:
 				nw=RectangleWave.new()
+			NoiseWave.CHUNK_ID:
+				nw=NoiseWave.new()
 			NormalizeFilter.CHUNK_ID:
 				nw=NormalizeFilter.new()
 			LpfFilter.CHUNK_ID:
 				nw=LpfFilter.new()
 			HpfFilter.CHUNK_ID:
 				nw=HpfFilter.new()
+			BpfFilter.CHUNK_ID:
+				nw=BpfFilter.new()
+			BrfFilter.CHUNK_ID:
+				nw=BrfFilter.new()
 			ClampFilter.CHUNK_ID:
 				nw=ClampFilter.new()
+			QuantizeFilter.CHUNK_ID:
+				nw=QuantizeFilter.new()
 			_:
 				print("Unrecognized chunk [%s]"%[hdr[ChunkedFile.CHUNK_ID]])
 		if nw!=null:
 			w.components[i]=nw
-			nw.deserialize(inf,nw,w.components)
+			nw.deserialize(inf,nw,w.components,hdr[ChunkedFile.CHUNK_VERSION])
 		inf.skip_chunk(hdr)
 	w.resize_data(1<<w.size_po2)
 	w.calculate()

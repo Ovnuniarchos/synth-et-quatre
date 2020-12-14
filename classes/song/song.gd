@@ -479,16 +479,16 @@ func deserialize(inf:ChunkedFile)->Song:
 			break
 		match hdr[ChunkedFile.CHUNK_ID]:
 			CHUNK_HIGHLIGHTS:
-				process_highlights(inf,song)
+				process_highlights(inf,song,hdr[ChunkedFile.CHUNK_VERSION])
 			CHUNK_CHANNELS:
-				process_channel_list(inf,song)
+				process_channel_list(inf,song,hdr[ChunkedFile.CHUNK_VERSION])
 				mandatory_CHAL=true
 			CHUNK_INSTRUMENTS:
-				process_instrument_list(inf,song)
+				process_instrument_list(inf,song,hdr[ChunkedFile.CHUNK_VERSION])
 			CHUNK_ORDERS:
-				process_order_list(inf,song)
+				process_order_list(inf,song,hdr[ChunkedFile.CHUNK_VERSION])
 			CHUNK_PATTERN_LIST:
-				process_pattern_list(inf,song)
+				process_pattern_list(inf,song,hdr[ChunkedFile.CHUNK_VERSION])
 			_:
 				print("Unrecognized chunk [%s]"%[hdr[ChunkedFile.CHUNK_ID]])
 		inf.skip_chunk(hdr)
@@ -498,25 +498,30 @@ func deserialize(inf:ChunkedFile)->Song:
 		w.connect("name_changed",song,"_on_wave_name_changed")
 	return song
 
-func process_highlights(inf:ChunkedFile,song:Song)->void:
+func process_highlights(inf:ChunkedFile,song:Song,version:int)->void:
 	song.minor_highlight=inf.get_16()
 	song.major_highlight=inf.get_16()
 
-func process_pattern_list(inf:ChunkedFile,song:Song)->void:
+func process_pattern_list(inf:ChunkedFile,song:Song,version:int)->void:
+	var hdr:Dictionary
 	var pat_l:Array=[]
 	pat_l.resize(MAX_CHANNELS)
 	for i in range(song.num_channels):
 		pat_l[i]=[]
 		pat_l[i].resize(inf.get_16())
 		for j in range(pat_l[i].size()):
-			var n:Pattern=Pattern.new(MAX_PAT_LENGTH)
-			n.deserialize(inf,n,song.pattern_length)
-			pat_l[i][j]=n
+			hdr=inf.get_chunk_header()
+			if hdr[ChunkedFile.CHUNK_ID]==Pattern.CHUNK_ID:
+				var n:Pattern=Pattern.new(MAX_PAT_LENGTH)
+				n.deserialize(inf,n,song.pattern_length,hdr[ChunkedFile.CHUNK_VERSION])
+				pat_l[i][j]=n
+			else:
+				pat_l[i][j]=Pattern.new(MAX_PAT_LENGTH)
 	for i in range(song.num_channels,MAX_CHANNELS):
 		pat_l[i]=[Pattern.new(MAX_PAT_LENGTH)]
 	song.pattern_list=pat_l
 
-func process_order_list(inf:ChunkedFile,song:Song)->void:
+func process_order_list(inf:ChunkedFile,song:Song,version:int)->void:
 	var ord_l:Array=[]
 	ord_l.resize(inf.get_16())
 	for i in range(ord_l.size()):
@@ -528,7 +533,7 @@ func process_order_list(inf:ChunkedFile,song:Song)->void:
 			ord_l[i][j]=0
 	song.orders=ord_l
 
-func process_instrument_list(inf:ChunkedFile,song:Song)->void:
+func process_instrument_list(inf:ChunkedFile,song:Song,version:int)->void:
 	var hdr:Dictionary
 	var inst_l:Array=[]
 	for i in range(4):
@@ -556,11 +561,11 @@ func process_instrument_list(inf:ChunkedFile,song:Song)->void:
 		match hdr[ChunkedFile.CHUNK_ID]:
 			SynthWave.CHUNK_ID:
 				var n:SynthWave=SynthWave.new()
-				n.deserialize(inf,n)
+				n.deserialize(inf,n,hdr[ChunkedFile.CHUNK_VERSION])
 				wav_l[i]=n
 			SampleWave.CHUNK_ID:
 				var n:SampleWave=SampleWave.new()
-				n.deserialize(inf,n)
+				n.deserialize(inf,n,hdr[ChunkedFile.CHUNK_VERSION])
 				wav_l[i]=n
 			_:
 				print("Unrecognized chunk [%s]"%[hdr[ChunkedFile.CHUNK_ID]])
@@ -568,7 +573,7 @@ func process_instrument_list(inf:ChunkedFile,song:Song)->void:
 	song.instrument_list=inst_l
 	song.wave_list=wav_l
 
-func process_channel_list(inf:ChunkedFile,song:Song)->void:
+func process_channel_list(inf:ChunkedFile,song:Song,version:int)->void:
 	var nc:int=inf.get_16()
 	song.num_channels=nc
 	song.pattern_list.resize(MAX_CHANNELS)

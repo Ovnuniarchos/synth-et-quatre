@@ -62,11 +62,11 @@ func obj_load(path:String)->void:
 		match hdr[ChunkedFile.CHUNK_ID]:
 			SynthWave.CHUNK_ID:
 				var n:SynthWave=SynthWave.new()
-				n.deserialize(f,n)
+				n.deserialize(f,n,hdr[ChunkedFile.CHUNK_VERSION])
 				wav_l[i]=n
 			SampleWave.CHUNK_ID:
 				var n:SampleWave=SampleWave.new()
-				n.deserialize(f,n)
+				n.deserialize(f,n,hdr[ChunkedFile.CHUNK_VERSION])
 				wav_l[i]=n
 			_:
 				print("Unrecognized chunk [%s]"%[hdr[ChunkedFile.CHUNK_ID]])

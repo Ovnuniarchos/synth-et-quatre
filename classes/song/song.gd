@@ -27,13 +27,20 @@ const MAX_INSTRUMENTS:int=256
 const FILE_SIGNATURE:String="SFMM\u000d\u000a\u001a\u000a"
 const FILE_VERSION:int=0
 const CHUNK_HEADER:String="MHDR"
+const CHUNK_HEADER_VERSION:int=0
 const CHUNK_HIGHLIGHTS:String="hIGH"
+const CHUNK_HIGHLIGHTS_VERSION:int=0
 const CHUNK_CHANNELS:String="CHAL"
+const CHUNK_CHANNELS_VERSION:int=0
 const CHANNEL_FM4:String="CFM4"
 const CHUNK_INSTRUMENTS:String="INSL"
+const CHUNK_INSTRUMENTS_VERSION:int=0
 const CHUNK_WAVES:String="WAVL"
+const CHUNK_WAVES_VERSION:int=0
 const CHUNK_ORDERS:String="ORDL"
+const CHUNK_ORDERS_VERSION:int=0
 const CHUNK_PATTERN_LIST:String="PATL"
+const CHUNK_PATTERN_LIST_VERSION:int=0
 
 
 var title:String="Untitled"
@@ -396,7 +403,7 @@ func serialize(out:ChunkedFile)->void:
 	# Signature: SFMM\0xc\0xa\0x1a\0xa
 	out.start_file(FILE_SIGNATURE,FILE_VERSION)
 	# Header
-	out.start_chunk(CHUNK_HEADER,0)
+	out.start_chunk(CHUNK_HEADER,CHUNK_HEADER_VERSION)
 	out.store_16(pattern_length)
 	out.store_16(ticks_second)
 	out.store_16(ticks_row)
@@ -404,19 +411,19 @@ func serialize(out:ChunkedFile)->void:
 	out.store_pascal_string(author)
 	out.end_chunk()
 	# Highlights
-	out.start_chunk(CHUNK_HIGHLIGHTS,0)
+	out.start_chunk(CHUNK_HIGHLIGHTS,CHUNK_HIGHLIGHTS_VERSION)
 	out.store_16(minor_highlight)
 	out.store_16(major_highlight)
 	out.end_chunk()
 	# Channels
-	out.start_chunk(CHUNK_CHANNELS,0)
+	out.start_chunk(CHUNK_CHANNELS,CHUNK_CHANNELS_VERSION)
 	out.store_16(num_channels)
 	for i in range(num_channels):
 		out.store_string(CHANNEL_FM4)
 		out.store_8(num_fxs[i])
 	out.end_chunk()
 	# Instruments
-	out.start_chunk(CHUNK_INSTRUMENTS,0)
+	out.start_chunk(CHUNK_INSTRUMENTS,CHUNK_INSTRUMENTS_VERSION)
 	for i in range(4):
 		out.store_16(lfo_frequencies[i]*256.0)
 		out.store_8(lfo_waves[i])
@@ -425,21 +432,21 @@ func serialize(out:ChunkedFile)->void:
 	for inst in instrument_list:
 		inst.serialize(out)
 	# Waveforms
-	out.start_chunk(CHUNK_WAVES,0)
+	out.start_chunk(CHUNK_WAVES,CHUNK_WAVES_VERSION)
 	out.store_16(wave_list.size())
 	for wave in wave_list:
 		wave.serialize(out)
 	out.end_chunk()
 	out.end_chunk()
 	# Orders
-	out.start_chunk(CHUNK_ORDERS,0)
+	out.start_chunk(CHUNK_ORDERS,CHUNK_ORDERS_VERSION)
 	out.store_16(orders.size())
 	for ordr in orders:
 		for chn in range(num_channels):
 			out.store_8(ordr[chn])
 	out.end_chunk()
 	# pattern_list
-	out.start_chunk(CHUNK_PATTERN_LIST,0)
+	out.start_chunk(CHUNK_PATTERN_LIST,CHUNK_PATTERN_LIST_VERSION)
 	for i in range(num_channels):
 		var chn:Array=pattern_list[i]
 		out.store_16(chn.size())

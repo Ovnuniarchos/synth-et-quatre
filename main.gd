@@ -3,6 +3,7 @@ extends Control
 """
 FIXME
 	Immediate note play skips notes (skips muted channels)
+	Make deserializing chunks version-sensitive.
 TODO:
 	Special behavior of ±value key for pan column
 	Channel invert cycle for pan column

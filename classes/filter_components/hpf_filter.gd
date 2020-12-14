@@ -2,6 +2,7 @@ extends WaveComponent
 class_name HpfFilter
 
 const CHUNK_ID:String="hPFF"
+const CHUNK_VERSION:int=0
 
 var cutoff:float=1.0 setget set_cutoff
 var coeffs:Array=[]
@@ -82,7 +83,7 @@ func set_coeffs()->void:
 #
 
 func serialize(out:ChunkedFile,components:Array)->void:
-	serialize_start(out,CHUNK_ID,components)
+	serialize_start(out,CHUNK_ID,CHUNK_VERSION,components)
 	out.store_float(cutoff)
 	out.store_16(taps)
 	out.end_chunk()

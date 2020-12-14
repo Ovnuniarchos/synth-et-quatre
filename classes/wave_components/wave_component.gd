@@ -85,8 +85,8 @@ func generate_output(size:int,input:Array,caller:WaveComponent):
 
 #
 
-func serialize_start(out:ChunkedFile,tag:String,components:Array)->void:
-	out.start_chunk(tag,0)
+func serialize_start(out:ChunkedFile,tag:String,version:int,components:Array)->void:
+	out.start_chunk(tag,version)
 	out.store_8(output_mode)
 	out.store_float(vol)
 	out.store_float(am)

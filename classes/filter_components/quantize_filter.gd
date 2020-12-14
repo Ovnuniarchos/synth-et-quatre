@@ -2,6 +2,7 @@ extends WaveComponent
 class_name QuantizeFilter
 
 const CHUNK_ID:String="qUAF"
+const CHUNK_VERSION:int=0
 
 var steps:int
 
@@ -41,7 +42,7 @@ func calculate(size:int,input:Array,caller:WaveComponent)->Array:
 #
 
 func serialize(out:ChunkedFile,components:Array)->void:
-	serialize_start(out,CHUNK_ID,components)
+	serialize_start(out,CHUNK_ID,CHUNK_VERSION,components)
 	out.store_8(steps)
 	out.end_chunk()
 

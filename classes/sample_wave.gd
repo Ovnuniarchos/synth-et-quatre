@@ -2,6 +2,7 @@ extends Waveform
 class_name SampleWave
 
 const CHUNK_ID:String="sAMW"
+const CHUNK_VERSION:int=0
 const DIVISORS:Dictionary={8:128.0,16:32768.0,24:8388608.0,32:1.0}
 
 var original_data:Array=[]
@@ -38,7 +39,7 @@ func equals(other:Waveform)->bool:
 #
 
 func serialize(out:ChunkedFile)->void:
-	out.start_chunk(CHUNK_ID,0)
+	out.start_chunk(CHUNK_ID,CHUNK_VERSION)
 	out.store_32(original_data.size())
 	out.store_8(bits_sample)
 	out.store_32(loop_start)

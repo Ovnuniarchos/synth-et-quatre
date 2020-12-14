@@ -27,7 +27,7 @@ func obj_save(path:String)->void:
 	# Serialize instrument
 	sinst.serialize(f)
 	# Serialize waveforms
-	f.start_chunk(Song.CHUNK_WAVES,0)
+	f.start_chunk(Song.CHUNK_WAVES,Song.CHUNK_WAVES_VERSION)
 	f.store_16(wave_list.size())
 	for wi in wave_list:
 		GLOBALS.song.wave_list[wi-FmInstrument.WAVE.NOISE-1].serialize(f)

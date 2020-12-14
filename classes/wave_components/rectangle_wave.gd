@@ -2,6 +2,7 @@ extends WaveComponent
 class_name RectangleWave
 
 const CHUNK_ID:String="rECW"
+const CHUNK_VERSION:int=0
 
 var freq_mult:float=1.0
 var phi0:float=0.0
@@ -65,7 +66,7 @@ func calculate(size:int,input:Array,caller:WaveComponent)->Array:
 #
 
 func serialize(out:ChunkedFile,components:Array)->void:
-	serialize_start(out,CHUNK_ID,components)
+	serialize_start(out,CHUNK_ID,CHUNK_VERSION,components)
 	out.store_float(freq_mult)
 	out.store_float(phi0)
 	out.store_float(z_start)

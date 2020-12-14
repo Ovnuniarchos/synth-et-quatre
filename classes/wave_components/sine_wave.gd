@@ -2,6 +2,7 @@ extends WaveComponent
 class_name SineWave
 
 const CHUNK_ID:String="sINW"
+const CHUNK_VERSION:int=0
 
 enum QUARTER{Q0,Q1,Q2,Q3,QZ,QH,QL}
 
@@ -85,7 +86,7 @@ func calculate(size:int,input:Array,caller:WaveComponent)->Array:
 #
 
 func serialize(out:ChunkedFile,components:Array)->void:
-	serialize_start(out,CHUNK_ID,components)
+	serialize_start(out,CHUNK_ID,CHUNK_VERSION,components)
 	out.store_float(freq_mult)
 	out.store_float(phi0)
 	out.store_8(quarters[0])

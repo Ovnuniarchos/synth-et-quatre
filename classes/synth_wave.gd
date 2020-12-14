@@ -2,6 +2,7 @@ extends Waveform
 class_name SynthWave
 
 const CHUNK_ID:String="sYNW"
+const CHUNK_VERSION:int=0
 
 var size_po2:int=8 setget set_size_po2
 var components:Array=[]
@@ -64,7 +65,7 @@ func readjust_inputs()->void:
 #
 
 func serialize(out:ChunkedFile)->void:
-	out.start_chunk(CHUNK_ID,0)
+	out.start_chunk(CHUNK_ID,CHUNK_VERSION)
 	out.store_8(size_po2)
 	out.store_pascal_string(name)
 	out.store_16(components.size())

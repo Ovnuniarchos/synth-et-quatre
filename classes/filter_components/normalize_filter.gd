@@ -2,6 +2,7 @@ extends WaveComponent
 class_name NormalizeFilter
 
 const CHUNK_ID:String="nORF"
+const CHUNK_VERSION:int=0
 
 var keep_center:bool=true
 
@@ -45,7 +46,7 @@ func calculate(size:int,input:Array,caller:WaveComponent)->Array:
 #
 
 func serialize(out:ChunkedFile,components:Array)->void:
-	serialize_start(out,CHUNK_ID,components)
+	serialize_start(out,CHUNK_ID,CHUNK_VERSION,components)
 	out.store_8(int(keep_center))
 	out.end_chunk()
 

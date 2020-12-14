@@ -2,6 +2,7 @@ extends WaveComponent
 class_name ClampFilter
 
 const CHUNK_ID:String="cLAF"
+const CHUNK_VERSION:int=0
 
 var u_clamp_on:bool=true
 var u_clamp:float=1.0
@@ -50,7 +51,7 @@ func calculate(size:int,input:Array,caller:WaveComponent)->Array:
 #
 
 func serialize(out:ChunkedFile,components:Array)->void:
-	serialize_start(out,CHUNK_ID,components)
+	serialize_start(out,CHUNK_ID,CHUNK_VERSION,components)
 	out.store_8(int(u_clamp_on))
 	out.store_8(int(l_clamp_on))
 	out.store_float(u_clamp)

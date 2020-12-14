@@ -10,6 +10,7 @@ const MAX_FX:int=4
 const LEGATO_MIN:int=LEGATO_MODE.OFF
 const LEGATO_MAX:int=LEGATO_MODE.STACCATO
 const CHUNK_ID:String="PATR"
+const CHUNK_VERSION:int=0
 
 var notes:Array=[]
 
@@ -54,7 +55,7 @@ func insert_row(row:int)->void:
 #
 
 func serialize(out:ChunkedFile,length:int,num_fx:int)->void:
-	out.start_chunk(CHUNK_ID,0)
+	out.start_chunk(CHUNK_ID,CHUNK_VERSION)
 	for j in range(length):
 		var n=notes[j]
 		var mask:int=0

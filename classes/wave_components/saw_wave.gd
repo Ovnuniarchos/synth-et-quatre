@@ -2,6 +2,7 @@ extends WaveComponent
 class_name SawWave
 
 const CHUNK_ID:String="sAWW"
+const CHUNK_VERSION:int=0
 
 enum HALF{H0,H1,H2,H3,HZ,HH,HL}
 
@@ -81,7 +82,7 @@ func calculate(size:int,input:Array,caller:WaveComponent)->Array:
 #
 
 func serialize(out:ChunkedFile,components:Array)->void:
-	serialize_start(out,CHUNK_ID,components)
+	serialize_start(out,CHUNK_ID,CHUNK_VERSION,components)
 	out.store_float(freq_mult)
 	out.store_float(phi0)
 	out.store_8(halves[0])

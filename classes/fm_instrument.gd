@@ -104,7 +104,7 @@ func copy_op(from:int,to:int)->void:
 #
 
 func serialize(out:ChunkedFile)->void:
-	out.start_chunk(CHUNK_ID,0)
+	out.start_chunk(CHUNK_ID,CHUNK_VERSION)
 	out.store_8(op_mask)
 	out.store_8(int(clip))
 	for i in range(4):

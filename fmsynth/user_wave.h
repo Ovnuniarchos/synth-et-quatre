@@ -16,7 +16,7 @@ public:
 	UserWave(godot::Array wave_in){
 		int size=correct_wave_size(wave_in.size());
 		if(size==0){
-			wave==NULL;
+			wave=NULL;
 		}else{
 			wave=new FixedPointShort[size];
 			for(int i=0;i<size;i++) wave[i]=((float)wave_in[i])*FP_ONE;

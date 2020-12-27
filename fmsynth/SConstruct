@@ -15,8 +15,6 @@ opts.Add(PathVariable('target_path', 'The path where the lib is installed.', 'bi
 opts.Add(PathVariable('target_name', 'The library name.', 'libsynth_tracker', PathVariable.PathAccept))
 
 # Local dependency paths, adapt them to your setup
-godot_headers_path = "/home/jordi/gits/godot-cpp/godot_headers/"
-cpp_bindings_path = "/home/jordi/gits/godot-cpp/"
 cpp_library = "libgodot-cpp"
 
 # only support 64 at this time..
@@ -49,6 +47,8 @@ if env['platform'] == "osx":
         env.Append(LINKFLAGS = ['-arch', 'x86_64'])
 
 elif env['platform'] in ('x11', 'linux'):
+    godot_headers_path = "/home/jordi/gits/godot-cpp/godot_headers/"
+    cpp_bindings_path = "/home/jordi/gits/godot-cpp/"
     env['target_path'] += 'x11/'
     cpp_library += '.linux'
     if env['target'] in ('debug', 'd'):
@@ -57,6 +57,8 @@ elif env['platform'] in ('x11', 'linux'):
         env.Append(CCFLAGS = ['-fPIC', '-g','-O3', '-std=c++17'])
 
 elif env['platform'] == "windows":
+    godot_headers_path = "C:/Users/jordi/Documents/dev/godot-cpp/godot_headers/"
+    cpp_bindings_path = "C:/Users/jordi/Documents/dev/godot-cpp/"
     env['target_path'] += 'win64/'
     cpp_library += '.windows'
     # This makes sure to keep the session environment variables on windows,

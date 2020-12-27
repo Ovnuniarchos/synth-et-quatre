@@ -7,8 +7,10 @@ reloadable=true
 
 [entry]
 
+Windows.64="res://fmsynth/bin/win64/libsynth_tracker.dll"
 X11.64="res://fmsynth/bin/x11/libsynth_tracker.so"
 
 [dependencies]
 
+Windows.64=[  ]
 X11.64=[  ]

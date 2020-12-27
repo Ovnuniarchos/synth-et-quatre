@@ -2,7 +2,6 @@
 .sconsign.dblite
 *.os
 *.pdf
-/fmsynth/bin
 .songs
 api.json
 *.sublime-*

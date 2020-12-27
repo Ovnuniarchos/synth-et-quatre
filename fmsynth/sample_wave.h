@@ -31,8 +31,8 @@ private:
 
 public:
 	SampleWave(godot::Array sample_in,int loop_0,int loop_1,float rec_freq,float sam_freq):Wave(sample_in.size(),rec_freq,sam_freq){
-		int64_t loop_st=clamp((int64_t)loop_0,0L,size);
-		int64_t loop_end=clamp((int64_t)loop_1,0L,size);
+		int64_t loop_st=clamp((int64_t)loop_0,(int64_t)0,size);
+		int64_t loop_end=clamp((int64_t)loop_1,(int64_t)0,size);
 		if(loop_st>loop_end){
 			loop_start=loop_end;
 			loop_end=loop_st;

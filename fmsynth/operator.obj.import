@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/operator.obj-644f88952a49a43d8183c1794c336ed8.mesh"
+
+[deps]
+
+files=[ "res://.import/operator.obj-644f88952a49a43d8183c1794c336ed8.mesh" ]
+
+source_file="res://fmsynth/operator.obj"
+dest_files=[ "res://.import/operator.obj-644f88952a49a43d8183c1794c336ed8.mesh", "res://.import/operator.obj-644f88952a49a43d8183c1794c336ed8.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

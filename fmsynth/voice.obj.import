@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/voice.obj-8026ed8e4390e7d2ad8762ebb4d3541c.mesh"
+
+[deps]
+
+files=[ "res://.import/voice.obj-8026ed8e4390e7d2ad8762ebb4d3541c.mesh" ]
+
+source_file="res://fmsynth/voice.obj"
+dest_files=[ "res://.import/voice.obj-8026ed8e4390e7d2ad8762ebb4d3541c.mesh", "res://.import/voice.obj-8026ed8e4390e7d2ad8762ebb4d3541c.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

@@ -256,7 +256,7 @@ _global_script_class_icons={
 
 config/name="SynthEtQuatre"
 run/main_scene="res://main.tscn"
-config/icon="res://icon.png"
+config/icon="res://se4.png"
 
 [autoload]
 

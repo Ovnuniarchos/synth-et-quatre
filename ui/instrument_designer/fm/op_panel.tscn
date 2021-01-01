@@ -69,14 +69,13 @@ margin_right = 35.0
 margin_bottom = 58.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Wave"
 
 [node name="Wave" type="GridContainer" parent="Params"]
 margin_top = 62.0
 margin_right = 1010.0
 margin_bottom = 82.0
-columns = 7
+columns = 5
 
 [node name="DUCLabel" type="Label" parent="Params/Wave"]
 margin_top = 3.0
@@ -86,43 +85,39 @@ text = "DUC"
 
 [node name="DUCSlider" type="ProgressBar" parent="Params/Wave"]
 margin_left = 32.0
-margin_right = 329.0
-margin_bottom = 20.0
+margin_top = 3.0
+margin_right = 492.0
+margin_bottom = 17.0
+grow_vertical = 2
+rect_min_size = Vector2( 0, 14 )
 size_flags_horizontal = 7
-size_flags_vertical = 7
+size_flags_vertical = 4
 percent_visible = false
 script = ExtResource( 5 )
 big_step = 4.0
 huge_step = 16.0
 
 [node name="Sep" type="ReferenceRect" parent="Params/Wave"]
-margin_left = 333.0
-margin_right = 349.0
+margin_left = 496.0
+margin_right = 512.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
 [node name="WAVLabel" type="Label" parent="Params/Wave"]
-margin_left = 353.0
+margin_left = 516.0
 margin_top = 3.0
-margin_right = 383.0
+margin_right = 546.0
 margin_bottom = 17.0
 text = "WAV"
 
 [node name="WAVButton" type="OptionButton" parent="Params/Wave"]
-margin_left = 387.0
-margin_right = 684.0
+margin_left = 550.0
+margin_right = 1010.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 clip_text = true
 script = ExtResource( 4 )
-
-[node name="Sep2" type="ReferenceRect" parent="Params/Wave"]
-margin_left = 688.0
-margin_right = 712.0
-margin_bottom = 20.0
-rect_min_size = Vector2( 24, 0 )
-size_flags_vertical = 7
 
 [node name="ReferenceRect2" type="ReferenceRect" parent="Params"]
 margin_top = 86.0
@@ -136,7 +131,6 @@ margin_right = 58.0
 margin_bottom = 120.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Envelope"
 
 [node name="ADSR" type="GridContainer" parent="Params"]
@@ -155,8 +149,9 @@ text = "ATR"
 margin_left = 30.0
 margin_right = 496.0
 margin_bottom = 14.0
+rect_min_size = Vector2( 0, 14 )
 size_flags_horizontal = 7
-size_flags_vertical = 7
+size_flags_vertical = 4
 max_value = 255.0
 step = 1.0
 percent_visible = false
@@ -181,8 +176,9 @@ text = "DER"
 margin_left = 543.0
 margin_right = 1009.0
 margin_bottom = 14.0
+rect_min_size = Vector2( 0, 14 )
 size_flags_horizontal = 7
-size_flags_vertical = 7
+size_flags_vertical = 4
 max_value = 255.0
 step = 1.0
 percent_visible = false
@@ -201,8 +197,9 @@ margin_left = 30.0
 margin_top = 18.0
 margin_right = 496.0
 margin_bottom = 32.0
+rect_min_size = Vector2( 0, 14 )
 size_flags_horizontal = 7
-size_flags_vertical = 7
+size_flags_vertical = 4
 max_value = 255.0
 step = 1.0
 percent_visible = false
@@ -230,8 +227,9 @@ margin_left = 543.0
 margin_top = 18.0
 margin_right = 1009.0
 margin_bottom = 32.0
+rect_min_size = Vector2( 0, 14 )
 size_flags_horizontal = 7
-size_flags_vertical = 7
+size_flags_vertical = 4
 max_value = 255.0
 step = 1.0
 percent_visible = false
@@ -247,11 +245,12 @@ text = "RER"
 
 [node name="RRSlider" type="ProgressBar" parent="Params/ADSR"]
 margin_left = 30.0
-margin_top = 36.0
+margin_top = 39.0
 margin_right = 496.0
-margin_bottom = 56.0
+margin_bottom = 53.0
+rect_min_size = Vector2( 0, 14 )
 size_flags_horizontal = 7
-size_flags_vertical = 7
+size_flags_vertical = 4
 max_value = 255.0
 step = 1.0
 percent_visible = false
@@ -294,8 +293,9 @@ margin_left = 30.0
 margin_top = 60.0
 margin_right = 496.0
 margin_bottom = 74.0
+rect_min_size = Vector2( 0, 14 )
 size_flags_horizontal = 7
-size_flags_vertical = 7
+size_flags_vertical = 4
 max_value = 255.0
 step = 1.0
 percent_visible = false
@@ -338,8 +338,9 @@ margin_left = 30.0
 margin_top = 78.0
 margin_right = 496.0
 margin_bottom = 92.0
+rect_min_size = Vector2( 0, 14 )
 size_flags_horizontal = 7
-size_flags_vertical = 7
+size_flags_vertical = 4
 max_value = 7.0
 step = 1.0
 percent_visible = false
@@ -359,7 +360,6 @@ margin_right = 66.0
 margin_bottom = 254.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Frequency"
 
 [node name="Frequency" type="GridContainer" parent="Params"]
@@ -378,8 +378,9 @@ text = "MUL"
 margin_left = 31.0
 margin_right = 498.0
 margin_bottom = 14.0
+rect_min_size = Vector2( 0, 14 )
 size_flags_horizontal = 7
-size_flags_vertical = 7
+size_flags_vertical = 4
 max_value = 32.0
 step = 1.0
 percent_visible = false
@@ -404,8 +405,9 @@ text = "DIV"
 margin_left = 543.0
 margin_right = 1010.0
 margin_bottom = 14.0
+rect_min_size = Vector2( 0, 14 )
 size_flags_horizontal = 7
-size_flags_vertical = 7
+size_flags_vertical = 4
 min_value = 1.0
 max_value = 32.0
 step = 1.0
@@ -432,8 +434,9 @@ text = "DET"
 margin_left = 28.0
 margin_right = 1010.0
 margin_bottom = 14.0
+rect_min_size = Vector2( 0, 14 )
 size_flags_horizontal = 7
-size_flags_vertical = 7
+size_flags_vertical = 4
 min_value = -12000.0
 max_value = 12000.0
 step = 1.0
@@ -457,8 +460,9 @@ text = "FMS"
 margin_left = 30.0
 margin_right = 1010.0
 margin_bottom = 14.0
+rect_min_size = Vector2( 0, 14 )
 size_flags_horizontal = 7
-size_flags_vertical = 7
+size_flags_vertical = 4
 max_value = 12000.0
 step = 1.0
 percent_visible = false
@@ -476,7 +480,6 @@ margin_right = 32.0
 margin_bottom = 346.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "LFOs"
 
 [node name="LFOs" type="HBoxContainer" parent="Params"]

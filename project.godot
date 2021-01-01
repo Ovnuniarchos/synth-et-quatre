@@ -44,10 +44,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://ui/options/config_checkbox.gd"
 }, {
-"base": "LabelSpinBox",
-"class": "ConfigSpinBox",
+"base": "SpinBar",
+"class": "ConfigSpinBar",
 "language": "GDScript",
-"path": "res://ui/options/config_spinbox.gd"
+"path": "res://ui/options/config_spinbar.gd"
 }, {
 "base": "Button",
 "class": "CycleButton",
@@ -227,7 +227,7 @@ _global_script_class_icons={
 "ClampFilter": "",
 "ClipContainer": "",
 "ConfigCheckBox": "",
-"ConfigSpinBox": "",
+"ConfigSpinBar": "",
 "CycleButton": "",
 "FmInstrument": "",
 "FmVoice": "",

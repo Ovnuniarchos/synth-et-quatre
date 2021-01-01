@@ -30,4 +30,5 @@ __meta__ = {
 margin_left = 84.0
 margin_right = 158.0
 margin_bottom = 24.0
+
 [connection signal="value_changed" from="Value" to="." method="_on_value_changed"]

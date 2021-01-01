@@ -4,7 +4,7 @@ class_name SpinBar
 
 export (float) var big_step:float=10.0
 export (float) var huge_step:float=100.0
-export (int,0,4) var _decimals:int=0
+export (int,0,4) var _decimals:int=0 setget set_decimals
 
 var dragging:bool=false
 var pressed:bool=false
@@ -14,8 +14,7 @@ var __setting:bool=false
 
 func _init()->void:
 	percent_visible=false
-	size_flags_horizontal=SIZE_EXPAND_FILL|SIZE_SHRINK_CENTER
-	size_flags_vertical=SIZE_EXPAND_FILL|SIZE_SHRINK_CENTER
+	rect_min_size.y=get_font("font").get_height()
 	label=Label.new()
 	label.align=HALIGN_CENTER
 	label.valign=VALIGN_CENTER
@@ -42,6 +41,11 @@ func _set(prop:String,val)->bool:
 	else:
 		set(prop,val)
 	return true
+
+
+func set_decimals(v:int)->void:
+	_decimals=v
+	set_value(value)
 
 
 func set_value(v:float)->void:

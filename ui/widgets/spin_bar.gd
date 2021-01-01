@@ -27,6 +27,8 @@ func _init()->void:
 
 
 func _ready()->void:
+	for c in get_children():
+		remove_child(c)
 	add_child(label)
 
 
@@ -71,13 +73,14 @@ func process_clicks(ev:InputEventMouseButton)->bool:
 		pressed=ev.is_pressed()
 		set_value(lerp(min_value,max_value,ev.position.x/rect_size.x))
 		return true
-	elif ev.button_index in [BUTTON_WHEEL_DOWN,BUTTON_WHEEL_UP] and not ev.is_pressed():
-		var delta:float=step
-		if ev.shift:
-			delta*=big_step
-		if ev.control:
-			delta*=huge_step
-		set_value(value+delta*(1.0 if ev.button_index==BUTTON_WHEEL_UP else -1.0))
+	elif ev.button_index in [BUTTON_WHEEL_DOWN,BUTTON_WHEEL_UP]:
+		if not ev.is_pressed():
+			var delta:float=step
+			if ev.shift:
+				delta*=big_step
+			if ev.control:
+				delta*=huge_step
+			set_value(value+delta*(1.0 if ev.button_index==BUTTON_WHEEL_UP else -1.0))
 		return true
 	return false
 

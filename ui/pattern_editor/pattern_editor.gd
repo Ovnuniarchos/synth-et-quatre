@@ -788,6 +788,7 @@ func _on_Info_step_changed(s:int)->void:
 
 func _on_Info_velocity_changed(vel:int)->void:
 	dflt_velocity=vel
+	emit_signal("velocity_changed",dflt_velocity)
 
 func _on_Editor_mouse_entered()->void:
 	_on_focus_entered()

@@ -26,7 +26,7 @@ func _on_song_changed()->void:
 
 # warning-ignore:unused_argument
 func _on_octave_changed(oct:int)->void:
-	var oc:SpinBox=$SC/VBC/GC/Octave
+	var oc:SpinBar=$SC/VBC/GC/Octave
 	oc.set_block_signals(true)
 	oc.value=GLOBALS.curr_octave-1
 	oc.set_block_signals(false)
@@ -61,9 +61,10 @@ func _on_Author_text_changed(t:String)->void:
 	GLOBALS.song.set_author(t)
 
 func _on_Editor_step_changed(step:int)->void:
-	$SC/VBC/GC/Step.set_block_signals(true)
-	$SC/VBC/GC/Step.value=step
-	$SC/VBC/GC/Step.set_block_signals(false)
+	var st:SpinBar=$SC/VBC/GC/Step
+	st.set_block_signals(true)
+	st.value=step
+	st.set_block_signals(false)
 
 func _on_MinHlite_value_changed(value:int)->void:
 	GLOBALS.song.set_minor_highlight(value)

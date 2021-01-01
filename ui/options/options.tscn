@@ -1,6 +1,5 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://theme/theme.tres" type="Theme" id=1]
 [ext_resource path="res://ui/options/options.gd" type="Script" id=2]
 [ext_resource path="res://ui/widgets/label_spinbox.tscn" type="PackedScene" id=3]
 [ext_resource path="res://ui/options/config_spinbox.gd" type="Script" id=4]
@@ -14,7 +13,6 @@ margin_left = 4.0
 margin_top = 35.0
 margin_right = -4.0
 margin_bottom = -4.0
-theme = ExtResource( 1 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -29,7 +27,7 @@ __meta__ = {
 
 [node name="VBC" type="VBoxContainer" parent="SC"]
 margin_right = 1016.0
-margin_bottom = 314.0
+margin_bottom = 298.0
 size_flags_horizontal = 3
 custom_constants/separation = 16
 __meta__ = {
@@ -38,25 +36,25 @@ __meta__ = {
 
 [node name="Titles1" type="HBoxContainer" parent="SC/VBC"]
 margin_right = 1016.0
-margin_bottom = 17.0
+margin_bottom = 14.0
 
 [node name="Audio" type="Label" parent="SC/VBC/Titles1"]
-margin_right = 508.0
-margin_bottom = 17.0
+margin_right = 506.0
+margin_bottom = 14.0
 size_flags_horizontal = 3
 text = "Audio"
 
 [node name="Export" type="Label" parent="SC/VBC/Titles1"]
-margin_left = 508.0
+margin_left = 510.0
 margin_right = 1016.0
-margin_bottom = 17.0
+margin_bottom = 14.0
 size_flags_horizontal = 3
 text = "Export to WAV"
 
 [node name="HBC1" type="HBoxContainer" parent="SC/VBC"]
-margin_top = 33.0
+margin_top = 30.0
 margin_right = 1016.0
-margin_bottom = 126.0
+margin_bottom = 118.0
 size_flags_horizontal = 3
 custom_constants/separation = 8
 __meta__ = {
@@ -65,19 +63,18 @@ __meta__ = {
 
 [node name="S" type="ReferenceRect" parent="SC/VBC/HBC1"]
 margin_right = 8.0
-margin_bottom = 93.0
+margin_bottom = 88.0
 rect_min_size = Vector2( 8, 0 )
 
 [node name="Audio" type="VBoxContainer" parent="SC/VBC/HBC1"]
 margin_left = 16.0
 margin_right = 504.0
-margin_bottom = 93.0
+margin_bottom = 88.0
 size_flags_horizontal = 3
 custom_constants/separation = 8
 
 [node name="SampleRate" parent="SC/VBC/HBC1/Audio" instance=ExtResource( 3 )]
 margin_right = 488.0
-margin_bottom = 27.0
 script = ExtResource( 4 )
 label = "Sample rate"
 min_value = 8000.0
@@ -86,9 +83,9 @@ step = 1.0
 config_key = "AUDIO_SAMPLERATE"
 
 [node name="BufferLength" parent="SC/VBC/HBC1/Audio" instance=ExtResource( 3 )]
-margin_top = 35.0
+margin_top = 32.0
 margin_right = 488.0
-margin_bottom = 62.0
+margin_bottom = 56.0
 script = ExtResource( 4 )
 label = "Buffer length"
 min_value = 0.1
@@ -99,19 +96,18 @@ config_key = "AUDIO_BUFFERLENGTH"
 [node name="S2" type="ReferenceRect" parent="SC/VBC/HBC1"]
 margin_left = 512.0
 margin_right = 520.0
-margin_bottom = 93.0
+margin_bottom = 88.0
 rect_min_size = Vector2( 8, 0 )
 
 [node name="Export" type="VBoxContainer" parent="SC/VBC/HBC1"]
 margin_left = 528.0
 margin_right = 1016.0
-margin_bottom = 93.0
+margin_bottom = 88.0
 size_flags_horizontal = 3
 custom_constants/separation = 8
 
 [node name="SampleRate" parent="SC/VBC/HBC1/Export" instance=ExtResource( 3 )]
 margin_right = 488.0
-margin_bottom = 27.0
 script = ExtResource( 4 )
 label = "Sample rate"
 min_value = 8000.0
@@ -120,43 +116,43 @@ step = 1.0
 config_key = "RECORD_SAMPLERATE"
 
 [node name="FPSamples" type="CheckBox" parent="SC/VBC/HBC1/Export"]
-margin_top = 35.0
+margin_top = 32.0
 margin_right = 488.0
-margin_bottom = 60.0
+margin_bottom = 56.0
 text = "Floating point samples"
 script = ExtResource( 5 )
 config_key = "RECORD_FPSAMPLES"
 
 [node name="SaveMuted" type="CheckBox" parent="SC/VBC/HBC1/Export"]
-margin_top = 68.0
+margin_top = 64.0
 margin_right = 488.0
-margin_bottom = 93.0
+margin_bottom = 88.0
 text = "Save muted channels"
 script = ExtResource( 5 )
 config_key = "RECORD_SAVEMUTED"
 
 [node name="Titles2" type="HBoxContainer" parent="SC/VBC"]
-margin_top = 142.0
+margin_top = 134.0
 margin_right = 1016.0
-margin_bottom = 159.0
+margin_bottom = 148.0
 
 [node name="MIDI" type="Label" parent="SC/VBC/Titles2"]
-margin_right = 508.0
-margin_bottom = 17.0
+margin_right = 506.0
+margin_bottom = 14.0
 size_flags_horizontal = 3
 text = "MIDI input"
 
 [node name="Editor" type="Label" parent="SC/VBC/Titles2"]
-margin_left = 508.0
+margin_left = 510.0
 margin_right = 1016.0
-margin_bottom = 17.0
+margin_bottom = 14.0
 size_flags_horizontal = 3
 text = "Editor"
 
 [node name="HBC2" type="HBoxContainer" parent="SC/VBC"]
-margin_top = 175.0
+margin_top = 164.0
 margin_right = 1016.0
-margin_bottom = 314.0
+margin_bottom = 298.0
 size_flags_horizontal = 3
 custom_constants/separation = 8
 __meta__ = {
@@ -165,29 +161,29 @@ __meta__ = {
 
 [node name="S3" type="ReferenceRect" parent="SC/VBC/HBC2"]
 margin_right = 8.0
-margin_bottom = 139.0
+margin_bottom = 134.0
 rect_min_size = Vector2( 8, 0 )
 
 [node name="MIDI" type="VBoxContainer" parent="SC/VBC/HBC2"]
 margin_left = 16.0
 margin_right = 504.0
-margin_bottom = 139.0
+margin_bottom = 134.0
 size_flags_horizontal = 3
 custom_constants/separation = 8
 
 [node name="NNV" type="VBoxContainer" parent="SC/VBC/HBC2/MIDI"]
 margin_right = 488.0
-margin_bottom = 40.0
+margin_bottom = 38.0
 
 [node name="NNV" type="Label" parent="SC/VBC/HBC2/MIDI/NNV"]
 margin_right = 488.0
-margin_bottom = 17.0
+margin_bottom = 14.0
 text = "New note velocity"
 
 [node name="NNVel" type="OptionButton" parent="SC/VBC/HBC2/MIDI/NNV"]
-margin_top = 17.0
+margin_top = 18.0
 margin_right = 488.0
-margin_bottom = 40.0
+margin_bottom = 38.0
 text = "Se4 velocity"
 items = [ "Se4 velocity", null, false, 0, null, "MIDI velocity", null, false, 1, null, "MIDI volume", null, false, 2, null, "Se4 × MIDI velocity", null, false, 3, null, "Se4 × MIDI volume", null, false, 4, null, "MIDI velocity × MIDI volume", null, false, 5, null, "Se4 × MIDI vel × MIDI vol", null, false, 6, null ]
 selected = 0
@@ -195,25 +191,25 @@ script = ExtResource( 6 )
 config_key = "MIDI_VELOCITYSRC"
 
 [node name="NoteOff" type="CheckBox" parent="SC/VBC/HBC2/MIDI"]
-margin_top = 48.0
+margin_top = 46.0
 margin_right = 488.0
-margin_bottom = 73.0
+margin_bottom = 70.0
 text = "Record MIDI Note Off"
 script = ExtResource( 5 )
 config_key = "MIDI_NOTEOFF"
 
 [node name="VolumeChange" type="CheckBox" parent="SC/VBC/HBC2/MIDI"]
-margin_top = 81.0
+margin_top = 78.0
 margin_right = 488.0
-margin_bottom = 106.0
+margin_bottom = 102.0
 text = "Record MIDI Volume"
 script = ExtResource( 5 )
 config_key = "MIDI_VOLUME"
 
 [node name="Aftertouch" type="CheckBox" parent="SC/VBC/HBC2/MIDI"]
-margin_top = 114.0
+margin_top = 110.0
 margin_right = 488.0
-margin_bottom = 139.0
+margin_bottom = 134.0
 text = "Record MIDI Aftertouch"
 script = ExtResource( 5 )
 config_key = "MIDI_AFTERTOUCH"
@@ -221,29 +217,30 @@ config_key = "MIDI_AFTERTOUCH"
 [node name="S4" type="ReferenceRect" parent="SC/VBC/HBC2"]
 margin_left = 512.0
 margin_right = 520.0
-margin_bottom = 139.0
+margin_bottom = 134.0
 rect_min_size = Vector2( 8, 0 )
 
 [node name="Editor" type="VBoxContainer" parent="SC/VBC/HBC2"]
 margin_left = 528.0
 margin_right = 1016.0
-margin_bottom = 139.0
+margin_bottom = 134.0
 size_flags_horizontal = 3
 
 [node name="HorizFXEdit" type="CheckBox" parent="SC/VBC/HBC2/Editor"]
 margin_right = 488.0
-margin_bottom = 25.0
+margin_bottom = 24.0
 text = "Horizontal FX edit"
 script = ExtResource( 5 )
 config_key = "EDIT_HORIZ_FX"
 
 [node name="FXCRLF" type="CheckBox" parent="SC/VBC/HBC2/Editor"]
-margin_top = 25.0
+margin_top = 28.0
 margin_right = 488.0
-margin_bottom = 50.0
+margin_bottom = 52.0
 text = "Keep cursor in value command"
 script = ExtResource( 5 )
 config_key = "EDIT_FX_CRLF"
+
 [connection signal="value_changed" from="SC/VBC/HBC1/Audio/SampleRate" to="." method="_on_AudioSampleRate_value_changed"]
 [connection signal="value_changed" from="SC/VBC/HBC1/Audio/BufferLength" to="." method="_on_AudioBufferSize_value_changed"]
 [connection signal="configured" from="SC/VBC/HBC2/Editor/HorizFXEdit" to="." method="_on_HorizFXEdit_toggled"]

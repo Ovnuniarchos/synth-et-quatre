@@ -16,40 +16,32 @@ __meta__ = {
 [node name="VBC" type="VBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 145.0
+margin_right = 141.0
 margin_bottom = 399.0
-__meta__ = {
-
-}
 
 [node name="Title" parent="VBC" instance=ExtResource( 1 )]
+margin_right = 134.0
 title = "SINE"
 
 [node name="Params" type="GridContainer" parent="VBC"]
 margin_top = 24.0
-margin_right = 138.0
+margin_right = 134.0
 margin_bottom = 392.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/vseparation = 2
 custom_constants/hseparation = 8
 columns = 2
-__meta__ = {
-
-}
 
 [node name="LabelMul" type="Label" parent="VBC/Params"]
 margin_top = 5.0
 margin_right = 52.0
 margin_bottom = 19.0
 text = "Freq"
-__meta__ = {
-
-}
 
 [node name="Mul" type="SpinBox" parent="VBC/Params"]
 margin_left = 60.0
-margin_right = 138.0
+margin_right = 134.0
 margin_bottom = 24.0
 focus_mode = 2
 max_value = 32.0
@@ -64,14 +56,11 @@ margin_top = 31.0
 margin_right = 52.0
 margin_bottom = 45.0
 text = "Offset"
-__meta__ = {
-
-}
 
 [node name="Ofs" type="SpinBox" parent="VBC/Params"]
 margin_left = 60.0
 margin_top = 26.0
-margin_right = 138.0
+margin_right = 134.0
 margin_bottom = 50.0
 focus_mode = 2
 min_value = -100.0
@@ -92,7 +81,7 @@ __meta__ = {
 [node name="Vol" type="SpinBox" parent="VBC/Params"]
 margin_left = 60.0
 margin_top = 52.0
-margin_right = 138.0
+margin_right = 134.0
 margin_bottom = 76.0
 focus_mode = 2
 min_value = -100.0
@@ -105,218 +94,152 @@ margin_top = 81.0
 margin_right = 52.0
 margin_bottom = 95.0
 text = "Quad 1"
-__meta__ = {
-
-}
 
 [node name="Quad1" type="OptionButton" parent="VBC/Params"]
 margin_left = 60.0
 margin_top = 78.0
-margin_right = 138.0
+margin_right = 134.0
 margin_bottom = 98.0
 text = "0 > 1"
 items = [ "0 > 1", null, false, 0, null, "1 > 0", null, false, 1, null, "0 > -1", null, false, 2, null, "-1 > 0", null, false, 3, null, "0", null, false, 4, null, "+1", null, false, 5, null, "-1", null, false, 6, null ]
 selected = 0
-__meta__ = {
-
-}
 
 [node name="LabelQ2" type="Label" parent="VBC/Params"]
 margin_top = 103.0
 margin_right = 52.0
 margin_bottom = 117.0
 text = "Quad 2"
-__meta__ = {
-
-}
 
 [node name="Quad2" type="OptionButton" parent="VBC/Params"]
 margin_left = 60.0
 margin_top = 100.0
-margin_right = 138.0
+margin_right = 134.0
 margin_bottom = 120.0
 text = "1 > 0"
 items = [ "0 > 1", null, false, 0, null, "1 > 0", null, false, 1, null, "0 > -1", null, false, 2, null, "-1 > 0", null, false, 3, null, "0", null, false, 4, null, "+1", null, false, 5, null, "-1", null, false, 6, null ]
 selected = 1
-__meta__ = {
-
-}
 
 [node name="LabelQ3" type="Label" parent="VBC/Params"]
 margin_top = 125.0
 margin_right = 52.0
 margin_bottom = 139.0
 text = "Quad 3"
-__meta__ = {
-
-}
 
 [node name="Quad3" type="OptionButton" parent="VBC/Params"]
 margin_left = 60.0
 margin_top = 122.0
-margin_right = 138.0
+margin_right = 134.0
 margin_bottom = 142.0
 text = "0 > -1"
 items = [ "0 > 1", null, false, 0, null, "1 > 0", null, false, 1, null, "0 > -1", null, false, 2, null, "-1 > 0", null, false, 3, null, "0", null, false, 4, null, "+1", null, false, 5, null, "-1", null, false, 6, null ]
 selected = 2
-__meta__ = {
-
-}
 
 [node name="LabelQ4" type="Label" parent="VBC/Params"]
 margin_top = 147.0
 margin_right = 52.0
 margin_bottom = 161.0
 text = "Quad 4"
-__meta__ = {
-
-}
 
 [node name="Quad4" type="OptionButton" parent="VBC/Params"]
 margin_left = 60.0
 margin_top = 144.0
-margin_right = 138.0
+margin_right = 134.0
 margin_bottom = 164.0
 text = "-1 > 0"
 items = [ "0 > 1", null, false, 0, null, "1 > 0", null, false, 1, null, "0 > -1", null, false, 2, null, "-1 > 0", null, false, 3, null, "0", null, false, 4, null, "+1", null, false, 5, null, "-1", null, false, 6, null ]
 selected = 3
-__meta__ = {
-
-}
 
 [node name="ReferenceRect" type="ReferenceRect" parent="VBC/Params"]
 margin_top = 166.0
 margin_right = 52.0
 margin_bottom = 190.0
 rect_min_size = Vector2( 0, 24 )
-__meta__ = {
-
-}
 
 [node name="ReferenceRect2" type="ReferenceRect" parent="VBC/Params"]
 margin_left = 60.0
 margin_top = 166.0
-margin_right = 138.0
+margin_right = 134.0
 margin_bottom = 190.0
 rect_min_size = Vector2( 0, 24 )
-__meta__ = {
-
-}
 
 [node name="LabelCycles" type="Label" parent="VBC/Params"]
 margin_top = 197.0
 margin_right = 52.0
 margin_bottom = 211.0
 text = "Cycles"
-__meta__ = {
-
-}
 
 [node name="Cycles" type="SpinBox" parent="VBC/Params"]
 margin_left = 60.0
 margin_top = 192.0
-margin_right = 138.0
+margin_right = 134.0
 margin_bottom = 216.0
-__meta__ = {
-
-}
 
 [node name="LabelPosition" type="Label" parent="VBC/Params"]
 margin_top = 223.0
 margin_right = 52.0
 margin_bottom = 237.0
 text = "Position"
-__meta__ = {
-
-}
 
 [node name="Position" type="SpinBox" parent="VBC/Params"]
 margin_left = 60.0
 margin_top = 218.0
-margin_right = 138.0
+margin_right = 134.0
 margin_bottom = 242.0
 step = 0.01
-__meta__ = {
-
-}
 
 [node name="LabelOutput" type="Label" parent="VBC/Params"]
 margin_top = 247.0
 margin_right = 52.0
 margin_bottom = 261.0
 text = "Output"
-__meta__ = {
-
-}
 
 [node name="Output" type="OptionButton" parent="VBC/Params"]
 margin_left = 60.0
 margin_top = 244.0
-margin_right = 138.0
+margin_right = 134.0
 margin_bottom = 264.0
 text = "Off"
 items = [ "Off", null, false, 0, null, "Replace", null, false, 1, null, "Add", null, false, 2, null, "AM", null, false, 3, null, "XM", null, false, 4, null ]
 selected = 0
-__meta__ = {
-
-}
 
 [node name="LabelFrom" type="Label" parent="VBC/Params"]
 margin_top = 271.0
 margin_right = 52.0
 margin_bottom = 285.0
 text = "From"
-__meta__ = {
-
-}
 
 [node name="From" type="SpinBox" parent="VBC/Params"]
 margin_left = 60.0
 margin_top = 266.0
-margin_right = 138.0
+margin_right = 134.0
 margin_bottom = 290.0
 min_value = -1.0
-__meta__ = {
-
-}
 
 [node name="LabelPM" type="Label" parent="VBC/Params"]
 margin_top = 297.0
 margin_right = 52.0
 margin_bottom = 311.0
 text = "PM"
-__meta__ = {
-
-}
 
 [node name="PM" type="SpinBox" parent="VBC/Params"]
 margin_left = 60.0
 margin_top = 292.0
-margin_right = 138.0
+margin_right = 134.0
 margin_bottom = 316.0
 min_value = -100.0
-__meta__ = {
-
-}
 
 [node name="LabelAM" type="Label" parent="VBC/Params"]
 margin_top = 323.0
 margin_right = 52.0
 margin_bottom = 337.0
 text = "AM"
-__meta__ = {
-
-}
 
 [node name="AM" type="SpinBox" parent="VBC/Params"]
 margin_left = 60.0
 margin_top = 318.0
-margin_right = 138.0
+margin_right = 134.0
 margin_bottom = 342.0
 min_value = -100.0
-__meta__ = {
-
-}
 
 [node name="LabelXM" type="Label" parent="VBC/Params"]
 margin_top = 349.0
@@ -330,12 +253,10 @@ __meta__ = {
 [node name="XM" type="SpinBox" parent="VBC/Params"]
 margin_left = 60.0
 margin_top = 344.0
-margin_right = 138.0
+margin_right = 134.0
 margin_bottom = 368.0
 min_value = -100.0
-__meta__ = {
 
-}
 [connection signal="value_changed" from="VBC/Params/Mul" to="." method="_on_Mul_value_changed"]
 [connection signal="value_changed" from="VBC/Params/Ofs" to="." method="_on_Ofs_value_changed"]
 [connection signal="value_changed" from="VBC/Params/Vol" to="." method="_on_Vol_value_changed"]

@@ -498,11 +498,11 @@ func deserialize(inf:ChunkedFile)->Song:
 		w.connect("name_changed",song,"_on_wave_name_changed")
 	return song
 
-func process_highlights(inf:ChunkedFile,song:Song,version:int)->void:
+func process_highlights(inf:ChunkedFile,song:Song,_version:int)->void:
 	song.minor_highlight=inf.get_16()
 	song.major_highlight=inf.get_16()
 
-func process_pattern_list(inf:ChunkedFile,song:Song,version:int)->void:
+func process_pattern_list(inf:ChunkedFile,song:Song,_version:int)->void:
 	var hdr:Dictionary
 	var pat_l:Array=[]
 	pat_l.resize(MAX_CHANNELS)
@@ -521,7 +521,7 @@ func process_pattern_list(inf:ChunkedFile,song:Song,version:int)->void:
 		pat_l[i]=[Pattern.new(MAX_PAT_LENGTH)]
 	song.pattern_list=pat_l
 
-func process_order_list(inf:ChunkedFile,song:Song,version:int)->void:
+func process_order_list(inf:ChunkedFile,song:Song,_version:int)->void:
 	var ord_l:Array=[]
 	ord_l.resize(inf.get_16())
 	for i in range(ord_l.size()):
@@ -533,7 +533,7 @@ func process_order_list(inf:ChunkedFile,song:Song,version:int)->void:
 			ord_l[i][j]=0
 	song.orders=ord_l
 
-func process_instrument_list(inf:ChunkedFile,song:Song,version:int)->void:
+func process_instrument_list(inf:ChunkedFile,song:Song,_version:int)->void:
 	var hdr:Dictionary
 	var inst_l:Array=[]
 	for i in range(4):
@@ -573,7 +573,7 @@ func process_instrument_list(inf:ChunkedFile,song:Song,version:int)->void:
 	song.instrument_list=inst_l
 	song.wave_list=wav_l
 
-func process_channel_list(inf:ChunkedFile,song:Song,version:int)->void:
+func process_channel_list(inf:ChunkedFile,song:Song,_version:int)->void:
 	var nc:int=inf.get_16()
 	song.num_channels=nc
 	song.pattern_list.resize(MAX_CHANNELS)

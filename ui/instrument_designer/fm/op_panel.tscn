@@ -27,7 +27,6 @@ margin_bottom = 20.0
 custom_constants/separation = 16
 
 [node name="Switch" type="Button" parent="Params/Switches"]
-modulate = Color( 1, 2, 1, 1 )
 margin_right = 96.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 96, 0 )
@@ -36,7 +35,6 @@ toggle_mode = true
 pressed = true
 text = "OPX"
 script = ExtResource( 1 )
-accent_color = Color( 1, 2, 1, 1 )
 
 [node name="Sep" type="ReferenceRect" parent="Params/Switches"]
 margin_left = 112.0

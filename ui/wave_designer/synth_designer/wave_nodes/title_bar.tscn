@@ -28,7 +28,6 @@ margin_top = 3.0
 margin_right = 118.0
 margin_bottom = 17.0
 size_flags_horizontal = 3
-custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "0 - "
 align = 1
 
@@ -37,6 +36,7 @@ margin_left = 118.0
 margin_right = 138.0
 margin_bottom = 20.0
 text = "X"
+
 [connection signal="button_up" from="MoveL" to="." method="_on_MoveL_button_up"]
 [connection signal="button_up" from="MoveR" to="." method="_on_MoveR_button_up"]
 [connection signal="button_up" from="Close" to="." method="_on_Close_button_up"]

@@ -21,8 +21,10 @@ FUTURE:
 	Themability
 """
 
+
 func _ready()->void:
 	AUDIO.connect("buffer_sent",$Main/Oscilloscope,"draw_music")
+	theme=THEME.theme
 
 func _on_tab_changed(tab:int)->void:
 	var t:Tabs=$Main/Tabs.get_tab_control(tab)

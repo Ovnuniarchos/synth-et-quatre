@@ -25,10 +25,7 @@ func _ready()->void:
 	set_popup($CC/HBC/Cleanup.get_popup(),"_on_Cleanup_id_pressed")
 	set_popup($CC/HBC/Save.get_popup(),"_on_Save_id_pressed")
 	set_popup($CC/HBC/Load.get_popup(),"_on_Load_id_pressed")
-	if get_tree().edited_scene_root!=null:
-		real_theme=get_tree().edited_scene_root.get_theme()
-	else:
-		real_theme=get_tree().current_scene.get_theme()
+	real_theme=THEME.theme
 	rect_size.y=0.0
 	base_height=$CC/HBC.rect_size.y
 

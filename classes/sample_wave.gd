@@ -62,7 +62,7 @@ func serialize(out:ChunkedFile)->void:
 
 #
 
-func deserialize(inf:ChunkedFile,w:SampleWave,version:int)->void:
+func deserialize(inf:ChunkedFile,w:SampleWave,_version:int)->void:
 	w.size=inf.get_32()
 	w.original_data.resize(w.size)
 	w.bits_sample=inf.get_8()

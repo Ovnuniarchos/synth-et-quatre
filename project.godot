@@ -262,6 +262,7 @@ config/icon="res://se4.png"
 
 GLOBALS="*res://singletons/globals.gd"
 CONFIG="*res://singletons/config.gd"
+THEME="*res://singletons/theme.gd"
 SYNTH="*res://singletons/synth.gd"
 AUDIO="*res://singletons/audio.tscn"
 GKBD="*res://singletons/global_keys.gd"

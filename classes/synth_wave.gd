@@ -75,7 +75,7 @@ func serialize(out:ChunkedFile)->void:
 
 #
 
-func deserialize(inf:ChunkedFile,w:SynthWave,version:int)->void:
+func deserialize(inf:ChunkedFile,w:SynthWave,_version:int)->void:
 	w.size_po2=inf.get_8()
 	w.name=inf.get_pascal_string()
 	w.components=[]

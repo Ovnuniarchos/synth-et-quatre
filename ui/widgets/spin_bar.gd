@@ -4,27 +4,50 @@ class_name SpinBar
 
 export (float) var big_step:float=10.0
 export (float) var huge_step:float=100.0
+export (int,0,4) var _decimals:int=0
 
 var dragging:bool=false
 var pressed:bool=false
+var label:Label
 
 
 func _init()->void:
 	percent_visible=false
+	size_flags_horizontal=SIZE_EXPAND_FILL|SIZE_SHRINK_CENTER
+	size_flags_vertical=SIZE_EXPAND_FILL|SIZE_SHRINK_CENTER
+	label=Label.new()
+	label.align=HALIGN_CENTER
+	label.valign=VALIGN_CENTER
+	label.clip_text=true
+	label.set_anchors_preset(Control.PRESET_WIDE)
+	label.size_flags_horizontal=SIZE_EXPAND_FILL|SIZE_SHRINK_CENTER
+	label.size_flags_vertical=SIZE_EXPAND_FILL|SIZE_SHRINK_CENTER
+	label.text=format_value()
 
 
-func _get_property_list()->Array:
-	var props:Array=get_script().get_script_property_list()
-	for p in props:
-		if p["name"] in ["Percent","percent_visible"]:
-			print(p)
-			p["usage"]=0
-	return props
+func _ready()->void:
+	add_child(label)
+
+
+func format_value()->String:
+	var f:String
+	if _decimals==0:
+		f="%d"
+	else:
+		f="%."+String(_decimals)+"f"
+	return f%value
+
+func _set(prop:String,val)->bool:
+	if prop=="value":
+		set_value(val)
+		return true
+	set(prop,val)
+	return true
 
 
 func set_value(v:float)->void:
 	value=clamp(v,min_value,max_value)
-	$Label.text=String(value)
+	label.text=format_value()
 
 
 func _gui_input(ev:InputEvent)->void:

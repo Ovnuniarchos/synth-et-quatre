@@ -15,7 +15,7 @@ __meta__ = {
 
 [node name="LFOs" type="GridContainer" parent="."]
 margin_right = 1024.0
-margin_bottom = 148.0
+margin_bottom = 144.0
 size_flags_horizontal = 3
 columns = 2
 __meta__ = {
@@ -24,29 +24,29 @@ __meta__ = {
 
 [node name="LFO1" parent="LFOs" instance=ExtResource( 1 )]
 margin_right = 510.0
-margin_bottom = 72.0
+margin_bottom = 70.0
 
 [node name="LFO2" parent="LFOs" instance=ExtResource( 1 )]
 margin_left = 514.0
-margin_bottom = 72.0
+margin_bottom = 70.0
 lfo = 1
 
 [node name="LFO3" parent="LFOs" instance=ExtResource( 1 )]
-margin_top = 76.0
+margin_top = 74.0
 margin_right = 510.0
-margin_bottom = 148.0
+margin_bottom = 144.0
 lfo = 2
 
 [node name="LFO4" parent="LFOs" instance=ExtResource( 1 )]
 margin_left = 514.0
-margin_top = 76.0
-margin_bottom = 148.0
+margin_top = 74.0
+margin_bottom = 144.0
 lfo = 3
 
 [node name="Info" type="PanelContainer" parent="."]
-margin_top = 152.0
+margin_top = 148.0
 margin_right = 1024.0
-margin_bottom = 190.0
+margin_bottom = 186.0
 size_flags_horizontal = 3
 
 [node name="HBC" type="HBoxContainer" parent="Info"]
@@ -70,7 +70,7 @@ margin_bottom = 24.0
 rect_min_size = Vector2( 192, 0 )
 
 [node name="Params" type="ScrollContainer" parent="."]
-margin_top = 194.0
+margin_top = 190.0
 margin_right = 1024.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
@@ -79,12 +79,12 @@ scroll_horizontal_enabled = false
 
 [node name="VBC" type="VBoxContainer" parent="Params"]
 margin_right = 1012.0
-margin_bottom = 940.0
+margin_bottom = 952.0
 size_flags_horizontal = 3
 
 [node name="OPS" type="GridContainer" parent="Params/VBC"]
 margin_right = 1012.0
-margin_bottom = 772.0
+margin_bottom = 784.0
 size_flags_horizontal = 3
 custom_constants/vseparation = 16
 custom_constants/hseparation = 16
@@ -93,34 +93,34 @@ columns = 2
 [node name="OP1" parent="Params/VBC/OPS" instance=ExtResource( 5 )]
 anchor_right = 0.0
 margin_right = 498.0
-margin_bottom = 378.0
+margin_bottom = 384.0
 
 [node name="OP2" parent="Params/VBC/OPS" instance=ExtResource( 5 )]
 anchor_right = 0.0
 margin_left = 514.0
 margin_right = 1012.0
-margin_bottom = 378.0
+margin_bottom = 384.0
 operator = 1
 
 [node name="OP3" parent="Params/VBC/OPS" instance=ExtResource( 5 )]
 anchor_right = 0.0
-margin_top = 394.0
+margin_top = 400.0
 margin_right = 498.0
-margin_bottom = 772.0
+margin_bottom = 784.0
 operator = 2
 
 [node name="OP4" parent="Params/VBC/OPS" instance=ExtResource( 5 )]
 anchor_right = 0.0
 margin_left = 514.0
-margin_top = 394.0
+margin_top = 400.0
 margin_right = 1012.0
-margin_bottom = 772.0
+margin_bottom = 784.0
 operator = 3
 
 [node name="Routing" parent="Params/VBC" instance=ExtResource( 2 )]
-margin_top = 776.0
+margin_top = 788.0
 margin_right = 1012.0
-margin_bottom = 940.0
+margin_bottom = 952.0
 
 [connection signal="text_changed" from="Info/HBC/Name" to="." method="_on_Name_changed"]
 [connection signal="instrument_changed" from="Params/VBC/OPS/OP1" to="." method="_on_instrument_changed"]

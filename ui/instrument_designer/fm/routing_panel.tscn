@@ -1,0 +1,133 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://ui/widgets/spin_bar.gd" type="Script" id=1]
+[ext_resource path="res://ui/instrument_designer/fm/routing_panel.gd" type="Script" id=2]
+
+[node name="Routing" type="VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="."]
+margin_right = 1024.0
+margin_bottom = 14.0
+text = "OP 2"
+align = 1
+
+[node name="Routing" type="GridContainer" parent="."]
+margin_top = 18.0
+margin_right = 1024.0
+margin_bottom = 104.0
+size_flags_horizontal = 3
+size_flags_vertical = 8
+columns = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OP1Label" type="Label" parent="Routing"]
+margin_right = 27.0
+margin_bottom = 14.0
+text = "OP1"
+
+[node name="OP1Slider" type="ProgressBar" parent="Routing"]
+margin_left = 31.0
+margin_right = 1024.0
+margin_bottom = 14.0
+size_flags_horizontal = 7
+size_flags_vertical = 7
+max_value = 255.0
+step = 1.0
+percent_visible = false
+script = ExtResource( 1 )
+big_step = 4.0
+huge_step = 16.0
+
+[node name="OP2Label" type="Label" parent="Routing"]
+margin_top = 18.0
+margin_right = 27.0
+margin_bottom = 32.0
+text = "OP2"
+
+[node name="OP2Slider" type="ProgressBar" parent="Routing"]
+margin_left = 31.0
+margin_top = 18.0
+margin_right = 1024.0
+margin_bottom = 32.0
+size_flags_horizontal = 7
+size_flags_vertical = 7
+max_value = 255.0
+step = 1.0
+percent_visible = false
+script = ExtResource( 1 )
+big_step = 4.0
+huge_step = 16.0
+
+[node name="OP3Label" type="Label" parent="Routing"]
+margin_top = 36.0
+margin_right = 27.0
+margin_bottom = 50.0
+text = "OP3"
+
+[node name="OP3Slider" type="ProgressBar" parent="Routing"]
+margin_left = 31.0
+margin_top = 36.0
+margin_right = 1024.0
+margin_bottom = 50.0
+size_flags_horizontal = 7
+size_flags_vertical = 7
+max_value = 255.0
+step = 1.0
+percent_visible = false
+script = ExtResource( 1 )
+big_step = 4.0
+huge_step = 16.0
+
+[node name="OP4Label" type="Label" parent="Routing"]
+margin_top = 54.0
+margin_right = 27.0
+margin_bottom = 68.0
+text = "OP4"
+
+[node name="OP4Slider" type="ProgressBar" parent="Routing"]
+margin_left = 31.0
+margin_top = 54.0
+margin_right = 1024.0
+margin_bottom = 68.0
+size_flags_horizontal = 7
+size_flags_vertical = 7
+max_value = 255.0
+step = 1.0
+percent_visible = false
+script = ExtResource( 1 )
+big_step = 4.0
+huge_step = 16.0
+
+[node name="OutLabel" type="Label" parent="Routing"]
+margin_top = 72.0
+margin_right = 27.0
+margin_bottom = 86.0
+text = "Out"
+
+[node name="OutSlider" type="ProgressBar" parent="Routing"]
+margin_left = 31.0
+margin_top = 72.0
+margin_right = 1024.0
+margin_bottom = 86.0
+size_flags_horizontal = 7
+size_flags_vertical = 7
+max_value = 255.0
+step = 1.0
+percent_visible = false
+script = ExtResource( 1 )
+big_step = 4.0
+huge_step = 16.0
+
+[connection signal="value_changed" from="Routing/OP1Slider" to="." method="_on_Slider_value_changed" binds= [ 0 ]]
+[connection signal="value_changed" from="Routing/OP2Slider" to="." method="_on_Slider_value_changed" binds= [ 1 ]]
+[connection signal="value_changed" from="Routing/OP3Slider" to="." method="_on_Slider_value_changed" binds= [ 2 ]]
+[connection signal="value_changed" from="Routing/OP4Slider" to="." method="_on_Slider_value_changed" binds= [ 3 ]]
+[connection signal="value_changed" from="Routing/OutSlider" to="." method="_on_Slider_value_changed" binds= [ -1 ]]

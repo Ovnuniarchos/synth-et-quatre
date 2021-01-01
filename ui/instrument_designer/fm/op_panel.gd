@@ -120,3 +120,7 @@ func set_sliders(inst:FmInstrument)->void:
 	$Params/Detune/DETLabel.text="DET" if inst.multipliers[operator]>0 else "FFR"
 	set_block_signals(false)
 	emit_signal("instrument_changed")
+
+
+func _on_DETSlider_value_changed(value):
+	pass # Replace with function body.

@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://ui/widgets/accent_button.gd" type="Script" id=1]
-[ext_resource path="res://ui/widgets/slider.gd" type="Script" id=2]
 [ext_resource path="res://ui/instrument_designer/fm/op_panel.gd" type="Script" id=3]
 [ext_resource path="res://ui/instrument_designer/wave_menu.gd" type="Script" id=4]
+[ext_resource path="res://ui/widgets/spin_bar.gd" type="Script" id=5]
 
 [node name="Operator" type="PanelContainer"]
 anchor_right = 1.0
@@ -18,7 +18,7 @@ __meta__ = {
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 1017.0
-margin_bottom = 371.0
+margin_bottom = 377.0
 size_flags_vertical = 0
 
 [node name="Switches" type="HBoxContainer" parent="Params"]
@@ -84,50 +84,42 @@ margin_right = 28.0
 margin_bottom = 17.0
 text = "DUC"
 
-[node name="DUCSlider" type="HSlider" parent="Params/Wave"]
+[node name="DUCSlider" type="ProgressBar" parent="Params/Wave"]
 margin_left = 32.0
-margin_top = 2.0
-margin_right = 464.0
-margin_bottom = 18.0
-size_flags_horizontal = 3
-size_flags_vertical = 4
-max_value = 255.0
-script = ExtResource( 2 )
-label = NodePath("../../Wave/DUCValue")
-
-[node name="DUCValue" type="Label" parent="Params/Wave"]
-margin_left = 468.0
-margin_top = 3.0
-margin_right = 492.0
-margin_bottom = 17.0
-size_flags_horizontal = 0
-text = "888"
+margin_right = 329.0
+margin_bottom = 20.0
+size_flags_horizontal = 7
+size_flags_vertical = 7
+percent_visible = false
+script = ExtResource( 5 )
+big_step = 4.0
+huge_step = 16.0
 
 [node name="Sep" type="ReferenceRect" parent="Params/Wave"]
-margin_left = 496.0
-margin_right = 512.0
+margin_left = 333.0
+margin_right = 349.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
 [node name="WAVLabel" type="Label" parent="Params/Wave"]
-margin_left = 516.0
+margin_left = 353.0
 margin_top = 3.0
-margin_right = 546.0
+margin_right = 383.0
 margin_bottom = 17.0
 text = "WAV"
 
 [node name="WAVButton" type="OptionButton" parent="Params/Wave"]
-margin_left = 550.0
-margin_right = 982.0
+margin_left = 387.0
+margin_right = 684.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 clip_text = true
 script = ExtResource( 4 )
 
 [node name="Sep2" type="ReferenceRect" parent="Params/Wave"]
-margin_left = 986.0
-margin_right = 1010.0
+margin_left = 688.0
+margin_right = 712.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 24, 0 )
 size_flags_vertical = 7
@@ -150,419 +142,347 @@ text = "Envelope"
 [node name="ADSR" type="GridContainer" parent="Params"]
 margin_top = 124.0
 margin_right = 1010.0
-margin_bottom = 204.0
+margin_bottom = 216.0
 custom_constants/hseparation = 2
-columns = 7
+columns = 5
 
 [node name="ARLabel" type="Label" parent="Params/ADSR"]
-margin_top = 1.0
 margin_right = 28.0
-margin_bottom = 15.0
+margin_bottom = 14.0
 text = "ATR"
 
-[node name="ARSlider" type="HSlider" parent="Params/ADSR"]
+[node name="ARSlider" type="ProgressBar" parent="Params/ADSR"]
 margin_left = 30.0
-margin_right = 470.0
-margin_bottom = 16.0
-size_flags_horizontal = 3
-size_flags_vertical = 4
-max_value = 255.0
-script = ExtResource( 2 )
-label = NodePath("../ARValue")
-
-[node name="ARValue" type="Label" parent="Params/ADSR"]
-margin_left = 472.0
-margin_top = 1.0
 margin_right = 496.0
-margin_bottom = 15.0
-size_flags_horizontal = 0
-text = "888"
+margin_bottom = 14.0
+size_flags_horizontal = 7
+size_flags_vertical = 7
+max_value = 255.0
+step = 1.0
+percent_visible = false
+script = ExtResource( 5 )
+big_step = 4.0
+huge_step = 16.0
 
 [node name="Sep" type="ReferenceRect" parent="Params/ADSR"]
 margin_left = 498.0
 margin_right = 514.0
-margin_bottom = 16.0
+margin_bottom = 14.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
 [node name="DRLabel" type="Label" parent="Params/ADSR"]
 margin_left = 516.0
-margin_top = 1.0
 margin_right = 541.0
-margin_bottom = 15.0
+margin_bottom = 14.0
 text = "DER"
 
-[node name="DRSlider" type="HSlider" parent="Params/ADSR"]
+[node name="DRSlider" type="ProgressBar" parent="Params/ADSR"]
 margin_left = 543.0
-margin_right = 983.0
-margin_bottom = 16.0
-size_flags_horizontal = 3
-size_flags_vertical = 4
-max_value = 255.0
-script = ExtResource( 2 )
-label = NodePath("../DRValue")
-
-[node name="DRValue" type="Label" parent="Params/ADSR"]
-margin_left = 985.0
-margin_top = 1.0
 margin_right = 1009.0
-margin_bottom = 15.0
-size_flags_horizontal = 0
-text = "888"
+margin_bottom = 14.0
+size_flags_horizontal = 7
+size_flags_vertical = 7
+max_value = 255.0
+step = 1.0
+percent_visible = false
+script = ExtResource( 5 )
+big_step = 4.0
+huge_step = 16.0
 
 [node name="SLLabel" type="Label" parent="Params/ADSR"]
-margin_top = 21.0
+margin_top = 18.0
 margin_right = 28.0
-margin_bottom = 35.0
+margin_bottom = 32.0
 text = "SUL"
 
-[node name="SLSlider" type="HSlider" parent="Params/ADSR"]
+[node name="SLSlider" type="ProgressBar" parent="Params/ADSR"]
 margin_left = 30.0
-margin_top = 20.0
-margin_right = 470.0
-margin_bottom = 36.0
-size_flags_horizontal = 3
-size_flags_vertical = 4
-max_value = 255.0
-script = ExtResource( 2 )
-label = NodePath("../SLValue")
-
-[node name="SLValue" type="Label" parent="Params/ADSR"]
-margin_left = 472.0
-margin_top = 21.0
+margin_top = 18.0
 margin_right = 496.0
-margin_bottom = 35.0
-size_flags_horizontal = 0
-text = "888"
+margin_bottom = 32.0
+size_flags_horizontal = 7
+size_flags_vertical = 7
+max_value = 255.0
+step = 1.0
+percent_visible = false
+script = ExtResource( 5 )
+big_step = 4.0
+huge_step = 16.0
 
 [node name="Sep2" type="ReferenceRect" parent="Params/ADSR"]
 margin_left = 498.0
-margin_top = 20.0
+margin_top = 18.0
 margin_right = 514.0
-margin_bottom = 36.0
+margin_bottom = 32.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
 [node name="SRLabel" type="Label" parent="Params/ADSR"]
 margin_left = 516.0
-margin_top = 21.0
+margin_top = 18.0
 margin_right = 541.0
-margin_bottom = 35.0
+margin_bottom = 32.0
 text = "SUR"
 
-[node name="SRSlider" type="HSlider" parent="Params/ADSR"]
+[node name="SRSlider" type="ProgressBar" parent="Params/ADSR"]
 margin_left = 543.0
-margin_top = 20.0
-margin_right = 983.0
-margin_bottom = 36.0
-size_flags_horizontal = 3
-size_flags_vertical = 4
-max_value = 255.0
-script = ExtResource( 2 )
-label = NodePath("../SRValue")
-
-[node name="SRValue" type="Label" parent="Params/ADSR"]
-margin_left = 985.0
-margin_top = 21.0
+margin_top = 18.0
 margin_right = 1009.0
-margin_bottom = 35.0
-size_flags_horizontal = 0
-text = "888"
+margin_bottom = 32.0
+size_flags_horizontal = 7
+size_flags_vertical = 7
+max_value = 255.0
+step = 1.0
+percent_visible = false
+script = ExtResource( 5 )
+big_step = 4.0
+huge_step = 16.0
 
 [node name="RRLabel" type="Label" parent="Params/ADSR"]
-margin_top = 43.0
+margin_top = 39.0
 margin_right = 28.0
-margin_bottom = 57.0
+margin_bottom = 53.0
 text = "RER"
 
-[node name="RRSlider" type="HSlider" parent="Params/ADSR"]
+[node name="RRSlider" type="ProgressBar" parent="Params/ADSR"]
 margin_left = 30.0
-margin_top = 42.0
-margin_right = 470.0
-margin_bottom = 58.0
-size_flags_horizontal = 3
-size_flags_vertical = 4
-max_value = 255.0
-script = ExtResource( 2 )
-label = NodePath("../RRValue")
-
-[node name="RRValue" type="Label" parent="Params/ADSR"]
-margin_left = 472.0
-margin_top = 43.0
+margin_top = 36.0
 margin_right = 496.0
-margin_bottom = 57.0
-size_flags_horizontal = 0
-text = "888"
+margin_bottom = 56.0
+size_flags_horizontal = 7
+size_flags_vertical = 7
+max_value = 255.0
+step = 1.0
+percent_visible = false
+script = ExtResource( 5 )
+big_step = 4.0
+huge_step = 16.0
 
 [node name="Sep3" type="ReferenceRect" parent="Params/ADSR"]
 margin_left = 498.0
-margin_top = 40.0
+margin_top = 36.0
 margin_right = 514.0
-margin_bottom = 60.0
+margin_bottom = 56.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
 [node name="RPLabel" type="Label" parent="Params/ADSR"]
 margin_left = 516.0
-margin_top = 43.0
+margin_top = 39.0
 margin_right = 541.0
-margin_bottom = 57.0
+margin_bottom = 53.0
 text = "RPT"
 
 [node name="Repeat" type="OptionButton" parent="Params/ADSR"]
 margin_left = 543.0
-margin_top = 40.0
-margin_right = 983.0
-margin_bottom = 60.0
+margin_top = 36.0
+margin_right = 1009.0
+margin_bottom = 56.0
 text = "OFF"
 items = [ "OFF", null, false, 0, null, "Attack", null, false, 4, null, "Decay", null, false, 3, null, "Sustain", null, false, 2, null, "Release", null, false, 1, null ]
 selected = 0
 
+[node name="AMSLabel" type="Label" parent="Params/ADSR"]
+margin_top = 60.0
+margin_right = 28.0
+margin_bottom = 74.0
+text = "AMS"
+
+[node name="AMSSlider" type="ProgressBar" parent="Params/ADSR"]
+margin_left = 30.0
+margin_top = 60.0
+margin_right = 496.0
+margin_bottom = 74.0
+size_flags_horizontal = 7
+size_flags_vertical = 7
+max_value = 255.0
+step = 1.0
+percent_visible = false
+script = ExtResource( 5 )
+big_step = 4.0
+huge_step = 16.0
+
 [node name="Sep4" type="ReferenceRect" parent="Params/ADSR"]
-margin_left = 985.0
-margin_top = 40.0
-margin_right = 1009.0
-margin_bottom = 60.0
+margin_left = 498.0
+margin_top = 60.0
+margin_right = 514.0
+margin_bottom = 74.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
-[node name="AMSLabel" type="Label" parent="Params/ADSR"]
-margin_top = 65.0
-margin_right = 28.0
-margin_bottom = 79.0
-text = "AMS"
-
-[node name="AMSSlider" type="HSlider" parent="Params/ADSR"]
-margin_left = 30.0
-margin_top = 64.0
-margin_right = 470.0
-margin_bottom = 80.0
-size_flags_horizontal = 3
-size_flags_vertical = 4
-max_value = 255.0
-script = ExtResource( 2 )
-label = NodePath("../AMSValue")
-
 [node name="AMSValue" type="Label" parent="Params/ADSR"]
-margin_left = 472.0
-margin_top = 65.0
-margin_right = 496.0
-margin_bottom = 79.0
+margin_left = 516.0
+margin_top = 60.0
+margin_right = 540.0
+margin_bottom = 74.0
 size_flags_horizontal = 0
 text = "888"
 
 [node name="Sep5" type="ReferenceRect" parent="Params/ADSR"]
-margin_left = 498.0
-margin_top = 64.0
-margin_right = 514.0
-margin_bottom = 80.0
+margin_left = 543.0
+margin_top = 60.0
+margin_right = 1009.0
+margin_bottom = 74.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
 [node name="KSRLabel" type="Label" parent="Params/ADSR"]
-margin_left = 516.0
-margin_top = 65.0
-margin_right = 541.0
-margin_bottom = 79.0
+margin_top = 78.0
+margin_right = 28.0
+margin_bottom = 92.0
 text = "KSR"
 
-[node name="KSRSlider" type="HSlider" parent="Params/ADSR"]
-margin_left = 543.0
-margin_top = 64.0
-margin_right = 983.0
-margin_bottom = 80.0
-size_flags_horizontal = 3
-size_flags_vertical = 4
+[node name="KSRSlider" type="ProgressBar" parent="Params/ADSR"]
+margin_left = 30.0
+margin_top = 78.0
+margin_right = 496.0
+margin_bottom = 92.0
+size_flags_horizontal = 7
+size_flags_vertical = 7
 max_value = 7.0
-script = ExtResource( 2 )
-label = NodePath("../KSRValue")
-mask = "%1d"
-
-[node name="KSRValue" type="Label" parent="Params/ADSR"]
-margin_left = 985.0
-margin_top = 65.0
-margin_right = 993.0
-margin_bottom = 79.0
-size_flags_horizontal = 0
-text = "8"
+step = 1.0
+percent_visible = false
+script = ExtResource( 5 )
+big_step = 1.0
+huge_step = 1.0
 
 [node name="ReferenceRect3" type="ReferenceRect" parent="Params"]
-margin_top = 208.0
+margin_top = 220.0
 margin_right = 1010.0
-margin_bottom = 224.0
+margin_bottom = 236.0
 rect_min_size = Vector2( 0, 16 )
 
 [node name="FrequencyTitle" type="Label" parent="Params"]
-margin_top = 228.0
+margin_top = 240.0
 margin_right = 66.0
-margin_bottom = 242.0
+margin_bottom = 254.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Frequency"
 
 [node name="Frequency" type="GridContainer" parent="Params"]
-margin_top = 246.0
+margin_top = 258.0
 margin_right = 1010.0
-margin_bottom = 262.0
+margin_bottom = 272.0
 custom_constants/hseparation = 2
-columns = 7
+columns = 5
 
 [node name="MULLabel" type="Label" parent="Params/Frequency"]
-margin_top = 1.0
 margin_right = 29.0
-margin_bottom = 15.0
+margin_bottom = 14.0
 text = "MUL"
 
-[node name="MULSlider" type="HSlider" parent="Params/Frequency"]
+[node name="MULSlider" type="ProgressBar" parent="Params/Frequency"]
 margin_left = 31.0
-margin_right = 480.0
-margin_bottom = 16.0
-size_flags_horizontal = 3
-size_flags_vertical = 4
-max_value = 32.0
-value = 1.0
-script = ExtResource( 2 )
-label = NodePath("../MULValue")
-mask = "%2d"
-
-[node name="MULValue" type="Label" parent="Params/Frequency"]
-margin_left = 482.0
-margin_top = 1.0
 margin_right = 498.0
-margin_bottom = 15.0
-size_flags_horizontal = 0
-text = "88"
+margin_bottom = 14.0
+size_flags_horizontal = 7
+size_flags_vertical = 7
+max_value = 32.0
+step = 1.0
+percent_visible = false
+script = ExtResource( 5 )
+big_step = 2.0
+huge_step = 4.0
 
 [node name="Sep" type="ReferenceRect" parent="Params/Frequency"]
 margin_left = 500.0
 margin_right = 516.0
-margin_bottom = 16.0
+margin_bottom = 14.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
 [node name="DIVLabel" type="Label" parent="Params/Frequency"]
 margin_left = 518.0
-margin_top = 1.0
 margin_right = 541.0
-margin_bottom = 15.0
+margin_bottom = 14.0
 text = "DIV"
 
-[node name="DIVSlider" type="HSlider" parent="Params/Frequency"]
+[node name="DIVSlider" type="ProgressBar" parent="Params/Frequency"]
 margin_left = 543.0
-margin_right = 992.0
-margin_bottom = 16.0
-size_flags_horizontal = 3
-size_flags_vertical = 4
+margin_right = 1010.0
+margin_bottom = 14.0
+size_flags_horizontal = 7
+size_flags_vertical = 7
 min_value = 1.0
 max_value = 32.0
+step = 1.0
 value = 1.0
-script = ExtResource( 2 )
-label = NodePath("../DIVValue")
-mask = "%2d"
-
-[node name="DIVValue" type="Label" parent="Params/Frequency"]
-margin_left = 994.0
-margin_top = 1.0
-margin_right = 1010.0
-margin_bottom = 15.0
-size_flags_horizontal = 0
-text = "88"
+percent_visible = false
+script = ExtResource( 5 )
+big_step = 2.0
+huge_step = 4.0
 
 [node name="Detune" type="HBoxContainer" parent="Params"]
-margin_top = 266.0
+margin_top = 276.0
 margin_right = 1010.0
-margin_bottom = 282.0
+margin_bottom = 290.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="DETLabel" type="Label" parent="Params/Detune"]
-margin_top = 1.0
 margin_right = 24.0
-margin_bottom = 15.0
+margin_bottom = 14.0
 text = "DET"
 
-[node name="DETSlider" type="HSlider" parent="Params/Detune"]
+[node name="DETSlider" type="ProgressBar" parent="Params/Detune"]
 margin_left = 28.0
-margin_right = 961.0
-margin_bottom = 16.0
-size_flags_horizontal = 3
-size_flags_vertical = 4
+margin_right = 1010.0
+margin_bottom = 14.0
+size_flags_horizontal = 7
+size_flags_vertical = 7
 min_value = -12000.0
 max_value = 12000.0
-script = ExtResource( 2 )
-label = NodePath("../DETValue")
-mask = "%+5d"
-
-[node name="DETValue" type="Label" parent="Params/Detune"]
-margin_left = 965.0
-margin_top = 1.0
-margin_right = 1010.0
-margin_bottom = 15.0
-rect_min_size = Vector2( 40, 0 )
-size_flags_horizontal = 0
-text = "-12000"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+step = 1.0
+percent_visible = false
+script = ExtResource( 5 )
 
 [node name="FMS" type="HBoxContainer" parent="Params"]
-margin_top = 286.0
+margin_top = 294.0
 margin_right = 1010.0
-margin_bottom = 302.0
+margin_bottom = 308.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="FMSLabel" type="Label" parent="Params/FMS"]
-margin_top = 1.0
 margin_right = 26.0
-margin_bottom = 15.0
+margin_bottom = 14.0
 text = "FMS"
 
-[node name="FMSSlider" type="HSlider" parent="Params/FMS"]
+[node name="FMSSlider" type="ProgressBar" parent="Params/FMS"]
 margin_left = 30.0
-margin_right = 966.0
-margin_bottom = 16.0
-size_flags_horizontal = 3
-size_flags_vertical = 4
-max_value = 12000.0
-script = ExtResource( 2 )
-label = NodePath("../FMSValue")
-mask = "%6d"
-
-[node name="FMSValue" type="Label" parent="Params/FMS"]
-margin_left = 970.0
-margin_top = 1.0
 margin_right = 1010.0
-margin_bottom = 15.0
-rect_min_size = Vector2( 40, 0 )
-size_flags_horizontal = 0
-text = "12000"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+margin_bottom = 14.0
+size_flags_horizontal = 7
+size_flags_vertical = 7
+max_value = 12000.0
+step = 1.0
+percent_visible = false
+script = ExtResource( 5 )
 
 [node name="Sep2" type="ReferenceRect" parent="Params"]
-margin_top = 306.0
+margin_top = 312.0
 margin_right = 1010.0
-margin_bottom = 322.0
+margin_bottom = 328.0
 rect_min_size = Vector2( 0, 16 )
 
 [node name="LFOsTitle" type="Label" parent="Params"]
-margin_top = 326.0
+margin_top = 332.0
 margin_right = 32.0
-margin_bottom = 340.0
+margin_bottom = 346.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "LFOs"
 
 [node name="LFOs" type="HBoxContainer" parent="Params"]
-margin_top = 344.0
+margin_top = 350.0
 margin_right = 1010.0
-margin_bottom = 364.0
+margin_bottom = 370.0
 size_flags_horizontal = 3
 
 [node name="AMFLabel" type="Label" parent="Params/LFOs"]
@@ -616,7 +536,7 @@ selected = 0
 [connection signal="value_changed" from="Params/ADSR/KSRSlider" to="." method="_on_KSRSlider_value_changed"]
 [connection signal="value_changed" from="Params/Frequency/MULSlider" to="." method="_on_MULSlider_value_changed"]
 [connection signal="value_changed" from="Params/Frequency/DIVSlider" to="." method="_on_DIVSlider_value_changed"]
-[connection signal="value_changed" from="Params/Detune/DETSlider" to="." method="_on_ADDSlider_value_changed"]
+[connection signal="value_changed" from="Params/Detune/DETSlider" to="." method="_on_DETSlider_value_changed"]
 [connection signal="value_changed" from="Params/FMS/FMSSlider" to="." method="_on_FMSSlider_value_changed"]
 [connection signal="item_selected" from="Params/LFOs/AmpLFO" to="." method="_on_AmpLFO_item_selected"]
 [connection signal="item_selected" from="Params/LFOs/FreqLFO" to="." method="_on_FreqLFO_item_selected"]

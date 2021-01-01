@@ -1,19 +1,4 @@
-[gd_resource type="Theme" load_steps=4 format=2]
-
-[sub_resource type="StyleBoxFlat" id=1]
-bg_color = Color( 0, 1, 0.25098, 1 )
-
-[sub_resource type="StyleBoxFlat" id=2]
-bg_color = Color( 1, 0, 0, 1 )
-
-[sub_resource type="StyleBoxFlat" id=3]
-content_margin_top = 9.0
-content_margin_bottom = 10.0
-bg_color = Color( 0.368627, 0, 0.4, 1 )
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
+[gd_resource type="Theme" format=2]
 
 [resource]
 Button/colors/font_color = Color( 0, 0, 0, 1 )
@@ -155,9 +140,9 @@ HSlider/icons/grabber = null
 HSlider/icons/grabber_disabled = null
 HSlider/icons/grabber_highlight = null
 HSlider/icons/tick = null
-HSlider/styles/grabber_area = SubResource( 1 )
-HSlider/styles/grabber_area_highlight = SubResource( 2 )
-HSlider/styles/slider = SubResource( 3 )
+HSlider/styles/grabber_area = null
+HSlider/styles/grabber_area_highlight = null
+HSlider/styles/slider = null
 HSplitContainer/constants/autohide = 1
 HSplitContainer/constants/separation = 12
 HSplitContainer/icons/grabber = null

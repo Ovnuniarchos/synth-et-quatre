@@ -25,7 +25,8 @@ func _ready()->void:
 	set_popup($CC/HBC/Cleanup.get_popup(),"_on_Cleanup_id_pressed")
 	set_popup($CC/HBC/Save.get_popup(),"_on_Save_id_pressed")
 	set_popup($CC/HBC/Load.get_popup(),"_on_Load_id_pressed")
-	real_theme=THEME.theme
+	real_theme=THEME.get("theme")
+	print(real_theme)
 	rect_size.y=0.0
 	base_height=$CC/HBC.rect_size.y
 

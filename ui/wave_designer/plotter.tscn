@@ -54,6 +54,9 @@ step = 1.0
 value = 220.0
 percent_visible = false
 script = ExtResource( 4 )
+big_step = 10.0
+huge_step = 100.0
+_decimals = 0
 suffix = "Hz"
 
 [node name="Play" type="Button" parent="Control"]

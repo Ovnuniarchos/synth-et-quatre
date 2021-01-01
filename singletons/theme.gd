@@ -257,6 +257,10 @@ var default_theme:Dictionary={
 		},
 		"focus":{},
 		"disabled":{}
+	},
+	"spinbar":{
+		"background":{},
+		"foreground":{}
 	}
 }
 func _init()->void:
@@ -320,6 +324,17 @@ func _init()->void:
 	set_itemlist_styles(default_theme,"listbox")
 	# Input
 	set_input_styles(default_theme,"input")
+	# SpinBars
+	var frag:Dictionary=ThemeParser.typesafe_get(default_theme,"spinbar",{})
+	if frag.has("background"):
+		theme.set_stylebox("bg","ProgressBar",ThemeParser.create_stylebox(frag,"background",button_colorsets[BS_NORMAL],panel_st[BS_NORMAL]))
+	else:
+		theme.set_stylebox("bg","ProgressBar",theme.get_stylebox("scroll","HScrollBar"))
+	if frag.has("foreground"):
+		theme.set_stylebox("fg","ProgressBar",ThemeParser.create_stylebox(frag,"foreground",box_colorsets[BS_HOVER],panel_st[BS_HOVER]))
+	else:
+		theme.set_stylebox("fg","ProgressBar",theme.get_stylebox("grabber","HScrollBar"))
+	theme.set_color("font_color","ProgressBar",ThemeParser.parse_color(frag,"color",std_colors[CO_DEFAULT_FG]))
 
 
 func set_default_glyphs(data:Dictionary)->void:

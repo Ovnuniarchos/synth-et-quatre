@@ -53,9 +53,9 @@ text = "Size"
 
 [node name="Size" type="ProgressBar" parent="Info/HBC"]
 margin_left = 360.0
-margin_top = 4.0
+margin_top = 5.0
 margin_right = 488.0
-margin_bottom = 18.0
+margin_bottom = 19.0
 rect_min_size = Vector2( 128, 14 )
 size_flags_vertical = 4
 min_value = 4.0
@@ -66,6 +66,8 @@ percent_visible = false
 script = ExtResource( 2 )
 big_step = 1.0
 huge_step = 1.0
+_decimals = 0
+suffix = ""
 
 [node name="LabelSizeSamples" type="Label" parent="Info/HBC"]
 margin_left = 492.0

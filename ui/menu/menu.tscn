@@ -5,8 +5,6 @@
 
 [node name="Menu" type="PanelContainer"]
 anchor_right = 1.0
-margin_right = -1010.0
-margin_bottom = 14.0
 size_flags_horizontal = 3
 script = ExtResource( 1 )
 __meta__ = {
@@ -14,11 +12,9 @@ __meta__ = {
 }
 
 [node name="CC" type="Container" parent="."]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 7.0
-margin_bottom = 7.0
 rect_clip_content = true
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource( 2 )
 
 [node name="HBC" type="HBoxContainer" parent="CC"]

@@ -9,6 +9,7 @@ export (int,0,4) var _decimals:int=0
 var dragging:bool=false
 var pressed:bool=false
 var label:Label
+var __setting:bool=false
 
 
 func _init()->void:
@@ -29,6 +30,24 @@ func _ready()->void:
 	add_child(label)
 
 
+func _set(prop:String,val)->bool:
+	if __setting:
+		__setting=false
+		return false
+	__setting=true
+	if prop=="value":
+		set_value(val)
+	else:
+		set(prop,val)
+	return true
+
+
+func set_value(v:float)->void:
+	value=clamp(v,min_value,max_value)
+	if label!=null:
+		label.text=format_value()
+
+
 func format_value()->String:
 	var f:String
 	if _decimals==0:
@@ -36,18 +55,6 @@ func format_value()->String:
 	else:
 		f="%."+String(_decimals)+"f"
 	return f%value
-
-func _set(prop:String,val)->bool:
-	if prop=="value":
-		set_value(val)
-		return true
-	set(prop,val)
-	return true
-
-
-func set_value(v:float)->void:
-	value=clamp(v,min_value,max_value)
-	label.text=format_value()
 
 
 func _gui_input(ev:InputEvent)->void:

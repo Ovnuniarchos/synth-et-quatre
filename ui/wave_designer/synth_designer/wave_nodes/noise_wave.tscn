@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://ui/wave_designer/synth_designer/wave_nodes/noise_wave.gd" type="Script" id=1]
 [ext_resource path="res://ui/wave_designer/synth_designer/wave_nodes/title_bar.tscn" type="PackedScene" id=2]
+[ext_resource path="res://ui/widgets/spin_bar.gd" type="Script" id=3]
 
 [node name="NoiseWave" type="PanelContainer"]
 margin_right = 148.0
@@ -16,17 +17,16 @@ __meta__ = {
 [node name="VBC" type="VBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 141.0
+margin_right = 160.0
 margin_bottom = 399.0
 
 [node name="Title" parent="VBC" instance=ExtResource( 2 )]
-margin_right = 134.0
+margin_right = 153.0
 title = "NOISE"
-index = 0
 
 [node name="Params" type="GridContainer" parent="VBC"]
 margin_top = 24.0
-margin_right = 134.0
+margin_right = 153.0
 margin_bottom = 392.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -35,161 +35,206 @@ custom_constants/hseparation = 8
 columns = 2
 
 [node name="LabelSeed" type="Label" parent="VBC/Params"]
-margin_top = 5.0
 margin_right = 52.0
-margin_bottom = 19.0
+margin_bottom = 14.0
 text = "Seed"
 
-[node name="Seed" type="SpinBox" parent="VBC/Params"]
+[node name="Seed" type="ProgressBar" parent="VBC/Params"]
 margin_left = 60.0
-margin_right = 134.0
-margin_bottom = 24.0
-focus_mode = 2
+margin_right = 153.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 93, 14 )
+size_flags_horizontal = 3
+size_flags_vertical = 4
 min_value = -2.14748e+09
 max_value = 2.14748e+09
-__meta__ = {
-"_edit_use_anchors_": false
-}
+step = 1.0
+percent_visible = false
+script = ExtResource( 3 )
 
 [node name="LabelTone" type="Label" parent="VBC/Params"]
-margin_top = 31.0
+margin_top = 16.0
 margin_right = 52.0
-margin_bottom = 45.0
+margin_bottom = 30.0
 text = "Tone"
 
-[node name="Tone" type="SpinBox" parent="VBC/Params"]
+[node name="Tone" type="ProgressBar" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 26.0
-margin_right = 134.0
-margin_bottom = 50.0
-focus_mode = 2
-max_value = 100.0
-step = 0.01
-value = 100.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+margin_top = 16.0
+margin_right = 153.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 32, 14 )
+size_flags_horizontal = 3
+size_flags_vertical = 4
+percent_visible = false
+script = ExtResource( 3 )
+big_step = 1.0
+huge_step = 10.0
+_decimals = 2
 
 [node name="LabelPosition" type="Label" parent="VBC/Params"]
-margin_top = 57.0
+margin_top = 32.0
 margin_right = 52.0
-margin_bottom = 71.0
+margin_bottom = 46.0
 text = "Position"
 
-[node name="Position" type="SpinBox" parent="VBC/Params"]
+[node name="Position" type="ProgressBar" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 52.0
-margin_right = 134.0
-margin_bottom = 76.0
-step = 0.01
+margin_top = 32.0
+margin_right = 153.0
+margin_bottom = 46.0
+rect_min_size = Vector2( 32, 14 )
+size_flags_horizontal = 3
+size_flags_vertical = 4
+percent_visible = false
+script = ExtResource( 3 )
+big_step = 1.0
+huge_step = 10.0
+_decimals = 2
 
 [node name="LabelLength" type="Label" parent="VBC/Params"]
-margin_top = 83.0
+margin_top = 48.0
 margin_right = 52.0
-margin_bottom = 97.0
+margin_bottom = 62.0
 text = "Length"
 
-[node name="Len" type="SpinBox" parent="VBC/Params"]
+[node name="Len" type="ProgressBar" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 78.0
-margin_right = 134.0
-margin_bottom = 102.0
-focus_mode = 2
-step = 0.01
+margin_top = 48.0
+margin_right = 153.0
+margin_bottom = 62.0
+rect_min_size = Vector2( 32, 14 )
+size_flags_horizontal = 3
+size_flags_vertical = 4
 value = 100.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+percent_visible = false
+script = ExtResource( 3 )
+big_step = 1.0
+huge_step = 10.0
+_decimals = 2
 
 [node name="LabelVol" type="Label" parent="VBC/Params"]
-margin_top = 109.0
+margin_top = 64.0
 margin_right = 52.0
-margin_bottom = 123.0
+margin_bottom = 78.0
 text = "Volume"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Vol" type="SpinBox" parent="VBC/Params"]
+[node name="Vol" type="ProgressBar" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 104.0
-margin_right = 134.0
-margin_bottom = 128.0
-focus_mode = 2
+margin_top = 64.0
+margin_right = 153.0
+margin_bottom = 78.0
+rect_min_size = Vector2( 37, 14 )
+size_flags_horizontal = 3
+size_flags_vertical = 4
 min_value = -100.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+step = 1.0
+value = 100.0
+percent_visible = false
+script = ExtResource( 3 )
+big_step = 5.0
+huge_step = 10.0
 
 [node name="ReferenceRect" type="ReferenceRect" parent="VBC/Params"]
-margin_top = 130.0
+margin_top = 80.0
 margin_right = 52.0
-margin_bottom = 154.0
+margin_bottom = 104.0
 rect_min_size = Vector2( 0, 24 )
 
 [node name="ReferenceRect2" type="ReferenceRect" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 130.0
-margin_right = 134.0
-margin_bottom = 154.0
+margin_top = 80.0
+margin_right = 153.0
+margin_bottom = 104.0
 rect_min_size = Vector2( 0, 24 )
 
 [node name="LabelOutput" type="Label" parent="VBC/Params"]
-margin_top = 159.0
+margin_top = 109.0
 margin_right = 52.0
-margin_bottom = 173.0
+margin_bottom = 123.0
 text = "Output"
 
 [node name="Output" type="OptionButton" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 156.0
-margin_right = 134.0
-margin_bottom = 176.0
+margin_top = 106.0
+margin_right = 153.0
+margin_bottom = 126.0
 text = "Off"
 items = [ "Off", null, false, 0, null, "Replace", null, false, 1, null, "Add", null, false, 2, null, "AM", null, false, 3, null, "XM", null, false, 4, null ]
 selected = 0
 
 [node name="LabelFrom" type="Label" parent="VBC/Params"]
-margin_top = 183.0
+margin_top = 128.0
 margin_right = 52.0
-margin_bottom = 197.0
+margin_bottom = 142.0
 text = "From"
 
-[node name="From" type="SpinBox" parent="VBC/Params"]
+[node name="From" type="ProgressBar" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 178.0
-margin_right = 134.0
-margin_bottom = 202.0
+margin_top = 128.0
+margin_right = 153.0
+margin_bottom = 142.0
+rect_min_size = Vector2( 32, 14 )
+size_flags_horizontal = 3
+size_flags_vertical = 4
 min_value = -1.0
+step = 1.0
+value = -1.0
+percent_visible = false
+script = ExtResource( 3 )
+big_step = 1.0
+huge_step = 1.0
 
 [node name="LabelAM" type="Label" parent="VBC/Params"]
-margin_top = 209.0
+margin_top = 144.0
 margin_right = 52.0
-margin_bottom = 223.0
+margin_bottom = 158.0
 text = "AM"
 
-[node name="AM" type="SpinBox" parent="VBC/Params"]
+[node name="AM" type="ProgressBar" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 204.0
-margin_right = 134.0
-margin_bottom = 228.0
-min_value = -100.0
+margin_top = 144.0
+margin_right = 153.0
+margin_bottom = 158.0
+rect_min_size = Vector2( 32, 14 )
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = -1.0
+step = 1.0
+value = -1.0
+percent_visible = false
+script = ExtResource( 3 )
+big_step = 1.0
+huge_step = 1.0
 
 [node name="LabelXM" type="Label" parent="VBC/Params"]
-margin_top = 235.0
+margin_top = 160.0
 margin_right = 52.0
-margin_bottom = 249.0
+margin_bottom = 174.0
 text = "XM"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="XM" type="SpinBox" parent="VBC/Params"]
+[node name="XM" type="ProgressBar" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 230.0
-margin_right = 134.0
-margin_bottom = 254.0
-min_value = -100.0
+margin_top = 160.0
+margin_right = 153.0
+margin_bottom = 174.0
+rect_min_size = Vector2( 32, 14 )
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = -1.0
+step = 1.0
+value = -1.0
+percent_visible = false
+script = ExtResource( 3 )
+big_step = 1.0
+huge_step = 1.0
+
 [connection signal="value_changed" from="VBC/Params/Seed" to="." method="_on_Seed_value_changed"]
 [connection signal="value_changed" from="VBC/Params/Tone" to="." method="_on_Tone_value_changed"]
 [connection signal="value_changed" from="VBC/Params/Position" to="." method="_on_Position_value_changed"]

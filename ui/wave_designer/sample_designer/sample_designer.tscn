@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://ui/wave_designer/sample_designer/sample_designer.gd" type="Script" id=1]
-[ext_resource path="res://ui/widgets/label_spinbox.tscn" type="PackedScene" id=2]
+[ext_resource path="res://ui/widgets/spin_bar.gd" type="Script" id=3]
 
 [node name="SampleDesigner" type="VBoxContainer"]
 anchor_right = 1.0
@@ -66,8 +66,9 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="VBC" type="VBoxContainer" parent="Designer/SC"]
-margin_right = 217.0
-margin_bottom = 160.0
+margin_right = 1010.0
+margin_bottom = 120.0
+size_flags_horizontal = 3
 
 [node name="Load" type="Button" parent="Designer/SC/VBC"]
 margin_right = 42.0
@@ -77,45 +78,97 @@ text = "Load"
 
 [node name="S" type="ReferenceRect" parent="Designer/SC/VBC"]
 margin_top = 24.0
-margin_right = 217.0
+margin_right = 1010.0
 margin_bottom = 48.0
 rect_min_size = Vector2( 24, 24 )
 
-[node name="RecFreq" parent="Designer/SC/VBC" instance=ExtResource( 2 )]
+[node name="GC" type="GridContainer" parent="Designer/SC/VBC"]
 margin_top = 52.0
-margin_right = 217.0
-margin_bottom = 76.0
-label = "Recorded frequency"
+margin_right = 1010.0
+margin_bottom = 120.0
+size_flags_horizontal = 11
+size_flags_vertical = 11
+columns = 2
+
+[node name="LabelRecFreq" type="Label" parent="Designer/SC/VBC/GC"]
+margin_right = 124.0
+margin_bottom = 14.0
+text = "Recorder frequency"
+
+[node name="RecFreq" type="ProgressBar" parent="Designer/SC/VBC/GC"]
+margin_left = 128.0
+margin_right = 1010.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 0, 14 )
+size_flags_horizontal = 3
+size_flags_vertical = 4
 min_value = 1.0
 max_value = 192000.0
 step = 1.0
+value = 1.0
+percent_visible = false
+script = ExtResource( 3 )
 
-[node name="SamFreq" parent="Designer/SC/VBC" instance=ExtResource( 2 )]
-margin_top = 80.0
-margin_right = 217.0
-margin_bottom = 104.0
-label = "Sample frequency"
+[node name="LabelSamFreq" type="Label" parent="Designer/SC/VBC/GC"]
+margin_top = 18.0
+margin_right = 124.0
+margin_bottom = 32.0
+text = "Sample frequency"
+
+[node name="SamFreq" type="ProgressBar" parent="Designer/SC/VBC/GC"]
+margin_left = 128.0
+margin_top = 18.0
+margin_right = 1010.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 0, 14 )
+size_flags_horizontal = 3
+size_flags_vertical = 4
 min_value = 1.0
 max_value = 192000.0
 step = 1.0
+value = 1.0
+percent_visible = false
+script = ExtResource( 3 )
 
-[node name="Start" parent="Designer/SC/VBC" instance=ExtResource( 2 )]
-margin_top = 108.0
-margin_right = 217.0
-margin_bottom = 132.0
-label = "Loop start"
-min_value = 0.0
-max_value = 100.0
-step = 1.0
+[node name="LabelStart" type="Label" parent="Designer/SC/VBC/GC"]
+margin_top = 36.0
+margin_right = 124.0
+margin_bottom = 50.0
+text = "Loop start"
 
-[node name="End" parent="Designer/SC/VBC" instance=ExtResource( 2 )]
-margin_top = 136.0
-margin_right = 217.0
-margin_bottom = 160.0
-label = "Loop end"
-min_value = 0.0
-max_value = 100.0
+[node name="Start" type="ProgressBar" parent="Designer/SC/VBC/GC"]
+margin_left = 128.0
+margin_top = 36.0
+margin_right = 1010.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 0, 14 )
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 192000.0
 step = 1.0
+value = 1.0
+percent_visible = false
+script = ExtResource( 3 )
+
+[node name="LabelEnd" type="Label" parent="Designer/SC/VBC/GC"]
+margin_top = 54.0
+margin_right = 124.0
+margin_bottom = 68.0
+text = "Loop end"
+
+[node name="End" type="ProgressBar" parent="Designer/SC/VBC/GC"]
+margin_left = 128.0
+margin_top = 54.0
+margin_right = 1010.0
+margin_bottom = 68.0
+rect_min_size = Vector2( 0, 14 )
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 192000.0
+step = 1.0
+value = 1.0
+percent_visible = false
+script = ExtResource( 3 )
 
 [node name="FileDialog" type="FileDialog" parent="."]
 margin_right = 315.0
@@ -129,8 +182,8 @@ current_path = "/home/jordi/godot/SynthEtQuatre/"
 
 [connection signal="text_changed" from="Info/HBC/Name" to="." method="_on_Name_changed"]
 [connection signal="pressed" from="Designer/SC/VBC/Load" to="." method="_on_Load_pressed"]
-[connection signal="value_changed" from="Designer/SC/VBC/RecFreq" to="." method="_on_values_changed"]
-[connection signal="value_changed" from="Designer/SC/VBC/SamFreq" to="." method="_on_values_changed"]
-[connection signal="value_changed" from="Designer/SC/VBC/Start" to="." method="_on_values_changed"]
-[connection signal="value_changed" from="Designer/SC/VBC/End" to="." method="_on_values_changed"]
+[connection signal="value_changed" from="Designer/SC/VBC/GC/RecFreq" to="." method="_on_values_changed"]
+[connection signal="value_changed" from="Designer/SC/VBC/GC/SamFreq" to="." method="_on_values_changed"]
+[connection signal="value_changed" from="Designer/SC/VBC/GC/Start" to="." method="_on_values_changed"]
+[connection signal="value_changed" from="Designer/SC/VBC/GC/End" to="." method="_on_values_changed"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_selected"]

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://ui/wave_designer/synth_designer/wave_nodes/title_bar.tscn" type="PackedScene" id=1]
 [ext_resource path="res://ui/wave_designer/synth_designer/filter_nodes/clamp_filter.gd" type="Script" id=2]
+[ext_resource path="res://ui/widgets/spin_bar.gd" type="Script" id=3]
 
 [node name="ClampFilter" type="PanelContainer"]
 margin_right = 170.0
@@ -22,7 +23,6 @@ margin_bottom = 387.0
 [node name="Title" parent="VBC" instance=ExtResource( 1 )]
 margin_right = 156.0
 title = "CLAMP"
-index = 0
 
 [node name="Params" type="GridContainer" parent="VBC"]
 margin_top = 24.0
@@ -42,146 +42,183 @@ text = "Clamp U"
 
 [node name="UClampOn" type="CheckBox" parent="VBC/Params"]
 margin_left = 62.0
-margin_right = 136.0
+margin_right = 156.0
 margin_bottom = 24.0
 
 [node name="LabelUClamp" type="Label" parent="VBC/Params"]
-margin_top = 31.0
+margin_top = 26.0
 margin_right = 54.0
-margin_bottom = 45.0
+margin_bottom = 40.0
 text = "Clamp U"
 
-[node name="UClamp" type="SpinBox" parent="VBC/Params"]
+[node name="UClamp" type="ProgressBar" parent="VBC/Params"]
 margin_left = 62.0
 margin_top = 26.0
-margin_right = 136.0
-margin_bottom = 50.0
-focus_mode = 2
+margin_right = 156.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 37, 14 )
+size_flags_horizontal = 3
+size_flags_vertical = 4
 min_value = -100.0
+step = 1.0
 value = 100.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+percent_visible = false
+script = ExtResource( 3 )
+big_step = 5.0
+huge_step = 10.0
 
 [node name="LabelLClampOn" type="Label" parent="VBC/Params"]
-margin_top = 57.0
+margin_top = 47.0
 margin_right = 54.0
-margin_bottom = 71.0
+margin_bottom = 61.0
 text = "Clamp L"
 
 [node name="LClampOn" type="CheckBox" parent="VBC/Params"]
 margin_left = 62.0
-margin_top = 52.0
-margin_right = 136.0
-margin_bottom = 76.0
+margin_top = 42.0
+margin_right = 156.0
+margin_bottom = 66.0
 
 [node name="LabelLClamp" type="Label" parent="VBC/Params"]
-margin_top = 83.0
+margin_top = 68.0
 margin_right = 54.0
-margin_bottom = 97.0
+margin_bottom = 82.0
 text = "Clamp L"
 
-[node name="LClamp" type="SpinBox" parent="VBC/Params"]
+[node name="LClamp" type="ProgressBar" parent="VBC/Params"]
 margin_left = 62.0
-margin_top = 78.0
-margin_right = 136.0
-margin_bottom = 102.0
-focus_mode = 2
+margin_top = 68.0
+margin_right = 156.0
+margin_bottom = 82.0
+rect_min_size = Vector2( 37, 14 )
+size_flags_horizontal = 3
+size_flags_vertical = 4
 min_value = -100.0
+step = 1.0
 value = -100.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+percent_visible = false
+script = ExtResource( 3 )
+big_step = 5.0
+huge_step = 10.0
 
 [node name="LabelVol" type="Label" parent="VBC/Params"]
-margin_top = 109.0
+margin_top = 84.0
 margin_right = 54.0
-margin_bottom = 123.0
+margin_bottom = 98.0
 text = "Volume"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Vol" type="SpinBox" parent="VBC/Params"]
+[node name="Vol" type="ProgressBar" parent="VBC/Params"]
 margin_left = 62.0
-margin_top = 104.0
-margin_right = 136.0
-margin_bottom = 128.0
-focus_mode = 2
+margin_top = 84.0
+margin_right = 156.0
+margin_bottom = 98.0
+rect_min_size = Vector2( 37, 14 )
+size_flags_horizontal = 3
+size_flags_vertical = 4
 min_value = -100.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+step = 1.0
+percent_visible = false
+script = ExtResource( 3 )
+big_step = 5.0
+huge_step = 10.0
 
 [node name="ReferenceRect" type="ReferenceRect" parent="VBC/Params"]
-margin_top = 130.0
+margin_top = 100.0
 margin_right = 54.0
-margin_bottom = 154.0
+margin_bottom = 124.0
 rect_min_size = Vector2( 0, 24 )
 
 [node name="ReferenceRect2" type="ReferenceRect" parent="VBC/Params"]
 margin_left = 62.0
-margin_top = 130.0
-margin_right = 136.0
-margin_bottom = 154.0
+margin_top = 100.0
+margin_right = 156.0
+margin_bottom = 124.0
 rect_min_size = Vector2( 0, 24 )
 
 [node name="LabelOutput" type="Label" parent="VBC/Params"]
-margin_top = 159.0
+margin_top = 129.0
 margin_right = 54.0
-margin_bottom = 173.0
+margin_bottom = 143.0
 text = "Output"
 
 [node name="Output" type="OptionButton" parent="VBC/Params"]
 margin_left = 62.0
-margin_top = 156.0
-margin_right = 136.0
-margin_bottom = 176.0
+margin_top = 126.0
+margin_right = 156.0
+margin_bottom = 146.0
 text = "Off"
 items = [ "Off", null, false, 0, null, "Replace", null, false, 1, null, "Add", null, false, 2, null, "AM", null, false, 4, null, "XM", null, false, 5, null ]
 selected = 0
 
 [node name="LabelFrom" type="Label" parent="VBC/Params"]
-margin_top = 183.0
+margin_top = 148.0
 margin_right = 54.0
-margin_bottom = 197.0
+margin_bottom = 162.0
 text = "From"
 
-[node name="From" type="SpinBox" parent="VBC/Params"]
+[node name="From" type="ProgressBar" parent="VBC/Params"]
 margin_left = 62.0
-margin_top = 178.0
-margin_right = 136.0
-margin_bottom = 202.0
+margin_top = 148.0
+margin_right = 156.0
+margin_bottom = 162.0
+rect_min_size = Vector2( 32, 14 )
+size_flags_horizontal = 3
+size_flags_vertical = 4
 min_value = -1.0
+step = 1.0
+percent_visible = false
+script = ExtResource( 3 )
+big_step = 1.0
+huge_step = 1.0
 
 [node name="LabelAM" type="Label" parent="VBC/Params"]
-margin_top = 209.0
+margin_top = 164.0
 margin_right = 54.0
-margin_bottom = 223.0
+margin_bottom = 178.0
 text = "AM"
 
-[node name="AM" type="SpinBox" parent="VBC/Params"]
+[node name="AM" type="ProgressBar" parent="VBC/Params"]
 margin_left = 62.0
-margin_top = 204.0
-margin_right = 136.0
-margin_bottom = 228.0
+margin_top = 164.0
+margin_right = 156.0
+margin_bottom = 178.0
+rect_min_size = Vector2( 37, 14 )
+size_flags_horizontal = 3
+size_flags_vertical = 4
 min_value = -100.0
+step = 1.0
+percent_visible = false
+script = ExtResource( 3 )
+big_step = 5.0
+huge_step = 10.0
 
 [node name="LabelXM" type="Label" parent="VBC/Params"]
-margin_top = 235.0
+margin_top = 180.0
 margin_right = 54.0
-margin_bottom = 249.0
+margin_bottom = 194.0
 text = "XM"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="XM" type="SpinBox" parent="VBC/Params"]
+[node name="XM" type="ProgressBar" parent="VBC/Params"]
 margin_left = 62.0
-margin_top = 230.0
-margin_right = 136.0
-margin_bottom = 254.0
+margin_top = 180.0
+margin_right = 156.0
+margin_bottom = 194.0
+rect_min_size = Vector2( 37, 14 )
+size_flags_horizontal = 3
+size_flags_vertical = 4
 min_value = -100.0
+step = 1.0
+percent_visible = false
+script = ExtResource( 3 )
+big_step = 5.0
+huge_step = 10.0
+
 [connection signal="toggled" from="VBC/Params/UClampOn" to="." method="_on_UClampOn_toggled"]
 [connection signal="value_changed" from="VBC/Params/UClamp" to="." method="_on_UClamp_value_changed"]
 [connection signal="toggled" from="VBC/Params/LClampOn" to="." method="_on_LClampOn_toggled"]

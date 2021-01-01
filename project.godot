@@ -94,11 +94,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://classes/instrument.gd"
 }, {
-"base": "HBoxContainer",
-"class": "LabelSpinBox",
-"language": "GDScript",
-"path": "res://ui/widgets/label_spinbox.gd"
-}, {
 "base": "WaveComponent",
 "class": "LpfFilter",
 "language": "GDScript",
@@ -237,7 +232,6 @@ _global_script_class_icons={
 "IOWavExport": "",
 "IconButton": "",
 "Instrument": "",
-"LabelSpinBox": "",
 "LpfFilter": "",
 "NoiseWave": "",
 "NormalizeFilter": "",

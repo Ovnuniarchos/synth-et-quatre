@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://ui/wave_designer/synth_designer/synth_designer.gd" type="Script" id=1]
+[ext_resource path="res://ui/widgets/spin_bar.gd" type="Script" id=2]
 
 [node name="SynthDesigner" type="VBoxContainer"]
 anchor_right = 1.0
@@ -33,35 +34,43 @@ text = "Name"
 
 [node name="Name" type="LineEdit" parent="Info/HBC"]
 margin_left = 42.0
-margin_right = 234.0
+margin_right = 298.0
 margin_bottom = 24.0
-rect_min_size = Vector2( 192, 0 )
+rect_min_size = Vector2( 256, 0 )
 
 [node name="S" type="ReferenceRect" parent="Info/HBC"]
-margin_left = 238.0
-margin_right = 262.0
+margin_left = 302.0
+margin_right = 326.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 24, 0 )
 
 [node name="LabelSize" type="Label" parent="Info/HBC"]
-margin_left = 266.0
+margin_left = 330.0
 margin_top = 5.0
-margin_right = 292.0
+margin_right = 356.0
 margin_bottom = 19.0
 text = "Size"
 
-[node name="Size" type="SpinBox" parent="Info/HBC"]
-margin_left = 296.0
-margin_right = 370.0
-margin_bottom = 24.0
+[node name="Size" type="ProgressBar" parent="Info/HBC"]
+margin_left = 360.0
+margin_top = 4.0
+margin_right = 488.0
+margin_bottom = 18.0
+rect_min_size = Vector2( 128, 14 )
+size_flags_vertical = 4
 min_value = 4.0
 max_value = 16.0
+step = 1.0
 value = 4.0
+percent_visible = false
+script = ExtResource( 2 )
+big_step = 1.0
+huge_step = 1.0
 
 [node name="LabelSizeSamples" type="Label" parent="Info/HBC"]
-margin_left = 374.0
+margin_left = 492.0
 margin_top = 5.0
-margin_right = 440.0
+margin_right = 558.0
 margin_bottom = 19.0
 text = "0 samples"
 

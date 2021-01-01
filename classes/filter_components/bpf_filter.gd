@@ -85,8 +85,9 @@ func set_coeffs()->void:
 			t=(sin(oh*i)-sin(ol*i))/(PI*i)
 		coeffs[i+taps]=t
 		sum+=abs(t)
-	for i in range(coeffs.size()):
-		coeffs[i]/=sum
+	if sum>0.0:
+		for i in range(coeffs.size()):
+			coeffs[i]/=sum
 
 #
 

@@ -70,28 +70,28 @@ func _on_file_selected(path:String)->void:
 	update_values(w)
 
 func update_values(w:SampleWave)->void:
-	$Designer/SC/VBC/RecFreq.set_block_signals(true)
-	$Designer/SC/VBC/SamFreq.set_block_signals(true)
-	$Designer/SC/VBC/Start.set_block_signals(true)
-	$Designer/SC/VBC/End.set_block_signals(true)
-	$Designer/SC/VBC/RecFreq.set_value(w.record_freq)
-	$Designer/SC/VBC/SamFreq.set_value(w.sample_freq)
-	$Designer/SC/VBC/Start.max_value=w.data.size()-1
-	$Designer/SC/VBC/Start.set_value(w.loop_start)
-	$Designer/SC/VBC/End.max_value=w.data.size()-1
-	$Designer/SC/VBC/End.set_value(w.loop_end)
-	$Designer/SC/VBC/RecFreq.set_block_signals(false)
-	$Designer/SC/VBC/SamFreq.set_block_signals(false)
-	$Designer/SC/VBC/Start.set_block_signals(false)
-	$Designer/SC/VBC/End.set_block_signals(false)
+	$Designer/SC/VBC/GC/RecFreq.set_block_signals(true)
+	$Designer/SC/VBC/GC/SamFreq.set_block_signals(true)
+	$Designer/SC/VBC/GC/Start.set_block_signals(true)
+	$Designer/SC/VBC/GC/End.set_block_signals(true)
+	$Designer/SC/VBC/GC/RecFreq.set_value(w.record_freq)
+	$Designer/SC/VBC/GC/SamFreq.set_value(w.sample_freq)
+	$Designer/SC/VBC/GC/Start.max_value=w.data.size()-1
+	$Designer/SC/VBC/GC/Start.set_value(w.loop_start)
+	$Designer/SC/VBC/GC/End.max_value=w.data.size()-1
+	$Designer/SC/VBC/GC/End.set_value(w.loop_end)
+	$Designer/SC/VBC/GC/RecFreq.set_block_signals(false)
+	$Designer/SC/VBC/GC/SamFreq.set_block_signals(false)
+	$Designer/SC/VBC/GC/Start.set_block_signals(false)
+	$Designer/SC/VBC/GC/End.set_block_signals(false)
 
 func _on_values_changed(_value:float)->void:
 	var w:SampleWave=GLOBALS.song.get_wave(curr_wave_ix) as SampleWave
 	if w==null:
 		return
-	w.record_freq=$Designer/SC/VBC/RecFreq.value
-	w.sample_freq=$Designer/SC/VBC/SamFreq.value
-	w.loop_start=$Designer/SC/VBC/Start.value
-	w.loop_end=$Designer/SC/VBC/End.value
+	w.record_freq=$Designer/SC/VBC/GC/RecFreq.value
+	w.sample_freq=$Designer/SC/VBC/GC/SamFreq.value
+	w.loop_start=$Designer/SC/VBC/GC/Start.value
+	w.loop_end=$Designer/SC/VBC/GC/End.value
 	GLOBALS.song.send_wave(w,SYNTH)
 	emit_signal("wave_calculated",curr_wave_ix)

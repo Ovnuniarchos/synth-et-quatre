@@ -189,3 +189,4 @@ func calculate()->void:
 		wave.calculate()
 		GLOBALS.song.send_wave(wave,SYNTH)
 	emit_signal("wave_calculated",curr_wave_ix)
+

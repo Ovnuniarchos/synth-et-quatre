@@ -11,7 +11,7 @@ var component:WaveComponent
 var designer:Control
 # warning-ignore:unused_class_variable
 var title_node:HBoxContainer
-var from_node:SpinBox
+var from_node:SpinBar
 
 func get_component_index(wc:WaveComponent)->int:
 	return wave.components.find(wc)

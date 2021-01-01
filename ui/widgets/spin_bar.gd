@@ -5,6 +5,7 @@ class_name SpinBar
 export (float) var big_step:float=10.0
 export (float) var huge_step:float=100.0
 export (int,0,4) var _decimals:int=0 setget set_decimals
+export (String) var suffix:String="" setget set_suffix
 
 var dragging:bool=false
 var pressed:bool=false
@@ -14,7 +15,10 @@ var __setting:bool=false
 
 func _init()->void:
 	percent_visible=false
-	rect_min_size.y=get_font("font").get_height()
+	var f:Font=get_font("font")
+	var s0:Vector2=f.get_string_size(format_value(min_value)+"  ")
+	var s1:Vector2=f.get_string_size(format_value(max_value)+"  ")
+	rect_min_size=Vector2(max(max(s0.x,s1.x),rect_min_size.x),max(max(s0.y,s1.y),rect_min_size.y))
 	label=Label.new()
 	label.align=HALIGN_CENTER
 	label.valign=VALIGN_CENTER
@@ -22,7 +26,7 @@ func _init()->void:
 	label.set_anchors_preset(Control.PRESET_WIDE)
 	label.size_flags_horizontal=SIZE_EXPAND_FILL|SIZE_SHRINK_CENTER
 	label.size_flags_vertical=SIZE_EXPAND_FILL|SIZE_SHRINK_CENTER
-	label.text=format_value()
+	label.text=format_value(value)
 
 
 func _ready()->void:
@@ -48,19 +52,24 @@ func set_decimals(v:int)->void:
 	set_value(value)
 
 
+func set_suffix(v:String)->void:
+	suffix=v
+	set_value(value)
+
+
 func set_value(v:float)->void:
 	value=clamp(v,min_value,max_value)
 	if label!=null:
-		label.text=format_value()
+		label.text=format_value(value)
 
 
-func format_value()->String:
+func format_value(v:float)->String:
 	var f:String
 	if _decimals==0:
-		f="%d"
+		f="%d %s"
 	else:
-		f="%."+String(_decimals)+"f"
-	return f%value
+		f="%."+String(_decimals)+"f %s"
+	return f%[v,suffix]
 
 
 func _gui_input(ev:InputEvent)->void:

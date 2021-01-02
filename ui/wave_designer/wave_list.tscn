@@ -47,6 +47,7 @@ margin_top = 24.0
 margin_right = 1024.0
 margin_bottom = 600.0
 offset = 4
+
 [connection signal="pressed" from="Buttons/Copy" to="." method="_on_Copy_pressed"]
 [connection signal="pressed" from="Buttons/Del" to="." method="_on_Del_pressed"]
 [connection signal="item_selected" from="Waves" to="." method="_on_item_selected"]

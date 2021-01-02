@@ -313,15 +313,15 @@ margin_bottom = 74.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
-[node name="AMSValue" type="Label" parent="Params/ADSR"]
+[node name="Sep5" type="ReferenceRect" parent="Params/ADSR"]
 margin_left = 516.0
 margin_top = 60.0
-margin_right = 540.0
+margin_right = 541.0
 margin_bottom = 74.0
-size_flags_horizontal = 0
-text = "888"
+rect_min_size = Vector2( 16, 0 )
+size_flags_vertical = 7
 
-[node name="Sep5" type="ReferenceRect" parent="Params/ADSR"]
+[node name="Sep6" type="ReferenceRect" parent="Params/ADSR"]
 margin_left = 543.0
 margin_top = 60.0
 margin_right = 1009.0
@@ -482,6 +482,8 @@ margin_right = 32.0
 margin_bottom = 346.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
 text = "LFOs"
 
 [node name="LFOs" type="HBoxContainer" parent="Params"]

@@ -17,10 +17,6 @@ var __setting:bool=false
 
 func _init()->void:
 	percent_visible=false
-	var f:Font=get_font("font")
-	var s0:Vector2=f.get_string_size(format_value(min_value)+"  ")
-	var s1:Vector2=f.get_string_size(format_value(max_value)+"  ")
-	rect_min_size=Vector2(max(max(s0.x,s1.x),rect_min_size.x),max(max(s0.y,s1.y),rect_min_size.y))
 	label=Label.new()
 	label.align=HALIGN_CENTER
 	label.valign=VALIGN_CENTER
@@ -35,10 +31,13 @@ func _ready()->void:
 	real_theme=THEME.get("theme")
 	for c in get_children():
 		remove_child(c)
-	label.add_color_override("font_color",real_theme.get_color("font_color","SpinBar"))
-	add_stylebox_override("fg",real_theme.get_stylebox("fg","SpinBar"))
+	ThemeParser.set_styles(real_theme,"SpinBar",label)
+	ThemeParser.set_styles(real_theme,"SpinBar",self)
 	var sb:StyleBox=real_theme.get_stylebox("bg","SpinBar")
-	add_stylebox_override("bg",sb)
+	var f:Font=get_font("font")
+	var s0:Vector2=f.get_string_size(format_value(min_value)+"  ")
+	var s1:Vector2=f.get_string_size(format_value(max_value)+"  ")
+	rect_min_size=Vector2(max(max(s0.x,s1.x),rect_min_size.x),max(max(s0.y,s1.y),rect_min_size.y))
 	rect_min_size+=Vector2(sb.content_margin_left+sb.content_margin_right,sb.content_margin_top+sb.content_margin_bottom)
 	add_child(label)
 

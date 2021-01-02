@@ -10,6 +10,7 @@ func _ready()->void:
 	GLOBALS.connect("song_changed",self,"_on_song_changed")
 	$Buttons/Add.get_popup().connect("id_pressed",self,"_on_Add_id_pressed")
 	_on_song_changed()
+	ThemeParser.set_styles(THEME.get("theme"),"Button",$Buttons/Add)
 
 func _on_song_changed()->void:
 	GLOBALS.song.connect("wave_list_changed",self,"update_ui")

@@ -29,12 +29,12 @@ func _ready()->void:
 func set_popup(mb:MenuButton,sel:String)->void:
 	var pu:PopupMenu=mb.get_popup()
 	pu.connect("id_pressed",self,sel)
-	pu.connect("popup_hide",self,"_on_popup_hide",[mb])
+	pu.connect("popup_hide",self,"_on_popup_hide")
 
 
-func _on_popup_hide(mb:MenuButton)->void:
-	if mb!=null:
-		mb.notification(NOTIFICATION_MOUSE_EXIT)
+func _on_popup_hide()->void:
+	for n in $HBC.get_children():
+		n.notification(NOTIFICATION_MOUSE_EXIT)
 
 
 func _on_New_pressed()->void:

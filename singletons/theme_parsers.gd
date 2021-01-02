@@ -8,14 +8,27 @@ enum{DIM_X,DIM_Y}
 
 
 const TYPE_NUMBER:Array=[TYPE_REAL,TYPE_INT]
+const BT_FLAT:String="flat"
+const BT_BITMAP:String="bitmap"
 const BOX_TYPES:Dictionary={
-	"flat":0,
-	"bitmap":1
+	BT_FLAT:0,
+	BT_BITMAP:1
 }
+const SM_STRETCH:String="stretch"
+const SM_TILE:String="tile"
+const SM_FIT:String="fit"
 const STRETCH_MODES:Dictionary={
-	"stretch":StyleBoxTexture.AXIS_STRETCH_MODE_STRETCH,
-	"tile":StyleBoxTexture.AXIS_STRETCH_MODE_TILE,
-	"fit":StyleBoxTexture.AXIS_STRETCH_MODE_TILE_FIT
+	SM_STRETCH:StyleBoxTexture.AXIS_STRETCH_MODE_STRETCH,
+	SM_TILE:StyleBoxTexture.AXIS_STRETCH_MODE_TILE,
+	SM_FIT:StyleBoxTexture.AXIS_STRETCH_MODE_TILE_FIT
+}
+const HM_NONE:String="none"
+const HM_LIGHT:String="light"
+const HM_NORMAL:String="normal"
+const HINT_MODES:Dictionary={
+	HM_NONE:DynamicFontData.HINTING_NONE,
+	HM_LIGHT:DynamicFontData.HINTING_LIGHT,
+	HM_NORMAL:DynamicFontData.HINTING_NORMAL
 }
 
 
@@ -28,13 +41,24 @@ static func typesafe_get(d:Dictionary,key:String,default):
 	return default
 
 
+static func parse_boolean(d:Dictionary,key:String,default:bool)->bool:
+	var ret=d.get(key)
+	if typeof(ret)==TYPE_BOOL:
+		return ret
+	elif typeof(ret) in TYPE_NUMBER:
+		return bool(ret)
+	elif typeof(ret)==TYPE_STRING:
+		return ret.to_lower() in ["yes","true","on"]
+	return default
+
+
 static func parse_color(data:Dictionary,key:String,default:Color)->Color:
 	var t:int=typeof(data.get(key,false))
 	if t==TYPE_STRING:
 		var c:String=data.get(key)
 		if c.is_valid_html_color():
 			return Color(c)
-		return ColorN(c)
+		return ColorN(c.to_lower().replace(" ",""))
 	elif t==TYPE_ARRAY:
 		var c:Array=data.get(key)
 		if c.size()==1:
@@ -122,37 +146,53 @@ static func parse_names(name:String,names:Dictionary,default:int)->int:
 static func create_stylebox(data:Dictionary,key:String,colorset:Dictionary,default:StyleBox)->StyleBox:
 	var frag:Dictionary=typesafe_get(data,key,{})
 	if frag.empty():
-		return create_sb_flat({},colorset) if default==null else default
-	var t:int=parse_names(typesafe_get(frag,"type","flat"),BOX_TYPES,BOX_TYPES["flat"])
-	if t==BOX_TYPES["flat"]:
-		return create_sb_flat(frag,colorset)
+		return create_sb_flat({},colorset,null) if default==null else default
+	var t:int=parse_names(typesafe_get(frag,"type",BT_FLAT),BOX_TYPES,-1)
+	if t==-1:
+		if default is StyleBoxTexture:
+			t=BOX_TYPES[BT_BITMAP]
+		else:
+			t=BOX_TYPES[BT_FLAT]
+	if t==BOX_TYPES[BT_FLAT]:
+		return create_sb_flat(frag,colorset,default as StyleBoxFlat)
 	else:
 		return create_sb_bitmap(frag)
 
 
-static func create_sb_flat(data:Dictionary,colorset:Dictionary)->StyleBoxFlat:
+static func create_sb_flat(data:Dictionary,colorset:Dictionary,base:StyleBoxFlat)->StyleBoxFlat:
 	var def_fg:Color=colorset["fg"]
 	var def_bg:Color=colorset["bg"]
-	var st:StyleBoxFlat=StyleBoxFlat.new()
-	st.bg_color=parse_color(data,"background",def_bg)
-	var values:Array=parse_sides_corners(data,"corner-radius",0.0)
-	st.corner_radius_top_left=values[FC_TOPLEFT]
-	st.corner_radius_top_right=values[FC_TOPRIGHT]
-	st.corner_radius_bottom_right=values[FC_BOTTOMRIGHT]
-	st.corner_radius_bottom_left=values[FC_BOTTOMLEFT]
-	st.corner_detail=8 if values.max()>0.0 else 0
-	st.anti_aliasing=values.max()>0.0
-	st.border_color=parse_color(data,"border",def_fg)
-	values=parse_sides_corners(data,"border-width",2.0)
-	st.border_width_top=values[FS_TOP]
-	st.border_width_right=values[FS_RIGHT]
-	st.border_width_bottom=values[FS_BOTTOM]
-	st.border_width_left=values[FS_LEFT]
-	values=parse_sides_corners(data,"margin",-1.0)
-	st.content_margin_top=values[FS_TOP]
-	st.content_margin_right=values[FS_RIGHT]
-	st.content_margin_bottom=values[FS_BOTTOM]
-	st.content_margin_left=values[FS_LEFT]
+	var st:StyleBoxFlat=StyleBoxFlat.new() if base==null else base.duplicate()
+	if data.has("background") or base==null:
+		st.bg_color=parse_color(data,"background",def_bg)
+	else:
+		st.bg_color=def_bg
+	var values:Array
+	if data.has("corner-radius") or base==null:
+		values=parse_sides_corners(data,"corner-radius",0.0)
+		st.corner_radius_top_left=values[FC_TOPLEFT]
+		st.corner_radius_top_right=values[FC_TOPRIGHT]
+		st.corner_radius_bottom_right=values[FC_BOTTOMRIGHT]
+		st.corner_radius_bottom_left=values[FC_BOTTOMLEFT]
+		st.corner_detail=8 if values.max()>0.0 else 0
+	if data.has("antialias") or base==null:
+		st.anti_aliasing=parse_boolean(data,"antialias",values.max()>0.0)
+	if data.has("border") or base==null:
+		st.border_color=parse_color(data,"border",def_fg)
+	else:
+		st.border_color=def_fg
+	if data.has("border-width") or base==null:
+		values=parse_sides_corners(data,"border-width",2.0)
+		st.border_width_top=values[FS_TOP]
+		st.border_width_right=values[FS_RIGHT]
+		st.border_width_bottom=values[FS_BOTTOM]
+		st.border_width_left=values[FS_LEFT]
+	if data.has("margin") or base==null:
+		values=parse_sides_corners(data,"margin",-1.0)
+		st.content_margin_top=values[FS_TOP]
+		st.content_margin_right=values[FS_RIGHT]
+		st.content_margin_bottom=values[FS_BOTTOM]
+		st.content_margin_left=values[FS_LEFT]
 	return st
 
 
@@ -170,9 +210,9 @@ static func create_sb_bitmap(data:Dictionary={})->StyleBoxTexture:
 	st.content_margin_right=values[FS_RIGHT]
 	st.content_margin_bottom=values[FS_BOTTOM]
 	st.content_margin_left=values[FS_LEFT]
-	values=parse_string_list(data,"stretch",2,"stretch")
-	st.axis_stretch_horizontal=parse_names(values[0],STRETCH_MODES,STRETCH_MODES["stretch"])
-	st.axis_stretch_vertical=parse_names(values[1],STRETCH_MODES,STRETCH_MODES["stretch"])
+	values=parse_string_list(data,SM_STRETCH,2,SM_STRETCH)
+	st.axis_stretch_horizontal=parse_names(values[0],STRETCH_MODES,STRETCH_MODES[SM_STRETCH])
+	st.axis_stretch_vertical=parse_names(values[1],STRETCH_MODES,STRETCH_MODES[SM_STRETCH])
 	return st
 
 
@@ -209,5 +249,26 @@ static func set_styles(theme:Theme,from:String,to:Control)->void:
 		to.add_icon_override(ic,theme.get_icon(ic,from))
 	for sb in theme.get_stylebox_list(from):
 		to.add_stylebox_override(sb,theme.get_stylebox(sb,from))
+
+
+static func parse_font(data:Dictionary,tag:String,base:DynamicFont)->DynamicFont:
+	var frag:Dictionary=typesafe_get(data,tag,{})
+	if not frag.empty():
+		var fnt:DynamicFont=DynamicFont.new() if base==null else base.duplicate()
+		var dfd:DynamicFontData
+		if frag.has("file"):
+			var dir:Directory=Directory.new()
+			if dir.file_exists("res://theme/"+typesafe_get(frag,"file","")):
+				dfd=load("res://theme/"+typesafe_get(frag,"file","")) as DynamicFontData
+		dfd=fnt.font_data if dfd==null else dfd
+		fnt.font_data=dfd
+		fnt.size=typesafe_get(frag,"size",14 if base==null else base.size)
+		fnt.outline_size=typesafe_get(frag,"outline-size",0 if base==null else base.outline_size)
+		fnt.outline_color=parse_color(frag,"outline",Color.white if base==null else base.outline_color)
+		if fnt.font_data!=null:
+			fnt.font_data.antialiased=typesafe_get(frag,"antialias",true)
+			fnt.font_data.hinting=parse_names(typesafe_get(frag,"hinting",HM_NORMAL),HINT_MODES,HINT_MODES[HM_NORMAL])
+		return fnt
+	return base
 
 

@@ -29,9 +29,10 @@ __meta__ = {
 }
 
 [node name="Menu" parent="Main" instance=ExtResource( 10 )]
+margin_bottom = 39.0
 
 [node name="Tabs" type="TabContainer" parent="Main"]
-margin_top = 38.0
+margin_top = 43.0
 margin_right = 1024.0
 margin_bottom = 532.0
 size_flags_vertical = 3

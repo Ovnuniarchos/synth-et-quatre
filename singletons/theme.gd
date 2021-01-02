@@ -34,22 +34,24 @@ var std_colors:Dictionary
 var std_font:DynamicFont
 
 # STRETCH_MODE: "stretch" | "tile" | "fit"
-# COLOR_TYPE: /#?([:xdigit:]{2})?[:xdigit:]{6}/i | COLOR_NAME | array4(float) | float
+# HINT_MODE: "none" | "light" | "normal"
+# COLOR_TYPE: /#?([:xdigit:]{2})?[:xdigit:]{6}/i | COLOR_NAME | array4(number) | number
 # BOX_TYPE: BOX_TYPE_FLAT | BOX_TYPE_BITMAP
 # BOX_TYPE_FLAT: {
 #  type: "flat"
 #  background: COLOR_TYPE
 #  border: COLOR_TYPE
-#  corner-radius: array4(float) | float
-#  border-width: array4(float) | float
-#  margin: array4(float) | float
+#  corner-radius: array4(number) | number
+#  border-width: array4(number) | number
+#  margin: array4(number) | number
+#  antialias: boolean
 # }
 # BOX_TYPE_BITMAP: {
 #  type: "bitmap"
 #  texture: string
 #  modulate: COLOR_TYPE
-#  margin: array4(float) | float
-#  border-width: array4(float) | float
+#  margin: array4(number) | number
+#  border-width: array4(number) | number
 #  stretch: array2(STRETCH_MODE) | string
 # }
 # SCROLLBAR_TYPE: SCROLLBAR_TYPE_FLAT | SCROLLBAR_TYPE_BITMAP
@@ -57,33 +59,38 @@ var std_font:DynamicFont
 #  type: "flat"
 #  background: COLOR_TYPE
 #  border: COLOR_TYPE
-#  corner-radius: array4(float) | float
-#  border-width: array4(float) | float
+#  corner-radius: array4(number) | number
+#  border-width: array4(number) | number
+#  antialias: boolean
 # }
 # SCROLLBAR_TYPE_BITMAP: {
 #  type: "bitmap"
 #  texture: string
 #  modulate: COLOR_TYPE
-#  margin: array4(float) | float
-#  border-width: array4(float) | float
+#  margin: array4(number) | number
+#  border-width: array4(number) | number
 #  stretch: array2(STRETCH_MODE) | string
 # }
 # FONT_TYPE: {
 #  file: string
-#  size: float
+#  size: number
+#  antialias: boolean
+#  hinting: HINT_MODE
+#  outline-size: number
+#  outline: COLOR_TYPE
 # }
 # SEPARATOR_TYPE: {
 #  color: COLOR_TYPE
-#  line-width: float
-#  margin: float
+#  line-width: number
+#  margin: number
 # }
 # SPACING_TYPE: {
-#  horizontal + vertical: float
+#  horizontal + vertical: number
 # }
 # GLYPH_TYPE: {
 #  file: string,
-#  rect: array4(float) | float
-#  margin: array2(float) | float
+#  rect: array4(number) | number
+#  margin: array2(number) | number
 # }
 
 # Theme properties:
@@ -97,18 +104,24 @@ var std_font:DynamicFont
 #  spacing: SPACING_TYPE
 #  font: FONT_TYPE
 #  panel: BOX_TYPE
-#  tab: normal + selected: {
-#   BOX_TYPE
-#   color: COLOR_TYPE
+#  tab:{
+#   normal + selected: {
+#    BOX_TYPE
+#    color: COLOR_TYPE
+#   }
+#   font: FONT_TYPE
 #  }
-#  button | check-button | menu:
+#  button | accent-button | menu: {
 #   normal + disabled + hover + pressed: {
 #    BOX_TYPE
 #    color: COLOR_TYPE
 #   }
+#   font: FONT_TYPE
+#  }
 #  popup: {
 #   normal + hover: BOX_TYPE
 #   separator: SEPARATOR_TYPE
+#   font: FONT_TYPE
 #  }
 #  scrollbar: {
 #   normal + hover + pressed: SCROLLBAR_TYPE
@@ -116,23 +129,26 @@ var std_font:DynamicFont
 #  }
 #  listbox: {
 #   background + selected: BOX_TYPE
-#   separation: float
+#   separation: number
+#   font: FONT_TYPE
 #  }
 #  input: {
 #   normal + focus + disabled: BOX_TYPE
+#   input: FONT_TYPE
 #  }
 #  spinbar | progress: {
 #   background: BOX_TYPE
 #   foreground: SCROLLBAR_TYPE
 #   color: COLOR_TYPE
+#   font: FONT_TYPE
 #  }
 
 var default_theme:Dictionary={
 	"colors":{
 		"default-fg":"black",
-		"default-bg":"#cccccc",
+		"default-bg":"#9999aa",
 		"faded-fg":"#80000000",
-		"faded-bg":"#80cccccc",
+		"faded-bg":"#80ccccdd",
 		"hover-fg":"white",
 		"hover-bg":"black"
 	},
@@ -163,20 +179,18 @@ var default_theme:Dictionary={
 		"type":"flat",
 		"border-width":[1.0,2.0,2.0,1.0],
 		"corner-radius":4.0,
-		"margin":4.0
+		"margin":4.0,
+		"antialias":false
 	},
 	"tab":{
 		"normal":{
 			"type":"flat",
 			"border-width":[1.0,1.0,0.0],
-			"border":"red",
 			"corner-radius":[4.0,4.0,0.0,0.0],
 			"margin":4.0
 		},
 		"selected":{
-			"type":"flat",
 			"background":"white",
-			"border":"#666666",
 			"border-width":[2.0,2.0,0.0],
 		},
 		"overlap":1.0
@@ -185,27 +199,20 @@ var default_theme:Dictionary={
 		"normal":{
 			"type":"flat",
 			"border-width":2.0,
-			"margin":4.0
+			"corner-radius":2.0,
+			"antialias":false,
+			"margin":2.0
 		},
-		"disabled":{
-			"type":"flat",
-			"border-width":2.0,
-			"margin":4.0
-		},
-		"hover":{
-			"type":"flat",
-			"border":"#666666",
-			"border-width":2.0,
-			"margin":4.0
-		}
+		"disabled":{},
+		"hover":{}
 	},
 	"menu":{
-		"normal":{"border-width":0.0},
-		"disabled":{"border-width":0.0},
-		"hover":{"border-width":0.0},
-		"pressed":{"border-width":0.0}
+		"normal":{
+			"border-width":0.0,
+			"margin":0.0
+		}
 	},
-	"check-button":{
+	"accent-button":{
 		"normal":{
 			"type":"flat",
 			"border-width":2.0,
@@ -276,10 +283,10 @@ var default_theme:Dictionary={
 	},
 	"spinbar":{
 		"background":{
-			"margin":2.0
+			"margin":0.0
 		},
 		"foreground":{
-			"background":"#999999",
+			"background":"#666677",
 			"border":"black"
 		}
 	},
@@ -288,7 +295,7 @@ var default_theme:Dictionary={
 			"margin":2.0
 		},
 		"foreground":{
-			"background":"#999999",
+			"background":"#666677",
 			"border":"black"
 		}
 	}
@@ -315,7 +322,7 @@ func _init()->void:
 	# Glyphs
 	set_default_glyphs(default_theme)
 	# Fonts
-	set_default_font(default_theme)
+	std_font=ThemeParser.parse_font(default_theme,"font",null)
 	theme.set_font("default_font","",std_font)
 	# Labels
 	theme.set_font("font","Label",std_font)
@@ -332,13 +339,14 @@ func _init()->void:
 	# Tabs
 	set_tab_styles(default_theme)
 	# Standard buttons
-	set_button_styles("button","Button",default_theme)
-	theme.set_font("font","Button",std_font)
+	set_button_styles(default_theme,"button","Button")
 	# Accent(check) buttons
 	ThemeParser.copy_styles(theme,"Button","AccentButton")
-	set_button_styles("check-button","AccentButton",default_theme)
-	theme.set_font("font","AccentButton",std_font)
-	# Check buttons
+	set_button_styles(default_theme,"accent-button","AccentButton")
+	# Menu buttons
+	ThemeParser.copy_styles(theme,"Button","MenuButton")
+	set_button_styles(default_theme,"menu","MenuButton")
+	# Check button icons
 	theme.set_icon("checked","CheckBox",theme.get_icon("check-on","Glyphs"))
 	theme.set_icon("unchecked","CheckBox",theme.get_icon("check-off","Glyphs"))
 	theme.set_stylebox("normal","CheckBox",EMPTY_ST)
@@ -358,9 +366,6 @@ func _init()->void:
 	# SpinBars
 	set_bar_styles(default_theme,"SpinBar")
 	set_bar_styles(default_theme,"ProgressBar")
-	# Menus
-	ThemeParser.copy_styles(theme,"Button","MenuButton")
-	set_button_styles("menu","MenuButton",default_theme)
 
 
 
@@ -375,7 +380,7 @@ func set_bar_styles(data:Dictionary,bar:String)->void:
 	else:
 		theme.set_stylebox("fg",bar,theme.get_stylebox("grabber","HScrollBar"))
 	theme.set_color("font_color",bar,ThemeParser.parse_color(frag,"color",std_colors[CO_DEFAULT_FG]))
-	theme.set_font("font",bar,std_font)
+	theme.set_font("font",bar,ThemeParser.parse_font(frag,"font",std_font))
 
 
 func set_default_glyphs(data:Dictionary)->void:
@@ -408,7 +413,7 @@ func set_default_glyphs(data:Dictionary)->void:
 
 func set_input_styles(data:Dictionary,key:String)->void:
 	var frag:Dictionary=ThemeParser.typesafe_get(data,key,{})
-	theme.set_font("font","LineEdit",std_font)
+	theme.set_font("font","LineEdit",ThemeParser.parse_font(frag,"font",std_font))
 	theme.set_color("font_color","LineEdit",ThemeParser.parse_color(ThemeParser.typesafe_get(frag,"normal",{}),"color",std_colors[CO_DEFAULT_FG]))
 	theme.set_color("font_color_selected","LineEdit",std_colors[CO_DEFAULT_BG])
 	theme.set_color("selection_color","LineEdit",std_colors[CO_DEFAULT_FG])
@@ -433,7 +438,7 @@ func parse_spacing(data:Dictionary,defaults:Array)->Dictionary:
 
 func set_itemlist_styles(data:Dictionary,key:String)->void:
 	var frag:Dictionary=ThemeParser.typesafe_get(data,key,{})
-	theme.set_font("font","ItemList",std_font)
+	theme.set_font("font","ItemList",ThemeParser.parse_font(frag,"font",std_font))
 	if frag.has("background"):
 		theme.set_stylebox("bg","ItemList",ThemeParser.create_stylebox(frag,"background",button_colorsets[BS_NORMAL],panel_st[BS_NORMAL]))
 		theme.set_color("font_color","ItemList",ThemeParser.parse_color(ThemeParser.typesafe_get(frag,"background",{}),"color",std_colors[CO_DEFAULT_FG]))
@@ -474,24 +479,13 @@ func set_default_colors(data:Dictionary)->Dictionary:
 	return ret
 
 
-func set_default_font(data:Dictionary)->void:
-	var frag:Dictionary=ThemeParser.typesafe_get(data,"font",{})
-	if data.has("font"):
-		std_font=DynamicFont.new()
-		var dfd:DynamicFontData=load("res://theme/"+ThemeParser.typesafe_get(frag,"file",""))
-		if dfd==null:
-			dfd=load("res://theme/DejaVuSansMono-Bold.ttf")
-		std_font.font_data=dfd
-		std_font.size=ThemeParser.typesafe_get(frag,"size",14.0)
-
-
 func set_popup_styles(data:Dictionary)->void:
-	theme.set_font("font","PopupMenu",std_font)
 	theme.set_color("font_color","PopupMenu",std_colors[CO_DEFAULT_FG])
 	theme.set_color("font_color_hover","PopupMenu",std_colors[CO_DEFAULT_BG])
 	theme.set_constant("hseparation","PopupMenu",0.0)
 	theme.set_constant("vseparation","PopupMenu",0.0)
 	var frag:Dictionary=ThemeParser.typesafe_get(data,"popup",{})
+	theme.set_font("font","PopupMenu",ThemeParser.parse_font(frag,"font",std_font))
 	theme.set_stylebox("panel","PopupMenu",ThemeParser.create_stylebox(frag,"normal",button_colorsets[BS_NORMAL],panel_st[BS_NORMAL]))
 	theme.set_stylebox("hover","PopupMenu",ThemeParser.create_stylebox(frag,"hover",button_colorsets[BS_HOVER],panel_st[BS_HOVER]))
 	var sep_st:StyleBoxLine=StyleBoxLine.new()
@@ -507,11 +501,11 @@ func set_popup_styles(data:Dictionary)->void:
 
 func set_tab_styles(data:Dictionary)->void:
 	theme.set_stylebox("panel","TabContainer",panel_st[BS_NORMAL])
-	theme.set_font("font","TabContainer",std_font)
 	if data.has("tab"):
 		var frag:Dictionary=ThemeParser.typesafe_get(data,"tab",{})
 		var tab_st:StyleBox=panel_st[BS_NORMAL]
 		var tab_cl:Color=ThemeParser.parse_color(ThemeParser.typesafe_get(frag,TB_NORMAL,{}),"color",std_colors[CO_DEFAULT_FG])
+		theme.set_font("font","TabContainer",ThemeParser.parse_font(frag,"font",std_font))
 		if frag.has("normal"):
 			tab_st=ThemeParser.create_stylebox(frag,TB_NORMAL,button_colorsets[BS_NORMAL],panel_st[BS_NORMAL])
 		else:
@@ -522,8 +516,8 @@ func set_tab_styles(data:Dictionary)->void:
 		theme.set_stylebox("tab_bg","TabContainer",tab_st)
 		theme.set_color("font_color_bg","TabContainer",tab_cl)
 		if frag.has("selected"):
-			theme.set_stylebox("tab_fg","TabContainer",ThemeParser.create_stylebox(frag,TB_SELECTED,button_colorsets[BS_NORMAL],panel_st[BS_NORMAL]))
-			theme.set_color("font_color_fg","TabContainer",ThemeParser.parse_color(ThemeParser.typesafe_get(frag,TB_SELECTED,{}),"color",std_colors[CO_DEFAULT_FG]))
+			theme.set_stylebox("tab_fg","TabContainer",ThemeParser.create_stylebox(frag,TB_SELECTED,button_colorsets[BS_NORMAL],tab_st))
+			theme.set_color("font_color_fg","TabContainer",ThemeParser.parse_color(ThemeParser.typesafe_get(frag,TB_SELECTED,{}),"color",tab_cl))
 		else:
 			theme.set_stylebox("tab_fg","TabContainer",tab_st)
 			theme.set_color("font_color_fg","TabContainer",tab_cl)
@@ -535,13 +529,10 @@ func set_tab_styles(data:Dictionary)->void:
 		theme.set_font("font","TabContainer",std_font)
 
 
-func set_button_styles(tag:String,style:String,data:Dictionary)->void:
-	theme.set_stylebox("focus",style,EMPTY_ST)
+func set_button_styles(data:Dictionary,tag:String,node_type:String)->void:
+	theme.set_stylebox("focus",node_type,EMPTY_ST)
 	var but_st:Dictionary={
-		BS_NORMAL:ThemeParser.create_sb_flat({},button_colorsets[BS_NORMAL]),
-		BS_DISABLED:ThemeParser.create_sb_flat({},button_colorsets[BS_DISABLED]),
-		BS_HOVER:ThemeParser.create_sb_flat({},button_colorsets[BS_HOVER]),
-		BS_PRESSED:ThemeParser.create_sb_flat({},button_colorsets[BS_PRESSED]),
+		BS_NORMAL:ThemeParser.create_sb_flat({},button_colorsets[BS_NORMAL],panel_st[BS_NORMAL])
 	}
 	var but_cl:Dictionary={
 		BS_NORMAL:std_colors[CO_DEFAULT_FG],
@@ -549,14 +540,16 @@ func set_button_styles(tag:String,style:String,data:Dictionary)->void:
 		BS_HOVER:std_colors[CO_DEFAULT_BG],
 		BS_PRESSED:std_colors[CO_DEFAULT_BG]
 	}
-	theme.set_constant("hseparation",style,0.0)
+	theme.set_constant("hseparation",node_type,0.0)
 	var frag:Dictionary=ThemeParser.typesafe_get(data,tag,{})
 	if not frag.empty():
-		for st in but_st:
+		theme.set_font("font",node_type,ThemeParser.parse_font(frag,"font",std_font))
+		for st in [BS_NORMAL,BS_DISABLED,BS_HOVER,BS_PRESSED]:
+			but_st[st]=ThemeParser.create_sb_flat({},button_colorsets[st],but_st[BS_NORMAL])
 			if frag.has(st):
-				but_st[st]=ThemeParser.create_stylebox(frag,st,button_colorsets[st],panel_st[st])
+				but_st[st]=ThemeParser.create_stylebox(frag,st,button_colorsets[st],but_st[st])
 				but_cl[st]=ThemeParser.parse_color(ThemeParser.typesafe_get(frag,st,{}),"color",button_colorsets[st]["fg"])
 	for st in but_st:
-		theme.set_stylebox(st,style,but_st[st])
-		theme.set_color("font_color" if st==BS_NORMAL else "font_color_"+st,style,but_cl[st])
+		theme.set_stylebox(st,node_type,but_st[st])
+		theme.set_color("font_color" if st==BS_NORMAL else "font_color_"+st,node_type,but_cl[st])
 

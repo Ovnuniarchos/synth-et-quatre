@@ -19,13 +19,22 @@ var real_theme:Theme
 
 
 func _ready()->void:
-	$HBC/Cleanup.get_popup().connect("id_pressed",self,"_on_Cleanup_id_pressed")
-	$HBC/Save.get_popup().connect("id_pressed",self,"_on_Save_id_pressed")
-	$HBC/Load.get_popup().connect("id_pressed",self,"_on_Load_id_pressed")
+	real_theme=THEME.get("theme")
+	ThemeParser.set_styles(real_theme,"MenuButton",$HBC/New)
+	set_popup($HBC/Cleanup,"_on_Cleanup_id_pressed")
+	set_popup($HBC/Save,"_on_Save_id_pressed")
+	set_popup($HBC/Load,"_on_Load_id_pressed")
 
 
-func set_popup(pu:Popup,sel:String)->void:
+func set_popup(mb:MenuButton,sel:String)->void:
+	var pu:PopupMenu=mb.get_popup()
 	pu.connect("id_pressed",self,sel)
+	pu.connect("popup_hide",self,"_on_popup_hide",[mb])
+
+
+func _on_popup_hide(mb:MenuButton)->void:
+	if mb!=null:
+		mb.notification(NOTIFICATION_MOUSE_EXIT)
 
 
 func _on_New_pressed()->void:

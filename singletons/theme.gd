@@ -97,16 +97,16 @@ var std_font:DynamicFont
 #  spacing: SPACING_TYPE
 #  font: FONT_TYPE
 #  panel: BOX_TYPE
-#  tabs: normal + selected: {
+#  tab: normal + selected: {
 #   BOX_TYPE
 #   color: COLOR_TYPE
 #  }
-#  button | check-button:
+#  button | check-button | menu:
 #   normal + disabled + hover + pressed: {
 #    BOX_TYPE
 #    color: COLOR_TYPE
 #   }
-#  menu: {
+#  popup: {
 #   normal + hover: BOX_TYPE
 #   separator: SEPARATOR_TYPE
 #  }
@@ -164,7 +164,7 @@ var default_theme:Dictionary={
 		"border-width":[1.0,2.0,2.0,1.0],
 		"margin":4.0
 	},
-	"tabs":{
+	"tab":{
 		"normal":{
 			"type":"flat",
 			"border-width":1.0,
@@ -194,6 +194,12 @@ var default_theme:Dictionary={
 			"margin":4.0
 		}
 	},
+	"menu":{
+		"normal":{"border-width":0.0},
+		"disabled":{"border-width":0.0},
+		"hover":{"border-width":0.0},
+		"pressed":{"border-width":0.0}
+	},
 	"check-button":{
 		"normal":{
 			"type":"flat",
@@ -219,7 +225,7 @@ var default_theme:Dictionary={
 			"color":"#00ff00"
 		}
 	},
-	"menu":{
+	"popup":{
 		"normal":{},
 		"hover":{
 			"type":"flat",
@@ -324,6 +330,7 @@ func _init()->void:
 	set_button_styles("button","Button",default_theme)
 	theme.set_font("font","Button",std_font)
 	# Accent(check) buttons
+	ThemeParser.copy_styles(theme,"Button","AccentButton")
 	set_button_styles("check-button","AccentButton",default_theme)
 	theme.set_font("font","AccentButton",std_font)
 	# Check buttons
@@ -346,6 +353,10 @@ func _init()->void:
 	# SpinBars
 	set_bar_styles(default_theme,"SpinBar")
 	set_bar_styles(default_theme,"ProgressBar")
+	# Menus
+	ThemeParser.copy_styles(theme,"Button","MenuButton")
+	set_button_styles("menu","MenuButton",default_theme)
+
 
 
 func set_bar_styles(data:Dictionary,bar:String)->void:
@@ -475,7 +486,7 @@ func set_popup_styles(data:Dictionary)->void:
 	theme.set_color("font_color_hover","PopupMenu",std_colors[CO_DEFAULT_BG])
 	theme.set_constant("hseparation","PopupMenu",0.0)
 	theme.set_constant("vseparation","PopupMenu",0.0)
-	var frag:Dictionary=ThemeParser.typesafe_get(data,"menu",{})
+	var frag:Dictionary=ThemeParser.typesafe_get(data,"popup",{})
 	theme.set_stylebox("panel","PopupMenu",ThemeParser.create_stylebox(frag,"normal",button_colorsets[BS_NORMAL],panel_st[BS_NORMAL]))
 	theme.set_stylebox("hover","PopupMenu",ThemeParser.create_stylebox(frag,"hover",button_colorsets[BS_HOVER],panel_st[BS_HOVER]))
 	var sep_st:StyleBoxLine=StyleBoxLine.new()
@@ -492,8 +503,8 @@ func set_popup_styles(data:Dictionary)->void:
 func set_tab_styles(data:Dictionary)->void:
 	theme.set_stylebox("panel","TabContainer",panel_st[BS_NORMAL])
 	theme.set_font("font","TabContainer",std_font)
-	if data.has("tabs"):
-		var frag:Dictionary=ThemeParser.typesafe_get(data,"tabs",{})
+	if data.has("tab"):
+		var frag:Dictionary=ThemeParser.typesafe_get(data,"tab",{})
 		var tab_st:StyleBox=panel_st[BS_NORMAL]
 		var tab_cl:Color=ThemeParser.parse_color(ThemeParser.typesafe_get(frag,TB_NORMAL,{}),"color",std_colors[CO_DEFAULT_FG])
 		if frag.has("normal"):

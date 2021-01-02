@@ -28,7 +28,6 @@ margin_right = 40.0
 margin_bottom = 20.0
 mouse_filter = 1
 text = "New"
-flat = true
 
 [node name="S" type="ReferenceRect" parent="HBC"]
 margin_left = 56.0
@@ -44,6 +43,7 @@ margin_bottom = 20.0
 focus_mode = 2
 mouse_filter = 1
 text = "Load"
+flat = false
 items = [ "Load song", null, 0, false, false, 0, 0, null, "", false, "Load instrument", null, 0, false, false, 1, 0, null, "", false ]
 switch_on_hover = true
 
@@ -54,6 +54,7 @@ margin_bottom = 20.0
 focus_mode = 2
 mouse_filter = 1
 text = "Save"
+flat = false
 items = [ "Save song", null, 0, false, false, 0, 0, null, "", false, "Save instrument", null, 0, false, false, 2, 0, null, "", false, "", null, 0, false, true, -1, 0, null, "", true, "Save WAV", null, 0, false, false, 1, 0, null, "", false ]
 switch_on_hover = true
 
@@ -71,6 +72,7 @@ margin_bottom = 20.0
 focus_mode = 2
 mouse_filter = 1
 text = "Cleanup"
+flat = false
 items = [ "Clean patterns", null, 0, false, false, 0, 0, null, "", false, "Clean instruments", null, 0, false, false, 1, 0, null, "", false, "Clean waves", null, 0, false, false, 2, 0, null, "", false, "", null, 0, false, true, -1, 0, null, "", true, "Clean all", null, 0, false, false, 3, 0, null, "", false ]
 switch_on_hover = true
 

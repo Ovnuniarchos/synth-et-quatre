@@ -87,7 +87,7 @@ func _on_DIVSlider_value_changed(value:float)->void:
 	GLOBALS.get_instrument().dividers[operator]=int(value)-1
 	emit_signal("instrument_changed")
 
-func _on_ADDSlider_value_changed(value:float)->void:
+func _on_DETSlider_value_changed(value):
 	GLOBALS.get_instrument().detunes[operator]=int(value)
 	emit_signal("instrument_changed")
 
@@ -122,5 +122,3 @@ func set_sliders(inst:FmInstrument)->void:
 	emit_signal("instrument_changed")
 
 
-func _on_DETSlider_value_changed(value):
-	pass # Replace with function body.

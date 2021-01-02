@@ -7,6 +7,8 @@ export (float) var huge_step:float=100.0
 export (int,0,4) var _decimals:int=0 setget set_decimals
 export (String) var suffix:String="" setget set_suffix
 
+
+var real_theme:Theme
 var dragging:bool=false
 var pressed:bool=false
 var label:Label
@@ -30,8 +32,14 @@ func _init()->void:
 
 
 func _ready()->void:
+	real_theme=THEME.get("theme")
 	for c in get_children():
 		remove_child(c)
+	label.add_color_override("font_color",real_theme.get_color("font_color","SpinBar"))
+	add_stylebox_override("fg",real_theme.get_stylebox("fg","SpinBar"))
+	var sb:StyleBox=real_theme.get_stylebox("bg","SpinBar")
+	add_stylebox_override("bg",sb)
+	rect_min_size+=Vector2(sb.content_margin_left+sb.content_margin_right,sb.content_margin_top+sb.content_margin_bottom)
 	add_child(label)
 
 

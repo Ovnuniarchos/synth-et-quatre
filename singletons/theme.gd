@@ -31,7 +31,7 @@ var button_colorsets:Dictionary
 var box_colorsets:Dictionary
 var std_spacing:Dictionary
 var std_colors:Dictionary
-var font_std:DynamicFont
+var std_font:DynamicFont
 
 # STRETCH_MODE: "stretch" | "tile" | "fit"
 # COLOR_TYPE: /#?([:xdigit:]{2})?[:xdigit:]{6}/i | COLOR_NAME | array4(float) | float
@@ -120,6 +120,11 @@ var font_std:DynamicFont
 #  }
 #  input: {
 #   normal + focus + disabled: BOX_TYPE
+#  }
+#  spinbar | progress: {
+#   background: BOX_TYPE
+#   foreground: SCROLLBAR_TYPE
+#   color: COLOR_TYPE
 #  }
 
 var default_theme:Dictionary={
@@ -259,8 +264,22 @@ var default_theme:Dictionary={
 		"disabled":{}
 	},
 	"spinbar":{
-		"background":{},
-		"foreground":{}
+		"background":{
+			"margin":2.0
+		},
+		"foreground":{
+			"background":"#999999",
+			"border":"black"
+		}
+	},
+	"progress":{
+		"background":{
+			"margin":2.0
+		},
+		"foreground":{
+			"background":"#999999",
+			"border":"black"
+		}
 	}
 }
 func _init()->void:
@@ -286,9 +305,9 @@ func _init()->void:
 	set_default_glyphs(default_theme)
 	# Fonts
 	set_default_font(default_theme)
-	theme.set_font("default_font","",font_std)
+	theme.set_font("default_font","",std_font)
 	# Labels
-	theme.set_font("font","Label",font_std)
+	theme.set_font("font","Label",std_font)
 	theme.set_constant("line_spacing","Label",0.0)
 	theme.set_color("font_color","Label",theme.get_color(CO_DEFAULT_FG,"Colors"))
 	# Panels
@@ -303,10 +322,10 @@ func _init()->void:
 	set_tab_styles(default_theme)
 	# Standard buttons
 	set_button_styles("button","Button",default_theme)
-	theme.set_font("font","Button",font_std)
+	theme.set_font("font","Button",std_font)
 	# Accent(check) buttons
 	set_button_styles("check-button","AccentButton",default_theme)
-	theme.set_font("font","AccentButton",font_std)
+	theme.set_font("font","AccentButton",std_font)
 	# Check buttons
 	theme.set_icon("checked","CheckBox",theme.get_icon("check-on","Glyphs"))
 	theme.set_icon("unchecked","CheckBox",theme.get_icon("check-off","Glyphs"))
@@ -325,16 +344,22 @@ func _init()->void:
 	# Input
 	set_input_styles(default_theme,"input")
 	# SpinBars
-	var frag:Dictionary=ThemeParser.typesafe_get(default_theme,"spinbar",{})
+	set_bar_styles(default_theme,"SpinBar")
+	set_bar_styles(default_theme,"ProgressBar")
+
+
+func set_bar_styles(data:Dictionary,bar:String)->void:
+	var frag:Dictionary=ThemeParser.typesafe_get(data,"spinbar",{})
 	if frag.has("background"):
-		theme.set_stylebox("bg","ProgressBar",ThemeParser.create_stylebox(frag,"background",button_colorsets[BS_NORMAL],panel_st[BS_NORMAL]))
+		theme.set_stylebox("bg",bar,ThemeParser.create_stylebox(frag,"background",button_colorsets[BS_NORMAL],panel_st[BS_NORMAL]))
 	else:
-		theme.set_stylebox("bg","ProgressBar",theme.get_stylebox("scroll","HScrollBar"))
+		theme.set_stylebox("bg",bar,theme.get_stylebox("scroll","HScrollBar"))
 	if frag.has("foreground"):
-		theme.set_stylebox("fg","ProgressBar",ThemeParser.create_stylebox(frag,"foreground",box_colorsets[BS_HOVER],panel_st[BS_HOVER]))
+		theme.set_stylebox("fg",bar,ThemeParser.create_stylebox(frag,"foreground",box_colorsets[BS_HOVER],panel_st[BS_HOVER]))
 	else:
-		theme.set_stylebox("fg","ProgressBar",theme.get_stylebox("grabber","HScrollBar"))
-	theme.set_color("font_color","ProgressBar",ThemeParser.parse_color(frag,"color",std_colors[CO_DEFAULT_FG]))
+		theme.set_stylebox("fg",bar,theme.get_stylebox("grabber","HScrollBar"))
+	theme.set_color("font_color",bar,ThemeParser.parse_color(frag,"color",std_colors[CO_DEFAULT_FG]))
+	theme.set_font("font",bar,std_font)
 
 
 func set_default_glyphs(data:Dictionary)->void:
@@ -367,7 +392,7 @@ func set_default_glyphs(data:Dictionary)->void:
 
 func set_input_styles(data:Dictionary,key:String)->void:
 	var frag:Dictionary=ThemeParser.typesafe_get(data,key,{})
-	theme.set_font("font","LineEdit",font_std)
+	theme.set_font("font","LineEdit",std_font)
 	theme.set_color("font_color","LineEdit",ThemeParser.parse_color(ThemeParser.typesafe_get(frag,"normal",{}),"color",std_colors[CO_DEFAULT_FG]))
 	theme.set_color("font_color_selected","LineEdit",std_colors[CO_DEFAULT_BG])
 	theme.set_color("selection_color","LineEdit",std_colors[CO_DEFAULT_FG])
@@ -392,7 +417,7 @@ func parse_spacing(data:Dictionary,defaults:Array)->Dictionary:
 
 func set_itemlist_styles(data:Dictionary,key:String)->void:
 	var frag:Dictionary=ThemeParser.typesafe_get(data,key,{})
-	theme.set_font("font","ItemList",font_std)
+	theme.set_font("font","ItemList",std_font)
 	if frag.has("background"):
 		theme.set_stylebox("bg","ItemList",ThemeParser.create_stylebox(frag,"background",button_colorsets[BS_NORMAL],panel_st[BS_NORMAL]))
 		theme.set_color("font_color","ItemList",ThemeParser.parse_color(ThemeParser.typesafe_get(frag,"background",{}),"color",std_colors[CO_DEFAULT_FG]))
@@ -436,16 +461,16 @@ func set_default_colors(data:Dictionary)->Dictionary:
 func set_default_font(data:Dictionary)->void:
 	var frag:Dictionary=ThemeParser.typesafe_get(data,"font",{})
 	if data.has("font"):
-		font_std=DynamicFont.new()
+		std_font=DynamicFont.new()
 		var dfd:DynamicFontData=load("res://theme/"+ThemeParser.typesafe_get(frag,"file",""))
 		if dfd==null:
 			dfd=load("res://theme/DejaVuSansMono-Bold.ttf")
-		font_std.font_data=dfd
-		font_std.size=ThemeParser.typesafe_get(frag,"size",14.0)
+		std_font.font_data=dfd
+		std_font.size=ThemeParser.typesafe_get(frag,"size",14.0)
 
 
 func set_popup_styles(data:Dictionary)->void:
-	theme.set_font("font","PopupMenu",font_std)
+	theme.set_font("font","PopupMenu",std_font)
 	theme.set_color("font_color","PopupMenu",std_colors[CO_DEFAULT_FG])
 	theme.set_color("font_color_hover","PopupMenu",std_colors[CO_DEFAULT_BG])
 	theme.set_constant("hseparation","PopupMenu",0.0)
@@ -466,7 +491,7 @@ func set_popup_styles(data:Dictionary)->void:
 
 func set_tab_styles(data:Dictionary)->void:
 	theme.set_stylebox("panel","TabContainer",panel_st[BS_NORMAL])
-	theme.set_font("font","TabContainer",font_std)
+	theme.set_font("font","TabContainer",std_font)
 	if data.has("tabs"):
 		var frag:Dictionary=ThemeParser.typesafe_get(data,"tabs",{})
 		var tab_st:StyleBox=panel_st[BS_NORMAL]
@@ -488,7 +513,7 @@ func set_tab_styles(data:Dictionary)->void:
 		theme.set_color("font_color_bg","TabContainer",std_colors[CO_DEFAULT_FG])
 		theme.set_stylebox("tab_fg","TabContainer",panel_st[BS_NORMAL])
 		theme.set_color("font_color_fg","TabContainer",std_colors[CO_DEFAULT_FG])
-		theme.set_font("font","TabContainer",font_std)
+		theme.set_font("font","TabContainer",std_font)
 
 
 func set_button_styles(tag:String,style:String,data:Dictionary)->void:

@@ -1,8 +1,12 @@
 extends CanvasLayer
 
 
+var real_theme:Theme
+
 func _ready()->void:
+	real_theme=THEME.get("theme")
 	$C/Bar.hide()
+	$C/Bar.theme=real_theme
 
 func start()->void:
 	$C/Bar.value=0.0

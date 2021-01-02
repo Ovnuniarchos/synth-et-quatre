@@ -98,8 +98,6 @@ percent_visible = false
 script = ExtResource( 5 )
 big_step = 4.0
 huge_step = 16.0
-_decimals = 0
-suffix = ""
 
 [node name="Sep" type="ReferenceRect" parent="Params/Wave"]
 margin_left = 496.0
@@ -162,8 +160,6 @@ percent_visible = false
 script = ExtResource( 5 )
 big_step = 4.0
 huge_step = 16.0
-_decimals = 0
-suffix = ""
 
 [node name="Sep" type="ReferenceRect" parent="Params/ADSR"]
 margin_left = 498.0
@@ -191,8 +187,6 @@ percent_visible = false
 script = ExtResource( 5 )
 big_step = 4.0
 huge_step = 16.0
-_decimals = 0
-suffix = ""
 
 [node name="SLLabel" type="Label" parent="Params/ADSR"]
 margin_top = 18.0
@@ -214,8 +208,6 @@ percent_visible = false
 script = ExtResource( 5 )
 big_step = 4.0
 huge_step = 16.0
-_decimals = 0
-suffix = ""
 
 [node name="Sep2" type="ReferenceRect" parent="Params/ADSR"]
 margin_left = 498.0
@@ -246,8 +238,6 @@ percent_visible = false
 script = ExtResource( 5 )
 big_step = 4.0
 huge_step = 16.0
-_decimals = 0
-suffix = ""
 
 [node name="RRLabel" type="Label" parent="Params/ADSR"]
 margin_top = 39.0
@@ -269,8 +259,6 @@ percent_visible = false
 script = ExtResource( 5 )
 big_step = 4.0
 huge_step = 16.0
-_decimals = 0
-suffix = ""
 
 [node name="Sep3" type="ReferenceRect" parent="Params/ADSR"]
 margin_left = 498.0
@@ -316,8 +304,6 @@ percent_visible = false
 script = ExtResource( 5 )
 big_step = 4.0
 huge_step = 16.0
-_decimals = 0
-suffix = ""
 
 [node name="Sep4" type="ReferenceRect" parent="Params/ADSR"]
 margin_left = 498.0
@@ -363,8 +349,6 @@ percent_visible = false
 script = ExtResource( 5 )
 big_step = 1.0
 huge_step = 1.0
-_decimals = 0
-suffix = ""
 
 [node name="ReferenceRect3" type="ReferenceRect" parent="Params"]
 margin_top = 220.0
@@ -405,8 +389,6 @@ percent_visible = false
 script = ExtResource( 5 )
 big_step = 2.0
 huge_step = 4.0
-_decimals = 0
-suffix = ""
 
 [node name="Sep" type="ReferenceRect" parent="Params/Frequency"]
 margin_left = 500.0
@@ -436,8 +418,6 @@ percent_visible = false
 script = ExtResource( 5 )
 big_step = 2.0
 huge_step = 4.0
-_decimals = 0
-suffix = ""
 
 [node name="Detune" type="HBoxContainer" parent="Params"]
 margin_top = 276.0
@@ -464,10 +444,6 @@ max_value = 12000.0
 step = 1.0
 percent_visible = false
 script = ExtResource( 5 )
-big_step = 10.0
-huge_step = 100.0
-_decimals = 0
-suffix = ""
 
 [node name="FMS" type="HBoxContainer" parent="Params"]
 margin_top = 294.0
@@ -493,10 +469,6 @@ max_value = 12000.0
 step = 1.0
 percent_visible = false
 script = ExtResource( 5 )
-big_step = 10.0
-huge_step = 100.0
-_decimals = 0
-suffix = ""
 
 [node name="Sep2" type="ReferenceRect" parent="Params"]
 margin_top = 312.0

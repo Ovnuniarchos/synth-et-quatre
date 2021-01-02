@@ -28,13 +28,10 @@ __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[node name="ReferenceRect" type="ReferenceRect" parent="Main"]
-margin_right = 1024.0
-margin_bottom = 16.0
-rect_min_size = Vector2( 0, 16 )
+[node name="Menu" parent="Main" instance=ExtResource( 10 )]
 
 [node name="Tabs" type="TabContainer" parent="Main"]
-margin_top = 20.0
+margin_top = 38.0
 margin_right = 1024.0
 margin_bottom = 532.0
 size_flags_vertical = 3
@@ -76,10 +73,6 @@ left_color = Color( 1, 0, 0, 1 )
 right_color = Color( 0, 1, 0, 1 )
 dc_line = false
 dc_line_color = Color( 1, 1, 1, 0.25098 )
-
-[node name="Menu" parent="." instance=ExtResource( 10 )]
-margin_right = 14.0
-margin_bottom = 14.0
 
 [node name="PlayControls" parent="." instance=ExtResource( 2 )]
 

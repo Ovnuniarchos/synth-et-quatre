@@ -1,8 +1,10 @@
-tool extends PanelContainer
+extends PanelContainer
+
 
 const FILES_SE4=PoolStringArray(["*.se4 ; SynthEtQuatre song"])
 const FILES_SI4=PoolStringArray(["*.si4 ; SynthEtQuatre instrument"])
 const FILES_WAV=PoolStringArray(["*.wav ; WAV file"])
+
 
 var IO_SONG:IOSong=IOSong.new()
 var IO_WAV_EXPORT:IOWavExport=IOWavExport.new()
@@ -14,48 +16,17 @@ enum FILE_MODE{LOAD_SONG,LOAD_INST,SAVE_SONG,SAVE_WAV,SAVE_INST}
 
 var file_mode:int
 var real_theme:Theme
-var base_height:float
-var popup_on:bool
-var bar_on:bool
 
 
 func _ready()->void:
-	popup_on=false
-	bar_on=false
-	set_popup($CC/HBC/Cleanup.get_popup(),"_on_Cleanup_id_pressed")
-	set_popup($CC/HBC/Save.get_popup(),"_on_Save_id_pressed")
-	set_popup($CC/HBC/Load.get_popup(),"_on_Load_id_pressed")
-	real_theme=THEME.get("theme")
-	print(real_theme)
-	rect_size.y=0.0
-	base_height=$CC/HBC.rect_size.y
+	$HBC/Cleanup.get_popup().connect("id_pressed",self,"_on_Cleanup_id_pressed")
+	$HBC/Save.get_popup().connect("id_pressed",self,"_on_Save_id_pressed")
+	$HBC/Load.get_popup().connect("id_pressed",self,"_on_Load_id_pressed")
+
 
 func set_popup(pu:Popup,sel:String)->void:
 	pu.connect("id_pressed",self,sel)
-	pu.connect("popup_hide",self,"_on_popup_hide")
-	pu.connect("about_to_show",self,"_on_popup_about_to_show")
 
-#
-
-func _on_mouse_entered()->void:
-	var sb:StyleBox=real_theme.get_stylebox("panel","PanelContainer")
-	rect_size.y=base_height+sb.get_center_size().y
-	bar_on=true
-
-func _on_mouse_exited()->void:
-	bar_on=false
-	if !popup_on:
-		rect_size.y=0
-
-func _on_popup_about_to_show():
-	popup_on=true
-
-func _on_popup_hide():
-	popup_on=false
-	if !bar_on:
-		_on_mouse_exited()
-
-#
 
 func _on_New_pressed()->void:
 	var song:Song=Song.new()
@@ -63,7 +34,6 @@ func _on_New_pressed()->void:
 	AUDIO.tracker.reset()
 	GLOBALS.set_song(song)
 
-#
 
 func _on_file_selected(path:String)->void:
 	var cfg_dir:Array
@@ -85,6 +55,7 @@ func _on_file_selected(path:String)->void:
 			IO_INSTRUMENT.obj_save(path)
 	CONFIG.set_value(cfg_dir,path.get_base_dir())
 
+
 func _on_files_selected(paths:PoolStringArray)->void:
 	var cfg_dir:Array
 	match file_mode:
@@ -100,16 +71,13 @@ func _on_FileDialog_visibility_changed()->void:
 	else:
 		FADER.close_dialog($FileDialog)
 
-#
 
 func _on_Load_id_pressed(id:int)->void:
-	popup_on=false
-	_on_mouse_exited()
-	match id:
-		0:
-			load_song()
-		1:
-			load_instrument()
+	if id==0:
+		load_song()
+	elif id==1:
+		load_instrument()
+
 
 func load_song()->void:
 	file_mode=FILE_MODE.LOAD_SONG
@@ -121,6 +89,7 @@ func load_song()->void:
 	$FileDialog.set_as_toplevel(true)
 	$FileDialog.popup_centered_ratio()
 
+
 func load_instrument()->void:
 	file_mode=FILE_MODE.LOAD_INST
 	$FileDialog.current_dir=CONFIG.get_value(CONFIG.CURR_INST_DIR)
@@ -131,18 +100,15 @@ func load_instrument()->void:
 	$FileDialog.set_as_toplevel(true)
 	$FileDialog.popup_centered_ratio()
 
-#
 
 func _on_Save_id_pressed(id:int)->void:
-	popup_on=false
-	_on_mouse_exited()
-	match id:
-		0:
-			save_song()
-		1:
-			save_wave()
-		2:
-			save_instrument()
+	if id==0:
+		save_song()
+	elif id==1:
+		save_wave()
+	elif id==2:
+		save_instrument()
+
 
 func save_song()->void:
 	file_mode=FILE_MODE.SAVE_SONG
@@ -154,6 +120,7 @@ func save_song()->void:
 	$FileDialog.set_as_toplevel(true)
 	$FileDialog.popup_centered_ratio()
 
+
 func save_wave()->void:
 	file_mode=FILE_MODE.SAVE_WAV
 	$FileDialog.current_dir=CONFIG.get_value(CONFIG.CURR_EXPORT_DIR)
@@ -163,6 +130,7 @@ func save_wave()->void:
 	$FileDialog.current_file=""
 	$FileDialog.set_as_toplevel(true)
 	$FileDialog.popup_centered_ratio()
+
 
 func save_instrument()->void:
 	file_mode=FILE_MODE.SAVE_INST
@@ -174,11 +142,8 @@ func save_instrument()->void:
 	$FileDialog.set_as_toplevel(true)
 	$FileDialog.popup_centered_ratio()
 
-#
 
 func _on_Cleanup_id_pressed(id:int)->void:
-	popup_on=false
-	_on_mouse_exited()
 	AUDIO.tracker.stop()
 	if id==0:
 		GLOBALS.song.clean_patterns()

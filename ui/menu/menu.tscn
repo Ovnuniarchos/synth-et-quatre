@@ -1,72 +1,74 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://ui/menu/menu.gd" type="Script" id=1]
-[ext_resource path="res://ui/widgets/clip_container.gd" type="Script" id=2]
 
 [node name="Menu" type="PanelContainer"]
-anchor_right = 1.0
+margin_right = 1024.0
+margin_bottom = 34.0
 size_flags_horizontal = 3
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CC" type="Container" parent="."]
-rect_clip_content = true
-size_flags_horizontal = 3
-size_flags_vertical = 3
-script = ExtResource( 2 )
-
-[node name="HBC" type="HBoxContainer" parent="CC"]
-margin_right = 282.0
-margin_bottom = 20.0
+[node name="HBC" type="HBoxContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1017.0
+margin_bottom = 27.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 16
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="New" type="Button" parent="CC/HBC"]
+[node name="New" type="Button" parent="HBC"]
 margin_right = 40.0
 margin_bottom = 20.0
 mouse_filter = 1
 text = "New"
 flat = true
 
-[node name="S" type="ReferenceRect" parent="CC/HBC"]
+[node name="S" type="ReferenceRect" parent="HBC"]
 margin_left = 56.0
 margin_right = 64.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 8, 0 )
 mouse_filter = 2
 
-[node name="Load" type="MenuButton" parent="CC/HBC"]
+[node name="Load" type="MenuButton" parent="HBC"]
 margin_left = 80.0
 margin_right = 122.0
 margin_bottom = 20.0
+focus_mode = 2
 mouse_filter = 1
 text = "Load"
 items = [ "Load song", null, 0, false, false, 0, 0, null, "", false, "Load instrument", null, 0, false, false, 1, 0, null, "", false ]
 switch_on_hover = true
 
-[node name="Save" type="MenuButton" parent="CC/HBC"]
+[node name="Save" type="MenuButton" parent="HBC"]
 margin_left = 138.0
 margin_right = 179.0
 margin_bottom = 20.0
+focus_mode = 2
 mouse_filter = 1
 text = "Save"
 items = [ "Save song", null, 0, false, false, 0, 0, null, "", false, "Save instrument", null, 0, false, false, 2, 0, null, "", false, "", null, 0, false, true, -1, 0, null, "", true, "Save WAV", null, 0, false, false, 1, 0, null, "", false ]
 switch_on_hover = true
 
-[node name="S2" type="ReferenceRect" parent="CC/HBC"]
+[node name="S2" type="ReferenceRect" parent="HBC"]
 margin_left = 195.0
 margin_right = 203.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 8, 0 )
 mouse_filter = 2
 
-[node name="Cleanup" type="MenuButton" parent="CC/HBC"]
+[node name="Cleanup" type="MenuButton" parent="HBC"]
 margin_left = 219.0
 margin_right = 282.0
 margin_bottom = 20.0
+focus_mode = 2
 mouse_filter = 1
 text = "Cleanup"
 items = [ "Clean patterns", null, 0, false, false, 0, 0, null, "", false, "Clean instruments", null, 0, false, false, 1, 0, null, "", false, "Clean waves", null, 0, false, false, 2, 0, null, "", false, "", null, 0, false, true, -1, 0, null, "", true, "Clean all", null, 0, false, false, 3, 0, null, "", false ]
@@ -82,11 +84,7 @@ filters = PoolStringArray( "*.se4 ; SynthEtQuatre song" )
 current_dir = "/home/jordi/godot/SynthEtQuatre"
 current_path = "/home/jordi/godot/SynthEtQuatre/"
 
-[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
-[connection signal="mouse_entered" from="CC" to="." method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="CC" to="." method="_on_mouse_exited"]
-[connection signal="pressed" from="CC/HBC/New" to="." method="_on_New_pressed"]
+[connection signal="pressed" from="HBC/New" to="." method="_on_New_pressed"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_selected"]
 [connection signal="files_selected" from="FileDialog" to="." method="_on_files_selected"]
 [connection signal="visibility_changed" from="FileDialog" to="." method="_on_FileDialog_visibility_changed"]

@@ -162,19 +162,24 @@ var default_theme:Dictionary={
 	"panel":{
 		"type":"flat",
 		"border-width":[1.0,2.0,2.0,1.0],
+		"corner-radius":4.0,
 		"margin":4.0
 	},
 	"tab":{
 		"normal":{
 			"type":"flat",
-			"border-width":1.0,
+			"border-width":[1.0,1.0,0.0],
+			"border":"red",
+			"corner-radius":[4.0,4.0,0.0,0.0],
 			"margin":4.0
 		},
 		"selected":{
 			"type":"flat",
-			"border-width":2.0,
-			"margin":4.0
+			"background":"white",
+			"border":"#666666",
+			"border-width":[2.0,2.0,0.0],
 		},
+		"overlap":1.0
 	},
 	"button":{
 		"normal":{
@@ -511,6 +516,9 @@ func set_tab_styles(data:Dictionary)->void:
 			tab_st=ThemeParser.create_stylebox(frag,TB_NORMAL,button_colorsets[BS_NORMAL],panel_st[BS_NORMAL])
 		else:
 			tab_st=panel_st[BS_NORMAL]
+		if frag.has("overlap"):
+			tab_st=tab_st.duplicate()
+			tab_st.expand_margin_bottom=ThemeParser.typesafe_get(frag,"overlap",0.0)
 		theme.set_stylebox("tab_bg","TabContainer",tab_st)
 		theme.set_color("font_color_bg","TabContainer",tab_cl)
 		if frag.has("selected"):

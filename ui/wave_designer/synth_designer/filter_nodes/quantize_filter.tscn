@@ -34,7 +34,9 @@ custom_constants/vseparation = 2
 custom_constants/hseparation = 8
 columns = 2
 
-[node name="LabelSteps" type="Label" parent="VBC/Params"]
+[node name="LabelSteps" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_right = 49.0
 margin_bottom = 14.0
 text = "Steps"
@@ -55,7 +57,9 @@ script = ExtResource( 3 )
 big_step = 4.0
 huge_step = 8.0
 
-[node name="LabelVol" type="Label" parent="VBC/Params"]
+[node name="LabelVol" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_top = 16.0
 margin_right = 49.0
 margin_bottom = 30.0
@@ -69,7 +73,7 @@ margin_left = 57.0
 margin_top = 16.0
 margin_right = 156.0
 margin_bottom = 30.0
-rect_min_size = Vector2( 37, 14 )
+rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
 min_value = -100.0
@@ -92,7 +96,9 @@ margin_right = 156.0
 margin_bottom = 56.0
 rect_min_size = Vector2( 0, 24 )
 
-[node name="LabelOutput" type="Label" parent="VBC/Params"]
+[node name="LabelOutput" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_top = 61.0
 margin_right = 49.0
 margin_bottom = 75.0
@@ -107,7 +113,9 @@ text = "Off"
 items = [ "Off", null, false, 0, null, "Replace", null, false, 1, null, "Add", null, false, 2, null, "AM", null, false, 4, null, "XM", null, false, 5, null ]
 selected = 0
 
-[node name="LabelFrom" type="Label" parent="VBC/Params"]
+[node name="LabelFrom" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_top = 80.0
 margin_right = 49.0
 margin_bottom = 94.0
@@ -118,7 +126,7 @@ margin_left = 57.0
 margin_top = 80.0
 margin_right = 156.0
 margin_bottom = 94.0
-rect_min_size = Vector2( 32, 14 )
+rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
 min_value = -1.0
@@ -128,7 +136,9 @@ script = ExtResource( 3 )
 big_step = 1.0
 huge_step = 1.0
 
-[node name="LabelAM" type="Label" parent="VBC/Params"]
+[node name="LabelAM" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_top = 96.0
 margin_right = 49.0
 margin_bottom = 110.0
@@ -139,7 +149,7 @@ margin_left = 57.0
 margin_top = 96.0
 margin_right = 156.0
 margin_bottom = 110.0
-rect_min_size = Vector2( 37, 14 )
+rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
 min_value = -100.0
@@ -149,7 +159,9 @@ script = ExtResource( 3 )
 big_step = 5.0
 huge_step = 10.0
 
-[node name="LabelXM" type="Label" parent="VBC/Params"]
+[node name="LabelXM" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_top = 112.0
 margin_right = 49.0
 margin_bottom = 126.0
@@ -163,7 +175,7 @@ margin_left = 57.0
 margin_top = 112.0
 margin_right = 156.0
 margin_bottom = 126.0
-rect_min_size = Vector2( 37, 14 )
+rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
 min_value = -100.0

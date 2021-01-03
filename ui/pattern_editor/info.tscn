@@ -28,7 +28,9 @@ margin_bottom = 586.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="LabelTitle" type="Label" parent="SC/VBC"]
+[node name="LabelTitle" type="Label" parent="SC/VBC" groups=[
+"Label",
+]]
 margin_right = 1010.0
 margin_bottom = 14.0
 text = "Title"
@@ -39,7 +41,9 @@ margin_right = 1010.0
 margin_bottom = 42.0
 size_flags_horizontal = 3
 
-[node name="LabelAuthor" type="Label" parent="SC/VBC"]
+[node name="LabelAuthor" type="Label" parent="SC/VBC" groups=[
+"Label",
+]]
 margin_top = 46.0
 margin_right = 1010.0
 margin_bottom = 60.0
@@ -64,7 +68,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LabelOctave" type="Label" parent="SC/VBC/GC"]
+[node name="LabelOctave" type="Label" parent="SC/VBC/GC" groups=[
+"Label",
+]]
 margin_top = 18.0
 margin_right = 96.0
 margin_bottom = 32.0
@@ -74,6 +80,7 @@ text = "Octave"
 margin_left = 104.0
 margin_right = 1010.0
 margin_bottom = 51.0
+rect_min_size = Vector2( 25, 14 )
 size_flags_horizontal = 7
 size_flags_vertical = 7
 min_value = -1.0
@@ -84,7 +91,9 @@ script = ExtResource( 2 )
 big_step = 1.0
 huge_step = 1.0
 
-[node name="LabelStep" type="Label" parent="SC/VBC/GC"]
+[node name="LabelStep" type="Label" parent="SC/VBC/GC" groups=[
+"Label",
+]]
 margin_top = 73.0
 margin_right = 96.0
 margin_bottom = 87.0
@@ -95,6 +104,7 @@ margin_left = 104.0
 margin_top = 55.0
 margin_right = 1010.0
 margin_bottom = 106.0
+rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 7
 size_flags_vertical = 7
 max_value = 256.0
@@ -105,7 +115,9 @@ script = ExtResource( 2 )
 big_step = 2.0
 huge_step = 8.0
 
-[node name="LabelVelocity" type="Label" parent="SC/VBC/GC"]
+[node name="LabelVelocity" type="Label" parent="SC/VBC/GC" groups=[
+"Label",
+]]
 margin_top = 128.0
 margin_right = 96.0
 margin_bottom = 142.0
@@ -116,6 +128,7 @@ margin_left = 104.0
 margin_top = 110.0
 margin_right = 1010.0
 margin_bottom = 161.0
+rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 7
 size_flags_vertical = 7
 max_value = 255.0
@@ -126,7 +139,9 @@ script = ExtResource( 2 )
 big_step = 4.0
 huge_step = 16.0
 
-[node name="LabelTicksSec" type="Label" parent="SC/VBC/GC"]
+[node name="LabelTicksSec" type="Label" parent="SC/VBC/GC" groups=[
+"Label",
+]]
 margin_top = 183.0
 margin_right = 96.0
 margin_bottom = 197.0
@@ -137,6 +152,7 @@ margin_left = 104.0
 margin_top = 165.0
 margin_right = 1010.0
 margin_bottom = 216.0
+rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 7
 size_flags_vertical = 7
 min_value = 1.0
@@ -148,7 +164,9 @@ script = ExtResource( 2 )
 big_step = 4.0
 huge_step = 16.0
 
-[node name="LabelTicksRow" type="Label" parent="SC/VBC/GC"]
+[node name="LabelTicksRow" type="Label" parent="SC/VBC/GC" groups=[
+"Label",
+]]
 margin_top = 238.0
 margin_right = 96.0
 margin_bottom = 252.0
@@ -159,6 +177,7 @@ margin_left = 104.0
 margin_top = 220.0
 margin_right = 1010.0
 margin_bottom = 271.0
+rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 7
 size_flags_vertical = 7
 min_value = 1.0
@@ -170,7 +189,9 @@ script = ExtResource( 2 )
 big_step = 4.0
 huge_step = 16.0
 
-[node name="LabelRowsPat" type="Label" parent="SC/VBC/GC"]
+[node name="LabelRowsPat" type="Label" parent="SC/VBC/GC" groups=[
+"Label",
+]]
 margin_top = 293.0
 margin_right = 96.0
 margin_bottom = 307.0
@@ -181,6 +202,7 @@ margin_left = 104.0
 margin_top = 275.0
 margin_right = 1010.0
 margin_bottom = 326.0
+rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 7
 size_flags_vertical = 7
 min_value = 16.0
@@ -192,7 +214,9 @@ script = ExtResource( 2 )
 big_step = 2.0
 huge_step = 4.0
 
-[node name="LabelChannels" type="Label" parent="SC/VBC/GC"]
+[node name="LabelChannels" type="Label" parent="SC/VBC/GC" groups=[
+"Label",
+]]
 margin_top = 348.0
 margin_right = 96.0
 margin_bottom = 362.0
@@ -203,6 +227,7 @@ margin_left = 104.0
 margin_top = 330.0
 margin_right = 1010.0
 margin_bottom = 381.0
+rect_min_size = Vector2( 28, 14 )
 size_flags_horizontal = 7
 size_flags_vertical = 7
 min_value = 1.0
@@ -214,7 +239,9 @@ script = ExtResource( 2 )
 big_step = 1.0
 huge_step = 1.0
 
-[node name="LabelMinHlite" type="Label" parent="SC/VBC/GC"]
+[node name="LabelMinHlite" type="Label" parent="SC/VBC/GC" groups=[
+"Label",
+]]
 margin_top = 403.0
 margin_right = 96.0
 margin_bottom = 417.0
@@ -225,6 +252,7 @@ margin_left = 104.0
 margin_top = 385.0
 margin_right = 1010.0
 margin_bottom = 436.0
+rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 7
 size_flags_vertical = 7
 min_value = 2.0
@@ -236,7 +264,9 @@ script = ExtResource( 2 )
 big_step = 2.0
 huge_step = 8.0
 
-[node name="LabelMajHlite" type="Label" parent="SC/VBC/GC"]
+[node name="LabelMajHlite" type="Label" parent="SC/VBC/GC" groups=[
+"Label",
+]]
 margin_top = 458.0
 margin_right = 96.0
 margin_bottom = 472.0
@@ -247,6 +277,7 @@ margin_left = 104.0
 margin_top = 440.0
 margin_right = 1010.0
 margin_bottom = 491.0
+rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 7
 size_flags_vertical = 7
 min_value = 2.0

@@ -34,7 +34,9 @@ custom_constants/vseparation = 2
 custom_constants/hseparation = 8
 columns = 2
 
-[node name="LabelUClampOn" type="Label" parent="VBC/Params"]
+[node name="LabelUClampOn" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_top = 5.0
 margin_right = 54.0
 margin_bottom = 19.0
@@ -45,7 +47,9 @@ margin_left = 62.0
 margin_right = 156.0
 margin_bottom = 24.0
 
-[node name="LabelUClamp" type="Label" parent="VBC/Params"]
+[node name="LabelUClamp" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_top = 26.0
 margin_right = 54.0
 margin_bottom = 40.0
@@ -56,7 +60,7 @@ margin_left = 62.0
 margin_top = 26.0
 margin_right = 156.0
 margin_bottom = 40.0
-rect_min_size = Vector2( 37, 14 )
+rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
 min_value = -100.0
@@ -67,7 +71,9 @@ script = ExtResource( 3 )
 big_step = 5.0
 huge_step = 10.0
 
-[node name="LabelLClampOn" type="Label" parent="VBC/Params"]
+[node name="LabelLClampOn" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_top = 47.0
 margin_right = 54.0
 margin_bottom = 61.0
@@ -79,7 +85,9 @@ margin_top = 42.0
 margin_right = 156.0
 margin_bottom = 66.0
 
-[node name="LabelLClamp" type="Label" parent="VBC/Params"]
+[node name="LabelLClamp" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_top = 68.0
 margin_right = 54.0
 margin_bottom = 82.0
@@ -90,7 +98,7 @@ margin_left = 62.0
 margin_top = 68.0
 margin_right = 156.0
 margin_bottom = 82.0
-rect_min_size = Vector2( 37, 14 )
+rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
 min_value = -100.0
@@ -101,7 +109,9 @@ script = ExtResource( 3 )
 big_step = 5.0
 huge_step = 10.0
 
-[node name="LabelVol" type="Label" parent="VBC/Params"]
+[node name="LabelVol" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_top = 84.0
 margin_right = 54.0
 margin_bottom = 98.0
@@ -115,7 +125,7 @@ margin_left = 62.0
 margin_top = 84.0
 margin_right = 156.0
 margin_bottom = 98.0
-rect_min_size = Vector2( 37, 14 )
+rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
 min_value = -100.0
@@ -138,7 +148,9 @@ margin_right = 156.0
 margin_bottom = 124.0
 rect_min_size = Vector2( 0, 24 )
 
-[node name="LabelOutput" type="Label" parent="VBC/Params"]
+[node name="LabelOutput" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_top = 129.0
 margin_right = 54.0
 margin_bottom = 143.0
@@ -153,7 +165,9 @@ text = "Off"
 items = [ "Off", null, false, 0, null, "Replace", null, false, 1, null, "Add", null, false, 2, null, "AM", null, false, 4, null, "XM", null, false, 5, null ]
 selected = 0
 
-[node name="LabelFrom" type="Label" parent="VBC/Params"]
+[node name="LabelFrom" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_top = 148.0
 margin_right = 54.0
 margin_bottom = 162.0
@@ -164,7 +178,7 @@ margin_left = 62.0
 margin_top = 148.0
 margin_right = 156.0
 margin_bottom = 162.0
-rect_min_size = Vector2( 32, 14 )
+rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
 min_value = -1.0
@@ -174,7 +188,9 @@ script = ExtResource( 3 )
 big_step = 1.0
 huge_step = 1.0
 
-[node name="LabelAM" type="Label" parent="VBC/Params"]
+[node name="LabelAM" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_top = 164.0
 margin_right = 54.0
 margin_bottom = 178.0
@@ -185,7 +201,7 @@ margin_left = 62.0
 margin_top = 164.0
 margin_right = 156.0
 margin_bottom = 178.0
-rect_min_size = Vector2( 37, 14 )
+rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
 min_value = -100.0
@@ -195,7 +211,9 @@ script = ExtResource( 3 )
 big_step = 5.0
 huge_step = 10.0
 
-[node name="LabelXM" type="Label" parent="VBC/Params"]
+[node name="LabelXM" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_top = 180.0
 margin_right = 54.0
 margin_bottom = 194.0
@@ -209,7 +227,7 @@ margin_left = 62.0
 margin_top = 180.0
 margin_right = 156.0
 margin_bottom = 194.0
-rect_min_size = Vector2( 37, 14 )
+rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
 min_value = -100.0

@@ -84,6 +84,7 @@ func update_values(w:SampleWave)->void:
 	$Designer/SC/VBC/GC/SamFreq.set_block_signals(false)
 	$Designer/SC/VBC/GC/Start.set_block_signals(false)
 	$Designer/SC/VBC/GC/End.set_block_signals(false)
+	$Info/HBC/LabelSizeSamples.text="%d samples"%w.size
 
 func _on_values_changed(_value:float)->void:
 	var w:SampleWave=GLOBALS.song.get_wave(curr_wave_ix) as SampleWave

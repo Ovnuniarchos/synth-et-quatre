@@ -10,9 +10,11 @@ enum{DIM_X,DIM_Y}
 const SP_HORIZONTAL:String="horizontal"
 const SP_VERTICAL:String="vertical"
 const TYPE_NUMBER:Array=[TYPE_REAL,TYPE_INT]
+const BT_UNDEFD:String=""
 const BT_FLAT:String="flat"
 const BT_BITMAP:String="bitmap"
 const BOX_TYPES:Dictionary={
+	BT_UNDEFD:-1,
 	BT_FLAT:0,
 	BT_BITMAP:1
 }
@@ -31,6 +33,14 @@ const HINT_MODES:Dictionary={
 	HM_NONE:DynamicFontData.HINTING_NONE,
 	HM_LIGHT:DynamicFontData.HINTING_LIGHT,
 	HM_NORMAL:DynamicFontData.HINTING_NORMAL
+}
+const ST_NONE:String="none"
+const ST_DROP:String="drop"
+const ST_OUTLINE:String="outline"
+const SHADOW_TYPES:Dictionary={
+	ST_NONE:0,
+	ST_DROP:1,
+	ST_OUTLINE:2
 }
 
 
@@ -141,8 +151,8 @@ static func parse_number_list(data:Dictionary,key:String,max_length:int,default:
 	return ret
 
 
-static func parse_names(name:String,names:Dictionary,default:int)->int:
-	return typesafe_get(names,name.to_lower(),default)
+static func parse_names(name:String,names:Dictionary,default_name:String)->int:
+	return typesafe_get(names,name.to_lower(),names[default_name])
 
 
 static func parse_spacing(data:Dictionary,key:String,defaults:Array)->Dictionary:
@@ -157,8 +167,8 @@ static func create_stylebox(data:Dictionary,key:String,colorset:Dictionary,defau
 	var frag:Dictionary=typesafe_get(data,key,{})
 	if frag.empty():
 		return create_sb_flat({},colorset,null) if default==null else default
-	var t:int=parse_names(typesafe_get(frag,"type",BT_FLAT),BOX_TYPES,-1)
-	if t==-1:
+	var t:int=parse_names(typesafe_get(frag,"type",BT_FLAT),BOX_TYPES,BT_UNDEFD)
+	if t==BOX_TYPES[BT_UNDEFD]:
 		if default is StyleBoxTexture:
 			t=BOX_TYPES[BT_BITMAP]
 		else:
@@ -221,8 +231,8 @@ static func create_sb_bitmap(data:Dictionary={})->StyleBoxTexture:
 	st.content_margin_bottom=values[FS_BOTTOM]
 	st.content_margin_left=values[FS_LEFT]
 	values=parse_string_list(data,SM_STRETCH,2,SM_STRETCH)
-	st.axis_stretch_horizontal=parse_names(values[0],STRETCH_MODES,STRETCH_MODES[SM_STRETCH])
-	st.axis_stretch_vertical=parse_names(values[1],STRETCH_MODES,STRETCH_MODES[SM_STRETCH])
+	st.axis_stretch_horizontal=parse_names(values[0],STRETCH_MODES,SM_STRETCH)
+	st.axis_stretch_vertical=parse_names(values[1],STRETCH_MODES,SM_STRETCH)
 	return st
 
 
@@ -235,36 +245,6 @@ static func rotate_content_margin(sb:StyleBox)->StyleBox:
 	return sb2
 
 
-static func copy_styles(theme:Theme,from:String,to:String)->void:
-	if theme==null:
-		return
-	for co in theme.get_color_list(from):
-		theme.set_color(co,to,theme.get_color(co,from))
-	for co in theme.get_constant_list(from):
-		theme.set_constant(co,to,theme.get_constant(co,from))
-	for fo in theme.get_font_list(from):
-		theme.set_font(fo,to,theme.get_font(fo,from))
-	for ic in theme.get_icon_list(from):
-		theme.set_icon(ic,to,theme.get_icon(ic,from))
-	for sb in theme.get_stylebox_list(from):
-		theme.set_stylebox(sb,to,theme.get_stylebox(sb,from))
-
-
-static func set_styles(theme:Theme,from:String,to:Control)->void:
-	if theme==null:
-		return
-	for co in theme.get_color_list(from):
-		to.add_color_override(co,theme.get_color(co,from))
-	for co in theme.get_constant_list(from):
-		to.add_constant_override(co,theme.get_constant(co,from))
-	for fo in theme.get_font_list(from):
-		to.add_font_override(fo,theme.get_font(fo,from))
-	for ic in theme.get_icon_list(from):
-		to.add_icon_override(ic,theme.get_icon(ic,from))
-	for sb in theme.get_stylebox_list(from):
-		to.add_stylebox_override(sb,theme.get_stylebox(sb,from))
-
-
 static func parse_font(data:Dictionary,tag:String,base:DynamicFont)->DynamicFont:
 	var frag:Dictionary=typesafe_get(data,tag,{})
 	if not frag.empty():
@@ -274,10 +254,10 @@ static func parse_font(data:Dictionary,tag:String,base:DynamicFont)->DynamicFont
 		fnt.font_data=dfd
 		fnt.size=typesafe_get(frag,"size",14 if base==null else base.size)
 		fnt.outline_size=typesafe_get(frag,"outline-size",0 if base==null else base.outline_size)
-		fnt.outline_color=parse_color(frag,"outline",Color.white if base==null else base.outline_color)
+		fnt.outline_color=Color.white
 		if fnt.font_data!=null:
 			fnt.font_data.antialiased=typesafe_get(frag,"antialias",true)
-			fnt.font_data.hinting=parse_names(typesafe_get(frag,"hinting",HM_NORMAL),HINT_MODES,HINT_MODES[HM_NORMAL])
+			fnt.font_data.hinting=parse_names(typesafe_get(frag,"hinting",HM_NORMAL),HINT_MODES,HM_NORMAL)
 		return fnt
 	return base
 
@@ -306,3 +286,19 @@ static func parse_glyph(data:Dictionary,default:StreamTexture)->AtlasTexture:
 	var offset:Array=parse_number_list(data,"offset",2,0.0)
 	at.margin=Rect2(offset[0]+margin[0],offset[1]+margin[1],margin[0]*2.0,margin[1]*2.0)
 	return at
+
+
+static func parse_text_styles(data:Dictionary,key:String,default:Dictionary)->Dictionary:
+	var ret:Dictionary={} if default==null else default.duplicate()
+	var frag:Dictionary=typesafe_get(data,key,{})
+	ret["font"]=parse_font(frag,"font",ret.get("font"))
+	ret["color"]=parse_color(frag,"color",ret.get("color"))
+	ret["outline"]=parse_color(frag,"outline",ret.get("outline",Color.white))
+	ret["shadow-color"]=parse_color(frag,"shadow-color",ret.get("shadow-color",Color(0)))
+	ret["shadow-offset"]=parse_number_list(frag,"shadow-offset",2,0)
+	ret["shadow-type"]=parse_names(
+		typesafe_get(frag,"shadow-type",ST_NONE),
+		SHADOW_TYPES,
+		[ST_NONE,ST_DROP,ST_OUTLINE][ret.get("shadow-type",SHADOW_TYPES[ST_NONE])]
+	)
+	return ret

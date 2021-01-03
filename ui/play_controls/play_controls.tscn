@@ -35,9 +35,8 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-accent_color = Color( 1, 2, 1, 1 )
-pressed_icon = "Stop"
-unpressed_icon = "Play"
+pressed_icon = "stop"
+unpressed_icon = "play"
 
 [node name="PlayTrack" type="Button" parent="PC/HBC"]
 margin_left = 36.0
@@ -49,9 +48,8 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-accent_color = Color( 1, 2, 1, 1 )
-pressed_icon = "Stop"
-unpressed_icon = "PlayTrack"
+pressed_icon = "stop"
+unpressed_icon = "play-track"
 
 [connection signal="toggled" from="PC/HBC/Play" to="." method="_on_Play_toggled"]
 [connection signal="toggled" from="PC/HBC/PlayTrack" to="." method="_on_PlayTrack_toggled"]

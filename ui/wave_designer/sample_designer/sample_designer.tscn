@@ -25,7 +25,9 @@ margin_right = 1017.0
 margin_bottom = 31.0
 custom_constants/separation = 4
 
-[node name="LabelName" type="Label" parent="Info/HBC"]
+[node name="LabelName" type="Label" parent="Info/HBC" groups=[
+"Label",
+]]
 margin_top = 5.0
 margin_right = 38.0
 margin_bottom = 19.0
@@ -90,7 +92,9 @@ size_flags_horizontal = 11
 size_flags_vertical = 11
 columns = 2
 
-[node name="LabelRecFreq" type="Label" parent="Designer/SC/VBC/GC"]
+[node name="LabelRecFreq" type="Label" parent="Designer/SC/VBC/GC" groups=[
+"Label",
+]]
 margin_right = 124.0
 margin_bottom = 14.0
 text = "Recorder frequency"
@@ -99,7 +103,7 @@ text = "Recorder frequency"
 margin_left = 128.0
 margin_right = 1010.0
 margin_bottom = 14.0
-rect_min_size = Vector2( 0, 14 )
+rect_min_size = Vector2( 60, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
 min_value = 1.0
@@ -109,7 +113,9 @@ value = 1.0
 percent_visible = false
 script = ExtResource( 3 )
 
-[node name="LabelSamFreq" type="Label" parent="Designer/SC/VBC/GC"]
+[node name="LabelSamFreq" type="Label" parent="Designer/SC/VBC/GC" groups=[
+"Label",
+]]
 margin_top = 18.0
 margin_right = 124.0
 margin_bottom = 32.0
@@ -120,7 +126,7 @@ margin_left = 128.0
 margin_top = 18.0
 margin_right = 1010.0
 margin_bottom = 32.0
-rect_min_size = Vector2( 0, 14 )
+rect_min_size = Vector2( 60, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
 min_value = 1.0
@@ -130,7 +136,9 @@ value = 1.0
 percent_visible = false
 script = ExtResource( 3 )
 
-[node name="LabelStart" type="Label" parent="Designer/SC/VBC/GC"]
+[node name="LabelStart" type="Label" parent="Designer/SC/VBC/GC" groups=[
+"Label",
+]]
 margin_top = 36.0
 margin_right = 124.0
 margin_bottom = 50.0
@@ -141,7 +149,7 @@ margin_left = 128.0
 margin_top = 36.0
 margin_right = 1010.0
 margin_bottom = 50.0
-rect_min_size = Vector2( 0, 14 )
+rect_min_size = Vector2( 60, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
 max_value = 192000.0
@@ -150,7 +158,9 @@ value = 1.0
 percent_visible = false
 script = ExtResource( 3 )
 
-[node name="LabelEnd" type="Label" parent="Designer/SC/VBC/GC"]
+[node name="LabelEnd" type="Label" parent="Designer/SC/VBC/GC" groups=[
+"Label",
+]]
 margin_top = 54.0
 margin_right = 124.0
 margin_bottom = 68.0
@@ -161,7 +171,7 @@ margin_left = 128.0
 margin_top = 54.0
 margin_right = 1010.0
 margin_bottom = 68.0
-rect_min_size = Vector2( 0, 14 )
+rect_min_size = Vector2( 60, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
 max_value = 192000.0

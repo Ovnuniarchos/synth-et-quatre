@@ -26,7 +26,9 @@ margin_right = 1017.0
 margin_bottom = 31.0
 custom_constants/separation = 4
 
-[node name="LabelName" type="Label" parent="Info/HBC"]
+[node name="LabelName" type="Label" parent="Info/HBC" groups=[
+"Label",
+]]
 margin_top = 5.0
 margin_right = 38.0
 margin_bottom = 19.0
@@ -44,7 +46,9 @@ margin_right = 326.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 24, 0 )
 
-[node name="LabelSize" type="Label" parent="Info/HBC"]
+[node name="LabelSize" type="Label" parent="Info/HBC" groups=[
+"Label",
+]]
 margin_left = 330.0
 margin_top = 5.0
 margin_right = 356.0
@@ -66,8 +70,6 @@ percent_visible = false
 script = ExtResource( 2 )
 big_step = 1.0
 huge_step = 1.0
-_decimals = 0
-suffix = ""
 
 [node name="LabelSizeSamples" type="Label" parent="Info/HBC"]
 margin_left = 492.0

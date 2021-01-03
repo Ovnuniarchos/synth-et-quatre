@@ -63,7 +63,9 @@ margin_right = 1010.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 16 )
 
-[node name="WaveTitle" type="Label" parent="Params"]
+[node name="WaveTitle" type="Label" parent="Params" groups=[
+"Title",
+]]
 margin_top = 44.0
 margin_right = 35.0
 margin_bottom = 58.0
@@ -77,7 +79,9 @@ margin_right = 1010.0
 margin_bottom = 82.0
 columns = 5
 
-[node name="DUCLabel" type="Label" parent="Params/Wave"]
+[node name="DUCLabel" type="Label" parent="Params/Wave" groups=[
+"Label",
+]]
 margin_top = 3.0
 margin_right = 28.0
 margin_bottom = 17.0
@@ -106,7 +110,9 @@ margin_bottom = 20.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
-[node name="WAVLabel" type="Label" parent="Params/Wave"]
+[node name="WAVLabel" type="Label" parent="Params/Wave" groups=[
+"Label",
+]]
 margin_left = 516.0
 margin_top = 3.0
 margin_right = 546.0
@@ -127,7 +133,9 @@ margin_right = 1010.0
 margin_bottom = 102.0
 rect_min_size = Vector2( 0, 16 )
 
-[node name="EnvelopeTitle" type="Label" parent="Params"]
+[node name="EnvelopeTitle" type="Label" parent="Params" groups=[
+"Title",
+]]
 margin_top = 106.0
 margin_right = 58.0
 margin_bottom = 120.0
@@ -142,7 +150,9 @@ margin_bottom = 216.0
 custom_constants/hseparation = 2
 columns = 5
 
-[node name="ARLabel" type="Label" parent="Params/ADSR"]
+[node name="ARLabel" type="Label" parent="Params/ADSR" groups=[
+"Label",
+]]
 margin_right = 28.0
 margin_bottom = 14.0
 text = "ATR"
@@ -168,7 +178,9 @@ margin_bottom = 14.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
-[node name="DRLabel" type="Label" parent="Params/ADSR"]
+[node name="DRLabel" type="Label" parent="Params/ADSR" groups=[
+"Label",
+]]
 margin_left = 516.0
 margin_right = 541.0
 margin_bottom = 14.0
@@ -188,7 +200,9 @@ script = ExtResource( 5 )
 big_step = 4.0
 huge_step = 16.0
 
-[node name="SLLabel" type="Label" parent="Params/ADSR"]
+[node name="SLLabel" type="Label" parent="Params/ADSR" groups=[
+"Label",
+]]
 margin_top = 18.0
 margin_right = 28.0
 margin_bottom = 32.0
@@ -217,7 +231,9 @@ margin_bottom = 32.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
-[node name="SRLabel" type="Label" parent="Params/ADSR"]
+[node name="SRLabel" type="Label" parent="Params/ADSR" groups=[
+"Label",
+]]
 margin_left = 516.0
 margin_top = 18.0
 margin_right = 541.0
@@ -239,7 +255,9 @@ script = ExtResource( 5 )
 big_step = 4.0
 huge_step = 16.0
 
-[node name="RRLabel" type="Label" parent="Params/ADSR"]
+[node name="RRLabel" type="Label" parent="Params/ADSR" groups=[
+"Label",
+]]
 margin_top = 39.0
 margin_right = 28.0
 margin_bottom = 53.0
@@ -268,7 +286,9 @@ margin_bottom = 56.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
-[node name="RPLabel" type="Label" parent="Params/ADSR"]
+[node name="RPLabel" type="Label" parent="Params/ADSR" groups=[
+"Label",
+]]
 margin_left = 516.0
 margin_top = 39.0
 margin_right = 541.0
@@ -284,7 +304,9 @@ text = "OFF"
 items = [ "OFF", null, false, 0, null, "Attack", null, false, 4, null, "Decay", null, false, 3, null, "Sustain", null, false, 2, null, "Release", null, false, 1, null ]
 selected = 0
 
-[node name="AMSLabel" type="Label" parent="Params/ADSR"]
+[node name="AMSLabel" type="Label" parent="Params/ADSR" groups=[
+"Label",
+]]
 margin_top = 60.0
 margin_right = 28.0
 margin_bottom = 74.0
@@ -329,7 +351,9 @@ margin_bottom = 74.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
-[node name="KSRLabel" type="Label" parent="Params/ADSR"]
+[node name="KSRLabel" type="Label" parent="Params/ADSR" groups=[
+"Label",
+]]
 margin_top = 78.0
 margin_right = 28.0
 margin_bottom = 92.0
@@ -356,7 +380,9 @@ margin_right = 1010.0
 margin_bottom = 236.0
 rect_min_size = Vector2( 0, 16 )
 
-[node name="FrequencyTitle" type="Label" parent="Params"]
+[node name="FrequencyTitle" type="Label" parent="Params" groups=[
+"Title",
+]]
 margin_top = 240.0
 margin_right = 66.0
 margin_bottom = 254.0
@@ -371,7 +397,9 @@ margin_bottom = 272.0
 custom_constants/hseparation = 2
 columns = 5
 
-[node name="MULLabel" type="Label" parent="Params/Frequency"]
+[node name="MULLabel" type="Label" parent="Params/Frequency" groups=[
+"Label",
+]]
 margin_right = 29.0
 margin_bottom = 14.0
 text = "MUL"
@@ -397,7 +425,9 @@ margin_bottom = 14.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
-[node name="DIVLabel" type="Label" parent="Params/Frequency"]
+[node name="DIVLabel" type="Label" parent="Params/Frequency" groups=[
+"Label",
+]]
 margin_left = 518.0
 margin_right = 541.0
 margin_bottom = 14.0
@@ -427,7 +457,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="DETLabel" type="Label" parent="Params/Detune"]
+[node name="DETLabel" type="Label" parent="Params/Detune" groups=[
+"Label",
+]]
 margin_right = 24.0
 margin_bottom = 14.0
 text = "DET"
@@ -453,7 +485,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="FMSLabel" type="Label" parent="Params/FMS"]
+[node name="FMSLabel" type="Label" parent="Params/FMS" groups=[
+"Label",
+]]
 margin_right = 26.0
 margin_bottom = 14.0
 text = "FMS"
@@ -476,7 +510,9 @@ margin_right = 1010.0
 margin_bottom = 328.0
 rect_min_size = Vector2( 0, 16 )
 
-[node name="LFOsTitle" type="Label" parent="Params"]
+[node name="LFOsTitle" type="Label" parent="Params" groups=[
+"Title",
+]]
 margin_top = 332.0
 margin_right = 32.0
 margin_bottom = 346.0
@@ -492,7 +528,9 @@ margin_right = 1010.0
 margin_bottom = 370.0
 size_flags_horizontal = 3
 
-[node name="AMFLabel" type="Label" parent="Params/LFOs"]
+[node name="AMFLabel" type="Label" parent="Params/LFOs" groups=[
+"Label",
+]]
 margin_top = 3.0
 margin_right = 50.0
 margin_bottom = 17.0
@@ -514,7 +552,9 @@ margin_bottom = 20.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
-[node name="FMFLabel" type="Label" parent="Params/LFOs"]
+[node name="FMFLabel" type="Label" parent="Params/LFOs" groups=[
+"Label",
+]]
 margin_left = 518.0
 margin_top = 3.0
 margin_right = 566.0

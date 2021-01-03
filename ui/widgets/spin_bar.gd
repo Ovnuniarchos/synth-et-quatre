@@ -31,9 +31,10 @@ func _ready()->void:
 	real_theme=THEME.get("theme")
 	for c in get_children():
 		remove_child(c)
-	ThemeParser.set_styles(real_theme,"SpinBar",label)
-	ThemeParser.set_styles(real_theme,"SpinBar",self)
-	var sb:StyleBox=real_theme.get_stylebox("bg","SpinBar")
+	if real_theme!=null:
+		ThemeHelper.apply_styles(real_theme,"SpinBar",label)
+		ThemeHelper.apply_styles(real_theme,"SpinBar",self)
+	var sb:StyleBox=get_stylebox("bg")
 	var f:Font=get_font("font")
 	var s0:Vector2=f.get_string_size(format_value(min_value)+"  ")
 	var s1:Vector2=f.get_string_size(format_value(max_value)+"  ")

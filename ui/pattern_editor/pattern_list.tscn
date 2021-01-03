@@ -57,7 +57,7 @@ margin_right = 144.0
 margin_bottom = 20.0
 shortcut_in_tooltip = false
 script = ExtResource( 2 )
-icon_name = "Down"
+icon_name = "arrow-down"
 
 [node name="S2" type="ReferenceRect" parent="VBC/HBC"]
 margin_left = 148.0

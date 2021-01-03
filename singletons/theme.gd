@@ -30,117 +30,8 @@ var box_colorsets:Dictionary
 var std_spacing:Dictionary
 var std_colors:Dictionary
 var std_font:DynamicFont
+var std_text_style:Dictionary
 
-# STRETCH_MODE: "stretch" | "tile" | "fit"
-# HINT_MODE: "none" | "light" | "normal"
-# COLOR_TYPE: /#?([:xdigit:]{2})?[:xdigit:]{6}/i | COLOR_NAME | array4(number) | number
-# BOX_TYPE: BOX_TYPE_FLAT | BOX_TYPE_BITMAP
-# BOX_TYPE_FLAT: {
-#  type: "flat"
-#  background: COLOR_TYPE
-#  border: COLOR_TYPE
-#  corner-radius: array4(number) | number
-#  border-width: array4(number) | number
-#  margin: array4(number) | number
-#  antialias: boolean
-# }
-# BOX_TYPE_BITMAP: {
-#  type: "bitmap"
-#  texture: string
-#  modulate: COLOR_TYPE
-#  margin: array4(number) | number
-#  border-width: array4(number) | number
-#  stretch: array2(STRETCH_MODE) | string
-# }
-# SCROLLBAR_TYPE: SCROLLBAR_TYPE_FLAT | SCROLLBAR_TYPE_BITMAP
-# SCROLLBAR_TYPE_FLAT: {
-#  type: "flat"
-#  background: COLOR_TYPE
-#  border: COLOR_TYPE
-#  corner-radius: array4(number) | number
-#  border-width: array4(number) | number
-#  antialias: boolean
-# }
-# SCROLLBAR_TYPE_BITMAP: {
-#  type: "bitmap"
-#  texture: string
-#  modulate: COLOR_TYPE
-#  margin: array4(number) | number
-#  border-width: array4(number) | number
-#  stretch: array2(STRETCH_MODE) | string
-# }
-# FONT_TYPE: {
-#  file: string
-#  size: number
-#  antialias: boolean
-#  hinting: HINT_MODE
-#  outline-size: number
-#  outline: COLOR_TYPE
-# }
-# SEPARATOR_TYPE: {
-#  color: COLOR_TYPE
-#  line-width: number
-#  margin: number
-# }
-# SPACING_TYPE: {
-#  horizontal + vertical: number
-# }
-# GLYPH_TYPE: {
-#  file: string,
-#  rect: array4(number) | number
-#  margin: array2(number) | number
-#  offset: array2(number) | number
-# }
-
-# Theme properties:
-#  colors: {
-#   default-fg + default-bg + faded-fg + faded-bg: COLOR_TYPE
-#  }
-#  glyphs: {
-#   source-file: string
-#   radio-on + radio-off: GLYPH_TYPE
-#  }
-#  spacing: SPACING_TYPE
-#  font: FONT_TYPE
-#  panel: BOX_TYPE
-#  tab:{
-#   normal + selected: {
-#    BOX_TYPE
-#    color: COLOR_TYPE
-#   }
-#   font: FONT_TYPE
-#  }
-#  button | accent-button | menu: {
-#   normal + disabled + hover + pressed: {
-#    BOX_TYPE
-#    color: COLOR_TYPE
-#   }
-#   font: FONT_TYPE
-#  }
-#  popup: {
-#   normal + hover: BOX_TYPE
-#   separator: SEPARATOR_TYPE
-#   font: FONT_TYPE
-#  }
-#  scrollbar: {
-#   normal + hover + pressed: SCROLLBAR_TYPE
-#   background: BOX_TYPE
-#  }
-#  listbox: {
-#   background + selected: BOX_TYPE
-#   separation: number
-#   font: FONT_TYPE
-#  }
-#  input: {
-#   normal + focus + disabled: BOX_TYPE
-#   input: FONT_TYPE
-#  }
-#  spinbar | progress: {
-#   background: BOX_TYPE
-#   foreground: SCROLLBAR_TYPE
-#   color: COLOR_TYPE
-#   font: FONT_TYPE
-#  }
 
 var default_theme:Dictionary={
 	"colors":{
@@ -154,86 +45,119 @@ var default_theme:Dictionary={
 	"glyphs":{
 		"source-file":"editor.png",
 		"radio-on":{
-			"rect":[12.0,114.0,12.0]
+			"rect":[12,114,12]
 		},
 		"radio-off":{
-			"rect":[0.0,114.0,12.0],
+			"rect":[0,114,12],
 		},
 		"check-on":{
-			"rect":[12.0,97.0,12.0,14.0]
+			"rect":[12,97,12,14]
 		},
 		"check-off":{
-			"rect":[0.0,97.0,12.0,14.0],
+			"rect":[0,97,12,14],
 		},
 		"arrow-up":{
-			"rect":[24.0,112.0,8.0,16.0],
-			"margin":[8.0,0.0],
-			"offset":0.0
+			"rect":[24,112,8,16],
+			"margin":[8,0]
+		},
+		"arrow-down":{
+			"rect":[32,112,8,16],
+			"margin":[8,0]
+		},
+		"arrow-left":{
+			"rect":[48,112,8,16],
+			"margin":[8,0]
+		},
+		"arrow-right":{
+			"rect":[40,112,8,16],
+			"margin":[8,0]
+		},
+		"close":{
+			"rect":[56,112,8,16],
+			"margin":[8,0]
+		},
+		"play":{
+			"rect":[96,112,16,16],
+			"margin":[2,0]
+		},
+		"play-track":{
+			"rect":[64,112,16,16],
+			"margin":[2,0]
+		},
+		"stop":{
+			"rect":[112,112,16,16],
+			"margin":[2,0]
 		}
 	},
 	"font":{
 		"file":"DejaVuSansMono-Bold.ttf",
-		"size":14.0
+		"size":14
+	},
+	"title":{
+		"font":{"size":16}
+	},
+	"label":{
+		"color":"red"
 	},
 	"panel":{
 		"type":"flat",
-		"border-width":[1.0,2.0,2.0,1.0],
-		"corner-radius":4.0,
-		"margin":4.0,
+		"border-width":[1,2,2,1],
+		"corner-radius":4,
+		"margin":4,
 		"antialias":false
 	},
 	"tab":{
 		"normal":{
 			"type":"flat",
-			"border-width":[1.0,1.0,0.0],
-			"corner-radius":[4.0,4.0,0.0,0.0],
-			"margin":4.0
+			"border-width":[1,1,0],
+			"corner-radius":[4,4,0,0],
+			"margin":4
 		},
 		"selected":{
 			"background":"white",
-			"border-width":[2.0,2.0,0.0],
+			"border-width":[2,2,0],
 		},
-		"overlap":1.0
+		"overlap":1
 	},
 	"button":{
 		"normal":{
 			"type":"flat",
-			"border-width":2.0,
-			"corner-radius":2.0,
+			"border-width":2,
+			"corner-radius":2,
 			"antialias":false,
-			"margin":3.0
+			"margin":3
 		},
 		"disabled":{},
 		"hover":{}
 	},
 	"menu":{
 		"normal":{
-			"border-width":0.0,
-			"margin":0.0
+			"border-width":0,
+			"margin":0
 		}
 	},
 	"accent-button":{
 		"normal":{
 			"type":"flat",
-			"border-width":2.0,
-			"margin":4.0
+			"border-width":2,
+			"margin":4
 		},
 		"disabled":{
 			"type":"flat",
-			"border-width":2.0,
-			"margin":4.0
+			"border-width":2,
+			"margin":4
 		},
 		"hover":{
 			"type":"flat",
-			"border-width":2.0,
-			"margin":4.0
+			"border-width":2,
+			"margin":4
 		},
 		"pressed":{
 			"type":"flat",
 			"background":"#006600",
 			"border":"#00ff00",
-			"border-width":2.0,
-			"margin":4.0,
+			"border-width":2,
+			"margin":4,
 			"color":"#00ff00"
 		}
 	},
@@ -241,49 +165,49 @@ var default_theme:Dictionary={
 		"normal":{},
 		"hover":{
 			"type":"flat",
-			"border-width":0.0
+			"border-width":0
 		},
 		"separator":{
 			"color":"black",
-			"line-width":2.0,
-			"margin":4.0
+			"line-width":2,
+			"margin":4
 		}
 	},
 	"scrollbar":{
 		"normal":{
-			"border-width":[1.0,2.0,2.0,1.0]
+			"border-width":[1,2,2,1]
 		},
 		"hover":{
-			"border-width":[1.0,2.0,2.0,1.0]
+			"border-width":[1,2,2,1]
 		},
 		"pressed":{
-			"border-width":[2.0,1.0,1.0,2.0]
+			"border-width":[2,1,1,2]
 		},
 		"background":{
-			"border-width":[2.0,1.0,1.0,2.0],
-			"margin": [6.0,0.0]
+			"border-width":[2,1,1,2],
+			"margin": [6,0]
 		}
 	},
 	"listbox":{
 		"background":{
-			"border-width":[2.0,1.0,1.0,2.0],
-			"margin":4.0
+			"border-width":[2,1,1,2],
+			"margin":4
 		},
 		"selected":{
 		},
-		"separation": 0.0
+		"separation": 0
 	},
 	"input":{
 		"normal":{
-			"border-width":[2.0,1.0,1.0,2.0],
-			"margin":4.0
+			"border-width":[2,1,1,2],
+			"margin":4
 		},
 		"focus":{},
 		"disabled":{}
 	},
 	"spinbar":{
 		"background":{
-			"margin":0.0
+			"margin":0
 		},
 		"foreground":{
 			"background":"#666677",
@@ -292,7 +216,7 @@ var default_theme:Dictionary={
 	},
 	"progress":{
 		"background":{
-			"margin":2.0
+			"margin":2
 		},
 		"foreground":{
 			"background":"#666677",
@@ -316,7 +240,7 @@ func _init()->void:
 		BS_PRESSED:{"fg":std_colors[CO_DEFAULT_FG],"bg":std_colors[CO_HOVER_FG]}
 	}
 	# Spacing
-	std_spacing=ThemeParser.parse_spacing(default_theme,"spacing",[4.0,4.0])
+	std_spacing=ThemeParser.parse_spacing(default_theme,"spacing",[4,4])
 	theme.set_constant("separation","HBoxContainer",std_spacing[ThemeParser.SP_HORIZONTAL])
 	theme.set_constant("separation","VBoxContainer",std_spacing[ThemeParser.SP_VERTICAL])
 	# Glyphs
@@ -324,10 +248,6 @@ func _init()->void:
 	# Fonts
 	std_font=ThemeParser.parse_font(default_theme,"font",null)
 	theme.set_font("default_font","",std_font)
-	# Labels
-	theme.set_font("font","Label",std_font)
-	theme.set_constant("line_spacing","Label",0.0)
-	theme.set_color("font_color","Label",theme.get_color(CO_DEFAULT_FG,"Colors"))
 	# Panels
 	panel_st[BS_NORMAL]=ThemeParser.create_stylebox(default_theme,"panel",button_colorsets[BS_NORMAL],null)
 	panel_st[BS_DISABLED]=ThemeParser.create_stylebox(default_theme,"panel",button_colorsets[BS_DISABLED],null)
@@ -341,10 +261,10 @@ func _init()->void:
 	# Standard buttons
 	set_button_styles(default_theme,"button","Button")
 	# Accent(check) buttons
-	ThemeParser.copy_styles(theme,"Button","AccentButton")
+	ThemeHelper.copy_styles(theme,"Button","AccentButton")
 	set_button_styles(default_theme,"accent-button","AccentButton")
 	# Menu buttons
-	ThemeParser.copy_styles(theme,"Button","MenuButton")
+	ThemeHelper.copy_styles(theme,"Button","MenuButton")
 	set_button_styles(default_theme,"menu","MenuButton")
 	# Check button icons
 	theme.set_icon("checked","CheckBox",theme.get_icon("check-on","Glyphs"))
@@ -366,21 +286,43 @@ func _init()->void:
 	# SpinBars
 	set_bar_styles(default_theme,"SpinBar")
 	set_bar_styles(default_theme,"ProgressBar")
+	# Labels
+	std_text_style=set_label_styles(default_theme,"text","Label",{
+		"font":std_font,
+		"color":theme.get_color(CO_DEFAULT_FG,"Colors")
+	})
+	set_label_styles(default_theme,"title","LabelTitle",std_text_style)
+	set_label_styles(default_theme,"label","LabelControl",std_text_style)
 
 
+func set_label_styles(data:Dictionary,key:String,label_type:String,default:Dictionary)->Dictionary:
+	var ret:Dictionary=ThemeParser.parse_text_styles(data,key,default)
+	theme.set_constant("line_spacing",label_type,0)
+	theme.set_font("font",label_type,ret["font"])
+	theme.set_color("font_color",label_type,ret["color"])
+	theme.set_color("font_outline_modulate",label_type,ret["outline"])
+	if ret["shadow-type"]==ThemeParser.SHADOW_TYPES[ThemeParser.ST_NONE]:
+		theme.set_color("font_color_shadow",label_type,Color(0))
+	else:
+		theme.set_color("font_color_shadow",label_type,ret["shadow-color"])
+	theme.set_constant("shadow_offset_x",label_type,ret["shadow-offset"][0])
+	theme.set_constant("shadow_offset_y",label_type,ret["shadow-offset"][1])
+	theme.set_constant("shadow_as_outline",label_type,int(ret["shadow-type"]==ThemeParser.SHADOW_TYPES[ThemeParser.ST_OUTLINE]))
+	return ret
 
-func set_bar_styles(data:Dictionary,bar:String)->void:
+
+func set_bar_styles(data:Dictionary,bar_type:String)->void:
 	var frag:Dictionary=ThemeParser.typesafe_get(data,"spinbar",{})
 	if frag.has("background"):
-		theme.set_stylebox("bg",bar,ThemeParser.create_stylebox(frag,"background",button_colorsets[BS_NORMAL],panel_st[BS_NORMAL]))
+		theme.set_stylebox("bg",bar_type,ThemeParser.create_stylebox(frag,"background",button_colorsets[BS_NORMAL],panel_st[BS_NORMAL]))
 	else:
-		theme.set_stylebox("bg",bar,theme.get_stylebox("scroll","HScrollBar"))
+		theme.set_stylebox("bg",bar_type,theme.get_stylebox("scroll","HScrollBar"))
 	if frag.has("foreground"):
-		theme.set_stylebox("fg",bar,ThemeParser.create_stylebox(frag,"foreground",box_colorsets[BS_HOVER],panel_st[BS_HOVER]))
+		theme.set_stylebox("fg",bar_type,ThemeParser.create_stylebox(frag,"foreground",box_colorsets[BS_HOVER],panel_st[BS_HOVER]))
 	else:
-		theme.set_stylebox("fg",bar,theme.get_stylebox("grabber","HScrollBar"))
-	theme.set_color("font_color",bar,ThemeParser.parse_color(frag,"color",std_colors[CO_DEFAULT_FG]))
-	theme.set_font("font",bar,ThemeParser.parse_font(frag,"font",std_font))
+		theme.set_stylebox("fg",bar_type,theme.get_stylebox("grabber","HScrollBar"))
+	theme.set_color("font_color",bar_type,ThemeParser.parse_color(frag,"color",std_colors[CO_DEFAULT_FG]))
+	theme.set_font("font",bar_type,ThemeParser.parse_font(frag,"font",std_font))
 
 
 func set_default_glyphs(data:Dictionary)->void:
@@ -428,8 +370,8 @@ func set_itemlist_styles(data:Dictionary,key:String)->void:
 		theme.set_color("font_color_selected","ItemList",std_colors[CO_DEFAULT_BG])
 	theme.set_stylebox("selected_focus","ItemList",theme.get_stylebox("selected","ItemList"))
 	theme.set_color("guide_color","ItemList",Color.transparent)
-	theme.set_constant("vseparation","ItemList",ThemeParser.typesafe_get(frag,"separation",4.0))
-	theme.set_constant("line_separation","ItemList",ThemeParser.typesafe_get(frag,"separation",4.0))
+	theme.set_constant("vseparation","ItemList",ThemeParser.typesafe_get(frag,"separation",4))
+	theme.set_constant("line_separation","ItemList",ThemeParser.typesafe_get(frag,"separation",4))
 
 
 func set_scrollbar_styles(data:Dictionary,key:String)->void:
@@ -456,8 +398,8 @@ func set_default_colors(data:Dictionary)->Dictionary:
 func set_popup_styles(data:Dictionary)->void:
 	theme.set_color("font_color","PopupMenu",std_colors[CO_DEFAULT_FG])
 	theme.set_color("font_color_hover","PopupMenu",std_colors[CO_DEFAULT_BG])
-	theme.set_constant("hseparation","PopupMenu",0.0)
-	theme.set_constant("vseparation","PopupMenu",0.0)
+	theme.set_constant("hseparation","PopupMenu",0)
+	theme.set_constant("vseparation","PopupMenu",0)
 	var frag:Dictionary=ThemeParser.typesafe_get(data,"popup",{})
 	theme.set_font("font","PopupMenu",ThemeParser.parse_font(frag,"font",std_font))
 	theme.set_stylebox("panel","PopupMenu",ThemeParser.create_stylebox(frag,"normal",button_colorsets[BS_NORMAL],panel_st[BS_NORMAL]))
@@ -465,8 +407,8 @@ func set_popup_styles(data:Dictionary)->void:
 	var sep_st:StyleBoxLine=StyleBoxLine.new()
 	frag=ThemeParser.typesafe_get(frag,"separator",{})
 	sep_st.color=ThemeParser.parse_color(frag,"color",std_colors[CO_DEFAULT_FG])
-	sep_st.thickness=ThemeParser.typesafe_get(frag,"line-width",2.0)
-	sep_st.grow_begin=-max(0.0,ThemeParser.typesafe_get(frag,"margin",2.0))
+	sep_st.thickness=ThemeParser.typesafe_get(frag,"line-width",2)
+	sep_st.grow_begin=-max(0,ThemeParser.typesafe_get(frag,"margin",2))
 	sep_st.grow_end=sep_st.grow_begin
 	theme.set_stylebox("separator","PopupMenu",sep_st)
 	theme.set_icon("radio_checked","PopupMenu",theme.get_icon("radio-on","Glyphs"))
@@ -486,7 +428,7 @@ func set_tab_styles(data:Dictionary)->void:
 			tab_st=panel_st[BS_NORMAL]
 		if frag.has("overlap"):
 			tab_st=tab_st.duplicate()
-			tab_st.expand_margin_bottom=ThemeParser.typesafe_get(frag,"overlap",0.0)
+			tab_st.expand_margin_bottom=ThemeParser.typesafe_get(frag,"overlap",0)
 		theme.set_stylebox("tab_bg","TabContainer",tab_st)
 		theme.set_color("font_color_bg","TabContainer",tab_cl)
 		if frag.has("selected"):
@@ -503,7 +445,7 @@ func set_tab_styles(data:Dictionary)->void:
 		theme.set_font("font","TabContainer",std_font)
 
 
-func set_button_styles(data:Dictionary,tag:String,node_type:String)->void:
+func set_button_styles(data:Dictionary,key:String,node_type:String)->void:
 	theme.set_stylebox("focus",node_type,EMPTY_ST)
 	var but_st:Dictionary={
 		BS_NORMAL:ThemeParser.create_sb_flat({},button_colorsets[BS_NORMAL],panel_st[BS_NORMAL])
@@ -514,16 +456,19 @@ func set_button_styles(data:Dictionary,tag:String,node_type:String)->void:
 		BS_HOVER:std_colors[CO_DEFAULT_BG],
 		BS_PRESSED:std_colors[CO_DEFAULT_BG]
 	}
-	theme.set_constant("hseparation",node_type,0.0)
-	var frag:Dictionary=ThemeParser.typesafe_get(data,tag,{})
+	theme.set_constant("hseparation",node_type,0)
+	var frag:Dictionary=ThemeParser.typesafe_get(data,key,{})
 	if not frag.empty():
 		theme.set_font("font",node_type,ThemeParser.parse_font(frag,"font",std_font))
 		for st in [BS_NORMAL,BS_DISABLED,BS_HOVER,BS_PRESSED]:
 			but_st[st]=ThemeParser.create_sb_flat({},button_colorsets[st],but_st[BS_NORMAL])
 			if frag.has(st):
 				but_st[st]=ThemeParser.create_stylebox(frag,st,button_colorsets[st],but_st[st])
-				but_cl[st]=ThemeParser.parse_color(ThemeParser.typesafe_get(frag,st,{}),"color",button_colorsets[st]["fg"])
+				var t0:Dictionary=ThemeParser.typesafe_get(frag,st,{})
+				but_cl[st]=ThemeParser.parse_color(t0,"color",button_colorsets[st]["fg"])
 	for st in but_st:
 		theme.set_stylebox(st,node_type,but_st[st])
 		theme.set_color("font_color" if st==BS_NORMAL else "font_color_"+st,node_type,but_cl[st])
+		# Undocumented (but handy) theme color
+		theme.set_color("icon_color_"+st,node_type,but_cl[st])
 

@@ -20,7 +20,7 @@ var real_theme:Theme
 
 func _ready()->void:
 	real_theme=THEME.get("theme")
-	ThemeParser.set_styles(real_theme,"MenuButton",$HBC/New)
+	ThemeHelper.apply_styles(real_theme,"MenuButton",$HBC/New)
 	set_popup($HBC/Cleanup,"_on_Cleanup_id_pressed")
 	set_popup($HBC/Save,"_on_Save_id_pressed")
 	set_popup($HBC/Load,"_on_Load_id_pressed")

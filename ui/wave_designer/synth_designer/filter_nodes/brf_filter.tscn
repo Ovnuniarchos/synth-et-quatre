@@ -34,7 +34,9 @@ custom_constants/vseparation = 2
 custom_constants/hseparation = 8
 columns = 2
 
-[node name="LabelCutoffLo" type="Label" parent="VBC/Params"]
+[node name="LabelCutoffLo" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_right = 56.0
 margin_bottom = 14.0
 text = "Cutoff Lo"
@@ -43,7 +45,7 @@ text = "Cutoff Lo"
 margin_left = 64.0
 margin_right = 156.0
 margin_bottom = 14.0
-rect_min_size = Vector2( 40, 14 )
+rect_min_size = Vector2( 56, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
 min_value = 1.0
@@ -56,7 +58,9 @@ big_step = 5.0
 huge_step = 10.0
 _decimals = 1
 
-[node name="LabelCutoffHi" type="Label" parent="VBC/Params"]
+[node name="LabelCutoffHi" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_top = 16.0
 margin_right = 56.0
 margin_bottom = 30.0
@@ -67,7 +71,7 @@ margin_left = 64.0
 margin_top = 16.0
 margin_right = 156.0
 margin_bottom = 30.0
-rect_min_size = Vector2( 40, 14 )
+rect_min_size = Vector2( 56, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
 min_value = 1.0
@@ -80,7 +84,9 @@ big_step = 5.0
 huge_step = 10.0
 _decimals = 1
 
-[node name="LabelTaps" type="Label" parent="VBC/Params"]
+[node name="LabelTaps" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_top = 32.0
 margin_right = 56.0
 margin_bottom = 46.0
@@ -91,7 +97,7 @@ margin_left = 64.0
 margin_top = 32.0
 margin_right = 156.0
 margin_bottom = 46.0
-rect_min_size = Vector2( 32, 14 )
+rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
 min_value = 1.0
@@ -103,7 +109,9 @@ script = ExtResource( 3 )
 big_step = 4.0
 huge_step = 8.0
 
-[node name="LabelVol" type="Label" parent="VBC/Params"]
+[node name="LabelVol" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_top = 48.0
 margin_right = 56.0
 margin_bottom = 62.0
@@ -117,7 +125,7 @@ margin_left = 64.0
 margin_top = 48.0
 margin_right = 156.0
 margin_bottom = 62.0
-rect_min_size = Vector2( 37, 14 )
+rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
 min_value = -100.0
@@ -140,7 +148,9 @@ margin_right = 156.0
 margin_bottom = 88.0
 rect_min_size = Vector2( 0, 24 )
 
-[node name="LabelOutput" type="Label" parent="VBC/Params"]
+[node name="LabelOutput" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_top = 93.0
 margin_right = 56.0
 margin_bottom = 107.0
@@ -155,7 +165,9 @@ text = "Off"
 items = [ "Off", null, false, 0, null, "Replace", null, false, 1, null, "Add", null, false, 2, null, "AM", null, false, 4, null, "XM", null, false, 5, null ]
 selected = 0
 
-[node name="LabelFrom" type="Label" parent="VBC/Params"]
+[node name="LabelFrom" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_top = 112.0
 margin_right = 56.0
 margin_bottom = 126.0
@@ -166,7 +178,7 @@ margin_left = 64.0
 margin_top = 112.0
 margin_right = 156.0
 margin_bottom = 126.0
-rect_min_size = Vector2( 32, 14 )
+rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
 min_value = -1.0
@@ -176,7 +188,9 @@ script = ExtResource( 3 )
 big_step = 1.0
 huge_step = 1.0
 
-[node name="LabelAM" type="Label" parent="VBC/Params"]
+[node name="LabelAM" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_top = 128.0
 margin_right = 56.0
 margin_bottom = 142.0
@@ -187,7 +201,7 @@ margin_left = 64.0
 margin_top = 128.0
 margin_right = 156.0
 margin_bottom = 142.0
-rect_min_size = Vector2( 37, 14 )
+rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
 min_value = -100.0
@@ -197,7 +211,9 @@ script = ExtResource( 3 )
 big_step = 5.0
 huge_step = 10.0
 
-[node name="LabelXM" type="Label" parent="VBC/Params"]
+[node name="LabelXM" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_top = 144.0
 margin_right = 56.0
 margin_bottom = 158.0
@@ -211,7 +227,7 @@ margin_left = 64.0
 margin_top = 144.0
 margin_right = 156.0
 margin_bottom = 158.0
-rect_min_size = Vector2( 37, 14 )
+rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
 min_value = -100.0

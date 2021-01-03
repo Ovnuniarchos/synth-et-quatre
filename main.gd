@@ -25,6 +25,8 @@ FUTURE:
 func _ready()->void:
 	AUDIO.connect("buffer_sent",$Main/Oscilloscope,"draw_music")
 	theme=THEME.get("theme")
+	ThemeHelper.apply_styles_group(theme,"LabelTitle","Title")
+	ThemeHelper.apply_styles_group(theme,"LabelControl","Label")
 
 
 func _on_tab_changed(tab:int)->void:

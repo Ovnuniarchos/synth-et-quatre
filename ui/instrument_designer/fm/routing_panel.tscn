@@ -11,7 +11,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Title" type="Label" parent="."]
+[node name="Title" type="Label" parent="." groups=[
+"Title",
+]]
 margin_right = 1024.0
 margin_bottom = 14.0
 text = "OP 2"
@@ -28,7 +30,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="OP1Label" type="Label" parent="Routing"]
+[node name="OP1Label" type="Label" parent="Routing" groups=[
+"Label",
+]]
 margin_right = 27.0
 margin_bottom = 14.0
 text = "OP1"
@@ -37,7 +41,7 @@ text = "OP1"
 margin_left = 31.0
 margin_right = 1024.0
 margin_bottom = 14.0
-rect_min_size = Vector2( 0, 14 )
+rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 7
 size_flags_vertical = 4
 max_value = 255.0
@@ -47,7 +51,9 @@ script = ExtResource( 1 )
 big_step = 4.0
 huge_step = 16.0
 
-[node name="OP2Label" type="Label" parent="Routing"]
+[node name="OP2Label" type="Label" parent="Routing" groups=[
+"Label",
+]]
 margin_top = 18.0
 margin_right = 27.0
 margin_bottom = 32.0
@@ -58,7 +64,7 @@ margin_left = 31.0
 margin_top = 18.0
 margin_right = 1024.0
 margin_bottom = 32.0
-rect_min_size = Vector2( 0, 14 )
+rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 7
 size_flags_vertical = 4
 max_value = 255.0
@@ -68,7 +74,9 @@ script = ExtResource( 1 )
 big_step = 4.0
 huge_step = 16.0
 
-[node name="OP3Label" type="Label" parent="Routing"]
+[node name="OP3Label" type="Label" parent="Routing" groups=[
+"Label",
+]]
 margin_top = 36.0
 margin_right = 27.0
 margin_bottom = 50.0
@@ -79,7 +87,7 @@ margin_left = 31.0
 margin_top = 36.0
 margin_right = 1024.0
 margin_bottom = 50.0
-rect_min_size = Vector2( 0, 14 )
+rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 7
 size_flags_vertical = 4
 max_value = 255.0
@@ -89,7 +97,9 @@ script = ExtResource( 1 )
 big_step = 4.0
 huge_step = 16.0
 
-[node name="OP4Label" type="Label" parent="Routing"]
+[node name="OP4Label" type="Label" parent="Routing" groups=[
+"Label",
+]]
 margin_top = 54.0
 margin_right = 27.0
 margin_bottom = 68.0
@@ -100,7 +110,7 @@ margin_left = 31.0
 margin_top = 54.0
 margin_right = 1024.0
 margin_bottom = 68.0
-rect_min_size = Vector2( 0, 14 )
+rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 7
 size_flags_vertical = 4
 max_value = 255.0
@@ -110,7 +120,9 @@ script = ExtResource( 1 )
 big_step = 4.0
 huge_step = 16.0
 
-[node name="OutLabel" type="Label" parent="Routing"]
+[node name="OutLabel" type="Label" parent="Routing" groups=[
+"Label",
+]]
 margin_top = 72.0
 margin_right = 27.0
 margin_bottom = 86.0
@@ -121,7 +133,7 @@ margin_left = 31.0
 margin_top = 72.0
 margin_right = 1024.0
 margin_bottom = 86.0
-rect_min_size = Vector2( 0, 14 )
+rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 7
 size_flags_vertical = 4
 max_value = 255.0

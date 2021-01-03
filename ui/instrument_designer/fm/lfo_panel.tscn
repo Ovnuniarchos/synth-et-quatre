@@ -20,7 +20,9 @@ margin_right = 1017.0
 margin_bottom = 64.0
 size_flags_horizontal = 3
 
-[node name="Title" type="Label" parent="VBC"]
+[node name="Title" type="Label" parent="VBC" groups=[
+"Title",
+]]
 margin_right = 1010.0
 margin_bottom = 14.0
 text = "LFO X"
@@ -31,7 +33,9 @@ margin_right = 1010.0
 margin_bottom = 38.0
 size_flags_horizontal = 3
 
-[node name="DUCLabel" type="Label" parent="VBC/HBC"]
+[node name="DUCLabel" type="Label" parent="VBC/HBC" groups=[
+"Label",
+]]
 margin_top = 3.0
 margin_right = 28.0
 margin_bottom = 17.0
@@ -42,7 +46,7 @@ margin_left = 32.0
 margin_top = 3.0
 margin_right = 493.0
 margin_bottom = 17.0
-rect_min_size = Vector2( 0, 14 )
+rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 7
 size_flags_vertical = 4
 max_value = 255.0
@@ -58,7 +62,9 @@ margin_right = 513.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 16, 0 )
 
-[node name="WAVLabel" type="Label" parent="VBC/HBC"]
+[node name="WAVLabel" type="Label" parent="VBC/HBC" groups=[
+"Label",
+]]
 margin_left = 517.0
 margin_top = 3.0
 margin_right = 545.0
@@ -79,7 +85,9 @@ margin_right = 1010.0
 margin_bottom = 56.0
 size_flags_horizontal = 3
 
-[node name="FRQLabel" type="Label" parent="VBC/HBC2"]
+[node name="FRQLabel" type="Label" parent="VBC/HBC2" groups=[
+"Label",
+]]
 margin_right = 26.0
 margin_bottom = 14.0
 text = "FRQ"
@@ -88,7 +96,7 @@ text = "FRQ"
 margin_left = 30.0
 margin_right = 1010.0
 margin_bottom = 14.0
-rect_min_size = Vector2( 0, 14 )
+rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 7
 size_flags_vertical = 4
 percent_visible = false

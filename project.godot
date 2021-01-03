@@ -179,6 +179,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://classes/synth_wave.gd"
 }, {
+"base": "Node",
+"class": "ThemeHelper",
+"language": "GDScript",
+"path": "res://singletons/theme_helpers.gd"
+}, {
 "base": "Object",
 "class": "ThemeParser",
 "language": "GDScript",
@@ -249,6 +254,7 @@ _global_script_class_icons={
 "Synth": "",
 "SynthTracker": "",
 "SynthWave": "",
+"ThemeHelper": "",
 "ThemeParser": "",
 "Tracker": "",
 "TriangleWave": "",

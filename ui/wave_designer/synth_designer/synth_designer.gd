@@ -48,7 +48,7 @@ func _on_Size_changed(value:float)->void:
 	if w!=null:
 		w.size_po2=value
 		calculate()
-	set_size_bytes(value)
+		set_size_bytes(w.size)
 
 func set_size_bytes(size:int)->void:
 	if size>0:
@@ -62,13 +62,11 @@ func _on_wave_selected(wave:int)->void:
 	if w==null:
 		$Info/HBC/Name.editable=false
 		$Info/HBC/Name.text=""
-		$Info/HBC/Size.editable=false
 		set_size_bytes(-1)
 		$Designer/SC.visible=false
 	else:
 		$Info/HBC/Name.editable=true
 		$Info/HBC/Name.text=w.name
-		$Info/HBC/Size.editable=true
 		$Info/HBC/Size.value=w.size_po2
 		set_size_bytes(w.size)
 		$Designer/SC.visible=true
@@ -80,7 +78,6 @@ func _on_wave_deleted(_wave:int)->void:
 	curr_wave_ix=-1
 	$Info/HBC/Name.editable=false
 	$Info/HBC/Name.text=""
-	$Info/HBC/Size.editable=false
 	set_size_bytes(-1)
 	regen_editor_nodes(null)
 	calculate()

@@ -17,16 +17,18 @@ __meta__ = {
 [node name="VBC" type="VBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 161.0
+margin_right = 153.0
 margin_bottom = 387.0
 
-[node name="Title" parent="VBC" instance=ExtResource( 2 )]
-margin_right = 154.0
+[node name="Title" parent="VBC" groups=[
+"Title",
+] instance=ExtResource( 2 )]
+margin_right = 146.0
 title = "RECTANGLE"
 
 [node name="Params" type="GridContainer" parent="VBC"]
 margin_top = 24.0
-margin_right = 154.0
+margin_right = 146.0
 margin_bottom = 380.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -34,16 +36,18 @@ custom_constants/vseparation = 2
 custom_constants/hseparation = 8
 columns = 2
 
-[node name="LabelMul" type="Label" parent="VBC/Params"]
+[node name="LabelMul" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_right = 52.0
 margin_bottom = 14.0
 text = "Freq"
 
 [node name="Mul" type="ProgressBar" parent="VBC/Params"]
 margin_left = 60.0
-margin_right = 154.0
+margin_right = 146.0
 margin_bottom = 14.0
-rect_min_size = Vector2( 24, 14 )
+rect_min_size = Vector2( 48, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
 max_value = 32.0
@@ -51,7 +55,9 @@ percent_visible = false
 script = ExtResource( 3 )
 _decimals = 2
 
-[node name="LabelOfs" type="Label" parent="VBC/Params"]
+[node name="LabelOfs" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_top = 16.0
 margin_right = 52.0
 margin_bottom = 30.0
@@ -60,9 +66,9 @@ text = "Offset"
 [node name="Ofs" type="ProgressBar" parent="VBC/Params"]
 margin_left = 60.0
 margin_top = 16.0
-margin_right = 154.0
+margin_right = 146.0
 margin_bottom = 30.0
-rect_min_size = Vector2( 37, 14 )
+rect_min_size = Vector2( 61, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
 min_value = -100.0
@@ -70,7 +76,9 @@ percent_visible = false
 script = ExtResource( 3 )
 _decimals = 2
 
-[node name="LabelVol" type="Label" parent="VBC/Params"]
+[node name="LabelVol" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_top = 32.0
 margin_right = 52.0
 margin_bottom = 46.0
@@ -82,9 +90,9 @@ __meta__ = {
 [node name="Vol" type="ProgressBar" parent="VBC/Params"]
 margin_left = 60.0
 margin_top = 32.0
-margin_right = 154.0
+margin_right = 146.0
 margin_bottom = 46.0
-rect_min_size = Vector2( 37, 14 )
+rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
 min_value = -100.0
@@ -94,7 +102,9 @@ script = ExtResource( 3 )
 big_step = 5.0
 huge_step = 10.0
 
-[node name="LabelZStart" type="Label" parent="VBC/Params"]
+[node name="LabelZStart" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_top = 48.0
 margin_right = 52.0
 margin_bottom = 62.0
@@ -103,9 +113,9 @@ text = "Z Start"
 [node name="ZStart" type="ProgressBar" parent="VBC/Params"]
 margin_left = 60.0
 margin_top = 48.0
-margin_right = 154.0
+margin_right = 146.0
 margin_bottom = 62.0
-rect_min_size = Vector2( 32, 14 )
+rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
 step = 1.0
@@ -114,7 +124,9 @@ script = ExtResource( 3 )
 big_step = 5.0
 huge_step = 10.0
 
-[node name="LabelNStart" type="Label" parent="VBC/Params"]
+[node name="LabelNStart" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_top = 64.0
 margin_right = 52.0
 margin_bottom = 78.0
@@ -123,9 +135,9 @@ text = "- Start"
 [node name="NStart" type="ProgressBar" parent="VBC/Params"]
 margin_left = 60.0
 margin_top = 64.0
-margin_right = 154.0
+margin_right = 146.0
 margin_bottom = 78.0
-rect_min_size = Vector2( 32, 14 )
+rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
 step = 1.0
@@ -143,11 +155,13 @@ rect_min_size = Vector2( 0, 24 )
 [node name="ReferenceRect2" type="ReferenceRect" parent="VBC/Params"]
 margin_left = 60.0
 margin_top = 80.0
-margin_right = 154.0
+margin_right = 146.0
 margin_bottom = 104.0
 rect_min_size = Vector2( 0, 24 )
 
-[node name="LabelCycles" type="Label" parent="VBC/Params"]
+[node name="LabelCycles" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_top = 106.0
 margin_right = 52.0
 margin_bottom = 120.0
@@ -156,9 +170,9 @@ text = "Cycles"
 [node name="Cycles" type="ProgressBar" parent="VBC/Params"]
 margin_left = 60.0
 margin_top = 106.0
-margin_right = 154.0
+margin_right = 146.0
 margin_bottom = 120.0
-rect_min_size = Vector2( 32, 14 )
+rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
 step = 1.0
@@ -168,7 +182,9 @@ script = ExtResource( 3 )
 big_step = 5.0
 huge_step = 10.0
 
-[node name="LabelPosition" type="Label" parent="VBC/Params"]
+[node name="LabelPosition" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_top = 122.0
 margin_right = 52.0
 margin_bottom = 136.0
@@ -177,12 +193,11 @@ text = "Position"
 [node name="Position" type="ProgressBar" parent="VBC/Params"]
 margin_left = 60.0
 margin_top = 122.0
-margin_right = 154.0
+margin_right = 146.0
 margin_bottom = 136.0
-rect_min_size = Vector2( 32, 14 )
+rect_min_size = Vector2( 56, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
-step = 0.01
 value = 1.0
 percent_visible = false
 script = ExtResource( 3 )
@@ -190,7 +205,9 @@ big_step = 5.0
 huge_step = 10.0
 _decimals = 2
 
-[node name="LabelOutput" type="Label" parent="VBC/Params"]
+[node name="LabelOutput" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_top = 141.0
 margin_right = 52.0
 margin_bottom = 155.0
@@ -199,13 +216,15 @@ text = "Output"
 [node name="Output" type="OptionButton" parent="VBC/Params"]
 margin_left = 60.0
 margin_top = 138.0
-margin_right = 154.0
+margin_right = 146.0
 margin_bottom = 158.0
 text = "Off"
 items = [ "Off", null, false, 0, null, "Replace", null, false, 1, null, "Add", null, false, 2, null, "AM", null, false, 3, null, "XM", null, false, 4, null ]
 selected = 0
 
-[node name="LabelFrom" type="Label" parent="VBC/Params"]
+[node name="LabelFrom" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_top = 160.0
 margin_right = 52.0
 margin_bottom = 174.0
@@ -214,9 +233,9 @@ text = "From"
 [node name="From" type="ProgressBar" parent="VBC/Params"]
 margin_left = 60.0
 margin_top = 160.0
-margin_right = 154.0
+margin_right = 146.0
 margin_bottom = 174.0
-rect_min_size = Vector2( 32, 14 )
+rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
 min_value = -1.0
@@ -226,7 +245,9 @@ script = ExtResource( 3 )
 big_step = 1.0
 huge_step = 1.0
 
-[node name="LabelPM" type="Label" parent="VBC/Params"]
+[node name="LabelPM" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_top = 176.0
 margin_right = 52.0
 margin_bottom = 190.0
@@ -235,9 +256,9 @@ text = "PM"
 [node name="PM" type="ProgressBar" parent="VBC/Params"]
 margin_left = 60.0
 margin_top = 176.0
-margin_right = 154.0
+margin_right = 146.0
 margin_bottom = 190.0
-rect_min_size = Vector2( 32, 14 )
+rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
 min_value = -100.0
@@ -247,7 +268,9 @@ script = ExtResource( 3 )
 big_step = 5.0
 huge_step = 10.0
 
-[node name="LabelAM" type="Label" parent="VBC/Params"]
+[node name="LabelAM" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_top = 192.0
 margin_right = 52.0
 margin_bottom = 206.0
@@ -256,9 +279,9 @@ text = "AM"
 [node name="AM" type="ProgressBar" parent="VBC/Params"]
 margin_left = 60.0
 margin_top = 192.0
-margin_right = 154.0
+margin_right = 146.0
 margin_bottom = 206.0
-rect_min_size = Vector2( 32, 14 )
+rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
 min_value = -100.0
@@ -268,7 +291,9 @@ script = ExtResource( 3 )
 big_step = 5.0
 huge_step = 10.0
 
-[node name="LabelXM" type="Label" parent="VBC/Params"]
+[node name="LabelXM" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_top = 208.0
 margin_right = 52.0
 margin_bottom = 222.0
@@ -280,9 +305,9 @@ __meta__ = {
 [node name="XM" type="ProgressBar" parent="VBC/Params"]
 margin_left = 60.0
 margin_top = 208.0
-margin_right = 154.0
+margin_right = 146.0
 margin_bottom = 222.0
-rect_min_size = Vector2( 32, 14 )
+rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
 min_value = -100.0

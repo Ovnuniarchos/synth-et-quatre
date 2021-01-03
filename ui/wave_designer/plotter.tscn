@@ -45,7 +45,7 @@ __meta__ = {
 margin_top = 6.0
 margin_right = 232.0
 margin_bottom = 20.0
-rect_min_size = Vector2( 52, 14 )
+rect_min_size = Vector2( 69, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
 min_value = 1.0
@@ -54,9 +54,6 @@ step = 1.0
 value = 220.0
 percent_visible = false
 script = ExtResource( 4 )
-big_step = 10.0
-huge_step = 100.0
-_decimals = 0
 suffix = "Hz"
 
 [node name="Play" type="Button" parent="Control"]
@@ -68,8 +65,8 @@ toggle_mode = true
 shortcut_in_tooltip = false
 text = ">"
 script = ExtResource( 3 )
-pressed_icon = "Stop"
-unpressed_icon = "Play"
+pressed_icon = "stop"
+unpressed_icon = "play"
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

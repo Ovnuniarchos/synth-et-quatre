@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://ui/wave_designer/synth_designer/wave_nodes/title_bar.gd" type="Script" id=1]
+[ext_resource path="res://ui/widgets/icon_button.gd" type="Script" id=2]
 
 [node name="Title" type="HBoxContainer"]
 margin_right = 138.0
@@ -12,18 +13,28 @@ __meta__ = {
 }
 
 [node name="MoveL" type="Button" parent="."]
-margin_right = 20.0
+margin_right = 12.0
 margin_bottom = 20.0
-text = "<"
+script = ExtResource( 2 )
+icon_name = "arrow-left"
 
 [node name="MoveR" type="Button" parent="."]
-margin_left = 20.0
-margin_right = 40.0
+margin_left = 12.0
+margin_right = 24.0
 margin_bottom = 20.0
-text = ">"
+script = ExtResource( 2 )
+icon_name = "arrow-right"
 
-[node name="Title" type="Label" parent="."]
-margin_left = 40.0
+[node name="S" type="ReferenceRect" parent="."]
+margin_left = 24.0
+margin_right = 32.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 8, 0 )
+
+[node name="Title" type="Label" parent="." groups=[
+"Title",
+]]
+margin_left = 32.0
 margin_top = 3.0
 margin_right = 118.0
 margin_bottom = 17.0
@@ -31,11 +42,18 @@ size_flags_horizontal = 3
 text = "0 - "
 align = 1
 
-[node name="Close" type="Button" parent="."]
+[node name="S2" type="ReferenceRect" parent="."]
 margin_left = 118.0
+margin_right = 126.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 8, 0 )
+
+[node name="Close" type="Button" parent="."]
+margin_left = 126.0
 margin_right = 138.0
 margin_bottom = 20.0
-text = "X"
+script = ExtResource( 2 )
+icon_name = "close"
 
 [connection signal="button_up" from="MoveL" to="." method="_on_MoveL_button_up"]
 [connection signal="button_up" from="MoveR" to="." method="_on_MoveR_button_up"]

@@ -17,16 +17,16 @@ __meta__ = {
 [node name="VBC" type="VBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 165.0
+margin_right = 163.0
 margin_bottom = 387.0
 
 [node name="Title" parent="VBC" instance=ExtResource( 1 )]
-margin_right = 158.0
+margin_right = 156.0
 title = "NORMALIZE"
 
 [node name="Params" type="GridContainer" parent="VBC"]
 margin_top = 24.0
-margin_right = 158.0
+margin_right = 156.0
 margin_bottom = 380.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -34,7 +34,9 @@ custom_constants/vseparation = 2
 custom_constants/hseparation = 8
 columns = 2
 
-[node name="LabelKeepCenter" type="Label" parent="VBC/Params"]
+[node name="LabelKeepCenter" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_top = 5.0
 margin_right = 49.0
 margin_bottom = 19.0
@@ -42,10 +44,12 @@ text = "Keep 0"
 
 [node name="KeepCenter" type="CheckBox" parent="VBC/Params"]
 margin_left = 57.0
-margin_right = 158.0
+margin_right = 156.0
 margin_bottom = 24.0
 
-[node name="LabelVol" type="Label" parent="VBC/Params"]
+[node name="LabelVol" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_top = 26.0
 margin_right = 49.0
 margin_bottom = 40.0
@@ -57,9 +61,9 @@ __meta__ = {
 [node name="Vol" type="ProgressBar" parent="VBC/Params"]
 margin_left = 57.0
 margin_top = 26.0
-margin_right = 158.0
+margin_right = 156.0
 margin_bottom = 40.0
-rect_min_size = Vector2( 37, 14 )
+rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
 min_value = -100.0
@@ -78,11 +82,13 @@ rect_min_size = Vector2( 0, 24 )
 [node name="ReferenceRect2" type="ReferenceRect" parent="VBC/Params"]
 margin_left = 57.0
 margin_top = 42.0
-margin_right = 158.0
+margin_right = 156.0
 margin_bottom = 66.0
 rect_min_size = Vector2( 0, 24 )
 
-[node name="LabelOutput" type="Label" parent="VBC/Params"]
+[node name="LabelOutput" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_top = 71.0
 margin_right = 49.0
 margin_bottom = 85.0
@@ -91,13 +97,15 @@ text = "Output"
 [node name="Output" type="OptionButton" parent="VBC/Params"]
 margin_left = 57.0
 margin_top = 68.0
-margin_right = 158.0
+margin_right = 156.0
 margin_bottom = 88.0
 text = "Off"
 items = [ "Off", null, false, 0, null, "Replace", null, false, 1, null, "Add", null, false, 2, null, "AM", null, false, 4, null, "XM", null, false, 5, null ]
 selected = 0
 
-[node name="LabelFrom" type="Label" parent="VBC/Params"]
+[node name="LabelFrom" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_top = 90.0
 margin_right = 49.0
 margin_bottom = 104.0
@@ -106,9 +114,9 @@ text = "From"
 [node name="From" type="ProgressBar" parent="VBC/Params"]
 margin_left = 57.0
 margin_top = 90.0
-margin_right = 158.0
+margin_right = 156.0
 margin_bottom = 104.0
-rect_min_size = Vector2( 32, 14 )
+rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
 min_value = -1.0
@@ -118,7 +126,9 @@ script = ExtResource( 3 )
 big_step = 1.0
 huge_step = 1.0
 
-[node name="LabelAM" type="Label" parent="VBC/Params"]
+[node name="LabelAM" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_top = 106.0
 margin_right = 49.0
 margin_bottom = 120.0
@@ -127,9 +137,9 @@ text = "AM"
 [node name="AM" type="ProgressBar" parent="VBC/Params"]
 margin_left = 57.0
 margin_top = 106.0
-margin_right = 158.0
+margin_right = 156.0
 margin_bottom = 120.0
-rect_min_size = Vector2( 37, 14 )
+rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
 min_value = -100.0
@@ -139,7 +149,9 @@ script = ExtResource( 3 )
 big_step = 5.0
 huge_step = 10.0
 
-[node name="LabelXM" type="Label" parent="VBC/Params"]
+[node name="LabelXM" type="Label" parent="VBC/Params" groups=[
+"Label",
+]]
 margin_top = 122.0
 margin_right = 49.0
 margin_bottom = 136.0
@@ -151,9 +163,9 @@ __meta__ = {
 [node name="XM" type="ProgressBar" parent="VBC/Params"]
 margin_left = 57.0
 margin_top = 122.0
-margin_right = 158.0
+margin_right = 156.0
 margin_bottom = 136.0
-rect_min_size = Vector2( 37, 14 )
+rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
 min_value = -100.0

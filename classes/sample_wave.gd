@@ -15,6 +15,7 @@ var sample_freq:float=440.0
 func calculate()->void:
 	var buf_size:int=original_data.size()
 	data.resize(buf_size)
+	size=buf_size
 	var div:float=DIVISORS[bits_sample]
 	for i in range(buf_size):
 		data[i]=original_data[i]/div

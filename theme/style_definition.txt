@@ -1,0 +1,141 @@
+#----------------------------------------------------------------#
+#-                       Type definitions                       -#
+#----------------------------------------------------------------#
+
+STRETCH_MODE: "stretch" | "tile" | "fit"
+
+HINT_MODE: "none" | "light" | "normal"
+
+COLOR_TYPE: /#?([:xdigit:]{2})?[:xdigit:]{6}/i | COLOR_NAME | array4(number) | number
+
+BOX_TYPE: BOX_TYPE_FLAT | BOX_TYPE_BITMAP
+
+BOX_TYPE_FLAT: {
+	type: "flat"
+	background: COLOR_TYPE
+	border: COLOR_TYPE
+	corner-radius: array4(number) | number
+	border-width: array4(number) | number
+	margin: array4(number) | number
+	antialias: boolean
+}
+
+BOX_TYPE_BITMAP: {
+	type: "bitmap"
+	texture: string
+	modulate: COLOR_TYPE
+	margin: array4(number) | number
+	border-width: array4(number) | number
+	stretch: array2(STRETCH_MODE) | string
+}
+
+SCROLLBAR_TYPE: SCROLLBAR_TYPE_FLAT | SCROLLBAR_TYPE_BITMAP
+
+SCROLLBAR_TYPE_FLAT: {
+	type: "flat"
+	background: COLOR_TYPE
+	border: COLOR_TYPE
+	corner-radius: array4(number) | number
+	border-width: array4(number) | number
+	antialias: boolean
+}
+
+SCROLLBAR_TYPE_BITMAP: {
+	type: "bitmap"
+	texture: string
+	modulate: COLOR_TYPE
+	margin: array4(number) | number
+	border-width: array4(number) | number
+	stretch: array2(STRETCH_MODE) | string
+}
+
+FONT_TYPE: {
+	file: string
+	size: number
+	antialias: boolean
+	hinting: HINT_MODE
+	outline-size: number
+}
+
+SEPARATOR_TYPE: {
+	color: COLOR_TYPE
+	line-width: number
+	margin: number
+}
+
+SPACING_TYPE: {
+	horizontal + vertical: number
+}
+
+GLYPH_TYPE: {
+	file: string,
+	rect: array4(number) | number
+	margin: array2(number) | number
+	offset: array2(number) | number
+}
+
+TEXT_STYLE: {
+	font: FONT_TYPE
+	color: COLOR_TYPE
+	outline: COLOR_TYPE
+	shadow-color: COLOR_TYPE
+	shadow-offset: array2(number) | number
+	shadow-type: "none" | "drop" | "outline"
+}
+
+#----------------------------------------------------------------#
+#-                       Theme properties                       -#
+#----------------------------------------------------------------#
+
+colors: {
+	default-fg + default-bg + faded-fg + faded-bg: COLOR_TYPE
+}
+glyphs: {
+	source-file: string
+	radio-on + radio-off: GLYPH_TYPE
+}
+spacing: SPACING_TYPE
+font: FONT_TYPE
+panel: BOX_TYPE
+text | title | label: TEXT_STYLE
+tab:{
+	normal + selected: {
+		BOX_TYPE
+		color: COLOR_TYPE
+	}
+	font: FONT_TYPE
+}
+button | accent-button | menu: {
+	normal + disabled + hover + pressed: {
+		BOX_TYPE
+		color: COLOR_TYPE
+	}
+	font: FONT_TYPE
+}
+popup: {
+	normal + hover: BOX_TYPE
+	separator: SEPARATOR_TYPE
+	font: FONT_TYPE
+}
+scrollbar: {
+	normal + hover + pressed: SCROLLBAR_TYPE
+	background: BOX_TYPE
+}
+listbox: {
+	background + selected: BOX_TYPE
+	separation: number
+	font: FONT_TYPE
+}
+input: {
+	normal + focus + disabled: BOX_TYPE
+	input: FONT_TYPE
+}
+spinbar | progress: {
+	background: BOX_TYPE
+	foreground: SCROLLBAR_TYPE
+	color: COLOR_TYPE
+	font: FONT_TYPE
+}
+title: {
+	font: FONT_TYPE
+}

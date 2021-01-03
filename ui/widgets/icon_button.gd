@@ -12,4 +12,4 @@ func _ready():
 func set_icon_name(n:String)->void:
 	icon_name=n
 	if real_theme!=null:
-		icon=real_theme.get_icon(icon_name,"Icons")
+		icon=real_theme.get_icon(icon_name,"Glyphs")

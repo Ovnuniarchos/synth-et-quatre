@@ -1,7 +1,5 @@
 extends Node
 
-const SP_HORIZONTAL:String="horizontal"
-const SP_VERTICAL:String="vertical"
 const BS_NORMAL:String="normal"
 const BS_DISABLED:String="disabled"
 const BS_HOVER:String="hover"
@@ -91,6 +89,7 @@ var std_font:DynamicFont
 #  file: string,
 #  rect: array4(number) | number
 #  margin: array2(number) | number
+#  offset: array2(number) | number
 # }
 
 # Theme properties:
@@ -155,20 +154,21 @@ var default_theme:Dictionary={
 	"glyphs":{
 		"source-file":"editor.png",
 		"radio-on":{
-			"rect":[12.0,114.0,12.0],
-			"margin":6.0
+			"rect":[12.0,114.0,12.0]
 		},
 		"radio-off":{
 			"rect":[0.0,114.0,12.0],
-			"margin":6.0
 		},
 		"check-on":{
-			"rect":[12.0,97.0,12.0,14.0],
-			"margin":6.0
+			"rect":[12.0,97.0,12.0,14.0]
 		},
 		"check-off":{
 			"rect":[0.0,97.0,12.0,14.0],
-			"margin":6.0
+		},
+		"arrow-up":{
+			"rect":[24.0,112.0,8.0,16.0],
+			"margin":[8.0,0.0],
+			"offset":0.0
 		}
 	},
 	"font":{
@@ -201,7 +201,7 @@ var default_theme:Dictionary={
 			"border-width":2.0,
 			"corner-radius":2.0,
 			"antialias":false,
-			"margin":2.0
+			"margin":3.0
 		},
 		"disabled":{},
 		"hover":{}
@@ -316,9 +316,9 @@ func _init()->void:
 		BS_PRESSED:{"fg":std_colors[CO_DEFAULT_FG],"bg":std_colors[CO_HOVER_FG]}
 	}
 	# Spacing
-	std_spacing=parse_spacing(ThemeParser.typesafe_get(default_theme,"spacing",{}),[4.0,4.0])
-	theme.set_constant("separation","HBoxContainer",std_spacing[SP_HORIZONTAL])
-	theme.set_constant("separation","VBoxContainer",std_spacing[SP_VERTICAL])
+	std_spacing=ThemeParser.parse_spacing(default_theme,"spacing",[4.0,4.0])
+	theme.set_constant("separation","HBoxContainer",std_spacing[ThemeParser.SP_HORIZONTAL])
+	theme.set_constant("separation","VBoxContainer",std_spacing[ThemeParser.SP_VERTICAL])
 	# Glyphs
 	set_default_glyphs(default_theme)
 	# Fonts
@@ -385,30 +385,11 @@ func set_bar_styles(data:Dictionary,bar:String)->void:
 
 func set_default_glyphs(data:Dictionary)->void:
 	var frag:Dictionary=ThemeParser.typesafe_get(data,"glyphs",{})
-	var dflt_img:Texture=load("res://theme/"+ThemeParser.typesafe_get(frag,"source-file",""))
+	var dflt_img:Texture=ThemeParser.resource_load("res://theme/"+ThemeParser.typesafe_get(frag,"source-file",""),"StreamTexture",null)
 	for glyph in frag:
 		if glyph=="source-file":
 			continue
-		var at:AtlasTexture=null
-		var img:Texture=null
-		if frag[glyph].get("file"):
-			img=load("res://theme/"+ThemeParser.typesafe_get(frag[glyph],"file",""))
-		if img==null:
-			img=dflt_img
-		if img==null:
-			theme.set_icon(glyph,"Glyphs",null)
-			continue
-		at=AtlasTexture.new()
-		at.atlas=img
-		at.filter_clip=true
-		var rect:Array=ThemeParser.parse_rectangle(frag[glyph],"rect",-1.0)
-		if rect.min()<0.0:
-			theme.set_icon(glyph,"Glyphs",null)
-			continue
-		at.region=Rect2(rect[0],rect[1],rect[2],rect[3])
-		var margin:Array=ThemeParser.parse_number_list(frag[glyph],"margin",2,0.0)
-		at.margin=Rect2(margin[0],margin[1],rect[2],rect[3])
-		theme.set_icon(glyph,"Glyphs",at)
+		theme.set_icon(glyph,"Glyphs",ThemeParser.parse_glyph(frag[glyph],dflt_img))
 
 
 func set_input_styles(data:Dictionary,key:String)->void:
@@ -427,13 +408,6 @@ func set_input_styles(data:Dictionary,key:String)->void:
 		theme.set_stylebox("focus","LineEdit",theme.get_stylebox("normal","LineEdit"))
 	theme.set_color("font_color_uneditable","LineEdit",ThemeParser.parse_color(ThemeParser.typesafe_get(frag,"disabled",{}),"color",std_colors[CO_FADED_FG]))
 	theme.set_stylebox("read_only","LineEdit",ThemeParser.create_stylebox(frag,"disabled",button_colorsets[BS_DISABLED],panel_st[BS_DISABLED]))
-
-
-func parse_spacing(data:Dictionary,defaults:Array)->Dictionary:
-	return {
-		SP_HORIZONTAL: ThemeParser.typesafe_get(data,SP_HORIZONTAL,defaults[0]),
-		SP_VERTICAL: ThemeParser.typesafe_get(data,SP_VERTICAL,defaults[1])
-	}
 
 
 func set_itemlist_styles(data:Dictionary,key:String)->void:

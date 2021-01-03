@@ -49,7 +49,7 @@ margin_right = 128.0
 margin_bottom = 20.0
 shortcut_in_tooltip = false
 script = ExtResource( 2 )
-icon_name = "Up"
+icon_name = "arrow-up"
 
 [node name="Down" type="Button" parent="VBC/HBC"]
 margin_left = 132.0

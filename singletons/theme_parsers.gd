@@ -7,6 +7,8 @@ enum{FS_TOP,FS_RIGHT,FS_BOTTOM,FS_LEFT}
 enum{DIM_X,DIM_Y}
 
 
+const SP_HORIZONTAL:String="horizontal"
+const SP_VERTICAL:String="vertical"
 const TYPE_NUMBER:Array=[TYPE_REAL,TYPE_INT]
 const BT_FLAT:String="flat"
 const BT_BITMAP:String="bitmap"
@@ -143,6 +145,14 @@ static func parse_names(name:String,names:Dictionary,default:int)->int:
 	return typesafe_get(names,name.to_lower(),default)
 
 
+static func parse_spacing(data:Dictionary,key:String,defaults:Array)->Dictionary:
+	var frag:Dictionary=typesafe_get(data,key,{})
+	return {
+		SP_HORIZONTAL: typesafe_get(frag,SP_HORIZONTAL,defaults[0]),
+		SP_VERTICAL: typesafe_get(frag,SP_VERTICAL,defaults[1])
+	}
+
+
 static func create_stylebox(data:Dictionary,key:String,colorset:Dictionary,default:StyleBox)->StyleBox:
 	var frag:Dictionary=typesafe_get(data,key,{})
 	if frag.empty():
@@ -226,6 +236,8 @@ static func rotate_content_margin(sb:StyleBox)->StyleBox:
 
 
 static func copy_styles(theme:Theme,from:String,to:String)->void:
+	if theme==null:
+		return
 	for co in theme.get_color_list(from):
 		theme.set_color(co,to,theme.get_color(co,from))
 	for co in theme.get_constant_list(from):
@@ -239,6 +251,8 @@ static func copy_styles(theme:Theme,from:String,to:String)->void:
 
 
 static func set_styles(theme:Theme,from:String,to:Control)->void:
+	if theme==null:
+		return
 	for co in theme.get_color_list(from):
 		to.add_color_override(co,theme.get_color(co,from))
 	for co in theme.get_constant_list(from):
@@ -256,11 +270,7 @@ static func parse_font(data:Dictionary,tag:String,base:DynamicFont)->DynamicFont
 	if not frag.empty():
 		var fnt:DynamicFont=DynamicFont.new() if base==null else base.duplicate()
 		var dfd:DynamicFontData
-		if frag.has("file"):
-			var dir:Directory=Directory.new()
-			if dir.file_exists("res://theme/"+typesafe_get(frag,"file","")):
-				dfd=load("res://theme/"+typesafe_get(frag,"file","")) as DynamicFontData
-		dfd=fnt.font_data if dfd==null else dfd
+		dfd=resource_load("res://theme/"+typesafe_get(frag,"file",""),"DynamicFontData",fnt.font_data)
 		fnt.font_data=dfd
 		fnt.size=typesafe_get(frag,"size",14 if base==null else base.size)
 		fnt.outline_size=typesafe_get(frag,"outline-size",0 if base==null else base.outline_size)
@@ -272,3 +282,27 @@ static func parse_font(data:Dictionary,tag:String,base:DynamicFont)->DynamicFont
 	return base
 
 
+static func resource_load(path:String,type:String,default:Resource)->Resource:
+	var dir:Directory=Directory.new()
+	if dir.file_exists(path):
+		var r:Resource=load(path)
+		return r if r.get_class()==type else default
+	return default
+
+
+static func parse_glyph(data:Dictionary,default:StreamTexture)->AtlasTexture:
+	var at:AtlasTexture=null
+	var img:Texture=resource_load("res://theme/"+typesafe_get(data,"file",""),"StreamTexture",default)
+	if img==null:
+		return null
+	at=AtlasTexture.new()
+	at.atlas=img
+	at.filter_clip=true
+	var rect:Array=parse_rectangle(data,"rect",-1.0)
+	if rect.min()<0.0:
+		return null
+	at.region=Rect2(rect[0],rect[1],rect[2],rect[3])
+	var margin:Array=parse_number_list(data,"margin",2,0.0)
+	var offset:Array=parse_number_list(data,"offset",2,0.0)
+	at.margin=Rect2(offset[0]+margin[0],offset[1]+margin[1],margin[0]*2.0,margin[1]*2.0)
+	return at

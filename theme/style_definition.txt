@@ -24,6 +24,7 @@ BOX_TYPE_BITMAP: {
 	type: "bitmap"
 	texture: string
 	modulate: COLOR_TYPE
+	rect: array4(number) | number
 	margin: array4(number) | number
 	border-width: array4(number) | number
 	stretch: array2(STRETCH_MODE) | string
@@ -128,7 +129,7 @@ listbox: {
 }
 input: {
 	normal + focus + disabled: BOX_TYPE
-	input: FONT_TYPE
+	font: FONT_TYPE
 }
 spinbar | progress: {
 	normal + disabled + hover: {

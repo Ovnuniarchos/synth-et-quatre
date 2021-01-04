@@ -1,9 +1,20 @@
-[gd_resource type="Theme" load_steps=3 format=2]
+[gd_resource type="Theme" load_steps=5 format=2]
 
 [ext_resource path="res://theme/DejaVuSansMono-Bold.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://theme/editor.png" type="Texture" id=2]
 
 [sub_resource type="DynamicFont" id=1]
 font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxTexture" id=2]
+texture = ExtResource( 2 )
+region_rect = Rect2( 32, 80, 32, 32 )
+margin_left = 5.0
+margin_right = 5.0
+margin_top = 5.0
+margin_bottom = 5.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
 
 [resource]
 Button/colors/font_color = Color( 0, 0, 0, 1 )
@@ -165,7 +176,7 @@ ItemList/styles/bg = null
 ItemList/styles/bg_focus = null
 ItemList/styles/cursor = null
 ItemList/styles/cursor_unfocused = null
-ItemList/styles/selected = null
+ItemList/styles/selected = SubResource( 2 )
 ItemList/styles/selected_focus = null
 Label/colors/font_color = Color( 0, 0, 0, 1 )
 Label/colors/font_color_shadow = Color( 0, 0, 0, 1 )

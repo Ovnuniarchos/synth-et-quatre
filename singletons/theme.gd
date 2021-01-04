@@ -32,6 +32,7 @@ var std_spacing:Dictionary
 var std_colors:Dictionary
 var std_font:DynamicFont
 var std_text_style:Dictionary
+var std_image:Texture
 
 
 var default_theme:Dictionary={
@@ -112,8 +113,8 @@ var default_theme:Dictionary={
 			"margin":4
 		},
 		"selected":{
-			"background":"white",
-			"border-width":[2,2,0],
+			"background":"#aaaabb",
+			"border-width":[2,2,0]
 		},
 		"overlap":1
 	},
@@ -124,9 +125,7 @@ var default_theme:Dictionary={
 			"corner-radius":2,
 			"antialias":false,
 			"margin":3
-		},
-		"disabled":{},
-		"hover":{}
+		}
 	},
 	"menu":{
 		"normal":{
@@ -160,7 +159,6 @@ var default_theme:Dictionary={
 		}
 	},
 	"popup":{
-		"normal":{},
 		"hover":{
 			"type":"flat",
 			"border-width":0
@@ -191,17 +189,13 @@ var default_theme:Dictionary={
 			"border-width":[2,1,1,2],
 			"margin":4
 		},
-		"selected":{
-		},
-		"separation": 0
+		"separation":0
 	},
 	"input":{
 		"normal":{
 			"border-width":[2,1,1,2],
 			"margin":4
-		},
-		"focus":{},
-		"disabled":{}
+		}
 	},
 	"spinbar":{
 		"normal":{
@@ -278,10 +272,10 @@ func _init()->void:
 	std_font=ThemeParser.parse_font(default_theme,"font",null)
 	theme.set_font("default_font","",std_font)
 	# Panels
-	panel_st[BS_NORMAL]=ThemeParser.create_stylebox(default_theme,"panel",button_colorsets[BS_NORMAL],null)
-	panel_st[BS_DISABLED]=ThemeParser.create_stylebox(default_theme,"panel",button_colorsets[BS_DISABLED],null)
-	panel_st[BS_HOVER]=ThemeParser.create_stylebox(default_theme,"panel",button_colorsets[BS_HOVER],null)
-	panel_st[BS_PRESSED]=ThemeParser.create_stylebox(default_theme,"panel",button_colorsets[BS_PRESSED],null)
+	panel_st[BS_NORMAL]=ThemeParser.create_stylebox(default_theme,"panel",button_colorsets[BS_NORMAL],null,std_image)
+	panel_st[BS_DISABLED]=ThemeParser.create_stylebox(default_theme,"panel",button_colorsets[BS_DISABLED],null,std_image)
+	panel_st[BS_HOVER]=ThemeParser.create_stylebox(default_theme,"panel",button_colorsets[BS_HOVER],null,std_image)
+	panel_st[BS_PRESSED]=ThemeParser.create_stylebox(default_theme,"panel",button_colorsets[BS_PRESSED],null,std_image)
 	theme.set_stylebox("panel","PanelContainer",panel_st[BS_NORMAL])
 	theme.set_stylebox("empty_panel","",EMPTY_ST)
 	# Popups
@@ -332,7 +326,7 @@ func set_label_styles(data:Dictionary,key:String,label_type:String,default:Dicti
 	theme.set_color("font_color",label_type,ret["color"])
 	theme.set_color("font_outline_modulate",label_type,ret["outline"])
 	if ret["shadow-type"]==ThemeParser.SHADOW_TYPES[ThemeParser.ST_NONE]:
-		theme.set_color("font_color_shadow",label_type,Color(0))
+		theme.set_color("font_color_shadow",label_type,Color.transparent)
 	else:
 		theme.set_color("font_color_shadow",label_type,ret["shadow-color"])
 	theme.set_constant("shadow_offset_x",label_type,ret["shadow-offset"][0])
@@ -345,19 +339,19 @@ func set_bar_styles(data:Dictionary,key:String,bar_type:String)->void:
 	var frag:Dictionary=ThemeParser.typesafe_get(data,key,{})
 	for mode in [BS_NORMAL,BS_DISABLED,BS_HOVER]:
 		var frag2:Dictionary=ThemeParser.typesafe_get(frag,mode,{})
-		theme.set_stylebox("bg_"+mode,bar_type,ThemeParser.create_stylebox(frag2,"background",bar_colorsets[mode]["bg"],panel_st[mode]))
-		theme.set_stylebox("fg_"+mode,bar_type,ThemeParser.create_stylebox(frag2,"foreground",bar_colorsets[mode]["fg"],panel_st[mode]))
+		theme.set_stylebox("bg_"+mode,bar_type,ThemeParser.create_stylebox(frag2,"background",bar_colorsets[mode]["bg"],panel_st[mode],std_image))
+		theme.set_stylebox("fg_"+mode,bar_type,ThemeParser.create_stylebox(frag2,"foreground",bar_colorsets[mode]["fg"],panel_st[mode],std_image))
 		theme.set_color("font_color_"+mode,bar_type,ThemeParser.parse_color(frag2,"color",bar_colorsets[mode]["text"]))
 		theme.set_font("font_"+mode,bar_type,ThemeParser.parse_font(frag2,"font",std_font))
 
 
 func set_default_glyphs(data:Dictionary)->void:
 	var frag:Dictionary=ThemeParser.typesafe_get(data,"glyphs",{})
-	var dflt_img:Texture=ThemeParser.resource_load("res://theme/"+ThemeParser.typesafe_get(frag,"source-file",""),"StreamTexture",null)
+	std_image=ThemeParser.resource_load("res://theme/"+ThemeParser.typesafe_get(frag,"source-file",""),"StreamTexture",null)
 	for glyph in frag:
 		if glyph=="source-file":
 			continue
-		theme.set_icon(glyph,"Glyphs",ThemeParser.parse_glyph(frag[glyph],dflt_img))
+		theme.set_icon(glyph,"Glyphs",ThemeParser.parse_glyph(frag[glyph],std_image))
 
 
 func set_input_styles(data:Dictionary,key:String)->void:
@@ -367,30 +361,36 @@ func set_input_styles(data:Dictionary,key:String)->void:
 	theme.set_color("font_color_selected","LineEdit",std_colors[CO_DEFAULT_BG])
 	theme.set_color("selection_color","LineEdit",std_colors[CO_DEFAULT_FG])
 	theme.set_color("cursor_color","LineEdit",std_colors[CO_DEFAULT_FG])
-	theme.set_stylebox("normal","LineEdit",ThemeParser.create_stylebox(frag,"normal",button_colorsets[BS_NORMAL],panel_st[BS_NORMAL]))
+	theme.set_stylebox("normal","LineEdit",ThemeParser.create_stylebox(frag,"normal",button_colorsets[BS_NORMAL],panel_st[BS_NORMAL],std_image))
+	var sb:StyleBox=theme.get_stylebox("normal","LineEdit")
 	if data.has("focus"):
+		theme.set_stylebox("focus","LineEdit",ThemeParser.create_stylebox(frag,"focus",button_colorsets[BS_NORMAL],panel_st[BS_NORMAL],std_image))
 		theme.set_color("font_color_focus","LineEdit",ThemeParser.parse_color(ThemeParser.typesafe_get(frag,"focus",{}),"color",std_colors[CO_DEFAULT_FG]))
-		theme.set_stylebox("focus","LineEdit",ThemeParser.create_stylebox(frag,"focus",button_colorsets[BS_NORMAL],panel_st[BS_NORMAL]))
 	else:
-		theme.set_color("font_color_focus","LineEdit",theme.get_color("font_color","LineEdit"))
-		theme.set_stylebox("focus","LineEdit",theme.get_stylebox("normal","LineEdit"))
-	theme.set_color("font_color_uneditable","LineEdit",ThemeParser.parse_color(ThemeParser.typesafe_get(frag,"disabled",{}),"color",std_colors[CO_FADED_FG]))
-	theme.set_stylebox("read_only","LineEdit",ThemeParser.create_stylebox(frag,"disabled",button_colorsets[BS_DISABLED],panel_st[BS_DISABLED]))
+		theme.set_stylebox("focus","LineEdit",ThemeParser.create_stylebox(frag,"focus",button_colorsets[BS_NORMAL],sb,std_image))
+		theme.set_color("font_color_focus","LineEdit",std_colors[CO_DEFAULT_FG])
+	if data.has("disabled"):
+		theme.set_stylebox("read_only","LineEdit",ThemeParser.create_stylebox(frag,"disabled",button_colorsets[BS_DISABLED],panel_st[BS_DISABLED],std_image))
+		theme.set_color("font_color_uneditable","LineEdit",ThemeParser.parse_color(ThemeParser.typesafe_get(frag,"disabled",{}),"color",std_colors[CO_FADED_FG]))
+	else:
+		theme.set_stylebox("read_only","LineEdit",ThemeParser.create_stylebox(frag,"disabled",button_colorsets[BS_DISABLED],sb,std_image))
+		theme.set_color("font_color_uneditable","LineEdit",std_colors[CO_FADED_FG])
 
 
 func set_itemlist_styles(data:Dictionary,key:String)->void:
 	var frag:Dictionary=ThemeParser.typesafe_get(data,key,{})
 	theme.set_font("font","ItemList",ThemeParser.parse_font(frag,"font",std_font))
 	if frag.has("background"):
-		theme.set_stylebox("bg","ItemList",ThemeParser.create_stylebox(frag,"background",button_colorsets[BS_NORMAL],panel_st[BS_NORMAL]))
+		theme.set_stylebox("bg","ItemList",ThemeParser.create_stylebox(frag,"background",button_colorsets[BS_NORMAL],panel_st[BS_NORMAL],std_image))
 		theme.set_color("font_color","ItemList",ThemeParser.parse_color(ThemeParser.typesafe_get(frag,"background",{}),"color",std_colors[CO_DEFAULT_FG]))
 	else:
 		theme.set_stylebox("bg","ItemList",panel_st[BS_NORMAL])
 		theme.set_color("font_color","ItemList",std_colors[CO_DEFAULT_FG])
 	theme.set_stylebox("bg_focus","ItemList",theme.get_stylebox("bg","ItemList"))
-	if data.has("selected"):
-		theme.set_stylebox("selected","ItemList",panel_st[BS_PRESSED])
-		theme.set_color("font_color_selected","ItemList",std_colors[CO_DEFAULT_BG])
+	if frag.has("selected"):
+		var t:StyleBox=ThemeParser.create_stylebox(frag,"selected",button_colorsets[BS_PRESSED],panel_st[BS_PRESSED],std_image)
+		theme.set_stylebox("selected","ItemList",t)
+		theme.set_color("font_color_selected","ItemList",ThemeParser.parse_color(ThemeParser.typesafe_get(frag,"selected",{}),"color",std_colors[CO_DEFAULT_BG]))
 	else:
 		theme.set_stylebox("selected","ItemList",panel_st[BS_PRESSED])
 		theme.set_color("font_color_selected","ItemList",std_colors[CO_DEFAULT_BG])
@@ -402,13 +402,13 @@ func set_itemlist_styles(data:Dictionary,key:String)->void:
 
 func set_scrollbar_styles(data:Dictionary,key:String)->void:
 	var frag:Dictionary=ThemeParser.typesafe_get(data,key,{})
-	theme.set_stylebox("grabber","HScrollBar",ThemeParser.create_stylebox(frag,"normal",box_colorsets[BS_NORMAL],panel_st[BS_NORMAL]))
+	theme.set_stylebox("grabber","HScrollBar",ThemeParser.create_stylebox(frag,"normal",box_colorsets[BS_NORMAL],panel_st[BS_NORMAL],std_image))
 	theme.set_stylebox("grabber","VScrollBar",ThemeParser.rotate_content_margin(theme.get_stylebox("grabber","HScrollBar")))
-	theme.set_stylebox("grabber_highlight","HScrollBar",ThemeParser.create_stylebox(frag,"hover",box_colorsets[BS_HOVER],panel_st[BS_HOVER]))
+	theme.set_stylebox("grabber_highlight","HScrollBar",ThemeParser.create_stylebox(frag,"hover",box_colorsets[BS_HOVER],panel_st[BS_HOVER],std_image))
 	theme.set_stylebox("grabber_highlight","VScrollBar",ThemeParser.rotate_content_margin(theme.get_stylebox("grabber_highlight","HScrollBar")))
-	theme.set_stylebox("grabber_pressed","HScrollBar",ThemeParser.create_stylebox(frag,"pressed",box_colorsets[BS_PRESSED],panel_st[BS_PRESSED]))
+	theme.set_stylebox("grabber_pressed","HScrollBar",ThemeParser.create_stylebox(frag,"pressed",box_colorsets[BS_PRESSED],panel_st[BS_PRESSED],std_image))
 	theme.set_stylebox("grabber_pressed","VScrollBar",ThemeParser.rotate_content_margin(theme.get_stylebox("grabber_pressed","HScrollBar")))
-	theme.set_stylebox("scroll","HScrollBar",ThemeParser.create_stylebox(frag,"background",box_colorsets[BS_NORMAL],panel_st[BS_NORMAL]))
+	theme.set_stylebox("scroll","HScrollBar",ThemeParser.create_stylebox(frag,"background",box_colorsets[BS_NORMAL],panel_st[BS_NORMAL],std_image))
 	theme.set_stylebox("scroll","VScrollBar",ThemeParser.rotate_content_margin(theme.get_stylebox("scroll","HScrollBar")))
 
 
@@ -428,8 +428,8 @@ func set_popup_styles(data:Dictionary)->void:
 	theme.set_constant("vseparation","PopupMenu",0)
 	var frag:Dictionary=ThemeParser.typesafe_get(data,"popup",{})
 	theme.set_font("font","PopupMenu",ThemeParser.parse_font(frag,"font",std_font))
-	theme.set_stylebox("panel","PopupMenu",ThemeParser.create_stylebox(frag,"normal",button_colorsets[BS_NORMAL],panel_st[BS_NORMAL]))
-	theme.set_stylebox("hover","PopupMenu",ThemeParser.create_stylebox(frag,"hover",button_colorsets[BS_HOVER],panel_st[BS_HOVER]))
+	theme.set_stylebox("panel","PopupMenu",ThemeParser.create_stylebox(frag,"normal",button_colorsets[BS_NORMAL],panel_st[BS_NORMAL],std_image))
+	theme.set_stylebox("hover","PopupMenu",ThemeParser.create_stylebox(frag,"hover",button_colorsets[BS_HOVER],panel_st[BS_HOVER],std_image))
 	var sep_st:StyleBoxLine=StyleBoxLine.new()
 	frag=ThemeParser.typesafe_get(frag,"separator",{})
 	sep_st.color=ThemeParser.parse_color(frag,"color",std_colors[CO_DEFAULT_FG])
@@ -449,7 +449,7 @@ func set_tab_styles(data:Dictionary)->void:
 		var tab_cl:Color=ThemeParser.parse_color(ThemeParser.typesafe_get(frag,TB_NORMAL,{}),"color",std_colors[CO_DEFAULT_FG])
 		theme.set_font("font","TabContainer",ThemeParser.parse_font(frag,"font",std_font))
 		if frag.has("normal"):
-			tab_st=ThemeParser.create_stylebox(frag,TB_NORMAL,button_colorsets[BS_NORMAL],panel_st[BS_NORMAL])
+			tab_st=ThemeParser.create_stylebox(frag,TB_NORMAL,button_colorsets[BS_NORMAL],panel_st[BS_NORMAL],std_image)
 		else:
 			tab_st=panel_st[BS_NORMAL]
 		if frag.has("overlap"):
@@ -458,7 +458,11 @@ func set_tab_styles(data:Dictionary)->void:
 		theme.set_stylebox("tab_bg","TabContainer",tab_st)
 		theme.set_color("font_color_bg","TabContainer",tab_cl)
 		if frag.has("selected"):
-			theme.set_stylebox("tab_fg","TabContainer",ThemeParser.create_stylebox(frag,TB_SELECTED,button_colorsets[BS_NORMAL],tab_st))
+			tab_st=ThemeParser.create_stylebox(frag,TB_SELECTED,button_colorsets[BS_NORMAL],tab_st,std_image)
+			if frag.has("overlap"):
+				tab_st=tab_st.duplicate()
+				tab_st.expand_margin_bottom=ThemeParser.typesafe_get(frag,"overlap",0)
+			theme.set_stylebox("tab_fg","TabContainer",tab_st)
 			theme.set_color("font_color_fg","TabContainer",ThemeParser.parse_color(ThemeParser.typesafe_get(frag,TB_SELECTED,{}),"color",tab_cl))
 		else:
 			theme.set_stylebox("tab_fg","TabContainer",tab_st)
@@ -487,11 +491,8 @@ func set_button_styles(data:Dictionary,key:String,node_type:String)->void:
 	if not frag.empty():
 		theme.set_font("font",node_type,ThemeParser.parse_font(frag,"font",std_font))
 		for st in [BS_NORMAL,BS_DISABLED,BS_HOVER,BS_PRESSED]:
-			but_st[st]=ThemeParser.create_sb_flat({},button_colorsets[st],but_st[BS_NORMAL])
-			if frag.has(st):
-				but_st[st]=ThemeParser.create_stylebox(frag,st,button_colorsets[st],but_st[st])
-				var t0:Dictionary=ThemeParser.typesafe_get(frag,st,{})
-				but_cl[st]=ThemeParser.parse_color(t0,"color",button_colorsets[st]["fg"])
+			but_st[st]=ThemeParser.create_stylebox(frag,st,button_colorsets[st],but_st[BS_NORMAL],std_image)
+			but_cl[st]=ThemeParser.parse_color(ThemeParser.typesafe_get(frag,st,{}),"color",button_colorsets[st]["fg"])
 	for st in but_st:
 		theme.set_stylebox(st,node_type,but_st[st])
 		theme.set_color("font_color" if st==BS_NORMAL else "font_color_"+st,node_type,but_cl[st])

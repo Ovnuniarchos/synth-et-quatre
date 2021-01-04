@@ -163,12 +163,14 @@ static func parse_spacing(data:Dictionary,key:String,defaults:Array)->Dictionary
 	}
 
 
-static func create_stylebox(data:Dictionary,key:String,colorset:Dictionary,default:StyleBox)->StyleBox:
+static func create_stylebox(data:Dictionary,key:String,colorset:Dictionary,default:StyleBox,def_image:Texture)->StyleBox:
 	var frag:Dictionary=typesafe_get(data,key,{})
 	if frag.empty():
-		var sb:StyleBoxFlat
+		var sb:StyleBox
 		if default==null:
 			sb=create_sb_flat({},colorset,null)
+		elif default is StyleBoxTexture:
+			return default
 		else:
 			sb=default
 			if sb.bg_color!=colorset["bg"] or sb.border_color!=colorset["fg"]:
@@ -176,7 +178,7 @@ static func create_stylebox(data:Dictionary,key:String,colorset:Dictionary,defau
 				sb.border_color=colorset["fg"]
 				sb.bg_color=colorset["bg"]
 		return sb
-	var t:int=parse_names(typesafe_get(frag,"type",BT_FLAT),BOX_TYPES,BT_UNDEFD)
+	var t:int=parse_names(typesafe_get(frag,"type",BT_UNDEFD),BOX_TYPES,BT_UNDEFD)
 	if t==BOX_TYPES[BT_UNDEFD]:
 		if default is StyleBoxTexture:
 			t=BOX_TYPES[BT_BITMAP]
@@ -185,7 +187,7 @@ static func create_stylebox(data:Dictionary,key:String,colorset:Dictionary,defau
 	if t==BOX_TYPES[BT_FLAT]:
 		return create_sb_flat(frag,colorset,default as StyleBoxFlat)
 	else:
-		return create_sb_bitmap(frag)
+		return create_sb_bitmap(frag,default as StyleBoxTexture,def_image)
 
 
 static func create_sb_flat(data:Dictionary,colorset:Dictionary,base:StyleBoxFlat)->StyleBoxFlat:
@@ -225,23 +227,48 @@ static func create_sb_flat(data:Dictionary,colorset:Dictionary,base:StyleBoxFlat
 	return st
 
 
-static func create_sb_bitmap(data:Dictionary={})->StyleBoxTexture:
-	var st:StyleBoxTexture=StyleBoxTexture.new()
-	st.texture=null
-	st.region_rect=Rect2()
-	var values:Array=parse_sides_corners(data,"border-width",2.0)
-	st.margin_top=values[FS_TOP]
-	st.margin_right=values[FS_RIGHT]
-	st.margin_bottom=values[FS_BOTTOM]
-	st.margin_left=values[FS_LEFT]
-	values=parse_sides_corners(data,"margin",4.0)
-	st.content_margin_top=values[FS_TOP]
-	st.content_margin_right=values[FS_RIGHT]
-	st.content_margin_bottom=values[FS_BOTTOM]
-	st.content_margin_left=values[FS_LEFT]
-	values=parse_string_list(data,SM_STRETCH,2,SM_STRETCH)
-	st.axis_stretch_horizontal=parse_names(values[0],STRETCH_MODES,SM_STRETCH)
-	st.axis_stretch_vertical=parse_names(values[1],STRETCH_MODES,SM_STRETCH)
+static func create_sb_bitmap(data:Dictionary,default:StyleBoxTexture,def_image:Texture)->StyleBoxTexture:
+	var st:StyleBoxTexture=StyleBoxTexture.new() if default==null else default.duplicate()
+	st.texture=resource_load("res://theme/"+typesafe_get(data,"texture",""),"StreamTexture",def_image)
+	if data.has("rect"):
+		var t:Array=parse_rectangle(data,"rect",0.0)
+		st.region_rect=Rect2(t[0],t[1],t[2],t[3])
+	elif default!=null:
+		st.region_rect=default.region_rect
+	else:
+		st.region_rect=Rect2() if st.texture==null else Rect2(Vector2(),st.texture.get_size())
+	st.modulate_color=parse_color(data,"modulate",Color.white if default==null else default.modulate_color)
+	st.draw_center=true
+	var values:Array
+	if data.has("border-width") or default==null:
+		values=parse_sides_corners(data,"border-width",2.0)
+		st.margin_top=values[FS_TOP]
+		st.margin_right=values[FS_RIGHT]
+		st.margin_bottom=values[FS_BOTTOM]
+		st.margin_left=values[FS_LEFT]
+	else:
+		st.margin_top=default.margin_top
+		st.margin_right=default.margin_right
+		st.margin_bottom=default.margin_bottom
+		st.margin_left=default.margin_left
+	if data.has("margin") or default==null:
+		values=parse_sides_corners(data,"margin",4.0)
+		st.content_margin_top=values[FS_TOP]
+		st.content_margin_right=values[FS_RIGHT]
+		st.content_margin_bottom=values[FS_BOTTOM]
+		st.content_margin_left=values[FS_LEFT]
+	else:
+		st.content_margin_top=default.content_margin_top
+		st.content_margin_right=default.content_margin_right
+		st.content_margin_bottom=default.content_margin_bottom
+		st.content_margin_left=default.content_margin_left
+	if data.has(SM_STRETCH) or default==null:
+		values=parse_string_list(data,SM_STRETCH,2,SM_STRETCH)
+		st.axis_stretch_horizontal=parse_names(values[0],STRETCH_MODES,SM_STRETCH)
+		st.axis_stretch_vertical=parse_names(values[1],STRETCH_MODES,SM_STRETCH)
+	else:
+		st.axis_stretch_horizontal=default.axis_stretch_horizontal
+		st.axis_stretch_vertical=default.axis_stretch_vertical
 	return st
 
 
@@ -303,7 +330,7 @@ static func parse_text_styles(data:Dictionary,key:String,default:Dictionary)->Di
 	ret["font"]=parse_font(frag,"font",ret.get("font"))
 	ret["color"]=parse_color(frag,"color",ret.get("color"))
 	ret["outline"]=parse_color(frag,"outline",ret.get("outline",Color.white))
-	ret["shadow-color"]=parse_color(frag,"shadow-color",ret.get("shadow-color",Color(0)))
+	ret["shadow-color"]=parse_color(frag,"shadow-color",ret.get("shadow-color",Color.transparent))
 	ret["shadow-offset"]=parse_number_list(frag,"shadow-offset",2,0)
 	ret["shadow-type"]=parse_names(
 		typesafe_get(frag,"shadow-type",ST_NONE),

@@ -306,7 +306,7 @@ static func resource_load(path:String,type:String,default:Resource)->Resource:
 	return default
 
 
-static func parse_glyph(data:Dictionary,default:StreamTexture)->AtlasTexture:
+static func parse_image(data:Dictionary,default:Texture)->AtlasTexture:
 	var at:AtlasTexture=null
 	var img:Texture=resource_load("res://theme/"+typesafe_get(data,"file",""),"StreamTexture",default)
 	if img==null:
@@ -318,6 +318,13 @@ static func parse_glyph(data:Dictionary,default:StreamTexture)->AtlasTexture:
 	if rect.min()<0.0:
 		return null
 	at.region=Rect2(rect[0],rect[1],rect[2],rect[3])
+	return at
+
+
+static func parse_glyph(data:Dictionary,default:Texture)->AtlasTexture:
+	var at:AtlasTexture=parse_image(data,default)
+	if at==null:
+		return null
 	var margin:Array=parse_number_list(data,"margin",2,0.0)
 	var offset:Array=parse_number_list(data,"offset",2,0.0)
 	at.margin=Rect2(offset[0]+margin[0],offset[1]+margin[1],margin[0]*2.0,margin[1]*2.0)

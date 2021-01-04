@@ -31,6 +31,7 @@ func _ready():
 		pp.add_item(sn[0],sn[1])
 	pp.connect("id_pressed",self,"_on_New_id_pressed")
 	update_ui()
+	ThemeHelper.apply_styles(THEME.get("theme"),"Button",new_but)
 
 func update_ui()->void:
 	_on_wave_selected(curr_wave_ix)

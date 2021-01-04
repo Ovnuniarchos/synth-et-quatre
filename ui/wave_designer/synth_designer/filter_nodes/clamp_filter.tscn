@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://ui/wave_designer/synth_designer/wave_nodes/title_bar.tscn" type="PackedScene" id=1]
 [ext_resource path="res://ui/wave_designer/synth_designer/filter_nodes/clamp_filter.gd" type="Script" id=2]
 [ext_resource path="res://ui/widgets/spin_bar.gd" type="Script" id=3]
+[ext_resource path="res://ui/widgets/accent_button.gd" type="Script" id=4]
 
 [node name="ClampFilter" type="PanelContainer"]
 margin_right = 170.0
@@ -23,6 +24,7 @@ margin_bottom = 387.0
 [node name="Title" parent="VBC" instance=ExtResource( 1 )]
 margin_right = 156.0
 title = "CLAMP"
+index = 0
 
 [node name="Params" type="GridContainer" parent="VBC"]
 margin_top = 24.0
@@ -37,29 +39,32 @@ columns = 2
 [node name="LabelUClampOn" type="Label" parent="VBC/Params" groups=[
 "Label",
 ]]
-margin_top = 5.0
+margin_top = 3.0
 margin_right = 54.0
-margin_bottom = 19.0
+margin_bottom = 17.0
 text = "Clamp U"
 
-[node name="UClampOn" type="CheckBox" parent="VBC/Params"]
+[node name="UClampOn" type="Button" parent="VBC/Params"]
 margin_left = 62.0
 margin_right = 156.0
-margin_bottom = 24.0
+margin_bottom = 20.0
+toggle_mode = true
+text = "Clamp"
+script = ExtResource( 4 )
 
 [node name="LabelUClamp" type="Label" parent="VBC/Params" groups=[
 "Label",
 ]]
-margin_top = 26.0
+margin_top = 22.0
 margin_right = 54.0
-margin_bottom = 40.0
+margin_bottom = 36.0
 text = "Clamp U"
 
 [node name="UClamp" type="ProgressBar" parent="VBC/Params"]
 margin_left = 62.0
-margin_top = 26.0
+margin_top = 22.0
 margin_right = 156.0
-margin_bottom = 40.0
+margin_bottom = 36.0
 rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -74,30 +79,33 @@ huge_step = 10.0
 [node name="LabelLClampOn" type="Label" parent="VBC/Params" groups=[
 "Label",
 ]]
-margin_top = 47.0
+margin_top = 41.0
 margin_right = 54.0
-margin_bottom = 61.0
+margin_bottom = 55.0
 text = "Clamp L"
 
-[node name="LClampOn" type="CheckBox" parent="VBC/Params"]
+[node name="LClampOn" type="Button" parent="VBC/Params"]
 margin_left = 62.0
-margin_top = 42.0
+margin_top = 38.0
 margin_right = 156.0
-margin_bottom = 66.0
+margin_bottom = 58.0
+toggle_mode = true
+text = "Clamp"
+script = ExtResource( 4 )
 
 [node name="LabelLClamp" type="Label" parent="VBC/Params" groups=[
 "Label",
 ]]
-margin_top = 68.0
+margin_top = 60.0
 margin_right = 54.0
-margin_bottom = 82.0
+margin_bottom = 74.0
 text = "Clamp L"
 
 [node name="LClamp" type="ProgressBar" parent="VBC/Params"]
 margin_left = 62.0
-margin_top = 68.0
+margin_top = 60.0
 margin_right = 156.0
-margin_bottom = 82.0
+margin_bottom = 74.0
 rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -112,9 +120,9 @@ huge_step = 10.0
 [node name="LabelVol" type="Label" parent="VBC/Params" groups=[
 "Label",
 ]]
-margin_top = 84.0
+margin_top = 76.0
 margin_right = 54.0
-margin_bottom = 98.0
+margin_bottom = 90.0
 text = "Volume"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -122,9 +130,9 @@ __meta__ = {
 
 [node name="Vol" type="ProgressBar" parent="VBC/Params"]
 margin_left = 62.0
-margin_top = 84.0
+margin_top = 76.0
 margin_right = 156.0
-margin_bottom = 98.0
+margin_bottom = 90.0
 rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -136,31 +144,31 @@ big_step = 5.0
 huge_step = 10.0
 
 [node name="ReferenceRect" type="ReferenceRect" parent="VBC/Params"]
-margin_top = 100.0
+margin_top = 92.0
 margin_right = 54.0
-margin_bottom = 124.0
+margin_bottom = 116.0
 rect_min_size = Vector2( 0, 24 )
 
 [node name="ReferenceRect2" type="ReferenceRect" parent="VBC/Params"]
 margin_left = 62.0
-margin_top = 100.0
+margin_top = 92.0
 margin_right = 156.0
-margin_bottom = 124.0
+margin_bottom = 116.0
 rect_min_size = Vector2( 0, 24 )
 
 [node name="LabelOutput" type="Label" parent="VBC/Params" groups=[
 "Label",
 ]]
-margin_top = 129.0
+margin_top = 121.0
 margin_right = 54.0
-margin_bottom = 143.0
+margin_bottom = 135.0
 text = "Output"
 
 [node name="Output" type="OptionButton" parent="VBC/Params"]
 margin_left = 62.0
-margin_top = 126.0
+margin_top = 118.0
 margin_right = 156.0
-margin_bottom = 146.0
+margin_bottom = 138.0
 text = "Off"
 items = [ "Off", null, false, 0, null, "Replace", null, false, 1, null, "Add", null, false, 2, null, "AM", null, false, 4, null, "XM", null, false, 5, null ]
 selected = 0
@@ -168,16 +176,16 @@ selected = 0
 [node name="LabelFrom" type="Label" parent="VBC/Params" groups=[
 "Label",
 ]]
-margin_top = 148.0
+margin_top = 140.0
 margin_right = 54.0
-margin_bottom = 162.0
+margin_bottom = 154.0
 text = "From"
 
 [node name="From" type="ProgressBar" parent="VBC/Params"]
 margin_left = 62.0
-margin_top = 148.0
+margin_top = 140.0
 margin_right = 156.0
-margin_bottom = 162.0
+margin_bottom = 154.0
 rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -191,16 +199,16 @@ huge_step = 1.0
 [node name="LabelAM" type="Label" parent="VBC/Params" groups=[
 "Label",
 ]]
-margin_top = 164.0
+margin_top = 156.0
 margin_right = 54.0
-margin_bottom = 178.0
+margin_bottom = 170.0
 text = "AM"
 
 [node name="AM" type="ProgressBar" parent="VBC/Params"]
 margin_left = 62.0
-margin_top = 164.0
+margin_top = 156.0
 margin_right = 156.0
-margin_bottom = 178.0
+margin_bottom = 170.0
 rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -214,9 +222,9 @@ huge_step = 10.0
 [node name="LabelXM" type="Label" parent="VBC/Params" groups=[
 "Label",
 ]]
-margin_top = 180.0
+margin_top = 172.0
 margin_right = 54.0
-margin_bottom = 194.0
+margin_bottom = 186.0
 text = "XM"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -224,9 +232,9 @@ __meta__ = {
 
 [node name="XM" type="ProgressBar" parent="VBC/Params"]
 margin_left = 62.0
-margin_top = 180.0
+margin_top = 172.0
 margin_right = 156.0
-margin_bottom = 194.0
+margin_bottom = 186.0
 rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4

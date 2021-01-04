@@ -5,7 +5,9 @@ FIXME
 	Immediate note play skips notes (skips muted channels)
 TODO:
 	Themability
-		H/VSeparator styling
+		File dialog styling
+		Alertbox styling
+		Tracker styling
 	Special behavior of ±value key for pan column
 	Channel invert cycle for pan column
 	MIDI on/off indicator

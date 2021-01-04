@@ -9,7 +9,7 @@
 [ext_resource path="res://ui/pattern_editor/channel_container.gd" type="Script" id=7]
 [ext_resource path="res://ui/pattern_editor/info_bar.tscn" type="PackedScene" id=8]
 
-[sub_resource type="StyleBoxEmpty" id=1]
+[sub_resource type="StyleBoxEmpty" id=2]
 content_margin_left = 0.0
 content_margin_right = 0.0
 content_margin_top = 0.0
@@ -122,7 +122,7 @@ margin_right = 1024.0
 margin_bottom = 24.0
 rect_clip_content = true
 size_flags_horizontal = 3
-custom_styles/panel = SubResource( 1 )
+custom_styles/panel = SubResource( 2 )
 
 [node name="HB" type="HBoxContainer" parent="VSC/CCVBC/VBC/CNT/Channels/Scroll"]
 margin_right = 992.0
@@ -184,6 +184,6 @@ rect_min_size = Vector2( 0, 48 )
 [connection signal="horizontal_scroll" from="VSC/CCVBC/VBC/Editor" to="." method="_on_editor_horizontal_scroll"]
 [connection signal="order_changed" from="VSC/CCVBC/VBC/Editor" to="VSC/CCHSC/HSC/CCPatternList/PatternList" method="_on_order_changed" binds= [ -1 ]]
 [connection signal="scroll_locked" from="VSC/CCVBC/VBC/Editor" to="VSC/CCHSC/HSC/CCPatternList/PatternList" method="_on_Editor_scroll_locked"]
-[connection signal="step_changed" from="VSC/CCVBC/VBC/Editor" to="VSC/CCVBC/VBC/InfoBar" method="_on_step_changed"]
 [connection signal="step_changed" from="VSC/CCVBC/VBC/Editor" to="VSC/CCHSC/HSC/CCInfo/Info" method="_on_Editor_step_changed"]
+[connection signal="step_changed" from="VSC/CCVBC/VBC/Editor" to="VSC/CCVBC/VBC/InfoBar" method="_on_step_changed"]
 [connection signal="velocity_changed" from="VSC/CCVBC/VBC/Editor" to="VSC/CCVBC/VBC/InfoBar" method="_on_velocity_changed"]

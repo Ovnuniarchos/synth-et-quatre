@@ -1,11 +1,14 @@
-tool extends CheckBox
-class_name ConfigCheckBox
+tool extends Button
+class_name ConfigButton
 
 signal configured(value)
 
 export (String) var config_key:String="" setget set_config_key
 
-func _ready():
+func _init()->void:
+	toggle_mode=true
+
+func _ready()->void:
 	set_config_key(config_key)
 
 func set_config_key(ck:String)->void:

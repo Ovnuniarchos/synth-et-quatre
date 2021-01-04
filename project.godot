@@ -39,10 +39,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://ui/widgets/clip_container.gd"
 }, {
-"base": "CheckBox",
-"class": "ConfigCheckBox",
+"base": "Button",
+"class": "ConfigButton",
 "language": "GDScript",
-"path": "res://ui/options/config_checkbox.gd"
+"path": "res://ui/options/config_button.gd"
 }, {
 "base": "SpinBar",
 "class": "ConfigSpinBar",
@@ -226,7 +226,7 @@ _global_script_class_icons={
 "ChunkedFile": "",
 "ClampFilter": "",
 "ClipContainer": "",
-"ConfigCheckBox": "",
+"ConfigButton": "",
 "ConfigSpinBar": "",
 "CycleButton": "",
 "FmInstrument": "",

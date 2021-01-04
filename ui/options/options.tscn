@@ -2,7 +2,7 @@
 
 [ext_resource path="res://ui/options/config_spinbar.gd" type="Script" id=1]
 [ext_resource path="res://ui/options/options.gd" type="Script" id=2]
-[ext_resource path="res://ui/options/config_checkbox.gd" type="Script" id=5]
+[ext_resource path="res://ui/options/config_button.gd" type="Script" id=3]
 [ext_resource path="res://ui/options/config_option.gd" type="Script" id=6]
 
 [node name="Options" type="Tabs"]
@@ -26,7 +26,7 @@ __meta__ = {
 
 [node name="GC" type="GridContainer" parent="SC"]
 margin_right = 1016.0
-margin_bottom = 234.0
+margin_bottom = 214.0
 size_flags_horizontal = 3
 custom_constants/hseparation = 16
 columns = 2
@@ -51,13 +51,13 @@ text = "Export to WAV"
 [node name="Audio" type="MarginContainer" parent="SC/GC"]
 margin_top = 18.0
 margin_right = 500.0
-margin_bottom = 88.0
+margin_bottom = 80.0
 custom_constants/margin_left = 16
 
 [node name="Audio" type="GridContainer" parent="SC/GC/Audio"]
 margin_left = 16.0
 margin_right = 500.0
-margin_bottom = 70.0
+margin_bottom = 62.0
 size_flags_horizontal = 3
 columns = 2
 
@@ -85,6 +85,7 @@ big_step = 100.0
 huge_step = 1000.0
 _decimals = 0
 suffix = ""
+editable = true
 config_key = "AUDIO_SAMPLERATE"
 
 [node name="LabelBufferLength" type="Label" parent="SC/GC/Audio/Audio" groups=[
@@ -113,19 +114,20 @@ big_step = 1.0
 huge_step = 1.0
 _decimals = 1
 suffix = ""
+editable = true
 config_key = "AUDIO_BUFFERLENGTH"
 
 [node name="Export" type="MarginContainer" parent="SC/GC"]
 margin_left = 516.0
 margin_top = 18.0
 margin_right = 1016.0
-margin_bottom = 88.0
+margin_bottom = 80.0
 custom_constants/margin_left = 16
 
 [node name="Export" type="VBoxContainer" parent="SC/GC/Export"]
 margin_left = 16.0
 margin_right = 500.0
-margin_bottom = 70.0
+margin_bottom = 62.0
 size_flags_horizontal = 3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="SC/GC/Export/Export"]
@@ -157,42 +159,45 @@ big_step = 100.0
 huge_step = 1000.0
 _decimals = 0
 suffix = ""
+editable = true
 config_key = "RECORD_SAMPLERATE"
 
-[node name="FPSamples" type="CheckBox" parent="SC/GC/Export/Export"]
+[node name="FPSamples" type="Button" parent="SC/GC/Export/Export"]
 margin_top = 18.0
 margin_right = 484.0
-margin_bottom = 42.0
+margin_bottom = 38.0
+toggle_mode = true
 text = "Floating point samples"
-script = ExtResource( 5 )
+script = ExtResource( 3 )
 config_key = "RECORD_FPSAMPLES"
 
-[node name="SaveMuted" type="CheckBox" parent="SC/GC/Export/Export"]
-margin_top = 46.0
+[node name="SaveMuted" type="Button" parent="SC/GC/Export/Export"]
+margin_top = 42.0
 margin_right = 484.0
-margin_bottom = 70.0
+margin_bottom = 62.0
+toggle_mode = true
 text = "Save muted channels"
-script = ExtResource( 5 )
+script = ExtResource( 3 )
 config_key = "RECORD_SAVEMUTED"
 
 [node name="S" type="ReferenceRect" parent="SC/GC"]
-margin_top = 92.0
+margin_top = 84.0
 margin_right = 500.0
-margin_bottom = 108.0
+margin_bottom = 100.0
 rect_min_size = Vector2( 0, 16 )
 
 [node name="S2" type="ReferenceRect" parent="SC/GC"]
 margin_left = 516.0
-margin_top = 92.0
+margin_top = 84.0
 margin_right = 1016.0
-margin_bottom = 108.0
+margin_bottom = 100.0
 
 [node name="MIDITitle" type="Label" parent="SC/GC" groups=[
 "Title",
 ]]
-margin_top = 112.0
+margin_top = 104.0
 margin_right = 500.0
-margin_bottom = 126.0
+margin_bottom = 118.0
 size_flags_horizontal = 3
 text = "MIDI input"
 
@@ -200,22 +205,22 @@ text = "MIDI input"
 "Title",
 ]]
 margin_left = 516.0
-margin_top = 112.0
+margin_top = 104.0
 margin_right = 1016.0
-margin_bottom = 126.0
+margin_bottom = 118.0
 size_flags_horizontal = 3
 text = "Editor"
 
 [node name="MIDI" type="MarginContainer" parent="SC/GC"]
-margin_top = 130.0
+margin_top = 122.0
 margin_right = 500.0
-margin_bottom = 234.0
+margin_bottom = 214.0
 custom_constants/margin_left = 16
 
 [node name="MIDI" type="VBoxContainer" parent="SC/GC/MIDI"]
 margin_left = 16.0
 margin_right = 500.0
-margin_bottom = 104.0
+margin_bottom = 92.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="SC/GC/MIDI/MIDI"]
 margin_right = 484.0
@@ -241,56 +246,61 @@ selected = 0
 script = ExtResource( 6 )
 config_key = "MIDI_VELOCITYSRC"
 
-[node name="NoteOff" type="CheckBox" parent="SC/GC/MIDI/MIDI"]
+[node name="NoteOff" type="Button" parent="SC/GC/MIDI/MIDI"]
 margin_top = 24.0
 margin_right = 484.0
-margin_bottom = 48.0
+margin_bottom = 44.0
+toggle_mode = true
 text = "Record MIDI Note Off"
-script = ExtResource( 5 )
+script = ExtResource( 3 )
 config_key = "MIDI_NOTEOFF"
 
-[node name="VolumeChange" type="CheckBox" parent="SC/GC/MIDI/MIDI"]
-margin_top = 52.0
+[node name="VolumeChange" type="Button" parent="SC/GC/MIDI/MIDI"]
+margin_top = 48.0
 margin_right = 484.0
-margin_bottom = 76.0
+margin_bottom = 68.0
+toggle_mode = true
 text = "Record MIDI Volume"
-script = ExtResource( 5 )
+script = ExtResource( 3 )
 config_key = "MIDI_VOLUME"
 
-[node name="Aftertouch" type="CheckBox" parent="SC/GC/MIDI/MIDI"]
-margin_top = 80.0
+[node name="Aftertouch" type="Button" parent="SC/GC/MIDI/MIDI"]
+margin_top = 72.0
 margin_right = 484.0
-margin_bottom = 104.0
+margin_bottom = 92.0
+toggle_mode = true
 text = "Record MIDI Aftertouch"
-script = ExtResource( 5 )
+script = ExtResource( 3 )
 config_key = "MIDI_AFTERTOUCH"
 
 [node name="Editor" type="MarginContainer" parent="SC/GC"]
 margin_left = 516.0
-margin_top = 130.0
+margin_top = 122.0
 margin_right = 1016.0
-margin_bottom = 234.0
+margin_bottom = 214.0
 custom_constants/margin_left = 16
 
 [node name="Editor" type="VBoxContainer" parent="SC/GC/Editor"]
 margin_left = 16.0
 margin_right = 500.0
-margin_bottom = 104.0
+margin_bottom = 92.0
 size_flags_horizontal = 3
 
-[node name="HorizFXEdit" type="CheckBox" parent="SC/GC/Editor/Editor"]
+[node name="HorizFXEdit" type="Button" parent="SC/GC/Editor/Editor"]
 margin_right = 484.0
-margin_bottom = 24.0
+margin_bottom = 20.0
+toggle_mode = true
 text = "Horizontal FX edit"
-script = ExtResource( 5 )
+script = ExtResource( 3 )
 config_key = "EDIT_HORIZ_FX"
 
-[node name="FXCRLF" type="CheckBox" parent="SC/GC/Editor/Editor"]
-margin_top = 28.0
+[node name="FXCRLF" type="Button" parent="SC/GC/Editor/Editor"]
+margin_top = 24.0
 margin_right = 484.0
-margin_bottom = 52.0
+margin_bottom = 44.0
+toggle_mode = true
 text = "Keep cursor in value command"
-script = ExtResource( 5 )
+script = ExtResource( 3 )
 config_key = "EDIT_FX_CRLF"
 
 [connection signal="value_changed" from="SC/GC/Audio/Audio/SampleRate" to="." method="_on_AudioSampleRate_value_changed"]

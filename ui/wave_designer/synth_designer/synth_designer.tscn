@@ -103,6 +103,7 @@ margin_top = 264.0
 margin_right = 20.0
 margin_bottom = 284.0
 size_flags_vertical = 4
+toggle_mode = false
 text = "+"
 flat = false
 

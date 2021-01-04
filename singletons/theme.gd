@@ -20,7 +20,8 @@ const DEFAULT_COLORS:Dictionary={
 	CO_HOVER_FG:Color.white,
 	CO_HOVER_BG:Color.black
 }
-var EMPTY_ST:StyleBoxEmpty=StyleBoxEmpty.new()
+var EMPTY_STYLEBOX:StyleBoxEmpty=StyleBoxEmpty.new()
+var EMPTY_TEXTURE:Texture=StreamTexture.new()
 
 
 var theme:Theme
@@ -44,20 +45,8 @@ var default_theme:Dictionary={
 		"hover-fg":"white",
 		"hover-bg":"black"
 	},
+	"default-image":"editor.png",
 	"glyphs":{
-		"source-file":"editor.png",
-		"radio-on":{
-			"rect":[12,114,12]
-		},
-		"radio-off":{
-			"rect":[0,114,12],
-		},
-		"check-on":{
-			"rect":[12,97,12,14]
-		},
-		"check-off":{
-			"rect":[0,97,12,14],
-		},
 		"arrow-up":{
 			"rect":[24,112,8,16],
 			"margin":[8,0]
@@ -167,7 +156,13 @@ var default_theme:Dictionary={
 			"color":"black",
 			"line-width":2,
 			"margin":4
-		}
+		},
+		"checked":{
+			"rect":[12,114,12]
+		},
+		"unchecked":{
+			"rect":[0,114,12],
+		},
 	},
 	"scrollbar":{
 		"normal":{
@@ -228,6 +223,16 @@ var default_theme:Dictionary={
 				"border":"black"
 			}
 		}
+	},
+	"splitter":{
+		"horizontal":{
+			"rect":[32,107,64,5],
+			"margin":4
+		},
+		"vertical":{
+			"rect":[96,48,5,64],
+			"margin":4
+		}
 	}
 }
 func _init()->void:
@@ -266,6 +271,8 @@ func _init()->void:
 	std_spacing=ThemeParser.parse_spacing(default_theme,"spacing",[4,4])
 	theme.set_constant("separation","HBoxContainer",std_spacing[ThemeParser.SP_HORIZONTAL])
 	theme.set_constant("separation","VBoxContainer",std_spacing[ThemeParser.SP_VERTICAL])
+	# Default image
+	std_image=ThemeParser.resource_load("res://theme/"+ThemeParser.typesafe_get(default_theme,"default-image",""),"StreamTexture",EMPTY_TEXTURE)
 	# Glyphs
 	set_default_glyphs(default_theme)
 	# Fonts
@@ -277,30 +284,20 @@ func _init()->void:
 	panel_st[BS_HOVER]=ThemeParser.create_stylebox(default_theme,"panel",button_colorsets[BS_HOVER],null,std_image)
 	panel_st[BS_PRESSED]=ThemeParser.create_stylebox(default_theme,"panel",button_colorsets[BS_PRESSED],null,std_image)
 	theme.set_stylebox("panel","PanelContainer",panel_st[BS_NORMAL])
-	theme.set_stylebox("empty_panel","",EMPTY_ST)
+	theme.set_stylebox("empty_panel","",EMPTY_STYLEBOX)
 	# Popups
 	set_popup_styles(default_theme)
 	# Tabs
 	set_tab_styles(default_theme)
 	# Standard buttons
 	set_button_styles(default_theme,"button","Button")
+	ThemeHelper.copy_styles(theme,"Button","OptionButton")
 	# Accent(check) buttons
 	ThemeHelper.copy_styles(theme,"Button","AccentButton")
 	set_button_styles(default_theme,"accent-button","AccentButton")
 	# Menu buttons
 	ThemeHelper.copy_styles(theme,"Button","MenuButton")
 	set_button_styles(default_theme,"menu","MenuButton")
-	# Check button icons
-	theme.set_icon("checked","CheckBox",theme.get_icon("check-on","Glyphs"))
-	theme.set_icon("unchecked","CheckBox",theme.get_icon("check-off","Glyphs"))
-	theme.set_stylebox("normal","CheckBox",EMPTY_ST)
-	theme.set_color("font_color","CheckBox",std_colors[CO_DEFAULT_FG])
-	theme.set_stylebox("disabled","CheckBox",EMPTY_ST)
-	theme.set_color("font_color_disabled","CheckBox",std_colors[CO_FADED_FG])
-	theme.set_stylebox("hover","CheckBox",EMPTY_ST)
-	theme.set_color("font_color_hover","CheckBox",std_colors[CO_HOVER_FG])
-	theme.set_stylebox("pressed","CheckBox",EMPTY_ST)
-	theme.set_color("font_color_pressed","CheckBox",std_colors[CO_DEFAULT_FG])
 	# Scrollbars
 	set_scrollbar_styles(default_theme,"scrollbar")
 	# Item list
@@ -317,6 +314,20 @@ func _init()->void:
 	})
 	set_label_styles(default_theme,"title","LabelTitle",std_text_style)
 	set_label_styles(default_theme,"label","LabelControl",std_text_style)
+	# Splitters
+	set_splitter_styles(ThemeParser.typesafe_get(default_theme,"splitter",{}),"horizontal","VSplitContainer")
+	set_splitter_styles(ThemeParser.typesafe_get(default_theme,"splitter",{}),"vertical","HSplitContainer")
+
+
+func set_splitter_styles(data:Dictionary,key:String,splitter_type:String)->void:
+	var frag:Dictionary=ThemeParser.typesafe_get(data,key,{})
+	var at:AtlasTexture=ThemeParser.parse_image(frag,std_image)
+	var margin:float=ThemeParser.typesafe_get(frag,"margin",0.0)*2.0
+	if at!=null:
+		margin+=at.region.size.x if key=="vertical" else at.region.size.y
+	theme.set_constant("separation",splitter_type,margin)
+	theme.set_icon("grabber",splitter_type,at)
+	theme.set_constant("autohide",splitter_type,int(ThemeParser.parse_boolean(frag,"autohide",false)))
 
 
 func set_label_styles(data:Dictionary,key:String,label_type:String,default:Dictionary)->Dictionary:
@@ -347,10 +358,7 @@ func set_bar_styles(data:Dictionary,key:String,bar_type:String)->void:
 
 func set_default_glyphs(data:Dictionary)->void:
 	var frag:Dictionary=ThemeParser.typesafe_get(data,"glyphs",{})
-	std_image=ThemeParser.resource_load("res://theme/"+ThemeParser.typesafe_get(frag,"source-file",""),"StreamTexture",null)
 	for glyph in frag:
-		if glyph=="source-file":
-			continue
 		theme.set_icon(glyph,"Glyphs",ThemeParser.parse_glyph(frag[glyph],std_image))
 
 
@@ -431,14 +439,18 @@ func set_popup_styles(data:Dictionary)->void:
 	theme.set_stylebox("panel","PopupMenu",ThemeParser.create_stylebox(frag,"normal",button_colorsets[BS_NORMAL],panel_st[BS_NORMAL],std_image))
 	theme.set_stylebox("hover","PopupMenu",ThemeParser.create_stylebox(frag,"hover",button_colorsets[BS_HOVER],panel_st[BS_HOVER],std_image))
 	var sep_st:StyleBoxLine=StyleBoxLine.new()
-	frag=ThemeParser.typesafe_get(frag,"separator",{})
-	sep_st.color=ThemeParser.parse_color(frag,"color",std_colors[CO_DEFAULT_FG])
-	sep_st.thickness=ThemeParser.typesafe_get(frag,"line-width",2)
-	sep_st.grow_begin=-max(0,ThemeParser.typesafe_get(frag,"margin",2))
+	var frag2:Dictionary=ThemeParser.typesafe_get(frag,"separator",{})
+	sep_st.color=ThemeParser.parse_color(frag2,"color",std_colors[CO_DEFAULT_FG])
+	sep_st.thickness=ThemeParser.typesafe_get(frag2,"line-width",2)
+	sep_st.grow_begin=-max(0,ThemeParser.typesafe_get(frag2,"margin",2))
 	sep_st.grow_end=sep_st.grow_begin
 	theme.set_stylebox("separator","PopupMenu",sep_st)
-	theme.set_icon("radio_checked","PopupMenu",theme.get_icon("radio-on","Glyphs"))
-	theme.set_icon("radio_unchecked","PopupMenu",theme.get_icon("radio-off","Glyphs"))
+	theme.set_icon("radio_checked","PopupMenu",ThemeParser.parse_glyph(ThemeParser.typesafe_get(frag,"checked",{}),std_image))
+	theme.set_icon("radio_unchecked","PopupMenu",ThemeParser.parse_glyph(ThemeParser.typesafe_get(frag,"unchecked",{}),std_image))
+	var t:Texture=ThemeParser.parse_glyph(ThemeParser.typesafe_get(frag,"dropper",{}),null)
+	theme.set_icon("arrow","OptionButton",theme.get_icon("arrow-down","Glyphs") if t==null else t)
+	# Another undocumented style
+	theme.set_constant("modulate_arrow","OptionButton",1)
 
 
 func set_tab_styles(data:Dictionary)->void:
@@ -476,7 +488,7 @@ func set_tab_styles(data:Dictionary)->void:
 
 
 func set_button_styles(data:Dictionary,key:String,node_type:String)->void:
-	theme.set_stylebox("focus",node_type,EMPTY_ST)
+	theme.set_stylebox("focus",node_type,EMPTY_STYLEBOX)
 	var but_st:Dictionary={
 		BS_NORMAL:ThemeParser.create_sb_flat({},button_colorsets[BS_NORMAL],panel_st[BS_NORMAL])
 	}

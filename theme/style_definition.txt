@@ -10,13 +10,19 @@ COLOR_TYPE: /#?([:xdigit:]{2})?[:xdigit:]{6}/i | COLOR_NAME | array4(number) | n
 
 BOX_TYPE: BOX_TYPE_FLAT | BOX_TYPE_BITMAP
 
+SIDES_TYPE: number<all> | [number<top,bottom>,number<left,right>] | [number<top>,number<left,right>,number<bottom>] | [number<top>,number:<right>,number:<bottom>,number:<left>]
+
+CORNERS_TYPE: number<all> | [number<top-left,bottom-right>,number<top-right,bottom-left>] | [number<top-left>,number<top-right,bottom-left>,number<bottom-right>] | [number<top-left>,number<top-right>,number<bottom-right>,number<bottom-left>]
+
+RECT_TYPE: number<all> | [number<top,left>,number<width,height>] | [number<left>,number<top>,number<width,height>] | [number<left>,number<top>,number<width>,number<height>]
+
 BOX_TYPE_FLAT: {
 	type: "flat"
 	background: COLOR_TYPE
 	border: COLOR_TYPE
-	corner-radius: array4(number) | number
-	border-width: array4(number) | number
-	margin: array4(number) | number
+	corner-radius: CORNERS_TYPE
+	border-width: SIDES_TYPE
+	margin: SIDES_TYPE
 	antialias: boolean
 }
 
@@ -24,10 +30,10 @@ BOX_TYPE_BITMAP: {
 	type: "bitmap"
 	texture: string
 	modulate: COLOR_TYPE
-	rect: array4(number) | number
-	margin: array4(number) | number
-	border-width: array4(number) | number
-	stretch: array2(STRETCH_MODE) | string
+	rect: RECT_TYPE
+	margin: SIDES_TYPE
+	border-width: SIDES_TYPE
+	stretch: array2(STRETCH_MODE)
 }
 
 SCROLLBAR_TYPE: SCROLLBAR_TYPE_FLAT | SCROLLBAR_TYPE_BITMAP
@@ -36,8 +42,8 @@ SCROLLBAR_TYPE_FLAT: {
 	type: "flat"
 	background: COLOR_TYPE
 	border: COLOR_TYPE
-	corner-radius: array4(number) | number
-	border-width: array4(number) | number
+	corner-radius: CORNERS_TYPE
+	border-width: SIDES_TYPE
 	antialias: boolean
 }
 
@@ -45,9 +51,9 @@ SCROLLBAR_TYPE_BITMAP: {
 	type: "bitmap"
 	texture: string
 	modulate: COLOR_TYPE
-	margin: array4(number) | number
-	border-width: array4(number) | number
-	stretch: array2(STRETCH_MODE) | string
+	margin: SIDES_TYPE
+	border-width: SIDES_TYPE
+	stretch: array2(STRETCH_MODE)
 }
 
 FONT_TYPE: {
@@ -68,9 +74,13 @@ SPACING_TYPE: {
 	horizontal + vertical: number
 }
 
-GLYPH_TYPE: {
+IMAGE_TYPE: {
 	file: string,
-	rect: array4(number) | number
+	rect: RECT_TYPE
+}
+
+GLYPH_TYPE: {
+	IMAGE_TYPE
 	margin: array2(number) | number
 	offset: array2(number) | number
 }
@@ -91,9 +101,10 @@ TEXT_STYLE: {
 colors: {
 	default-fg + default-bg + faded-fg + faded-bg: COLOR_TYPE
 }
+default-image: string
 glyphs: {
-	source-file: string
-	radio-on + radio-off: GLYPH_TYPE
+	arrow-up + arrow-down + arrow-left + arrow-right +
+	close + play + play-track + stop: GLYPH_TYPE
 }
 spacing: SPACING_TYPE
 font: FONT_TYPE
@@ -117,6 +128,9 @@ popup: {
 	normal + hover: BOX_TYPE
 	separator: SEPARATOR_TYPE
 	font: FONT_TYPE
+	checked: GLYPH_TYPE
+	unchecked: GLYPH_TYPE
+	dropper: GLYPH_TYPE
 }
 scrollbar: {
 	normal + hover + pressed: SCROLLBAR_TYPE
@@ -141,4 +155,10 @@ spinbar | progress: {
 }
 title: {
 	font: FONT_TYPE
+}
+splitter: {
+	horizontal + vertical: {
+		IMAGE_TYPE
+		margin: number
+	}
 }

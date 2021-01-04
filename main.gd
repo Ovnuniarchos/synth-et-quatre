@@ -4,6 +4,8 @@ extends Control
 FIXME
 	Immediate note play skips notes (skips muted channels)
 TODO:
+	Themability
+		Check bitmap boxes functionality
 	Special behavior of ±value key for pan column
 	Channel invert cycle for pan column
 	MIDI on/off indicator
@@ -18,7 +20,6 @@ TODO:
 
 FUTURE:
 	Translations
-	Themability
 """
 
 

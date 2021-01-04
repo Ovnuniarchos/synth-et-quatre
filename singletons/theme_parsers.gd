@@ -166,7 +166,16 @@ static func parse_spacing(data:Dictionary,key:String,defaults:Array)->Dictionary
 static func create_stylebox(data:Dictionary,key:String,colorset:Dictionary,default:StyleBox)->StyleBox:
 	var frag:Dictionary=typesafe_get(data,key,{})
 	if frag.empty():
-		return create_sb_flat({},colorset,null) if default==null else default
+		var sb:StyleBoxFlat
+		if default==null:
+			sb=create_sb_flat({},colorset,null)
+		else:
+			sb=default
+			if sb.bg_color!=colorset["bg"] or sb.border_color!=colorset["fg"]:
+				sb=default.duplicate()
+				sb.border_color=colorset["fg"]
+				sb.bg_color=colorset["bg"]
+		return sb
 	var t:int=parse_names(typesafe_get(frag,"type",BT_FLAT),BOX_TYPES,BT_UNDEFD)
 	if t==BOX_TYPES[BT_UNDEFD]:
 		if default is StyleBoxTexture:

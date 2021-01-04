@@ -11,7 +11,7 @@ func _ready()->void:
 func setup()->void:
 	set_block_signals(true)
 	$VBC/Params/UClampOn.pressed=component.u_clamp_on
-	$VBC/Params/UClampOn.editable=component.u_clamp_on
+	$VBC/Params/UClamp.editable=component.u_clamp_on
 	$VBC/Params/UClamp.value=component.u_clamp*100.0
 	$VBC/Params/LClampOn.pressed=component.l_clamp_on
 	$VBC/Params/LClamp.editable=component.l_clamp_on

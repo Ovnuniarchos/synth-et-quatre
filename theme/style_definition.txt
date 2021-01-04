@@ -131,10 +131,12 @@ input: {
 	input: FONT_TYPE
 }
 spinbar | progress: {
-	background: BOX_TYPE
-	foreground: SCROLLBAR_TYPE
-	color: COLOR_TYPE
-	font: FONT_TYPE
+	normal + disabled + hover: {
+		background: BOX_TYPE
+		foreground: SCROLLBAR_TYPE
+		color: COLOR_TYPE
+		font: FONT_TYPE
+	}
 }
 title: {
 	font: FONT_TYPE

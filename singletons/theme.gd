@@ -27,6 +27,7 @@ var theme:Theme
 var panel_st:Dictionary
 var button_colorsets:Dictionary
 var box_colorsets:Dictionary
+var bar_colorsets:Dictionary
 var std_spacing:Dictionary
 var std_colors:Dictionary
 var std_font:DynamicFont
@@ -95,9 +96,6 @@ var default_theme:Dictionary={
 	},
 	"title":{
 		"font":{"size":16}
-	},
-	"label":{
-		"color":"red"
 	},
 	"panel":{
 		"type":"flat",
@@ -206,21 +204,35 @@ var default_theme:Dictionary={
 		"disabled":{}
 	},
 	"spinbar":{
-		"background":{
-			"margin":0
+		"normal":{
+			"background":{
+				"margin":0
+			},
+			"foreground":{
+				"background":"#666677",
+				"border":"black"
+			}
 		},
-		"foreground":{
-			"background":"#666677",
-			"border":"black"
-		}
+		"hover":{
+			"background":{
+				"background":"black",
+				"border":"white"
+			},
+			"foreground":{
+				"background":"#333344",
+				"border":"white"
+			}
+		},
 	},
 	"progress":{
-		"background":{
-			"margin":2
-		},
-		"foreground":{
-			"background":"#666677",
-			"border":"black"
+		"normal":{
+			"background":{
+				"margin":2
+			},
+			"foreground":{
+				"background":"#666677",
+				"border":"black"
+			}
 		}
 	}
 }
@@ -233,6 +245,23 @@ func _init()->void:
 		BS_DISABLED:{"fg":std_colors[CO_FADED_FG],"bg":std_colors[CO_FADED_BG]},
 		BS_HOVER:{"fg":std_colors[CO_HOVER_FG],"bg":std_colors[CO_HOVER_BG]},
 		BS_PRESSED:{"fg":std_colors[CO_DEFAULT_BG],"bg":std_colors[CO_DEFAULT_FG]}
+	}
+	bar_colorsets={
+		BS_NORMAL:{
+			"bg":{"fg":std_colors[CO_DEFAULT_FG],"bg":std_colors[CO_DEFAULT_BG]},
+			"fg":{"fg":std_colors[CO_DEFAULT_BG],"bg":std_colors[CO_DEFAULT_FG]},
+			"text":std_colors[CO_DEFAULT_FG]
+		},
+		BS_DISABLED:{
+			"bg":{"fg":std_colors[CO_FADED_FG],"bg":std_colors[CO_FADED_BG]},
+			"fg":{"fg":std_colors[CO_FADED_BG],"bg":std_colors[CO_FADED_FG]},
+			"text":std_colors[CO_FADED_FG]
+		},
+		BS_HOVER:{
+			"bg":{"fg":std_colors[CO_HOVER_FG],"bg":std_colors[CO_HOVER_BG]},
+			"fg":{"fg":std_colors[CO_HOVER_BG],"bg":std_colors[CO_HOVER_FG]},
+			"text":std_colors[CO_HOVER_FG]
+		}
 	}
 	box_colorsets={
 		BS_NORMAL:{"fg":std_colors[CO_DEFAULT_FG],"bg":std_colors[CO_DEFAULT_BG]},
@@ -254,6 +283,7 @@ func _init()->void:
 	panel_st[BS_HOVER]=ThemeParser.create_stylebox(default_theme,"panel",button_colorsets[BS_HOVER],null)
 	panel_st[BS_PRESSED]=ThemeParser.create_stylebox(default_theme,"panel",button_colorsets[BS_PRESSED],null)
 	theme.set_stylebox("panel","PanelContainer",panel_st[BS_NORMAL])
+	theme.set_stylebox("empty_panel","",EMPTY_ST)
 	# Popups
 	set_popup_styles(default_theme)
 	# Tabs
@@ -284,8 +314,8 @@ func _init()->void:
 	# Input
 	set_input_styles(default_theme,"input")
 	# SpinBars
-	set_bar_styles(default_theme,"SpinBar")
-	set_bar_styles(default_theme,"ProgressBar")
+	set_bar_styles(default_theme,"spinbar","SpinBar")
+	set_bar_styles(default_theme,"progress","ProgressBar")
 	# Labels
 	std_text_style=set_label_styles(default_theme,"text","Label",{
 		"font":std_font,
@@ -311,18 +341,14 @@ func set_label_styles(data:Dictionary,key:String,label_type:String,default:Dicti
 	return ret
 
 
-func set_bar_styles(data:Dictionary,bar_type:String)->void:
-	var frag:Dictionary=ThemeParser.typesafe_get(data,"spinbar",{})
-	if frag.has("background"):
-		theme.set_stylebox("bg",bar_type,ThemeParser.create_stylebox(frag,"background",button_colorsets[BS_NORMAL],panel_st[BS_NORMAL]))
-	else:
-		theme.set_stylebox("bg",bar_type,theme.get_stylebox("scroll","HScrollBar"))
-	if frag.has("foreground"):
-		theme.set_stylebox("fg",bar_type,ThemeParser.create_stylebox(frag,"foreground",box_colorsets[BS_HOVER],panel_st[BS_HOVER]))
-	else:
-		theme.set_stylebox("fg",bar_type,theme.get_stylebox("grabber","HScrollBar"))
-	theme.set_color("font_color",bar_type,ThemeParser.parse_color(frag,"color",std_colors[CO_DEFAULT_FG]))
-	theme.set_font("font",bar_type,ThemeParser.parse_font(frag,"font",std_font))
+func set_bar_styles(data:Dictionary,key:String,bar_type:String)->void:
+	var frag:Dictionary=ThemeParser.typesafe_get(data,key,{})
+	for mode in [BS_NORMAL,BS_DISABLED,BS_HOVER]:
+		var frag2:Dictionary=ThemeParser.typesafe_get(frag,mode,{})
+		theme.set_stylebox("bg_"+mode,bar_type,ThemeParser.create_stylebox(frag2,"background",bar_colorsets[mode]["bg"],panel_st[mode]))
+		theme.set_stylebox("fg_"+mode,bar_type,ThemeParser.create_stylebox(frag2,"foreground",bar_colorsets[mode]["fg"],panel_st[mode]))
+		theme.set_color("font_color_"+mode,bar_type,ThemeParser.parse_color(frag2,"color",bar_colorsets[mode]["text"]))
+		theme.set_font("font_"+mode,bar_type,ThemeParser.parse_font(frag2,"font",std_font))
 
 
 func set_default_glyphs(data:Dictionary)->void:

@@ -173,7 +173,7 @@ static func create_stylebox(data:Dictionary,key:String,colorset:Dictionary,defau
 			return default
 		else:
 			sb=default
-			if sb.bg_color!=colorset["bg"] or sb.border_color!=colorset["fg"]:
+			if not colorset.empty() and (sb.bg_color!=colorset["bg"] or sb.border_color!=colorset["fg"]):
 				sb=default.duplicate()
 				sb.border_color=colorset["fg"]
 				sb.bg_color=colorset["bg"]

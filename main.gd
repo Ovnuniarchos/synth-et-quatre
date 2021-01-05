@@ -5,7 +5,6 @@ FIXME
 	Immediate note play skips notes (skips muted channels)
 TODO:
 	Themability
-		File dialog styling
 		Tooltip styling
 		Tracker styling
 		Channel buttons styling

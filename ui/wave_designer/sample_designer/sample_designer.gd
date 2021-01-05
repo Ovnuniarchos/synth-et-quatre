@@ -5,6 +5,9 @@ signal name_changed(wave_ix,text)
 
 var curr_wave_ix:int=-1
 
+func _init()->void:
+	theme=THEME.get("theme")
+
 func _ready()->void:
 	update_ui()
 
@@ -96,3 +99,8 @@ func _on_values_changed(_value:float)->void:
 	w.loop_end=$Designer/SC/VBC/GC/End.value
 	GLOBALS.song.send_wave(w,SYNTH)
 	emit_signal("wave_calculated",curr_wave_ix)
+
+
+func _on_FileDialog_popup_hide()->void:
+	$Designer/SC/VBC/Load.notification(NOTIFICATION_MOUSE_EXIT)
+	$Designer/SC/VBC/Load.notification(NOTIFICATION_FOCUS_EXIT)

@@ -173,14 +173,9 @@ dialog: {
 	closer-margin: array2(number)
 }
 file-dialog: {
-	file: IMAGE_TYPE
-	folder: IMAGE_TYPE
-	parent: IMAGE_TYPE
-	reload: IMAGE_TYPE
-	hide: IMAGE_TYPE
-	file-color: COLOR_TYPE
-	folder-color: COLOR_TYPE
-	disabled-color: COLOR_TYPE
+	file-list + file-list-selected: BOX_TYPE
+	color + color-selected + color-disabled + file-color + folder-color: COLOR_TYPE
+	file + folder + parent + reload + hide: IMAGE_TYPE
 }
 tooltip: {
 	BOX_TYPE

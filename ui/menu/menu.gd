@@ -18,8 +18,12 @@ var file_mode:int
 var real_theme:Theme
 
 
-func _ready()->void:
+func _init()->void:
 	real_theme=THEME.get("theme")
+	theme=real_theme
+
+
+func _ready()->void:
 	ThemeHelper.apply_styles(real_theme,"MenuButton",$HBC/New)
 	set_popup($HBC/Cleanup,"_on_Cleanup_id_pressed")
 	set_popup($HBC/Save,"_on_Save_id_pressed")
@@ -35,6 +39,7 @@ func set_popup(mb:MenuButton,sel:String)->void:
 func _on_popup_hide()->void:
 	for n in $HBC.get_children():
 		n.notification(NOTIFICATION_MOUSE_EXIT)
+		n.notification(NOTIFICATION_FOCUS_EXIT)
 
 
 func _on_New_pressed()->void:

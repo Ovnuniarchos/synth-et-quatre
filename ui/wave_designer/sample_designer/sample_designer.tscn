@@ -112,6 +112,11 @@ step = 1.0
 value = 1.0
 percent_visible = false
 script = ExtResource( 3 )
+big_step = 10.0
+huge_step = 100.0
+_decimals = 0
+suffix = ""
+editable = true
 
 [node name="LabelSamFreq" type="Label" parent="Designer/SC/VBC/GC" groups=[
 "Label",
@@ -135,6 +140,11 @@ step = 1.0
 value = 1.0
 percent_visible = false
 script = ExtResource( 3 )
+big_step = 10.0
+huge_step = 100.0
+_decimals = 0
+suffix = ""
+editable = true
 
 [node name="LabelStart" type="Label" parent="Designer/SC/VBC/GC" groups=[
 "Label",
@@ -157,6 +167,11 @@ step = 1.0
 value = 1.0
 percent_visible = false
 script = ExtResource( 3 )
+big_step = 10.0
+huge_step = 100.0
+_decimals = 0
+suffix = ""
+editable = true
 
 [node name="LabelEnd" type="Label" parent="Designer/SC/VBC/GC" groups=[
 "Label",
@@ -179,6 +194,11 @@ step = 1.0
 value = 1.0
 percent_visible = false
 script = ExtResource( 3 )
+big_step = 10.0
+huge_step = 100.0
+_decimals = 0
+suffix = ""
+editable = true
 
 [node name="FileDialog" type="FileDialog" parent="."]
 margin_right = 315.0
@@ -197,3 +217,4 @@ current_path = "/home/jordi/godot/SynthEtQuatre/"
 [connection signal="value_changed" from="Designer/SC/VBC/GC/Start" to="." method="_on_values_changed"]
 [connection signal="value_changed" from="Designer/SC/VBC/GC/End" to="." method="_on_values_changed"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_selected"]
+[connection signal="popup_hide" from="FileDialog" to="." method="_on_FileDialog_popup_hide"]

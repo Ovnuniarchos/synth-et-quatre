@@ -236,10 +236,27 @@ var default_theme:Dictionary={
 	},
 	"dialog":{
 		"closer":{
-			"rect":[0,92,12]
+			"rect":[0,104,12]
 		},
 		"title-margin":4,
 		"closer-margin":4
+	},
+	"file-dialog":{
+		"file":{
+			"rect":[16,96,16]
+		},
+		"folder":{
+			"rect":[32,96,16]
+		},
+		"parent":{
+			"rect":[0,80,16]
+		},
+		"reload":{
+			"rect":[16,80,16]
+		},
+		"hide":{
+			"rect":[32,80,16]
+		}
 	}
 }
 func _init()->void:
@@ -326,6 +343,27 @@ func _init()->void:
 	set_splitter_styles(ThemeParser.typesafe_get(default_theme,"splitter",{}),"vertical","HSplitContainer")
 	# Dialogs
 	set_dialog_styles(default_theme,"dialog")
+	# File selector
+	set_filedialog_styles(default_theme,"file-dialog")
+
+
+func set_filedialog_styles(data:Dictionary,key:String)->void:
+	var frag:Dictionary=ThemeParser.typesafe_get(data,key,{})
+	theme.set_stylebox("bg","Tree",ThemeParser.create_stylebox(frag,"file-list",box_colorsets[BS_NORMAL],theme.get_stylebox("normal","LineEdit"),std_image))
+	theme.set_font("font","Tree",theme.get_font("default_font",""))
+	theme.set_color("font_color","Tree",ThemeParser.parse_color(frag,"color",std_colors[CO_DEFAULT_FG]))
+	theme.set_stylebox("selected","Tree",ThemeParser.create_stylebox(frag,"file-list-selected",{},theme.get_stylebox("hover","PopupMenu"),std_image))
+	theme.set_stylebox("selected_focus","Tree",theme.get_stylebox("selected","Tree"))
+	theme.set_color("font_color_selected","Tree",ThemeParser.parse_color(frag,"color-selected",theme.get_color("font_color_hover","PopupMenu")))
+	theme.set_constant("draw_guides","Tree",0)
+	theme.set_icon("file","FileDialog",ThemeParser.parse_image(ThemeParser.typesafe_get(frag,"file",{}),std_image))
+	theme.set_icon("folder","FileDialog",ThemeParser.parse_image(ThemeParser.typesafe_get(frag,"folder",{}),std_image))
+	theme.set_icon("parent_folder","FileDialog",ThemeParser.parse_image(ThemeParser.typesafe_get(frag,"parent",{}),std_image))
+	theme.set_icon("reload","FileDialog",ThemeParser.parse_image(ThemeParser.typesafe_get(frag,"reload",{}),std_image))
+	theme.set_icon("toggle_hidden","FileDialog",ThemeParser.parse_image(ThemeParser.typesafe_get(frag,"hide",{}),std_image))
+	theme.set_color("file_icon_modulate","FileDialog",ThemeParser.parse_color(frag,"file-color",Color.white))
+	theme.set_color("files_disabled","FileDialog",ThemeParser.parse_color(frag,"color-disabled",std_colors[CO_FADED_FG]))
+	theme.set_color("folder_icon_modulate","FileDialog",ThemeParser.parse_color(frag,"folder-color",Color.white))
 
 
 func set_dialog_styles(data:Dictionary,key:String)->void:

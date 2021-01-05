@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://ui/test.gd" type="Script" id=1]
+[ext_resource path="res://theme/theme_tmp.tres" type="Theme" id=2]
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 2 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="."]
+margin_right = 12.0
+margin_bottom = 20.0
+text = "Dialog"
+
+[node name="Button2" type="Button" parent="."]
+margin_left = 148.66
+margin_right = 200.66
+margin_bottom = 20.0
+text = "File"
+
+[node name="FileDialog" type="FileDialog" parent="."]
+margin_right = 315.0
+margin_bottom = 130.0
+window_title = "Abrir un Directorio"
+mode = 2
+
+[node name="AcceptDialog" type="AcceptDialog" parent="."]
+margin_right = 94.0
+margin_bottom = 58.0
+window_title = "¡Alerta!"
+
+[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="Button2" to="." method="_on_Button2_pressed"]

@@ -6,8 +6,9 @@ FIXME
 TODO:
 	Themability
 		File dialog styling
-		Alertbox styling
+		Tooltip styling
 		Tracker styling
+		Channel buttons styling
 	Special behavior of ±value key for pan column
 	Channel invert cycle for pan column
 	MIDI on/off indicator

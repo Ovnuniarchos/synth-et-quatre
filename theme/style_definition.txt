@@ -8,6 +8,8 @@ HINT_MODE: "none" | "light" | "normal"
 
 COLOR_TYPE: /#?([:xdigit:]{2})?[:xdigit:]{6}/i | COLOR_NAME | array4(number) | number
 
+SHADOW_TYPE: "none" | "drop" | "outline"
+
 BOX_TYPE: BOX_TYPE_FLAT | BOX_TYPE_BITMAP
 
 SIDES_TYPE: number<all> | [number<top,bottom>,number<left,right>] | [number<top>,number<left,right>,number<bottom>] | [number<top>,number:<right>,number:<bottom>,number:<left>]
@@ -91,7 +93,7 @@ TEXT_STYLE: {
 	outline: COLOR_TYPE
 	shadow-color: COLOR_TYPE
 	shadow-offset: array2(number) | number
-	shadow-type: "none" | "drop" | "outline"
+	shadow-type: SHADOW_TYPE
 }
 
 #----------------------------------------------------------------#
@@ -161,4 +163,27 @@ splitter: {
 		IMAGE_TYPE
 		margin: number
 	}
+}
+dialog: {
+	BOX_TYPE
+	title-margin: number
+	title-color: COLOR_TYPE
+	title-font: FONT_TYPE
+	closer: IMAGE_TYPE
+	closer-margin: array2(number)
+}
+file-dialog: {
+	file: IMAGE_TYPE
+	folder: IMAGE_TYPE
+	parent: IMAGE_TYPE
+	reload: IMAGE_TYPE
+	hide: IMAGE_TYPE
+	file-color: COLOR_TYPE
+	folder-color: COLOR_TYPE
+	disabled-color: COLOR_TYPE
+}
+tooltip: {
+	BOX_TYPE
+	font: FONT_TYPE
+	color: COLOR_TYPE
 }

@@ -233,6 +233,13 @@ var default_theme:Dictionary={
 			"rect":[96,48,5,64],
 			"margin":4
 		}
+	},
+	"dialog":{
+		"closer":{
+			"rect":[0,92,12]
+		},
+		"title-margin":4,
+		"closer-margin":4
 	}
 }
 func _init()->void:
@@ -317,6 +324,30 @@ func _init()->void:
 	# Splitters
 	set_splitter_styles(ThemeParser.typesafe_get(default_theme,"splitter",{}),"horizontal","VSplitContainer")
 	set_splitter_styles(ThemeParser.typesafe_get(default_theme,"splitter",{}),"vertical","HSplitContainer")
+	# Dialogs
+	set_dialog_styles(default_theme,"dialog")
+
+
+func set_dialog_styles(data:Dictionary,key:String)->void:
+	var frag:Dictionary=ThemeParser.typesafe_get(data,key,{})
+	var st:StyleBox=ThemeParser.create_stylebox(data,key,box_colorsets[BS_NORMAL],panel_st[BS_NORMAL],std_image)
+	if st==panel_st[BS_NORMAL]:
+		st=panel_st[BS_NORMAL].duplicate()
+	var tf:Font=ThemeParser.parse_font(frag,"title-font",theme.get_font("font","LabelTitle"))
+	theme.set_font("title_font","WindowDialog",tf)
+	var th:float=tf.get_height()+ThemeParser.typesafe_get(frag,"title-margin",0.0)
+	st.expand_margin_top=th
+	theme.set_constant("title_height","WindowDialog",th)
+	theme.set_color("title_color","WindowDialog",ThemeParser.parse_color(frag,"title-color",std_colors[CO_DEFAULT_FG]))
+	theme.set_stylebox("panel","WindowDialog",st)
+	var icn:AtlasTexture=ThemeParser.parse_image(ThemeParser.typesafe_get(frag,"closer",{}),std_image)
+	theme.set_icon("close","WindowDialog",icn)
+	theme.set_icon("close_highlight","WindowDialog",icn)
+	if icn!=null:
+		var ofs:Array=ThemeParser.parse_number_list(frag,"closer-margin",2,0.0)
+		theme.set_constant("close_h_ofs","WindowDialog",icn.region.size.x+ofs[0])
+		theme.set_constant("close_v_ofs","WindowDialog",th-ofs[1])
+
 
 
 func set_splitter_styles(data:Dictionary,key:String,splitter_type:String)->void:

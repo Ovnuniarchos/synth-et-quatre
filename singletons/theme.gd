@@ -257,6 +257,11 @@ var default_theme:Dictionary={
 		"hide":{
 			"rect":[32,80,16]
 		}
+	},
+	"tooltip":{
+		"font":{
+			"size":12
+		}
 	}
 }
 func _init()->void:
@@ -345,6 +350,16 @@ func _init()->void:
 	set_dialog_styles(default_theme,"dialog")
 	# File selector
 	set_filedialog_styles(default_theme,"file-dialog")
+	# Tooltips
+	set_tooltip_style(default_theme,"tooltip")
+
+
+func set_tooltip_style(data:Dictionary,key:String)->void:
+	var frag:Dictionary=ThemeParser.typesafe_get(data,key,{})
+	theme.set_stylebox("panel","TooltipPanel",ThemeParser.create_stylebox(data,key,box_colorsets[BS_NORMAL],panel_st[BS_NORMAL],std_image))
+	theme.set_color("font_color","TooltipLabel",ThemeParser.parse_color(frag,"color",std_colors[CO_DEFAULT_FG]))
+	theme.set_color("font_color_shadow","TooltipLabel",Color.transparent)
+	theme.set_font("font","TooltipLabel",ThemeParser.parse_font(frag,"font",std_font))
 
 
 func set_filedialog_styles(data:Dictionary,key:String)->void:

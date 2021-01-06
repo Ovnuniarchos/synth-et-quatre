@@ -108,6 +108,7 @@ colors: {
 default-image: string
 glyphs: {
 	arrow-up + arrow-down + arrow-left + arrow-right +
+	close +
 	play + play-track + stop: GLYPH_TYPE
 }
 spacing: SPACING_TYPE
@@ -194,4 +195,13 @@ tracker: {
 	active-row: COLOR_TYPE
 	muted: COLOR_TYPE
 	solo: COLOR_TYPE
+}
+order-matrix: {
+	item + item-hover +
+	rownum + rownum-hover + rownum-sel + rownum-sel-hover: {
+		BOX_TYPE
+		color: COLOR_TYPE
+	}
+	margin: COORDS_TYPE
+	font: FONT_TYPE
 }

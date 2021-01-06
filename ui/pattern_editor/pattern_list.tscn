@@ -83,8 +83,6 @@ margin_right = 1010.0
 margin_bottom = 564.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_constants/vseparation = 0
-custom_constants/hseparation = 0
 
 [connection signal="pressed" from="VBC/HBC/Add" to="." method="_on_Add_pressed"]
 [connection signal="pressed" from="VBC/HBC/Copy" to="." method="_on_Copy_pressed"]

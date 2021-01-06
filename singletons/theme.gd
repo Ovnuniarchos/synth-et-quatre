@@ -63,6 +63,10 @@ var default_theme:Dictionary={
 			"rect":[40,112,8,16],
 			"margin":[8,0]
 		},
+		"close":{
+			"rect":[56,112,8,16],
+			"margin":[8,8]
+		},
 		"play":{
 			"rect":[96,112,16,16],
 			"margin":[2,0]
@@ -262,6 +266,28 @@ var default_theme:Dictionary={
 	"tracker":{
 		"rect":[0,0,128,48],
 		"cell-size":[8,16]
+	},
+	"order-matrix":{
+		"item":{
+			"border-width":1,
+			"margin":[2,4]
+		},
+		"rownum":{
+			"background":"transparent",
+			"border-width":0
+		},
+		"rownum-hover":{
+			"border-width":0
+		},
+		"rownum-sel":{
+			"background":"#226644",
+			"color":"#44ff99"
+		},
+		"rownum-sel-hover":{
+			"background":"#44ff99",
+			"color":"#226644"
+		},
+		"margin":1
 	}
 }
 func _init()->void:
@@ -327,6 +353,10 @@ func _init()->void:
 	# Menu buttons
 	ThemeHelper.copy_styles(theme,"Button","MenuButton")
 	set_button_styles(default_theme,"menu","MenuButton")
+	# Order buttons
+	set_button_styles(default_theme,"button","RowButton")
+	set_button_styles(default_theme,"button","OrderButton")
+	set_order_matrix_styles(default_theme,"order-matrix")
 	# Scrollbars
 	set_scrollbar_styles(default_theme,"scrollbar")
 	# Item list
@@ -354,6 +384,35 @@ func _init()->void:
 	set_tooltip_style(default_theme,"tooltip")
 	# Tracker
 	set_tracker_styles(default_theme,"tracker")
+
+
+func set_order_matrix_styles(data:Dictionary,key:String)->void:
+	var frag:Dictionary=ThemeParser.typesafe_get(data,key,{})
+	var font:Font=ThemeParser.parse_font(frag,"font",theme.get_font("font","Button"))
+	var margin:Array=ThemeParser.parse_number_list(frag,"margin",2,0.0)
+	theme.set_constant("margin-x","OrderMatrix",margin[0])
+	theme.set_constant("margin-y","OrderMatrix",margin[1])
+	theme.set_font("font","OrderButton",font)
+	theme.set_font("font","RowButton",font)
+	var sb:StyleBox=theme.get_stylebox("normal","Button")
+	theme.set_stylebox("normal","OrderButton",ThemeParser.create_stylebox(frag,"item",button_colorsets[BS_NORMAL],sb,std_image))
+	theme.set_color("font_color","OrderButton",ThemeParser.parse_color(ThemeParser.typesafe_get(frag,"item",{}),"color",std_colors[CO_DEFAULT_FG]))
+	sb=theme.get_stylebox("normal","OrderButton")
+	theme.set_stylebox("normal","RowButton",ThemeParser.create_stylebox(frag,"rownum",button_colorsets[BS_NORMAL],sb,std_image))
+	theme.set_color("font_color","RowButton",ThemeParser.parse_color(ThemeParser.typesafe_get(frag,"rownum",{}),"color",std_colors[CO_DEFAULT_FG]))
+	sb=theme.get_stylebox("normal","RowButton")
+	theme.set_stylebox("normal_on","RowButton",ThemeParser.create_stylebox(frag,"rownum-sel",button_colorsets[BS_NORMAL],sb,std_image))
+	theme.set_color("font_color_on","RowButton",ThemeParser.parse_color(ThemeParser.typesafe_get(frag,"rownum-sel",{}),"color",std_colors[CO_DEFAULT_FG]))
+	#
+	sb=theme.get_stylebox("hover","Button")
+	theme.set_stylebox("hover","OrderButton",ThemeParser.create_stylebox(frag,"item-hover",button_colorsets[BS_HOVER],sb,std_image))
+	theme.set_color("font_color_hover","OrderButton",ThemeParser.parse_color(ThemeParser.typesafe_get(frag,"item-hover",{}),"color",std_colors[CO_HOVER_FG]))
+	sb=theme.get_stylebox("hover","OrderButton")
+	theme.set_stylebox("hover","RowButton",ThemeParser.create_stylebox(frag,"rownum-hover",button_colorsets[BS_HOVER],sb,std_image))
+	theme.set_color("font_color_hover","RowButton",ThemeParser.parse_color(ThemeParser.typesafe_get(frag,"rownum-hover",{}),"color",std_colors[CO_HOVER_FG]))
+	sb=theme.get_stylebox("hover","RowButton")
+	theme.set_stylebox("hover_on","RowButton",ThemeParser.create_stylebox(frag,"rownum-sel-hover",button_colorsets[BS_HOVER],sb,std_image))
+	theme.set_color("font_color_hover_on","RowButton",ThemeParser.parse_color(ThemeParser.typesafe_get(frag,"rownum-sel-hover",{}),"color",std_colors[CO_HOVER_FG]))
 
 
 func set_tracker_styles(data:Dictionary,key:String)->void:
@@ -422,6 +481,8 @@ func set_dialog_styles(data:Dictionary,key:String)->void:
 	theme.set_color("title_color","WindowDialog",ThemeParser.parse_color(frag,"title-color",std_colors[CO_DEFAULT_FG]))
 	theme.set_stylebox("panel","WindowDialog",st)
 	var icn:AtlasTexture=ThemeParser.parse_image(ThemeParser.typesafe_get(frag,"closer",{}),std_image)
+	if icn==null:
+		icn=theme.get_icon("close","Glyphs")
 	theme.set_icon("close","WindowDialog",icn)
 	theme.set_icon("close_highlight","WindowDialog",icn)
 	if icn!=null:

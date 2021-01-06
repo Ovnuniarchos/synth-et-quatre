@@ -4,6 +4,9 @@ extends Control
 FIXME
 	Immediate note play skips notes (skips muted channels)
 TODO:
+	Styling:
+		Test null dictionary
+		Load from external (config-driven) file
 	Special behavior of ±value key for pan column
 	Channel invert cycle for pan column
 	MIDI on/off indicator

@@ -2,6 +2,7 @@ extends HBoxContainer
 
 
 func _ready()->void:
+	add_constant_override("separation",get_font("font").get_height()*2)
 	GLOBALS.connect("song_changed",self,"_on_song_changed")
 	GLOBALS.connect("octave_changed",self,"_on_octave_changed")
 	GLOBALS.connect("instrument_changed",self,"_on_instrument_changed")

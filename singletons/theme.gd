@@ -63,10 +63,6 @@ var default_theme:Dictionary={
 			"rect":[40,112,8,16],
 			"margin":[8,0]
 		},
-		"close":{
-			"rect":[56,112,8,16],
-			"margin":[8,0]
-		},
 		"play":{
 			"rect":[96,112,16,16],
 			"margin":[2,0]
@@ -140,11 +136,11 @@ var default_theme:Dictionary={
 		},
 		"pressed":{
 			"type":"flat",
-			"background":"#006600",
-			"border":"#00ff00",
+			"background":"#226644",
+			"border":"#44ff99",
 			"border-width":2,
 			"margin":4,
-			"color":"#00ff00"
+			"color":"#44ff99"
 		}
 	},
 	"popup":{
@@ -158,10 +154,10 @@ var default_theme:Dictionary={
 			"margin":4
 		},
 		"checked":{
-			"rect":[12,114,12]
+			"rect":[12,116,12]
 		},
 		"unchecked":{
-			"rect":[0,114,12],
+			"rect":[0,116,12],
 		},
 	},
 	"scrollbar":{
@@ -226,11 +222,11 @@ var default_theme:Dictionary={
 	},
 	"splitter":{
 		"horizontal":{
-			"rect":[32,107,64,5],
+			"rect":[59,107,64,5],
 			"margin":4
 		},
 		"vertical":{
-			"rect":[96,48,5,64],
+			"rect":[123,48,5,64],
 			"margin":4
 		}
 	},
@@ -262,6 +258,10 @@ var default_theme:Dictionary={
 		"font":{
 			"size":12
 		}
+	},
+	"tracker":{
+		"rect":[0,0,128,48],
+		"cell-size":[8,16]
 	}
 }
 func _init()->void:
@@ -352,6 +352,34 @@ func _init()->void:
 	set_filedialog_styles(default_theme,"file-dialog")
 	# Tooltips
 	set_tooltip_style(default_theme,"tooltip")
+	# Tracker
+	set_tracker_styles(default_theme,"tracker")
+
+
+func set_tracker_styles(data:Dictionary,key:String)->void:
+	var frag:Dictionary=ThemeParser.typesafe_get(data,key,{})
+	var at:AtlasTexture=ThemeParser.parse_image(frag,std_image)
+	var cs:Array=ThemeParser.parse_number_list(frag,"cell-size",2,-1)
+	if cs.max()<1.0:
+		cs=[8,16]
+	var ts:TileSet=TileSet.new()
+	var tid:int=0
+	for y in range(0,at.region.size.y,cs[1]):
+		for x in range(0,at.region.size.x,cs[0]):
+			ts.create_tile(tid)
+			ts.tile_set_texture(tid,at)
+			ts.tile_set_region(tid,Rect2(x,y,cs[0],cs[1]))
+			tid+=1
+	theme.set_meta("tileset",ts)
+	theme.set_constant("cell_w","Tracker",cs[0])
+	theme.set_constant("cell_h","Tracker",cs[1])
+	theme.set_color("background","Tracker",ThemeParser.parse_color(frag,"background",std_colors[CO_DEFAULT_BG]))
+	theme.set_color("minor","Tracker",ThemeParser.parse_color(frag,"minor-highlighht",std_colors[CO_DEFAULT_BG].linear_interpolate(std_colors[CO_DEFAULT_FG],0.25)))
+	theme.set_color("major","Tracker",ThemeParser.parse_color(frag,"major-highlighht",std_colors[CO_DEFAULT_BG].linear_interpolate(std_colors[CO_DEFAULT_FG],0.5)))
+	theme.set_color("active","Tracker",ThemeParser.parse_color(frag,"active-row",std_colors[CO_HOVER_FG]))
+	theme.set_color("color","Tracker",ThemeParser.parse_color(frag,"color",std_colors[CO_DEFAULT_FG]))
+	theme.set_color("muted","Tracker",ThemeParser.parse_color(frag,"muted",Color("#ff9999")))
+	theme.set_color("solo","Tracker",ThemeParser.parse_color(frag,"solo",Color("#99ccff")))
 
 
 func set_tooltip_style(data:Dictionary,key:String)->void:

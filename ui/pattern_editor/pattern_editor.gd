@@ -31,9 +31,11 @@ var midi_note:int=-1
 var midi_vel:int=127
 var midi_vol:int=127
 
-onready var editor:TileMap=$Pattern
-onready var lines:TileMap=$Lines
-onready var sel_rect:Node2D=$Selection
+var editor:TileMap
+var lines:TileMap
+var sel_rect:Node2D
+var cursor:Node2D
+var background:Node2D
 var ofs_chan:int=0
 var container:Control
 var container_size:Vector2
@@ -50,7 +52,14 @@ var scroll_lock:bool=false
 var last_entered:Array=[]
 
 
+
 func _ready()->void:
+	editor=$PatternOrg/Pattern
+	lines=$Lines
+	sel_rect=$PatternOrg/Selection
+	cursor=$PatternOrg/Cursor
+	background=$BG
+	setup_styles()
 	GKBD.connect("step_changed",self,"_on_Gkbd_step_changed")
 	GLOBALS.connect("song_changed",self,"_on_song_changed")
 	AUDIO.tracker.connect("position_changed",self,"_on_playing_pos_changed")
@@ -59,6 +68,22 @@ func _ready()->void:
 	selection.active=false
 	sel_rect.selection=selection
 	last_entered.resize(Pattern.MAX_ATTR)
+
+func setup_styles()->void:
+	var t:Theme=THEME.get("theme")
+	lines.tile_set=t.get_meta("tileset")
+	lines.cell_size=Vector2(t.get_constant("cell_w","Tracker"),t.get_constant("cell_h","Tracker"))
+	editor.tile_set=lines.tile_set
+	editor.cell_size=lines.cell_size
+	cursor.cell_size=lines.cell_size
+	sel_rect.cell_size=lines.cell_size
+	sel_rect.set_arrays(COL_WIDTH,COLS,channel_col0)
+	$PatternOrg.position.x=lines.cell_size.x*4.0
+	editor.modulate=t.get_color("color","Tracker")
+	background.color_base=t.get_color("background","Tracker")
+	background.color_min=t.get_color("minor","Tracker")
+	background.color_maj=t.get_color("major","Tracker")
+	background.color_active=t.get_color("active","Tracker")
 
 func _on_song_changed()->void:
 	GLOBALS.song.connect("channels_changed",self,"_on_channels_changed")
@@ -589,7 +614,7 @@ func _on_channels_changed()->void:
 	update_tilemap()
 	set_channel(curr_channel)
 	set_column(curr_column)
-	$Selection.update()
+	sel_rect.update()
 
 func _on_playing_pos_changed(order:int,row:int)->void:
 	if scroll_lock:
@@ -694,7 +719,7 @@ func set_note_cells(row:int,col:int,note)->void:
 #
 
 func set_bg_rows(rows:int)->void:
-	$BG.rows=rows
+	background.rows=rows
 
 func advance(f:int)->void:
 	set_row(curr_row+f)
@@ -704,8 +729,8 @@ func set_row(r:int)->void:
 	curr_row=clamp(r,0,sz-1)
 	var dy:float=(rect_size.y*0.5)-(curr_row*16.0)
 	digit_ix=0
-	$BG.row=curr_row
-	$BG.position.y=dy
+	background.row=curr_row
+	background.position.y=dy
 	lines.position.y=dy
 	editor.position.y=dy
 	sel_rect.position.y=dy
@@ -734,40 +759,40 @@ func set_column(c:int)->void:
 	set_cursor()
 
 func set_cursor()->void:
-	var c:Node2D=$Cursor
 	if !focused:
-		c.hide()
+		cursor.hide()
 		return
-	var x:float=32+((channel_col0[curr_channel]+COLS[curr_column])*8.0)+ofs_chan
-	while x+(COL_WIDTH[curr_column]*8.0)>container_size.x:
-		x-=144.0
-		ofs_chan-=144.0
-	while x<32.0:
-		x+=144.0
-		ofs_chan+=144.0
+	var x:float=((channel_col0[curr_channel]+COLS[curr_column])*lines.cell_size.x)+ofs_chan
+	var c:float=22.0*lines.cell_size.x
+	while x+(COL_WIDTH[curr_column]*lines.cell_size.x)>container_size.x:
+		x-=c
+		ofs_chan-=c
+	while x<0.0:
+		x+=c
+		ofs_chan+=c
 	emit_signal("horizontal_scroll",ofs_chan)
-	editor.position.x=ofs_chan+32.0
-	sel_rect.position.x=ofs_chan+32.0
-	c.position=Vector2(x,rect_size.y*0.5)
-	c.cell_size=editor.cell_size*Vector2(COL_WIDTH[curr_column],1.0)
-	c.show()
+	editor.position.x=ofs_chan
+	sel_rect.position.x=ofs_chan
+	cursor.position=Vector2(x,rect_size.y*0.5)
+	cursor.cell_size=editor.cell_size*Vector2(COL_WIDTH[curr_column],1.0)
+	cursor.show()
 
 #
 
 func _on_focus_entered()->void:
 	grab_focus()
 	focused=true
-	$Cursor.show()
+	cursor.show()
 	set_cursor()
 
 func _on_focus_exited()->void:
 	release_focus()
 	focused=false
-	$Cursor.hide()
+	cursor.hide()
 
 func _on_container_resized(cont:Control)->void:
 	container=cont
-	container_size=cont.rect_size
+	container_size=cont.rect_size-Vector2(lines.cell_size.x*4.0,0.0)
 	set_cursor()
 
 func _on_resized()->void:
@@ -793,9 +818,6 @@ func _on_Info_velocity_changed(vel:int)->void:
 func _on_Editor_mouse_entered()->void:
 	_on_focus_entered()
 
-func _on_Selection_ready()->void:
-	$Selection.set_arrays(COL_WIDTH,COLS,channel_col0)
-
 func _on_highlights_changed()->void:
-	$BG.every_min=GLOBALS.song.minor_highlight
-	$BG.every_maj=GLOBALS.song.major_highlight
+	background.every_min=GLOBALS.song.minor_highlight
+	background.every_maj=GLOBALS.song.major_highlight

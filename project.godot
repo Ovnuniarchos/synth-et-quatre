@@ -24,6 +24,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://classes/filter_components/brf_filter.gd"
 }, {
+"base": "HBoxContainer",
+"class": "ChannelButtons",
+"language": "GDScript",
+"path": "res://ui/pattern_editor/channel_buttons.gd"
+}, {
 "base": "File",
 "class": "ChunkedFile",
 "language": "GDScript",
@@ -223,6 +228,7 @@ _global_script_class_icons={
 "AccentButton": "",
 "BpfFilter": "",
 "BrfFilter": "",
+"ChannelButtons": "",
 "ChunkedFile": "",
 "ClampFilter": "",
 "ClipContainer": "",

@@ -18,6 +18,8 @@ CORNERS_TYPE: number<all> | [number<top-left,bottom-right>,number<top-right,bott
 
 RECT_TYPE: number<all> | [number<top,left>,number<width,height>] | [number<left>,number<top>,number<width,height>] | [number<left>,number<top>,number<width>,number<height>]
 
+COORDS_TYPE: number<all> | [number<x>,number<y>]
+
 BOX_TYPE_FLAT: {
 	type: "flat"
 	background: COLOR_TYPE
@@ -83,8 +85,8 @@ IMAGE_TYPE: {
 
 GLYPH_TYPE: {
 	IMAGE_TYPE
-	margin: array2(number) | number
-	offset: array2(number) | number
+	margin: COORDS_TYPE
+	offset: COORDS_TYPE
 }
 
 TEXT_STYLE: {
@@ -92,7 +94,7 @@ TEXT_STYLE: {
 	color: COLOR_TYPE
 	outline: COLOR_TYPE
 	shadow-color: COLOR_TYPE
-	shadow-offset: array2(number) | number
+	shadow-offset: COORDS_TYPE
 	shadow-type: SHADOW_TYPE
 }
 
@@ -106,7 +108,7 @@ colors: {
 default-image: string
 glyphs: {
 	arrow-up + arrow-down + arrow-left + arrow-right +
-	close + play + play-track + stop: GLYPH_TYPE
+	play + play-track + stop: GLYPH_TYPE
 }
 spacing: SPACING_TYPE
 font: FONT_TYPE
@@ -170,7 +172,7 @@ dialog: {
 	title-color: COLOR_TYPE
 	title-font: FONT_TYPE
 	closer: IMAGE_TYPE
-	closer-margin: array2(number)
+	closer-margin: COORDS_TYPE
 }
 file-dialog: {
 	file-list + file-list-selected: BOX_TYPE
@@ -181,4 +183,15 @@ tooltip: {
 	BOX_TYPE
 	font: FONT_TYPE
 	color: COLOR_TYPE
+}
+tracker: {
+	IMAGE_TYPE
+	cell-size: COORDS_TYPE
+	background: COLOR_TYPE
+	color: COLOR_TYPE
+	minor-highlight: COLOR_TYPE
+	major-highlight: COLOR_TYPE
+	active-row: COLOR_TYPE
+	muted: COLOR_TYPE
+	solo: COLOR_TYPE
 }

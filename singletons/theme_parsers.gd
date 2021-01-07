@@ -5,6 +5,7 @@ class_name ThemeParser
 enum{FC_TOPLEFT,FC_TOPRIGHT,FC_BOTTOMRIGHT,FC_BOTTOMLEFT}
 enum{FS_TOP,FS_RIGHT,FS_BOTTOM,FS_LEFT}
 enum{DIM_X,DIM_Y}
+enum{FT_IMAGE,FT_FONT}
 
 
 const SP_HORIZONTAL:String="horizontal"
@@ -163,7 +164,7 @@ static func parse_spacing(data:Dictionary,key:String,defaults:Array)->Dictionary
 	}
 
 
-static func create_stylebox(data:Dictionary,key:String,colorset:Dictionary,default:StyleBox,def_image:Texture)->StyleBox:
+static func create_stylebox(data:Dictionary,key:String,base_dir,colorset:Dictionary,default:StyleBox,def_image:Texture)->StyleBox:
 	var frag:Dictionary=typesafe_get(data,key,{})
 	if frag.empty():
 		var sb:StyleBox
@@ -187,7 +188,7 @@ static func create_stylebox(data:Dictionary,key:String,colorset:Dictionary,defau
 	if t==BOX_TYPES[BT_FLAT]:
 		return create_sb_flat(frag,colorset,default as StyleBoxFlat)
 	else:
-		return create_sb_bitmap(frag,default as StyleBoxTexture,def_image)
+		return create_sb_bitmap(frag,base_dir,default as StyleBoxTexture,def_image)
 
 
 static func create_sb_flat(data:Dictionary,colorset:Dictionary,base:StyleBoxFlat)->StyleBoxFlat:
@@ -227,9 +228,9 @@ static func create_sb_flat(data:Dictionary,colorset:Dictionary,base:StyleBoxFlat
 	return st
 
 
-static func create_sb_bitmap(data:Dictionary,default:StyleBoxTexture,def_image:Texture)->StyleBoxTexture:
+static func create_sb_bitmap(data:Dictionary,base_dir:String,default:StyleBoxTexture,def_image:Texture)->StyleBoxTexture:
 	var st:StyleBoxTexture=StyleBoxTexture.new() if default==null else default.duplicate()
-	st.texture=resource_load("res://theme/"+typesafe_get(data,"texture",""),"StreamTexture",def_image)
+	st.texture=resource_load(typesafe_get(data,"texture",""),base_dir,FT_IMAGE,def_image)
 	if data.has("rect"):
 		var t:Array=parse_rectangle(data,"rect",0.0)
 		st.region_rect=Rect2(t[0],t[1],t[2],t[3])
@@ -281,12 +282,12 @@ static func rotate_content_margin(sb:StyleBox)->StyleBox:
 	return sb2
 
 
-static func parse_font(data:Dictionary,tag:String,base:DynamicFont)->DynamicFont:
+static func parse_font(data:Dictionary,tag:String,base_dir:String,base:DynamicFont)->DynamicFont:
 	var frag:Dictionary=typesafe_get(data,tag,{})
 	if not frag.empty():
 		var fnt:DynamicFont=DynamicFont.new() if base==null else base.duplicate()
 		var dfd:DynamicFontData
-		dfd=resource_load("res://theme/"+typesafe_get(frag,"file",""),"DynamicFontData",fnt.font_data)
+		dfd=resource_load(typesafe_get(frag,"file",""),base_dir,FT_FONT,fnt.font_data)
 		fnt.font_data=dfd
 		fnt.size=typesafe_get(frag,"size",14 if base==null else base.size)
 		fnt.outline_size=typesafe_get(frag,"outline-size",0 if base==null else base.outline_size)
@@ -298,17 +299,26 @@ static func parse_font(data:Dictionary,tag:String,base:DynamicFont)->DynamicFont
 	return base
 
 
-static func resource_load(path:String,type:String,default:Resource)->Resource:
+static func resource_load(path:String,base_dir:String,type:int,default:Resource)->Resource:
+	if path.is_rel_path():
+		path=base_dir+"/"+path
 	var dir:Directory=Directory.new()
-	if dir.file_exists(path):
-		var r:Resource=load(path)
-		return r if r.get_class()==type else default
-	return default
+	if not dir.file_exists(path):
+		return default
+	var ret:Resource
+	if type==FT_FONT:
+		return load(path)
+	ret=Image.new()
+	if ret.load(path)!=OK:
+		return default
+	var r2:Texture=ImageTexture.new()
+	r2.create_from_image(ret,0)
+	return r2
 
 
-static func parse_image(data:Dictionary,default:Texture)->AtlasTexture:
+static func parse_image(data:Dictionary,base_dir:String,default:Texture)->AtlasTexture:
 	var at:AtlasTexture=null
-	var img:Texture=resource_load("res://theme/"+typesafe_get(data,"file",""),"StreamTexture",default)
+	var img:Texture=resource_load(typesafe_get(data,"file",""),base_dir,FT_IMAGE,default)
 	if img==null:
 		return null
 	at=AtlasTexture.new()
@@ -321,8 +331,8 @@ static func parse_image(data:Dictionary,default:Texture)->AtlasTexture:
 	return at
 
 
-static func parse_glyph(data:Dictionary,default:Texture)->AtlasTexture:
-	var at:AtlasTexture=parse_image(data,default)
+static func parse_glyph(data:Dictionary,base_dir:String,default:Texture)->AtlasTexture:
+	var at:AtlasTexture=parse_image(data,base_dir,default)
 	if at==null:
 		return null
 	var margin:Array=parse_number_list(data,"margin",2,0.0)
@@ -331,17 +341,13 @@ static func parse_glyph(data:Dictionary,default:Texture)->AtlasTexture:
 	return at
 
 
-static func parse_text_styles(data:Dictionary,key:String,default:Dictionary)->Dictionary:
+static func parse_text_styles(data:Dictionary,key:String,base_dir:String,default:Dictionary)->Dictionary:
 	var ret:Dictionary={} if default==null else default.duplicate()
 	var frag:Dictionary=typesafe_get(data,key,{})
-	ret["font"]=parse_font(frag,"font",ret.get("font"))
+	ret["font"]=parse_font(frag,"font",base_dir,ret.get("font"))
 	ret["color"]=parse_color(frag,"color",ret.get("color"))
 	ret["outline"]=parse_color(frag,"outline",ret.get("outline",Color.white))
 	ret["shadow-color"]=parse_color(frag,"shadow-color",ret.get("shadow-color",Color.transparent))
 	ret["shadow-offset"]=parse_number_list(frag,"shadow-offset",2,0)
-	ret["shadow-type"]=parse_names(
-		typesafe_get(frag,"shadow-type",ST_NONE),
-		SHADOW_TYPES,
-		[ST_NONE,ST_DROP,ST_OUTLINE][ret.get("shadow-type",SHADOW_TYPES[ST_NONE])]
-	)
+	ret["shadow-type"]=parse_names(typesafe_get(frag,"shadow-type",ST_NONE),SHADOW_TYPES,[ST_NONE,ST_DROP,ST_OUTLINE][ret.get("shadow-type",SHADOW_TYPES[ST_NONE])])
 	return ret

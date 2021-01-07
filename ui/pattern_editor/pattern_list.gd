@@ -55,7 +55,7 @@ func update_list(from:int=0,to:int=-1)->void:
 	highlight_current_order(true)
 
 func set_row_style(row:Button,current:bool)->void:
-	if not row.get_meta("styled"):
+	if not row.has_meta("styled"):
 		row.set_meta("styled",true)
 		ThemeHelper.apply_styles(theme,"RowButton",row)
 	row.add_stylebox_override("normal",theme.get_stylebox("normal_on" if current else "normal","RowButton"))

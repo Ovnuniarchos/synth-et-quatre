@@ -32,7 +32,9 @@ const COPIES=[
 	THEME_FILE
 ]
 
+
 var config:ConfigFile
+
 
 func _init()->void:
 	var ocfg:ConfigFile=ConfigFile.new()
@@ -41,19 +43,24 @@ func _init()->void:
 	for c in COPIES:
 		copy_value(ocfg,c)
 
+
 func _notification(what:int)->void:
 	if what==NOTIFICATION_PREDELETE:
 		config.save(CFG_PATH)
 
+
 #
+
 
 func copy_value(old_cfg:ConfigFile,sect_key:Array)->void:
 	config.set_value(sect_key[0],sect_key[1],old_cfg.get_value(sect_key[0],sect_key[1],sect_key[2]))
+
 
 func get_value(sect_key:Array):
 	if sect_key[3]==TYPE_ENUM:
 		return sect_key[4].find(config.get_value(sect_key[0],sect_key[1],sect_key[2]))
 	return config.get_value(sect_key[0],sect_key[1],sect_key[2])
+
 
 func set_value(sect_key:Array,value)->void:
 	if sect_key[3]==TYPE_INT:

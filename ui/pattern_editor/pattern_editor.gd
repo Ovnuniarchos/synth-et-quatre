@@ -31,6 +31,7 @@ var midi_note:int=-1
 var midi_vel:int=127
 var midi_vol:int=127
 
+var song:Song
 var editor:TileMap
 var lines:TileMap
 var sel_rect:Node2D
@@ -86,9 +87,10 @@ func setup_styles()->void:
 	background.color_active=t.get_color("active","Tracker")
 
 func _on_song_changed()->void:
-	GLOBALS.song.connect("channels_changed",self,"_on_channels_changed")
-	GLOBALS.song.connect("order_changed",self,"_on_order_changed")
-	GLOBALS.song.connect("highlights_changed",self,"_on_highlights_changed")
+	song=GLOBALS.song
+	song.connect("channels_changed",self,"_on_channels_changed")
+	song.connect("order_changed",self,"_on_order_changed")
+	song.connect("highlights_changed",self,"_on_highlights_changed")
 	curr_order=0
 	set_row(0)
 	set_channel(0)
@@ -419,45 +421,66 @@ func process_keyboard(ev:InputEventKey)->bool:
 			if ev.pressed:
 				put_note(null,0,null,-12 if ev.shift else -1,0)
 			return true
-	if curr_column in [ATTRS.FM0,ATTRS.FM1,ATTRS.FM2,ATTRS.FM3]:
+	elif curr_column in [ATTRS.FM0,ATTRS.FM1,ATTRS.FM2,ATTRS.FM3]:
 		if ev.scancode==GKBD.CLEAR:
-			if ev.pressed:
+			if !ev.pressed:
 				put_opmask(0)
 			return true
-		if ev.scancode in GKBD.HEX_INPUT:
+		elif ev.scancode in GKBD.HEX_INPUT:
 			if !ev.pressed:
 				put_opmask(GKBD.HEX_INPUT.find(ev.scancode))
 			return true
-		if ev.scancode in GKBD.HEX_INPUT_KP:
+		elif ev.scancode in GKBD.HEX_INPUT_KP:
 			if !ev.pressed:
 				put_opmask(GKBD.HEX_INPUT_KP.find(ev.scancode)/2)
 			return true
-		if ev.scancode in GKBD.VALUE_UP:
+		elif ev.scancode in GKBD.VALUE_UP:
 			if ev.pressed:
 				put_opmask(0,1)
 			return true
-		if ev.scancode in GKBD.VALUE_DOWN:
+		elif ev.scancode in GKBD.VALUE_DOWN:
 			if ev.pressed:
 				put_opmask(0,-1)
 			return true
-	if curr_column>ATTRS.NOTE:
+	elif curr_column==ATTRS.PAN:
 		if ev.scancode==GKBD.CLEAR:
-			if ev.pressed:
+			if !ev.pressed:
 				put_cmd_or_val(null)
 			return true
-		if ev.scancode in GKBD.HEX_INPUT:
+		elif ev.scancode in GKBD.HEX_INPUT:
 			if !ev.pressed:
 				put_cmd_or_val(GKBD.HEX_INPUT.find(ev.scancode))
 			return true
-		if ev.scancode in GKBD.HEX_INPUT_KP:
+		elif ev.scancode in GKBD.HEX_INPUT_KP:
 			if !ev.pressed:
 				put_cmd_or_val(GKBD.HEX_INPUT_KP.find(ev.scancode))
 			return true
-		if ev.scancode in GKBD.VALUE_UP:
+		elif ev.scancode in GKBD.VALUE_UP:
+			if ev.pressed:
+				adjust_pan(4 if ev.shift else 1,ev.control)
+			return true
+		elif ev.scancode in GKBD.VALUE_DOWN:
+			if ev.pressed:
+				adjust_pan(-4 if ev.shift else -1,ev.control)
+			return true
+	elif curr_column>ATTRS.NOTE:
+		if ev.scancode==GKBD.CLEAR:
+			if !ev.pressed:
+				put_cmd_or_val(null)
+			return true
+		elif ev.scancode in GKBD.HEX_INPUT:
+			if !ev.pressed:
+				put_cmd_or_val(GKBD.HEX_INPUT.find(ev.scancode))
+			return true
+		elif ev.scancode in GKBD.HEX_INPUT_KP:
+			if !ev.pressed:
+				put_cmd_or_val(GKBD.HEX_INPUT_KP.find(ev.scancode))
+			return true
+		elif ev.scancode in GKBD.VALUE_UP:
 			if ev.pressed:
 				put_cmd_or_val(0,16 if ev.shift else 1)
 			return true
-		if ev.scancode in GKBD.VALUE_DOWN:
+		elif ev.scancode in GKBD.VALUE_DOWN:
 			if ev.pressed:
 				put_cmd_or_val(0,-16 if ev.shift else -1)
 			return true
@@ -466,7 +489,6 @@ func process_keyboard(ev:InputEventKey)->bool:
 #
 
 func find_last():
-	var song:Song=GLOBALS.song
 	var row:int=curr_row-1
 	var data
 	while row>-1:
@@ -477,7 +499,6 @@ func find_last():
 	return null
 
 func copy_last(entered:bool)->void:
-	var song:Song=GLOBALS.song
 	var val=last_entered[curr_column] if entered else find_last()
 	song.set_note(curr_order,curr_channel,curr_row,curr_column,val)
 	if curr_column==ATTRS.LG_MODE:
@@ -491,7 +512,6 @@ func copy_last(entered:bool)->void:
 	advance(step)
 
 func put_opmask(val:int,add:int=0)->void:
-	var song:Song=GLOBALS.song
 	if add!=0:
 		val=(GLOBALS.nvl(song.get_note(curr_order,curr_channel,curr_row,curr_column),0)+add)&0xf
 	song.set_note(curr_order,curr_channel,curr_row,curr_column,val)
@@ -502,8 +522,20 @@ func put_opmask(val:int,add:int=0)->void:
 			return
 	advance(step if add==0 else 0)
 
+func adjust_pan(delta:int,invert:bool)->void:
+	var val=song.get_note(curr_order,curr_channel,curr_row,curr_column)
+	if invert:
+		if val==null:
+			val=31
+		val^=(128 if delta<0 else 0)|(64 if delta>0 else 0)
+	else:
+		if val==null:
+			val=31-delta
+		val=clamp(delta+(val&63),0,63)|(val&192)
+	song.set_note(curr_order,curr_channel,curr_row,curr_column,val)
+	set_2_digits(curr_row,channel_col0[curr_channel]+COLS[curr_column],val)
+
 func put_cmd_or_val(val,add:int=0)->void:
-	var song:Song=GLOBALS.song
 	if add!=0:
 		val=song.get_note(curr_order,curr_channel,curr_row,curr_column)
 		if val==null:
@@ -532,7 +564,6 @@ func put_cmd_or_val(val,add:int=0)->void:
 			advance(step)
 
 func put_legato(lm,add:int=1,adv:int=step)->void:
-	var song:Song=GLOBALS.song
 	var legato:int
 	if lm==null:
 		legato=(GLOBALS.nvl(song.get_note(curr_order,curr_channel,curr_row,ATTRS.LG_MODE),0)+add)%(Pattern.LEGATO_MAX+1)
@@ -544,7 +575,6 @@ func put_legato(lm,add:int=1,adv:int=step)->void:
 	advance(adv)
 
 func put_note(semitone,octave:int,instrument,add:int=0,adv:int=step)->void:
-	var song:Song=GLOBALS.song
 	var note
 	if add!=0:
 		note=song.get_note(curr_order,curr_channel,curr_row,ATTRS.NOTE)
@@ -604,7 +634,6 @@ func calculate_velocity(base:int,vel:int,vol:int)->int:
 #
 
 func _on_channels_changed()->void:
-	var song:Song=GLOBALS.song
 	channel_col0.resize(song.num_channels)
 	var col0:int=0
 	for i in range(channel_col0.size()):
@@ -629,7 +658,6 @@ func _on_order_changed(order_ix:int,channel_ix:int)->void:
 		update_tilemap(channel_ix)
 
 func update_tilemap(channel:int=-1)->void:
-	var song:Song=GLOBALS.song
 	var col:int=0
 	lines.clear()
 	for i in range(0,song.pattern_length):
@@ -661,7 +689,6 @@ func update_tilemap(channel:int=-1)->void:
 			row+=1
 
 func update_row(row:int,channel:int=-1)->void:
-	var song:Song=GLOBALS.song
 	if row<0 or row>=song.pattern_length:
 		return
 	var col:int

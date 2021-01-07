@@ -26,7 +26,7 @@ __meta__ = {
 
 [node name="GC" type="GridContainer" parent="SC"]
 margin_right = 1016.0
-margin_bottom = 214.0
+margin_bottom = 276.0
 size_flags_horizontal = 3
 custom_constants/hseparation = 16
 columns = 2
@@ -303,7 +303,61 @@ text = "Keep cursor in value command"
 script = ExtResource( 3 )
 config_key = "EDIT_FX_CRLF"
 
+[node name="S3" type="ReferenceRect" parent="SC/GC"]
+margin_top = 218.0
+margin_right = 500.0
+margin_bottom = 234.0
+rect_min_size = Vector2( 0, 16 )
+
+[node name="S4" type="ReferenceRect" parent="SC/GC"]
+margin_left = 516.0
+margin_top = 218.0
+margin_right = 1016.0
+margin_bottom = 234.0
+
+[node name="ThemeTitle" type="Label" parent="SC/GC" groups=[
+"Title",
+]]
+margin_top = 238.0
+margin_right = 500.0
+margin_bottom = 252.0
+text = "Theme"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="S5" type="ReferenceRect" parent="SC/GC"]
+margin_left = 516.0
+margin_top = 238.0
+margin_right = 1016.0
+margin_bottom = 252.0
+
+[node name="MarginContainer" type="MarginContainer" parent="SC/GC"]
+margin_top = 256.0
+margin_right = 500.0
+margin_bottom = 276.0
+custom_constants/margin_left = 16
+
+[node name="ThemeFile" type="Button" parent="SC/GC/MarginContainer"]
+margin_left = 16.0
+margin_right = 500.0
+margin_bottom = 20.0
+clip_text = true
+
+[node name="FileDialog" type="FileDialog" parent="."]
+margin_right = 315.0
+margin_bottom = 130.0
+window_title = "Select a theme"
+mode_overrides_title = false
+mode = 0
+access = 2
+filters = PoolStringArray( "*.json" )
+current_dir = "/home/jordi/godot/SynthEtQuatre"
+current_path = "/home/jordi/godot/SynthEtQuatre/"
+
 [connection signal="value_changed" from="SC/GC/Audio/Audio/SampleRate" to="." method="_on_AudioSampleRate_value_changed"]
 [connection signal="value_changed" from="SC/GC/Audio/Audio/BufferLength" to="." method="_on_AudioBufferSize_value_changed"]
 [connection signal="configured" from="SC/GC/Editor/Editor/HorizFXEdit" to="." method="_on_HorizFXEdit_toggled"]
 [connection signal="toggled" from="SC/GC/Editor/Editor/HorizFXEdit" to="." method="_on_HorizFXEdit_toggled"]
+[connection signal="pressed" from="SC/GC/MarginContainer/ThemeFile" to="." method="_on_ThemeFile_pressed"]
+[connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]

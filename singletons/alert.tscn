@@ -18,4 +18,5 @@ dialog_autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
 [connection signal="popup_hide" from="Alert" to="." method="_on_popup_hide"]

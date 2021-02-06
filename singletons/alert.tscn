@@ -13,7 +13,7 @@ margin_top = -137.5
 margin_right = 279.0
 margin_bottom = 137.5
 popup_exclusive = true
-window_title = "¡Alerta!"
+window_title = "Warning!"
 dialog_autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false

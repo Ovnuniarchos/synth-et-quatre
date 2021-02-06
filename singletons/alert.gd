@@ -3,6 +3,7 @@ extends CanvasLayer
 onready var dlg:AcceptDialog=$Alert
 
 func _ready()->void:
+	dlg.theme=THEME.theme
 	dlg.get_label().valign=Label.VALIGN_CENTER
 	GLOBALS.connect("song_changed",self,"_on_song_changed")
 	_on_song_changed()

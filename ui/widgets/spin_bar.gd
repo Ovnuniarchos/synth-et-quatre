@@ -47,6 +47,8 @@ func _init()->void:
 		connect("mouse_entered",self,"_on_mouse_enter")
 	if not is_connected("mouse_exited",self,"_on_mouse_exit"):
 		connect("mouse_exited",self,"_on_mouse_exit")
+	if not is_connected("value_changed",self,"_on_value_changed"):
+		connect("value_changed",self,"_on_value_changed")
 
 
 func _ready()->void:
@@ -71,18 +73,6 @@ func _ready()->void:
 	switch_input(false)
 
 
-func _set(prop:String,val)->bool:
-	if __setting:
-		__setting=false
-		return false
-	__setting=true
-	if prop=="value":
-		set_value(val)
-	else:
-		set(prop,val)
-	return true
-
-
 func set_decimals(v:int)->void:
 	_decimals=v
 	set_value(value)
@@ -98,7 +88,7 @@ func set_editable(e:bool)->void:
 	set_mode(mode)
 
 
-func set_value(v:float)->void:
+func _on_value_changed(v:float)->void:
 	value=clamp(v,min_value,max_value)
 	if label!=null:
 		label.text=format_value(value)+" "+suffix

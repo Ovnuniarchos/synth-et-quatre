@@ -3,7 +3,6 @@ extends Control
 """
 FIXME
 	Immediate note play skips notes (skips muted channels)
-	Sliders do not set their numbers to their correct value
 TODO:
 	MIDI on/off indicator
 	Reset per channel parameters (as a command|button)

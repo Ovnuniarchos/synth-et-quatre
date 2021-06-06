@@ -67,9 +67,6 @@ margin_right = 1024.0
 margin_bottom = 600.0
 rect_min_size = Vector2( 0, 64 )
 bg_color = Color( 0, 0, 0.12549, 1 )
-left_color = Color( 1, 0, 0, 1 )
-right_color = Color( 0, 1, 0, 1 )
-dc_line = false
 dc_line_color = Color( 1, 1, 1, 0.25098 )
 
 [node name="PlayControls" parent="." instance=ExtResource( 2 )]

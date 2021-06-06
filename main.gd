@@ -10,9 +10,9 @@ TODO:
 		Flag?: MIDI Pitch bend
 		Flag?: MIDI modulation
 		Range?: MIDI modulation
-	Make arpeggio last until new note?
 	Automation
 	Reduce pops on volume changes.
+		¿Smooth volume changes for n samples?
 
 FUTURE:
 	Translations

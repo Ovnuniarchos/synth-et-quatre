@@ -101,6 +101,7 @@ size_flags_horizontal = 7
 size_flags_vertical = 4
 percent_visible = false
 script = ExtResource( 4 )
+_decimals = 2
 
 [connection signal="value_changed" from="VBC/HBC/DUCSlider" to="." method="_on_DUCSlider_value_changed"]
 [connection signal="item_selected" from="VBC/HBC/WAVButton" to="." method="_on_WAVButton_item_selected"]

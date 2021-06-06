@@ -1,16 +1,18 @@
 extends Node
 
+signal midi_on(on)
+
 var midi_open:bool
 var watchdog:Timer
 
 func _ready()->void:
-	midi_open=false
+	set_midi_open(false)
 	watchdog=Timer.new()
 	watchdog.one_shot=false
 	watchdog.wait_time=0.02
 	watchdog.autostart=true
 	watchdog.connect("timeout",self,"_watchdog_thread")
-	add_child(watchdog)
+	#add_child(watchdog)
 
 func _notification(n:int)->void:
 	if n==NOTIFICATION_PREDELETE:
@@ -31,8 +33,13 @@ func _watchdog_thread()->void:
 			if md.empty():
 				midi_open=false
 				break
+	set_midi_open(midi_open)
 	if !midi_open:
 		OS.close_midi_inputs()
 		DEBUG.set_var("MIDI","off")
 	else:
 		DEBUG.set_var("MIDI",String(mdl))
+
+func set_midi_open(on:bool)->void:
+	midi_open=on
+	emit_signal("midi_on",on)

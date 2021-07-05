@@ -7,18 +7,18 @@ export (String) var config_key:String="" setget set_config_key
 
 func _ready():
 	set_config_key(config_key)
-	._ready()
 
 
 func set_config_key(ck:String)->void:
 	config_key=ck
 	update_configuration_warning()
 	if (ck in CONFIG) and typeof(CONFIG[ck])==TYPE_ARRAY:
-		min_value=CONFIG[ck][4]
-		max_value=CONFIG[ck][5]
-		step=CONFIG[ck][6]
+		min_value=CONFIG[ck][CONFIG.MIN]
+		max_value=CONFIG[ck][CONFIG.MAX]
+		step=CONFIG[ck][CONFIG.STEP]
 		if !Engine.editor_hint:
-			set_value(CONFIG.get_value(CONFIG[ck]))
+			value=CONFIG.get_value(CONFIG[ck])
+			._on_value_changed(value)
 		property_list_changed_notify()
 
 

@@ -83,9 +83,6 @@ percent_visible = false
 script = ExtResource( 1 )
 big_step = 100.0
 huge_step = 1000.0
-_decimals = 0
-suffix = ""
-editable = true
 config_key = "AUDIO_SAMPLERATE"
 
 [node name="LabelBufferLength" type="Label" parent="SC/GC/Audio/Audio" groups=[
@@ -113,8 +110,6 @@ script = ExtResource( 1 )
 big_step = 1.0
 huge_step = 1.0
 _decimals = 1
-suffix = ""
-editable = true
 config_key = "AUDIO_BUFFERLENGTH"
 
 [node name="Export" type="MarginContainer" parent="SC/GC"]
@@ -157,9 +152,6 @@ percent_visible = false
 script = ExtResource( 1 )
 big_step = 100.0
 huge_step = 1000.0
-_decimals = 0
-suffix = ""
-editable = true
 config_key = "RECORD_SAMPLERATE"
 
 [node name="FPSamples" type="Button" parent="SC/GC/Export/Export"]

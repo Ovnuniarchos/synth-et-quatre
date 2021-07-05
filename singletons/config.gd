@@ -1,5 +1,8 @@
 extends Node
 
+enum {SECTION,KEY,DEFAULT,TYPE,MIN,MAX,STEP}
+const VALUES=MIN
+
 const TYPE_ENUM=TYPE_MAX
 const CFG_PATH="user://se4.ini"
 const CURR_SONG_DIR=["Files","current_song_dir","",TYPE_STRING]
@@ -7,8 +10,8 @@ const CURR_INST_DIR=["Files","current_inst_dir","",TYPE_STRING]
 const CURR_SAMPLE_DIR=["Files","current_sample_dir","",TYPE_STRING]
 const CURR_EXPORT_DIR=["Files","current_export_dir","",TYPE_STRING]
 const AUDIO_SAMPLERATE=["Audio","sample_rate",48000,TYPE_INT,8000,192000,1]
-const AUDIO_BUFFERLENGTH=["Audio","buffer_length",TYPE_REAL,0.1,0.1,1,0.1,TYPE_REAL]
-const RECORD_SAMPLERATE=["Record","sample_rate",TYPE_INT,48000,8000,192000,1]
+const AUDIO_BUFFERLENGTH=["Audio","buffer_length",0.1,TYPE_REAL,0.1,1,0.1]
+const RECORD_SAMPLERATE=["Record","sample_rate",48000,TYPE_INT,8000,192000,1]
 const RECORD_FPSAMPLES=["Record","fp_samples",false,TYPE_BOOL]
 const RECORD_SAVEMUTED=["Record","save_muted",false,TYPE_BOOL]
 const MIDI_NOTEOFF=["MIDI Input","midi_note_off",false,TYPE_BOOL]
@@ -53,27 +56,28 @@ func _notification(what:int)->void:
 
 
 func copy_value(old_cfg:ConfigFile,sect_key:Array)->void:
-	config.set_value(sect_key[0],sect_key[1],old_cfg.get_value(sect_key[0],sect_key[1],sect_key[2]))
+	config.set_value(sect_key[SECTION],sect_key[KEY],old_cfg.get_value(sect_key[SECTION],sect_key[KEY],sect_key[DEFAULT]))
 
 
 func get_value(sect_key:Array):
-	if sect_key[3]==TYPE_ENUM:
-		return sect_key[4].find(config.get_value(sect_key[0],sect_key[1],sect_key[2]))
-	return config.get_value(sect_key[0],sect_key[1],sect_key[2])
+	var val=config.get_value(sect_key[SECTION],sect_key[KEY],sect_key[DEFAULT])
+	if sect_key[TYPE]==TYPE_ENUM:
+		return sect_key[VALUES].find(val)
+	return val
 
 
 func set_value(sect_key:Array,value)->void:
-	if sect_key[3]==TYPE_INT:
-		config.set_value(sect_key[0],sect_key[1],int(value))
-	elif sect_key[3]==TYPE_REAL:
-		config.set_value(sect_key[0],sect_key[1],float(value))
-	elif sect_key[3]==TYPE_BOOL:
-		config.set_value(sect_key[0],sect_key[1],bool(value))
-	elif sect_key[3]==TYPE_STRING:
-		config.set_value(sect_key[0],sect_key[1],String(value))
-	elif sect_key[3]==TYPE_ENUM:
+	if sect_key[TYPE]==TYPE_INT:
+		config.set_value(sect_key[SECTION],sect_key[KEY],int(value))
+	elif sect_key[TYPE]==TYPE_REAL:
+		config.set_value(sect_key[SECTION],sect_key[KEY],float(value))
+	elif sect_key[TYPE]==TYPE_BOOL:
+		config.set_value(sect_key[SECTION],sect_key[KEY],bool(value))
+	elif sect_key[TYPE]==TYPE_STRING:
+		config.set_value(sect_key[SECTION],sect_key[KEY],String(value))
+	elif sect_key[TYPE]==TYPE_ENUM:
 		value=int(value)
-		if value<0 or value>=sect_key[4].size():
-			value=sect_key[2]
-		config.set_value(sect_key[0],sect_key[1],sect_key[4][value])
+		if value<0 or value>=sect_key[VALUES].size():
+			value=sect_key[DEFAULT]
+		config.set_value(sect_key[SECTION],sect_key[KEY],sect_key[VALUES][value])
 

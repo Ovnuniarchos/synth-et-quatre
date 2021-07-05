@@ -12,7 +12,7 @@ func _ready()->void:
 	watchdog.wait_time=0.02
 	watchdog.autostart=true
 	watchdog.connect("timeout",self,"_watchdog_thread")
-	#add_child(watchdog)
+	add_child(watchdog)
 
 func _notification(n:int)->void:
 	if n==NOTIFICATION_PREDELETE:

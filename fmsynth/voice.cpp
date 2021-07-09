@@ -10,11 +10,16 @@ FixedPoint Voice::generate(FixedPoint* lfo_ins){
 	for(int i=0;i<MAX_OPS;i++){
 		FixedPoint pm=0L;
 		for(int j=0;j<MAX_OPS;j++){
-			pm+=last_samples[j]*pms[j][i];
+			if(i==j){
+				pm+=(last_samples[0][j]+last_samples[1][j])*pms[j][i];
+			}else{
+				pm+=last_samples[0][j]*pms[j][i];
+			}
 		}
 		pm>>=8;
-		last_samples[i]=ops[i].generate(pm,lfo_ins[am_lfos[i]],lfo_ins[fm_lfos[i]]);
-		out+=last_samples[i]*outs[i];
+		last_samples[1][i]=last_samples[0][i];
+		last_samples[0][i]=ops[i].generate(pm,lfo_ins[am_lfos[i]],lfo_ins[fm_lfos[i]]);
+		out+=last_samples[0][i]*outs[i];
 	}
 	out=(out*volume)>>16;
 	return clip?clamp(out,-FP_ONE,FP_ONE):out;
@@ -165,7 +170,8 @@ void Voice::stop(int op_mask){
 	for(int i=0;i<MAX_OPS;i++,op_mask>>=1){
 		if(op_mask&1){
 			ops[i].stop();
-			last_samples[i]=0L;
+			last_samples[0][i]=0L;
+			last_samples[1][i]=0L;
 		}
 	}
 }
@@ -178,7 +184,13 @@ void Voice::set_enable(int op_mask,int enable_bits){
 
 
 void Voice::set_pm_factor(int op_from,int op_to,int factor){
-	pms[clamp(op_from,0,MAX_OPS-1)][clamp(op_to,0,MAX_OPS-1)]=(clamp(factor,0,255)+(factor<=0?0:1))*2;
+	op_from=clamp(op_from,0,MAX_OPS-1);
+	op_to=clamp(op_to,0,MAX_OPS-1);
+	int pmf=clamp(factor,0,255)+(factor<=0?0:1);
+	if(op_from!=op_to){
+		pmf*=2;
+	}
+	pms[op_from][op_to]=pmf;
 }
 
 void Voice::set_output(int op_mask,int vol){

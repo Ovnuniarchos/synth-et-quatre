@@ -22,6 +22,7 @@ const COLS:Array=[0,1,6,9,12,15,17,18,21,23,24,27,29,30,33,35,36]
 const KEYOFF:int=-1
 const KEYCUT:int=-2
 
+var is_ready:bool=false
 var curr_order:int=0
 var curr_row:int=0
 var curr_channel:int=0
@@ -69,6 +70,8 @@ func _ready()->void:
 	selection.active=false
 	sel_rect.selection=selection
 	last_entered.resize(Pattern.MAX_ATTR)
+	is_ready=true
+
 
 func setup_styles()->void:
 	var t:Theme=THEME.get("theme")
@@ -86,6 +89,7 @@ func setup_styles()->void:
 	background.color_maj=t.get_color("major","Tracker")
 	background.color_active=t.get_color("active","Tracker")
 
+
 func _on_song_changed()->void:
 	song=GLOBALS.song
 	song.connect("channels_changed",self,"_on_channels_changed")
@@ -101,9 +105,8 @@ func _on_song_changed()->void:
 	emit_signal("step_changed",step)
 	emit_signal("velocity_changed",dflt_velocity)
 
-func _input(event:InputEvent)->void:
-	if !is_visible_in_tree() or FADER.active:
-		return
+
+func _gui_input(event:InputEvent)->void:
 	if process_mouse_motion(event as InputEventMouseMotion):
 		accept_event()
 		return
@@ -116,6 +119,7 @@ func _input(event:InputEvent)->void:
 	if process_midi(event as InputEventMIDI):
 		accept_event()
 		return
+
 
 func process_midi(ev:InputEventMIDI)->bool:
 	if ev==null:
@@ -151,6 +155,7 @@ func process_midi(ev:InputEventMIDI)->bool:
 		return true
 	return false
 
+
 func process_mouse_motion(ev:InputEventMouseMotion)->bool:
 	if ev==null:
 		return false
@@ -180,6 +185,7 @@ func process_mouse_motion(ev:InputEventMouseMotion)->bool:
 		sel_rect.update()
 		return true
 	return false
+
 
 func process_mouse_button(ev:InputEventMouseButton)->bool:
 	if ev==null:
@@ -229,6 +235,7 @@ func process_mouse_button(ev:InputEventMouseButton)->bool:
 			advance(-4*step if ev.shift else -1)
 		return true
 	return false
+
 
 func process_keyboard(ev:InputEventKey)->bool:
 	if ev==null or !focused:
@@ -486,7 +493,9 @@ func process_keyboard(ev:InputEventKey)->bool:
 			return true
 	return false
 
+
 #
+
 
 func find_last():
 	var row:int=curr_row-1
@@ -511,6 +520,7 @@ func copy_last(entered:bool)->void:
 		set_2_digits(curr_row,COLS[curr_column]+channel_col0[curr_channel],val)
 	advance(step)
 
+
 func put_opmask(val:int,add:int=0)->void:
 	if add!=0:
 		val=(GLOBALS.nvl(song.get_note(curr_order,curr_channel,curr_row,curr_column),0)+add)&0xf
@@ -521,6 +531,7 @@ func put_opmask(val:int,add:int=0)->void:
 			set_column(curr_column+1)
 			return
 	advance(step if add==0 else 0)
+
 
 func adjust_pan(delta:int,invert:bool)->void:
 	var val=song.get_note(curr_order,curr_channel,curr_row,curr_column)
@@ -534,6 +545,7 @@ func adjust_pan(delta:int,invert:bool)->void:
 		val=clamp(delta+(val&63),0,63)|(val&192)
 	song.set_note(curr_order,curr_channel,curr_row,curr_column,val)
 	set_2_digits(curr_row,channel_col0[curr_channel]+COLS[curr_column],val)
+
 
 func put_cmd_or_val(val,add:int=0)->void:
 	if add!=0:
@@ -563,6 +575,7 @@ func put_cmd_or_val(val,add:int=0)->void:
 		else:
 			advance(step)
 
+
 func put_legato(lm,add:int=1,adv:int=step)->void:
 	var legato:int
 	if lm==null:
@@ -573,6 +586,7 @@ func put_legato(lm,add:int=1,adv:int=step)->void:
 	last_entered[ATTRS.LG_MODE]=legato
 	set_legato_cell(curr_row,channel_col0[curr_channel],legato)
 	advance(adv)
+
 
 func put_note(semitone,octave:int,instrument,add:int=0,adv:int=step)->void:
 	var note
@@ -615,6 +629,7 @@ func put_note(semitone,octave:int,instrument,add:int=0,adv:int=step)->void:
 		set_2_digits(curr_row,COLS[ATTRS.VOL]+channel_col0[curr_channel],velocity)
 	advance(adv)
 
+
 func calculate_velocity(base:int,vel:int,vol:int)->int:
 	var vel_mode:int=CONFIG.get_value(CONFIG.MIDI_VELOCITYSRC)
 	if vel_mode==CONFIG.VELMODE_SE4:
@@ -631,7 +646,9 @@ func calculate_velocity(base:int,vel:int,vol:int)->int:
 		return int(floor((vel*vol)/63.25))
 	return (base*vel*vol)/16129
 
+
 #
+
 
 func _on_channels_changed()->void:
 	channel_col0.resize(song.num_channels)
@@ -645,6 +662,7 @@ func _on_channels_changed()->void:
 	set_column(curr_column)
 	sel_rect.update()
 
+
 func _on_playing_pos_changed(order:int,row:int)->void:
 	if scroll_lock:
 		return
@@ -653,9 +671,11 @@ func _on_playing_pos_changed(order:int,row:int)->void:
 		update_tilemap()
 	set_row(row)
 
+
 func _on_order_changed(order_ix:int,channel_ix:int)->void:
 	if order_ix==curr_order or order_ix<0:
 		update_tilemap(channel_ix)
+
 
 func update_tilemap(channel:int=-1)->void:
 	var col:int=0
@@ -688,6 +708,7 @@ func update_tilemap(channel:int=-1)->void:
 				set_2_digits(row,col+COLS[ATTRS.FV0+fx],note[ATTRS.FV0+fx])
 			row+=1
 
+
 func update_row(row:int,channel:int=-1)->void:
 	if row<0 or row>=song.pattern_length:
 		return
@@ -711,11 +732,13 @@ func update_row(row:int,channel:int=-1)->void:
 			set_opmask(row,col+COLS[ATTRS.FM0+fx],note[ATTRS.FM0+fx])
 			set_2_digits(row,col+COLS[ATTRS.FV0+fx],note[ATTRS.FV0+fx])
 
+
 func set_opmask(row:int,col:int,value)->void:
 	if value==null or value==0:
 		editor.set_cell(col,row,DOT)
 	else:
 		editor.set_cell(col,row,OP_MASK+(value&15))
+
 
 func set_2_digits(row:int,col:int,value)->void:
 	if value==null:
@@ -725,9 +748,11 @@ func set_2_digits(row:int,col:int,value)->void:
 		editor.set_cell(col,row,value>>4)
 		editor.set_cell(col+1,row,value&15)
 
+
 func set_legato_cell(row:int,col:int,legato)->void:
 	legato=legato if legato!=null else 0
 	editor.set_cell(col,row,[DOT,LEGATO,STACCATO][legato])
+
 
 func set_note_cells(row:int,col:int,note)->void:
 	if note==null or note==KEYOFF or note==KEYCUT:
@@ -743,13 +768,17 @@ func set_note_cells(row:int,col:int,note)->void:
 		editor.set_cell(col+3,row,MINUS if oc<0 else (oc/10))
 		editor.set_cell(col+4,row,int(abs(oc))%10)
 
+
 #
+
 
 func set_bg_rows(rows:int)->void:
 	background.rows=rows
 
+
 func advance(f:int)->void:
 	set_row(curr_row+f)
+
 
 func set_row(r:int)->void:
 	var sz:int=GLOBALS.song.pattern_length
@@ -762,10 +791,12 @@ func set_row(r:int)->void:
 	editor.position.y=dy
 	sel_rect.position.y=dy
 
+
 func set_channel(c:int)->void:
 	var nc:int=GLOBALS.song.num_channels-1
 	curr_channel=0 if c<0 else nc if c>nc else c
 	set_cursor()
+
 
 func set_column(c:int)->void:
 	digit_ix=0
@@ -784,6 +815,7 @@ func set_column(c:int)->void:
 	else:
 		curr_column=c
 	set_cursor()
+
 
 func set_cursor()->void:
 	if !focused:
@@ -804,7 +836,9 @@ func set_cursor()->void:
 	cursor.cell_size=editor.cell_size*Vector2(COL_WIDTH[curr_column],1.0)
 	cursor.show()
 
+
 #
+
 
 func _on_focus_entered()->void:
 	grab_focus()
@@ -812,38 +846,43 @@ func _on_focus_entered()->void:
 	cursor.show()
 	set_cursor()
 
+
 func _on_focus_exited()->void:
 	release_focus()
 	focused=false
 	cursor.hide()
+
 
 func _on_container_resized(cont:Control)->void:
 	container=cont
 	container_size=cont.rect_size-Vector2(lines.cell_size.x*4.0,0.0)
 	set_cursor()
 
+
 func _on_resized()->void:
 	container_size=rect_size if container==null else container.rect_size
 	set_row(curr_row)
 	set_cursor()
 
+
 func _on_order_selected(order:int)->void:
 	curr_order=order
 	update_tilemap()
 
+
 func _on_Gkbd_step_changed(delta:int)->void:
 	_on_Info_step_changed(step+delta)
+
 
 func _on_Info_step_changed(s:int)->void:
 	step=max(0.0,s)
 	emit_signal("step_changed",step)
 
+
 func _on_Info_velocity_changed(vel:int)->void:
 	dflt_velocity=vel
 	emit_signal("velocity_changed",dflt_velocity)
 
-func _on_Editor_mouse_entered()->void:
-	_on_focus_entered()
 
 func _on_highlights_changed()->void:
 	background.every_min=GLOBALS.song.minor_highlight

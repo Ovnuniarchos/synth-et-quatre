@@ -36,6 +36,8 @@ func update_list(from:int=0,to:int=-1)->void:
 	order_labels.resize(to)
 	for order in range(from,to):
 		l=Button.new()
+		l.focus_mode=FOCUS_NONE
+		l.mouse_filter=Control.MOUSE_FILTER_STOP
 		l.name="ord%03d"%[order]
 		l.text="%03d"%[order]
 		set_row_style(l,order==GLOBALS.curr_order)
@@ -89,11 +91,6 @@ func _on_order_gui_input(ev:InputEvent,order:int)->void:
 		GLOBALS.curr_order=order
 		highlight_current_order(false)
 		emit_signal("order_selected",order)
-
-func _on_order_pressed(order:int)->void:
-	GLOBALS.curr_order=order
-	highlight_current_order(false)
-	emit_signal("order_selected",order)
 
 func _on_order_changed(order:int,channel:int)->void:
 	if order>=GLOBALS.song.orders.size():

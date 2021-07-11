@@ -29,12 +29,14 @@ custom_constants/separation = 4
 [node name="Add" type="Button" parent="VBC/HBC"]
 margin_right = 37.0
 margin_bottom = 20.0
+focus_mode = 0
 text = "Add"
 
 [node name="Copy" type="Button" parent="VBC/HBC"]
 margin_left = 41.0
 margin_right = 84.0
 margin_bottom = 20.0
+focus_mode = 0
 text = "Copy"
 
 [node name="S" type="ReferenceRect" parent="VBC/HBC"]
@@ -47,6 +49,7 @@ rect_min_size = Vector2( 24, 0 )
 margin_left = 116.0
 margin_right = 128.0
 margin_bottom = 20.0
+focus_mode = 0
 shortcut_in_tooltip = false
 script = ExtResource( 2 )
 icon_name = "arrow-up"
@@ -55,6 +58,7 @@ icon_name = "arrow-up"
 margin_left = 132.0
 margin_right = 144.0
 margin_bottom = 20.0
+focus_mode = 0
 shortcut_in_tooltip = false
 script = ExtResource( 2 )
 icon_name = "arrow-down"
@@ -69,6 +73,7 @@ rect_min_size = Vector2( 24, 0 )
 margin_left = 176.0
 margin_right = 210.0
 margin_bottom = 20.0
+focus_mode = 0
 text = "Del"
 
 [node name="SC" type="ScrollContainer" parent="VBC"]

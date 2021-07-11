@@ -40,15 +40,16 @@ func _init()->void:
 	input.align=LineEdit.ALIGN_CENTER
 	input.editable=false
 	input.visible=false
-	input.connect("text_entered",self,"_on_text_entered")
-	input.connect("focus_exited",self,"_on_text_canceled")
-	input.connect("gui_input",self,"_gui_input")
-	if not is_connected("mouse_entered",self,"_on_mouse_enter"):
-		connect("mouse_entered",self,"_on_mouse_enter")
-	if not is_connected("mouse_exited",self,"_on_mouse_exit"):
-		connect("mouse_exited",self,"_on_mouse_exit")
-	if not is_connected("value_changed",self,"_on_value_changed"):
-		connect("value_changed",self,"_on_value_changed")
+	if !Engine.editor_hint:
+		input.connect("text_entered",self,"_on_text_entered")
+		input.connect("focus_exited",self,"_on_text_canceled")
+		input.connect("gui_input",self,"_gui_input")
+		if not is_connected("mouse_entered",self,"_on_mouse_enter"):
+			connect("mouse_entered",self,"_on_mouse_enter")
+		if not is_connected("mouse_exited",self,"_on_mouse_exit"):
+			connect("mouse_exited",self,"_on_mouse_exit")
+		if not is_connected("value_changed",self,"_on_value_changed"):
+			connect("value_changed",self,"_on_value_changed")
 
 
 func _ready()->void:
@@ -169,7 +170,10 @@ func switch_input(on:bool)->void:
 		input.grab_focus()
 	else:
 		set_mode(MODE_HOVER if Rect2(Vector2(),rect_size).has_point(get_local_mouse_position()) else MODE_NORMAL)
+		input.set_block_signals(true)
 		input.release_focus()
+		input.set_block_signals(false)
+		emit_signal("focus_exited")
 	input.editable=on
 	input.visible=on
 	label.visible=not on

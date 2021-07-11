@@ -1,6 +1,8 @@
 extends Tabs
 
+
 enum {ENABLED,SOLO,MUTE}
+
 
 onready var channels:HBoxContainer=$VSC/CCVBC/VBC/CNT/Channels/Scroll/HB
 onready var editor:PanelContainer=$VSC/CCVBC/VBC/Editor
@@ -8,6 +10,7 @@ onready var editor:PanelContainer=$VSC/CCVBC/VBC/Editor
 var mute_status:Array
 var cell_size:Vector2
 var channel_group:PackedScene=preload("channel_buttons.tscn")
+
 
 func _ready()->void:
 	var t:Theme=THEME.get("theme")
@@ -22,6 +25,7 @@ func _ready()->void:
 	connect("resized",editor,"_on_container_resized",[self])
 	editor._on_container_resized(self)
 
+
 func _on_song_changed()->void:
 	for i in range(Song.MAX_CHANNELS):
 		mute_status[i]=ENABLED
@@ -29,6 +33,7 @@ func _on_song_changed()->void:
 	SYNTH.mute_voices(0)
 	GLOBALS.song.connect("channels_changed",self,"_on_channels_changed")
 	_on_channels_changed()
+
 
 func _on_channels_changed()->void:
 	var song:Song=GLOBALS.song
@@ -47,8 +52,10 @@ func _on_channels_changed()->void:
 		channels.add_child(chg)
 	editor.set_bg_rows(song.pattern_length)
 
+
 func _on_editor_horizontal_scroll(offset:float)->void:
 	channels.margin_left=offset
+
 
 func _on_goto_position(pos:int)->void:
 	if GLOBALS.curr_order==pos:
@@ -57,8 +64,10 @@ func _on_goto_position(pos:int)->void:
 func _on_DelFX_pressed(chan:int)->void:
 	GLOBALS.song.mod_fx_channel(chan,-1)
 
+
 func _on_AddFX_pressed(chan:int)->void:
 	GLOBALS.song.mod_fx_channel(chan,1)
+
 
 func _on_Channel_cycled(status:int,chan:int)->void:
 	mute_status[chan]=status
@@ -77,3 +86,8 @@ func _on_Channel_cycled(status:int,chan:int)->void:
 		mask^=0xffffffff
 	GLOBALS.muted_mask=mask
 	SYNTH.mute_voices(mask)
+
+
+func _on_Info_focus_exited():
+	if editor!=null && editor.is_ready:
+		editor.grab_focus()

@@ -20,7 +20,7 @@ __meta__ = {
 [node name="HBC" type="HBoxContainer" parent="PC"]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 63.0
+margin_right = 70.0
 margin_bottom = 30.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -29,6 +29,7 @@ custom_constants/separation = 16
 [node name="Play" type="Button" parent="PC/HBC"]
 margin_right = 20.0
 margin_bottom = 23.0
+focus_mode = 0
 toggle_mode = true
 text = ">"
 script = ExtResource( 1 )
@@ -40,10 +41,11 @@ unpressed_icon = "play"
 
 [node name="PlayTrack" type="Button" parent="PC/HBC"]
 margin_left = 36.0
-margin_right = 56.0
+margin_right = 63.0
 margin_bottom = 23.0
+focus_mode = 0
 toggle_mode = true
-text = ">"
+text = ">|"
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false

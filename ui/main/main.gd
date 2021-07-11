@@ -24,7 +24,6 @@ func _ready()->void:
 	ThemeHelper.apply_styles_group(theme,"LabelTitle","Title")
 	ThemeHelper.apply_styles_group(theme,"LabelControl","Label")
 
-
 func _on_tab_changed(tab:int)->void:
 	var t:Tabs=$Main/Tabs.get_tab_control(tab)
 	if t.has_method("update_ui"):

@@ -19,12 +19,24 @@ func on_config_changed(section:String,key:String,value)->void:
 	if CONFIG.item_equals(section,key,CONFIG.EDIT_OSCRATE):
 		rate=int(value)
 
+
 func draw_music(buf:Array)->void:
 	divider+=1
 	if divider>=rate:
 		divider=0
 		buffer=buf
 		update()
+
+
+func _unhandled_input(ev:InputEvent)->void:
+	if not(ev is InputEventKey):
+		return
+	if ev.scancode!=GKBD.OSCILLOSCOPE_TOGGLE:
+		return
+	accept_event()
+	if ev.pressed:
+		return
+	visible=not visible
 
 
 func _on_gui_input(ev:InputEvent)->void:

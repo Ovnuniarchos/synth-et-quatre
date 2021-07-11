@@ -1,37 +1,42 @@
 extends Node
 
-enum {SECTION,KEY,DEFAULT,TYPE,MIN,MAX,STEP}
-const VALUES=MIN
 
-const TYPE_ENUM=TYPE_MAX
-const CFG_PATH="user://se4.ini"
-const CURR_SONG_DIR=["Files","current_song_dir","",TYPE_STRING]
-const CURR_INST_DIR=["Files","current_inst_dir","",TYPE_STRING]
-const CURR_SAMPLE_DIR=["Files","current_sample_dir","",TYPE_STRING]
-const CURR_EXPORT_DIR=["Files","current_export_dir","",TYPE_STRING]
-const AUDIO_SAMPLERATE=["Audio","sample_rate",48000,TYPE_INT,8000,192000,1]
-const AUDIO_BUFFERLENGTH=["Audio","buffer_length",0.1,TYPE_REAL,0.1,1,0.1]
-const RECORD_SAMPLERATE=["Record","sample_rate",48000,TYPE_INT,8000,192000,1]
-const RECORD_FPSAMPLES=["Record","fp_samples",false,TYPE_BOOL]
-const RECORD_SAVEMUTED=["Record","save_muted",false,TYPE_BOOL]
-const MIDI_NOTEOFF=["MIDI Input","midi_note_off",false,TYPE_BOOL]
-const MIDI_VELOCITYSRC=[
+signal config_changed(section,key,value)
+
+
+enum {SECTION,KEY,DEFAULT,TYPE,MIN,MAX,STEP}
+const VALUES:int=MIN
+const TYPE_ENUM:int=TYPE_MAX
+const CFG_PATH:String="user://se4.ini"
+
+const CURR_SONG_DIR:Array=["Files","current_song_dir","",TYPE_STRING]
+const CURR_INST_DIR:Array=["Files","current_inst_dir","",TYPE_STRING]
+const CURR_SAMPLE_DIR:Array=["Files","current_sample_dir","",TYPE_STRING]
+const CURR_EXPORT_DIR:Array=["Files","current_export_dir","",TYPE_STRING]
+const AUDIO_SAMPLERATE:Array=["Audio","sample_rate",48000,TYPE_INT,8000,192000,1]
+const AUDIO_BUFFERLENGTH:Array=["Audio","buffer_length",0.1,TYPE_REAL,0.1,1,0.1]
+const RECORD_SAMPLERATE:Array=["Record","sample_rate",48000,TYPE_INT,8000,192000,1]
+const RECORD_FPSAMPLES:Array=["Record","fp_samples",false,TYPE_BOOL]
+const RECORD_SAVEMUTED:Array=["Record","save_muted",false,TYPE_BOOL]
+const MIDI_NOTEOFF:Array=["MIDI Input","midi_note_off",false,TYPE_BOOL]
+const MIDI_VELOCITYSRC:Array=[
 		"MIDI Input","midi_vel_src","SE4",TYPE_ENUM,
 		["SE4","VEL","VOL","SE4VEL","SE4VOL","VELVOL","SE4VELVOL"]
 	]
 enum {VELMODE_SE4,VELMODE_VEL,VELMODE_VOL,VELMODE_SE4VEL,VELMODE_SE4VOL,VELMODE_VELVOL,VELMODE_SE4VELVOL}
-const MIDI_VOLUME=["MIDI Input","midi_volume",false,TYPE_BOOL]
-const MIDI_AFTERTOUCH=["MIDI Input","midi_aftertouch",false,TYPE_BOOL]
-const EDIT_HORIZ_FX=["Editor","horizontal_fx_edit",false,TYPE_BOOL]
-const EDIT_FX_CRLF=["Editor","horizontal_cr_lf",false,TYPE_BOOL]
-const THEME_FILE=["Theme","file","theme/default.json",TYPE_STRING]
+const MIDI_VOLUME:Array=["MIDI Input","midi_volume",false,TYPE_BOOL]
+const MIDI_AFTERTOUCH:Array=["MIDI Input","midi_aftertouch",false,TYPE_BOOL]
+const EDIT_HORIZ_FX:Array=["Editor","horizontal_fx_edit",false,TYPE_BOOL]
+const EDIT_FX_CRLF:Array=["Editor","horizontal_cr_lf",false,TYPE_BOOL]
+const EDIT_OSCRATE:Array=["Editor","oscilloscope_update_rate",4,TYPE_INT,1,32,1]
+const THEME_FILE:Array=["Theme","file","theme/default.json",TYPE_STRING]
 
-const COPIES=[
+const COPIES:Array=[
 	CURR_SONG_DIR,CURR_INST_DIR,CURR_SAMPLE_DIR,CURR_EXPORT_DIR,
 	AUDIO_SAMPLERATE,AUDIO_BUFFERLENGTH,
 	RECORD_SAMPLERATE,RECORD_FPSAMPLES,RECORD_SAVEMUTED,
 	MIDI_NOTEOFF,MIDI_VELOCITYSRC,MIDI_VOLUME,MIDI_AFTERTOUCH,
-	EDIT_HORIZ_FX,EDIT_FX_CRLF,
+	EDIT_HORIZ_FX,EDIT_FX_CRLF,EDIT_OSCRATE,
 	THEME_FILE
 ]
 
@@ -80,4 +85,8 @@ func set_value(sect_key:Array,value)->void:
 		if value<0 or value>=sect_key[VALUES].size():
 			value=sect_key[DEFAULT]
 		config.set_value(sect_key[SECTION],sect_key[KEY],sect_key[VALUES][value])
+	emit_signal("config_changed",sect_key[SECTION],sect_key[KEY],value)
 
+
+func item_equals(section:String,key:String,item:Array)->bool:
+	return section==item[SECTION] and key==item[KEY]

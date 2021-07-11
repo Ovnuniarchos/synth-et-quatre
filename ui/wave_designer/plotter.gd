@@ -43,7 +43,7 @@ func change_sample(w:Waveform)->void:
 		d=w.data
 		wave=weakref(w)
 	send_sample(d,$Control/Frequency.value)
-	$Oscilloscope.draw_waveform(d)
+	$Plot.draw_waveform(d)
 
 func send_sample(sample:Array,freq:float)->void:
 	var std:AudioStreamSample=$Player.stream as AudioStreamSample

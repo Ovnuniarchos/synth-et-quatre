@@ -219,6 +219,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://classes/io_modules/wave_file.gd"
 }, {
+"base": "Panel",
+"class": "WavePlotter",
+"language": "GDScript",
+"path": "res://ui/widgets/wave_plotter.gd"
+}, {
 "base": "Reference",
 "class": "Waveform",
 "language": "GDScript",
@@ -267,13 +272,14 @@ _global_script_class_icons={
 "WaveComponent": "",
 "WaveController": "",
 "WaveFile": "",
+"WavePlotter": "",
 "Waveform": ""
 }
 
 [application]
 
 config/name="SynthEtQuatre"
-run/main_scene="res://main.tscn"
+run/main_scene="res://ui/main/main.tscn"
 config/icon="res://se4.png"
 
 [audio]

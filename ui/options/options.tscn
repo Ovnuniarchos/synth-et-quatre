@@ -295,6 +295,36 @@ text = "Keep cursor in value command"
 script = ExtResource( 3 )
 config_key = "EDIT_FX_CRLF"
 
+[node name="Oscilloscope" type="GridContainer" parent="SC/GC/Editor/Editor"]
+margin_top = 48.0
+margin_right = 484.0
+margin_bottom = 62.0
+columns = 2
+
+[node name="LabelUpdateRate" type="Label" parent="SC/GC/Editor/Editor/Oscilloscope" groups=[
+"Label",
+]]
+margin_right = 160.0
+margin_bottom = 14.0
+text = "Oscilloscope update rate"
+
+[node name="UpdateRate" type="ProgressBar" parent="SC/GC/Editor/Editor/Oscilloscope"]
+margin_left = 164.0
+margin_right = 484.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 60, 14 )
+size_flags_horizontal = 7
+size_flags_vertical = 4
+min_value = 1.0
+max_value = 32.0
+step = 1.0
+value = 1.0
+percent_visible = false
+script = ExtResource( 1 )
+big_step = 1.0
+huge_step = 1.0
+config_key = "EDIT_OSCRATE"
+
 [node name="S3" type="ReferenceRect" parent="SC/GC"]
 margin_top = 218.0
 margin_right = 500.0

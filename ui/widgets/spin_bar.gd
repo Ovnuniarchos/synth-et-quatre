@@ -173,7 +173,8 @@ func switch_input(on:bool)->void:
 		input.set_block_signals(true)
 		input.release_focus()
 		input.set_block_signals(false)
-		emit_signal("focus_exited")
+		if !Engine.editor_hint:
+			emit_signal("focus_exited")
 	input.editable=on
 	input.visible=on
 	label.visible=not on

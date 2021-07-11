@@ -30,6 +30,7 @@ func _unhandled_input(ev:InputEvent)->void:
 
 func _on_Play_toggled(pressed:bool)->void:
 	if pressed:
+		play_track.pressed=false
 		AUDIO.tracker.play(GLOBALS.curr_order)
 	else:
 		AUDIO.tracker.stop()
@@ -37,6 +38,7 @@ func _on_Play_toggled(pressed:bool)->void:
 
 func _on_PlayTrack_toggled(pressed:bool)->void:
 	if pressed:
+		play.pressed=false
 		AUDIO.tracker.play_track(GLOBALS.curr_order)
 	else:
 		AUDIO.tracker.stop()

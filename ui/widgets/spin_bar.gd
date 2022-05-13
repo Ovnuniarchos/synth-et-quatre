@@ -74,6 +74,10 @@ func _ready()->void:
 	switch_input(false)
 
 
+func set_value(f:float)->void:
+	.set_value(f)
+
+
 func set_decimals(v:int)->void:
 	_decimals=v
 	set_value(value)

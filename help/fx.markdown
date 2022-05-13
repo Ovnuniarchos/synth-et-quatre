@@ -18,7 +18,7 @@ Slide frequency by `xx-128` cents/tick. This affects the ending note of a portam
 
 Slide frequency to current note by `xx` cents/tick.
 
-##04xy
+## 04xy
 
 Arpeggio at note, note+`x` semitones, note+`y` semitones. Each note lasts 1 tick.
 

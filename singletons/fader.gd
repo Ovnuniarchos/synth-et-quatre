@@ -4,14 +4,14 @@ var dialogs:Array=[]
 var active:bool=false
 
 func _ready()->void:
-	hide(null)
+	hide_fader(null)
 
-func hide(dlg:Node)->void:
+func hide_fader(dlg:Node)->void:
 	close_dialog(dlg)
 	if dialogs.empty():
 		$Fader.hide()
 
-func show(dlg:Node)->void:
+func show_fader(dlg:Node)->void:
 	open_dialog(dlg)
 	$Fader.show()
 

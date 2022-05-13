@@ -10,12 +10,12 @@ func _ready()->void:
 
 func start()->void:
 	$C/Bar.value=0.0
-	FADER.show(self)
+	FADER.show_fader(self)
 	$C/Bar.show()
 
 func end()->void:
 	$C/Bar.hide()
-	FADER.hide(self)
+	FADER.hide_fader(self)
 
 func set_value(v:float)->void:
 	$C/Bar.value=v

@@ -20,8 +20,8 @@ func _on_song_changed()->void:
 	update_list()
 
 func update_list(from:int=0,to:int=-1)->void:
-	list.add_constant_override("hseparation",theme.get_constant("margin-x","OrderMatrix"))
-	list.add_constant_override("vseparation",theme.get_constant("margin-y","OrderMatrix"))
+	list.add_constant_override("hseparation",theme.get_constant("margin_x","OrderMatrix"))
+	list.add_constant_override("vseparation",theme.get_constant("margin_y","OrderMatrix"))
 	var song:Song=GLOBALS.song
 	curr_highlight=GLOBALS.curr_order
 	from=clamp(from,0,song.orders.size()-1)

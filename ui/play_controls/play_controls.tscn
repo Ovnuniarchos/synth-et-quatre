@@ -43,7 +43,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 pressed_icon = "stop"
-unpressed_icon = "play-track"
+unpressed_icon = "play_track"
 
 [connection signal="toggled" from="HBC/Play" to="." method="_on_Play_toggled"]
 [connection signal="toggled" from="HBC/PlayTrack" to="." method="_on_PlayTrack_toggled"]

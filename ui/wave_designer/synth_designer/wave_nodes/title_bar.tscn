@@ -16,14 +16,14 @@ __meta__ = {
 margin_right = 12.0
 margin_bottom = 20.0
 script = ExtResource( 2 )
-icon_name = "arrow-left"
+icon_name = "arrow_left"
 
 [node name="MoveR" type="Button" parent="."]
 margin_left = 12.0
 margin_right = 24.0
 margin_bottom = 20.0
 script = ExtResource( 2 )
-icon_name = "arrow-right"
+icon_name = "arrow_right"
 
 [node name="S" type="ReferenceRect" parent="."]
 margin_left = 24.0

@@ -154,8 +154,8 @@ func set_order_matrix_styles(new_theme:Theme,data:Dictionary,key:String,base_dir
 	var frag:Dictionary=ThemeParser.typesafe_get(data,key,{})
 	var font:Font=ThemeParser.parse_font(frag,"font",base_dir,new_theme.get_font("font","Button"))
 	var margin:Array=ThemeParser.parse_number_list(frag,"margin",2,0.0)
-	new_theme.set_constant("margin-x","OrderMatrix",margin[0])
-	new_theme.set_constant("margin-y","OrderMatrix",margin[1])
+	new_theme.set_constant("margin_x","OrderMatrix",margin[0])
+	new_theme.set_constant("margin_y","OrderMatrix",margin[1])
 	new_theme.set_font("font","OrderButton",font)
 	new_theme.set_font("font","RowButton",font)
 	var sb:StyleBox=new_theme.get_stylebox("normal","Button")
@@ -299,7 +299,7 @@ func set_bar_styles(new_theme:Theme,data:Dictionary,key:String,bar_type:String,b
 func set_default_glyphs(new_theme:Theme,data:Dictionary,base_dir:String)->void:
 	var frag:Dictionary=ThemeParser.typesafe_get(data,"glyphs",{})
 	for glyph in frag:
-		new_theme.set_icon(glyph,"Glyphs",ThemeParser.parse_glyph(frag[glyph],base_dir,std_image))
+		new_theme.set_icon(glyph.replace("-","_"),"Glyphs",ThemeParser.parse_glyph(frag[glyph],base_dir,std_image))
 
 
 func set_input_styles(new_theme:Theme,data:Dictionary,key:String,base_dir:String)->void:
@@ -365,7 +365,7 @@ func set_default_colors(new_theme:Theme,data:Dictionary)->Dictionary:
 	var ret:Dictionary={}
 	for ci in DEFAULT_COLORS:
 		ret[ci]=ThemeParser.parse_color(frag,ci,DEFAULT_COLORS[ci])
-		new_theme.set_color(ci,"Colors",ret[ci])
+		new_theme.set_color(ci.replace("-","_"),"Colors",ret[ci])
 	return ret
 
 
@@ -388,7 +388,7 @@ func set_popup_styles(new_theme:Theme,data:Dictionary,base_dir:String)->void:
 	new_theme.set_icon("radio_checked","PopupMenu",ThemeParser.parse_glyph(ThemeParser.typesafe_get(frag,"checked",{}),base_dir,std_image))
 	new_theme.set_icon("radio_unchecked","PopupMenu",ThemeParser.parse_glyph(ThemeParser.typesafe_get(frag,"unchecked",{}),base_dir,std_image))
 	var t:Texture=ThemeParser.parse_glyph(ThemeParser.typesafe_get(frag,"dropper",{}),base_dir,null)
-	new_theme.set_icon("arrow","OptionButton",new_theme.get_icon("arrow-down","Glyphs") if t==null else t)
+	new_theme.set_icon("arrow","OptionButton",new_theme.get_icon("arrow_down","Glyphs") if t==null else t)
 	# Another undocumented style
 	new_theme.set_constant("modulate_arrow","OptionButton",1)
 

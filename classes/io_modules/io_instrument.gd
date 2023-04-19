@@ -92,6 +92,7 @@ func obj_load(path:String)->void:
 			GLOBALS.song.add_wave(wav)
 			wav.calculate()
 			GLOBALS.song.send_wave(wav,SYNTH)
+			GLOBALS.song.send_wave(wav,IM_SYNTH)
 			for inst_w in range(4):
 				if tmp_waves[inst_w]==in_w:
 					ni.waveforms[inst_w]=new_wave_i

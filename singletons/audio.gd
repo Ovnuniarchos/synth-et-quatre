@@ -17,6 +17,7 @@ func _ready()->void:
 func set_mix_rate(mr:int)->void:
 	stream.mix_rate=mr
 	SYNTH.set_mix_rate(stream.mix_rate)
+	IM_SYNTH.set_mix_rate(stream.mix_rate)
 	play()
 
 func set_buffer_length(bl:float)->void:
@@ -29,5 +30,8 @@ func _process(_delta:float)->void:
 	if size>0 and playback.can_push_buffer(size):
 		tracker.gen_commands(GLOBALS.song,stream.mix_rate,size,cmds)
 		var buf:Array=SYNTH.generate(size,cmds,1.0/GLOBALS.song.num_channels)
+		var ibuf:Array=IM_SYNTH.generate(size,[],IM_SYNTH.DEFAULT_VOLUME)
+		for i in size:
+			buf[i]+=ibuf[i]
 		playback.push_buffer(PoolVector2Array(buf))
 		emit_signal("buffer_sent",buf)

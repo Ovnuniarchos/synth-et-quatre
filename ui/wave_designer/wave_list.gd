@@ -49,6 +49,7 @@ func _on_Del_pressed()->void:
 			$Waves.remove_item(GLOBALS.song.find_wave(w))
 			GLOBALS.song.delete_wave(w)
 			GLOBALS.song.sync_waves(SYNTH,curr_wave_ix)
+			GLOBALS.song.sync_waves(IM_SYNTH,curr_wave_ix)
 			emit_signal("wave_deleted",curr_wave_ix)
 			if curr_wave_ix>=GLOBALS.song.wave_list.size():
 				curr_wave_ix=GLOBALS.song.wave_list.size()-1
@@ -64,6 +65,7 @@ func _on_Copy_pressed()->void:
 		$Waves.add_item(nw.name)
 		GLOBALS.song.add_wave(nw)
 		GLOBALS.song.send_wave(nw,SYNTH)
+		GLOBALS.song.send_wave(nw,IM_SYNTH)
 		emit_signal("wave_added",cnt)
 		emit_signal("wave_selected",cnt)
 	set_buttons()
@@ -82,6 +84,7 @@ func _on_Add_id_pressed(id:int)->void:
 		nw.name=nn
 		GLOBALS.song.add_wave(nw)
 		GLOBALS.song.send_wave(nw,SYNTH)
+		GLOBALS.song.send_wave(nw,IM_SYNTH)
 		emit_signal("wave_added",cnt)
 		emit_signal("wave_selected",cnt)
 	set_buttons()

@@ -109,31 +109,26 @@ func handle_keys(event:InputEventKey)->bool:
 	return false
 
 func play_note(keyon:bool,legato:bool,semi:int,chan:int=-1)->void:
-	if SYNTH.mute_mask&0xFFFFFFFF==0xFFFFFFFF:
-		return
 	var instr:Instrument=GLOBALS.get_instrument()
 	if keyon:
 		if chan==-1:
 			channel=(channel+1)&31
-			var bailout:int=0
-			while SYNTH.mute_mask&(1<<channel)!=0 and bailout<32:
-				channel=(channel+1)&31
-				bailout+=1
 			chan=channel
 		notes_on[chan]=semi
 		if instr is FmInstrument:
-			SYNTH.set_fm_instrument(chan,instr)
-			SYNTH.play_fm_note(chan,instr,semi,legato)
+			IM_SYNTH.set_fm_instrument(chan,instr)
+			IM_SYNTH.play_fm_note(chan,instr,semi,legato)
 	else:
 		for i in range(Song.MAX_CHANNELS):
 			if notes_on[i]!=semi:
 				continue
 			notes_on[i]=-1
 			if instr is FmInstrument:
-				SYNTH.synth.key_off(i,15)
+				IM_SYNTH.synth.key_off(i,15)
 
 #
 
 func _on_FmEditor_instrument_changed()->void:
 	if channel!=-1:
 		SYNTH.set_fm_instrument(channel,GLOBALS.get_instrument())
+		IM_SYNTH.set_fm_instrument(channel,GLOBALS.get_instrument())

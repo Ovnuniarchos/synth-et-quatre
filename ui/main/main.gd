@@ -2,8 +2,10 @@ extends Control
 
 """
 FIXME
-	Immediate note play skips notes (skips muted channels)
 TODO:
+	Move note playing to IM_SYNTH
+	Mono/poly mode for IM_SYNTH
+	DSP library for wave synthesis
 	MIDI on/off indicator
 	Reset per channel parameters (as a command|button)
 	MIDI input

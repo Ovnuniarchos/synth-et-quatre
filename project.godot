@@ -172,9 +172,9 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "Synth",
 "language": "GDScript",
-"path": "res://singletons/synth.gd"
+"path": "res://classes/synth.gd"
 }, {
-"base": "",
+"base": "Object",
 "class": "SynthTracker",
 "language": "NativeScript",
 "path": "res://fm_synth.gdns"
@@ -292,6 +292,7 @@ GLOBALS="*res://singletons/globals.gd"
 CONFIG="*res://singletons/config.gd"
 THEME="*res://singletons/theme.gd"
 SYNTH="*res://singletons/synth.gd"
+IM_SYNTH="*res://singletons/im_synth.gd"
 AUDIO="*res://singletons/audio.tscn"
 GKBD="*res://singletons/global_keys.gd"
 FADER="*res://singletons/fader.tscn"

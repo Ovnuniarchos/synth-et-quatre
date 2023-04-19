@@ -57,6 +57,7 @@ func calculate()->void:
 	if wave!=null:
 		wave.calculate()
 		GLOBALS.song.send_wave(wave,SYNTH)
+		GLOBALS.song.send_wave(wave,IM_SYNTH)
 	emit_signal("wave_calculated",curr_wave_ix)
 
 #
@@ -98,6 +99,7 @@ func _on_values_changed(_value:float)->void:
 	w.loop_start=$Designer/SC/VBC/GC/Start.value
 	w.loop_end=$Designer/SC/VBC/GC/End.value
 	GLOBALS.song.send_wave(w,SYNTH)
+	GLOBALS.song.send_wave(w,IM_SYNTH)
 	emit_signal("wave_calculated",curr_wave_ix)
 
 

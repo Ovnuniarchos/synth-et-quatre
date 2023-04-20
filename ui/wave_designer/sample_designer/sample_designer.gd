@@ -56,8 +56,7 @@ func calculate()->void:
 	var wave:Waveform=GLOBALS.song.get_wave(curr_wave_ix)
 	if wave!=null:
 		wave.calculate()
-		GLOBALS.song.send_wave(wave,SYNTH)
-		GLOBALS.song.send_wave(wave,IM_SYNTH)
+		SYNCER.send_wave(wave)
 	emit_signal("wave_calculated",curr_wave_ix)
 
 #
@@ -98,8 +97,7 @@ func _on_values_changed(_value:float)->void:
 	w.sample_freq=$Designer/SC/VBC/GC/SamFreq.value
 	w.loop_start=$Designer/SC/VBC/GC/Start.value
 	w.loop_end=$Designer/SC/VBC/GC/End.value
-	GLOBALS.song.send_wave(w,SYNTH)
-	GLOBALS.song.send_wave(w,IM_SYNTH)
+	SYNCER.send_wave(w)
 	emit_signal("wave_calculated",curr_wave_ix)
 
 

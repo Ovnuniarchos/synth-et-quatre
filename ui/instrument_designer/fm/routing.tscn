@@ -22,9 +22,7 @@ margin_bottom = 165.0
 size_flags_horizontal = 3
 size_flags_vertical = 0
 
-[node name="Title" type="Label" parent="Routings" groups=[
-"Title",
-]]
+[node name="Title" type="Label" parent="Routings" groups=["Title"]]
 margin_right = 815.0
 margin_bottom = 14.0
 text = "Routing"

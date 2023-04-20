@@ -27,22 +27,27 @@ func _on_channel_copy(from:int,to:int)->void:
 
 func _on_DUCSlider_value_changed(value:float)->void:
 	GLOBALS.get_instrument().duty_cycles[operator]=int(value)
+	IM_SYNTH.set_duty_cycle(operator,int(value))
 	emit_signal("instrument_changed")
 
 func _on_WAVButton_item_selected(idx:int)->void:
 	GLOBALS.get_instrument().waveforms[operator]=idx
+	IM_SYNTH.set_wave(operator,idx)
 	emit_signal("instrument_changed")
 
 func _on_ARSlider_value_changed(value:float)->void:
 	GLOBALS.get_instrument().attacks[operator]=int(value)
+	IM_SYNTH.set_attack_rate(operator,int(value))
 	emit_signal("instrument_changed")
 
 func _on_DRSlider_value_changed(value:float)->void:
 	GLOBALS.get_instrument().decays[operator]=int(value)
+	IM_SYNTH.set_decay_rate(operator,int(value))
 	emit_signal("instrument_changed")
 
 func _on_SLSlider_value_changed(value:float)->void:
 	GLOBALS.get_instrument().sustain_levels[operator]=int(value)
+	IM_SYNTH.set_sustain_level(operator,int(value))
 	emit_signal("instrument_changed")
 
 func _on_SRSlider_value_changed(value:float)->void:
@@ -51,44 +56,54 @@ func _on_SRSlider_value_changed(value:float)->void:
 
 func _on_RRSlider_value_changed(value:float)->void:
 	GLOBALS.get_instrument().releases[operator]=int(value)
+	IM_SYNTH.set_release_rate(operator,int(value))
 	emit_signal("instrument_changed")
 
 func _on_Repeat_item_selected(idx:int)->void:
 	idx=$Params/ADSR/Repeat.get_item_id(idx)
 	GLOBALS.get_instrument().repeats[operator]=idx
+	IM_SYNTH.set_repeat(operator,idx)
 	emit_signal("instrument_changed")
 
 func _on_AMSSlider_value_changed(value:float)->void:
 	GLOBALS.get_instrument().am_intensity[operator]=int(value)
+	IM_SYNTH.set_am_intensity(operator,int(value))
 	emit_signal("instrument_changed")
 
 func _on_AmpLFO_item_selected(idx:int)->void:
 	GLOBALS.get_instrument().am_lfo[operator]=idx
+	IM_SYNTH.set_am_lfo(operator,idx)
 	emit_signal("instrument_changed")
 
 func _on_KSRSlider_value_changed(value:float)->void:
 	GLOBALS.get_instrument().key_scalers[operator]=int(value)
+	IM_SYNTH.set_ksr(operator,int(value))
 	emit_signal("instrument_changed")
 
 func _on_FMSSlider_value_changed(value:float)->void:
 	GLOBALS.get_instrument().fm_intensity[operator]=int(value)
+	IM_SYNTH.set_fm_intensity(operator,int(value))
 	emit_signal("instrument_changed")
 
 func _on_FreqLFO_item_selected(idx:int)->void:
 	GLOBALS.get_instrument().fm_lfo[operator]=idx
+	IM_SYNTH.set_fm_lfo(operator,idx)
 	emit_signal("instrument_changed")
 
 func _on_MULSlider_value_changed(value:float)->void:
 	GLOBALS.get_instrument().multipliers[operator]=int(value)
+	IM_SYNTH.set_freq_mul(operator,int(value))
 	$Params/Detune/DETLabel.text="DET" if int(value)>0 else "FFR"
 	emit_signal("instrument_changed")
 
 func _on_DIVSlider_value_changed(value:float)->void:
 	GLOBALS.get_instrument().dividers[operator]=int(value)-1
+	IM_SYNTH.set_freq_div(operator,int(value)-1)
 	emit_signal("instrument_changed")
 
 func _on_DETSlider_value_changed(value):
 	GLOBALS.get_instrument().detunes[operator]=int(value)
+	IM_SYNTH.set_detune(operator,int(value))
 	emit_signal("instrument_changed")
 
 func _on_Switch_toggled(on:bool)->void:
@@ -96,6 +111,7 @@ func _on_Switch_toggled(on:bool)->void:
 	opm&=-1^op_mask
 	opm|=int(on)<<operator
 	GLOBALS.get_instrument().op_mask=opm
+	IM_SYNTH.set_enable(opm)
 	emit_signal("instrument_changed")
 
 func set_sliders(inst:FmInstrument)->void:

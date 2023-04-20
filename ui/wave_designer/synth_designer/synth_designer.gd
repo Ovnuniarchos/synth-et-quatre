@@ -185,7 +185,6 @@ func calculate()->void:
 	var wave:Waveform=GLOBALS.song.get_wave(curr_wave_ix)
 	if wave!=null:
 		wave.calculate()
-		GLOBALS.song.send_wave(wave,SYNTH)
-		GLOBALS.song.send_wave(wave,IM_SYNTH)
+		SYNCER.send_wave(wave)
 	emit_signal("wave_calculated",curr_wave_ix)
 

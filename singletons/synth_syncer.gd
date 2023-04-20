@@ -4,6 +4,11 @@ func set_mix_rate(mix_rate:float)->void:
 	SYNTH.synth.set_mix_rate(mix_rate)
 	IM_SYNTH.synth.set_mix_rate(mix_rate)
 
+func send_wave(wave:Waveform)->void:
+	GLOBALS.song.send_wave(wave,SYNTH)
+	GLOBALS.song.send_wave(wave,IM_SYNTH)
+
+
 func set_fm_instrument(channel:int,instr:FmInstrument)->void:
 	SYNTH.set_fm_instrument(channel,instr)
 	IM_SYNTH.set_fm_instrument(channel,instr)

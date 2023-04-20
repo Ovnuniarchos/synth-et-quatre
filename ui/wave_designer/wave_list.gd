@@ -64,8 +64,7 @@ func _on_Copy_pressed()->void:
 		curr_wave_ix=cnt
 		$Waves.add_item(nw.name)
 		GLOBALS.song.add_wave(nw)
-		GLOBALS.song.send_wave(nw,SYNTH)
-		GLOBALS.song.send_wave(nw,IM_SYNTH)
+		SYNCER.send_wave(nw)
 		emit_signal("wave_added",cnt)
 		emit_signal("wave_selected",cnt)
 	set_buttons()
@@ -83,8 +82,7 @@ func _on_Add_id_pressed(id:int)->void:
 			nw=SampleWave.new()
 		nw.name=nn
 		GLOBALS.song.add_wave(nw)
-		GLOBALS.song.send_wave(nw,SYNTH)
-		GLOBALS.song.send_wave(nw,IM_SYNTH)
+		SYNCER.send_wave(nw)
 		emit_signal("wave_added",cnt)
 		emit_signal("wave_selected",cnt)
 	set_buttons()

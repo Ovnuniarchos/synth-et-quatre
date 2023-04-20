@@ -3,7 +3,6 @@ extends Control
 """
 FIXME
 TODO:
-	PolyMode that recycles slots for equal notes
 	CycleButtons themable
 	DSP library for wave synthesis
 	MIDI on/off indicator

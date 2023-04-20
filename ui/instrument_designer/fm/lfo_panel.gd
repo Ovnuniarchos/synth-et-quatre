@@ -13,27 +13,27 @@ func set_lfo(ix:int)->void:
 
 func update_values()->void:
 	$VBC/HBC/DUCSlider.value=GLOBALS.song.lfo_duty_cycles[lfo]
-	SYNTH.set_lfo_duty_cycle(lfo,GLOBALS.song.lfo_duty_cycles[lfo])
+	SYNCER.set_lfo_duty_cycle(lfo,GLOBALS.song.lfo_duty_cycles[lfo])
 	$VBC/HBC/WAVButton.select(GLOBALS.song.lfo_waves[lfo])
-	SYNTH.set_lfo_wave(lfo,GLOBALS.song.lfo_waves[lfo])
+	SYNCER.set_lfo_wave(lfo,GLOBALS.song.lfo_waves[lfo])
 	$VBC/HBC2/FRQSlider.value=GLOBALS.song.lfo_frequencies[lfo]
-	SYNTH.set_lfo_frequency(lfo,GLOBALS.song.lfo_frequencies[lfo])
+	SYNCER.set_lfo_frequency(lfo,GLOBALS.song.lfo_frequencies[lfo])
 
 
 func _on_DUCSlider_value_changed(value:float)->void:
 	var iv:int=int(value)
 	var lfo_duty_cycles:Array=GLOBALS.song.lfo_duty_cycles
 	lfo_duty_cycles[lfo]=iv
-	SYNTH.set_lfo_duty_cycle(lfo,iv)
+	SYNCER.set_lfo_duty_cycle(lfo,iv)
 
 
 func _on_WAVButton_item_selected(idx:int)->void:
 	var lfo_waves:Array=GLOBALS.song.lfo_waves
 	lfo_waves[lfo]=idx
-	SYNTH.set_lfo_wave(lfo,idx)
+	SYNCER.set_lfo_wave(lfo,idx)
 
 
 func _on_FRQSlider_value_changed(value:float)->void:
 	var lfo_frequencies:Array=GLOBALS.song.lfo_frequencies
 	lfo_frequencies[lfo]=value
-	SYNTH.set_lfo_frequency(lfo,value)
+	SYNCER.set_lfo_frequency(lfo,value)

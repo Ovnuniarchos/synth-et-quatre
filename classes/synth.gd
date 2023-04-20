@@ -4,7 +4,7 @@ class_name Synth
 const MAX_CHANNELS:int=32
 const DEFAULT_VOLUME:float=1.0/32.0
 
-var synth=preload("res://fm_synth.gdns").new()
+var synth:SynthTracker=preload("res://fm_synth.gdns").new()
 
 #
 
@@ -24,7 +24,7 @@ func generate(buffer_size:int,command_list:Array,global_volume:float=DEFAULT_VOL
 #
 
 func reset(full:bool=false)->void:
-	for i in range(32):
+	for i in 32:
 		synth.stop(i,15)
 		if !full:
 			continue
@@ -41,8 +41,8 @@ func reset(full:bool=false)->void:
 		synth.set_detune(i,15,0)
 		synth.set_output(i,1,255)
 		synth.set_output(i,14,0)
-		for j in range(4):
-			for k in range(4):
+		for j in 4:
+			for k in 4:
 				synth.set_pm_factor(i,j,k,16 if (j+k)==0 else 0)
 		synth.set_am_intensity(i,15,0)
 		synth.set_am_lfo(i,15,0)
@@ -50,7 +50,7 @@ func reset(full:bool=false)->void:
 		synth.set_fm_lfo(i,15,0)
 		synth.set_ksr(i,15,0)
 	if full:
-		for i in range(4):
+		for i in 4:
 			synth.set_lfo_duty_cycle(i,0)
 			synth.set_lfo_duty_cycle(i,FmInstrument.WAVE.TRIANGLE)
 			synth.set_lfo_freq(i,1.0)
@@ -60,7 +60,7 @@ func set_mix_rate(mix_rate:float)->void:
 
 func set_fm_instrument(channel:int,instr:FmInstrument)->void:
 	synth.set_clip(channel,instr.clip)
-	for i in range(4):
+	for i in 4:
 		var op_mask:int=1<<i
 		synth.set_attack_rate(channel,op_mask,instr.attacks[i])
 		synth.set_decay_rate(channel,op_mask,instr.decays[i])

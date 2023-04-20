@@ -16,8 +16,7 @@ func _ready()->void:
 
 func set_mix_rate(mr:int)->void:
 	stream.mix_rate=mr
-	SYNTH.set_mix_rate(stream.mix_rate)
-	IM_SYNTH.set_mix_rate(stream.mix_rate)
+	SYNCER.set_mix_rate(stream.mix_rate)
 	play()
 
 func set_buffer_length(bl:float)->void:

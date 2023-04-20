@@ -112,5 +112,4 @@ func handle_keys(event:InputEventKey)->bool:
 
 func _on_FmEditor_instrument_changed()->void:
 	if channel!=-1:
-		SYNTH.set_fm_instrument(channel,GLOBALS.get_instrument())
-		IM_SYNTH.set_fm_instrument(channel,GLOBALS.get_instrument())
+		SYNCER.set_fm_instrument(channel,GLOBALS.get_instrument())

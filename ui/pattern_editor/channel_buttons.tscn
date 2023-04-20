@@ -7,9 +7,6 @@
 margin_right = 144.0
 margin_bottom = 24.0
 script = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="DelFX" type="Button" parent="."]
 margin_right = 17.0

@@ -3,10 +3,12 @@ extends Control
 
 onready var play:Button=$HBC/Play
 onready var play_track:Button=$HBC/PlayTrack
+onready var poly_mode:Button=$HBC/PolyMode
 
 
 func _ready()->void:
 	GLOBALS.connect("song_changed",self,"_on_song_changed")
+	poly_mode.set_pressed_no_signal(IM_SYNTH.poly)
 
 
 func _on_song_changed()->void:
@@ -42,3 +44,7 @@ func _on_PlayTrack_toggled(pressed:bool)->void:
 		AUDIO.tracker.play_track(GLOBALS.curr_order)
 	else:
 		AUDIO.tracker.stop()
+
+
+func _on_PolyMode_cycled(status:int)->void:
+	IM_SYNTH.poly=status!=0

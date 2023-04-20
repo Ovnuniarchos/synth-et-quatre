@@ -3,8 +3,8 @@ extends Control
 """
 FIXME
 TODO:
-	Move note playing to IM_SYNTH
-	Mono/poly mode for IM_SYNTH
+	PolyMode that recycles slots for equal notes
+	CycleButtons themable
 	DSP library for wave synthesis
 	MIDI on/off indicator
 	Reset per channel parameters (as a command|button)

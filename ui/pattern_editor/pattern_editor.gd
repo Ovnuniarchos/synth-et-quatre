@@ -129,13 +129,13 @@ func process_midi(ev:InputEventMIDI)->bool:
 		midi_vel=ev.velocity
 		midi_note=ev.pitch
 		put_note(ev.pitch%12,ev.pitch/12,GLOBALS.curr_instrument)
-		GKBD.play_note(true,false,ev.pitch,curr_channel)
+		IM_SYNTH.play_note(true,false,ev.pitch)
 		return true
 	if ev.message==MIDI_MESSAGE_NOTE_OFF and ev.pitch==midi_note:
 		midi_note=-1
 		if CONFIG.get_value(CONFIG.MIDI_NOTEOFF):
 			put_note(KEYOFF,0,null)
-		GKBD.play_note(false,false,ev.pitch,curr_channel)
+		IM_SYNTH.play_note(false,false,ev.pitch)
 		return true
 	if ev.message==MIDI_MESSAGE_AFTERTOUCH and CONFIG.get_value(CONFIG.MIDI_AFTERTOUCH)\
 			and midi_note==ev.pitch:

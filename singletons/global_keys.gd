@@ -65,9 +65,9 @@ func handle_midi(event:InputEventMIDI)->bool:
 	if event==null:
 		return false
 	if event.message==MIDI_MESSAGE_NOTE_ON:
-		play_note(true,false,event.pitch)
+		IM_SYNTH.play_note(true,false,event.pitch)
 	elif event.message==MIDI_MESSAGE_NOTE_OFF:
-		play_note(false,false,event.pitch)
+		IM_SYNTH.play_note(false,false,event.pitch)
 	else:
 		print("CH:%d MS:%d PI:%d VE:%d IN:%d PR:%d CN:%d CV:%d"%[event.channel,event.message,event.pitch,event.velocity,event.instrument,event.pressure,event.controller_number,event.controller_value])
 	return true
@@ -77,7 +77,7 @@ func handle_keys(event:InputEventKey)->bool:
 		return false
 	var fscan:int=event.get_scancode_with_modifiers()
 	if (event.scancode) in KEYBOARD:
-		play_note(event.pressed,
+		IM_SYNTH.play_note(event.pressed,
 				event.shift,
 				KEYBOARD.find(event.scancode)+(GLOBALS.curr_octave*12)
 			)
@@ -107,24 +107,6 @@ func handle_keys(event:InputEventKey)->bool:
 			emit_signal("step_changed",-1)
 		return true
 	return false
-
-func play_note(keyon:bool,legato:bool,semi:int,chan:int=-1)->void:
-	var instr:Instrument=GLOBALS.get_instrument()
-	if keyon:
-		if chan==-1:
-			channel=(channel+1)&31
-			chan=channel
-		notes_on[chan]=semi
-		if instr is FmInstrument:
-			IM_SYNTH.set_fm_instrument(chan,instr)
-			IM_SYNTH.play_fm_note(chan,instr,semi,legato)
-	else:
-		for i in range(Song.MAX_CHANNELS):
-			if notes_on[i]!=semi:
-				continue
-			notes_on[i]=-1
-			if instr is FmInstrument:
-				IM_SYNTH.synth.key_off(i,15)
 
 #
 

@@ -1,7 +1,8 @@
 extends Node
 class_name Synth
 
-const DEFAULT_VOLUME=1.0/32.0
+const MAX_CHANNELS:int=32
+const DEFAULT_VOLUME:float=1.0/32.0
 
 var synth=preload("res://fm_synth.gdns").new()
 

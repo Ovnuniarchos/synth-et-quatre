@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://ui/widgets/play_button.gd" type="Script" id=1]
 [ext_resource path="res://ui/play_controls/play_controls.gd" type="Script" id=2]
+[ext_resource path="res://ui/widgets/cycle_button.gd" type="Script" id=3]
 
 [node name="PC" type="PanelContainer"]
 script = ExtResource( 2 )
@@ -12,7 +13,7 @@ __meta__ = {
 [node name="HBC" type="HBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 63.0
+margin_right = 134.0
 margin_bottom = 27.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -45,5 +46,19 @@ __meta__ = {
 pressed_icon = "stop"
 unpressed_icon = "play_track"
 
+[node name="ReferenceRect" type="ReferenceRect" parent="HBC"]
+margin_left = 72.0
+margin_right = 72.0
+margin_bottom = 20.0
+
+[node name="PolyMode" type="Button" parent="HBC"]
+margin_left = 88.0
+margin_right = 127.0
+margin_bottom = 20.0
+text = "Poly"
+script = ExtResource( 3 )
+colors = PoolColorArray( 1, 1, 1, 1, 0.501961, 0.752941, 1, 1, 2, 1, 1, 1 )
+
 [connection signal="toggled" from="HBC/Play" to="." method="_on_Play_toggled"]
 [connection signal="toggled" from="HBC/PlayTrack" to="." method="_on_PlayTrack_toggled"]
+[connection signal="cycled" from="HBC/PolyMode" to="." method="_on_PolyMode_cycled"]

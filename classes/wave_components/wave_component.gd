@@ -67,20 +67,7 @@ func generate_output(size:int,input:Array,caller:WaveComponent):
 	is_generated=true
 	if caller!=null:
 		return generated
-	output.resize(size)
-	for i in range(0,size):
-		var modval:float=modulator[i]
-		var val:float=generated[i]*lerp(1.0,(modval+1.0)*0.5,am)*lerp(1.0,modval,xm)
-		if output_mode==OUT_MODE.OFF:
-			output[i]=input[i]
-		elif output_mode==OUT_MODE.REPLACE:
-			output[i]=val*vol
-		elif output_mode==OUT_MODE.ADD:
-			output[i]=input[i]+val*vol
-		elif output_mode==OUT_MODE.AM:
-			output[i]=input[i]*lerp(1.0,(val+1.0)*0.5,vol)
-		elif output_mode==OUT_MODE.XM:
-			output[i]=input[i]*lerp(1.0,val,vol)
+	output=DSP.mix_waves(input,generated,modulator,output,am,xm,vol,output_mode)
 	return output
 
 #
@@ -93,7 +80,7 @@ func serialize_start(out:ChunkedFile,tag:String,version:int,components:Array)->v
 	out.store_float(xm)
 	out.store_16(components.find(input_comp))
 
-func deserialize_start(inf:ChunkedFile,c:WaveComponent,components:Array,version:int)->void:
+func deserialize_start(inf:ChunkedFile,c:WaveComponent,components:Array,_version:int)->void:
 	c.output_mode=inf.get_8()
 	c.vol=inf.get_float()
 	c.am=inf.get_float()

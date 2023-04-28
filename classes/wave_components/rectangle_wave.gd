@@ -46,21 +46,9 @@ func equals(other:WaveComponent)->bool:
 
 func calculate(size:int,input:Array,caller:WaveComponent)->Array:
 	set_modulator(size,pm,input,caller)
-	var dphi:float=1.0/size
-	var phi:float=-dphi
-	for i in range(0,size):
-		phi+=dphi
-		var cphi:float=fmod(phi-pos0+1.0,1.0)
-		if (cycles>0 and (cphi*freq_mult)>=cycles) or cphi<0.0:
-			generated[i]=0.0
-			continue
-		var rphi:float=fmod((cphi*freq_mult)+phi0+(modulator[i]*pm)+1.0,1.0)
-		if rphi>n_start:
-			generated[i]=-1.0
-		elif rphi>z_start:
-			generated[i]=0.0
-		else:
-			generated[i]=1.0
+	DSP.rectangle(input,generated,modulator,pos0,phi0,freq_mult,cycles,pm,
+		z_start,n_start
+	)
 	return generate_output(size,input,caller)
 
 #

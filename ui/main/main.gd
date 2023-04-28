@@ -4,7 +4,6 @@ extends Control
 FIXME
 TODO:
 	CycleButtons themable
-	DSP library for wave synthesis
 	MIDI on/off indicator
 	Reset per channel parameters (as a command|button)
 	MIDI input

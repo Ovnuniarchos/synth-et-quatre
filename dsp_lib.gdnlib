@@ -2,12 +2,12 @@
 
 singleton=false
 load_once=true
-symbol_prefix="fmsynth_"
+symbol_prefix="dsplib_"
 reloadable=true
 
 [entry]
 
-X11.64="res://fmsynth/bin/x11/libsynth_tracker.so"
+X11.64="res://dsplib/bin/x11/libdsp.so"
 
 [dependencies]
 

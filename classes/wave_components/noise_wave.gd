@@ -39,32 +39,7 @@ func equals(other:WaveComponent)->bool:
 
 func calculate(size:int,input:Array,caller:WaveComponent)->Array:
 	set_modulator(size,pm,input,caller)
-	rng0.seed=rng_seed
-	var i_min:int=pos0*size
-	var i_max:int=length*size
-	var dsample:float=0.0
-	var j:int
-	var v0:float=rng0.randf_range(-1.0,1.0)
-	var v1:float=rng0.randf_range(-1.0,1.0)
-	var v_min:float=2.0
-	var v_max:float=-2.0
-	for i in range(0,size):
-		j=(i+i_min)%size
-		if i<i_max:
-			dsample+=tone
-			if dsample>=1.0:
-				dsample-=1.0
-				v0=v1
-				v1=rng0.randf_range(-1.0,1.0)
-			generated[j]=lerp(v0,v1,ease(dsample,-2.0))
-			v_min=min(v_min,generated[j])
-			v_max=max(v_max,generated[j])
-		else:
-			generated[j]=0.0
-	for i in range(0,size):
-		j=(i+i_min)%size
-		if i<i_max:
-			generated[j]=range_lerp(generated[j],v_min,v_max,-1.0,1.0)
+	DSP.noise(generated,pos0,length,rng_seed,tone);
 	return generate_output(size,input,caller)
 
 #

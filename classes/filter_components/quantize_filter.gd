@@ -33,10 +33,7 @@ func calculate(size:int,input:Array,caller:WaveComponent)->Array:
 		modulator=input_comp.generated
 	else:
 		modulator=input
-	var st:float=2.0/(steps-1)
-	for i in range(0,size):
-		var val:float=stepify(modulator[i]+1.0,st)-1.0
-		generated[i]=val
+	DSP.quantize(modulator,generated,steps)
 	return generate_output(size,input,caller)
 
 #

@@ -45,15 +45,7 @@ func calculate(size:int,input:Array,caller:WaveComponent)->Array:
 		modulator=input_comp.generated
 	else:
 		modulator=input
-	var size1:int=size-1
-	var r:Array=range(0,(taps*2)+1)
-	for i in range(0,size):
-		var phi:int=-taps
-		var val:float=0.0
-		for j in r:
-			val+=modulator[(i+phi)&size1]*coeffs[j]
-			phi+=1
-		generated[i]=val
+	DSP.convolution_filter(modulator,generated,coeffs)
 	return generate_output(size,input,caller)
 
 func set_taps(t:int)->void:

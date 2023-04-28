@@ -42,10 +42,7 @@ func calculate(size:int,input:Array,caller:WaveComponent)->Array:
 		modulator=input_comp.generated
 	else:
 		modulator=input
-	for i in range(0,size):
-		var val:float=modulator[i]
-		val=clamp(val,l_clamp if l_clamp_on else val,u_clamp if u_clamp_on else val)
-		generated[i]=val
+	DSP.clamp(modulator,generated,l_clamp,u_clamp,l_clamp_on,u_clamp_on)
 	return generate_output(size,input,caller)
 
 #

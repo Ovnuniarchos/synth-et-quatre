@@ -32,15 +32,7 @@ func calculate(size:int,input:Array,caller:WaveComponent)->Array:
 		modulator=input_comp.generated
 	else:
 		modulator=input
-	var v_max:float=modulator.max()
-	var v_min:float=modulator.min()
-	if keep_center:
-		v_max=max(abs(v_max),abs(v_min))
-		for i in range(0,size):
-			generated[i]=range_lerp(modulator[i],-v_max,v_max,-1.0,1.0)
-	else:
-		for i in range(0,size):
-			generated[i]=range_lerp(modulator[i],v_min,v_max,-1.0,1.0)
+	DSP.normalize(modulator,generated,keep_center)
 	return generate_output(size,input,caller)
 
 #

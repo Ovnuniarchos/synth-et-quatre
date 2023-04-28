@@ -56,8 +56,7 @@ func array_fill(array:Array,value,size:int=-1)->void:
 		size=array.size()
 	else:
 		array.resize(size)
-	for i in range(0,array.size()):
-		array[i]=value
+	array.fill(value)
 
 func nvl(value,default):
 	return value if value!=null else default

@@ -4,15 +4,15 @@
 
 using namespace godot;
 
-extern "C" void GDN_EXPORT godot_gdnative_init(godot_gdnative_init_options *o){
+extern "C" void GDN_EXPORT fmsynth_gdnative_init(godot_gdnative_init_options *o){
 	Godot::gdnative_init(o);
 }
 
-extern "C" void GDN_EXPORT godot_gdnative_terminate(godot_gdnative_terminate_options *o){
+extern "C" void GDN_EXPORT fmsynth_gdnative_terminate(godot_gdnative_terminate_options *o){
 	Godot::gdnative_terminate(o);
 }
 
-extern "C" void GDN_EXPORT godot_nativescript_init(void *handle){
+extern "C" void GDN_EXPORT fmsynth_nativescript_init(void *handle){
 	Godot::nativescript_init(handle);
 	register_class<SynthTracker>();
 }
@@ -60,6 +60,7 @@ void SynthTracker::_register_methods(){
 	register_method("set_lfo_wave",&SynthTracker::set_lfo_wave);
 	register_method("set_lfo_duty_cycle",&SynthTracker::set_lfo_duty_cycle);
 	register_method("set_lfo_freq",&SynthTracker::set_lfo_freq);
+	register_method("set_lfo_phase",&SynthTracker::set_lfo_phase);
 
 	register_method("mute_voices",&SynthTracker::mute_voices);
 }

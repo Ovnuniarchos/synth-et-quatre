@@ -59,6 +59,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://ui/widgets/cycle_button.gd"
 }, {
+"base": "Node",
+"class": "DSPLib",
+"language": "NativeScript",
+"path": "res://dsp_lib.gdns"
+}, {
 "base": "Instrument",
 "class": "FmInstrument",
 "language": "GDScript",
@@ -240,6 +245,7 @@ _global_script_class_icons={
 "ConfigButton": "",
 "ConfigSpinBar": "",
 "CycleButton": "",
+"DSPLib": "",
 "FmInstrument": "",
 "FmVoice": "",
 "HpfFilter": "",
@@ -288,6 +294,7 @@ mix_rate=48000
 
 [autoload]
 
+DSP="*res://dsp_lib.gdns"
 GLOBALS="*res://singletons/globals.gd"
 CONFIG="*res://singletons/config.gd"
 THEME="*res://singletons/theme.gd"
@@ -307,6 +314,10 @@ MIDI="*res://singletons/midi.gd"
 gdscript/warnings/narrowing_conversion=false
 gdscript/warnings/return_value_discarded=false
 gdscript/warnings/integer_division=false
+
+[gdnative]
+
+singletons=[  ]
 
 [input]
 

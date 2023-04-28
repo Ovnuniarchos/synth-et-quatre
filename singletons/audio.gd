@@ -26,11 +26,13 @@ func set_buffer_length(bl:float)->void:
 func _process(_delta:float)->void:
 	var playback:AudioStreamPlayback=get_stream_playback()
 	var size:int=playback.get_frames_available()
+	var buf:Array
 	if size>0 and playback.can_push_buffer(size):
 		tracker.gen_commands(GLOBALS.song,stream.mix_rate,size,cmds)
-		var buf:Array=SYNTH.generate(size,cmds,1.0/GLOBALS.song.num_channels)
-		var ibuf:Array=IM_SYNTH.generate(size,[],IM_SYNTH.DEFAULT_VOLUME)
-		for i in size:
-			buf[i]+=ibuf[i]
+		buf=DSP.add_sound_streams(
+			SYNTH.generate(size,cmds,1.0/GLOBALS.song.num_channels),
+			IM_SYNTH.generate(size,[],IM_SYNTH.DEFAULT_VOLUME)
+		)
 		playback.push_buffer(PoolVector2Array(buf))
 		emit_signal("buffer_sent",buf)
+

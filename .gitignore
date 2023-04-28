@@ -3,6 +3,7 @@
 *.os
 *.pdf
 /fmsynth/bin
+/dsplib/bin
 .songs
 api.json
 *.sublime-*

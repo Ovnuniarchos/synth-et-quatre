@@ -39,7 +39,7 @@ func equals(other:WaveComponent)->bool:
 
 func calculate(size:int,input:Array,caller:WaveComponent)->Array:
 	set_modulator(size,pm,input,caller)
-	DSP.noise(generated,pos0,length,rng_seed,tone);
+	DSP.noise(input,generated,pos0,length,rng_seed,tone,vol,output_mode);
 	return generate_output(size,input,caller)
 
 #

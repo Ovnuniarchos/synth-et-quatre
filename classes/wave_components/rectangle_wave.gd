@@ -46,9 +46,7 @@ func equals(other:WaveComponent)->bool:
 
 func calculate(size:int,input:Array,caller:WaveComponent)->Array:
 	set_modulator(size,pm,input,caller)
-	DSP.rectangle(input,generated,modulator,pos0,phi0,freq_mult,cycles,pm,
-		z_start,n_start
-	)
+	DSP.rectangle(input,generated,modulator,pos0,phi0,freq_mult,cycles,pm,z_start,n_start,vol,output_mode)
 	return generate_output(size,input,caller)
 
 #

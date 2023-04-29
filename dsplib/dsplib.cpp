@@ -68,8 +68,7 @@ Array DSPLib::mixWaves(Array input,Array generated,Array modulator,Array output,
 		for(int i=generated.size()-1;i>-1;i--){
 			output[i]=variant2Float(generated[i])*
 				Math::lerp(1.0f,full2Positive(variant2Float(modulator[i])),am)*
-				Math::lerp(1.0f,variant2Float(modulator[i]),xm)*
-				vol;
+				Math::lerp(1.0f,variant2Float(modulator[i]),xm);
 		}
 		return output;
 	case ADD:
@@ -78,7 +77,7 @@ Array DSPLib::mixWaves(Array input,Array generated,Array modulator,Array output,
 			output[i]=variant2Float(input[i])+(
 				variant2Float(generated[i])*
 				Math::lerp(1.0f,full2Positive(variant2Float(modulator[i])),am)*
-				Math::lerp(1.0f,variant2Float(modulator[i]),xm)*vol
+				Math::lerp(1.0f,variant2Float(modulator[i]),xm)
 			);
 		}
 		return output;
@@ -106,7 +105,8 @@ Array DSPLib::mixWaves(Array input,Array generated,Array modulator,Array output,
 	return input;
 }
 
-void DSPLib::noise(Array input,Array output,float pos0,float length,int64_t seed,float tone){
+void DSPLib::noise(Array input,Array output,float pos0,float length,int64_t seed,float tone,float vol,int mode){
+	vol=(mode!=REPLACE && mode!=ADD)?1.0f:vol;
 	randomSeed=seed;
 	float fract=0.0f;
 	int size=input.size();
@@ -114,27 +114,33 @@ void DSPLib::noise(Array input,Array output,float pos0,float length,int64_t seed
 	int range=length*size;
 	float v0=randSample();
 	float v1=randSample();
+	float vmin=std::numeric_limits<float>::max();
+	float vmax=-std::numeric_limits<float>::max();
 	for(int i=0,j=phi0%size;i<size;i++,j=(j+1)%size){
 		if(i<=range){
 			fract+=tone;
-			if(fract>=1.0){
-				fract-=1.0;
+			if(fract>=1.0f){
+				fract-=1.0f;
 				v0=v1;
 				v1=randSample();
 			}
-			output[j]=Math::lerp(v0,v1,ease(fract));
-		}else{
+			float v=Math::lerp(v0,v1,ease(fract));
+			output[j]=v;
+			vmin=(v<vmin)?v:vmin;
+			vmax=(v>vmax)?v:vmax;
+		}else if(mode==REPLACE){
 			output[j]=input[j];
+		}else{
+			output[j]=0.0f;
 		}
 	}
-	float vmax=input.max();
-	float vmin=input.min();
 	for(int i=0,j=phi0%size;i<range;i++,j=(j+1)%size){
-		output[j]=Math::range_lerp(variant2Float(output[j]),vmin,vmax,-1.0f,1.0f);
+		output[j]=Math::range_lerp(variant2Float(output[j]),vmin,vmax,-1.0f,1.0f)*vol;
 	}
 }
 
-void DSPLib::sine(Array input,Array output,Array modulator,float pos0,float offset,float freqMult,float cycles,float pm,int q0,int q1,int q2,int q3){
+void DSPLib::sine(Array input,Array output,Array modulator,float pos0,float offset,float freqMult,float cycles,float pm,int q0,int q1,int q2,int q3,float vol,int mode){
+	vol=(mode!=REPLACE && mode!=ADD)?1.0f:vol;
 	int quadrants[]={q0,q1,q2,q3};
 	int size=input.size();
 	int sz1=size-1;
@@ -143,7 +149,7 @@ void DSPLib::sine(Array input,Array output,Array modulator,float pos0,float offs
 	uint64_t phi=(uint64_t)(offset*FIXP_1)&FIXP_1MASK;
 	for(int i=0,j=(int)(pos0*size)&sz1;i<size;i++,j=(j+1)&sz1){
 		if(cycles>0.0f && i>=range){
-			output[j]=input[j];
+			output[j]=(mode==REPLACE)?variant2Float(input[j]):0.0f;
 			continue;
 		}
 		uint64_t rphi=phi+(variant2Float(modulator[i])*pm*FIXP_1);
@@ -152,12 +158,13 @@ void DSPLib::sine(Array input,Array output,Array modulator,float pos0,float offs
 			-sineTable[(rphi>>24UL)&0x3fffUL],-sineTable[(~rphi>>24UL)&0x3fffUL],
 			0.0f,1.0f,-1.0f
 		};
-		output[j]=values[quadrants[(rphi>>38UL)&3]];
+		output[j]=values[quadrants[(rphi>>38UL)&3]]*vol;
 		phi+=dphi;
 	}
 }
 
-void DSPLib::rectangle(Array input,Array output,Array modulator,float pos0,float offset,float freqMult,float cycles,float pm,float zStart,float nStart){
+void DSPLib::rectangle(Array input,Array output,Array modulator,float pos0,float offset,float freqMult,float cycles,float pm,float zStart,float nStart,float vol,int mode){
+	vol=(mode!=REPLACE && mode!=ADD)?1.0f:vol;
 	int size=input.size();
 	int sz1=size-1;
 	int range=(size*cycles)/freqMult;
@@ -167,22 +174,23 @@ void DSPLib::rectangle(Array input,Array output,Array modulator,float pos0,float
 	uint64_t ns=(uint64_t)(nStart*FIXP_1)&FIXP_1MASK;
 	for(int i=0,j=(int)(pos0*size)&sz1;i<size;i++,j=(j+1)&sz1){
 		if(cycles>0.0f && i>=range){
-			output[j]=input[j];
+			output[j]=(mode==REPLACE)?variant2Float(input[j]):0.0f;
 			continue;
 		}
 		uint64_t rphi=(uint64_t)(phi+(variant2Float(modulator[i])*pm*FIXP_1))&FIXP_1MASK;
 		if(rphi>ns){
-			output[j]=-1.0f;
+			output[j]=-vol;
 		}else if(rphi>zs){
 			output[j]=0.0f;
 		}else{
-			output[j]=1.0f;
+			output[j]=vol;
 		}
 		phi+=dphi;
 	}
 }
 
-void DSPLib::saw(Array input,Array output,Array modulator,float pos0,float offset,float freqMult,float cycles,float pm,int half0,int half1){
+void DSPLib::saw(Array input,Array output,Array modulator,float pos0,float offset,float freqMult,float cycles,float pm,int half0,int half1,float vol,int mode){
+	vol=(mode!=REPLACE && mode!=ADD)?1.0f:vol;
 	int halves[]={half0,half1};
 	int size=input.size();
 	int sz1=size-1;
@@ -192,19 +200,19 @@ void DSPLib::saw(Array input,Array output,Array modulator,float pos0,float offse
 	I2FConverter i2f;
 	for(int i=0,j=(int)(pos0*size)&sz1;i<size;i++,j=(j+1)&sz1){
 		if(cycles>0.0f && i>=range){
-			output[j]=input[j];
+			output[j]=(mode==REPLACE)?variant2Float(input[j]):0.0f;
 			continue;
 		}
 		uint64_t rphi=(uint64_t)(phi+(variant2Float(modulator[i])*pm*FIXP_1))&FIXP_1MASK;
 		i2f.setMantissa(rphi>>16);
 		float values[]={i2f.f-1.0f,i2f.f,1.0f-i2f.f,-i2f.f,0.0f,1.0f,-1.0f};
-		input[j]=values[halves[(rphi>>39)&1]];
+		output[j]=values[halves[(rphi>>39)&1]]*vol;
 		phi+=dphi;
 	}
-	return input;
 }
 
-void DSPLib::triangle(Array input,Array modulator,float pos0,float offset,float freqMult,float cycles,float pm,int half0,int half1){
+void DSPLib::triangle(Array input,Array output,Array modulator,float pos0,float offset,float freqMult,float cycles,float pm,int half0,int half1,float vol,int mode){
+	vol=(mode!=REPLACE && mode!=ADD)?1.0f:vol;
 	int halves[]={half0,half1};
 	int size=input.size();
 	int sz1=size-1;
@@ -214,17 +222,16 @@ void DSPLib::triangle(Array input,Array modulator,float pos0,float offset,float 
 	I2FConverter i2f;
 	for(int i=0,j=(int)(pos0*size)&sz1;i<size;i++,j=(j+1)&sz1){
 		if(cycles>0.0f && i>=range){
-			input[j]=0.0f;
+			output[j]=(mode==REPLACE)?variant2Float(input[j]):0.0f;
 			continue;
 		}
 		uint64_t rphi=(uint64_t)(phi+(variant2Float(modulator[i])*pm*FIXP_1))&FIXP_1MASK;
 		i2f.setMantissa(rphi>>16);
 		i2f.f=(i2f.f*2.0f)-1.0f;
 		float values[]={i2f.f,-i2f.f,0.0f,1.0f,-1.0f};
-		input[j]=values[halves[(rphi>>39)&1]];
+		output[j]=values[halves[(rphi>>39)&1]]*vol;
 		phi+=dphi;
 	}
-	return input;
 }
 
 void DSPLib::normalize(Array input,Array output,bool keepCenter){
@@ -240,7 +247,6 @@ void DSPLib::normalize(Array input,Array output,bool keepCenter){
 			output[i]=Math::range_lerp(variant2Float(input[i]),vMin,vMax,-1.0f,1.0f);
 		}
 	}
-	return output;
 }
 
 void DSPLib::convolutionFilter(Array input,Array output,Array coeffs){
@@ -257,7 +263,6 @@ void DSPLib::convolutionFilter(Array input,Array output,Array coeffs){
 	}
 	delete[] in;
 	delete[] co;
-	return output;
 }
 
 void DSPLib::clamp(Array input,Array output,float loLevel,float hiLevel,bool loClamp,bool hiClamp){
@@ -265,7 +270,6 @@ void DSPLib::clamp(Array input,Array output,float loLevel,float hiLevel,bool loC
 		float v=variant2Float(input[i]);
 		output[i]=Math::clamp(v,loClamp?loLevel:v,hiClamp?hiLevel:v);
 	}
-	return output;
 }
 
 void DSPLib::quantize(Array input,Array output,int steps){
@@ -273,5 +277,4 @@ void DSPLib::quantize(Array input,Array output,int steps){
 	for(int i=input.size()-1;i>-1;i--){
 		output[i]=Math::stepify(variant2Float(input[i])+1.0f,st)-1.0f;
 	}
-	return output;
 }

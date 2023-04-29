@@ -5,6 +5,7 @@
 #include <Node.hpp>
 #include <Vector2.hpp>
 #include <Math.hpp>
+#include <limits>
 
 namespace godot{
 
@@ -63,11 +64,11 @@ public:
 
 	Array mixWaves(Array input,Array generated,Array modulator,Array output,float am,float xm,float vol,int mode);
 
-	void noise(Array input,Array output,float pos0,float length,int64_t seed,float tone);
-	void sine(Array input,Array output,Array modulator,float pos0,float offset,float freqMult,float cycles,float pm,int q0,int q1,int q2,int q3);
-	void rectangle(Array input,Array output,Array modulator,float pos0,float offset,float freqMult,float cycles,float pm,float zStart,float nStart);
-	void saw(Array input,Array output,Array modulator,float pos0,float offset,float freqMult,float cycles,float pm,int half0,int half1);
-	void triangle(Array input,Array output,Array modulator,float pos0,float offset,float freqMult,float cycles,float pm,int half0,int half1);
+	void noise(Array input,Array output,float pos0,float length,int64_t seed,float tone,float vol,int mode);
+	void sine(Array input,Array output,Array modulator,float pos0,float offset,float freqMult,float cycles,float pm,int q0,int q1,int q2,int q3,float vol,int mode);
+	void rectangle(Array input,Array output,Array modulator,float pos0,float offset,float freqMult,float cycles,float pm,float zStart,float nStart,float vol,int mode);
+	void saw(Array input,Array output,Array modulator,float pos0,float offset,float freqMult,float cycles,float pm,int half0,int half1,float vol,int mode);
+	void triangle(Array input,Array output,Array modulator,float pos0,float offset,float freqMult,float cycles,float pm,int half0,int half1,float vol,int mode);
 
 	void normalize(Array input,Array output,bool keepCenter);
 	void convolutionFilter(Array input,Array output,Array coeffs);

@@ -48,7 +48,7 @@ func equals(other:WaveComponent)->bool:
 
 func calculate(size:int,input:Array,caller:WaveComponent)->Array:
 	set_modulator(size,pm,input,caller)
-	DSP.saw(generated,modulator,pos0,phi0,freq_mult,cycles,pm,halves[0],halves[1])
+	DSP.saw(input,generated,modulator,pos0,phi0,freq_mult,cycles,pm,halves[0],halves[1],vol,output_mode)
 	return generate_output(size,input,caller)
 
 #

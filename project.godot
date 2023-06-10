@@ -214,6 +214,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://classes/wave_components/wave_component.gd"
 }, {
+"base": "HBoxContainer",
+"class": "WaveComponentTitleBar",
+"language": "GDScript",
+"path": "res://ui/wave_designer/synth_designer/wave_nodes/title_bar.gd"
+}, {
 "base": "Node",
 "class": "WaveController",
 "language": "GDScript",
@@ -276,6 +281,7 @@ _global_script_class_icons={
 "Tracker": "",
 "TriangleWave": "",
 "WaveComponent": "",
+"WaveComponentTitleBar": "",
 "WaveController": "",
 "WaveFile": "",
 "WavePlotter": "",

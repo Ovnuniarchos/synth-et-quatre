@@ -10,9 +10,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 0
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Info" type="PanelContainer" parent="."]
 margin_right = 1024.0
@@ -26,9 +23,7 @@ margin_right = 1017.0
 margin_bottom = 31.0
 custom_constants/separation = 4
 
-[node name="LabelName" type="Label" parent="Info/HBC" groups=[
-"Label",
-]]
+[node name="LabelName" type="Label" parent="Info/HBC" groups=["Label"]]
 margin_top = 5.0
 margin_right = 38.0
 margin_bottom = 19.0
@@ -46,9 +41,7 @@ margin_right = 326.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 24, 0 )
 
-[node name="LabelSize" type="Label" parent="Info/HBC" groups=[
-"Label",
-]]
+[node name="LabelSize" type="Label" parent="Info/HBC" groups=["Label"]]
 margin_left = 330.0
 margin_top = 5.0
 margin_right = 356.0
@@ -95,7 +88,7 @@ size_flags_vertical = 3
 
 [node name="Components" type="HBoxContainer" parent="Designer/SC"]
 margin_right = 20.0
-margin_bottom = 548.0
+margin_bottom = 20.0
 size_flags_vertical = 3
 
 [node name="New" type="MenuButton" parent="Designer/SC/Components"]

@@ -10,7 +10,7 @@ var component:WaveComponent
 # warning-ignore:unused_class_variable
 var designer:Control
 # warning-ignore:unused_class_variable
-var title_node:HBoxContainer
+var title_node:WaveComponentTitleBar
 var from_node:SpinBar
 
 func _ready()->void:
@@ -22,3 +22,8 @@ func get_component_index(wc:WaveComponent)->int:
 func adjust_max_node_from()->void:
 	if from_node!=null:
 		from_node.max_value=wave.components.size()-1
+
+func setup()->void:
+	title_node.index=get_component_index(component)
+	title_node.connect("delete_requested",designer,"_on_delete_requested")
+	title_node.connect("move_requested",designer,"_on_move_requested")

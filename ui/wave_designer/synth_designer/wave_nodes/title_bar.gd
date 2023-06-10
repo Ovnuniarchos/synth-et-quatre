@@ -1,4 +1,5 @@
 tool extends HBoxContainer
+class_name WaveComponentTitleBar
 
 signal delete_requested(node)
 signal move_requested(node,direction)

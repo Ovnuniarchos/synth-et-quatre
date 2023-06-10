@@ -3,12 +3,10 @@ extends WaveController
 func _ready()->void:
 	from_node=$VBC/Params/From
 	title_node=$VBC/Title
-	title_node.index=self.get_index()-1
-	title_node.connect("delete_requested",designer,"_on_delete_requested")
-	title_node.connect("move_requested",designer,"_on_move_requested")
 	setup()
 
 func setup()->void:
+	.setup()
 	set_block_signals(true)
 	$VBC/Params/Mul.value=component.freq_mult
 	$VBC/Params/Ofs.value=component.phi0*100.0

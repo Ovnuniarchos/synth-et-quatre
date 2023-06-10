@@ -91,6 +91,7 @@ func regen_editor_nodes(wave:SynthWave)->void:
 			n.queue_free()
 	if wave==null:
 		return
+	var cix:int=0
 	for wc in wave.components:
 		if wc is SineWave:
 			insert_component(WAVE_TYPES.SIN,wave,wc)
@@ -115,9 +116,19 @@ func regen_editor_nodes(wave:SynthWave)->void:
 		elif wc is NormalizeFilter:
 			insert_component(WAVE_TYPES.NORM,wave,wc)
 		elif wc is QuantizeFilter:
-			insert_component(WAVE_TYPES.NORM,wave,wc)
+			insert_component(WAVE_TYPES.QUANT,wave,wc)
+		cix+=1
 	wave.readjust_inputs()
 	calculate()
+
+func insert_component(type:int,wave:SynthWave,wc:WaveComponent)->void:
+	var new_node:WaveController=WAVES[type][2].instance()
+	new_node.wave=wave
+	new_node.component=wc
+	new_node.designer=self
+	new_node.connect("params_changed",self,"calculate")
+	components.add_child(new_node)
+	new_but.raise()
 
 func _on_New_id_pressed(id:int)->void:
 	var wave:Waveform=GLOBALS.song.get_wave(curr_wave_ix)
@@ -152,15 +163,6 @@ func _on_New_id_pressed(id:int)->void:
 	insert_component(id,wave,wc)
 	wave.readjust_inputs()
 	calculate()
-
-func insert_component(type:int,wave:SynthWave,wc:WaveComponent)->void:
-	var new_node:WaveController=WAVES[type][2].instance()
-	new_node.wave=wave
-	new_node.component=wc
-	new_node.designer=self
-	new_node.connect("params_changed",self,"calculate")
-	components.add_child(new_node)
-	new_but.raise()
 
 func _on_delete_requested(control:WaveController)->void:
 	var wave:SynthWave=control.wave

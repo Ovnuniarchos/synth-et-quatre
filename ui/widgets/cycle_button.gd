@@ -5,6 +5,7 @@ signal cycled(status)
 
 export (int) var status=0 setget set_status
 export (PoolColorArray) var colors=PoolColorArray([Color.white]) setget set_colors
+export (PoolStringArray) var texts=PoolStringArray() setget set_texts
 
 func _init()->void:
 	toggle_mode=false
@@ -23,6 +24,19 @@ func set_colors(c:PoolColorArray)->void:
 	else:
 		colors=c
 		status%=c.size()
+	texts.resize(colors.size())
+	property_list_changed_notify()
+	set_visuals()
+
+func set_texts(t:PoolStringArray)->void:
+	if t.size()==0:
+		texts=PoolStringArray()
+		status=0
+	else:
+		texts=t
+		status%=t.size()
+	colors.resize(texts.size())
+	property_list_changed_notify()
 	set_visuals()
 
 func cycle(dir:int)->void:
@@ -40,3 +54,4 @@ func _gui_input(ev:InputEvent)->void:
 
 func set_visuals()->void:
 	modulate=colors[status]
+	text=texts[status] if texts[status] else text

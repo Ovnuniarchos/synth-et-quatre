@@ -91,7 +91,6 @@ func regen_editor_nodes(wave:SynthWave)->void:
 			n.queue_free()
 	if wave==null:
 		return
-	var cix:int=0
 	for wc in wave.components:
 		if wc is SineWave:
 			insert_component(WAVE_TYPES.SIN,wave,wc)
@@ -117,7 +116,6 @@ func regen_editor_nodes(wave:SynthWave)->void:
 			insert_component(WAVE_TYPES.NORM,wave,wc)
 		elif wc is QuantizeFilter:
 			insert_component(WAVE_TYPES.QUANT,wave,wc)
-		cix+=1
 	wave.readjust_inputs()
 	calculate()
 

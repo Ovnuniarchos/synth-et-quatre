@@ -14,6 +14,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://ui/widgets/accent_button.gd"
 }, {
+"base": "HBoxContainer",
+"class": "BarEditor",
+"language": "GDScript",
+"path": "res://ui/widgets/bar_editor.gd"
+}, {
 "base": "WaveComponent",
 "class": "BpfFilter",
 "language": "GDScript",
@@ -199,6 +204,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://singletons/theme_parsers.gd"
 }, {
+"base": "PanelContainer",
+"class": "Tooltip",
+"language": "GDScript",
+"path": "res://ui/widgets/tooltip.gd"
+}, {
 "base": "Reference",
 "class": "Tracker",
 "language": "GDScript",
@@ -241,6 +251,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "AccentButton": "",
+"BarEditor": "",
 "BpfFilter": "",
 "BrfFilter": "",
 "ChannelButtons": "",
@@ -278,6 +289,7 @@ _global_script_class_icons={
 "SynthWave": "",
 "ThemeHelper": "",
 "ThemeParser": "",
+"Tooltip": "",
 "Tracker": "",
 "TriangleWave": "",
 "WaveComponent": "",
@@ -320,6 +332,10 @@ MIDI="*res://singletons/midi.gd"
 gdscript/warnings/narrowing_conversion=false
 gdscript/warnings/return_value_discarded=false
 gdscript/warnings/integer_division=false
+
+[display]
+
+window/vsync/use_vsync=false
 
 [gdnative]
 

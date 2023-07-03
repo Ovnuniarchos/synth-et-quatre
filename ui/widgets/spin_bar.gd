@@ -39,7 +39,8 @@ func _init()->void:
 	input.set_anchors_and_margins_preset(Control.PRESET_WIDE)
 	input.align=LineEdit.ALIGN_CENTER
 	input.editable=false
-	input.visible=false
+	input.visible=true
+	input.context_menu_enabled=false
 	if !Engine.editor_hint:
 		input.connect("text_entered",self,"_on_text_entered")
 		input.connect("focus_exited",self,"_on_text_canceled")
@@ -59,6 +60,7 @@ func _ready()->void:
 	if real_theme!=null:
 		ThemeHelper.apply_styles(real_theme,"SpinBar",label)
 		ThemeHelper.apply_styles(real_theme,"SpinBar",input)
+		input.add_constant_override("minimum_spaces",0)
 		input.add_stylebox_override("read_only",real_theme.get_stylebox("empty_panel",""))
 		input.add_stylebox_override("focus",real_theme.get_stylebox("empty_panel",""))
 		input.add_stylebox_override("normal",real_theme.get_stylebox("empty_panel",""))
@@ -170,6 +172,8 @@ func process_keyboard(ev:InputEventKey)->bool:
 func switch_input(on:bool)->void:
 	if on:
 		set_mode(MODE_NORMAL)
+		input.rect_size=rect_size
+		input.rect_position=Vector2.ZERO
 		input.text=format_value(value)
 		input.grab_focus()
 	else:

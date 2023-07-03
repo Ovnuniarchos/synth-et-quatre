@@ -1,20 +1,43 @@
 extends Synth
 
-var notes_on:Array=[-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]
-var notes:Array=[-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]
-var instruments:Array=[-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]
+enum {MONO,SEMI,POLY}
+
+var notes_on:Array
+var notes:Array
+var instruments:Array
+var timers:Array
 var channel:int=0
-var poly:int=2
+var poly:int=POLY
+var ti:int
 
 #
 
+func _init()->void:
+	notes_on=Array()
+	notes=Array()
+	instruments=Array()
+	for i in MAX_CHANNELS:
+		instruments.append(null)
+		notes.append(-1)
+		notes_on.append(-1)
+		timers.append(0)
+
+func _ready()->void:
+	var tmr:Timer=Timer.new()
+	tmr.wait_time=0.004
+	tmr.connect("timeout",self,"_on_tmr")
+	add_child(tmr)
+	ti=Time.get_ticks_msec()
+	tmr.start()
+
+func _on_tmr()->void:
+	var delta:int=Time.get_ticks_msec()-ti
+	ti=Time.get_ticks_msec()
+
 func find_channel(semi:int)->int:
-	if poly==2:
+	if poly==POLY:
 		return (channel+1)&31
-	elif poly==1:
+	elif poly==SEMI:
 		for i in MAX_CHANNELS:
 			if notes[i]==semi:
 				return i
@@ -22,6 +45,7 @@ func find_channel(semi:int)->int:
 	return channel
 
 func play_note(keyon:bool,legato:bool,semi:int)->void:
+	semi*=100
 	var instr:Instrument=GLOBALS.get_instrument()
 	if keyon:
 		channel=find_channel(semi)
@@ -42,8 +66,8 @@ func play_note(keyon:bool,legato:bool,semi:int)->void:
 #
 
 func play_fm_note(chan:int,instr:FmInstrument,semi:int,legato:bool)->void:
-	var semitone:int=semi*100
-	synth.set_note(chan,instr.op_mask,semitone)
+	#var semitone:int=semi*100
+	synth.set_note(chan,instr.op_mask,semi)
 	synth.set_enable(chan,15,instr.op_mask)
 	synth.set_panning(chan,31,false,false)
 	synth.key_on(chan,instr.op_mask,255,legato)

@@ -3,16 +3,22 @@ extends VBoxContainer
 signal instrument_name_changed(index,text)
 signal instrument_changed
 
+var params:Node
+
+func _ready()->void:
+	params=$Tabs/Parameters/Params/VBC
+	update_instrument()
+
 func update_instrument()->void:
+	if params==null:
+		return
 	var ci:Instrument=GLOBALS.get_instrument()
 	if ci==null:
 		return
 	$Info/HBC/Name.text=ci.name
-	$Params/VBC/OPS/OP1.set_sliders(ci)
-	$Params/VBC/OPS/OP2.set_sliders(ci)
-	$Params/VBC/OPS/OP3.set_sliders(ci)
-	$Params/VBC/OPS/OP4.set_sliders(ci)
-	$Params/VBC/Routing.set_sliders(ci)
+	for i in range(1,5):
+		params.get_node("OPS/OP%d"%[i]).set_sliders(ci)
+	params.get_node("Routing").set_sliders(ci)
 
 func _on_Name_changed(text:String)->void:
 	var ci:Instrument=GLOBALS.get_instrument()
@@ -31,5 +37,5 @@ func _on_operator_changed(op:int)->void:
 	var ci:Instrument=GLOBALS.get_instrument()
 	if ci==null:
 		return
-	get_node("Params/VBC/OPS/OP%d"%[op+1]).set_sliders(ci)
-	$Params/VBC/Routing.set_sliders(ci)
+	params.get_node("OPS/OP%d"%[op+1]).set_sliders(ci)
+	params.get_node("Routing").set_sliders(ci)

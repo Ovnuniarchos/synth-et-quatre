@@ -34,3 +34,6 @@ enum{
 enum{
 	TRG_KEEP, TRG_ON, TRG_OFF, TRG_STOP
 }
+
+const MIN_FREQ:int=-200
+const MAX_FREQ:int=14300

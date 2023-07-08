@@ -6,28 +6,55 @@
 
 [node name="BarEditor" type="HBoxContainer"]
 anchor_right = 1.0
-margin_bottom = 446.0
+margin_bottom = 128.0
 mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 script = ExtResource( 1 )
-min_value = -255.0
-max_value = 255.0
 
 [node name="Params" type="VBoxContainer" parent="."]
-margin_right = 64.0
-margin_bottom = 446.0
+margin_right = 128.0
+margin_bottom = 128.0
+
+[node name="Title" type="Button" parent="Params"]
+margin_right = 128.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 128, 0 )
+text = "Macro"
 
 [node name="R" type="ReferenceRect" parent="Params"]
-margin_right = 64.0
-margin_bottom = 32.0
-rect_min_size = Vector2( 64, 32 )
+margin_top = 24.0
+margin_right = 128.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 0, 16 )
+size_flags_horizontal = 3
+size_flags_vertical = 0
 
-[node name="Steps" type="ProgressBar" parent="Params"]
-margin_top = 36.0
-margin_right = 64.0
-margin_bottom = 50.0
+[node name="Relative" type="Button" parent="Params"]
+visible = false
+margin_top = 78.0
+margin_right = 128.0
+margin_bottom = 102.0
+toggle_mode = true
+text = "Relative"
+
+[node name="HBC" type="GridContainer" parent="Params"]
+margin_top = 44.0
+margin_right = 128.0
+margin_bottom = 94.0
+columns = 2
+
+[node name="LSteps" type="Label" parent="Params/HBC"]
+margin_right = 36.0
+margin_bottom = 14.0
+text = "Steps"
+
+[node name="Steps" type="ProgressBar" parent="Params/HBC"]
+margin_left = 40.0
+margin_right = 128.0
+margin_bottom = 14.0
 rect_min_size = Vector2( 36, 14 )
+size_flags_horizontal = 3
 max_value = 256.0
 step = 1.0
 percent_visible = false
@@ -35,42 +62,97 @@ script = ExtResource( 2 )
 big_step = 8.0
 huge_step = 32.0
 
+[node name="LDiv" type="Label" parent="Params/HBC"]
+margin_top = 18.0
+margin_right = 36.0
+margin_bottom = 32.0
+text = "Ticks"
+
+[node name="Div" type="ProgressBar" parent="Params/HBC"]
+margin_left = 40.0
+margin_top = 18.0
+margin_right = 128.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 36, 14 )
+min_value = 1.0
+max_value = 256.0
+step = 1.0
+value = 1.0
+percent_visible = false
+script = ExtResource( 2 )
+big_step = 8.0
+huge_step = 32.0
+
+[node name="LDelay" type="Label" parent="Params/HBC"]
+margin_top = 36.0
+margin_right = 36.0
+margin_bottom = 50.0
+text = "Delay"
+
+[node name="Delay" type="ProgressBar" parent="Params/HBC"]
+margin_left = 40.0
+margin_top = 36.0
+margin_right = 128.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 36, 14 )
+max_value = 256.0
+step = 1.0
+value = 1.0
+percent_visible = false
+script = ExtResource( 2 )
+big_step = 8.0
+huge_step = 32.0
+
 [node name="Editor" type="ScrollContainer" parent="."]
-margin_left = 68.0
+margin_left = 132.0
 margin_right = 1024.0
-margin_bottom = 446.0
+margin_bottom = 128.0
 mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 scroll_vertical_enabled = false
 
-[node name="HBC" type="VBoxContainer" parent="Editor"]
-margin_bottom = 446.0
-mouse_filter = 2
-size_flags_horizontal = 0
+[node name="Origin" type="ReferenceRect" parent="Editor"]
+margin_right = 16.0
+margin_bottom = 128.0
+rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 3
 
-[node name="Values" type="Control" parent="Editor/HBC"]
-margin_bottom = 426.0
+[node name="HBC" type="VBoxContainer" parent="Editor/Origin"]
+anchor_bottom = 1.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Values" type="Control" parent="Editor/Origin/HBC"]
+margin_bottom = 108.0
 rect_clip_content = true
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Value" type="PanelContainer" parent="Editor/HBC/Values"]
-self_modulate = Color( 1, 1, 1, 0.752941 )
-margin_right = 14.0
-margin_bottom = 28.0
-mouse_filter = 2
-script = ExtResource( 3 )
-
-[node name="LoopRange" type="Control" parent="Editor/HBC"]
-margin_top = 430.0
-margin_bottom = 446.0
+[node name="LoopRange" type="Control" parent="Editor/Origin/HBC"]
+margin_top = 112.0
+margin_bottom = 128.0
 rect_min_size = Vector2( 0, 16 )
 rect_clip_content = true
 size_flags_horizontal = 3
 
-[connection signal="value_changed" from="Params/Steps" to="." method="_on_Steps_value_changed"]
+[node name="Value" type="PanelContainer" parent="Editor/Origin"]
+visible = false
+self_modulate = Color( 1, 1, 1, 0.752941 )
+margin_right = 14.0
+margin_bottom = 14.0
+mouse_filter = 2
+script = ExtResource( 3 )
+
+[connection signal="pressed" from="Params/Title" to="." method="_on_Title_pressed" binds= [ 1 ]]
+[connection signal="toggled" from="Params/Relative" to="." method="_on_Relative_toggled"]
+[connection signal="value_changed" from="Params/HBC/Steps" to="." method="_on_Steps_value_changed"]
+[connection signal="value_changed" from="Params/HBC/Div" to="." method="_on_Div_value_changed"]
+[connection signal="value_changed" from="Params/HBC/Delay" to="." method="_on_Delay_value_changed"]
 [connection signal="draw" from="Editor" to="." method="_on_Editor_draw"]
-[connection signal="draw" from="Editor/HBC/Values" to="." method="_on_Values_draw"]
-[connection signal="draw" from="Editor/HBC/LoopRange" to="." method="_on_LoopRange_draw"]
+[connection signal="draw" from="Editor/Origin/HBC/Values" to="." method="_on_Values_draw"]
+[connection signal="gui_input" from="Editor/Origin/HBC/Values" to="." method="_on_Values_gui_input"]
+[connection signal="mouse_exited" from="Editor/Origin/HBC/Values" to="." method="_on_Values_mouse_exited"]
+[connection signal="draw" from="Editor/Origin/HBC/LoopRange" to="." method="_on_LoopRange_draw"]
+[connection signal="gui_input" from="Editor/Origin/HBC/LoopRange" to="." method="_on_LoopRange_gui_input"]

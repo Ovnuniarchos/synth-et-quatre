@@ -31,17 +31,13 @@ size_flags_horizontal = 3
 custom_constants/hseparation = 16
 columns = 2
 
-[node name="AudioTitle" type="Label" parent="SC/GC" groups=[
-"Title",
-]]
+[node name="AudioTitle" type="Label" parent="SC/GC" groups=["Title"]]
 margin_right = 500.0
 margin_bottom = 14.0
 size_flags_horizontal = 3
 text = "Audio"
 
-[node name="ExportTitle" type="Label" parent="SC/GC" groups=[
-"Title",
-]]
+[node name="ExportTitle" type="Label" parent="SC/GC" groups=["Title"]]
 margin_left = 516.0
 margin_right = 1016.0
 margin_bottom = 14.0
@@ -61,9 +57,7 @@ margin_bottom = 62.0
 size_flags_horizontal = 3
 columns = 2
 
-[node name="LabelSampleRate" type="Label" parent="SC/GC/Audio/Audio" groups=[
-"Label",
-]]
+[node name="LabelSampleRate" type="Label" parent="SC/GC/Audio/Audio" groups=["Label"]]
 margin_right = 82.0
 margin_bottom = 14.0
 text = "Sample rate"
@@ -85,9 +79,7 @@ big_step = 100.0
 huge_step = 1000.0
 config_key = "AUDIO_SAMPLERATE"
 
-[node name="LabelBufferLength" type="Label" parent="SC/GC/Audio/Audio" groups=[
-"Label",
-]]
+[node name="LabelBufferLength" type="Label" parent="SC/GC/Audio/Audio" groups=["Label"]]
 margin_top = 18.0
 margin_right = 82.0
 margin_bottom = 32.0
@@ -130,9 +122,7 @@ margin_right = 484.0
 margin_bottom = 14.0
 size_flags_horizontal = 3
 
-[node name="LabelSampleRate" type="Label" parent="SC/GC/Export/Export/HBoxContainer" groups=[
-"Label",
-]]
+[node name="LabelSampleRate" type="Label" parent="SC/GC/Export/Export/HBoxContainer" groups=["Label"]]
 margin_right = 82.0
 margin_bottom = 14.0
 text = "Buffer length"
@@ -184,18 +174,14 @@ margin_top = 84.0
 margin_right = 1016.0
 margin_bottom = 100.0
 
-[node name="MIDITitle" type="Label" parent="SC/GC" groups=[
-"Title",
-]]
+[node name="MIDITitle" type="Label" parent="SC/GC" groups=["Title"]]
 margin_top = 104.0
 margin_right = 500.0
 margin_bottom = 118.0
 size_flags_horizontal = 3
 text = "MIDI input"
 
-[node name="EditorTitle" type="Label" parent="SC/GC" groups=[
-"Title",
-]]
+[node name="EditorTitle" type="Label" parent="SC/GC" groups=["Title"]]
 margin_left = 516.0
 margin_top = 104.0
 margin_right = 1016.0
@@ -219,9 +205,7 @@ margin_right = 484.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 
-[node name="NNV" type="Label" parent="SC/GC/MIDI/MIDI/HBoxContainer" groups=[
-"Label",
-]]
+[node name="NNV" type="Label" parent="SC/GC/MIDI/MIDI/HBoxContainer" groups=["Label"]]
 margin_top = 3.0
 margin_right = 115.0
 margin_bottom = 17.0
@@ -301,9 +285,7 @@ margin_right = 484.0
 margin_bottom = 62.0
 columns = 2
 
-[node name="LabelUpdateRate" type="Label" parent="SC/GC/Editor/Editor/Oscilloscope" groups=[
-"Label",
-]]
+[node name="LabelUpdateRate" type="Label" parent="SC/GC/Editor/Editor/Oscilloscope" groups=["Label"]]
 margin_right = 160.0
 margin_bottom = 14.0
 text = "Oscilloscope update rate"
@@ -337,9 +319,7 @@ margin_top = 218.0
 margin_right = 1016.0
 margin_bottom = 234.0
 
-[node name="ThemeTitle" type="Label" parent="SC/GC" groups=[
-"Title",
-]]
+[node name="ThemeTitle" type="Label" parent="SC/GC" groups=["Title"]]
 margin_top = 238.0
 margin_right = 500.0
 margin_bottom = 252.0
@@ -374,8 +354,6 @@ mode_overrides_title = false
 mode = 0
 access = 2
 filters = PoolStringArray( "*.json" )
-current_dir = "/home/jordi/godot/SynthEtQuatre"
-current_path = "/home/jordi/godot/SynthEtQuatre/"
 
 [connection signal="value_changed" from="SC/GC/Audio/Audio/SampleRate" to="." method="_on_AudioSampleRate_value_changed"]
 [connection signal="value_changed" from="SC/GC/Audio/Audio/BufferLength" to="." method="_on_AudioBufferSize_value_changed"]

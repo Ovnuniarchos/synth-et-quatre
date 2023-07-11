@@ -21,7 +21,7 @@ var release_tick:int=-1
 var legato:int=LG_MODE.OFF
 var freqs:Array=[0,0,0,0]
 var base_freqs:Array=[0,0,0,0]
-var pre_freqs:Array=[0,0,0,0]
+var next_freqs:Array=[0,0,0,0]
 var arp_freqs:Array=[0,0,0,0]
 var velocity:int=255
 var panning:int=0x1F
@@ -115,7 +115,7 @@ func reset()->void:
 	legato=LG_MODE.OFF
 	freqs=[0,0,0,0]
 	base_freqs=[0,0,0,0]
-	pre_freqs=[0,0,0,0]
+	next_freqs=[0,0,0,0]
 	arp_freqs=[0,0,0,0]
 	velocity=255
 	panning=0x1F
@@ -227,6 +227,7 @@ func process_tick_0(note:Array,song:Song,num_fxs:int)->int:
 			set_frequency(note[ATTRS.NOTE]*100,15)
 		elif note[ATTRS.NOTE]==-1:
 			trigger=CONSTS.TRG_OFF
+			release_tick=macro_tick
 		else:
 			trigger=CONSTS.TRG_STOP
 	if note[ATTRS.INSTR]!=null:
@@ -330,8 +331,8 @@ func process_tick_0(note:Array,song:Song,num_fxs:int)->int:
 				breakpoint
 		j+=3
 	for i in range(4):
-		base_freqs[i]=pre_freqs[i]
-		freqs[i]=base_freqs[i]+arp_freqs[i]
+		base_freqs[i]=next_freqs[i]
+		freqs[i]=freq_macro.get_value(macro_tick,release_tick,base_freqs[i])+arp_freqs[i]
 	return tracker_cmd
 
 func process_tick_n(song:Song,channel:int)->void:
@@ -361,8 +362,8 @@ func process_tick_n(song:Song,channel:int)->void:
 		elif fx_cmd==CONSTS.FX_RPT_PHI0:
 			set_repeated_phi_zero(fx_opmasks[i])
 	for i in range(4):
-		base_freqs[i]=pre_freqs[i]
-		freqs[i]=base_freqs[i]+arp_freqs[i]
+		base_freqs[i]=next_freqs[i]
+		freqs[i]=freq_macro.get_value(macro_tick,release_tick,base_freqs[i])+arp_freqs[i]
 
 func get_fx_cmd(c,i:int)->int:
 	if c!=null:
@@ -731,7 +732,7 @@ func set_frequency(f,op_mask:int)->void:
 		if op_mask&1:
 			freqs_dirty[i]=true
 			fx_vals[CONSTS.FX_FRQ_PORTA][1+i]=f
-			pre_freqs[i]=f
+			next_freqs[i]=f
 		op_mask>>=1
 	freqs_dirty_any=true
 
@@ -741,7 +742,7 @@ func slide_frequency(d,op_mask:int)->void:
 	for i in range(4):
 		if op_mask&1:
 			freqs_dirty[i]=true
-			pre_freqs[i]=clamp(pre_freqs[i]+d,CONSTS.MIN_FREQ,CONSTS.MAX_FREQ)
+			next_freqs[i]=clamp(next_freqs[i]+d,CONSTS.MIN_FREQ,CONSTS.MAX_FREQ)
 			fx_vals[CONSTS.FX_FRQ_PORTA][1+i]=clamp(
 					fx_vals[CONSTS.FX_FRQ_PORTA][1+i]+d,CONSTS.MIN_FREQ,CONSTS.MAX_FREQ)
 		op_mask>>=1
@@ -754,9 +755,9 @@ func slide_frequency_to(d:Array,op_mask:int)->void:
 		if op_mask&1:
 			freqs_dirty[i]=true
 			if freqs[i]>d[i+1]:
-				pre_freqs[i]=clamp(base_freqs[i]-d[0],d[i+1],CONSTS.MAX_FREQ)
+				next_freqs[i]=clamp(base_freqs[i]-d[0],d[i+1],CONSTS.MAX_FREQ)
 			else:
-				pre_freqs[i]=clamp(base_freqs[i]+d[0],CONSTS.MIN_FREQ,d[i+1])
+				next_freqs[i]=clamp(base_freqs[i]+d[0],CONSTS.MIN_FREQ,d[i+1])
 		op_mask>>=1
 	freqs_dirty_any=true
 

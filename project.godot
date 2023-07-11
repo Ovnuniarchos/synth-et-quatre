@@ -130,6 +130,11 @@ _global_script_classes=[ {
 "path": "res://ui/widgets/numbered_item_list.gd"
 }, {
 "base": "Reference",
+"class": "ParamMacro",
+"language": "GDScript",
+"path": "res://classes/param_macro.gd"
+}, {
+"base": "Reference",
 "class": "Pattern",
 "language": "GDScript",
 "path": "res://classes/song/pattern.gd"
@@ -220,11 +225,6 @@ _global_script_classes=[ {
 "path": "res://classes/wave_components/triangle_wave.gd"
 }, {
 "base": "Reference",
-"class": "VoiceMacro",
-"language": "GDScript",
-"path": "res://classes/macro.gd"
-}, {
-"base": "Reference",
 "class": "WaveComponent",
 "language": "GDScript",
 "path": "res://classes/wave_components/wave_component.gd"
@@ -279,6 +279,7 @@ _global_script_class_icons={
 "NoiseWave": "",
 "NormalizeFilter": "",
 "NumberedItemList": "",
+"ParamMacro": "",
 "Pattern": "",
 "PlayButton": "",
 "QuantizeFilter": "",
@@ -297,7 +298,6 @@ _global_script_class_icons={
 "Tooltip": "",
 "Tracker": "",
 "TriangleWave": "",
-"VoiceMacro": "",
 "WaveComponent": "",
 "WaveComponentTitleBar": "",
 "WaveController": "",

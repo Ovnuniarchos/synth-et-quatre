@@ -1,11 +1,7 @@
 tool extends HBoxContainer
 class_name BarEditor
 
-signal values_changed(values,steps)
-signal loop_changed(start,end)
-signal mode_changed(relative)
-signal divisor_changed(divisor)
-signal delay_changed(divisor)
+signal macro_changed(parameter,values,steps,loop_start,loop_end,relative,tick_div,delay)
 
 enum{MODE_ABS,MODE_REL,MODE_SWABS,MODE_SWREL}
 
@@ -13,19 +9,21 @@ const MAX_STEPS:int=256
 
 var loop_start:int=-1
 var loop_end:int=-1
-var values:Array setget set_values
+var values:Array
 var relative:bool=true
 var steps:int=0
 var tick_div:int=1
 var delay:int=0
 
-var height_sel:int=1
+var height_sel:int=2
 var line_start:Vector2=Vector2.INF
 var line_end:Vector2
 var line_buffer:Array
 
 var title_button:Button
 var step_bar:SpinBar
+var div_bar:SpinBar
+var delay_bar:SpinBar
 var values_graph:Control
 var loop_graph:Control
 var val_tooltip:Tooltip
@@ -34,8 +32,9 @@ var real_theme:Theme
 var editor:ScrollContainer
 
 export (String) var title:String="Macro" setget set_title
+export (String) var parameter:String=""
 export (float) var title_width:float=128.0 setget set_title_width
-export (PoolRealArray) var heights:PoolRealArray=PoolRealArray([64.0,128.0,256.0])
+export (PoolRealArray) var heights:PoolRealArray=PoolRealArray([160.0,240.0,320.0])
 export (float) var min_value_rel:float=-12.0
 export (float) var max_value_rel:float=12.0
 export (float) var center_value:float=0.0
@@ -58,6 +57,8 @@ func _ready()->void:
 		real_theme=THEME.theme
 	title_button=$Params/Title
 	step_bar=$Params/HBC/Steps
+	div_bar=$Params/HBC/Div
+	delay_bar=$Params/HBC/Delay
 	values_graph=$Editor/Origin/HBC/Values
 	loop_graph=$Editor/Origin/HBC/LoopRange
 	val_tooltip=$Editor/Origin/Value
@@ -65,7 +66,9 @@ func _ready()->void:
 	rel_button=$Params/Relative
 	relative=mode==MODE_REL or mode==MODE_SWREL
 	if mode>=MODE_SWABS:
+		rel_button.set_block_signals(true)
 		rel_button.pressed=mode==MODE_SWREL
+		rel_button.set_block_signals(false)
 		rel_button.visible=true
 	else:
 		rel_button.visible=false
@@ -89,13 +92,9 @@ func init_values()->void:
 	values.fill(center_value)
 
 func set_values(v:Array)->void:
-	steps=min(MAX_STEPS,v.size())
-	for i in steps:
+	var sz:int=min(MAX_STEPS,v.size())
+	for i in sz:
 		values[i]=v[i]
-	values_graph.update()
-
-func set_steps(s:int)->void:
-	$Params/Steps.value=s
 
 func _on_Values_gui_input(ev:InputEvent)->void:
 	if not ev is InputEventMouse:
@@ -142,7 +141,7 @@ func _on_Values_gui_input(ev:InputEvent)->void:
 				values[ls.x]=le.y
 		values_graph.update()
 		val_tooltip.show_at(String(yv),ev.position-Vector2(0.0,val_tooltip.rect_size.y*0.5))
-		emit_signal("values_changed",values,steps)
+		emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,relative,tick_div,delay)
 
 func _on_LoopRange_gui_input(ev:InputEvent)->void:
 	if not ev is InputEventMouse:
@@ -167,7 +166,7 @@ func _on_LoopRange_gui_input(ev:InputEvent)->void:
 		redraw=true
 	if redraw:
 		loop_graph.update()
-		emit_signal("loop_changed",loop_start,loop_end)
+		emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,relative,tick_div,delay)
 
 func _on_Steps_value_changed(s:int)->void:
 	steps=s
@@ -180,7 +179,7 @@ func _on_Steps_value_changed(s:int)->void:
 	$Editor/Origin.rect_min_size.x=steps*16.0
 	values_graph.update()
 	loop_graph.update()
-	emit_signal("values_changed",values,steps)
+	emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,relative,tick_div,delay)
 
 func _on_Values_draw()->void:
 	if values_graph==null:
@@ -233,19 +232,34 @@ func _on_Relative_toggled(p:bool)->void:
 	for i in MAX_STEPS:
 		values[i]=stepify(range_lerp(values[i],v00,v01,v10,v11),step)
 	values_graph.update()
-	emit_signal("values_changed",values,steps)
-	emit_signal("mode_changed",relative)
+	emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,relative,tick_div,delay)
 
 func _on_Title_pressed(delta:int)->void:
-	if heights.size()<1:
+	if heights.empty():
 		return
 	height_sel=(height_sel+delta)%heights.size()
+	rect_min_size.y=heights[height_sel]
 	rect_size.y=heights[height_sel]
 
 func _on_Div_value_changed(v:float)->void:
 	tick_div=v
-	emit_signal("divisor_changed",tick_div)
+	emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,relative,tick_div,delay)
 
 func _on_Delay_value_changed(v:float)->void:
 	delay=v
-	emit_signal("delay_changed",delay)
+	emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,relative,tick_div,delay)
+
+func set_macro(m:ParamMacro)->void:
+	loop_start=m.loop_start
+	loop_end=m.loop_end
+	set_values(m.values)
+	relative=m.relative
+	steps=m.steps
+	tick_div=m.tick_div
+	delay=m.delay
+	values_graph.update()
+	loop_graph.update()
+	rel_button.pressed=relative
+	step_bar.value=steps
+	div_bar.value=tick_div
+	delay_bar.value=delay

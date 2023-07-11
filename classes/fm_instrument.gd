@@ -31,9 +31,11 @@ var routings:Array=[
 	[0,0,0,0,0],
 	[0,0,0,0,0]
 ]
+var freq_macro:ParamMacro
 
 func _init()->void:
 	name=TYPE
+	freq_macro=ParamMacro.new()
 
 func duplicate()->Instrument:
 	var ni:FmInstrument=.duplicate() as FmInstrument
@@ -53,6 +55,7 @@ func duplicate()->Instrument:
 	ni.am_intensity=am_intensity.duplicate()
 	ni.fm_intensity=fm_intensity.duplicate()
 	ni.routings=routings.duplicate(true)
+	ni.freq_macro=freq_macro.duplicate()
 	return ni
 
 func copy(from:Instrument,full:bool=false)->void:

@@ -11,9 +11,37 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 4 )
 
-[node name="Info" type="PanelContainer" parent="."]
+[node name="LFOs" type="GridContainer" parent="."]
 margin_right = 1024.0
-margin_bottom = 38.0
+margin_bottom = 144.0
+size_flags_horizontal = 3
+columns = 2
+
+[node name="LFO1" parent="LFOs" instance=ExtResource( 1 )]
+margin_right = 510.0
+margin_bottom = 70.0
+
+[node name="LFO2" parent="LFOs" instance=ExtResource( 1 )]
+margin_left = 514.0
+margin_bottom = 70.0
+lfo = 1
+
+[node name="LFO3" parent="LFOs" instance=ExtResource( 1 )]
+margin_top = 74.0
+margin_right = 510.0
+margin_bottom = 144.0
+lfo = 2
+
+[node name="LFO4" parent="LFOs" instance=ExtResource( 1 )]
+margin_left = 514.0
+margin_top = 74.0
+margin_bottom = 144.0
+lfo = 3
+
+[node name="Info" type="PanelContainer" parent="."]
+margin_top = 148.0
+margin_right = 1024.0
+margin_bottom = 186.0
 size_flags_horizontal = 3
 
 [node name="HBC" type="HBoxContainer" parent="Info"]
@@ -37,51 +65,13 @@ margin_bottom = 24.0
 rect_min_size = Vector2( 192, 0 )
 
 [node name="Tabs" type="TabContainer" parent="."]
-margin_top = 42.0
+margin_top = 190.0
 margin_right = 1024.0
 margin_bottom = 600.0
 size_flags_vertical = 3
 tab_align = 0
 
-[node name="LFOs" type="Tabs" parent="Tabs"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
-
-[node name="LFOs" type="GridContainer" parent="Tabs/LFOs"]
-anchor_right = 1.0
-margin_bottom = 144.0
-size_flags_horizontal = 3
-columns = 2
-
-[node name="LFO1" parent="Tabs/LFOs/LFOs" instance=ExtResource( 1 )]
-margin_right = 506.0
-margin_bottom = 70.0
-
-[node name="LFO2" parent="Tabs/LFOs/LFOs" instance=ExtResource( 1 )]
-margin_left = 510.0
-margin_right = 1016.0
-margin_bottom = 70.0
-lfo = 1
-
-[node name="LFO3" parent="Tabs/LFOs/LFOs" instance=ExtResource( 1 )]
-margin_top = 74.0
-margin_right = 506.0
-margin_bottom = 144.0
-lfo = 2
-
-[node name="LFO4" parent="Tabs/LFOs/LFOs" instance=ExtResource( 1 )]
-margin_left = 510.0
-margin_top = 74.0
-margin_right = 1016.0
-margin_bottom = 144.0
-lfo = 3
-
 [node name="Parameters" type="Tabs" parent="Tabs"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -99,8 +89,8 @@ size_flags_vertical = 3
 scroll_horizontal_enabled = false
 
 [node name="VBC" type="VBoxContainer" parent="Tabs/Parameters/Params"]
-margin_right = 1008.0
-margin_bottom = 62.0
+margin_right = 996.0
+margin_bottom = 960.0
 size_flags_horizontal = 3
 
 [node name="OPS" type="GridContainer" parent="Tabs/Parameters/Params/VBC"]
@@ -159,16 +149,17 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 scroll_horizontal_enabled = false
 
-[node name="Macro" type="VBoxContainer" parent="Tabs/Macros/Macro"]
+[node name="VBC" type="VBoxContainer" parent="Tabs/Macros/Macro"]
 margin_right = 1016.0
-margin_bottom = 256.0
+margin_bottom = 320.0
 rect_min_size = Vector2( 0, 256 )
 size_flags_horizontal = 3
 
-[node name="Tone" parent="Tabs/Macros/Macro/Macro" instance=ExtResource( 3 )]
+[node name="Tone" parent="Tabs/Macros/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
 margin_right = 1016.0
 title = "Tone (cents)"
+parameter = "G_TONE"
 min_value_rel = -4800.0
 max_value_rel = 4800.0
 min_value_abs = -200.0
@@ -223,3 +214,4 @@ margin_bottom = -4.0
 [connection signal="instrument_changed" from="Tabs/Parameters/Params/VBC/OPS/OP4" to="." method="_on_instrument_changed"]
 [connection signal="operator_changed" from="Tabs/Parameters/Params/VBC/OPS/OP4" to="." method="_on_operator_changed"]
 [connection signal="instrument_changed" from="Tabs/Parameters/Params/VBC/Routing" to="." method="_on_instrument_changed"]
+[connection signal="macro_changed" from="Tabs/Macros/Macro/VBC/Tone" to="." method="_on_macro_changed"]

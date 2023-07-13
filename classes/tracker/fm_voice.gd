@@ -15,7 +15,7 @@ var fx_apply:Array=[false,false,false,false]
 var fx_vals:Array
 
 var arpeggio_tick:int=0
-var internal_tick:int=0
+var row_tick:int=0
 var macro_tick:int=0
 var release_tick:int=-1
 var legato:int=LG_MODE.OFF
@@ -109,7 +109,7 @@ func reset()->void:
 		else:
 			fx_vals[i]=0
 	arpeggio_tick=0
-	internal_tick=0
+	row_tick=0
 	macro_tick=0
 	release_tick=-1
 	legato=LG_MODE.OFF
@@ -192,7 +192,7 @@ func process_tick(song:Song,channel:int,curr_order:int,curr_row:int,curr_tick:in
 			fx_vals[i]=0
 		fx_vals[CONSTS.FX_DELAY]=0
 		fx_vals[CONSTS.FX_DELAY_SONG]=0
-		internal_tick=0
+		row_tick=0
 		#
 		var j:int=0
 		for i in range(song.num_fxs[channel]):
@@ -205,11 +205,11 @@ func process_tick(song:Song,channel:int,curr_order:int,curr_row:int,curr_tick:in
 		if curr_tick==0:
 			return fx_vals[CONSTS.FX_DELAY_SONG]|TRCK.SIG_DELAY_SONG
 	if fx_vals[CONSTS.FX_DELAY]==0:
-		if internal_tick==0:
+		if row_tick==0:
 			tracker_cmd=process_tick_0(note,song,song.num_fxs[channel])
 		else:
 			process_tick_n(song,channel)
-		internal_tick+=1
+		row_tick+=1
 		macro_tick+=1
 		arpeggio_tick=(arpeggio_tick+1)%3
 	else:

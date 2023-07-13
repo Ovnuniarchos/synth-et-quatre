@@ -47,7 +47,7 @@ func _on_operator_changed(op:int)->void:
 	params.get_node("OPS/OP%d"%[op+1]).set_sliders(ci)
 	params.get_node("Routing").set_sliders(ci)
 
-func _on_macro_changed(parameter:String,values:Array,steps:int,loop_start:int,loop_end:int,relative:bool,tick_div:int,delay:int)->void:
+func _on_macro_changed(parameter:String,values:Array,steps:int,loop_start:int,loop_end:int,release_loop_start:int,relative:bool,tick_div:int,delay:int)->void:
 	if param_dict==null or not param_dict.has(parameter):
 		return
 	var pm:ParamMacro=param_dict.get(parameter) as ParamMacro
@@ -55,6 +55,7 @@ func _on_macro_changed(parameter:String,values:Array,steps:int,loop_start:int,lo
 	pm.steps=steps
 	pm.loop_start=loop_start
 	pm.loop_end=loop_end
+	pm.release_loop_start=release_loop_start
 	pm.relative=relative
 	pm.tick_div=tick_div
 	pm.delay=delay

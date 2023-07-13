@@ -9,7 +9,7 @@ var kon_time:Array
 var koff_time:Array
 var channel:int=0
 var poly:int=POLY
-var ti:int
+var ti:int=-1
 
 #
 
@@ -60,7 +60,7 @@ func play_note(keyon:bool,legato:bool,semi:int)->void:
 			if notes_on[i]!=semi:
 				continue
 			notes_on[i]=-1
-			koff_time[i]=Time.get_ticks_msec()-kon_time[i]
+			koff_time[i]=kon_time[i]
 			if GLOBALS.get_instrument(instr_ids[i]) is FmInstrument:
 				synth.key_off(i,15)
 
@@ -73,7 +73,7 @@ func play_fm_note(chan:int,instr:FmInstrument,semi:int,legato:bool)->void:
 	synth.set_panning(chan,31,false,false)
 	synth.key_on(chan,instr.op_mask,255,legato)
 	if !legato:
-		kon_time[chan]=Time.get_ticks_msec()
+		kon_time[chan]=0
 		koff_time[chan]=-1
 
 #
@@ -81,7 +81,10 @@ func play_fm_note(chan:int,instr:FmInstrument,semi:int,legato:bool)->void:
 var freqs:Array=[0,0,0,0]
 
 func _on_macro_timer()->void:
-	var ti:int=Time.get_ticks_msec()
+	if ti<0:
+		ti=Time.get_ticks_msec()
+		return
+	ti=Time.get_ticks_msec()-ti
 	var instr:FmInstrument
 	for chan in MAX_CHANNELS:
 		if notes[chan]==-1 or instr_ids[chan]==-1:
@@ -89,13 +92,15 @@ func _on_macro_timer()->void:
 		instr=GLOBALS.get_instrument(instr_ids[chan]) as FmInstrument
 		if instr==null:
 			continue
+		kon_time[chan]+=ti
 		for i in 4:
 			freqs[i]=instr.freq_macro.get_value(
-				((ti-kon_time[chan])*GLOBALS.song.ticks_second)/1000,
+				(kon_time[chan]*GLOBALS.song.ticks_second)/1000,
 				(koff_time[chan]*GLOBALS.song.ticks_second)/1000 if koff_time[chan]>-1 else -1,
 				notes[chan]
 			)
 			synth.set_note(chan,1<<i,freqs[i])
+	ti=Time.get_ticks_msec()
 
 #
 

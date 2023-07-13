@@ -1,7 +1,7 @@
 tool extends HBoxContainer
 class_name BarEditor
 
-signal macro_changed(parameter,values,steps,loop_start,loop_end,relative,tick_div,delay)
+signal macro_changed(parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
 
 enum{MODE_ABS,MODE_REL,MODE_SWABS,MODE_SWREL}
 
@@ -9,6 +9,7 @@ const MAX_STEPS:int=256
 
 var loop_start:int=-1
 var loop_end:int=-1
+var release_loop_start:int=-1
 var values:Array
 var relative:bool=true
 var steps:int=0
@@ -119,6 +120,7 @@ func _on_Values_gui_input(ev:InputEvent)->void:
 	elif ev.button_mask==8 or ev.button_mask==16:
 		st*=(-1.0 if ev.button_mask==16 else 1.0)
 		yv=clamp(values[ix]+st,miv,mxv)
+		accept_event()
 		redraw=true
 	elif ev.button_mask==0 and ev is InputEventMouseMotion:
 		val_tooltip.fade()
@@ -141,7 +143,7 @@ func _on_Values_gui_input(ev:InputEvent)->void:
 				values[ls.x]=le.y
 		values_graph.update()
 		val_tooltip.show_at(String(yv),ev.position-Vector2(0.0,val_tooltip.rect_size.y*0.5))
-		emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,relative,tick_div,delay)
+		emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
 
 func _on_LoopRange_gui_input(ev:InputEvent)->void:
 	if not ev is InputEventMouse:
@@ -149,37 +151,49 @@ func _on_LoopRange_gui_input(ev:InputEvent)->void:
 	var ix:int=ev.position.x/16.0
 	var redraw:bool=false
 	if ev.button_mask==BUTTON_MASK_LEFT:
-		ix=clamp(ix,0,steps)
-		if loop_start<0:
-			loop_start=ix
-			loop_end=loop_start
-		elif abs(ix-loop_end)<=abs(ix-loop_start):
-			loop_end=ix
-			loop_start=min(loop_start,loop_end)
+		if ev.shift:
+			ix=clamp(ix,loop_end+1,steps)
+			release_loop_start=ix
 		else:
-			loop_start=ix
-			loop_end=max(loop_start,loop_end)
+			ix=clamp(ix,0,steps)
+			if loop_start<0:
+				loop_start=ix
+				loop_end=loop_start
+			elif abs(ix-loop_end)<=abs(ix-loop_start):
+				loop_end=ix
+				loop_start=min(loop_start,loop_end)
+			else:
+				loop_start=ix
+				loop_end=max(loop_start,loop_end)
+			if release_loop_start>-1:
+				release_loop_start=-1 if loop_end>=steps-1 else int(clamp(release_loop_start,loop_end+1,steps))
 		redraw=true
 	elif ev.button_mask==BUTTON_MASK_RIGHT:
-		loop_start=-1
-		loop_end=-1
+		if ev.shift:
+			release_loop_start=-1
+		else:
+			loop_start=-1
+			loop_end=-1
 		redraw=true
 	if redraw:
 		loop_graph.update()
-		emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,relative,tick_div,delay)
+		emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
 
 func _on_Steps_value_changed(s:int)->void:
 	steps=s
 	if s>0:
 		loop_start=min(s-1,loop_start)
 		loop_end=min(s-1,loop_end)
+		release_loop_start=min(s-1,release_loop_start)
 	else:
 		loop_start=-1
 		loop_end=-1
+		release_loop_start=-1
+		
 	$Editor/Origin.rect_min_size.x=steps*16.0
 	values_graph.update()
 	loop_graph.update()
-	emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,relative,tick_div,delay)
+	emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
 
 func _on_Values_draw()->void:
 	if values_graph==null:
@@ -202,12 +216,20 @@ func _on_Values_draw()->void:
 			x0+=16.0
 
 func _on_LoopRange_draw()->void:
-	if loop_start<0 or loop_end<0 or loop_graph==null:
+	if loop_graph==null:
 		return
-	var x0:float=loop_start*16.0
-	for _i in range(loop_start,loop_end+1):
-		loop_graph.draw_rect(Rect2(x0,0.0,15.0,loop_graph.rect_size.y),Color.white)
-		x0+=16.0
+	var x0:float
+	var h:float=loop_graph.rect_size.y*0.5
+	if loop_start>-1 and loop_end>-1:
+		x0=loop_start*16.0
+		for _i in range(loop_start,loop_end+1):
+			loop_graph.draw_rect(Rect2(x0,0.0,15.0,h),Color.white)
+			x0+=16.0
+	if release_loop_start>-1:
+		x0=release_loop_start*16.0
+		for _i in range(release_loop_start,steps):
+			loop_graph.draw_rect(Rect2(x0,h,15.0,h),Color.white)
+			x0+=16.0
 
 func _on_Editor_draw():
 	if editor==null or values_graph==null or loop_graph==null:
@@ -232,7 +254,7 @@ func _on_Relative_toggled(p:bool)->void:
 	for i in MAX_STEPS:
 		values[i]=stepify(range_lerp(values[i],v00,v01,v10,v11),step)
 	values_graph.update()
-	emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,relative,tick_div,delay)
+	emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
 
 func _on_Title_pressed(delta:int)->void:
 	if heights.empty():
@@ -243,11 +265,11 @@ func _on_Title_pressed(delta:int)->void:
 
 func _on_Div_value_changed(v:float)->void:
 	tick_div=v
-	emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,relative,tick_div,delay)
+	emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
 
 func _on_Delay_value_changed(v:float)->void:
 	delay=v
-	emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,relative,tick_div,delay)
+	emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
 
 func set_macro(m:ParamMacro)->void:
 	loop_start=m.loop_start

@@ -31,6 +31,7 @@ var val_tooltip:Tooltip
 var rel_button:Button
 var real_theme:Theme
 var editor:ScrollContainer
+var hiddables:Array
 
 export (String) var title:String="Macro" setget set_title
 export (String) var parameter:String=""
@@ -65,6 +66,7 @@ func _ready()->void:
 	val_tooltip=$Editor/Origin/Value
 	editor=$Editor
 	rel_button=$Params/Relative
+	hiddables=[$Params/R,$Params/HBC]
 	relative=mode==MODE_REL or mode==MODE_SWREL
 	if mode>=MODE_SWABS:
 		rel_button.set_block_signals(true)
@@ -259,9 +261,19 @@ func _on_Relative_toggled(p:bool)->void:
 func _on_Title_pressed(delta:int)->void:
 	if heights.empty():
 		return
-	height_sel=(height_sel+delta)%heights.size()
-	rect_min_size.y=heights[height_sel]
-	rect_size.y=heights[height_sel]
+	height_sel=(height_sel+delta)%(heights.size()+1)
+	if height_sel==0:
+		rel_button.visible=false
+		for h in hiddables:
+			h.visible=false
+		rect_min_size.y=0.0
+		rect_size.y=0.0
+	else:
+		rel_button.visible=mode>=MODE_SWABS
+		for h in hiddables:
+			h.visible=true
+		rect_min_size.y=heights[height_sel-1]
+		rect_size.y=heights[height_sel-1]
 
 func _on_Div_value_changed(v:float)->void:
 	tick_div=v

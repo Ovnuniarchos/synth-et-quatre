@@ -72,6 +72,7 @@ size_flags_vertical = 3
 tab_align = 0
 
 [node name="Parameters" type="Tabs" parent="Tabs"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -89,8 +90,8 @@ size_flags_vertical = 3
 scroll_horizontal_enabled = false
 
 [node name="VBC" type="VBoxContainer" parent="Tabs/Parameters/Params"]
-margin_right = 996.0
-margin_bottom = 960.0
+margin_right = 1008.0
+margin_bottom = 62.0
 size_flags_horizontal = 3
 
 [node name="OPS" type="GridContainer" parent="Tabs/Parameters/Params/VBC"]
@@ -134,7 +135,6 @@ margin_right = 996.0
 margin_bottom = 960.0
 
 [node name="Macros" type="Tabs" parent="Tabs"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -150,14 +150,16 @@ size_flags_vertical = 3
 scroll_horizontal_enabled = false
 
 [node name="VBC" type="VBoxContainer" parent="Tabs/Macros/Macro"]
-margin_right = 1016.0
-margin_bottom = 320.0
+margin_right = 1004.0
+margin_bottom = 484.0
 rect_min_size = Vector2( 0, 256 )
 size_flags_horizontal = 3
 
 [node name="Tone" parent="Tabs/Macros/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
-margin_right = 1016.0
+margin_right = 1004.0
+margin_bottom = 240.0
+rect_min_size = Vector2( 0, 240 )
 title = "Tone (cents)"
 parameter = "G_TONE"
 min_value_rel = -4800.0
@@ -166,6 +168,21 @@ min_value_abs = -200.0
 max_value_abs = 14300.0
 big_step = 10.0
 huge_step = 100.0
+mode = 3
+
+[node name="Volume" parent="Tabs/Macros/Macro/VBC" instance=ExtResource( 3 )]
+anchor_right = 0.0
+margin_top = 244.0
+margin_right = 1004.0
+margin_bottom = 484.0
+rect_min_size = Vector2( 0, 240 )
+title = "Volume"
+parameter = "G_VOLUME"
+min_value_rel = -255.0
+max_value_rel = 255.0
+max_value_abs = 255.0
+big_step = 8.0
+huge_step = 32.0
 mode = 3
 
 [node name="Macros OP1" type="Tabs" parent="Tabs"]
@@ -215,3 +232,4 @@ margin_bottom = -4.0
 [connection signal="operator_changed" from="Tabs/Parameters/Params/VBC/OPS/OP4" to="." method="_on_operator_changed"]
 [connection signal="instrument_changed" from="Tabs/Parameters/Params/VBC/Routing" to="." method="_on_instrument_changed"]
 [connection signal="macro_changed" from="Tabs/Macros/Macro/VBC/Tone" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="Tabs/Macros/Macro/VBC/Volume" to="." method="_on_macro_changed"]

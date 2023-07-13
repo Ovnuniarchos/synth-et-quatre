@@ -35,14 +35,15 @@ func get_release_tick(tick:int,tick0:int)->int:
 	return tick
 
 func get_value(tick:int,release_tick:int,base_value:int)->int:
-	if steps==0 or tick<delay or (release_tick>-1 and release_tick<delay):
+	if steps==0 or tick<delay:
 		return base_value
 	tick-=delay
-	release_tick-=delay
 	var macro_tick:int
 	if release_tick>-1 and release_loop_start>-1:
+		release_tick-=delay
 		macro_tick=get_release_tick(tick-release_tick,get_tick(release_tick,-1))
 	else:
+		release_tick-=delay
 		macro_tick=get_tick(tick,release_tick)
 	return base_value+values[macro_tick] if relative else values[macro_tick]
 

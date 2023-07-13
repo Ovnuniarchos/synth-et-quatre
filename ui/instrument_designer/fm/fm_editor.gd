@@ -24,7 +24,8 @@ func update_instrument()->void:
 	params.get_node("Routing").set_sliders(ci)
 	gen_macro.get_node("Tone").set_macro(ci.freq_macro)
 	param_dict={
-		"G_TONE":ci.freq_macro
+		"G_TONE":ci.freq_macro,
+		"G_VOLUME":ci.volume_macro
 	}
 
 func _on_Name_changed(text:String)->void:

@@ -4,6 +4,7 @@ enum {MONO,SEMI,POLY}
 
 var notes_on:Array
 var notes:Array
+var volumes:Array
 var instr_ids:Array
 var kon_time:Array
 var koff_time:Array
@@ -16,12 +17,14 @@ var ti:int=-1
 func _init()->void:
 	notes_on=Array()
 	notes=Array()
+	volumes=Array()
 	instr_ids=Array()
 	kon_time=Array()
 	koff_time=Array()
 	for i in MAX_CHANNELS:
-		notes.append(-1)
 		notes_on.append(-1)
+		notes.append(-1)
+		volumes.append(0)
 		instr_ids.append(-1)
 		kon_time.append(-1)
 		koff_time.append(-1)
@@ -72,13 +75,12 @@ func play_fm_note(chan:int,instr:FmInstrument,semi:int,legato:bool)->void:
 	synth.set_enable(chan,15,instr.op_mask)
 	synth.set_panning(chan,31,false,false)
 	synth.key_on(chan,instr.op_mask,255,legato)
+	volumes[chan]=255
 	if !legato:
 		kon_time[chan]=0
 		koff_time[chan]=-1
 
 #
-
-var freqs:Array=[0,0,0,0]
 
 func _on_macro_timer()->void:
 	if ti<0:
@@ -86,6 +88,9 @@ func _on_macro_timer()->void:
 		return
 	ti=Time.get_ticks_msec()-ti
 	var instr:FmInstrument
+	var val:int
+	var kot:int
+	var kft:int
 	for chan in MAX_CHANNELS:
 		if notes[chan]==-1 or instr_ids[chan]==-1:
 			continue
@@ -93,13 +98,14 @@ func _on_macro_timer()->void:
 		if instr==null:
 			continue
 		kon_time[chan]+=ti
+		kot=(kon_time[chan]*GLOBALS.song.ticks_second)/1000
+		kft=(koff_time[chan]*GLOBALS.song.ticks_second)/1000 if koff_time[chan]>-1 else -1
+		#
 		for i in 4:
-			freqs[i]=instr.freq_macro.get_value(
-				(kon_time[chan]*GLOBALS.song.ticks_second)/1000,
-				(koff_time[chan]*GLOBALS.song.ticks_second)/1000 if koff_time[chan]>-1 else -1,
-				notes[chan]
-			)
-			synth.set_note(chan,1<<i,freqs[i])
+			val=instr.freq_macro.get_value(kot,kft,notes[chan])
+			synth.set_note(chan,1<<i,val)
+		val=instr.volume_macro.get_value(kot,kft,volumes[chan])
+		synth.set_volume(chan,val)
 	ti=Time.get_ticks_msec()
 
 #

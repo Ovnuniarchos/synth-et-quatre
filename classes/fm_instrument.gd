@@ -32,10 +32,12 @@ var routings:Array=[
 	[0,0,0,0,0]
 ]
 var freq_macro:ParamMacro
+var volume_macro:ParamMacro
 
 func _init()->void:
 	name=TYPE
 	freq_macro=ParamMacro.new()
+	volume_macro=ParamMacro.new()
 
 func duplicate()->Instrument:
 	var ni:FmInstrument=.duplicate() as FmInstrument

@@ -33,11 +33,17 @@ var routings:Array=[
 ]
 var freq_macro:ParamMacro
 var volume_macro:ParamMacro
+var pan_macro:ParamMacro
+var chanl_invert_macro:ParamMacro
+var clip_macro:ParamMacro
 
 func _init()->void:
 	name=TYPE
 	freq_macro=ParamMacro.new()
 	volume_macro=ParamMacro.new()
+	pan_macro=ParamMacro.new()
+	chanl_invert_macro=ParamMacro.new()
+	clip_macro=ParamMacro.new()
 
 func duplicate()->Instrument:
 	var ni:FmInstrument=.duplicate() as FmInstrument
@@ -58,6 +64,10 @@ func duplicate()->Instrument:
 	ni.fm_intensity=fm_intensity.duplicate()
 	ni.routings=routings.duplicate(true)
 	ni.freq_macro=freq_macro.duplicate()
+	ni.volume_macro=volume_macro.duplicate()
+	ni.pan_macro=pan_macro.duplicate()
+	ni.chanl_invert_macro=chanl_invert_macro.duplicate()
+	ni.clip_macro=clip_macro.duplicate()
 	return ni
 
 func copy(from:Instrument,full:bool=false)->void:

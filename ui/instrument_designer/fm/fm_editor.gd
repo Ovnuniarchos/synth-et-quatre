@@ -25,7 +25,10 @@ func update_instrument()->void:
 	gen_macro.get_node("Tone").set_macro(ci.freq_macro)
 	param_dict={
 		"G_TONE":ci.freq_macro,
-		"G_VOLUME":ci.volume_macro
+		"G_VOLUME":ci.volume_macro,
+		"G_PAN":ci.pan_macro,
+		"G_CHNINVERT":ci.chanl_invert_macro,
+		"G_CLIP":ci.clip_macro
 	}
 
 func _on_Name_changed(text:String)->void:

@@ -2,12 +2,15 @@ extends Synth
 
 enum {MONO,SEMI,POLY}
 
-var notes_on:Array
-var notes:Array
-var volumes:Array
-var instr_ids:Array
-var kon_time:Array
-var koff_time:Array
+var notes_on:Array=Array()
+var notes:Array=Array()
+var volumes:Array=Array()
+var panpots:Array=Array()
+var channel_invs:Array=Array()
+var clips:Array=Array()
+var instr_ids:Array=Array()
+var kon_time:Array=Array()
+var koff_time:Array=Array()
 var channel:int=0
 var poly:int=POLY
 var ti:int=-1
@@ -15,16 +18,13 @@ var ti:int=-1
 #
 
 func _init()->void:
-	notes_on=Array()
-	notes=Array()
-	volumes=Array()
-	instr_ids=Array()
-	kon_time=Array()
-	koff_time=Array()
 	for i in MAX_CHANNELS:
 		notes_on.append(-1)
 		notes.append(-1)
 		volumes.append(0)
+		panpots.append(0)
+		channel_invs.append(0)
+		clips.append(0)
 		instr_ids.append(-1)
 		kon_time.append(-1)
 		koff_time.append(-1)
@@ -70,12 +70,15 @@ func play_note(keyon:bool,legato:bool,semi:int)->void:
 #
 
 func play_fm_note(chan:int,instr:FmInstrument,semi:int,legato:bool)->void:
-	#var semitone:int=semi*100
+	# semitone = semi / 100
 	synth.set_note(chan,instr.op_mask,semi)
 	synth.set_enable(chan,15,instr.op_mask)
 	synth.set_panning(chan,31,false,false)
 	synth.key_on(chan,instr.op_mask,255,legato)
 	volumes[chan]=255
+	panpots[chan]=31
+	channel_invs[chan]=0
+	clips[chan]=int(instr.clip)
 	if !legato:
 		kon_time[chan]=0
 		koff_time[chan]=-1
@@ -89,6 +92,7 @@ func _on_macro_timer()->void:
 	ti=Time.get_ticks_msec()-ti
 	var instr:FmInstrument
 	var val:int
+	var val_b:int
 	var kot:int
 	var kft:int
 	for chan in MAX_CHANNELS:
@@ -100,12 +104,20 @@ func _on_macro_timer()->void:
 		kon_time[chan]+=ti
 		kot=(kon_time[chan]*GLOBALS.song.ticks_second)/1000
 		kft=(koff_time[chan]*GLOBALS.song.ticks_second)/1000 if koff_time[chan]>-1 else -1
-		#
+		# Global tone
 		for i in 4:
 			val=instr.freq_macro.get_value(kot,kft,notes[chan])
 			synth.set_note(chan,1<<i,val)
+		# Global volume
 		val=instr.volume_macro.get_value(kot,kft,volumes[chan])
 		synth.set_volume(chan,val)
+		# Panpot
+		val=instr.pan_macro.get_value(kot,kft,panpots[chan])
+		val_b=instr.chanl_invert_macro.get_value(kot,kft,channel_invs[chan])
+		synth.set_panning(chan,val,bool(val_b&1),bool(val_b&2))
+		# Clip
+		val=instr.pan_macro.get_value(kot,kft,clips[chan])
+		synth.set_clip(chan,bool(val))
 	ti=Time.get_ticks_msec()
 
 #
@@ -269,6 +281,7 @@ func set_clip(clip:bool)->void:
 		return
 	for i in MAX_CHANNELS:
 		if instr_ids[i]==GLOBALS.curr_instrument:
+			clips[i]=int(clip)
 			synth.set_clip(i,clip)
 
 func set_pm_factor(from_op:int,to_op:int,pm_factor:int)->void:

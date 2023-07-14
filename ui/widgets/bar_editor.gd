@@ -3,7 +3,7 @@ class_name BarEditor
 
 signal macro_changed(parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
 
-enum{MODE_ABS,MODE_REL,MODE_SWABS,MODE_SWREL}
+enum{MODE_ABS,MODE_REL,MODE_SWABS,MODE_SWREL,MODE_MASK}
 
 const MAX_STEPS:int=256
 
@@ -16,10 +16,13 @@ var steps:int=0
 var tick_div:int=1
 var delay:int=0
 
-var height_sel:int=2
+var height_sel:int=0
 var line_start:Vector2=Vector2.INF
 var line_end:Vector2
 var line_buffer:Array
+var bset:int=0
+var bclr:int=0
+var bmode:int=0
 
 var title_button:Button
 var step_bar:SpinBar
@@ -37,15 +40,15 @@ export (String) var title:String="Macro" setget set_title
 export (String) var parameter:String=""
 export (float) var title_width:float=128.0 setget set_title_width
 export (PoolRealArray) var heights:PoolRealArray=PoolRealArray([160.0,240.0,320.0])
-export (float) var min_value_rel:float=-12.0
-export (float) var max_value_rel:float=12.0
-export (float) var center_value:float=0.0
-export (float) var min_value_abs:float=0.0
-export (float) var max_value_abs:float=48.0
-export (float) var step:float=1.0
-export (float) var big_step:float=4.0
-export (float) var huge_step:float=16.0
-export (int,"Absolute","Relative","SwitchAbs","SwitchRel") var mode:int=0
+export (int) var min_value_rel:int=-12.0
+export (int) var max_value_rel:int=12.0
+export (int) var center_value:int=0.0
+export (int) var min_value_abs:int=0.0
+export (int) var max_value_abs:int=48.0
+export (int) var step:int=1.0
+export (int) var big_step:int=4.0
+export (int) var huge_step:int=16.0
+export (int,"Absolute","Relative","SwitchAbs","SwitchRel","Mask") var mode:int=0
 
 
 func _init()->void:
@@ -68,10 +71,8 @@ func _ready()->void:
 	rel_button=$Params/Relative
 	hiddables=[$Params/R,$Params/HBC]
 	relative=mode==MODE_REL or mode==MODE_SWREL
-	if mode>=MODE_SWABS:
-		rel_button.set_block_signals(true)
-		rel_button.pressed=mode==MODE_SWREL
-		rel_button.set_block_signals(false)
+	if can_switch_modes():
+		rel_button.set_pressed_no_signal(mode==MODE_SWREL)
 		rel_button.visible=true
 	else:
 		rel_button.visible=false
@@ -80,6 +81,9 @@ func _ready()->void:
 	_on_Title_pressed(0)
 	values_graph.update()
 	loop_graph.update()
+
+func can_switch_modes()->bool:
+	return mode>=MODE_SWABS and mode<MODE_MASK
 
 func set_title(t:String)->void:
 	title=t
@@ -92,17 +96,40 @@ func set_title_width(w:float)->void:
 		title_button.rect_min_size.x=w
 
 func init_values()->void:
-	values.fill(center_value)
+	if mode<MODE_MASK:
+		values.fill(center_value)
+	else:
+		values.fill(0)
 
 func set_values(v:Array)->void:
 	var sz:int=min(MAX_STEPS,v.size())
 	for i in sz:
 		values[i]=v[i]
 
+func process_mask_input(ev:InputEventMouse)->void:
+	if ev.button_mask==BUTTON_MASK_LEFT:
+		var ym:float=values_graph.rect_size.y
+		var ix:int=clamp(ev.position.x/16.0,0.0,MAX_STEPS-1)
+		var yv:int=max_value_abs-clamp(floor((ev.position.y/ym)*(max_value_abs+1)),0.0,max_value_abs)
+		if bmode==0:
+			bset=1<<yv
+			values[ix]^=bset
+			bmode=1 if bset&values[ix] else -1
+		bclr=~(1<<yv)
+		bset=1<<yv if bmode==1 else 0
+		values[ix]=(values[ix]&bclr)|bset
+		values_graph.update()
+		emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
+	elif ev.button_mask==0:
+		bmode=0
+
 func _on_Values_gui_input(ev:InputEvent)->void:
 	if not ev is InputEventMouse:
 		return
-	var st:float=step*(big_step if ev.shift else 1.0)*(huge_step if ev.control else 1.0)
+	if mode==MODE_MASK:
+		process_mask_input(ev as InputEventMouse)
+		return
+	var st:float=step*(big_step if ev.shift else 1)*(huge_step if ev.control else 1)
 	var ym:float=values_graph.rect_size.y
 	var ix:int=clamp(ev.position.x/16.0,0.0,MAX_STEPS-1)
 	var miv:float=min_value_rel if relative else min_value_abs
@@ -130,7 +157,7 @@ func _on_Values_gui_input(ev:InputEvent)->void:
 			line_start=Vector2.INF
 	if redraw:
 		if line_start==Vector2.INF:
-			values[ix]=yv
+			values[ix]=int(yv)
 		else:
 			values=line_buffer.duplicate()
 			var ls:Vector2=line_start
@@ -140,9 +167,9 @@ func _on_Values_gui_input(ev:InputEvent)->void:
 				le=line_start
 			if ls.x!=le.x:
 				for i in range(ls.x,le.x+1):
-					values[i]=range_lerp(i,ls.x,le.x,ls.y,le.y)
+					values[i]=int(range_lerp(i,ls.x,le.x,ls.y,le.y))
 			else:
-				values[ls.x]=le.y
+				values[ls.x]=int(le.y)
 		values_graph.update()
 		val_tooltip.show_at(String(yv),ev.position-Vector2(0.0,val_tooltip.rect_size.y*0.5))
 		emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
@@ -191,7 +218,6 @@ func _on_Steps_value_changed(s:int)->void:
 		loop_start=-1
 		loop_end=-1
 		release_loop_start=-1
-		
 	$Editor/Origin.rect_min_size.x=steps*16.0
 	values_graph.update()
 	loop_graph.update()
@@ -205,7 +231,20 @@ func _on_Values_draw()->void:
 	var y0:float=range_lerp(center_value,min_value_rel,max_value_rel,ym,0.0)
 	var x0:float=0.0
 	var yv:float
-	if relative:
+	if mode==MODE_MASK:
+		var hb:float=ym/(max_value_abs+1.0)
+		var j:int
+		for i in steps:
+			j=1<<int(max_value_abs)
+			yv=0.0
+			while j>0:
+				if values[i]&j:
+					values_graph.draw_rect(Rect2(x0,yv,15.0,hb-1.0),Color.white)
+				j>>=1
+				yv+=hb
+			
+			x0+=16.0
+	elif relative:
 		for i in steps:
 			values_graph.draw_line(Vector2(x0,y0),Vector2(x0+15.0,y0),Color.white)
 			yv=range_lerp(values[i],min_value_rel,max_value_rel,ym,0.0)
@@ -269,7 +308,7 @@ func _on_Title_pressed(delta:int)->void:
 		rect_min_size.y=0.0
 		rect_size.y=0.0
 	else:
-		rel_button.visible=mode>=MODE_SWABS
+		rel_button.visible=can_switch_modes()
 		for h in hiddables:
 			h.visible=true
 		rect_min_size.y=heights[height_sel-1]
@@ -293,7 +332,7 @@ func set_macro(m:ParamMacro)->void:
 	delay=m.delay
 	values_graph.update()
 	loop_graph.update()
-	rel_button.pressed=relative
+	rel_button.set_pressed_no_signal(relative)
 	step_bar.value=steps
 	div_bar.value=tick_div
 	delay_bar.value=delay

@@ -6,16 +6,18 @@
 
 [node name="BarEditor" type="HBoxContainer"]
 anchor_right = 1.0
-margin_bottom = 320.0
-rect_min_size = Vector2( 0, 320 )
+margin_bottom = 240.0
+rect_min_size = Vector2( 0, 240 )
 mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 script = ExtResource( 1 )
+max_value_abs = 3
+mode = 4
 
 [node name="Params" type="VBoxContainer" parent="."]
 margin_right = 128.0
-margin_bottom = 320.0
+margin_bottom = 240.0
 
 [node name="Title" type="Button" parent="Params"]
 margin_right = 128.0
@@ -107,7 +109,7 @@ huge_step = 32.0
 [node name="Editor" type="ScrollContainer" parent="."]
 margin_left = 132.0
 margin_right = 1024.0
-margin_bottom = 320.0
+margin_bottom = 240.0
 mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -115,7 +117,7 @@ scroll_vertical_enabled = false
 
 [node name="Origin" type="ReferenceRect" parent="Editor"]
 margin_right = 16.0
-margin_bottom = 320.0
+margin_bottom = 240.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 3
 
@@ -126,14 +128,14 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Values" type="Control" parent="Editor/Origin/HBC"]
-margin_bottom = 300.0
+margin_bottom = 220.0
 rect_clip_content = true
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="LoopRange" type="Control" parent="Editor/Origin/HBC"]
-margin_top = 304.0
-margin_bottom = 320.0
+margin_top = 224.0
+margin_bottom = 240.0
 rect_min_size = Vector2( 0, 16 )
 rect_clip_content = true
 size_flags_horizontal = 3

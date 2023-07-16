@@ -572,7 +572,6 @@ func commit_clip(channel:int,cmds:Array,ptr:int)->int:
 	clip_dirty=false
 	return ptr+1
 
-
 func commit_velocity(channel:int,cmds:Array,ptr:int)->int:
 	cmds[ptr]=CONSTS.CMD_VEL|(channel<<8)|(velocity<<16)
 	velocity_dirty=false

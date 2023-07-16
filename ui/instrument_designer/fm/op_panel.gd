@@ -52,6 +52,7 @@ func _on_SLSlider_value_changed(value:float)->void:
 
 func _on_SRSlider_value_changed(value:float)->void:
 	GLOBALS.get_instrument().sustains[operator]=int(value)
+	IM_SYNTH.set_sustain_rate(operator,int(value))
 	emit_signal("instrument_changed")
 
 func _on_RRSlider_value_changed(value:float)->void:

@@ -8,6 +8,8 @@ var volumes:Array=Array()
 var panpots:Array=Array()
 var channel_invs:Array=Array()
 var clips:Array=Array()
+var duty_cycles:Array=Array()
+var waves:Array=Array()
 var instr_ids:Array=Array()
 var kon_time:Array=Array()
 var koff_time:Array=Array()
@@ -25,6 +27,8 @@ func _init()->void:
 		panpots.append(0)
 		channel_invs.append(0)
 		clips.append(0)
+		duty_cycles.append([0,0,0,0])
+		waves.append([0,0,0,0])
 		instr_ids.append(-1)
 		kon_time.append(-1)
 		koff_time.append(-1)
@@ -78,6 +82,9 @@ func play_fm_note(chan:int,instr:FmInstrument,semi:int,legato:bool)->void:
 	volumes[chan]=255
 	panpots[chan]=31
 	channel_invs[chan]=0
+	for i in 4:
+		duty_cycles[chan][i]=instr.duty_cycles[i]
+		waves[chan][i]=instr.waveforms[i]
 	clips[chan]=int(instr.clip)
 	if !legato:
 		kon_time[chan]=0
@@ -95,6 +102,7 @@ func _on_macro_timer()->void:
 	var val_b:int
 	var kot:int
 	var kft:int
+	var mask:int
 	for chan in MAX_CHANNELS:
 		if notes[chan]==-1 or instr_ids[chan]==-1:
 			continue
@@ -105,19 +113,28 @@ func _on_macro_timer()->void:
 		kot=(kon_time[chan]*GLOBALS.song.ticks_second)/1000
 		kft=(koff_time[chan]*GLOBALS.song.ticks_second)/1000 if koff_time[chan]>-1 else -1
 		# Global tone
-		for i in 4:
+		for op in 4:
 			val=instr.freq_macro.get_value(kot,kft,notes[chan])
-			synth.set_note(chan,1<<i,val)
+			synth.set_note(chan,1<<op,val)
 		# Global volume
 		val=instr.volume_macro.get_value(kot,kft,volumes[chan])
 		synth.set_volume(chan,val)
-		# Panpot
+		# Global Panpot
 		val=instr.pan_macro.get_value(kot,kft,panpots[chan])
 		val_b=instr.chanl_invert_macro.get_value(kot,kft,channel_invs[chan])
 		synth.set_panning(chan,val,bool(val_b&1),bool(val_b&2))
-		# Clip
+		# Global Clip
 		val=instr.pan_macro.get_value(kot,kft,clips[chan])
 		synth.set_clip(chan,bool(val))
+		# Per-op
+		for op in 4:
+			mask=1<<op
+			# Op Duty Cycle
+			val=instr.duty_macros[op].get_value(kot,kft,duty_cycles[chan][op])
+			synth.set_duty_cycle(chan,mask,val<<16)
+			# Op Wave
+			val=instr.wave_macros[op].get_value(kot,kft,waves[chan][op])
+			synth.set_wave(chan,mask,val)
 	ti=Time.get_ticks_msec()
 
 #
@@ -157,6 +174,8 @@ func set_wave(op:int,ix:int)->void:
 	for i in MAX_CHANNELS:
 		if instr_ids[i]==GLOBALS.curr_instrument:
 			synth.set_wave(i,op_mask,ix)
+			for j in 4:
+				waves[i][j]=inst.waveforms[j]
 
 func set_duty_cycle(op:int,duc:int)->void:
 	var inst:FmInstrument=GLOBALS.get_instrument()
@@ -167,6 +186,8 @@ func set_duty_cycle(op:int,duc:int)->void:
 	for i in MAX_CHANNELS:
 		if instr_ids[i]==GLOBALS.curr_instrument:
 			synth.set_duty_cycle(i,op_mask,duc)
+			for j in 4:
+				duty_cycles[i][j]=inst.duty_cycles[j]
 
 func set_attack_rate(op:int,ar:int)->void:
 	var inst:FmInstrument=GLOBALS.get_instrument()

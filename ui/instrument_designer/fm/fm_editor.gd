@@ -5,11 +5,15 @@ signal instrument_changed
 
 var params:Node
 var gen_macro:Node
+var ops_macro:Array
 var param_dict:Dictionary
 
 func _ready()->void:
 	params=$Tabs/Parameters/Params/VBC
 	gen_macro=$Tabs/Macros/Macro/VBC
+	ops_macro=[
+		$"Tabs/Macros OP1/Macro/VBC",
+	]
 	update_instrument()
 
 func update_instrument()->void:
@@ -23,12 +27,27 @@ func update_instrument()->void:
 		params.get_node("OPS/OP%d"%[i]).set_sliders(ci)
 	params.get_node("Routing").set_sliders(ci)
 	gen_macro.get_node("Tone").set_macro(ci.freq_macro)
+	gen_macro.get_node("Volume").set_macro(ci.volume_macro)
+	gen_macro.get_node("Pan").set_macro(ci.pan_macro)
+	gen_macro.get_node("ChInvert").set_macro(ci.chanl_invert_macro)
+	gen_macro.get_node("Clip").set_macro(ci.clip_macro)
+	for op in 1:
+		ops_macro[op].get_node("Duty").set_macro(ci.duty_macros[op])
+		ops_macro[op].get_node("Wave").set_macro(ci.wave_macros[op])
 	param_dict={
 		"G_TONE":ci.freq_macro,
 		"G_VOLUME":ci.volume_macro,
 		"G_PAN":ci.pan_macro,
 		"G_CHNINVERT":ci.chanl_invert_macro,
-		"G_CLIP":ci.clip_macro
+		"G_CLIP":ci.clip_macro,
+		"O1_DUTY":ci.duty_macros[0],
+		"O2_DUTY":ci.duty_macros[1],
+		"O3_DUTY":ci.duty_macros[2],
+		"O4_DUTY":ci.duty_macros[3],
+		"O1_WAVE":ci.wave_macros[0],
+		"O2_WAVE":ci.wave_macros[1],
+		"O3_WAVE":ci.wave_macros[2],
+		"O4_WAVE":ci.wave_macros[3],
 	}
 
 func _on_Name_changed(text:String)->void:

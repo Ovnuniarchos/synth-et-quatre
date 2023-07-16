@@ -14,6 +14,9 @@ var loop_size:int=1
 var release_loop_size:int=1
 
 
+func _init(rel:bool=true)->void:
+	relative=rel
+
 func get_tick(tick:int,release_tick:int)->int:
 	tick/=tick_div
 	if loop_start<0:

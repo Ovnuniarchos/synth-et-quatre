@@ -157,9 +157,7 @@ size_flags_horizontal = 3
 
 [node name="Tone" parent="Tabs/Macros/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
-margin_right = 1004.0
-margin_bottom = 20.0
-rect_min_size = Vector2( 0, 0 )
+margin_right = 1016.0
 title = "Tone (cents)"
 parameter = "G_TONE"
 min_value_rel = -4800
@@ -172,10 +170,9 @@ mode = 3
 
 [node name="Volume" parent="Tabs/Macros/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
-margin_top = 244.0
-margin_right = 1004.0
-margin_bottom = 264.0
-rect_min_size = Vector2( 0, 0 )
+margin_top = 24.0
+margin_right = 1016.0
+margin_bottom = 44.0
 title = "Volume"
 parameter = "G_VOLUME"
 min_value_rel = -255
@@ -187,10 +184,9 @@ mode = 3
 
 [node name="Pan" parent="Tabs/Macros/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
-margin_top = 488.0
-margin_right = 1004.0
-margin_bottom = 508.0
-rect_min_size = Vector2( 0, 0 )
+margin_top = 48.0
+margin_right = 1016.0
+margin_bottom = 68.0
 title = "Pan"
 parameter = "G_PAN"
 min_value_rel = -62
@@ -201,23 +197,23 @@ mode = 3
 
 [node name="ChInvert" parent="Tabs/Macros/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
-margin_top = 732.0
-margin_right = 1004.0
-margin_bottom = 752.0
-rect_min_size = Vector2( 0, 0 )
+margin_top = 72.0
+margin_right = 1016.0
+margin_bottom = 92.0
 title = "Channel Invert"
 parameter = "G_CHNINVERT"
 max_value_abs = 1
+mode = 4
 
 [node name="Clip" parent="Tabs/Macros/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
-margin_top = 732.0
-margin_right = 1004.0
-margin_bottom = 752.0
-rect_min_size = Vector2( 0, 0 )
+margin_top = 96.0
+margin_right = 1016.0
+margin_bottom = 116.0
 title = "Clip"
 parameter = "G_CLIP"
 max_value_abs = 0
+mode = 4
 
 [node name="Macros OP1" type="Tabs" parent="Tabs"]
 visible = false
@@ -228,32 +224,40 @@ margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
 
-[node name="Macros OP2" type="Tabs" parent="Tabs"]
-visible = false
+[node name="Macro" type="ScrollContainer" parent="Tabs/Macros OP1"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+scroll_horizontal_enabled = false
 
-[node name="Macros OP3" type="Tabs" parent="Tabs"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
+[node name="VBC" type="VBoxContainer" parent="Tabs/Macros OP1/Macro"]
+margin_right = 1016.0
+margin_bottom = 44.0
+size_flags_horizontal = 3
 
-[node name="Macros OP4" type="Tabs" parent="Tabs"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
+[node name="Duty" parent="Tabs/Macros OP1/Macro/VBC" instance=ExtResource( 3 )]
+anchor_right = 0.0
+margin_right = 1016.0
+title = "Duty Cycle"
+parameter = "O1_DUTY"
+min_value_rel = -255
+max_value_rel = 255
+max_value_abs = 255
+big_step = 8
+huge_step = 32
+mode = 3
+
+[node name="Wave" parent="Tabs/Macros OP1/Macro/VBC" instance=ExtResource( 3 )]
+anchor_right = 0.0
+margin_right = 1016.0
+title = "Wave"
+parameter = "O1_WAVE"
+min_value_rel = -255
+max_value_rel = 255
+max_value_abs = 255
+big_step = 8
+huge_step = 32
 
 [connection signal="text_changed" from="Info/HBC/Name" to="." method="_on_Name_changed"]
 [connection signal="instrument_changed" from="Tabs/Parameters/Params/VBC/OPS/OP1" to="." method="_on_instrument_changed"]
@@ -270,3 +274,5 @@ margin_bottom = -4.0
 [connection signal="macro_changed" from="Tabs/Macros/Macro/VBC/Pan" to="." method="_on_macro_changed"]
 [connection signal="macro_changed" from="Tabs/Macros/Macro/VBC/ChInvert" to="." method="_on_macro_changed"]
 [connection signal="macro_changed" from="Tabs/Macros/Macro/VBC/Clip" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="Tabs/Macros OP1/Macro/VBC/Duty" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="Tabs/Macros OP1/Macro/VBC/Wave" to="." method="_on_macro_changed"]

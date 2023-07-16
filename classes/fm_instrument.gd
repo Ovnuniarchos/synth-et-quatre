@@ -36,14 +36,18 @@ var volume_macro:ParamMacro
 var pan_macro:ParamMacro
 var chanl_invert_macro:ParamMacro
 var clip_macro:ParamMacro
+var duty_macros:Array
+var wave_macros:Array
 
 func _init()->void:
 	name=TYPE
 	freq_macro=ParamMacro.new()
 	volume_macro=ParamMacro.new()
 	pan_macro=ParamMacro.new()
-	chanl_invert_macro=ParamMacro.new()
-	clip_macro=ParamMacro.new()
+	chanl_invert_macro=ParamMacro.new(false)
+	clip_macro=ParamMacro.new(false)
+	duty_macros=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
+	wave_macros=[ParamMacro.new(false),ParamMacro.new(false),ParamMacro.new(false),ParamMacro.new(false)]
 
 func duplicate()->Instrument:
 	var ni:FmInstrument=.duplicate() as FmInstrument

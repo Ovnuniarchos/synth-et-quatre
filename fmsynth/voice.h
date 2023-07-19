@@ -16,6 +16,7 @@ private:
 	int outs[MAX_OPS]={256,0,0,0};
 	FixedPoint last_samples[2][MAX_OPS]={{0L,0L,0L,0L},{0L,0L,0L,0L}};
 	int volume=256;
+	int new_volume=256;
 	int vol_left=33;
 	int vol_right=33;
 	int am_lfos[MAX_OPS]={0,0,0,0};

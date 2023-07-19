@@ -21,6 +21,11 @@ FixedPoint Voice::generate(FixedPoint* lfo_ins){
 		last_samples[0][i]=ops[i].generate(pm,lfo_ins[am_lfos[i]],lfo_ins[fm_lfos[i]]);
 		out+=last_samples[0][i]*outs[i];
 	}
+	if(volume>new_volume){
+		volume--;
+	}else if(volume<new_volume){
+		volume++;
+	}
 	out=(out*volume)>>16;
 	return clip?clamp(out,-FP_ONE,FP_ONE):out;
 };
@@ -80,7 +85,7 @@ void Voice::set_phase(int op_mask,FixedPoint phi){
 
 
 void Voice::set_volume(int vol){
-	volume=clamp(vol,0,255)+(vol==0?0:1);
+	new_volume=clamp(vol,0,255)+(vol==0?0:1);
 }
 
 void Voice::set_attack_rate(int op_mask,int rate){
@@ -154,7 +159,7 @@ void Voice::set_fm_lfo(int op_mask,int lfo){
 
 
 void Voice::key_on(int op_mask,int vol,bool legato){
-	volume=clamp(vol,0,255)+(vol>0?1:0);
+	new_volume=clamp(vol,0,255)+(vol>0?1:0);
 	for(int i=0;i<MAX_OPS;i++,op_mask>>=1){
 		if(op_mask&1) ops[i].key_on(legato);
 	}

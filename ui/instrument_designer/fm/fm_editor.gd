@@ -39,16 +39,17 @@ func update_instrument()->void:
 		"G_VOLUME":ci.volume_macro,
 		"G_PAN":ci.pan_macro,
 		"G_CHNINVERT":ci.chanl_invert_macro,
-		"G_CLIP":ci.clip_macro,
-		"O1_DUTY":ci.duty_macros[0],
-		"O2_DUTY":ci.duty_macros[1],
-		"O3_DUTY":ci.duty_macros[2],
-		"O4_DUTY":ci.duty_macros[3],
-		"O1_WAVE":ci.wave_macros[0],
-		"O2_WAVE":ci.wave_macros[1],
-		"O3_WAVE":ci.wave_macros[2],
-		"O4_WAVE":ci.wave_macros[3],
+		"G_CLIP":ci.clip_macro
 	}
+	for i in range(1,5):
+		param_dict["%d_TONE"%[i]]=ci.op_freq_macro[i-1]
+		param_dict["%d_DUTY"%[i]]=ci.duty_macros[i-1]
+		param_dict["%d_WAVE"%[i]]=ci.wave_macros[i-1]
+		param_dict["%d_ATTACK"%[i]]=ci.attack_macros[i-1]
+		param_dict["%d_DECAY"%[i]]=ci.decay_macros[i-1]
+		param_dict["%d_SUSLEV"%[i]]=ci.sus_level_macros[i-1]
+		param_dict["%d_SUSTAIN"%[i]]=ci.sus_rate_macros[i-1]
+		param_dict["%d_RELEASE"%[i]]=ci.release_macros[i-1]
 
 func _on_Name_changed(text:String)->void:
 	var ci:Instrument=GLOBALS.get_instrument()

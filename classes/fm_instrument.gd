@@ -26,28 +26,27 @@ var am_lfo:Array=[0,0,0,0]
 var fm_intensity:Array=[0,0,0,0]
 var fm_lfo:Array=[0,0,0,0]
 var routings:Array=[
-	[16,0,0,0,255],
+	[64,0,0,0,255],
 	[0,0,0,0,0],
 	[0,0,0,0,0],
 	[0,0,0,0,0]
 ]
-var freq_macro:ParamMacro
-var volume_macro:ParamMacro
-var pan_macro:ParamMacro
-var chanl_invert_macro:ParamMacro
-var clip_macro:ParamMacro
-var duty_macros:Array
-var wave_macros:Array
+var freq_macro:ParamMacro=ParamMacro.new()
+var op_freq_macro:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
+var volume_macro:ParamMacro=ParamMacro.new()
+var pan_macro:ParamMacro=ParamMacro.new()
+var chanl_invert_macro:ParamMacro=ParamMacro.new(false)
+var clip_macro:ParamMacro=ParamMacro.new(false)
+var duty_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
+var wave_macros:Array=[ParamMacro.new(false),ParamMacro.new(false),ParamMacro.new(false),ParamMacro.new(false)]
+var attack_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
+var decay_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
+var sus_level_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
+var sus_rate_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
+var release_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
 
 func _init()->void:
 	name=TYPE
-	freq_macro=ParamMacro.new()
-	volume_macro=ParamMacro.new()
-	pan_macro=ParamMacro.new()
-	chanl_invert_macro=ParamMacro.new(false)
-	clip_macro=ParamMacro.new(false)
-	duty_macros=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
-	wave_macros=[ParamMacro.new(false),ParamMacro.new(false),ParamMacro.new(false),ParamMacro.new(false)]
 
 func duplicate()->Instrument:
 	var ni:FmInstrument=.duplicate() as FmInstrument

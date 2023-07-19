@@ -233,14 +233,27 @@ scroll_horizontal_enabled = false
 
 [node name="VBC" type="VBoxContainer" parent="Tabs/Macros OP1/Macro"]
 margin_right = 1016.0
-margin_bottom = 44.0
+margin_bottom = 188.0
 size_flags_horizontal = 3
+
+[node name="Tone" parent="Tabs/Macros OP1/Macro/VBC" instance=ExtResource( 3 )]
+anchor_right = 0.0
+margin_right = 1016.0
+title = "Tone (cents)"
+parameter = "1_TONE"
+min_value_rel = -4800
+max_value_rel = 4800
+min_value_abs = -200
+max_value_abs = 14300
+big_step = 10
+huge_step = 100
+mode = 3
 
 [node name="Duty" parent="Tabs/Macros OP1/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
 margin_right = 1016.0
 title = "Duty Cycle"
-parameter = "O1_DUTY"
+parameter = "1_DUTY"
 min_value_rel = -255
 max_value_rel = 255
 max_value_abs = 255
@@ -252,12 +265,72 @@ mode = 3
 anchor_right = 0.0
 margin_right = 1016.0
 title = "Wave"
-parameter = "O1_WAVE"
+parameter = "1_WAVE"
 min_value_rel = -255
 max_value_rel = 255
 max_value_abs = 255
 big_step = 8
 huge_step = 32
+
+[node name="Attack" parent="Tabs/Macros OP1/Macro/VBC" instance=ExtResource( 3 )]
+anchor_right = 0.0
+margin_right = 1016.0
+title = "Attack"
+parameter = "1_ATTACK"
+min_value_rel = -255
+max_value_rel = 255
+max_value_abs = 255
+big_step = 8
+huge_step = 32
+mode = 3
+
+[node name="Decay" parent="Tabs/Macros OP1/Macro/VBC" instance=ExtResource( 3 )]
+anchor_right = 0.0
+margin_right = 1016.0
+title = "Decay"
+parameter = "1_DECAY"
+min_value_rel = -255
+max_value_rel = 255
+max_value_abs = 255
+big_step = 8
+huge_step = 32
+mode = 3
+
+[node name="SusLev" parent="Tabs/Macros OP1/Macro/VBC" instance=ExtResource( 3 )]
+anchor_right = 0.0
+margin_right = 1016.0
+title = "Sus. Level"
+parameter = "1_SUSLEV"
+min_value_rel = -255
+max_value_rel = 255
+max_value_abs = 255
+big_step = 8
+huge_step = 32
+mode = 3
+
+[node name="SusRate" parent="Tabs/Macros OP1/Macro/VBC" instance=ExtResource( 3 )]
+anchor_right = 0.0
+margin_right = 1016.0
+title = "Sus. Rate"
+parameter = "1_SUSTAIN"
+min_value_rel = -255
+max_value_rel = 255
+max_value_abs = 255
+big_step = 8
+huge_step = 32
+mode = 3
+
+[node name="Release" parent="Tabs/Macros OP1/Macro/VBC" instance=ExtResource( 3 )]
+anchor_right = 0.0
+margin_right = 1016.0
+title = "Release"
+parameter = "1_RELEASE"
+min_value_rel = -255
+max_value_rel = 255
+max_value_abs = 255
+big_step = 8
+huge_step = 32
+mode = 3
 
 [connection signal="text_changed" from="Info/HBC/Name" to="." method="_on_Name_changed"]
 [connection signal="instrument_changed" from="Tabs/Parameters/Params/VBC/OPS/OP1" to="." method="_on_instrument_changed"]
@@ -274,5 +347,11 @@ huge_step = 32
 [connection signal="macro_changed" from="Tabs/Macros/Macro/VBC/Pan" to="." method="_on_macro_changed"]
 [connection signal="macro_changed" from="Tabs/Macros/Macro/VBC/ChInvert" to="." method="_on_macro_changed"]
 [connection signal="macro_changed" from="Tabs/Macros/Macro/VBC/Clip" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="Tabs/Macros OP1/Macro/VBC/Tone" to="." method="_on_macro_changed"]
 [connection signal="macro_changed" from="Tabs/Macros OP1/Macro/VBC/Duty" to="." method="_on_macro_changed"]
 [connection signal="macro_changed" from="Tabs/Macros OP1/Macro/VBC/Wave" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="Tabs/Macros OP1/Macro/VBC/Attack" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="Tabs/Macros OP1/Macro/VBC/Decay" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="Tabs/Macros OP1/Macro/VBC/SusLev" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="Tabs/Macros OP1/Macro/VBC/SusRate" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="Tabs/Macros OP1/Macro/VBC/Release" to="." method="_on_macro_changed"]

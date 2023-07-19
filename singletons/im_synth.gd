@@ -112,9 +112,12 @@ func _on_macro_timer()->void:
 		kon_time[chan]+=ti
 		kot=(kon_time[chan]*GLOBALS.song.ticks_second)/1000
 		kft=(koff_time[chan]*GLOBALS.song.ticks_second)/1000 if koff_time[chan]>-1 else -1
-		# Global tone
+		# Global+op tone
 		for op in 4:
-			val=instr.freq_macro.get_value(kot,kft,notes[chan])
+			val=instr.op_freq_macro[op].get_value(
+				kot,kft,
+				instr.freq_macro.get_value(kot,kft,notes[chan])
+			)
 			synth.set_note(chan,1<<op,val)
 		# Global volume
 		val=instr.volume_macro.get_value(kot,kft,volumes[chan])
@@ -135,6 +138,21 @@ func _on_macro_timer()->void:
 			# Op Wave
 			val=instr.wave_macros[op].get_value(kot,kft,waves[chan][op])
 			synth.set_wave(chan,mask,val)
+			# TODO: Op Attack
+			val=instr.attack_macros[op].get_value(kot,kft,0)
+			synth.set_attack_rate(chan,mask,val)
+			# TODO: Op Decay
+			val=instr.decay_macros[op].get_value(kot,kft,0)
+			synth.set_decay_rate(chan,mask,val)
+			# TODO: Op SusLevel
+			val=instr.sus_level_macros[op].get_value(kot,kft,0)
+			synth.set_sustain_level(chan,mask,val)
+			# TODO: Op SusRate
+			val=instr.sus_rate_macross[op].get_value(kot,kft,0)
+			synth.set_sustain_rate(chan,mask,val)
+			# TODO: Op Release
+			val=instr.release_macros[op].get_value(kot,kft,0)
+			synth.set_release_rate(chan,mask,val)
 	ti=Time.get_ticks_msec()
 
 #

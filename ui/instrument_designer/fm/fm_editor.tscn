@@ -158,6 +158,7 @@ size_flags_horizontal = 3
 [node name="Tone" parent="Tabs/Macros/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
 margin_right = 1016.0
+margin_bottom = -236.0
 title = "Tone (cents)"
 parameter = "G_TONE"
 min_value_rel = -4800
@@ -166,13 +167,12 @@ min_value_abs = -200
 max_value_abs = 14300
 big_step = 10
 huge_step = 100
-mode = 3
 
 [node name="Volume" parent="Tabs/Macros/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
 margin_top = 24.0
 margin_right = 1016.0
-margin_bottom = 44.0
+margin_bottom = -212.0
 title = "Volume"
 parameter = "G_VOLUME"
 min_value_rel = -255
@@ -180,26 +180,24 @@ max_value_rel = 255
 max_value_abs = 255
 big_step = 8
 huge_step = 32
-mode = 3
 
 [node name="Pan" parent="Tabs/Macros/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
 margin_top = 48.0
 margin_right = 1016.0
-margin_bottom = 68.0
+margin_bottom = -188.0
 title = "Pan"
 parameter = "G_PAN"
 min_value_rel = -62
 max_value_rel = 62
 max_value_abs = 62
 huge_step = 8
-mode = 3
 
 [node name="ChInvert" parent="Tabs/Macros/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
 margin_top = 72.0
 margin_right = 1016.0
-margin_bottom = 92.0
+margin_bottom = -164.0
 title = "Channel Invert"
 parameter = "G_CHNINVERT"
 max_value_abs = 1
@@ -209,7 +207,7 @@ mode = 4
 anchor_right = 0.0
 margin_top = 96.0
 margin_right = 1016.0
-margin_bottom = 116.0
+margin_bottom = -140.0
 title = "Clip"
 parameter = "G_CLIP"
 max_value_abs = 0
@@ -239,6 +237,7 @@ size_flags_horizontal = 3
 [node name="Tone" parent="Tabs/Macros OP1/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
 margin_right = 1016.0
+margin_bottom = -168.0
 title = "Tone (cents)"
 parameter = "1_TONE"
 min_value_rel = -4800
@@ -247,11 +246,11 @@ min_value_abs = -200
 max_value_abs = 14300
 big_step = 10
 huge_step = 100
-mode = 3
 
 [node name="Duty" parent="Tabs/Macros OP1/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
 margin_right = 1016.0
+margin_bottom = -168.0
 title = "Duty Cycle"
 parameter = "1_DUTY"
 min_value_rel = -255
@@ -259,11 +258,11 @@ max_value_rel = 255
 max_value_abs = 255
 big_step = 8
 huge_step = 32
-mode = 3
 
 [node name="Wave" parent="Tabs/Macros OP1/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
 margin_right = 1016.0
+margin_bottom = -168.0
 title = "Wave"
 parameter = "1_WAVE"
 min_value_rel = -255
@@ -271,10 +270,12 @@ max_value_rel = 255
 max_value_abs = 255
 big_step = 8
 huge_step = 32
+mode = 0
 
 [node name="Attack" parent="Tabs/Macros OP1/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
 margin_right = 1016.0
+margin_bottom = -168.0
 title = "Attack"
 parameter = "1_ATTACK"
 min_value_rel = -255
@@ -282,11 +283,11 @@ max_value_rel = 255
 max_value_abs = 255
 big_step = 8
 huge_step = 32
-mode = 3
 
 [node name="Decay" parent="Tabs/Macros OP1/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
 margin_right = 1016.0
+margin_bottom = -168.0
 title = "Decay"
 parameter = "1_DECAY"
 min_value_rel = -255
@@ -294,11 +295,11 @@ max_value_rel = 255
 max_value_abs = 255
 big_step = 8
 huge_step = 32
-mode = 3
 
 [node name="SusLev" parent="Tabs/Macros OP1/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
 margin_right = 1016.0
+margin_bottom = -168.0
 title = "Sus. Level"
 parameter = "1_SUSLEV"
 min_value_rel = -255
@@ -306,11 +307,11 @@ max_value_rel = 255
 max_value_abs = 255
 big_step = 8
 huge_step = 32
-mode = 3
 
 [node name="SusRate" parent="Tabs/Macros OP1/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
 margin_right = 1016.0
+margin_bottom = -168.0
 title = "Sus. Rate"
 parameter = "1_SUSTAIN"
 min_value_rel = -255
@@ -318,11 +319,11 @@ max_value_rel = 255
 max_value_abs = 255
 big_step = 8
 huge_step = 32
-mode = 3
 
 [node name="Release" parent="Tabs/Macros OP1/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
 margin_right = 1016.0
+margin_bottom = -168.0
 title = "Release"
 parameter = "1_RELEASE"
 min_value_rel = -255
@@ -330,7 +331,6 @@ max_value_rel = 255
 max_value_abs = 255
 big_step = 8
 huge_step = 32
-mode = 3
 
 [connection signal="text_changed" from="Info/HBC/Name" to="." method="_on_Name_changed"]
 [connection signal="instrument_changed" from="Tabs/Parameters/Params/VBC/OPS/OP1" to="." method="_on_instrument_changed"]

@@ -206,7 +206,8 @@ order-matrix: {
 	font: FONT_TYPE
 }
 bar-editor: {
-	bar-width + loop-height + separation: number
+	bar-size: COORDS_TYPE
+	loop-height + separation: number
 	color + relative-color + mask-color + center-color + loop-color + release-color: COLOR_TYPE
 	values + loop: BOX_TYPE
 	labels: {

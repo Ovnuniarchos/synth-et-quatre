@@ -33,7 +33,10 @@ var loop_graph:Control
 var val_tooltip:Tooltip
 var rel_button:Button
 var real_theme:Theme
+var origin:Control
 var editor:ScrollContainer
+var bar_width:float
+var bar_height:float
 var hiddables:Array
 var heights:PoolRealArray=PoolRealArray([160.0,240.0,320.0])
 
@@ -48,7 +51,7 @@ export (int) var max_value_abs:int=48.0
 export (int) var step:int=1.0
 export (int) var big_step:int=4.0
 export (int) var huge_step:int=16.0
-export (int,"Absolute","Relative","SwitchAbs","SwitchRel","Mask") var mode:int=0
+export (int,"Absolute","Relative","SwitchAbs","SwitchRel","Mask") var mode:int=MODE_SWREL
 
 
 func _init()->void:
@@ -67,7 +70,12 @@ func _ready()->void:
 	values_graph=$Editor/Origin/HBC/Values
 	loop_graph=$Editor/Origin/HBC/LoopRange
 	val_tooltip=$Editor/Origin/Value
+	$Editor/Origin/HBC.add_constant_override("separation",real_theme.get_constant("separation","BarEditor"))
+	$Editor/Origin/HBC/LoopRange.rect_min_size.y=real_theme.get_constant("loop_height","BarEditor")
+	bar_width=real_theme.get_constant("bar_size_x","BarEditor")
+	bar_height=real_theme.get_constant("bar_size_y","BarEditor")
 	editor=$Editor
+	origin=$Editor/Origin
 	rel_button=$Params/Relative
 	hiddables=[$Params/R,$Params/HBC]
 	relative=mode==MODE_REL or mode==MODE_SWREL
@@ -109,7 +117,7 @@ func set_values(v:Array)->void:
 func process_mask_input(ev:InputEventMouse)->void:
 	if ev.button_mask==BUTTON_MASK_LEFT:
 		var ym:float=values_graph.rect_size.y
-		var ix:int=clamp(ev.position.x/16.0,0.0,MAX_STEPS-1)
+		var ix:int=clamp(ev.position.x/bar_width,0.0,MAX_STEPS-1)
 		var yv:int=max_value_abs-clamp(floor((ev.position.y/ym)*(max_value_abs+1)),0.0,max_value_abs)
 		if bmode==0:
 			bset=1<<yv
@@ -131,7 +139,7 @@ func _on_Values_gui_input(ev:InputEvent)->void:
 		return
 	var st:float=step*(big_step if ev.shift else 1)*(huge_step if ev.control else 1)
 	var ym:float=values_graph.rect_size.y
-	var ix:int=clamp(ev.position.x/16.0,0.0,MAX_STEPS-1)
+	var ix:int=clamp(ev.position.x/bar_width,0.0,MAX_STEPS-1)
 	var miv:float=min_value_rel if relative else min_value_abs
 	var mxv:float=max_value_rel if relative else max_value_abs
 	var yv:float=clamp(stepify(range_lerp(ev.position.y,0.0,ym,mxv,miv),st),miv,mxv)
@@ -177,7 +185,7 @@ func _on_Values_gui_input(ev:InputEvent)->void:
 func _on_LoopRange_gui_input(ev:InputEvent)->void:
 	if not ev is InputEventMouse:
 		return
-	var ix:int=ev.position.x/16.0
+	var ix:int=ev.position.x/bar_width
 	var redraw:bool=false
 	if ev.button_mask==BUTTON_MASK_LEFT:
 		if ev.shift:
@@ -218,7 +226,7 @@ func _on_Steps_value_changed(s:int)->void:
 		loop_start=-1
 		loop_end=-1
 		release_loop_start=-1
-	$Editor/Origin.rect_min_size.x=steps*16.0
+	origin.rect_min_size.x=steps*bar_width
 	values_graph.update()
 	loop_graph.update()
 	emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
@@ -226,64 +234,74 @@ func _on_Steps_value_changed(s:int)->void:
 func _on_Values_draw()->void:
 	if values_graph==null:
 		return
-	values_graph.rect_min_size.x=steps*16.0
+	values_graph.rect_min_size.x=steps*bar_width
 	var ym:float=values_graph.rect_size.y
 	var y0:float=range_lerp(center_value,min_value_rel,max_value_rel,ym,0.0)
 	var x0:float=0.0
 	var yv:float
+	var color:Color
 	if mode==MODE_MASK:
 		var hb:float=ym/(max_value_abs+1.0)
 		var j:int
+		color=real_theme.get_color("mask_color","BarEditor")
 		for i in steps:
 			j=1<<int(max_value_abs)
 			yv=0.0
 			while j>0:
 				if values[i]&j:
-					values_graph.draw_rect(Rect2(x0,yv,15.0,hb-1.0),Color.white)
+					values_graph.draw_rect(Rect2(x0,yv,bar_width-1.0,hb-1.0),color)
 				j>>=1
 				yv+=hb
-			
-			x0+=16.0
+			x0+=bar_width
 	elif relative:
+		color=real_theme.get_color("relative_color","BarEditor")
+		values_graph.draw_line(Vector2(0.0,y0),Vector2(editor.rect_size.x,y0),
+			real_theme.get_color("center_color","BarEditor")
+		)
+		var dy:float=bar_height*0.5
 		for i in steps:
-			values_graph.draw_line(Vector2(x0,y0),Vector2(x0+15.0,y0),Color.white)
 			yv=range_lerp(values[i],min_value_rel,max_value_rel,ym,0.0)
-			values_graph.draw_rect(Rect2(x0,yv-4.0,15.0,8.0),Color.white)
-			x0+=16.0
+			values_graph.draw_rect(Rect2(x0,yv-dy,bar_width-1.0,bar_height),color)
+			x0+=bar_width
 	else:
+		color=real_theme.get_color("values_color","BarEditor")
 		for i in steps:
 			yv=-range_lerp(values[i],min_value_abs,max_value_abs,0.0,ym)
-			values_graph.draw_rect(Rect2(x0,ym,15.0,yv),Color.white)
-			x0+=16.0
+			values_graph.draw_rect(Rect2(x0,ym,bar_width-1.0,yv),color)
+			x0+=bar_width
 
 func _on_LoopRange_draw()->void:
 	if loop_graph==null:
 		return
+	var loop_color:Color=real_theme.get_color("loop_color","BarEditor")
+	var release_color:Color=real_theme.get_color("release_color","BarEditor")
 	var x0:float
 	var h:float=loop_graph.rect_size.y*0.5
 	if loop_start>-1 and loop_end>-1:
-		x0=loop_start*16.0
+		x0=loop_start*bar_width
 		for _i in range(loop_start,loop_end+1):
-			loop_graph.draw_rect(Rect2(x0,0.0,15.0,h),Color.white)
-			x0+=16.0
+			loop_graph.draw_rect(Rect2(x0,0.0,bar_width-1.0,h),loop_color)
+			x0+=bar_width
 	if release_loop_start>-1:
-		x0=release_loop_start*16.0
+		x0=release_loop_start*bar_width
 		for _i in range(release_loop_start,steps):
-			loop_graph.draw_rect(Rect2(x0,h,15.0,h),Color.white)
-			x0+=16.0
+			loop_graph.draw_rect(Rect2(x0,h,bar_width-1.0,h),release_color)
+			x0+=bar_width
 
-func _on_Editor_draw():
+func _on_Editor_draw()->void:
 	if editor==null or values_graph==null or loop_graph==null:
 		return
 	if Engine.editor_hint:
-		editor.draw_rect(Rect2(Vector2.ZERO,editor.rect_size),Color.red,false)
+		editor.draw_rect(Rect2(Vector2.ZERO,editor.rect_size),Color.red,false,2.0)
 		return
-	var sb:=real_theme.get_stylebox("panel","PanelContainer")
-	editor.draw_style_box(sb,Rect2(Vector2.ZERO,Vector2(editor.rect_size.x,values_graph.rect_size.y)))
-	editor.draw_style_box(sb,Rect2(loop_graph.rect_position,Vector2(editor.rect_size.x,loop_graph.rect_size.y)))
+	editor.draw_style_box(real_theme.get_stylebox("values","BarEditor"),
+		Rect2(Vector2.ZERO,Vector2(editor.rect_size.x,values_graph.rect_size.y))
+	)
+	editor.draw_style_box(real_theme.get_stylebox("loop","BarEditor"),
+		Rect2(loop_graph.rect_position,Vector2(editor.rect_size.x,loop_graph.rect_size.y))
+	)
 
-
-func _on_Values_mouse_exited():
+func _on_Values_mouse_exited()->void:
 	val_tooltip.fade()
 
 func _on_Relative_toggled(p:bool)->void:
@@ -313,6 +331,7 @@ func _on_Title_pressed(delta:int)->void:
 			h.visible=true
 		rect_min_size.y=heights[height_sel-1]
 		rect_size.y=heights[height_sel-1]
+	$Editor/Origin/HBC.queue_sort()
 
 func _on_Div_value_changed(v:float)->void:
 	tick_div=v

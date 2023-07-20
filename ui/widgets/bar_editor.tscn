@@ -6,7 +6,8 @@
 
 [node name="BarEditor" type="HBoxContainer"]
 anchor_right = 1.0
-margin_bottom = 20.0
+anchor_bottom = 1.0
+margin_bottom = -580.0
 mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
@@ -38,6 +39,7 @@ margin_top = 78.0
 margin_right = 128.0
 margin_bottom = 102.0
 toggle_mode = true
+pressed = true
 text = "Relative"
 
 [node name="HBC" type="GridContainer" parent="Params"]
@@ -126,8 +128,10 @@ anchor_bottom = 1.0
 mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_constants/separation = 0
 
 [node name="Values" type="Control" parent="Editor/Origin/HBC"]
+margin_bottom = 4.0
 rect_clip_content = true
 size_flags_horizontal = 3
 size_flags_vertical = 3

@@ -12,7 +12,7 @@ SHADOW_TYPE: "none" | "drop" | "outline"
 
 BOX_TYPE: BOX_TYPE_FLAT | BOX_TYPE_BITMAP
 
-SIDES_TYPE: number<all> | [number<top,bottom>,number<left,right>] | [number<top>,number<left,right>,number<bottom>] | [number<top>,number:<right>,number:<bottom>,number:<left>]
+SIDES_TYPE: number<all> | [number<top,bottom>,number<left,right>] | [number<top>,number<left,right>,number<bottom>] | [number<top>,number<right>,number<bottom>,number<left>]
 
 CORNERS_TYPE: number<all> | [number<top-left,bottom-right>,number<top-right,bottom-left>] | [number<top-left>,number<top-right,bottom-left>,number<bottom-right>] | [number<top-left>,number<top-right>,number<bottom-right>,number<bottom-left>]
 
@@ -204,4 +204,13 @@ order-matrix: {
 	}
 	margin: COORDS_TYPE
 	font: FONT_TYPE
+}
+bar-editor: {
+	bar-width + loop-height + separation: number
+	color + relative-color + mask-color + center-color + loop-color + release-color: COLOR_TYPE
+	values + loop: BOX_TYPE
+	labels: {
+		FONT_TYPE
+		color: COLOR_TYPE
+	}
 }

@@ -89,7 +89,7 @@ size_flags_vertical = 3
 scroll_horizontal_enabled = false
 
 [node name="VBC" type="VBoxContainer" parent="Tabs/Parameters/Params"]
-margin_right = 996.0
+margin_right = 564.0
 margin_bottom = 960.0
 size_flags_horizontal = 3
 
@@ -150,7 +150,7 @@ size_flags_vertical = 3
 scroll_horizontal_enabled = false
 
 [node name="VBC" type="VBoxContainer" parent="Tabs/Macros/Macro"]
-margin_right = 1016.0
+margin_right = 132.0
 margin_bottom = 256.0
 rect_min_size = Vector2( 0, 256 )
 size_flags_horizontal = 3
@@ -232,7 +232,7 @@ size_flags_vertical = 3
 scroll_horizontal_enabled = false
 
 [node name="VBC" type="VBoxContainer" parent="Tabs/Macros OP1/Macro"]
-margin_right = 1016.0
+margin_right = 132.0
 margin_bottom = 188.0
 size_flags_horizontal = 3
 

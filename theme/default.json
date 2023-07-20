@@ -256,6 +256,12 @@
 			"color":"#226644"
 		},
 		"margin":1
+	},
+	"bar-editor":{
+		"separation":1,
+		"labels":{
+			"size":10
+		}
 	}
 }
 

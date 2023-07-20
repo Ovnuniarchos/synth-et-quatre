@@ -147,7 +147,29 @@ func parse_theme(file:String)->Theme:
 	set_tooltip_style(new_theme,theme_data,"tooltip",base_dir)
 	# Tracker
 	set_tracker_styles(new_theme,theme_data,"tracker",base_dir)
+	# Bar editor
+	set_bar_editor_styles(new_theme,theme_data,"bar-editor",base_dir)
 	return new_theme
+
+
+func set_bar_editor_styles(new_theme:Theme,data:Dictionary,key:String,base_dir:String)->void:
+	var frag:Dictionary=ThemeParser.typesafe_get(data,key,{})
+	var sb:StyleBox=new_theme.get_stylebox("panel","PanelContainer")
+	new_theme.set_stylebox("values","BarEditor",ThemeParser.create_stylebox(frag,"values",base_dir,box_colorsets[BS_NORMAL],sb,std_image))
+	new_theme.set_stylebox("loop","BarEditor",ThemeParser.create_stylebox(frag,"loop",base_dir,box_colorsets[BS_NORMAL],new_theme.get_stylebox("values","BarEditor"),std_image))
+	new_theme.set_color("values_color","BarEditor",ThemeParser.parse_color(frag,"color",std_colors[CO_HOVER_FG]))
+	new_theme.set_color("relative_color","BarEditor",ThemeParser.parse_color(frag,"relative-color",new_theme.get_color("values_color","BarEditor")))
+	new_theme.set_color("mask_color","BarEditor",ThemeParser.parse_color(frag,"mask-color",new_theme.get_color("values_color","BarEditor")))
+	new_theme.set_color("center_color","BarEditor",ThemeParser.parse_color(frag,"center-color",new_theme.get_color("values_color","BarEditor")))
+	new_theme.set_color("loop_color","BarEditor",ThemeParser.parse_color(frag,"loop-color",new_theme.get_color("values_color","BarEditor")))
+	new_theme.set_color("release_color","BarEditor",ThemeParser.parse_color(frag,"release-color",new_theme.get_color("loop_color","BarEditor")))
+	new_theme.set_constant("bar_width","BarEditor",ThemeParser.typesafe_get(frag,"bar-width",16.0))
+	new_theme.set_constant("loop_height","BarEditor",ThemeParser.typesafe_get(frag,"loop-height",16.0))
+	new_theme.set_constant("separation","BarEditor",ThemeParser.typesafe_get(frag,"separation",new_theme.get_constant("separation","HBoxContainer")))
+	var f2:Dictionary=ThemeParser.typesafe_get(frag,"labels",{})
+	new_theme.set_color("label_color","BarEditor",ThemeParser.parse_color(f2,"color",std_colors[CO_DEFAULT_FG]))
+	new_theme.set_font("label_font","BarEditor",ThemeParser.parse_font(frag,"labels",base_dir,new_theme.get_font("font","TooltipLabel")))
+
 
 
 func set_order_matrix_styles(new_theme:Theme,data:Dictionary,key:String,base_dir:String)->void:

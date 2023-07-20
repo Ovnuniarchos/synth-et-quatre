@@ -148,7 +148,7 @@ func _on_macro_timer()->void:
 			val=instr.sus_level_macros[op].get_value(kot,kft,0)
 			synth.set_sustain_level(chan,mask,val)
 			# TODO: Op SusRate
-			val=instr.sus_rate_macross[op].get_value(kot,kft,0)
+			val=instr.sus_rate_macros[op].get_value(kot,kft,0)
 			synth.set_sustain_rate(chan,mask,val)
 			# TODO: Op Release
 			val=instr.release_macros[op].get_value(kot,kft,0)

@@ -16,6 +16,9 @@ func _ready()->void:
 	var real_theme:Theme=THEME.get("theme")
 	if real_theme!=null:
 		add_stylebox_override("panel",real_theme.get_stylebox("panel","TooltipPanel"))
+		label.add_font_override("font",real_theme.get_font("font","TooltipLabel"))
+		label.add_font_override("font_color",real_theme.get_font("font_color","TooltipLabel"))
+		label.add_font_override("font_color_shadow",real_theme.get_font("font_color_shadow","TooltipLabel"))
 
 func show_at(t:String,p:Vector2)->void:
 	label.text=t

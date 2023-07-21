@@ -102,6 +102,7 @@ func parse_theme(file:String)->Theme:
 	panel_st[BS_HOVER]=ThemeParser.create_stylebox(theme_data,"panel",base_dir,button_colorsets[BS_HOVER],null,std_image)
 	panel_st[BS_PRESSED]=ThemeParser.create_stylebox(theme_data,"panel",base_dir,button_colorsets[BS_PRESSED],null,std_image)
 	new_theme.set_stylebox("panel","PanelContainer",panel_st[BS_NORMAL])
+	new_theme.set_stylebox("panel","Panel",panel_st[BS_NORMAL])
 	new_theme.set_stylebox("empty_panel","",EMPTY_STYLEBOX)
 	# Popups
 	set_popup_styles(new_theme,theme_data,base_dir)
@@ -152,11 +153,28 @@ func parse_theme(file:String)->Theme:
 	return new_theme
 
 
+func set_bar_editor_margins(sb:StyleBox,frag:Dictionary)->void:
+	if not frag.has("margin"):
+		if sb is StyleBoxFlat:
+			sb.content_margin_left=sb.border_width_left
+			sb.content_margin_right=sb.border_width_right
+			sb.content_margin_top=sb.border_width_top
+			sb.content_margin_bottom=sb.border_width_bottom
+		else:
+			sb.content_margin_left=sb.margin_left
+			sb.content_margin_right=sb.margin_right
+			sb.content_margin_top=sb.margin_top
+			sb.content_margin_bottom=sb.margin_bottom
+
 func set_bar_editor_styles(new_theme:Theme,data:Dictionary,key:String,base_dir:String)->void:
 	var frag:Dictionary=ThemeParser.typesafe_get(data,key,{})
 	var sb:StyleBox=new_theme.get_stylebox("panel","PanelContainer")
-	new_theme.set_stylebox("values","BarEditor",ThemeParser.create_stylebox(frag,"values",base_dir,box_colorsets[BS_NORMAL],sb,std_image))
-	new_theme.set_stylebox("loop","BarEditor",ThemeParser.create_stylebox(frag,"loop",base_dir,box_colorsets[BS_NORMAL],new_theme.get_stylebox("values","BarEditor"),std_image))
+	var sb2:StyleBox=ThemeParser.create_stylebox(frag,"values",base_dir,box_colorsets[BS_NORMAL],sb,std_image)
+	set_bar_editor_margins(sb2,ThemeParser.typesafe_get(frag,"values",{}))
+	new_theme.set_stylebox("values","BarEditor",sb2)
+	sb2=ThemeParser.create_stylebox(frag,"loop",base_dir,box_colorsets[BS_NORMAL],new_theme.get_stylebox("values","BarEditor"),std_image)
+	set_bar_editor_margins(sb2,ThemeParser.typesafe_get(frag,"loop",{}))
+	new_theme.set_stylebox("loop","BarEditor",sb2)
 	new_theme.set_color("values_color","BarEditor",ThemeParser.parse_color(frag,"color",std_colors[CO_HOVER_FG]))
 	new_theme.set_color("relative_color","BarEditor",ThemeParser.parse_color(frag,"relative-color",new_theme.get_color("values_color","BarEditor")))
 	new_theme.set_color("mask_color","BarEditor",ThemeParser.parse_color(frag,"mask-color",new_theme.get_color("values_color","BarEditor")))

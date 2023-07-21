@@ -33,8 +33,9 @@ var loop_graph:Control
 var val_tooltip:Tooltip
 var rel_button:Button
 var real_theme:Theme
-var origin:Control
-var editor:ScrollContainer
+var editor:Control
+var scroll:ScrollBar
+
 var bar_width:float
 var bar_height:float
 var hiddables:Array
@@ -52,6 +53,7 @@ export (int) var step:int=1.0
 export (int) var big_step:int=4.0
 export (int) var huge_step:int=16.0
 export (int,"Absolute","Relative","SwitchAbs","SwitchRel","Mask") var mode:int=MODE_SWREL
+export (PoolStringArray) var labels:PoolStringArray=PoolStringArray()
 
 
 func _init()->void:
@@ -63,19 +65,22 @@ func _ready()->void:
 		real_theme=Theme.new()
 	else:
 		real_theme=THEME.theme
+	theme=real_theme
 	title_button=$Params/Title
 	step_bar=$Params/HBC/Steps
 	div_bar=$Params/HBC/Div
 	delay_bar=$Params/HBC/Delay
-	values_graph=$Editor/Origin/HBC/Values
-	loop_graph=$Editor/Origin/HBC/LoopRange
-	val_tooltip=$Editor/Origin/Value
-	$Editor/Origin/HBC.add_constant_override("separation",real_theme.get_constant("separation","BarEditor"))
-	$Editor/Origin/HBC/LoopRange.rect_min_size.y=real_theme.get_constant("loop_height","BarEditor")
+	values_graph=$Editor/Values/Values
+	loop_graph=$Editor/LoopRange/LoopRange
+	$Editor/Values.add_stylebox_override("panel",real_theme.get_stylebox("values","BarEditor"))
+	$Editor/LoopRange.add_stylebox_override("panel",real_theme.get_stylebox("loop","BarEditor"))
+	$Editor/LoopRange.rect_min_size.y=real_theme.get_constant("loop_height","BarEditor")
+	val_tooltip=$Editor/Values/Values/Value
 	bar_width=real_theme.get_constant("bar_size_x","BarEditor")
 	bar_height=real_theme.get_constant("bar_size_y","BarEditor")
 	editor=$Editor
-	origin=$Editor/Origin
+	editor.add_constant_override("separation",real_theme.get_constant("separation","BarEditor"))
+	scroll=$Editor/HScrollBar
 	rel_button=$Params/Relative
 	hiddables=[$Params/R,$Params/HBC]
 	relative=mode==MODE_REL or mode==MODE_SWREL
@@ -95,13 +100,15 @@ func can_switch_modes()->bool:
 
 func set_title(t:String)->void:
 	title=t
-	if title_button!=null:
-		title_button.text=t
+	if title_button==null:
+		yield(self,"ready")
+	title_button.text=t
 
 func set_title_width(w:float)->void:
 	title_width=w
-	if title_button!=null:
-		title_button.rect_min_size.x=w
+	if title_button==null:
+		yield(self,"ready")
+	title_button.rect_min_size.x=w
 
 func init_values()->void:
 	if mode<MODE_MASK:
@@ -139,7 +146,7 @@ func _on_Values_gui_input(ev:InputEvent)->void:
 		return
 	var st:float=step*(big_step if ev.shift else 1)*(huge_step if ev.control else 1)
 	var ym:float=values_graph.rect_size.y
-	var ix:int=clamp(ev.position.x/bar_width,0.0,MAX_STEPS-1)
+	var ix:int=clamp((ev.position.x+scroll.value)/bar_width,0.0,MAX_STEPS-1)
 	var miv:float=min_value_rel if relative else min_value_abs
 	var mxv:float=max_value_rel if relative else max_value_abs
 	var yv:float=clamp(stepify(range_lerp(ev.position.y,0.0,ym,mxv,miv),st),miv,mxv)
@@ -185,7 +192,7 @@ func _on_Values_gui_input(ev:InputEvent)->void:
 func _on_LoopRange_gui_input(ev:InputEvent)->void:
 	if not ev is InputEventMouse:
 		return
-	var ix:int=ev.position.x/bar_width
+	var ix:int=(ev.position.x+scroll.value)/bar_width
 	var redraw:bool=false
 	if ev.button_mask==BUTTON_MASK_LEFT:
 		if ev.shift:
@@ -226,15 +233,15 @@ func _on_Steps_value_changed(s:int)->void:
 		loop_start=-1
 		loop_end=-1
 		release_loop_start=-1
-	origin.rect_min_size.x=steps*bar_width
 	values_graph.update()
 	loop_graph.update()
+	_on_item_rect_changed()
 	emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
 
 func _on_Values_draw()->void:
 	if values_graph==null:
-		return
-	values_graph.rect_min_size.x=steps*bar_width
+		yield(self,"ready")
+	values_graph.draw_set_transform(Vector2(-scroll.value,0.0),0.0,Vector2.ONE)
 	var ym:float=values_graph.rect_size.y
 	var y0:float=range_lerp(center_value,min_value_rel,max_value_rel,ym,0.0)
 	var x0:float=0.0
@@ -255,7 +262,7 @@ func _on_Values_draw()->void:
 			x0+=bar_width
 	elif relative:
 		color=real_theme.get_color("relative_color","BarEditor")
-		values_graph.draw_line(Vector2(0.0,y0),Vector2(editor.rect_size.x,y0),
+		values_graph.draw_line(Vector2(0.0,y0),Vector2(steps*bar_width,y0),
 			real_theme.get_color("center_color","BarEditor")
 		)
 		var dy:float=bar_height*0.5
@@ -272,7 +279,8 @@ func _on_Values_draw()->void:
 
 func _on_LoopRange_draw()->void:
 	if loop_graph==null:
-		return
+		yield(self,"ready")
+	loop_graph.draw_set_transform(Vector2(-scroll.value,0.0),0.0,Vector2.ONE)
 	var loop_color:Color=real_theme.get_color("loop_color","BarEditor")
 	var release_color:Color=real_theme.get_color("release_color","BarEditor")
 	var x0:float
@@ -287,19 +295,6 @@ func _on_LoopRange_draw()->void:
 		for _i in range(release_loop_start,steps):
 			loop_graph.draw_rect(Rect2(x0,h,bar_width-1.0,h),release_color)
 			x0+=bar_width
-
-func _on_Editor_draw()->void:
-	if editor==null or values_graph==null or loop_graph==null:
-		return
-	if Engine.editor_hint:
-		editor.draw_rect(Rect2(Vector2.ZERO,editor.rect_size),Color.red,false,2.0)
-		return
-	editor.draw_style_box(real_theme.get_stylebox("values","BarEditor"),
-		Rect2(Vector2.ZERO,Vector2(editor.rect_size.x,values_graph.rect_size.y))
-	)
-	editor.draw_style_box(real_theme.get_stylebox("loop","BarEditor"),
-		Rect2(loop_graph.rect_position,Vector2(editor.rect_size.x,loop_graph.rect_size.y))
-	)
 
 func _on_Values_mouse_exited()->void:
 	val_tooltip.fade()
@@ -331,7 +326,6 @@ func _on_Title_pressed(delta:int)->void:
 			h.visible=true
 		rect_min_size.y=heights[height_sel-1]
 		rect_size.y=heights[height_sel-1]
-	$Editor/Origin/HBC.queue_sort()
 
 func _on_Div_value_changed(v:float)->void:
 	tick_div=v
@@ -359,3 +353,17 @@ func set_macro(m:ParamMacro)->void:
 	div_bar.value=tick_div
 	delay_bar.value=delay
 	set_block_signals(false)
+
+func _on_item_rect_changed()->void:
+	if scroll==null:
+		yield(self,"ready")
+	scroll.max_value=steps*bar_width
+	scroll.page=editor.rect_size.x
+	scroll.visible=scroll.max_value>scroll.page
+	_on_scrolling()
+
+func _on_scrolling()->void:
+	if values_graph==null:
+		yield(self,"ready")
+	values_graph.update()
+	loop_graph.update()

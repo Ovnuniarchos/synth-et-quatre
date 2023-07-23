@@ -5,7 +5,9 @@
 		"faded-fg":"#80000000",
 		"faded-bg":"#80ccccdd",
 		"hover-fg":"white",
-		"hover-bg":"black"
+		"hover-bg":"black",
+		"accent-fg":"#44ff99",
+		"accent-bg":"#226644"
 	},
 	"default-image":"editor.png",
 	"glyphs":{
@@ -108,11 +110,11 @@
 		},
 		"pressed":{
 			"type":"flat",
-			"background":"#226644",
-			"border":"#44ff99",
+			"background":"backgroundaccent",
+			"border":"foregroundaccent",
 			"border-width":2,
 			"margin":4,
-			"color":"#44ff99"
+			"color":"foregroundaccent"
 		}
 	},
 	"popup":{
@@ -248,19 +250,24 @@
 			"border-width":0
 		},
 		"rownum-sel":{
-			"background":"#226644",
-			"color":"#44ff99"
+			"background":"backgroundaccent",
+			"color":"foregroundaccent"
 		},
 		"rownum-sel-hover":{
-			"background":"#44ff99",
-			"color":"#226644"
+			"background":"foregroundaccent",
+			"color":"backgroundaccent"
 		},
 		"margin":1
 	},
 	"bar-editor":{
 		"separation":1,
 		"labels":{
-			"size":10
+			"font":{
+				"size":10,
+				"outline-size":1
+			},
+			"color":"fff",
+			"outline":"000"
 		}
 	}
 }

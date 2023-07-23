@@ -6,7 +6,7 @@ STRETCH_MODE: "stretch" | "tile" | "fit"
 
 HINT_MODE: "none" | "light" | "normal"
 
-COLOR_TYPE: /#?([:xdigit:]{2})?[:xdigit:]{6}/i | COLOR_NAME | array4(number) | number
+COLOR_TYPE: /#?([:xdigit:]{2})?[:xdigit:]{6}/i | COLOR_NAME | number<R,G,B> | [number<R,G,B>] | [number<R,G,B>,number<A>] | [number<R>,number<G>,number<B>] | [number<R>,number<G>,number<B>,number<A>]
 
 SHADOW_TYPE: "none" | "drop" | "outline"
 
@@ -19,6 +19,10 @@ CORNERS_TYPE: number<all> | [number<top-left,bottom-right>,number<top-right,bott
 RECT_TYPE: number<all> | [number<top,left>,number<width,height>] | [number<left>,number<top>,number<width,height>] | [number<left>,number<top>,number<width>,number<height>]
 
 COORDS_TYPE: number<all> | [number<x>,number<y>]
+
+STRETCH_TYPE: STRETCH_MODE<all> | [STRETCH_MODE<all>] | [STRETCH_MODE<x>,STRETCH_MODE<y>]
+
+COLOR_NAME: aliceblue | antiquewhite | aqua | aquamarine | azure | beige | bisque | black | blanchedalmond | blue | blueviolet | brown | burlywood | cadetblue | chartreuse | chocolate | coral | cornflower | cornsilk | crimson | cyan | darkblue | darkcyan | darkgoldenrod | darkgray | darkgreen | darkkhaki | darkmagenta | darkolivegreen | darkorange | darkorchid | darkred | darksalmon | darkseagreen | darkslateblue | darkslategray | darkturquoise | darkviolet | deeppink | deepskyblue | dimgray | dodgerblue | firebrick | floralwhite | forestgreen | fuchsia | gainsboro | ghostwhite | gold | goldenrod | gray | green | greenyellow | honeydew | hotpink | indianred | indigo | ivory | khaki | lavender | lavenderblush | lawngreen | lemonchiffon | lightblue | lightcoral | lightcyan | lightgoldenrod | lightgray | lightgreen | lightpink | lightsalmon | lightseagreen | lightskyblue | lightslategray | lightsteelblue | lightyellow | lime | limegreen | linen | magenta | maroon | mediumaquamarine | mediumblue | mediumorchid | mediumpurple | mediumseagreen | mediumslateblue | mediumspringgreen | mediumturquoise | mediumvioletred | midnightblue | mintcream | mistyrose | moccasin | navajowhite | navyblue | oldlace | olive | olivedrab | orange | orangered | orchid | palegoldenrod | palegreen | paleturquoise | palevioletred | papayawhip | peachpuff | peru | pink | plum | powderblue | purple | rebeccapurple | red | rosybrown | royalblue | saddlebrown | salmon | sandybrown | seagreen | seashell | sienna | silver | skyblue | slateblue | slategray | snow | springgreen | steelblue | tan | teal | thistle | tomato | transparent | turquoise | violet | webgray | webgreen | webmaroon | webpurple | wheat | white | whitesmoke | yellow | yellowgreen | background | foreground | backgroundfaded | foregroundfaded | backgroundhover | foregroundhover | backgroundaccent | foregroundaccent
 
 BOX_TYPE_FLAT: {
 	type: "flat"
@@ -37,7 +41,7 @@ BOX_TYPE_BITMAP: {
 	rect: RECT_TYPE
 	margin: SIDES_TYPE
 	border-width: SIDES_TYPE
-	stretch: array2(STRETCH_MODE)
+	stretch: STRETCH_TYPE
 }
 
 SCROLLBAR_TYPE: SCROLLBAR_TYPE_FLAT | SCROLLBAR_TYPE_BITMAP
@@ -57,7 +61,7 @@ SCROLLBAR_TYPE_BITMAP: {
 	modulate: COLOR_TYPE
 	margin: SIDES_TYPE
 	border-width: SIDES_TYPE
-	stretch: array2(STRETCH_MODE)
+	stretch: STRETCH_TYPE
 }
 
 FONT_TYPE: {
@@ -103,7 +107,7 @@ TEXT_STYLE: {
 #----------------------------------------------------------------#
 
 colors: {
-	default-fg + default-bg + faded-fg + faded-bg: COLOR_TYPE
+	default-fg + default-bg + faded-fg + faded-bg + accent-fg + accent-bg: COLOR_TYPE
 }
 default-image: string
 glyphs: {
@@ -210,8 +214,5 @@ bar-editor: {
 	loop-height + separation: number
 	color + relative-color + mask-color + center-color + loop-color + release-color: COLOR_TYPE
 	values + loop: BOX_TYPE
-	labels: {
-		FONT_TYPE
-		color: COLOR_TYPE
-	}
+	labels: TEXT_STYLE
 }

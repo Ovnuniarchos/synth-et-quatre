@@ -37,6 +37,15 @@ _ALWAYS_INLINE_ void Operator::calculate_envelope(){
 				eg_phase=eg_repeat==SUSTAIN?ATTACK:OFF;
 			}
 			break;
+		case SUSTAIN_UP:
+			eg_vol+=eg_ar;
+			if(!on){
+				eg_phase=eg_repeat==SUSTAIN?ATTACK:RELEASE;
+			}else if(eg_vol>=eg_sl){
+				eg_vol=eg_sl;
+				eg_phase=SUSTAIN;
+			}
+			break;
 		case RELEASE:
 			eg_vol-=eg_rr;
 			if(eg_vol<=0L){
@@ -149,6 +158,13 @@ void Operator::set_decay_rate(int rate){
 void Operator::set_sustain_level(int level){
 	sustain_level=clamp(level,0,255);
 	eg_sl=(FP_ONE*level)/255;
+	if(eg_phase==SUSTAIN || eg_phase==SUSTAIN_UP){
+		if(eg_vol>eg_sl){
+			eg_phase=DECAY;
+		}else if(eg_vol<eg_sl){
+			eg_phase=SUSTAIN_UP;
+		}
+	}
 }
 
 void Operator::set_sustain_rate(int rate){

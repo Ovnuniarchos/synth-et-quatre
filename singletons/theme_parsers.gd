@@ -43,7 +43,19 @@ const SHADOW_TYPES:Dictionary={
 	ST_DROP:1,
 	ST_OUTLINE:2
 }
+const STD_COLORS:Dictionary={
+	"background":Color.transparent,
+	"foreground":Color.transparent,
+	"backgroundfaded":Color.transparent,
+	"foregroundfaded":Color.transparent,
+	"backgroundhover":Color.transparent,
+	"foregroundhover":Color.transparent
+}
 
+static func set_std_colors(colors:Dictionary):
+	for k in colors:
+		if colors[k] is Color:
+			STD_COLORS[k]=colors[k]
 
 static func typesafe_get(d:Dictionary,key:String,default):
 	var ret=d.get(key,default)
@@ -61,17 +73,27 @@ static func parse_boolean(d:Dictionary,key:String,default:bool)->bool:
 	elif typeof(ret) in TYPE_NUMBER:
 		return bool(ret)
 	elif typeof(ret)==TYPE_STRING:
-		return ret.to_lower() in ["yes","true","on"]
+		return ret.to_lower().strip_edges() in ["yes","true","on"]
 	return default
 
 
 static func parse_color(data:Dictionary,key:String,default:Color)->Color:
 	var t:int=typeof(data.get(key,false))
 	if t==TYPE_STRING:
-		var c:String=data.get(key)
+		var c:String=data.get(key).to_lower().replace(" ","")
 		if c.is_valid_html_color():
 			return Color(c)
-		return ColorN(c.to_lower().replace(" ",""))
+		var css_short:RegEx=RegEx.new()
+		css_short.compile("^#?([0-9a-f]{3,4})$")
+		var rm:RegExMatch=css_short.search(c)
+		if rm!=null:
+			c=""
+			for c0 in rm.get_string(1):
+				c+=c0+c0
+			return Color(c)
+		if STD_COLORS.has(c):
+			return STD_COLORS[c];
+		return ColorN(c)
 	elif t==TYPE_ARRAY:
 		var c:Array=data.get(key)
 		if c.size()==1:

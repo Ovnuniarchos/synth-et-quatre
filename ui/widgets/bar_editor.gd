@@ -35,6 +35,7 @@ var rel_button:Button
 var real_theme:Theme
 var editor:Control
 var scroll:ScrollBar
+var labels_point:Control
 
 var bar_width:float
 var bar_height:float
@@ -70,12 +71,13 @@ func _ready()->void:
 	step_bar=$Params/HBC/Steps
 	div_bar=$Params/HBC/Div
 	delay_bar=$Params/HBC/Delay
-	values_graph=$Editor/Values/Values
-	loop_graph=$Editor/LoopRange/LoopRange
+	values_graph=$Editor/Values/Graph
+	loop_graph=$Editor/LoopRange/Graph
+	labels_point=$Editor/Values/Labels
 	$Editor/Values.add_stylebox_override("panel",real_theme.get_stylebox("values","BarEditor"))
 	$Editor/LoopRange.add_stylebox_override("panel",real_theme.get_stylebox("loop","BarEditor"))
 	$Editor/LoopRange.rect_min_size.y=real_theme.get_constant("loop_height","BarEditor")
-	val_tooltip=$Editor/Values/Values/Value
+	val_tooltip=$Editor/Values/Graph/Value
 	bar_width=real_theme.get_constant("bar_size_x","BarEditor")
 	bar_height=real_theme.get_constant("bar_size_y","BarEditor")
 	editor=$Editor
@@ -92,8 +94,6 @@ func _ready()->void:
 	set_title(title)
 	set_title_width(title_width)
 	_on_Title_pressed(0)
-	values_graph.update()
-	loop_graph.update()
 
 func can_switch_modes()->bool:
 	return mode>=MODE_SWABS and mode<MODE_MASK
@@ -120,6 +120,9 @@ func set_values(v:Array)->void:
 	var sz:int=min(MAX_STEPS,v.size())
 	for i in sz:
 		values[i]=v[i]
+	if values_graph==null:
+		yield(self,"ready")
+	values_graph.update()
 
 func process_mask_input(ev:InputEventMouse)->void:
 	if ev.button_mask==BUTTON_MASK_LEFT:
@@ -138,7 +141,7 @@ func process_mask_input(ev:InputEventMouse)->void:
 	elif ev.button_mask==0:
 		bmode=0
 
-func _on_Values_gui_input(ev:InputEvent)->void:
+func _on_ValuesGraph_gui_input(ev:InputEvent)->void:
 	if not ev is InputEventMouse:
 		return
 	if mode==MODE_MASK:
@@ -189,7 +192,7 @@ func _on_Values_gui_input(ev:InputEvent)->void:
 		val_tooltip.show_at(String(yv),ev.position-Vector2(0.0,val_tooltip.rect_size.y*0.5))
 		emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
 
-func _on_LoopRange_gui_input(ev:InputEvent)->void:
+func _on_LoopRangeGraph_gui_input(ev:InputEvent)->void:
 	if not ev is InputEventMouse:
 		return
 	var ix:int=(ev.position.x+scroll.value)/bar_width
@@ -199,7 +202,7 @@ func _on_LoopRange_gui_input(ev:InputEvent)->void:
 			ix=clamp(ix,loop_end+1,steps)
 			release_loop_start=ix
 		else:
-			ix=clamp(ix,0,steps)
+			ix=clamp(ix,0,steps-1)
 			if loop_start<0:
 				loop_start=ix
 				loop_end=loop_start
@@ -238,7 +241,49 @@ func _on_Steps_value_changed(s:int)->void:
 	_on_item_rect_changed()
 	emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
 
-func _on_Values_draw()->void:
+func _on_Labels_draw()->void:
+	if labels_point==null:
+		yield(self,"ready")
+	var texts:Array
+	var font:Font=real_theme.get_font("font","BarEditorLabel")
+	var color:Color=real_theme.get_color("font_color","BarEditorLabel")
+	var ol_color:Color=real_theme.get_color("font_outline_modulate","BarEditorLabel")
+	var s_color:Color=real_theme.get_color("font_color_shadow","BarEditorLabel")
+	var s_ofs:Vector2=Vector2(real_theme.get_constant("shadow_offset_x","BarEditorLabel"),
+		real_theme.get_constant("shadow_offset_y","BarEditorLabel")
+	)
+	var s_outline:bool=real_theme.get_constant("shadow_as_outline","BarEditorLabel")
+	var p0:Vector2
+	var p1:Vector2
+	var dp:Vector2
+	var dp2:Vector2
+	if mode!=MODE_MASK and (relative or labels.empty()):
+		p0=Vector2(labels_point.rect_position)+Vector2(0.0,font.get_ascent())
+		p1=Vector2(labels_point.rect_position)+Vector2(0.0,values_graph.rect_size.y-font.get_descent())
+		if relative:
+			texts=[String(max_value_rel),String(center_value),String(min_value_rel)]
+			dp=(p1-p0)*0.5
+		else:
+			texts=[String(max_value_abs),String(min_value_abs)]
+			dp=p1-p0
+		dp2=Vector2.ZERO
+	elif not labels.empty():
+		texts=labels
+		p0=Vector2(labels_point.rect_position)
+		p1=Vector2(labels_point.rect_position)+Vector2(0.0,values_graph.rect_size.y)
+		dp=(p1-p0)/texts.size()
+		dp2=Vector2(0.0,dp.y+font.get_ascent())*0.5
+	for t in texts:
+		if s_color!=Color.transparent:
+			font.draw(labels_point.get_canvas_item(),p0+dp2+s_ofs,t,s_color,-1,Color.transparent)
+			if s_outline:
+				font.draw(labels_point.get_canvas_item(),p0+dp2+Vector2(-s_ofs.x,s_ofs.y),t,s_color,-1,Color.transparent)
+				font.draw(labels_point.get_canvas_item(),p0+dp2+Vector2(s_ofs.x,-s_ofs.y),t,s_color,-1,Color.transparent)
+				font.draw(labels_point.get_canvas_item(),p0+dp2+Vector2(-s_ofs.x,-s_ofs.y),t,s_color,-1,Color.transparent)
+		font.draw(labels_point.get_canvas_item(),p0+dp2,t,color,-1,ol_color)
+		p0+=dp
+
+func _on_ValuesGraph_draw()->void:
 	if values_graph==null:
 		yield(self,"ready")
 	values_graph.draw_set_transform(Vector2(-scroll.value,0.0),0.0,Vector2.ONE)
@@ -277,7 +322,7 @@ func _on_Values_draw()->void:
 			values_graph.draw_rect(Rect2(x0,ym,bar_width-1.0,yv),color)
 			x0+=bar_width
 
-func _on_LoopRange_draw()->void:
+func _on_LoopRangeGraph_draw()->void:
 	if loop_graph==null:
 		yield(self,"ready")
 	loop_graph.draw_set_transform(Vector2(-scroll.value,0.0),0.0,Vector2.ONE)
@@ -296,7 +341,7 @@ func _on_LoopRange_draw()->void:
 			loop_graph.draw_rect(Rect2(x0,h,bar_width-1.0,h),release_color)
 			x0+=bar_width
 
-func _on_Values_mouse_exited()->void:
+func _on_ValuesGraph_mouse_exited()->void:
 	val_tooltip.fade()
 
 func _on_Relative_toggled(p:bool)->void:
@@ -307,7 +352,10 @@ func _on_Relative_toggled(p:bool)->void:
 	var v11:float=max_value_rel if relative else max_value_abs
 	for i in MAX_STEPS:
 		values[i]=stepify(range_lerp(values[i],v00,v01,v10,v11),step)
+	if values_graph==null:
+		yield(self,"ready")
 	values_graph.update()
+	labels_point.update()
 	emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
 
 func _on_Title_pressed(delta:int)->void:

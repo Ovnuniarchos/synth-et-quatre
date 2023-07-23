@@ -32,16 +32,15 @@ margin_bottom = 2.0
 [node name="BarEditor" type="HBoxContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_bottom = -556.0
+margin_bottom = -580.0
 size_flags_horizontal = 3
 size_flags_vertical = 0
 theme = SubResource( 1 )
 script = ExtResource( 1 )
-max_value_abs = 3
 
 [node name="Params" type="VBoxContainer" parent="."]
 margin_right = 128.0
-margin_bottom = 44.0
+margin_bottom = 20.0
 
 [node name="Title" type="Button" parent="Params"]
 margin_right = 128.0
@@ -140,30 +139,30 @@ huge_step = 32.0
 [node name="Editor" type="VBoxContainer" parent="."]
 margin_left = 132.0
 margin_right = 1024.0
-margin_bottom = 44.0
+margin_bottom = 20.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 0
 
 [node name="Values" type="PanelContainer" parent="Editor"]
 margin_right = 892.0
-margin_bottom = 40.0
+margin_bottom = 16.0
 rect_clip_content = true
 mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 4 )
 
-[node name="Values" type="Control" parent="Editor/Values"]
+[node name="Graph" type="Control" parent="Editor/Values"]
 margin_left = 2.0
 margin_top = 2.0
 margin_right = 890.0
-margin_bottom = 38.0
+margin_bottom = 14.0
 rect_clip_content = true
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Value" type="PanelContainer" parent="Editor/Values/Values"]
+[node name="Value" type="PanelContainer" parent="Editor/Values/Graph"]
 visible = false
 self_modulate = Color( 1, 1, 1, 0.752941 )
 margin_left = -7.0
@@ -173,16 +172,25 @@ margin_bottom = 7.0
 mouse_filter = 1
 script = ExtResource( 3 )
 
+[node name="Labels" type="ReferenceRect" parent="Editor/Values"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 2.0
+margin_bottom = 2.0
+mouse_filter = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
 [node name="LoopRange" type="PanelContainer" parent="Editor"]
-margin_top = 40.0
+margin_top = 16.0
 margin_right = 892.0
-margin_bottom = 44.0
+margin_bottom = 20.0
 rect_clip_content = true
 mouse_filter = 1
 size_flags_horizontal = 3
 custom_styles/panel = SubResource( 4 )
 
-[node name="LoopRange" type="Control" parent="Editor/LoopRange"]
+[node name="Graph" type="Control" parent="Editor/LoopRange"]
 margin_left = 2.0
 margin_top = 2.0
 margin_right = 890.0
@@ -207,9 +215,10 @@ page = 892.0
 [connection signal="value_changed" from="Params/HBC/Steps" to="." method="_on_Steps_value_changed"]
 [connection signal="value_changed" from="Params/HBC/Div" to="." method="_on_Div_value_changed"]
 [connection signal="value_changed" from="Params/HBC/Delay" to="." method="_on_Delay_value_changed"]
-[connection signal="draw" from="Editor/Values/Values" to="." method="_on_Values_draw"]
-[connection signal="gui_input" from="Editor/Values/Values" to="." method="_on_Values_gui_input"]
-[connection signal="mouse_exited" from="Editor/Values/Values" to="." method="_on_Values_mouse_exited"]
-[connection signal="draw" from="Editor/LoopRange/LoopRange" to="." method="_on_LoopRange_draw"]
-[connection signal="gui_input" from="Editor/LoopRange/LoopRange" to="." method="_on_LoopRange_gui_input"]
+[connection signal="draw" from="Editor/Values/Graph" to="." method="_on_ValuesGraph_draw"]
+[connection signal="gui_input" from="Editor/Values/Graph" to="." method="_on_ValuesGraph_gui_input"]
+[connection signal="mouse_exited" from="Editor/Values/Graph" to="." method="_on_ValuesGraph_mouse_exited"]
+[connection signal="draw" from="Editor/Values/Labels" to="." method="_on_Labels_draw"]
+[connection signal="draw" from="Editor/LoopRange/Graph" to="." method="_on_LoopRangeGraph_draw"]
+[connection signal="gui_input" from="Editor/LoopRange/Graph" to="." method="_on_LoopRangeGraph_gui_input"]
 [connection signal="scrolling" from="Editor/HScrollBar" to="." method="_on_scrolling"]

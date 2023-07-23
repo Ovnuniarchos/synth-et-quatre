@@ -12,13 +12,17 @@ const CO_FADED_FG:String="faded-fg"
 const CO_FADED_BG:String="faded-bg"
 const CO_HOVER_FG:String="hover-fg"
 const CO_HOVER_BG:String="hover-bg"
+const CO_ACCENT_FG:String="accent-fg"
+const CO_ACCENT_BG:String="accent-bg"
 const DEFAULT_COLORS:Dictionary={
 	CO_DEFAULT_FG:Color.black,
 	CO_DEFAULT_BG:Color.white,
 	CO_FADED_FG:Color(0.0,0.0,0.0,0.5),
 	CO_FADED_BG:Color(1.0,1.0,1.0,0.5),
 	CO_HOVER_FG:Color.white,
-	CO_HOVER_BG:Color.black
+	CO_HOVER_BG:Color.black,
+	CO_ACCENT_FG:Color.red,
+	CO_ACCENT_BG:Color.darkred
 }
 var EMPTY_STYLEBOX:StyleBoxEmpty=StyleBoxEmpty.new()
 var EMPTY_TEXTURE:Texture=StreamTexture.new()
@@ -57,6 +61,16 @@ func parse_theme(file:String)->Theme:
 	var new_theme=Theme.new()
 	# Colors
 	std_colors=set_default_colors(new_theme,theme_data)
+	ThemeParser.set_std_colors({
+		"background":std_colors[CO_DEFAULT_BG],
+		"foreground":std_colors[CO_DEFAULT_FG],
+		"backgroundfaded":std_colors[CO_FADED_BG],
+		"foregroundfaded":std_colors[CO_FADED_FG],
+		"backgroundhover":std_colors[CO_HOVER_BG],
+		"foregroundhover":std_colors[CO_HOVER_FG],
+		"backgroundaccent":std_colors[CO_ACCENT_BG],
+		"foregroundaccent":std_colors[CO_ACCENT_FG],
+	})
 	button_colorsets={
 		BS_NORMAL:{"fg":std_colors[CO_DEFAULT_FG],"bg":std_colors[CO_DEFAULT_BG]},
 		BS_DISABLED:{"fg":std_colors[CO_FADED_FG],"bg":std_colors[CO_FADED_BG]},
@@ -169,10 +183,10 @@ func set_bar_editor_margins(sb:StyleBox,frag:Dictionary)->void:
 func set_bar_editor_styles(new_theme:Theme,data:Dictionary,key:String,base_dir:String)->void:
 	var frag:Dictionary=ThemeParser.typesafe_get(data,key,{})
 	var sb:StyleBox=new_theme.get_stylebox("panel","PanelContainer")
-	var sb2:StyleBox=ThemeParser.create_stylebox(frag,"values",base_dir,box_colorsets[BS_NORMAL],sb,std_image)
+	var sb2:StyleBox=ThemeParser.create_stylebox(frag,"values",base_dir,box_colorsets[BS_NORMAL],sb,std_image).duplicate()
 	set_bar_editor_margins(sb2,ThemeParser.typesafe_get(frag,"values",{}))
 	new_theme.set_stylebox("values","BarEditor",sb2)
-	sb2=ThemeParser.create_stylebox(frag,"loop",base_dir,box_colorsets[BS_NORMAL],new_theme.get_stylebox("values","BarEditor"),std_image)
+	sb2=ThemeParser.create_stylebox(frag,"loop",base_dir,box_colorsets[BS_NORMAL],new_theme.get_stylebox("values","BarEditor"),std_image).duplicate()
 	set_bar_editor_margins(sb2,ThemeParser.typesafe_get(frag,"loop",{}))
 	new_theme.set_stylebox("loop","BarEditor",sb2)
 	new_theme.set_color("values_color","BarEditor",ThemeParser.parse_color(frag,"color",std_colors[CO_HOVER_FG]))
@@ -186,10 +200,12 @@ func set_bar_editor_styles(new_theme:Theme,data:Dictionary,key:String,base_dir:S
 	new_theme.set_constant("bar_size_y","BarEditor",sz[1])
 	new_theme.set_constant("loop_height","BarEditor",ThemeParser.typesafe_get(frag,"loop-height",16.0))
 	new_theme.set_constant("separation","BarEditor",ThemeParser.typesafe_get(frag,"separation",new_theme.get_constant("separation","HBoxContainer")))
-	var f2:Dictionary=ThemeParser.typesafe_get(frag,"labels",{})
-	new_theme.set_color("label_color","BarEditor",ThemeParser.parse_color(f2,"color",std_colors[CO_DEFAULT_FG]))
 	new_theme.set_font("label_font","BarEditor",ThemeParser.parse_font(frag,"labels",base_dir,new_theme.get_font("font","TooltipLabel")))
-
+	set_label_styles(new_theme,frag,"labels","BarEditorLabel",{
+		"font":std_font,
+		"color":std_colors[CO_DEFAULT_FG],
+		"outline":std_colors[CO_DEFAULT_FG]
+	},base_dir)
 
 
 func set_order_matrix_styles(new_theme:Theme,data:Dictionary,key:String,base_dir:String)->void:

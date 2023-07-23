@@ -115,7 +115,7 @@ size_flags_vertical = 3
 scroll_horizontal_enabled = false
 
 [node name="VBC" type="VBoxContainer" parent="Tabs/Parameters/Params"]
-margin_right = 564.0
+margin_right = 996.0
 margin_bottom = 960.0
 size_flags_horizontal = 3
 
@@ -176,15 +176,16 @@ size_flags_vertical = 3
 scroll_horizontal_enabled = false
 
 [node name="VBC" type="VBoxContainer" parent="Tabs/Macros/Macro"]
-margin_right = 136.0
+margin_right = 1016.0
 margin_bottom = 256.0
 rect_min_size = Vector2( 0, 256 )
 size_flags_horizontal = 3
 
 [node name="Tone" parent="Tabs/Macros/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
+anchor_bottom = 0.0
 margin_right = 1016.0
-margin_bottom = -236.0
+margin_bottom = 20.0
 theme = SubResource( 1 )
 title = "Tone (cents)"
 parameter = "G_TONE"
@@ -197,9 +198,10 @@ huge_step = 100
 
 [node name="Volume" parent="Tabs/Macros/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
+anchor_bottom = 0.0
 margin_top = 24.0
 margin_right = 1016.0
-margin_bottom = -212.0
+margin_bottom = 44.0
 theme = SubResource( 2 )
 title = "Volume"
 parameter = "G_VOLUME"
@@ -211,9 +213,10 @@ huge_step = 32
 
 [node name="Pan" parent="Tabs/Macros/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
+anchor_bottom = 0.0
 margin_top = 48.0
 margin_right = 1016.0
-margin_bottom = -188.0
+margin_bottom = 68.0
 theme = SubResource( 3 )
 title = "Pan"
 parameter = "G_PAN"
@@ -224,20 +227,23 @@ huge_step = 8
 
 [node name="ChInvert" parent="Tabs/Macros/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
+anchor_bottom = 0.0
 margin_top = 72.0
 margin_right = 1016.0
-margin_bottom = -164.0
+margin_bottom = 92.0
 theme = SubResource( 4 )
 title = "Channel Invert"
 parameter = "G_CHNINVERT"
 max_value_abs = 1
 mode = 4
+labels = PoolStringArray( "Right", "Left" )
 
 [node name="Clip" parent="Tabs/Macros/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
+anchor_bottom = 0.0
 margin_top = 96.0
 margin_right = 1016.0
-margin_bottom = -140.0
+margin_bottom = 116.0
 theme = SubResource( 5 )
 title = "Clip"
 parameter = "G_CLIP"
@@ -249,7 +255,7 @@ visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
-margin_top = 32.0
+margin_top = 24.0
 margin_right = -4.0
 margin_bottom = -4.0
 
@@ -261,14 +267,14 @@ size_flags_vertical = 3
 scroll_horizontal_enabled = false
 
 [node name="VBC" type="VBoxContainer" parent="Tabs/Macros OP1/Macro"]
-margin_right = 136.0
+margin_right = 1016.0
 margin_bottom = 188.0
 size_flags_horizontal = 3
 
 [node name="Tone" parent="Tabs/Macros OP1/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
 margin_right = 1016.0
-margin_bottom = -328.0
+margin_bottom = -168.0
 theme = SubResource( 6 )
 title = "Tone (cents)"
 parameter = "1_TONE"
@@ -282,7 +288,7 @@ huge_step = 100
 [node name="Duty" parent="Tabs/Macros OP1/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
 margin_right = 1016.0
-margin_bottom = -328.0
+margin_bottom = -168.0
 theme = SubResource( 7 )
 title = "Duty Cycle"
 parameter = "1_DUTY"
@@ -295,7 +301,7 @@ huge_step = 32
 [node name="Wave" parent="Tabs/Macros OP1/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
 margin_right = 1016.0
-margin_bottom = -328.0
+margin_bottom = -168.0
 theme = SubResource( 8 )
 title = "Wave"
 parameter = "1_WAVE"
@@ -309,7 +315,7 @@ mode = 0
 [node name="Attack" parent="Tabs/Macros OP1/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
 margin_right = 1016.0
-margin_bottom = -328.0
+margin_bottom = -168.0
 theme = SubResource( 9 )
 title = "Attack"
 parameter = "1_ATTACK"
@@ -322,7 +328,7 @@ huge_step = 32
 [node name="Decay" parent="Tabs/Macros OP1/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
 margin_right = 1016.0
-margin_bottom = -328.0
+margin_bottom = -168.0
 theme = SubResource( 10 )
 title = "Decay"
 parameter = "1_DECAY"
@@ -335,7 +341,7 @@ huge_step = 32
 [node name="SusLev" parent="Tabs/Macros OP1/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
 margin_right = 1016.0
-margin_bottom = -328.0
+margin_bottom = -168.0
 theme = SubResource( 11 )
 title = "Sus. Level"
 parameter = "1_SUSLEV"
@@ -348,7 +354,7 @@ huge_step = 32
 [node name="SusRate" parent="Tabs/Macros OP1/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
 margin_right = 1016.0
-margin_bottom = -328.0
+margin_bottom = -168.0
 theme = SubResource( 12 )
 title = "Sus. Rate"
 parameter = "1_SUSTAIN"
@@ -361,7 +367,7 @@ huge_step = 32
 [node name="Release" parent="Tabs/Macros OP1/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
 margin_right = 1016.0
-margin_bottom = -328.0
+margin_bottom = -168.0
 theme = SubResource( 13 )
 title = "Release"
 parameter = "1_RELEASE"

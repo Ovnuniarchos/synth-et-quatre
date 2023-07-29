@@ -146,6 +146,10 @@ void Operator::set_phase(FixedPoint _phi){
 	phi=_phi;
 }
 
+void Operator::shift_phase(FixedPoint delta){
+	phi+=delta;
+}
+
 
 void Operator::set_attack_rate(int rate){
 	eg_ar=get_rate(rate,attack_rate);

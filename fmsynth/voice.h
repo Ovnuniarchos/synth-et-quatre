@@ -38,6 +38,7 @@ public:
 	void set_wave(int op_mask,int wave_num);
 	void set_duty_cycle(int op_mask,FixedPoint duty_cycle);
 	void set_phase(int op_mask,FixedPoint phi);
+	void shift_phase(int op_mask,FixedPoint delta);
 
 	void set_volume(int vol);
 	void set_attack_rate(int op_mask,int rate);

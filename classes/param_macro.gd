@@ -1,6 +1,10 @@
 extends Reference
 class_name ParamMacro
 
+const MASK_PASSTHROUGH_SHIFT:int=32
+const MASK_VALUE_MASK:int=0xffffffff
+const PASSTHROUGH:int=0x7fffffffffffffff
+
 var loop_start:int=-1 setget set_loop_start
 var loop_end:int=-1 setget set_loop_end
 var release_loop_start:int=-1 setget set_release_loop_start
@@ -48,7 +52,10 @@ func get_value(tick:int,release_tick:int,base_value:int)->int:
 	else:
 		release_tick-=delay
 		macro_tick=get_tick(tick,release_tick)
-	return base_value+values[macro_tick] if relative else values[macro_tick]
+	var value:int=values[macro_tick]
+	if value==PASSTHROUGH:
+		return base_value
+	return base_value+value if relative else value
 
 func duplicate()->ParamMacro:
 	var np:ParamMacro=get_script().new()
@@ -82,7 +89,7 @@ func set_loop_end(v:int)->void:
 	normalize_loop_points()
 
 func set_release_loop_start(v:int)->void:
-	release_loop_start=clamp(v,-1,steps-1)
+	release_loop_start=int(max(v,-1)) if v<steps else -1
 	normalize_loop_points()
 
 func set_values(a:Array)->void:

@@ -40,7 +40,7 @@ Disabling an operator stops its waveform and envelope generators, and sets its o
 
 ## `mm:oo:vv:08` (SET OP MULTIPLIER)
 
-Set frequency multiplier in voice `vv`, with operator mask `oo`, to `mm+1`. `mm` is clamped to `0 - 32`. A value of `0` puts the operator in fixed frequency mode.
+Set frequency multiplier in voice `vv`, with operator mask `oo`, to `mm`. `mm` is clamped to `0 - 32`. A value of `0` puts the operator in fixed frequency mode.
 
 ## `dd:oo:vv:09` (SET OP DIVIDER)
 
@@ -88,7 +88,7 @@ Set release rate in voice `vv`, with operator mask `oo`, to `rr`.
 
 ## `pp:oo:vv:13` (SET OP ENVELOPE REPEAT POINT)
 
-Set envelope repeat point for voice `vv`, with operator mask `oo`, to `pp`. Modes are 0 (no repeat),1 (repeat from attack), 2 (repeat from decay), 3 (repeate from sustain), or 4 (repeat from release).
+Set envelope repeat point for voice `vv`, with operator mask `oo`, to `pp`. Modes are 0 (no repeat),1 (repeat from attack), 2 (repeat from decay), 3 (repeat from sustain), or 4 (repeat from release).
 
 `pp` is clamped to the range `0 - 4`.
 

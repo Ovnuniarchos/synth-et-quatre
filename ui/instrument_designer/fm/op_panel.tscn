@@ -143,13 +143,13 @@ custom_constants/hseparation = 2
 columns = 5
 
 [node name="ARLabel" type="Label" parent="Params/ADSR" groups=["Label"]]
-margin_right = 28.0
+margin_right = 26.0
 margin_bottom = 14.0
 text = "ATR"
 
 [node name="ARSlider" type="ProgressBar" parent="Params/ADSR"]
-margin_left = 30.0
-margin_right = 497.0
+margin_left = 28.0
+margin_right = 496.0
 margin_bottom = 14.0
 rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 7
@@ -162,20 +162,20 @@ big_step = 4.0
 huge_step = 16.0
 
 [node name="Sep" type="ReferenceRect" parent="Params/ADSR"]
-margin_left = 499.0
-margin_right = 515.0
+margin_left = 498.0
+margin_right = 514.0
 margin_bottom = 14.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
 [node name="DRLabel" type="Label" parent="Params/ADSR" groups=["Label"]]
-margin_left = 517.0
-margin_right = 542.0
+margin_left = 516.0
+margin_right = 541.0
 margin_bottom = 14.0
 text = "DER"
 
 [node name="DRSlider" type="ProgressBar" parent="Params/ADSR"]
-margin_left = 544.0
+margin_left = 543.0
 margin_right = 1010.0
 margin_bottom = 14.0
 rect_min_size = Vector2( 36, 14 )
@@ -190,14 +190,14 @@ huge_step = 16.0
 
 [node name="SLLabel" type="Label" parent="Params/ADSR" groups=["Label"]]
 margin_top = 18.0
-margin_right = 28.0
+margin_right = 26.0
 margin_bottom = 32.0
 text = "SUL"
 
 [node name="SLSlider" type="ProgressBar" parent="Params/ADSR"]
-margin_left = 30.0
+margin_left = 28.0
 margin_top = 18.0
-margin_right = 497.0
+margin_right = 496.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 7
@@ -210,22 +210,22 @@ big_step = 4.0
 huge_step = 16.0
 
 [node name="Sep2" type="ReferenceRect" parent="Params/ADSR"]
-margin_left = 499.0
+margin_left = 498.0
 margin_top = 18.0
-margin_right = 515.0
+margin_right = 514.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
 [node name="SRLabel" type="Label" parent="Params/ADSR" groups=["Label"]]
-margin_left = 517.0
+margin_left = 516.0
 margin_top = 18.0
-margin_right = 542.0
+margin_right = 541.0
 margin_bottom = 32.0
 text = "SUR"
 
 [node name="SRSlider" type="ProgressBar" parent="Params/ADSR"]
-margin_left = 544.0
+margin_left = 543.0
 margin_top = 18.0
 margin_right = 1010.0
 margin_bottom = 32.0
@@ -241,14 +241,14 @@ huge_step = 16.0
 
 [node name="RRLabel" type="Label" parent="Params/ADSR" groups=["Label"]]
 margin_top = 39.0
-margin_right = 28.0
+margin_right = 26.0
 margin_bottom = 53.0
 text = "RER"
 
 [node name="RRSlider" type="ProgressBar" parent="Params/ADSR"]
-margin_left = 30.0
+margin_left = 28.0
 margin_top = 39.0
-margin_right = 497.0
+margin_right = 496.0
 margin_bottom = 53.0
 rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 7
@@ -261,39 +261,39 @@ big_step = 4.0
 huge_step = 16.0
 
 [node name="Sep3" type="ReferenceRect" parent="Params/ADSR"]
-margin_left = 499.0
+margin_left = 498.0
 margin_top = 36.0
-margin_right = 515.0
+margin_right = 514.0
 margin_bottom = 56.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
 [node name="RPLabel" type="Label" parent="Params/ADSR" groups=["Label"]]
-margin_left = 517.0
+margin_left = 516.0
 margin_top = 39.0
-margin_right = 542.0
+margin_right = 541.0
 margin_bottom = 53.0
 text = "RPT"
 
 [node name="Repeat" type="OptionButton" parent="Params/ADSR"]
-margin_left = 544.0
+margin_left = 543.0
 margin_top = 36.0
 margin_right = 1010.0
 margin_bottom = 56.0
 text = "OFF"
-items = [ "OFF", null, false, 0, null, "Attack", null, false, 4, null, "Decay", null, false, 3, null, "Sustain", null, false, 2, null, "Release", null, false, 1, null ]
+items = [ "OFF", null, false, 0, null, "Attack", null, false, 1, null, "Decay", null, false, 2, null, "Sustain", null, false, 3, null, "Release", null, false, 4, null ]
 selected = 0
 
 [node name="AMSLabel" type="Label" parent="Params/ADSR" groups=["Label"]]
 margin_top = 60.0
-margin_right = 28.0
+margin_right = 26.0
 margin_bottom = 74.0
-text = "AMS"
+text = "AMI"
 
 [node name="AMSSlider" type="ProgressBar" parent="Params/ADSR"]
-margin_left = 30.0
+margin_left = 28.0
 margin_top = 60.0
-margin_right = 497.0
+margin_right = 496.0
 margin_bottom = 74.0
 rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 7
@@ -306,23 +306,23 @@ big_step = 4.0
 huge_step = 16.0
 
 [node name="Sep4" type="ReferenceRect" parent="Params/ADSR"]
-margin_left = 499.0
+margin_left = 498.0
 margin_top = 60.0
-margin_right = 515.0
+margin_right = 514.0
 margin_bottom = 74.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
 [node name="Sep5" type="ReferenceRect" parent="Params/ADSR"]
-margin_left = 517.0
+margin_left = 516.0
 margin_top = 60.0
-margin_right = 542.0
+margin_right = 541.0
 margin_bottom = 74.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
 [node name="Sep6" type="ReferenceRect" parent="Params/ADSR"]
-margin_left = 544.0
+margin_left = 543.0
 margin_top = 60.0
 margin_right = 1010.0
 margin_bottom = 74.0
@@ -331,14 +331,14 @@ size_flags_vertical = 7
 
 [node name="KSRLabel" type="Label" parent="Params/ADSR" groups=["Label"]]
 margin_top = 78.0
-margin_right = 28.0
+margin_right = 26.0
 margin_bottom = 92.0
 text = "KSR"
 
 [node name="KSRSlider" type="ProgressBar" parent="Params/ADSR"]
-margin_left = 30.0
+margin_left = 28.0
 margin_top = 78.0
-margin_right = 497.0
+margin_right = 496.0
 margin_bottom = 92.0
 rect_min_size = Vector2( 20, 14 )
 size_flags_horizontal = 7
@@ -454,12 +454,12 @@ __meta__ = {
 }
 
 [node name="FMSLabel" type="Label" parent="Params/FMS" groups=["Label"]]
-margin_right = 26.0
+margin_right = 24.0
 margin_bottom = 14.0
-text = "FMS"
+text = "FMI"
 
 [node name="FMSSlider" type="ProgressBar" parent="Params/FMS"]
-margin_left = 30.0
+margin_left = 28.0
 margin_right = 1010.0
 margin_bottom = 14.0
 rect_min_size = Vector2( 52, 14 )

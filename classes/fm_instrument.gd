@@ -35,6 +35,9 @@ var freq_macro:ParamMacro=ParamMacro.new()
 var op_freq_macro:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
 var volume_macro:ParamMacro=ParamMacro.new()
 var pan_macro:ParamMacro=ParamMacro.new()
+var key_macro:ParamMacro=ParamMacro.new(false)
+var op_key_macro:Array=[ParamMacro.new(false),ParamMacro.new(false),ParamMacro.new(false),ParamMacro.new(false)]
+var op_enable_macro:ParamMacro=ParamMacro.new(false)
 var chanl_invert_macro:ParamMacro=ParamMacro.new(false)
 var clip_macro:ParamMacro=ParamMacro.new(false)
 var duty_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
@@ -44,6 +47,16 @@ var decay_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),Param
 var sus_level_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
 var sus_rate_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
 var release_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
+var repeat_macros:Array=[ParamMacro.new(false),ParamMacro.new(false),ParamMacro.new(false),ParamMacro.new(false)]
+var ami_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
+var ksr_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
+var multiplier_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
+var divider_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
+var detune_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
+var fmi_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
+var am_lfo_macros:Array=[ParamMacro.new(false),ParamMacro.new(false),ParamMacro.new(false),ParamMacro.new(false)]
+var fm_lfo_macros:Array=[ParamMacro.new(false),ParamMacro.new(false),ParamMacro.new(false),ParamMacro.new(false)]
+var phase_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
 
 func _init()->void:
 	name=TYPE

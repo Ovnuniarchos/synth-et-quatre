@@ -56,6 +56,7 @@ void SynthTracker::_register_methods(){
 	register_method("set_panning",&SynthTracker::set_panning);
 
 	register_method("set_phase",&SynthTracker::set_phase);
+	register_method("shift_phase",&SynthTracker::shift_phase);
 
 	register_method("set_lfo_wave",&SynthTracker::set_lfo_wave);
 	register_method("set_lfo_duty_cycle",&SynthTracker::set_lfo_duty_cycle);
@@ -480,6 +481,10 @@ void SynthTracker::set_duty_cycle(int voice,int op_mask,FixedPoint duty_cycle){
 
 void SynthTracker::set_phase(int voice,int op_mask,FixedPoint phi){
 	synth.set_phase(voice,op_mask,phi);
+}
+
+void SynthTracker::shift_phase(int voice,int op_mask,FixedPoint delta){
+	synth.shift_phase(voice,op_mask,delta);
 }
 
 void SynthTracker::define_wave(int wave_num,Array wave){

@@ -8,7 +8,7 @@ private:
 	const int EG_DIVIDER=32;
 	const FixedPoint ENVELOPE_RATE_1S=FP_ONE*EG_DIVIDER*256;
 
-	enum ADSR{OFF,RELEASE,SUSTAIN,DECAY,ATTACK,SUSTAIN_UP};
+	enum ADSR{OFF,ATTACK,DECAY,SUSTAIN,RELEASE,SUSTAIN_UP};
 
 	float mix_rate=DEFAULT_MIX_RATE;
 
@@ -72,6 +72,7 @@ public:
 	void set_wave(int wave_num);
 	void set_duty_cycle(FixedPoint duty_cycle);
 	void set_phase(FixedPoint phi);
+	void shift_phase(FixedPoint delta);
 
 	void set_attack_rate(int rate);
 	void set_decay_rate(int rate);

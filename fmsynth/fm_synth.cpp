@@ -68,6 +68,10 @@ void FmSynth::set_phase(int voice,int op_mask,FixedPoint phi){
 	voices[voice%MAX_VOICES].set_phase(op_mask,phi);
 }
 
+void FmSynth::shift_phase(int voice,int op_mask,FixedPoint delta){
+	voices[voice%MAX_VOICES].shift_phase(op_mask,delta);
+}
+
 void FmSynth::define_wave(int wave_num,godot::Array wave){
 	wave_num%=MAX_WAVES;
 	if(wave_num<MIN_USR_WAVE){

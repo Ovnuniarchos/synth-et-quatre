@@ -57,6 +57,7 @@ public:
 	void set_wave(int voice,int op_mask,int wave_num);
 	void set_duty_cycle(int voice,int op_mask,FixedPoint duty_cycle);
 	void set_phase(int voice,int op_mask,FixedPoint phi);
+	void shift_phase(int voice,int op_mask,FixedPoint delta);
 	void define_wave(int wave_num,godot::Array wave);
 	void define_sample(int wave_num,int loop_start,int loop_end,float rec_freq,float sam_freq,godot::Array sample);
 

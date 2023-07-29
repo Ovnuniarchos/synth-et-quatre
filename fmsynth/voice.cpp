@@ -83,6 +83,12 @@ void Voice::set_phase(int op_mask,FixedPoint phi){
 	}
 }
 
+void Voice::shift_phase(int op_mask,FixedPoint delta){
+	for(int i=0;i<MAX_OPS;i++,op_mask>>=1){
+		if(op_mask&1) ops[i].shift_phase(delta);
+	}
+}
+
 
 void Voice::set_volume(int vol){
 	new_volume=clamp(vol,0,255)+(vol==0?0:1);

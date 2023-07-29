@@ -4,6 +4,7 @@ class_name BarEditor
 signal macro_changed(parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
 
 enum{MODE_ABS,MODE_REL,MODE_SWABS,MODE_SWREL,MODE_MASK}
+enum{BIT_CLEAR,BIT_SWITCH,BIT_SET}
 
 const MAX_STEPS:int=256
 
@@ -20,9 +21,7 @@ var height_sel:int=0
 var line_start:Vector2=Vector2.INF
 var line_end:Vector2
 var line_buffer:Array
-var bset:int=0
-var bclr:int=0
-var bmode:int=0
+var bmode:int=BIT_SWITCH
 
 var title_button:Button
 var step_bar:SpinBar
@@ -48,12 +47,12 @@ export (float) var title_width:float=128.0 setget set_title_width
 export (int) var min_value_rel:int=-12.0
 export (int) var max_value_rel:int=12.0
 export (int) var center_value:int=0.0
-export (int) var min_value_abs:int=0.0
-export (int) var max_value_abs:int=48.0
+export (int) var min_value_abs:int=0.0 setget set_min_value_abs
+export (int) var max_value_abs:int=48.0 setget set_max_value_abs
 export (int) var step:int=1.0
 export (int) var big_step:int=4.0
 export (int) var huge_step:int=16.0
-export (int,"Absolute","Relative","SwitchAbs","SwitchRel","Mask") var mode:int=MODE_SWREL
+export (int,"Absolute","Relative","SwitchAbs","SwitchRel","Mask") var mode:int=MODE_SWREL setget set_mode
 export (PoolStringArray) var labels:PoolStringArray=PoolStringArray()
 
 
@@ -110,6 +109,23 @@ func set_title_width(w:float)->void:
 		yield(self,"ready")
 	title_button.rect_min_size.x=w
 
+func set_min_value_abs(v:int)->void:
+	if mode==MODE_MASK:
+		v=clamp(v,0.0,31.0)
+	min_value_abs=v
+
+func set_max_value_abs(v:int)->void:
+	if mode==MODE_MASK:
+		v=clamp(v,0.0,31.0)
+	max_value_abs=v
+
+func set_mode(m:int)->void:
+	mode=m
+	if mode==MODE_MASK:
+		min_value_abs=clamp(min_value_abs,0.0,31.0)
+		max_value_abs=clamp(max_value_abs,0.0,31.0)
+		property_list_changed_notify()
+
 func init_values()->void:
 	if mode<MODE_MASK:
 		values.fill(center_value)
@@ -124,22 +140,35 @@ func set_values(v:Array)->void:
 		yield(self,"ready")
 	values_graph.update()
 
+func bit(ix:int,bit_n:int,bit_op:int)->bool:
+	var mask:int=1<<bit_n
+	if bit_op==BIT_SWITCH:
+		values[ix]^=mask
+		return bool(values[ix]&mask)
+	elif bit_op==BIT_SET:
+		values[ix]|=mask
+		return true
+	values[ix]&=~mask
+	return false
+
 func process_mask_input(ev:InputEventMouse)->void:
 	if ev.button_mask==BUTTON_MASK_LEFT:
 		var ym:float=values_graph.rect_size.y
 		var ix:int=clamp(ev.position.x/bar_width,0.0,MAX_STEPS-1)
 		var yv:int=max_value_abs-clamp(floor((ev.position.y/ym)*(max_value_abs+1)),0.0,max_value_abs)
-		if bmode==0:
-			bset=1<<yv
-			values[ix]^=bset
-			bmode=1 if bset&values[ix] else -1
-		bclr=~(1<<yv)
-		bset=1<<yv if bmode==1 else 0
-		values[ix]=(values[ix]&bclr)|bset
+		var enop:int=BIT_SET
+		if ev.shift:
+			bit(ix,yv,BIT_CLEAR)
+			enop=BIT_CLEAR
+		elif bmode==BIT_SWITCH:
+			bmode=BIT_SET if bit(ix,yv,bmode) else BIT_CLEAR
+		else:
+			bit(ix,yv,bmode)
+		bit(ix,yv+ParamMacro.MASK_PASSTHROUGH_SHIFT,enop)
 		values_graph.update()
 		emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
 	elif ev.button_mask==0:
-		bmode=0
+		bmode=BIT_SWITCH
 
 func _on_ValuesGraph_gui_input(ev:InputEvent)->void:
 	if not ev is InputEventMouse:
@@ -152,9 +181,11 @@ func _on_ValuesGraph_gui_input(ev:InputEvent)->void:
 	var ix:int=clamp((ev.position.x+scroll.value)/bar_width,0.0,MAX_STEPS-1)
 	var miv:float=min_value_rel if relative else min_value_abs
 	var mxv:float=max_value_rel if relative else max_value_abs
-	var yv:float=clamp(stepify(range_lerp(ev.position.y,0.0,ym,mxv,miv),st),miv,mxv)
+	var yv:int=int(clamp(stepify(range_lerp(ev.position.y,0.0,ym,mxv,miv),st),miv,mxv))
 	var redraw:bool=false
 	if ev.button_mask==BUTTON_MASK_LEFT:
+		if ev.shift and mode!=MODE_MASK:
+			yv=ParamMacro.PASSTHROUGH
 		redraw=true
 	elif ev.button_mask==BUTTON_MASK_RIGHT:
 		if line_start==Vector2.INF:
@@ -175,7 +206,7 @@ func _on_ValuesGraph_gui_input(ev:InputEvent)->void:
 			line_start=Vector2.INF
 	if redraw:
 		if line_start==Vector2.INF:
-			values[ix]=int(yv)
+			values[ix]=yv
 		else:
 			values=line_buffer.duplicate()
 			var ls:Vector2=line_start
@@ -189,7 +220,7 @@ func _on_ValuesGraph_gui_input(ev:InputEvent)->void:
 			else:
 				values[ls.x]=int(le.y)
 		values_graph.update()
-		val_tooltip.show_at(String(yv),ev.position-Vector2(0.0,val_tooltip.rect_size.y*0.5))
+		val_tooltip.show_at(String(yv) if yv!=ParamMacro.PASSTHROUGH else "Passthrough",ev.position-Vector2(0.0,val_tooltip.rect_size.y*0.5))
 		emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
 
 func _on_LoopRangeGraph_gui_input(ev:InputEvent)->void:
@@ -199,8 +230,8 @@ func _on_LoopRangeGraph_gui_input(ev:InputEvent)->void:
 	var redraw:bool=false
 	if ev.button_mask==BUTTON_MASK_LEFT:
 		if ev.shift:
-			ix=clamp(ix,loop_end+1,steps)
-			release_loop_start=ix
+			ix=max(ix,loop_end+1)
+			release_loop_start=ix if ix<steps else -1
 		else:
 			ix=clamp(ix,0,steps-1)
 			if loop_start<0:
@@ -242,6 +273,8 @@ func _on_Steps_value_changed(s:int)->void:
 	emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
 
 func _on_Labels_draw()->void:
+	if height_sel==0:
+		return
 	if labels_point==null:
 		yield(self,"ready")
 	var texts:Array
@@ -297,11 +330,11 @@ func _on_ValuesGraph_draw()->void:
 		var j:int
 		color=real_theme.get_color("mask_color","BarEditor")
 		for i in steps:
-			j=1<<int(max_value_abs)
+			j=1<<max_value_abs
 			yv=0.0
 			while j>0:
-				if values[i]&j:
-					values_graph.draw_rect(Rect2(x0,yv,bar_width-1.0,hb-1.0),color)
+				if values[i]&(j<<ParamMacro.MASK_PASSTHROUGH_SHIFT):
+					values_graph.draw_rect(Rect2(x0,yv,bar_width-1.0,hb-1.0),color,bool(values[i]&j))
 				j>>=1
 				yv+=hb
 			x0+=bar_width
@@ -312,14 +345,20 @@ func _on_ValuesGraph_draw()->void:
 		)
 		var dy:float=bar_height*0.5
 		for i in steps:
-			yv=range_lerp(values[i],min_value_rel,max_value_rel,ym,0.0)
-			values_graph.draw_rect(Rect2(x0,yv-dy,bar_width-1.0,bar_height),color)
+			if values[i]!=ParamMacro.PASSTHROUGH:
+				yv=range_lerp(values[i],min_value_rel,max_value_rel,ym,0.0)
+				values_graph.draw_rect(Rect2(x0,yv-dy,bar_width-1.0,bar_height),color)
+			else:
+				values_graph.draw_rect(Rect2(x0,0,bar_width-1.0,ym-1),color,false)
 			x0+=bar_width
 	else:
 		color=real_theme.get_color("values_color","BarEditor")
 		for i in steps:
-			yv=-range_lerp(values[i],min_value_abs,max_value_abs,0.0,ym)
-			values_graph.draw_rect(Rect2(x0,ym,bar_width-1.0,yv),color)
+			if values[i]!=ParamMacro.PASSTHROUGH:
+				yv=-range_lerp(values[i],min_value_abs,max_value_abs,0.0,ym)
+				values_graph.draw_rect(Rect2(x0,ym,bar_width-1.0,yv),color)
+			else:
+				values_graph.draw_rect(Rect2(x0,0,bar_width-1.0,ym-1),color,false)
 			x0+=bar_width
 
 func _on_LoopRangeGraph_draw()->void:
@@ -351,7 +390,8 @@ func _on_Relative_toggled(p:bool)->void:
 	var v10:float=min_value_rel if relative else min_value_abs
 	var v11:float=max_value_rel if relative else max_value_abs
 	for i in MAX_STEPS:
-		values[i]=stepify(range_lerp(values[i],v00,v01,v10,v11),step)
+		if values[i]!=ParamMacro.PASSTHROUGH:
+			values[i]=stepify(range_lerp(values[i],v00,v01,v10,v11),step)
 	if values_graph==null:
 		yield(self,"ready")
 	values_graph.update()

@@ -104,15 +104,32 @@ func _on_macro_timer()->void:
 		kot=(kon_time[chan]*GLOBALS.song.ticks_second)/1000
 		kft=(koff_time[chan]*GLOBALS.song.ticks_second)/1000 if koff_time[chan]>-1 else -1
 		# Global+op tone
+		val_b=instr.freq_macro.get_value(kot,kft,notes[chan])
 		for op in 4:
-			val=instr.op_freq_macro[op].get_value(
-				kot,kft,
-				instr.freq_macro.get_value(kot,kft,notes[chan])
-			)
+			val=instr.op_freq_macro[op].get_value(kot,kft,val_b)
 			synth.set_note(chan,1<<op,val)
 		# Global volume
 		val=instr.volume_macro.get_value(kot,kft,volumes[chan])
 		synth.set_volume(chan,val)
+		# Global+op key
+		val_b=instr.key_macro.get_value(kot,kft,0)
+		for op in 4:
+			mask=1<<op
+			val=instr.op_key_macro[op].get_value(kot,kft,val_b)
+			if val==1:
+				synth.key_on(chan,mask,volumes[chan],false)
+			elif val==2:
+				synth.key_on(chan,mask,volumes[chan],true)
+			elif val==3:
+				synth.stop(chan,mask)
+				synth.key_on(chan,mask,volumes[chan],false)
+			elif val==4:
+				synth.key_off(chan,mask)
+			elif val==5:
+				synth.stop(chan,mask)
+		# Global Op Enable
+		val=instr.op_enable_macro.get_value(kot,kft,0)
+		synth.set_enable(chan,val>>ParamMacro.MASK_PASSTHROUGH_SHIFT,val&ParamMacro.MASK_VALUE_MASK)
 		# Global Panpot
 		val=instr.pan_macro.get_value(kot,kft,panpots[chan])
 		val_b=instr.chanl_invert_macro.get_value(kot,kft,channel_invs[chan])
@@ -129,21 +146,50 @@ func _on_macro_timer()->void:
 			# Op Wave
 			val=instr.wave_macros[op].get_value(kot,kft,instr.waveforms[op])
 			synth.set_wave(chan,mask,val)
-			# TODO: Op Attack
+			# Op Attack
 			val=instr.attack_macros[op].get_value(kot,kft,instr.attacks[op])
 			synth.set_attack_rate(chan,mask,val)
-			# TODO: Op Decay
+			# Op Decay
 			val=instr.decay_macros[op].get_value(kot,kft,instr.decays[op])
 			synth.set_decay_rate(chan,mask,val)
-			# TODO: Op SusLevel
+			# Op SusLevel
 			val=instr.sus_level_macros[op].get_value(kot,kft,instr.sustain_levels[op])
 			synth.set_sustain_level(chan,mask,val)
-			# TODO: Op SusRate
+			# Op SusRate
 			val=instr.sus_rate_macros[op].get_value(kot,kft,instr.sustains[op])
 			synth.set_sustain_rate(chan,mask,val)
-			# TODO: Op Release
+			# Op Release
 			val=instr.release_macros[op].get_value(kot,kft,instr.releases[op])
 			synth.set_release_rate(chan,mask,val)
+			# Op Repeat
+			val=instr.repeat_macros[op].get_value(kot,kft,instr.repeats[op])
+			synth.set_repeat(chan,mask,val)
+			# Op AMI
+			val=instr.ami_macros[op].get_value(kot,kft,instr.am_intensity[op])
+			synth.set_am_intensity(chan,mask,val)
+			# Op KSR
+			val=instr.ksr_macros[op].get_value(kot,kft,instr.key_scalers[op])
+			synth.set_ksr(chan,mask,val)
+			# Op Multiplier
+			val=instr.multiplier_macros[op].get_value(kot,kft,instr.multipliers[op])
+			synth.set_freq_mul(chan,mask,val)
+			# Op Divider
+			val=instr.divider_macros[op].get_value(kot,kft,instr.dividers[op])
+			synth.set_freq_div(chan,mask,val-1)
+			# Op Detune
+			val=instr.detune_macros[op].get_value(kot,kft,instr.detunes[op])
+			synth.set_detune(chan,mask,val)
+			# Op AM LFO
+			val=instr.am_lfo_macros[op].get_value(kot,kft,instr.am_lfo[op])
+			synth.set_am_lfo(chan,mask,val)
+			# Op Phase
+			val=instr.phase_macros[op].get_value(kot,kft,ParamMacro.PASSTHROUGH)
+			if val!=ParamMacro.PASSTHROUGH:
+				if instr.phase_macros[op].relative:
+					synth.shift_phase(chan,mask,val<<16)
+				else:
+					synth.set_phase(chan,mask,val<<16)
+
 	ti=Time.get_ticks_msec()
 
 #

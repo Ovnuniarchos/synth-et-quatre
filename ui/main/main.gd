@@ -3,6 +3,7 @@ extends Control
 """
 FIXME
 TODO:
+	Automation
 	CycleButtons themable
 	MIDI on/off indicator
 	Reset per channel parameters (as a command|button)
@@ -10,9 +11,6 @@ TODO:
 		Flag?: MIDI Pitch bend
 		Flag?: MIDI modulation
 		Range?: MIDI modulation
-	Automation
-	Reduce pops on volume changes.
-		¿Smooth volume changes for n samples?
 
 FUTURE:
 	Translations

@@ -4,9 +4,15 @@ class_name FmVoice
 const CONSTS=preload("res://classes/tracker/fm_voice_constants.gd")
 const TRCK=preload("res://classes/tracker/tracker_constants.gd")
 const ATTRS=Pattern.ATTRS
-const LG_MODE=Pattern.LEGATO_MODE
 
-var trigger:int=CONSTS.TRG_KEEP
+enum {KON_PASS,KON_STD,KON_LEGATO,KON_STACCATO,KON_OFF,KON_STOP}
+
+const LEGATO2KON:Dictionary={
+	Pattern.LEGATO_MODE.OFF:KON_STD,
+	Pattern.LEGATO_MODE.LEGATO:KON_LEGATO,
+	Pattern.LEGATO_MODE.STACCATO:KON_STACCATO
+}
+
 # Index by track
 var fx_cmds:Array=[0,0,0,0]
 var fx_opmasks:Array=[0,0,0,0]
@@ -18,7 +24,6 @@ var arpeggio_tick:int=0
 var row_tick:int=0
 var macro_tick:int=0
 var release_tick:int=-1
-var legato:int=LG_MODE.OFF
 var freqs:Array=[0,0,0,0]
 var base_freqs:Array=[0,0,0,0]
 var next_freqs:Array=[0,0,0,0]
@@ -28,6 +33,8 @@ var panning:int=0x1F
 
 var instrument_dirty:bool=false
 var clip_dirty:bool=true
+var key_dirty_any:bool=true
+var key_dirty:Array=[KON_PASS,KON_PASS,KON_PASS,KON_PASS]
 var freqs_dirty_any:bool=true
 var freqs_dirty:Array=[false,false,false,false]
 var fms_dirty_any:bool=true
@@ -95,7 +102,7 @@ func _init()->void:
 	reset()
 
 func reset()->void:
-	trigger=CONSTS.TRG_KEEP
+	# trigger=CONSTS.TRG_KEEP
 	fx_cmds=[0,0,0,0]
 	fx_opmasks=[0,0,0,0]
 	fx_apply=[false,false,false,false]
@@ -112,7 +119,6 @@ func reset()->void:
 	row_tick=0
 	macro_tick=0
 	release_tick=-1
-	legato=LG_MODE.OFF
 	freqs=[0,0,0,0]
 	base_freqs=[0,0,0,0]
 	next_freqs=[0,0,0,0]
@@ -123,6 +129,8 @@ func reset()->void:
 	clip_dirty=true
 	freqs_dirty_any=true
 	freqs_dirty=[false,false,false,false]
+	key_dirty_any=false
+	key_dirty=[KON_PASS,KON_PASS,KON_PASS,KON_PASS]
 	fms_dirty_any=true
 	fms_dirty=[false,false,false,false]
 	fml_dirty_any=true
@@ -217,19 +225,25 @@ func process_tick(song:Song,channel:int,curr_order:int,curr_row:int,curr_tick:in
 	return tracker_cmd
 
 func process_tick_0(note:Array,song:Song,num_fxs:int)->int:
-	legato=LG_MODE.OFF if note[ATTRS.LG_MODE]==null else note[ATTRS.LG_MODE]
-	if legato!=LG_MODE.LEGATO:
-		macro_tick=0
-		release_tick=-1
+	var legato:int=KON_STD if note[ATTRS.LG_MODE]==null else LEGATO2KON[note[ATTRS.LG_MODE]]
 	if note[ATTRS.NOTE]!=null:
+		if legato!=KON_LEGATO:
+			macro_tick=0
+			release_tick=-1
 		if note[ATTRS.NOTE]>=0:
-			trigger=CONSTS.TRG_ON
+			for i in 4:
+				key_dirty[i]=legato if op_mask&(1<<i) else KON_STOP
+				key_dirty_any=true
 			set_frequency(note[ATTRS.NOTE]*100,15)
 		elif note[ATTRS.NOTE]==-1:
-			trigger=CONSTS.TRG_OFF
+			for i in 4:
+				key_dirty[i]=KON_OFF
+			key_dirty_any=true
 			release_tick=macro_tick
 		else:
-			trigger=CONSTS.TRG_STOP
+			for i in 4:
+				key_dirty[i]=KON_STOP
+			key_dirty_any=true
 	if note[ATTRS.INSTR]!=null:
 		set_instrument(song.get_instrument(note[ATTRS.INSTR]) as FmInstrument)
 	set_velocity(note[ATTRS.VOL])
@@ -330,9 +344,7 @@ func process_tick_0(note:Array,song:Song,num_fxs:int)->int:
 			elif fx_cmd==CONSTS.FX_DEBUG:
 				breakpoint
 		j+=3
-	for i in range(4):
-		base_freqs[i]=next_freqs[i]
-		freqs[i]=freq_macro.get_value(macro_tick,release_tick,base_freqs[i])+arp_freqs[i]
+	apply_macros()
 	return tracker_cmd
 
 func process_tick_n(song:Song,channel:int)->void:
@@ -361,9 +373,27 @@ func process_tick_n(song:Song,channel:int)->void:
 			set_repeated_triggers(fx_cmd)
 		elif fx_cmd==CONSTS.FX_RPT_PHI0:
 			set_repeated_phi_zero(fx_opmasks[i])
-	for i in range(4):
+	apply_macros()
+
+func apply_macros()->void:
+	var old:int
+	var val:int
+	# Global volume
+	old=velocity
+	velocity=volume_macro.get_value(macro_tick,release_tick,velocity)
+	velocity_dirty=velocity_dirty or old!=velocity
+	for i in 4:
+		# Global+Op tone
+		old=freqs[i]
 		base_freqs[i]=next_freqs[i]
-		freqs[i]=freq_macro.get_value(macro_tick,release_tick,base_freqs[i])+arp_freqs[i]
+		freqs[i]=op_freq_macro[i].get_value(macro_tick,release_tick,freq_macro.get_value(macro_tick,release_tick,base_freqs[i]))+arp_freqs[i]
+		freqs_dirty[i]=freqs_dirty[i] or old!=freqs[i]
+		freqs_dirty_any=freqs_dirty_any or freqs_dirty[i]
+		# Global+op key
+		val=op_key_macro[i].get_value(macro_tick,release_tick,key_macro.get_value(macro_tick,release_tick,key_dirty[i]))
+		key_dirty_any=key_dirty_any or val!=key_dirty[i]
+		key_dirty[i]=val
+
 
 func get_fx_cmd(c,i:int)->int:
 	if c!=null:
@@ -421,7 +451,7 @@ func get_fx_val(v,note,cmd:int,cmd_col:int)->int:
 func commit(channel:int,cmds:Array,ptr:int)->int:
 	if instrument_dirty:
 		ptr=commit_instrument(channel,cmds,ptr)
-	if trigger>CONSTS.TRG_KEEP:
+	if key_dirty_any:
 		ptr=commit_retrigger(channel,cmds,ptr)
 	if clip_dirty:
 		ptr=commit_clip(channel,cmds,ptr)
@@ -578,25 +608,29 @@ func commit_velocity(channel:int,cmds:Array,ptr:int)->int:
 	return ptr+1
 
 func commit_retrigger(channel:int,cmds:Array,ptr:int)->int:
-	if trigger==CONSTS.TRG_OFF:
-		cmds[ptr]=CONSTS.CMD_KEYOFF|(channel<<8)|0xFF0000
-		return ptr+1
-	elif trigger==CONSTS.TRG_STOP:
-		cmds[ptr]=CONSTS.CMD_STOP|(channel<<8)|0xFF0000
-		return ptr+1
-	if freqs_dirty_any:
-		ptr=commit_opmasked_long(channel,cmds,ptr,CONSTS.CMD_FREQ,freqs_dirty,freqs)
-		freqs_dirty_any=false
-	if legato==LG_MODE.STACCATO:
-		cmds[ptr]=CONSTS.CMD_KEYON_STACCATO
-	elif legato==LG_MODE.LEGATO:
-		cmds[ptr]=CONSTS.CMD_KEYON_LEGATO
-	else:
-		cmds[ptr]=CONSTS.CMD_KEYON
-	cmds[ptr]|=(channel<<8)|(op_mask<<16)|(velocity<<24)
-	trigger=CONSTS.TRG_KEEP
+	# Somewhere commands>32bit are generated
+	var optr:int=ptr
+	for i in 4:
+		if key_dirty[i]==KON_PASS:
+			continue
+		elif key_dirty[i]==KON_STD:
+			cmds[ptr]=CONSTS.CMD_KEYON|(channel<<8)|(op_mask<<16)|(velocity<<24)
+		elif key_dirty[i]==KON_LEGATO:
+			cmds[ptr]=CONSTS.CMD_KEYON_LEGATO|(channel<<8)|(op_mask<<16)|(velocity<<24)
+		elif key_dirty[i]==KON_STACCATO:
+			cmds[ptr]=CONSTS.CMD_KEYON_STACCATO|(channel<<8)|(op_mask<<16)|(velocity<<24)
+		elif key_dirty[i]==KON_OFF:
+			cmds[ptr]=CONSTS.CMD_KEYOFF|(channel<<8)|(0x10000<<i)
+		elif key_dirty[i]==KON_STOP:
+			cmds[ptr]=CONSTS.CMD_STOP|(channel<<8)|(0x10000<<i)
+		ptr+=1
+	if optr!=ptr:
+		ptr=commit_panning(channel,cmds,ptr)
+	key_dirty_any=false
+	for i in 4:
+		key_dirty[i]=KON_PASS
 	velocity_dirty=false
-	return commit_panning(channel,cmds,ptr+1)
+	return ptr
 
 func commit_instrument(channel:int,cmds:Array,ptr:int)->int:
 	instrument_dirty=false
@@ -693,91 +727,91 @@ func set_lfo_freq(value:int,lfo_mask:int,val_mask:int,val_shift:int)->bool:
 		lfo_mask>>=1
 	return true
 
-func set_opmasked(value:int,params:Array,dirties:Array,op_mask:int)->bool:
-	if (op_mask&15)==0:
+func set_opmasked(value:int,params:Array,dirties:Array,op:int)->bool:
+	if (op&15)==0:
 		return false
 	for i in range(4):
-		if op_mask&1:
+		if op&1:
 			dirties[i]=true
 			params[i]=value
-		op_mask>>=1
+		op>>=1
 	return true
 
-func set_output(value:int,op_mask:int)->void:
-	if (op_mask&15)==0:
+func set_output(value:int,op:int)->void:
+	if (op&15)==0:
 		return
 	for i in range(4):
-		if op_mask&1:
+		if op&1:
 			output_dirty[i]=true
 			routings[i][4]=value
-		op_mask>>=1
+		op>>=1
 	output_dirty_any=true
 
-func set_fm_level(value:int,from:int,op_mask:int)->void:
-	if (op_mask&15)==0:
+func set_fm_level(value:int,from:int,op:int)->void:
+	if (op&15)==0:
 		return
 	for i in range(4):
-		if op_mask&1:
+		if op&1:
 			pm_level_dirty[from][i]=true
 			routings[from][i]=value
-		op_mask>>=1
+		op>>=1
 	pm_level_dirty_any[from]=true
 
-func set_frequency(f,op_mask:int)->void:
-	if (op_mask&15)==0:
+func set_frequency(f,op:int)->void:
+	if (op&15)==0:
 		return
 	f=clamp(f,CONSTS.MIN_FREQ,CONSTS.MAX_FREQ)
 	for i in range(4):
-		if op_mask&1:
+		if op&1:
 			freqs_dirty[i]=true
 			fx_vals[CONSTS.FX_FRQ_PORTA][1+i]=f
 			next_freqs[i]=f
-		op_mask>>=1
+		op>>=1
 	freqs_dirty_any=true
 
-func slide_frequency(d,op_mask:int)->void:
-	if (op_mask&15)==0:
+func slide_frequency(d,op:int)->void:
+	if (op&15)==0:
 		return
 	for i in range(4):
-		if op_mask&1:
+		if op&1:
 			freqs_dirty[i]=true
 			next_freqs[i]=clamp(next_freqs[i]+d,CONSTS.MIN_FREQ,CONSTS.MAX_FREQ)
 			fx_vals[CONSTS.FX_FRQ_PORTA][1+i]=clamp(
 					fx_vals[CONSTS.FX_FRQ_PORTA][1+i]+d,CONSTS.MIN_FREQ,CONSTS.MAX_FREQ)
-		op_mask>>=1
+		op>>=1
 	freqs_dirty_any=true
 
-func slide_frequency_to(d:Array,op_mask:int)->void:
-	if (op_mask&15)==0:
+func slide_frequency_to(d:Array,op:int)->void:
+	if (op&15)==0:
 		return
 	for i in range(4):
-		if op_mask&1:
+		if op&1:
 			freqs_dirty[i]=true
 			if freqs[i]>d[i+1]:
 				next_freqs[i]=clamp(base_freqs[i]-d[0],d[i+1],CONSTS.MAX_FREQ)
 			else:
 				next_freqs[i]=clamp(base_freqs[i]+d[0],CONSTS.MIN_FREQ,d[i+1])
-		op_mask>>=1
+		op>>=1
 	freqs_dirty_any=true
 
-func slide_fms(d:int,op_mask:int)->void:
-	if (op_mask&15)==0:
+func slide_fms(d:int,op:int)->void:
+	if (op&15)==0:
 		return
 	for i in range(4):
-		if op_mask&1:
+		if op&1:
 			fms_dirty[i]=true
 			fm_intensity[i]=clamp(fm_intensity[i]+d,0,12000)
-		op_mask>>=1
+		op>>=1
 	fms_dirty_any=true
 
-func slide_detune(d:int,op_mask:int)->void:
-	if (op_mask&15)==0:
+func slide_detune(d:int,op:int)->void:
+	if (op&15)==0:
 		return
 	for i in range(4):
-		if op_mask&1:
+		if op&1:
 			detune_dirty[i]=true
 			detunes[i]=clamp(detunes[i]+d,-12000,12000)
-		op_mask>>=1
+		op>>=1
 	detune_dirty_any=true
 
 #
@@ -800,47 +834,59 @@ func set_repeated_triggers(fx_cmd:int)->void:
 	fx_vals[fx_cmd][0]-=1
 	if fx_vals[fx_cmd][0]<=0:
 		fx_vals[fx_cmd][0]=fx_vals[fx_cmd][1]
-		if fx_cmd==CONSTS.FX_RPT_ON:
-			trigger=CONSTS.TRG_ON
-			legato=LG_MODE.OFF
-		elif fx_cmd==CONSTS.FX_RPT_RETRIG:
-			trigger=CONSTS.TRG_ON
-			legato=LG_MODE.STACCATO
+		macro_tick=0
+		release_tick=-1
+		key_dirty_any=true
+		var legato=KON_STD if fx_cmd==CONSTS.FX_RPT_ON else KON_STACCATO
+		for i in 4:
+			key_dirty[i]=legato if op_mask&(1<<i) else KON_STOP
+
 
 func set_delayed_triggers(fx_cmd:int)->void:
 	fx_vals[fx_cmd]-=1
 	if fx_vals[fx_cmd]<=0:
 		if fx_cmd==CONSTS.FX_DLY_OFF:
-			trigger=CONSTS.TRG_OFF
+			for i in 4:
+				key_dirty[i]=KON_OFF
+			release_tick=macro_tick
+			key_dirty_any=true
 		elif fx_cmd==CONSTS.FX_DLY_CUT:
-			trigger=CONSTS.TRG_STOP
+			for i in 4:
+				key_dirty[i]=KON_STOP
+			key_dirty_any=true
 		elif fx_cmd==CONSTS.FX_DLY_ON:
-			trigger=CONSTS.TRG_ON
-			legato=LG_MODE.OFF
+			macro_tick=0
+			release_tick=-1
+			for i in 4:
+				key_dirty[i]=KON_STD if op_mask&(1<<i) else KON_STOP
+			key_dirty_any=true
 		elif fx_cmd==CONSTS.FX_DLY_RETRIG:
-			trigger=CONSTS.TRG_ON
-			legato=LG_MODE.STACCATO
+			macro_tick=0
+			release_tick=-1
+			for i in 4:
+				key_dirty[i]=KON_STACCATO if op_mask&(1<<i) else KON_STOP
+			key_dirty_any=true
 
-func set_repeated_phi_zero(op_mask:int)->void:
+func set_repeated_phi_zero(op:int)->void:
 	fx_vals[CONSTS.FX_RPT_PHI0][0]-=1
 	if fx_vals[CONSTS.FX_RPT_PHI0][0]<=0:
 		fx_vals[CONSTS.FX_RPT_PHI0][0]=fx_vals[CONSTS.FX_RPT_PHI0][1]
-	if (op_mask&15)==0:
+	if (op&15)==0:
 		return
 	for i in range(4):
-		if op_mask&1:
+		if op&1:
 			phase_dirty[i]=true
 			phases[i]=0
-		op_mask>>=1
+		op>>=1
 	phase_dirty_any=true
 
-func set_delayed_phi_zero(op_mask:int)->void:
+func set_delayed_phi_zero(op:int)->void:
 	fx_vals[CONSTS.FX_DLY_PHI0]-=1
-	if fx_vals[CONSTS.FX_DLY_PHI0]>0 or (op_mask&15)==0:
+	if fx_vals[CONSTS.FX_DLY_PHI0]>0 or (op&15)==0:
 		return
 	for i in range(4):
-		if op_mask&1:
+		if op&1:
 			phase_dirty[i]=true
 			phases[i]=0
-		op_mask>>=1
+		op>>=1
 	phase_dirty_any=true

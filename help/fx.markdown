@@ -205,7 +205,7 @@ Delays are executed before jumps.
 
 ## 40xx
 
-Delays this channel by `xx` ticks. Any other command, and any further delay/repeat will be relative to the end of this command.
+Delays this channel by `xx` ticks. Any other command for this row, and any further delay/repeat will be relative to the end of this command.
 
 ## 41xx
 

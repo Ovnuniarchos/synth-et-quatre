@@ -59,14 +59,16 @@ func get_value(tick:int,release_tick:int,base_value:int)->int:
 
 func duplicate()->ParamMacro:
 	var np:ParamMacro=get_script().new()
+	np.steps=steps
 	np.loop_start=loop_start
 	np.loop_end=loop_end
+	np.loop_size=loop_size
+	np.release_loop_start=release_loop_start
+	np.release_loop_size=release_loop_size
 	np.values=values.duplicate()
 	np.relative=relative
-	np.steps=steps
 	np.tick_div=tick_div
 	np.delay=delay
-	np.loop_size=loop_size
 	return np
 
 func set_loop_start(v:int)->void:

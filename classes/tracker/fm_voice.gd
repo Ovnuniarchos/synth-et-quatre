@@ -35,6 +35,8 @@ var instrument_dirty:bool=false
 var clip_dirty:bool=true
 var key_dirty_any:bool=true
 var key_dirty:Array=[KON_PASS,KON_PASS,KON_PASS,KON_PASS]
+var enable_mask:int=0
+var enable_bits:int=0
 var freqs_dirty_any:bool=true
 var freqs_dirty:Array=[false,false,false,false]
 var fms_dirty_any:bool=true
@@ -83,6 +85,7 @@ var duty_cycle_dirty:Array=[false,false,false,false]
 var phase_dirty_any:bool=false
 var phase_dirty:Array=[false,false,false,false]
 var phases:Array=[0,0,0,0]
+var phases_rel:Array=[false,false,false,false]
 var lfo_wave_dirty_any:bool=true
 var lfo_wave_dirty:Array=[false,false,false,false]
 var lfo_waves:Array=[0,0,0,0]
@@ -131,6 +134,8 @@ func reset()->void:
 	freqs_dirty=[false,false,false,false]
 	key_dirty_any=false
 	key_dirty=[KON_PASS,KON_PASS,KON_PASS,KON_PASS]
+	enable_mask=0
+	enable_bits=0
 	fms_dirty_any=true
 	fms_dirty=[false,false,false,false]
 	fml_dirty_any=true
@@ -382,6 +387,19 @@ func apply_macros()->void:
 	old=velocity
 	velocity=volume_macro.get_value(macro_tick,release_tick,velocity)
 	velocity_dirty=velocity_dirty or old!=velocity
+	# Global Op Enable
+	val=op_enable_macro.get_value(macro_tick,release_tick,0)
+	enable_mask=val>>ParamMacro.MASK_PASSTHROUGH_SHIFT
+	enable_bits=val&ParamMacro.MASK_VALUE_MASK
+	# Global Panpot
+	old=panning
+	panning=pan_macro.get_value(macro_tick,release_tick,panning)|\
+		chanl_invert_macro.get_value(macro_tick,release_tick,panning>>6)<<6
+	panning_dirty=panning_dirty or old!=panning
+	# Global Clip
+	old=int(clip)
+	clip=bool(clip_macro.get_value(macro_tick,release_tick,old))
+	clip_dirty=clip_dirty or old!=int(clip)
 	for i in 4:
 		# Global+Op tone
 		old=freqs[i]
@@ -390,10 +408,60 @@ func apply_macros()->void:
 		freqs_dirty[i]=freqs_dirty[i] or old!=freqs[i]
 		freqs_dirty_any=freqs_dirty_any or freqs_dirty[i]
 		# Global+op key
-		val=op_key_macro[i].get_value(macro_tick,release_tick,key_macro.get_value(macro_tick,release_tick,key_dirty[i]))
-		key_dirty_any=key_dirty_any or val!=key_dirty[i]
-		key_dirty[i]=val
+		# Passthrugh value == 0 or ParamMacro.PASSTHROUGH?
+		old=key_dirty[i]
+		key_dirty[i]=key_macro.get_value(macro_tick,release_tick,key_dirty[i])
+		key_dirty[i]=op_key_macro[i].get_value(macro_tick,release_tick,key_dirty[i])
+		key_dirty_any=key_dirty_any or old!=key_dirty[i]
+		# Op Phase
+		val=phase_macros[i].get_value(macro_tick,release_tick,ParamMacro.PASSTHROUGH)
+		if val!=ParamMacro.PASSTHROUGH:
+			phase_dirty[i]=true
+			phase_dirty_any=true
+			phases[i]=val
+			phases_rel[i]=phase_macros[i].relative
+	# Op Duty Cycle
+	duty_cycle_dirty_any=apply_op_macro(duty_macros,duty_cycles,duty_cycle_dirty,duty_cycle_dirty_any)
+	# Op Wave
+	wave_dirty_any=apply_op_macro(wave_macros,waveforms,wave_dirty,wave_dirty_any)
+	# Op Attack
+	attack_dirty_any=apply_op_macro(attack_macros,attacks,attack_dirty,attack_dirty_any)
+	# Op Decay
+	decay_dirty_any=apply_op_macro(decay_macros,decays,decay_dirty,decay_dirty_any)
+	# Op SusLevel
+	suslev_dirty_any=apply_op_macro(sus_level_macros,sustain_levels,suslev_dirty,suslev_dirty_any)
+	# Op SusRate
+	susrate_dirty_any=apply_op_macro(sus_rate_macros,sustains,susrate_dirty,susrate_dirty_any)
+	# Op Release
+	release_dirty_any=apply_op_macro(release_macros,releases,release_dirty,release_dirty_any)
+	# Op Repeat
+	repeat_dirty_any=apply_op_macro(repeat_macros,repeats,repeat_dirty,repeat_dirty_any)
+	# Op AMI
+	ams_dirty_any=apply_op_macro(ami_macros,am_intensity,ams_dirty,ams_dirty_any)
+	# Op KSR
+	ksr_dirty_any=apply_op_macro(ksr_macros,key_scalers,ksr_dirty,ksr_dirty_any)
+	# Op Multiplier
+	multiplier_dirty_any=apply_op_macro(multiplier_macros,multipliers,multiplier_dirty,multiplier_dirty_any)
+	# Op Divider
+	divider_dirty_any=apply_op_macro(divider_macros,dividers,divider_dirty,divider_dirty_any)
+	# Op Detune
+	detune_dirty_any=apply_op_macro(detune_macros,detunes,detune_dirty,detune_dirty_any)
+	# Op FMI
+	fms_dirty_any=apply_op_macro(fmi_macros,fm_intensity,fms_dirty,fms_dirty_any)
+	# Op AM LFO
+	aml_dirty_any=apply_op_macro(am_lfo_macros,am_lfo,aml_dirty,aml_dirty_any)
+	# Op FM LFO
+	fml_dirty_any=apply_op_macro(fm_lfo_macros,fm_lfo,fml_dirty,fml_dirty_any)
 
+
+func apply_op_macro(macros:Array,values:Array,dirty:Array,dirty_any:bool)->bool:
+	var old:int
+	for op in 4:
+		old=values[op]
+		values[op]=macros[op].get_value(macro_tick,release_tick,values[op])
+		dirty[op]=dirty[op] or old!=values[op]
+		dirty_any=dirty_any or dirty[op]
+	return dirty_any
 
 func get_fx_cmd(c,i:int)->int:
 	if c!=null:
@@ -453,6 +521,8 @@ func commit(channel:int,cmds:Array,ptr:int)->int:
 		ptr=commit_instrument(channel,cmds,ptr)
 	if key_dirty_any:
 		ptr=commit_retrigger(channel,cmds,ptr)
+	if enable_mask!=0:
+		ptr=commit_enable(channel,cmds,ptr)
 	if clip_dirty:
 		ptr=commit_clip(channel,cmds,ptr)
 	if freqs_dirty_any:
@@ -505,7 +575,7 @@ func commit(channel:int,cmds:Array,ptr:int)->int:
 	if aml_dirty_any:
 		ptr=commit_opmasked_short(channel,cmds,ptr,CONSTS.CMD_AML,aml_dirty,am_lfo)
 		aml_dirty_any=false
-	for i in range(4):
+	for i in 4:
 		if pm_level_dirty_any[i]:
 			ptr=commit_pm_level(channel,cmds,ptr,i,pm_level_dirty[i],routings[i])
 	if output_dirty_any:
@@ -519,7 +589,6 @@ func commit(channel:int,cmds:Array,ptr:int)->int:
 		duty_cycle_dirty_any=false
 	if phase_dirty_any:
 		ptr=commit_opmasked_long(channel,cmds,ptr,CONSTS.CMD_PHI,phase_dirty,phases,16)
-		phase_dirty_any=false
 	if lfo_wave_dirty_any:
 		ptr=commit_lfo_short(cmds,ptr,CONSTS.CMD_LFO_WAVE,lfo_wave_dirty,lfo_waves)
 		lfo_wave_dirty_any=false
@@ -535,9 +604,22 @@ func commit(channel:int,cmds:Array,ptr:int)->int:
 		lfo_phase_dirty_any=false
 	return ptr
 
+func commit_phase(channel:int,cmds:Array,ptr:int,dirties:Array,values:Array,
+	relatives:Array)->int:
+	var cmd:int
+	for i in 4:
+		if dirties[i]:
+			dirties[i]=false
+			cmd=CONSTS.CMD_DPHI if relatives[i] else CONSTS.CMD_PHI
+			cmds[ptr]=cmd|(channel<<8)|(0x10000<<i)
+			cmds[ptr+1]=values[i]<<16
+			ptr+=2
+	phase_dirty_any=false
+	return ptr
+
 func commit_lfo_long(cmds:Array,ptr:int,cmd:int,dirties:Array,values:Array,
 		shift:int=0)->int:
-	for i in range(4):
+	for i in 4:
 		if dirties[i]:
 			dirties[i]=false
 			cmds[ptr]=cmd|(i<<8)
@@ -546,7 +628,7 @@ func commit_lfo_long(cmds:Array,ptr:int,cmd:int,dirties:Array,values:Array,
 	return ptr
 
 func commit_lfo_short(cmds:Array,ptr:int,cmd:int,dirties:Array,values:Array)->int:
-	for i in range(4):
+	for i in 4:
 		if dirties[i]:
 			dirties[i]=false
 			cmds[ptr]=cmd|(i<<8)|(values[i]<<16)
@@ -554,7 +636,7 @@ func commit_lfo_short(cmds:Array,ptr:int,cmd:int,dirties:Array,values:Array)->in
 	return ptr
 
 func commit_output(channel:int,cmds:Array,ptr:int)->int:
-	for i in range(4):
+	for i in 4:
 		if output_dirty[i]:
 			output_dirty[i]=false
 			cmds[ptr]=CONSTS.CMD_OUT|(channel<<8)|(0x10000<<i)|(routings[i][4]<<24)
@@ -565,7 +647,7 @@ func commit_output(channel:int,cmds:Array,ptr:int)->int:
 func commit_pm_level(channel:int,cmds:Array,ptr:int,from:int,dirties:Array,
 		values:Array)->int:
 	pm_level_dirty_any[from]=false
-	for i in range(4):
+	for i in 4:
 		if dirties[i]:
 			dirties[i]=false
 			cmds[ptr]=CONSTS.CMD_PM|(channel<<8)|(0x10000<<i)|(from<<24)
@@ -575,7 +657,7 @@ func commit_pm_level(channel:int,cmds:Array,ptr:int,from:int,dirties:Array,
 
 func commit_opmasked_short(channel:int,cmds:Array,ptr:int,cmd:int,dirties:Array,
 		values:Array)->int:
-	for i in range(4):
+	for i in 4:
 		if dirties[i]:
 			dirties[i]=false
 			cmds[ptr]=cmd|(channel<<8)|(0x10000<<i)|(values[i]<<24)
@@ -584,7 +666,7 @@ func commit_opmasked_short(channel:int,cmds:Array,ptr:int,cmd:int,dirties:Array,
 
 func commit_opmasked_long(channel:int,cmds:Array,ptr:int,cmd:int,dirties:Array,
 		values:Array,shift:int=0)->int:
-	for i in range(4):
+	for i in 4:
 		if dirties[i]:
 			dirties[i]=false
 			cmds[ptr]=cmd|(channel<<8)|(0x10000<<i)
@@ -607,8 +689,12 @@ func commit_velocity(channel:int,cmds:Array,ptr:int)->int:
 	velocity_dirty=false
 	return ptr+1
 
+func commit_enable(channel:int,cmds:Array,ptr:int)->int:
+	cmds[ptr]=CONSTS.CMD_ENABLE|(channel<<8)|(enable_mask<<16)||(enable_bits<<24)
+	enable_mask=0
+	return ptr+1
+
 func commit_retrigger(channel:int,cmds:Array,ptr:int)->int:
-	# Somewhere commands>32bit are generated
 	var optr:int=ptr
 	for i in 4:
 		if key_dirty[i]==KON_PASS:
@@ -653,7 +739,7 @@ func commit_instrument(channel:int,cmds:Array,ptr:int)->int:
 	duty_cycle_dirty_any=false
 	cmds[ptr]=CONSTS.CMD_CLIP|(channel<<8)|(int(clip)<<24)
 	ptr+=1
-	for i in range(4):
+	for i in 4:
 		fms_dirty[i]=false
 		fml_dirty[i]=false
 		multiplier_dirty[i]=false
@@ -693,7 +779,7 @@ func commit_instrument(channel:int,cmds:Array,ptr:int)->int:
 		cmds[ptr+17]=CONSTS.CMD_AML|chn_opm|(am_lfo[i]<<24)
 		cmds[ptr+18]=CONSTS.CMD_KSR|chn_opm|(key_scalers[i]<<24)
 		ptr+=19
-		for j in range(4):
+		for j in 4:
 			pm_level_dirty[i][j]=false
 			cmds[ptr]=CONSTS.CMD_PM|(channel<<8)|(j<<16)|(i<<24)
 			cmds[ptr+1]=routings[i][j]
@@ -720,7 +806,7 @@ func set_clip(value:int)->bool:
 func set_lfo_freq(value:int,lfo_mask:int,val_mask:int,val_shift:int)->bool:
 	if (lfo_mask&15)==0:
 		return false
-	for i in range(4):
+	for i in 4:
 		if lfo_mask&1:
 			lfo_freq_dirty[i]=true
 			lfo_freqs[i]=(lfo_freqs[i]&val_mask)|(value<<val_shift)
@@ -730,7 +816,7 @@ func set_lfo_freq(value:int,lfo_mask:int,val_mask:int,val_shift:int)->bool:
 func set_opmasked(value:int,params:Array,dirties:Array,op:int)->bool:
 	if (op&15)==0:
 		return false
-	for i in range(4):
+	for i in 4:
 		if op&1:
 			dirties[i]=true
 			params[i]=value
@@ -740,7 +826,7 @@ func set_opmasked(value:int,params:Array,dirties:Array,op:int)->bool:
 func set_output(value:int,op:int)->void:
 	if (op&15)==0:
 		return
-	for i in range(4):
+	for i in 4:
 		if op&1:
 			output_dirty[i]=true
 			routings[i][4]=value
@@ -750,7 +836,7 @@ func set_output(value:int,op:int)->void:
 func set_fm_level(value:int,from:int,op:int)->void:
 	if (op&15)==0:
 		return
-	for i in range(4):
+	for i in 4:
 		if op&1:
 			pm_level_dirty[from][i]=true
 			routings[from][i]=value
@@ -761,7 +847,7 @@ func set_frequency(f,op:int)->void:
 	if (op&15)==0:
 		return
 	f=clamp(f,CONSTS.MIN_FREQ,CONSTS.MAX_FREQ)
-	for i in range(4):
+	for i in 4:
 		if op&1:
 			freqs_dirty[i]=true
 			fx_vals[CONSTS.FX_FRQ_PORTA][1+i]=f
@@ -772,7 +858,7 @@ func set_frequency(f,op:int)->void:
 func slide_frequency(d,op:int)->void:
 	if (op&15)==0:
 		return
-	for i in range(4):
+	for i in 4:
 		if op&1:
 			freqs_dirty[i]=true
 			next_freqs[i]=clamp(next_freqs[i]+d,CONSTS.MIN_FREQ,CONSTS.MAX_FREQ)
@@ -784,7 +870,7 @@ func slide_frequency(d,op:int)->void:
 func slide_frequency_to(d:Array,op:int)->void:
 	if (op&15)==0:
 		return
-	for i in range(4):
+	for i in 4:
 		if op&1:
 			freqs_dirty[i]=true
 			if freqs[i]>d[i+1]:
@@ -797,7 +883,7 @@ func slide_frequency_to(d:Array,op:int)->void:
 func slide_fms(d:int,op:int)->void:
 	if (op&15)==0:
 		return
-	for i in range(4):
+	for i in 4:
 		if op&1:
 			fms_dirty[i]=true
 			fm_intensity[i]=clamp(fm_intensity[i]+d,0,12000)
@@ -807,7 +893,7 @@ func slide_fms(d:int,op:int)->void:
 func slide_detune(d:int,op:int)->void:
 	if (op&15)==0:
 		return
-	for i in range(4):
+	for i in 4:
 		if op&1:
 			detune_dirty[i]=true
 			detunes[i]=clamp(detunes[i]+d,-12000,12000)
@@ -873,10 +959,11 @@ func set_repeated_phi_zero(op:int)->void:
 		fx_vals[CONSTS.FX_RPT_PHI0][0]=fx_vals[CONSTS.FX_RPT_PHI0][1]
 	if (op&15)==0:
 		return
-	for i in range(4):
+	for i in 4:
 		if op&1:
 			phase_dirty[i]=true
 			phases[i]=0
+			phases_rel[i]=false
 		op>>=1
 	phase_dirty_any=true
 
@@ -884,9 +971,10 @@ func set_delayed_phi_zero(op:int)->void:
 	fx_vals[CONSTS.FX_DLY_PHI0]-=1
 	if fx_vals[CONSTS.FX_DLY_PHI0]>0 or (op&15)==0:
 		return
-	for i in range(4):
+	for i in 4:
 		if op&1:
 			phase_dirty[i]=true
 			phases[i]=0
+			phases_rel[i]=false
 		op>>=1
 	phase_dirty_any=true

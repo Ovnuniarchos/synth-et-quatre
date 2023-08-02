@@ -102,6 +102,7 @@ void SynthTracker::_init(){
 #define TRACE_OUTPUT "OUT[%d %02x %d] "
 #define TRACE_PAN "PAN[%d %02x] "
 #define TRACE_PHI "PHI[%d %02x %06x] "
+#define TRACE_DPHI "DPHI[%d %02x %06x] "
 #define TRACE_AM_FACTOR "AMS[%d %02x %d] "
 #define TRACE_AM_LFO "AML[%d %02x %d] "
 #define TRACE_FM_FACTOR "FMS[%d %02x %d] "
@@ -249,6 +250,11 @@ Array SynthTracker::generate(int size,float volume,Array cmds){
 					data=VAR2INT(cmds[cmd_ptr++]);
 					TRACE(TRACE_PHI,voice,op_mask,data);
 					synth.set_phase(voice,op_mask,data);
+					break;
+				case CMD_DPHI:
+					data=VAR2INT(cmds[cmd_ptr++]);
+					TRACE(TRACE_DPHI,voice,op_mask,data);
+					synth.shift_phase(voice,op_mask,data);
 					break;
 				case CMD_AMS:
 					TRACE(TRACE_AM_FACTOR,voice,op_mask,data_8);

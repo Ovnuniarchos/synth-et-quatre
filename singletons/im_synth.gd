@@ -135,7 +135,7 @@ func _on_macro_timer()->void:
 		val_b=instr.chanl_invert_macro.get_value(kot,kft,channel_invs[chan])
 		synth.set_panning(chan,val,bool(val_b&1),bool(val_b&2))
 		# Global Clip
-		val=instr.pan_macro.get_value(kot,kft,instr.clip)
+		val=instr.clip_macro.get_value(kot,kft,instr.clip)
 		synth.set_clip(chan,bool(val))
 		# Per-op
 		for op in 4:
@@ -179,9 +179,15 @@ func _on_macro_timer()->void:
 			# Op Detune
 			val=instr.detune_macros[op].get_value(kot,kft,instr.detunes[op])
 			synth.set_detune(chan,mask,val)
+			# Op FMI
+			val=instr.fmi_macros[op].get_value(kot,kft,instr.fm_intensity[op])
+			synth.set_fm_intensity(chan,mask,val)
 			# Op AM LFO
 			val=instr.am_lfo_macros[op].get_value(kot,kft,instr.am_lfo[op])
 			synth.set_am_lfo(chan,mask,val)
+			# Op FM LFO
+			val=instr.fm_lfo_macros[op].get_value(kot,kft,instr.fm_lfo[op])
+			synth.set_fm_lfo(chan,mask,val)
 			# Op Phase
 			val=instr.phase_macros[op].get_value(kot,kft,ParamMacro.PASSTHROUGH)
 			if val!=ParamMacro.PASSTHROUGH:
@@ -189,7 +195,6 @@ func _on_macro_timer()->void:
 					synth.shift_phase(chan,mask,val<<16)
 				else:
 					synth.set_phase(chan,mask,val<<16)
-
 	ti=Time.get_ticks_msec()
 
 #

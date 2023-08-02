@@ -118,47 +118,51 @@ Bit 6 inverts the left channel, and bit 7 the right one. This allows for pseudo-
 
 Set waveform phase for voice `vv`, with operator mask `oo`, to `phi÷167772.16`%. Only the lower 24 bits of `phi` are read.
 
-## `aa:oo:vv:19` (SET OP AM INTENSITY)
+## `--:oo:vv:19 dphi` (ADVANCE OP WAVE PHASE)
+
+Set waveform phase for voice `vv`, with operator mask `oo`, to `phi÷167772.16`%. Only the lower 24 bits of `phi` are read.
+
+## `aa:oo:vv:1A` (SET OP AM INTENSITY)
 
 Set AM (tremolo) intensity for voice `vv`, with operator mask `oo`, to `aa÷2.55`% amplitude.
 
-## `nn:oo:vv:1A` (SET OP AM LFO)
+## `nn:oo:vv:1B` (SET OP AM LFO)
 
 Set AM (tremolo) LFO for voice `vv`, with operator mask `oo`, to LFO number `nn`. `nn` is clamped to the range `0 - 3`.
 
-## `--:oo:vv:1B mils` (SET OP FM INTENSITY)
+## `--:oo:vv:1C mils` (SET OP FM INTENSITY)
 
 Set FM (vibrato) intensity for voice `vv`, with operator mask `oo`, to `mils` millis. `mils` is clamped to the range `0 - 12000`.
 
-## `nn:oo:vv:1C` (SET OP FM LFO)
+## `nn:oo:vv:1D` (SET OP FM LFO)
 
 Set FM (vibrato) LFO for voice `vv`, with operator mask `oo`,to LFO number `nn`. `nn` is clamped to the range `0 - 3`.
 
-## `--:--:ll:1D freq` (SET LFO FREQ)
+## `--:--:ll:1E freq` (SET LFO FREQ)
 
 Set LFO number `ll` frequency to `freq÷256` Hz.
 
 `ll` is clamped to the range `0 - 3`. `freq`, to the range `0 - 65535`.
 
-## `--:nn:ll:1E` (SET LFO WAVE)
+## `--:nn:ll:1F` (SET LFO WAVE)
 
 Set wave `nn` for LFO number `ll`. Waves 0-3 are internal. Waves 4+ are user-defined, and must be defined before use.
 
 `ll` is clamped to the range `0 - 3`.
 
-## `--:--:ll:1F duty` (SET LFO DUTY CYCLE)
+## `--:--:ll:20 duty` (SET LFO DUTY CYCLE)
 
 Set LFO number `ll`'s duty cycle to `duty÷167772.16`%.
 
 `ll` is clamped to the range `0 - 3`. Only the lower 24 bits of `duty` are read.
 
-## `--:--:ll:20 phi` (SET LFO WAVE PHASE)
+## `--:--:ll:21 phi` (SET LFO WAVE PHASE)
 
 Set waveform phase for LFO `ll`, to `phi÷167772.16`%.
 
 `ll` is clamped to the range `0 - 3`. Only the lower 24 bits of `phi` are read.
 
-## `cc:--:vv:21` (SET CLIP)
+## `cc:--:vv:22` (SET CLIP)
 
 Set clipping for voice `vv`.
 

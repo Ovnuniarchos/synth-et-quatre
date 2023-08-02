@@ -61,6 +61,12 @@ var phase_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),Param
 func _init()->void:
 	name=TYPE
 
+func duplicate_op_macros(macros:Array)->Array:
+	var nm:Array=macros.duplicate(true)
+	for i in nm.size():
+		nm[i]=nm[i].duplicate()
+	return nm
+
 func duplicate()->Instrument:
 	var ni:FmInstrument=.duplicate() as FmInstrument
 	ni.op_mask=op_mask
@@ -80,10 +86,31 @@ func duplicate()->Instrument:
 	ni.fm_intensity=fm_intensity.duplicate()
 	ni.routings=routings.duplicate(true)
 	ni.freq_macro=freq_macro.duplicate()
+	ni.op_freq_macro=duplicate_op_macros(op_freq_macro)
 	ni.volume_macro=volume_macro.duplicate()
 	ni.pan_macro=pan_macro.duplicate()
+	ni.key_macro=key_macro.duplicate()
+	ni.op_key_macro=duplicate_op_macros(op_key_macro)
+	ni.op_enable_macro=op_enable_macro.duplicate()
 	ni.chanl_invert_macro=chanl_invert_macro.duplicate()
 	ni.clip_macro=clip_macro.duplicate()
+	ni.duty_macros=duplicate_op_macros(duty_macros)
+	ni.wave_macros=duplicate_op_macros(wave_macros)
+	ni.attack_macros=duplicate_op_macros(attack_macros)
+	ni.decay_macros=duplicate_op_macros(decay_macros)
+	ni.sus_level_macros=duplicate_op_macros(sus_level_macros)
+	ni.sus_rate_macros=duplicate_op_macros(sus_rate_macros)
+	ni.release_macros=duplicate_op_macros(release_macros)
+	ni.repeat_macros=duplicate_op_macros(repeat_macros)
+	ni.ami_macros=duplicate_op_macros(ami_macros)
+	ni.ksr_macros=duplicate_op_macros(ksr_macros)
+	ni.multiplier_macros=duplicate_op_macros(multiplier_macros)
+	ni.divider_macros=duplicate_op_macros(divider_macros)
+	ni.detune_macros=duplicate_op_macros(detune_macros)
+	ni.fmi_macros=duplicate_op_macros(fmi_macros)
+	ni.am_lfo_macros=duplicate_op_macros(am_lfo_macros)
+	ni.fm_lfo_macros=duplicate_op_macros(fm_lfo_macros)
+	ni.phase_macros=duplicate_op_macros(phase_macros)
 	return ni
 
 func copy(from:Instrument,full:bool=false)->void:
@@ -105,6 +132,32 @@ func copy(from:Instrument,full:bool=false)->void:
 		am_intensity=from.am_intensity.duplicate()
 		fm_intensity=from.fm_intensity.duplicate()
 		routings=from.routings.duplicate(true)
+		freq_macro=from.freq_macro.duplicate()
+		op_freq_macro=duplicate_op_macros(from.op_freq_macro)
+		volume_macro=from.volume_macro.duplicate()
+		pan_macro=from.pan_macro.duplicate()
+		key_macro=from.key_macro.duplicate()
+		op_key_macro=duplicate_op_macros(from.op_key_macro)
+		op_enable_macro=from.op_enable_macro.duplicate()
+		chanl_invert_macro=from.chanl_invert_macro.duplicate()
+		clip_macro=from.clip_macro.duplicate()
+		duty_macros=duplicate_op_macros(from.duty_macros)
+		wave_macros=duplicate_op_macros(from.wave_macros)
+		attack_macros=duplicate_op_macros(from.attack_macros)
+		decay_macros=duplicate_op_macros(from.decay_macros)
+		sus_level_macros=duplicate_op_macros(from.sus_level_macros)
+		sus_rate_macros=duplicate_op_macros(from.sus_rate_macros)
+		release_macros=duplicate_op_macros(from.release_macros)
+		repeat_macros=duplicate_op_macros(from.repeat_macros)
+		ami_macros=duplicate_op_macros(from.ami_macros)
+		ksr_macros=duplicate_op_macros(from.ksr_macros)
+		multiplier_macros=duplicate_op_macros(from.multiplier_macros)
+		divider_macros=duplicate_op_macros(from.divider_macros)
+		detune_macros=duplicate_op_macros(from.detune_macros)
+		fmi_macros=duplicate_op_macros(from.fmi_macros)
+		am_lfo_macros=duplicate_op_macros(from.am_lfo_macros)
+		fm_lfo_macros=duplicate_op_macros(from.fm_lfo_macros)
+		phase_macros=duplicate_op_macros(from.phase_macros)
 
 func delete_waveform(w_ix:int)->void:
 	for i in range(4):

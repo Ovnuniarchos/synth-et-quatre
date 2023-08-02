@@ -3,7 +3,8 @@ class_name BarEditor
 
 signal macro_changed(parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
 
-enum{MODE_ABS,MODE_REL,MODE_SWABS,MODE_SWREL,MODE_MASK}
+# Implement mode SELECT_ONE
+enum{MODE_ABS,MODE_REL,MODE_SWABS,MODE_SWREL,MODE_MASK,MODE_SELECT}
 enum{BIT_CLEAR,BIT_SWITCH,BIT_SET}
 
 const MAX_STEPS:int=256
@@ -52,7 +53,7 @@ export (int) var max_value_abs:int=48.0 setget set_max_value_abs
 export (int) var step:int=1.0
 export (int) var big_step:int=4.0
 export (int) var huge_step:int=16.0
-export (int,"Absolute","Relative","SwitchAbs","SwitchRel","Mask") var mode:int=MODE_SWREL setget set_mode
+export (int,"Absolute","Relative","SwitchAbs","SwitchRel","Mask","Select") var mode:int=MODE_SWREL setget set_mode
 export (PoolStringArray) var labels:PoolStringArray=PoolStringArray()
 
 
@@ -129,6 +130,8 @@ func set_mode(m:int)->void:
 func init_values()->void:
 	if mode<MODE_MASK:
 		values.fill(center_value)
+	elif mode==MODE_SELECT:
+		values.fill(ParamMacro.PASSTHROUGH)
 	else:
 		values.fill(0)
 
@@ -181,7 +184,13 @@ func _on_ValuesGraph_gui_input(ev:InputEvent)->void:
 	var ix:int=clamp((ev.position.x+scroll.value)/bar_width,0.0,MAX_STEPS-1)
 	var miv:float=min_value_rel if relative else min_value_abs
 	var mxv:float=max_value_rel if relative else max_value_abs
-	var yv:int=int(clamp(stepify(range_lerp(ev.position.y,0.0,ym,mxv,miv),st),miv,mxv))
+	var yv:int
+	if relative:
+		yv=int(clamp(stepify(range_lerp(ev.position.y,0.0,ym,mxv,miv),st),miv,mxv))
+	elif mode==MODE_SELECT:
+		yv=int(clamp(ceil((1.0-(ev.position.y/ym))*(abs(mxv-miv)+1.0)),miv,mxv))
+	else:
+		yv=int(clamp(ceil((1.0-(ev.position.y/ym))*abs(mxv-miv)),miv,mxv))
 	var redraw:bool=false
 	if ev.button_mask==BUTTON_MASK_LEFT:
 		if ev.shift and mode!=MODE_MASK:
@@ -353,11 +362,12 @@ func _on_ValuesGraph_draw()->void:
 			x0+=bar_width
 	else:
 		color=real_theme.get_color("values_color","BarEditor")
+		var miy:float=ym/(abs(min_value_abs-max_value_abs)+1.0) if mode==MODE_SELECT else 0.0
 		for i in steps:
 			if values[i]!=ParamMacro.PASSTHROUGH:
-				yv=-range_lerp(values[i],min_value_abs,max_value_abs,0.0,ym)
+				yv=-range_lerp(values[i],min_value_abs,max_value_abs,miy,ym)
 				values_graph.draw_rect(Rect2(x0,ym,bar_width-1.0,yv),color)
-			else:
+			elif mode!=MODE_SELECT:
 				values_graph.draw_rect(Rect2(x0,0,bar_width-1.0,ym-1),color,false)
 			x0+=bar_width
 

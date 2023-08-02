@@ -3,7 +3,8 @@ extends Control
 """
 FIXME
 TODO:
-	Automation
+	X Automation
+		File support
 	CycleButtons themable
 	MIDI on/off indicator
 	Reset per channel parameters (as a command|button)

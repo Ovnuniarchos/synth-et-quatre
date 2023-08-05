@@ -160,7 +160,7 @@ func copy(from:Instrument,full:bool=false)->void:
 		phase_macros=duplicate_op_macros(from.phase_macros)
 
 func delete_waveform(w_ix:int)->void:
-	for i in range(4):
+	for i in 4:
 		if waveforms[i]>=w_ix:
 			waveforms[i]-=1
 			if waveforms[i]==WAVE.NOISE:
@@ -191,7 +191,7 @@ func serialize(out:ChunkedFile)->void:
 	out.start_chunk(CHUNK_ID,CHUNK_VERSION)
 	out.store_8(op_mask)
 	out.store_8(int(clip))
-	for i in range(4):
+	for i in 4:
 		out.store_8(attacks[i])
 		out.store_8(decays[i])
 		out.store_8(sustains[i])
@@ -222,7 +222,7 @@ func deserialize(inf:ChunkedFile,ins:FmInstrument,version:int)->void:
 		ins.clip=bool(inf.get_8())
 	else:
 		ins.clip=0
-	for i in range(4):
+	for i in 4:
 		ins.attacks[i]=inf.get_8()
 		ins.decays[i]=inf.get_8()
 		ins.sustains[i]=inf.get_8()
@@ -239,7 +239,7 @@ func deserialize(inf:ChunkedFile,ins:FmInstrument,version:int)->void:
 		ins.fm_intensity[i]=inf.get_16()
 		ins.fm_lfo[i]=inf.get_8()
 		ins.key_scalers[i]=inf.get_8()
-	for i in range(4):
-		for j in range(5):
+	for i in 4:
+		for j in 5:
 			routings[i][j]=inf.get_8()
 	ins.name=inf.get_pascal_string()

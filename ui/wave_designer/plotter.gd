@@ -48,7 +48,7 @@ func change_sample(w:Waveform)->void:
 func send_sample(sample:Array,freq:float)->void:
 	var std:AudioStreamSample=$Player.stream as AudioStreamSample
 	sam.resize(sample.size())
-	for i in range(0,sample.size()):
+	for i in range(sample.size()):
 		sam[i]=sample[i]*127.0
 	std.data=PoolByteArray(sam)
 	var w:Waveform=get_wave()

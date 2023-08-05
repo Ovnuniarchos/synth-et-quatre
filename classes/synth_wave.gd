@@ -19,7 +19,7 @@ func calculate()->void:
 	var buf_size:int=data.size()
 	var buffer:Array=[]
 	buffer.resize(buf_size)
-	for i in range(0,buf_size):
+	for i in range(buf_size):
 		buffer[i]=0.0
 	for comp in components:
 		buffer=comp.calculate(buf_size,buffer,null)
@@ -31,7 +31,7 @@ func duplicate()->Waveform:
 	nw.components=[]
 	for c in components:
 		nw.components.append(c.duplicate())
-	for i in range(0,components.size()):
+	for i in range(components.size()):
 		var ii:int=components.find(components[i].input_comp)
 		nw.components[i].input_comp=null if ii==-1 else nw.components[ii]
 	return nw
@@ -56,7 +56,7 @@ func get_component(index:int)->WaveComponent:
 	return components[index]
 
 func readjust_inputs()->void:
-	for i in range(0,components.size()):
+	for i in range(components.size()):
 		var c:WaveComponent=components[i] as WaveComponent
 		if components.find(c.input_comp)>components.find(c):
 			c.input_comp=null
@@ -80,7 +80,7 @@ func deserialize(inf:ChunkedFile,w:SynthWave,_version:int)->void:
 	w.name=inf.get_pascal_string()
 	w.components=[]
 	w.components.resize(inf.get_16())
-	for i in range(0,w.components.size()):
+	for i in range(w.components.size()):
 		var hdr:Dictionary=inf.get_chunk_header()
 		var nw:WaveComponent=null
 		match hdr[ChunkedFile.CHUNK_ID]:

@@ -680,7 +680,7 @@ func _on_order_changed(order_ix:int,channel_ix:int)->void:
 func update_tilemap(channel:int=-1)->void:
 	var col:int=0
 	lines.clear()
-	for i in range(0,song.pattern_length):
+	for i in range(song.pattern_length):
 		lines.set_cell(0,i,i/100)
 		lines.set_cell(1,i,(i/10)%10)
 		lines.set_cell(2,i,i%10)
@@ -695,7 +695,7 @@ func update_tilemap(channel:int=-1)->void:
 		var row:int=0
 		var pat:Pattern=song.get_order_pattern(curr_order,chan)
 		col=channel_col0[chan]
-		for i in range(0,song.pattern_length):
+		for i in range(song.pattern_length):
 			var note:Array=pat.notes[i]
 			set_legato_cell(row,col,note[ATTRS.LG_MODE])
 			set_note_cells(row,col,note[ATTRS.NOTE])

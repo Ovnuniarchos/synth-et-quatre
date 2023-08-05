@@ -36,7 +36,7 @@ func equals(other:WaveComponent)->bool:
 		return false
 	if other.get("CHUNK_ID")!=CHUNK_ID:
 		return false
-	for i in range(4):
+	for i in 4:
 		if quarters[i]!=other.quarters[i]:
 			return false
 	if !are_equal_approx([

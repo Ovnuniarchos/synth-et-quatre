@@ -118,7 +118,7 @@ func delete_wave(wave:Waveform)->void:
 	var ix:int=wave_list.find(wave)+MIN_CUSTOM_WAVE
 	for inst in instrument_list:
 		inst.delete_waveform(ix)
-	for lfi in range(4):
+	for lfi in 4:
 		if lfo_waves[lfi]>ix:
 			lfo_waves[lfi]=correct_wave(lfo_waves[lfi])
 	for chan in pattern_list:
@@ -424,7 +424,7 @@ func serialize(out:ChunkedFile)->void:
 	out.end_chunk()
 	# Instruments
 	out.start_chunk(CHUNK_INSTRUMENTS,CHUNK_INSTRUMENTS_VERSION)
-	for i in range(4):
+	for i in 4:
 		out.store_16(lfo_frequencies[i]*256.0)
 		out.store_8(lfo_waves[i])
 		out.store_8(lfo_duty_cycles[i])
@@ -536,7 +536,7 @@ func process_order_list(inf:ChunkedFile,song:Song,_version:int)->void:
 func process_instrument_list(inf:ChunkedFile,song:Song,_version:int)->void:
 	var hdr:Dictionary
 	var inst_l:Array=[]
-	for i in range(4):
+	for i in 4:
 		song.lfo_frequencies[i]=inf.get_16()/256.0
 		song.lfo_waves[i]=inf.get_8()
 		song.lfo_duty_cycles[i]=inf.get_8()
@@ -717,7 +717,7 @@ func clean_waveforms()->void:
 	# Scan the instruments to change old->new
 	for inst in instrument_list:
 		if inst is FmInstrument:
-			for wi in range(4):
+			for wi in 4:
 				inst.waveforms[wi]=wave_xform[inst.waveforms[wi]]
 	# Make new list from used
 	var w_list:Array=[]

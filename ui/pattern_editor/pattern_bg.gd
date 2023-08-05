@@ -29,7 +29,7 @@ func set_every_maj(e:int)->void:
 func _draw():
 	var y:float=0.0
 	var c:Color
-	for i in range(0,rows):
+	for i in range(rows):
 		if i==row:
 			c=color_active
 		elif (i%every_maj)==0:

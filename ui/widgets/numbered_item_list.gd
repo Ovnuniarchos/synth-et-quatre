@@ -51,7 +51,7 @@ func _draw()->void:
 #
 
 func renumber()->void:
-	for i in range(0,get_item_count()):
+	for i in range(get_item_count()):
 		if item_marked[i]:
 			.set_item_text(i,_pat%[i+offset,get_item_text(i).right(digits+1)])
 		else:

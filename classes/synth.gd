@@ -74,7 +74,7 @@ func set_fm_instrument(channel:int,instr:FmInstrument)->void:
 		synth.set_freq_div(channel,op_mask,instr.dividers[i])
 		synth.set_detune(channel,op_mask,instr.detunes[i])
 		synth.set_output(channel,op_mask,instr.routings[i][4])
-		for j in range(4):
+		for j in 4:
 			synth.set_pm_factor(channel,i,j,instr.routings[i][j])
 		synth.set_am_intensity(channel,op_mask,instr.am_intensity[i])
 		synth.set_am_lfo(channel,op_mask,instr.am_lfo[i])

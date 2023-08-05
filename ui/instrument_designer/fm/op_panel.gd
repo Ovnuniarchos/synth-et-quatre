@@ -11,7 +11,7 @@ func _ready()->void:
 	set_op(operator)
 	var ops:Array=[(operator+1)&3,(operator+2)&3,(operator+3)&3]
 	ops.sort()
-	for i in range(3):
+	for i in 3:
 		var b:Button=get_node("Params/Switches/Copy%d"%[i+1])
 		b.text="> OP%d"%[ops[i]+1]
 		b.connect("pressed",self,"_on_channel_copy",[operator,ops[i]])

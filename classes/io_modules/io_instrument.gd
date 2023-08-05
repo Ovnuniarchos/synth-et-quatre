@@ -10,15 +10,15 @@ func obj_save(path:String)->void:
 	var inst:FmInstrument=GLOBALS.song.instrument_list[GLOBALS.curr_instrument]
 	var sinst:FmInstrument=inst.duplicate()
 	var wave_list:Dictionary={}
-	for i in range(4):
+	for i in 4:
 		if inst.waveforms[i]>FmInstrument.WAVE.NOISE and !wave_list.has(inst.waveforms[i]):
 			var w_new:int=wave_list.size()+FmInstrument.WAVE.CUSTOM
 			var w_old:int=inst.waveforms[i]
-			for _j in range(4):
+			for _j in 4:
 				if sinst.waveforms[i]==w_old:
 					sinst.waveforms[i]=-w_new
 			wave_list[w_old]=w_old
-	for i in range(4):
+	for i in 4:
 		sinst.waveforms[i]=abs(sinst.waveforms[i])
 	var f:ChunkedFile=ChunkedFile.new()
 	f.open(path,File.WRITE)
@@ -92,11 +92,11 @@ func obj_load(path:String)->void:
 			GLOBALS.song.add_wave(wav)
 			wav.calculate()
 			SYNCER.send_wave(wav)
-			for inst_w in range(4):
+			for inst_w in 4:
 				if tmp_waves[inst_w]==in_w:
 					ni.waveforms[inst_w]=new_wave_i
 		else:
-			for inst_w in range(4):
+			for inst_w in 4:
 				if tmp_waves[inst_w]==in_w:
 					ni.waveforms[inst_w]=wav
 		in_w+=1

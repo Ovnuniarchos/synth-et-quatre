@@ -116,7 +116,7 @@ void SynthTracker::_init(){
 #define TRACE_END "END@%d "
 #define TRACE_UNKNOWN "???[%08x] "
 
-// #define TRACE_CMDS
+//#define TRACE_CMDS
 #ifdef TRACE_CMDS
 #define TRACE(...) printf(__VA_ARGS__)
 #else

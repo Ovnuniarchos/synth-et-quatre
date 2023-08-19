@@ -136,7 +136,10 @@ func _on_macro_timer()->void:
 		synth.set_panning(chan,val,bool(val_b&1),bool(val_b&2))
 		# Global Clip
 		val=instr.clip_macro.get_value(kot,kft,instr.clip)
-		synth.set_clip(chan,bool(val))
+		if val>=ParamMacro.MASK_VALUE_MASK:
+			synth.set_clip(chan,bool(val&ParamMacro.MASK_VALUE_MASK))
+		else:
+			synth.set_clip(chan,instr.clip)
 		# Per-op
 		for op in 4:
 			mask=1<<op
@@ -195,6 +198,13 @@ func _on_macro_timer()->void:
 					synth.shift_phase(chan,mask,val<<16)
 				else:
 					synth.set_phase(chan,mask,val<<16)
+			# Op Output
+			val=instr.out_macros[op].get_value(kot,kft,instr.routings[op][4])
+			synth.set_output(chan,mask,val)
+			for op_to in 4:
+				# Op OpX
+				val=instr.op_macros[op][op_to].get_value(kot,kft,instr.routings[op][op_to])
+				synth.set_pm_factor(chan,op,op_to,val)
 	ti=Time.get_ticks_msec()
 
 #

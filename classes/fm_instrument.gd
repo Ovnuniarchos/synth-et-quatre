@@ -9,11 +9,11 @@ const CHUNK_VERSION:int=1
 
 var op_mask:int=1
 var clip:bool=false
-var attacks:Array=[240,240,240,240]
-var decays:Array=[192,192,192,192]
+var attacks:Array=[255,255,255,255]#[240,240,240,240]
+var decays:Array=[255,255,255,255]#[192,192,192,192]
 var sustains:Array=[0,0,0,0]
-var sustain_levels:Array=[192,192,192,192]
-var releases:Array=[32,32,32,32]
+var sustain_levels:Array=[255,255,255,255]#[192,192,192,192]
+var releases:Array=[255,255,255,255]#[32,32,32,32]
 var key_scalers:Array=[0,0,0,0]
 var repeats:Array=[REPEAT.OFF,REPEAT.OFF,REPEAT.OFF,REPEAT.OFF]
 var multipliers:Array=[1,1,1,1]
@@ -26,10 +26,10 @@ var am_lfo:Array=[0,0,0,0]
 var fm_intensity:Array=[0,0,0,0]
 var fm_lfo:Array=[0,0,0,0]
 var routings:Array=[
-	[64,0,0,0,255],
-	[0,0,0,0,0],
-	[0,0,0,0,0],
-	[0,0,0,0,0]
+	[0,0,0,0,255],#[64,0,0,0,255],
+	[0,0,0,0,255],#[0,0,0,0,0],
+	[0,0,0,0,255],#[0,0,0,0,0],
+	[0,0,0,0,255]#[0,0,0,0,0]
 ]
 var freq_macro:ParamMacro=ParamMacro.new()
 var op_freq_macro:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
@@ -57,6 +57,13 @@ var fmi_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMa
 var am_lfo_macros:Array=[ParamMacro.new(false),ParamMacro.new(false),ParamMacro.new(false),ParamMacro.new(false)]
 var fm_lfo_macros:Array=[ParamMacro.new(false),ParamMacro.new(false),ParamMacro.new(false),ParamMacro.new(false)]
 var phase_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
+var op_macros:Array=[
+	[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()],
+	[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()],
+	[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()],
+	[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
+]
+var out_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
 
 func _init()->void:
 	name=TYPE
@@ -111,6 +118,9 @@ func duplicate()->Instrument:
 	ni.am_lfo_macros=duplicate_op_macros(am_lfo_macros)
 	ni.fm_lfo_macros=duplicate_op_macros(fm_lfo_macros)
 	ni.phase_macros=duplicate_op_macros(phase_macros)
+	ni.op_macros=[null,null,null,null]
+	for i in 4:
+		ni.op_macros[i]=duplicate_op_macros(op_macros[i])
 	return ni
 
 func copy(from:Instrument,full:bool=false)->void:
@@ -158,6 +168,10 @@ func copy(from:Instrument,full:bool=false)->void:
 		am_lfo_macros=duplicate_op_macros(from.am_lfo_macros)
 		fm_lfo_macros=duplicate_op_macros(from.fm_lfo_macros)
 		phase_macros=duplicate_op_macros(from.phase_macros)
+		op_macros=[null,null,null,null]
+		for i in 4:
+			op_macros[i]=duplicate_op_macros(from.op_macros[i])
+		out_macros=duplicate_op_macros(from.out_macros)
 
 func delete_waveform(w_ix:int)->void:
 	for i in 4:

@@ -13,6 +13,9 @@ func _ready()->void:
 	gen_macro=$Tabs/Macros/Macro/VBC
 	ops_macro=[
 		$"Tabs/Macros OP1/Macro/VBC",
+		$"Tabs/Macros OP2/Macro/VBC",
+		$"Tabs/Macros OP3/Macro/VBC",
+		$"Tabs/Macros OP4/Macro/VBC",
 	]
 	update_instrument()
 
@@ -33,7 +36,7 @@ func update_instrument()->void:
 	gen_macro.get_node("OpEnable").set_macro(ci.op_enable_macro)
 	gen_macro.get_node("ChInvert").set_macro(ci.chanl_invert_macro)
 	gen_macro.get_node("Clip").set_macro(ci.clip_macro)
-	for op in 1:
+	for op in 4:
 		ops_macro[op].get_node("Tone").set_macro(ci.op_freq_macro[op])
 		ops_macro[op].get_node("KeyOn").set_macro(ci.op_key_macro[op])
 		ops_macro[op].get_node("Duty").set_macro(ci.duty_macros[op])
@@ -53,6 +56,11 @@ func update_instrument()->void:
 		ops_macro[op].get_node("AMLFO").set_macro(ci.am_lfo_macros[op])
 		ops_macro[op].get_node("FMLFO").set_macro(ci.fm_lfo_macros[op])
 		ops_macro[op].get_node("Phase").set_macro(ci.phase_macros[op])
+		ops_macro[op].get_node("OP1").set_macro(ci.op_macros[op][0])
+		ops_macro[op].get_node("OP2").set_macro(ci.op_macros[op][1])
+		ops_macro[op].get_node("OP3").set_macro(ci.op_macros[op][2])
+		ops_macro[op].get_node("OP4").set_macro(ci.op_macros[op][3])
+		ops_macro[op].get_node("Output").set_macro(ci.out_macros[op])
 	param_dict={
 		"G_TONE":ci.freq_macro,
 		"G_VOLUME":ci.volume_macro,
@@ -82,6 +90,11 @@ func update_instrument()->void:
 		param_dict["%d_AMLFO"%[i]]=ci.am_lfo_macros[i-1]
 		param_dict["%d_FMLFO"%[i]]=ci.fm_lfo_macros[i-1]
 		param_dict["%d_PHI"%[i]]=ci.phase_macros[i-1]
+		param_dict["%d_OP1"%[i]]=ci.op_macros[i-1][0]
+		param_dict["%d_OP2"%[i]]=ci.op_macros[i-1][1]
+		param_dict["%d_OP3"%[i]]=ci.op_macros[i-1][2]
+		param_dict["%d_OP4"%[i]]=ci.op_macros[i-1][3]
+		param_dict["%d_OUT"%[i]]=ci.out_macros[i-1]
 
 func _on_Name_changed(text:String)->void:
 	var ci:Instrument=GLOBALS.get_instrument()

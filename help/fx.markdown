@@ -92,9 +92,17 @@ Set repeat mode to `xx`. This value is clamped to the range 0-4.
 
 ## 17xx
 
-Set tremolo intensity from `1x` to `0x - 1x`.
+Set tremolo intensity to `1-(xx÷255)x - 1x`.
 
 ## 18xx
+
+Adjust tremolo intensity by `(xx-128)÷255`.
+
+## 19xx
+
+Slide tremolo intensity by `(xx-128)÷255`/tick.
+
+## 1Axx
 
 Set tremolo to use LFO # `xx`. This value is clamped to the range 0-3.
 

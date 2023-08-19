@@ -210,6 +210,10 @@ void Operator::set_fm_intensity(int millis){
 }
 
 
+void Operator::set_enable(bool enable){
+	enabled=enable;
+}
+
 void Operator::key_on(bool legato){
 	enabled=true;
 	if(eg_phase==OFF){
@@ -232,10 +236,8 @@ void Operator::key_on(bool legato){
 }
 
 void Operator::key_off(){
-	if(enabled){
-		eg_phase=eg_repeat==SUSTAIN?ATTACK:RELEASE;
-		on=false;
-	}
+	eg_phase=eg_repeat==SUSTAIN?ATTACK:RELEASE;
+	on=eg_phase==ATTACK;
 }
 
 void Operator::stop(){

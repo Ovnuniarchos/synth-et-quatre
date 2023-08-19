@@ -12,6 +12,8 @@ private:
 
 	float mix_rate=DEFAULT_MIX_RATE;
 
+	bool enabled=false;
+
 	int key_cents=0;
 	float frequency=0.0;
 	float freq_mul=1.0;
@@ -57,8 +59,6 @@ private:
 	_ALWAYS_INLINE_ bool is_valid_wave(int ix);
 
 public:
-	bool enabled=false;
-
 	void set_wave_list(Wave **list);
 
 	FixedPoint generate(FixedPoint pm_in,FixedPoint am_lfo_in,FixedPoint fm_lfo_in);
@@ -85,6 +85,7 @@ public:
 	void set_am_intensity(int intensity);
 	void set_fm_intensity(int millis);
 
+	void set_enable(bool enable);
 	void key_on(bool legato);
 	void key_off();
 	void stop();

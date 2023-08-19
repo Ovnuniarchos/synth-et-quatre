@@ -1,4 +1,4 @@
-[gd_scene load_steps=89 format=2]
+[gd_scene load_steps=109 format=2]
 
 [ext_resource path="res://ui/instrument_designer/fm/lfo_panel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://ui/instrument_designer/fm/routing.tscn" type="PackedScene" id=2]
@@ -171,6 +171,46 @@
 [sub_resource type="Theme" id=82]
 
 [sub_resource type="Theme" id=83]
+
+[sub_resource type="Theme" id=84]
+
+[sub_resource type="Theme" id=85]
+
+[sub_resource type="Theme" id=86]
+
+[sub_resource type="Theme" id=87]
+
+[sub_resource type="Theme" id=88]
+
+[sub_resource type="Theme" id=89]
+
+[sub_resource type="Theme" id=90]
+
+[sub_resource type="Theme" id=91]
+
+[sub_resource type="Theme" id=92]
+
+[sub_resource type="Theme" id=93]
+
+[sub_resource type="Theme" id=94]
+
+[sub_resource type="Theme" id=95]
+
+[sub_resource type="Theme" id=96]
+
+[sub_resource type="Theme" id=97]
+
+[sub_resource type="Theme" id=98]
+
+[sub_resource type="Theme" id=99]
+
+[sub_resource type="Theme" id=100]
+
+[sub_resource type="Theme" id=101]
+
+[sub_resource type="Theme" id=102]
+
+[sub_resource type="Theme" id=103]
 
 [node name="FmEditor" type="VBoxContainer"]
 anchor_right = 1.0
@@ -392,13 +432,37 @@ huge_step = 8
 mode = 3
 labels = PoolStringArray(  )
 
+[node name="ChInvert" parent="Tabs/Macros/Macro/VBC" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 120.0
+margin_right = 1016.0
+margin_bottom = 140.0
+theme = SubResource( 4 )
+__meta__ = {
+"_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
+}
+title = "Channel Invert"
+parameter = "G_CHNINVERT"
+title_width = 128.0
+min_value_rel = -12
+max_value_rel = 12
+center_value = 0
+min_value_abs = 0
+max_value_abs = 1
+step = 1
+big_step = 4
+huge_step = 16
+mode = 4
+labels = PoolStringArray( "Right", "Left" )
+
 [node name="KeyOn" parent="Tabs/Macros/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 72.0
 margin_right = 1016.0
 margin_bottom = 92.0
-theme = SubResource( 4 )
+theme = SubResource( 5 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -422,7 +486,7 @@ anchor_bottom = 0.0
 margin_top = 96.0
 margin_right = 1016.0
 margin_bottom = 116.0
-theme = SubResource( 5 )
+theme = SubResource( 6 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -439,30 +503,6 @@ big_step = 1
 huge_step = 1
 mode = 4
 labels = PoolStringArray( "Op4", "Op3", "Op2", "Op1" )
-
-[node name="ChInvert" parent="Tabs/Macros/Macro/VBC" instance=ExtResource( 3 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_top = 120.0
-margin_right = 1016.0
-margin_bottom = 140.0
-theme = SubResource( 6 )
-__meta__ = {
-"_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
-}
-title = "Channel Invert"
-parameter = "G_CHNINVERT"
-title_width = 128.0
-min_value_rel = -12
-max_value_rel = 12
-center_value = 0
-min_value_abs = 0
-max_value_abs = 1
-step = 1
-big_step = 4
-huge_step = 16
-mode = 4
-labels = PoolStringArray( "Right", "Left" )
 
 [node name="Clip" parent="Tabs/Macros/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
@@ -506,7 +546,7 @@ scroll_horizontal_enabled = false
 
 [node name="VBC" type="VBoxContainer" parent="Tabs/Macros OP1/Macro"]
 margin_right = 1016.0
-margin_bottom = 452.0
+margin_bottom = 572.0
 size_flags_horizontal = 3
 
 [node name="Tone" parent="Tabs/Macros OP1/Macro/VBC" instance=ExtResource( 3 )]
@@ -548,7 +588,7 @@ title_width = 128.0
 min_value_rel = -12
 max_value_rel = 12
 center_value = 0
-min_value_abs = 0
+min_value_abs = 1
 max_value_abs = 5
 step = 1
 big_step = 1
@@ -902,7 +942,7 @@ theme = SubResource( 24 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
-title = "Release"
+title = "AM LFO"
 parameter = "1_AMLFO"
 title_width = 128.0
 min_value_rel = -12
@@ -913,8 +953,8 @@ max_value_abs = 3
 step = 1
 big_step = 1
 huge_step = 1
-mode = 0
-labels = PoolStringArray(  )
+mode = 5
+labels = PoolStringArray( "LFO 4", "LFO 3", "LFO 2", "LFO 1" )
 
 [node name="FMLFO" parent="Tabs/Macros OP1/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
@@ -926,7 +966,7 @@ theme = SubResource( 25 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
-title = "Release"
+title = "FM LFO"
 parameter = "1_FMLFO"
 title_width = 128.0
 min_value_rel = -12
@@ -937,8 +977,8 @@ max_value_abs = 3
 step = 1
 big_step = 1
 huge_step = 1
-mode = 0
-labels = PoolStringArray(  )
+mode = 5
+labels = PoolStringArray( "LFO 4", "LFO 3", "LFO 2", "LFO 1" )
 
 [node name="Phase" parent="Tabs/Macros OP1/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
@@ -952,6 +992,126 @@ __meta__ = {
 }
 title = "Phase"
 parameter = "1_PHI"
+title_width = 128.0
+min_value_rel = -255
+max_value_rel = 255
+center_value = 0
+min_value_abs = 0
+max_value_abs = 255
+step = 1
+big_step = 8
+huge_step = 32
+mode = 3
+labels = PoolStringArray(  )
+
+[node name="OP1" parent="Tabs/Macros OP1/Macro/VBC" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 168.0
+margin_right = 1016.0
+margin_bottom = 188.0
+theme = SubResource( 27 )
+__meta__ = {
+"_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
+}
+title = "Op1->Op1"
+parameter = "1_OP1"
+title_width = 128.0
+min_value_rel = -255
+max_value_rel = 255
+center_value = 0
+min_value_abs = 0
+max_value_abs = 255
+step = 1
+big_step = 8
+huge_step = 32
+mode = 3
+labels = PoolStringArray(  )
+
+[node name="OP2" parent="Tabs/Macros OP1/Macro/VBC" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 168.0
+margin_right = 1016.0
+margin_bottom = 188.0
+theme = SubResource( 28 )
+__meta__ = {
+"_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
+}
+title = "Op1->Op2"
+parameter = "1_OP2"
+title_width = 128.0
+min_value_rel = -255
+max_value_rel = 255
+center_value = 0
+min_value_abs = 0
+max_value_abs = 255
+step = 1
+big_step = 8
+huge_step = 32
+mode = 3
+labels = PoolStringArray(  )
+
+[node name="OP3" parent="Tabs/Macros OP1/Macro/VBC" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 168.0
+margin_right = 1016.0
+margin_bottom = 188.0
+theme = SubResource( 29 )
+__meta__ = {
+"_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
+}
+title = "Op1->Op3"
+parameter = "1_OP3"
+title_width = 128.0
+min_value_rel = -255
+max_value_rel = 255
+center_value = 0
+min_value_abs = 0
+max_value_abs = 255
+step = 1
+big_step = 8
+huge_step = 32
+mode = 3
+labels = PoolStringArray(  )
+
+[node name="OP4" parent="Tabs/Macros OP1/Macro/VBC" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 168.0
+margin_right = 1016.0
+margin_bottom = 188.0
+theme = SubResource( 30 )
+__meta__ = {
+"_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
+}
+title = "Op1->Op4"
+parameter = "1_OP4"
+title_width = 128.0
+min_value_rel = -255
+max_value_rel = 255
+center_value = 0
+min_value_abs = 0
+max_value_abs = 255
+step = 1
+big_step = 8
+huge_step = 32
+mode = 3
+labels = PoolStringArray(  )
+
+[node name="Output" parent="Tabs/Macros OP1/Macro/VBC" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 168.0
+margin_right = 1016.0
+margin_bottom = 188.0
+theme = SubResource( 31 )
+__meta__ = {
+"_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
+}
+title = "Op1 Out"
+parameter = "1_OUT"
 title_width = 128.0
 min_value_rel = -255
 max_value_rel = 255
@@ -982,7 +1142,7 @@ scroll_horizontal_enabled = false
 
 [node name="VBC" type="VBoxContainer" parent="Tabs/Macros OP2/Macro"]
 margin_right = 1016.0
-margin_bottom = 452.0
+margin_bottom = 572.0
 size_flags_horizontal = 3
 
 [node name="Tone" parent="Tabs/Macros OP2/Macro/VBC" instance=ExtResource( 3 )]
@@ -990,7 +1150,7 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 1016.0
 margin_bottom = 20.0
-theme = SubResource( 27 )
+theme = SubResource( 32 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -1014,7 +1174,7 @@ anchor_bottom = 0.0
 margin_top = 48.0
 margin_right = 1016.0
 margin_bottom = 68.0
-theme = SubResource( 28 )
+theme = SubResource( 33 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -1024,7 +1184,7 @@ title_width = 128.0
 min_value_rel = -12
 max_value_rel = 12
 center_value = 0
-min_value_abs = 0
+min_value_abs = 1
 max_value_abs = 5
 step = 1
 big_step = 1
@@ -1038,7 +1198,7 @@ anchor_bottom = 0.0
 margin_top = 24.0
 margin_right = 1016.0
 margin_bottom = 44.0
-theme = SubResource( 29 )
+theme = SubResource( 34 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -1062,7 +1222,7 @@ anchor_bottom = 0.0
 margin_top = 48.0
 margin_right = 1016.0
 margin_bottom = 68.0
-theme = SubResource( 30 )
+theme = SubResource( 35 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -1086,7 +1246,7 @@ anchor_bottom = 0.0
 margin_top = 72.0
 margin_right = 1016.0
 margin_bottom = 92.0
-theme = SubResource( 31 )
+theme = SubResource( 36 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -1110,7 +1270,7 @@ anchor_bottom = 0.0
 margin_top = 96.0
 margin_right = 1016.0
 margin_bottom = 116.0
-theme = SubResource( 32 )
+theme = SubResource( 37 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -1134,7 +1294,7 @@ anchor_bottom = 0.0
 margin_top = 120.0
 margin_right = 1016.0
 margin_bottom = 140.0
-theme = SubResource( 33 )
+theme = SubResource( 38 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -1158,7 +1318,7 @@ anchor_bottom = 0.0
 margin_top = 144.0
 margin_right = 1016.0
 margin_bottom = 164.0
-theme = SubResource( 34 )
+theme = SubResource( 39 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -1182,7 +1342,7 @@ anchor_bottom = 0.0
 margin_top = 168.0
 margin_right = 1016.0
 margin_bottom = 188.0
-theme = SubResource( 35 )
+theme = SubResource( 40 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -1206,7 +1366,7 @@ anchor_bottom = 0.0
 margin_top = 168.0
 margin_right = 1016.0
 margin_bottom = 188.0
-theme = SubResource( 36 )
+theme = SubResource( 41 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -1230,7 +1390,7 @@ anchor_bottom = 0.0
 margin_top = 168.0
 margin_right = 1016.0
 margin_bottom = 188.0
-theme = SubResource( 37 )
+theme = SubResource( 42 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -1254,7 +1414,7 @@ anchor_bottom = 0.0
 margin_top = 168.0
 margin_right = 1016.0
 margin_bottom = 188.0
-theme = SubResource( 38 )
+theme = SubResource( 43 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -1278,7 +1438,7 @@ anchor_bottom = 0.0
 margin_top = 168.0
 margin_right = 1016.0
 margin_bottom = 188.0
-theme = SubResource( 39 )
+theme = SubResource( 44 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -1302,7 +1462,7 @@ anchor_bottom = 0.0
 margin_top = 168.0
 margin_right = 1016.0
 margin_bottom = 188.0
-theme = SubResource( 40 )
+theme = SubResource( 45 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -1326,7 +1486,7 @@ anchor_bottom = 0.0
 margin_top = 168.0
 margin_right = 1016.0
 margin_bottom = 188.0
-theme = SubResource( 41 )
+theme = SubResource( 46 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -1350,7 +1510,7 @@ anchor_bottom = 0.0
 margin_top = 168.0
 margin_right = 1016.0
 margin_bottom = 188.0
-theme = SubResource( 42 )
+theme = SubResource( 47 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -1374,11 +1534,11 @@ anchor_bottom = 0.0
 margin_top = 168.0
 margin_right = 1016.0
 margin_bottom = 188.0
-theme = SubResource( 43 )
+theme = SubResource( 48 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
-title = "Release"
+title = "AM LFO"
 parameter = "2_AMLFO"
 title_width = 128.0
 min_value_rel = -12
@@ -1389,8 +1549,8 @@ max_value_abs = 3
 step = 1
 big_step = 1
 huge_step = 1
-mode = 0
-labels = PoolStringArray(  )
+mode = 5
+labels = PoolStringArray( "LFO 4", "LFO 3", "LFO 2", "LFO 1" )
 
 [node name="FMLFO" parent="Tabs/Macros OP2/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
@@ -1398,11 +1558,11 @@ anchor_bottom = 0.0
 margin_top = 168.0
 margin_right = 1016.0
 margin_bottom = 188.0
-theme = SubResource( 44 )
+theme = SubResource( 49 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
-title = "Release"
+title = "FM LFO"
 parameter = "2_FMLFO"
 title_width = 128.0
 min_value_rel = -12
@@ -1413,8 +1573,8 @@ max_value_abs = 3
 step = 1
 big_step = 1
 huge_step = 1
-mode = 0
-labels = PoolStringArray(  )
+mode = 5
+labels = PoolStringArray( "LFO 4", "LFO 3", "LFO 2", "LFO 1" )
 
 [node name="Phase" parent="Tabs/Macros OP2/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
@@ -1422,12 +1582,132 @@ anchor_bottom = 0.0
 margin_top = 168.0
 margin_right = 1016.0
 margin_bottom = 188.0
-theme = SubResource( 45 )
+theme = SubResource( 50 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
 title = "Phase"
 parameter = "2_PHI"
+title_width = 128.0
+min_value_rel = -255
+max_value_rel = 255
+center_value = 0
+min_value_abs = 0
+max_value_abs = 255
+step = 1
+big_step = 8
+huge_step = 32
+mode = 3
+labels = PoolStringArray(  )
+
+[node name="OP1" parent="Tabs/Macros OP2/Macro/VBC" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 168.0
+margin_right = 1016.0
+margin_bottom = 188.0
+theme = SubResource( 51 )
+__meta__ = {
+"_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
+}
+title = "Op2->Op1"
+parameter = "2_OP1"
+title_width = 128.0
+min_value_rel = -255
+max_value_rel = 255
+center_value = 0
+min_value_abs = 0
+max_value_abs = 255
+step = 1
+big_step = 8
+huge_step = 32
+mode = 3
+labels = PoolStringArray(  )
+
+[node name="OP2" parent="Tabs/Macros OP2/Macro/VBC" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 168.0
+margin_right = 1016.0
+margin_bottom = 188.0
+theme = SubResource( 52 )
+__meta__ = {
+"_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
+}
+title = "Op2->Op2"
+parameter = "2_OP2"
+title_width = 128.0
+min_value_rel = -255
+max_value_rel = 255
+center_value = 0
+min_value_abs = 0
+max_value_abs = 255
+step = 1
+big_step = 8
+huge_step = 32
+mode = 3
+labels = PoolStringArray(  )
+
+[node name="OP3" parent="Tabs/Macros OP2/Macro/VBC" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 168.0
+margin_right = 1016.0
+margin_bottom = 188.0
+theme = SubResource( 53 )
+__meta__ = {
+"_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
+}
+title = "Op2->Op3"
+parameter = "2_OP3"
+title_width = 128.0
+min_value_rel = -255
+max_value_rel = 255
+center_value = 0
+min_value_abs = 0
+max_value_abs = 255
+step = 1
+big_step = 8
+huge_step = 32
+mode = 3
+labels = PoolStringArray(  )
+
+[node name="OP4" parent="Tabs/Macros OP2/Macro/VBC" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 168.0
+margin_right = 1016.0
+margin_bottom = 188.0
+theme = SubResource( 54 )
+__meta__ = {
+"_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
+}
+title = "Op2->Op4"
+parameter = "2_OP4"
+title_width = 128.0
+min_value_rel = -255
+max_value_rel = 255
+center_value = 0
+min_value_abs = 0
+max_value_abs = 255
+step = 1
+big_step = 8
+huge_step = 32
+mode = 3
+labels = PoolStringArray(  )
+
+[node name="Output" parent="Tabs/Macros OP2/Macro/VBC" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 168.0
+margin_right = 1016.0
+margin_bottom = 188.0
+theme = SubResource( 55 )
+__meta__ = {
+"_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
+}
+title = "Op2 Out"
+parameter = "2_OUT"
 title_width = 128.0
 min_value_rel = -255
 max_value_rel = 255
@@ -1458,7 +1738,7 @@ scroll_horizontal_enabled = false
 
 [node name="VBC" type="VBoxContainer" parent="Tabs/Macros OP3/Macro"]
 margin_right = 1016.0
-margin_bottom = 452.0
+margin_bottom = 572.0
 size_flags_horizontal = 3
 
 [node name="Tone" parent="Tabs/Macros OP3/Macro/VBC" instance=ExtResource( 3 )]
@@ -1466,7 +1746,7 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 1016.0
 margin_bottom = 20.0
-theme = SubResource( 46 )
+theme = SubResource( 56 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -1490,7 +1770,7 @@ anchor_bottom = 0.0
 margin_top = 48.0
 margin_right = 1016.0
 margin_bottom = 68.0
-theme = SubResource( 47 )
+theme = SubResource( 57 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -1500,7 +1780,7 @@ title_width = 128.0
 min_value_rel = -12
 max_value_rel = 12
 center_value = 0
-min_value_abs = 0
+min_value_abs = 1
 max_value_abs = 5
 step = 1
 big_step = 1
@@ -1514,7 +1794,7 @@ anchor_bottom = 0.0
 margin_top = 24.0
 margin_right = 1016.0
 margin_bottom = 44.0
-theme = SubResource( 48 )
+theme = SubResource( 58 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -1538,7 +1818,7 @@ anchor_bottom = 0.0
 margin_top = 48.0
 margin_right = 1016.0
 margin_bottom = 68.0
-theme = SubResource( 49 )
+theme = SubResource( 59 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -1562,7 +1842,7 @@ anchor_bottom = 0.0
 margin_top = 72.0
 margin_right = 1016.0
 margin_bottom = 92.0
-theme = SubResource( 50 )
+theme = SubResource( 60 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -1586,7 +1866,7 @@ anchor_bottom = 0.0
 margin_top = 96.0
 margin_right = 1016.0
 margin_bottom = 116.0
-theme = SubResource( 51 )
+theme = SubResource( 61 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -1610,7 +1890,7 @@ anchor_bottom = 0.0
 margin_top = 120.0
 margin_right = 1016.0
 margin_bottom = 140.0
-theme = SubResource( 52 )
+theme = SubResource( 62 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -1634,7 +1914,7 @@ anchor_bottom = 0.0
 margin_top = 144.0
 margin_right = 1016.0
 margin_bottom = 164.0
-theme = SubResource( 53 )
+theme = SubResource( 63 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -1658,7 +1938,7 @@ anchor_bottom = 0.0
 margin_top = 168.0
 margin_right = 1016.0
 margin_bottom = 188.0
-theme = SubResource( 54 )
+theme = SubResource( 64 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -1682,7 +1962,7 @@ anchor_bottom = 0.0
 margin_top = 168.0
 margin_right = 1016.0
 margin_bottom = 188.0
-theme = SubResource( 55 )
+theme = SubResource( 65 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -1706,7 +1986,7 @@ anchor_bottom = 0.0
 margin_top = 168.0
 margin_right = 1016.0
 margin_bottom = 188.0
-theme = SubResource( 56 )
+theme = SubResource( 66 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -1730,7 +2010,7 @@ anchor_bottom = 0.0
 margin_top = 168.0
 margin_right = 1016.0
 margin_bottom = 188.0
-theme = SubResource( 57 )
+theme = SubResource( 67 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -1754,7 +2034,7 @@ anchor_bottom = 0.0
 margin_top = 168.0
 margin_right = 1016.0
 margin_bottom = 188.0
-theme = SubResource( 58 )
+theme = SubResource( 68 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -1778,7 +2058,7 @@ anchor_bottom = 0.0
 margin_top = 168.0
 margin_right = 1016.0
 margin_bottom = 188.0
-theme = SubResource( 59 )
+theme = SubResource( 69 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -1802,7 +2082,7 @@ anchor_bottom = 0.0
 margin_top = 168.0
 margin_right = 1016.0
 margin_bottom = 188.0
-theme = SubResource( 60 )
+theme = SubResource( 70 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -1826,7 +2106,7 @@ anchor_bottom = 0.0
 margin_top = 168.0
 margin_right = 1016.0
 margin_bottom = 188.0
-theme = SubResource( 61 )
+theme = SubResource( 71 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -1850,11 +2130,11 @@ anchor_bottom = 0.0
 margin_top = 168.0
 margin_right = 1016.0
 margin_bottom = 188.0
-theme = SubResource( 62 )
+theme = SubResource( 72 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
-title = "Release"
+title = "AM LFO"
 parameter = "3_AMLFO"
 title_width = 128.0
 min_value_rel = -12
@@ -1865,8 +2145,8 @@ max_value_abs = 3
 step = 1
 big_step = 1
 huge_step = 1
-mode = 0
-labels = PoolStringArray(  )
+mode = 5
+labels = PoolStringArray( "LFO 4", "LFO 3", "LFO 2", "LFO 1" )
 
 [node name="FMLFO" parent="Tabs/Macros OP3/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
@@ -1874,11 +2154,11 @@ anchor_bottom = 0.0
 margin_top = 168.0
 margin_right = 1016.0
 margin_bottom = 188.0
-theme = SubResource( 63 )
+theme = SubResource( 73 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
-title = "Release"
+title = "FM LFO"
 parameter = "3_FMLFO"
 title_width = 128.0
 min_value_rel = -12
@@ -1889,8 +2169,8 @@ max_value_abs = 3
 step = 1
 big_step = 1
 huge_step = 1
-mode = 0
-labels = PoolStringArray(  )
+mode = 5
+labels = PoolStringArray( "LFO 4", "LFO 3", "LFO 2", "LFO 1" )
 
 [node name="Phase" parent="Tabs/Macros OP3/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
@@ -1898,12 +2178,132 @@ anchor_bottom = 0.0
 margin_top = 168.0
 margin_right = 1016.0
 margin_bottom = 188.0
-theme = SubResource( 64 )
+theme = SubResource( 74 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
 title = "Phase"
 parameter = "3_PHI"
+title_width = 128.0
+min_value_rel = -255
+max_value_rel = 255
+center_value = 0
+min_value_abs = 0
+max_value_abs = 255
+step = 1
+big_step = 8
+huge_step = 32
+mode = 3
+labels = PoolStringArray(  )
+
+[node name="OP1" parent="Tabs/Macros OP3/Macro/VBC" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 168.0
+margin_right = 1016.0
+margin_bottom = 188.0
+theme = SubResource( 75 )
+__meta__ = {
+"_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
+}
+title = "Op3->Op1"
+parameter = "3_OP1"
+title_width = 128.0
+min_value_rel = -255
+max_value_rel = 255
+center_value = 0
+min_value_abs = 0
+max_value_abs = 255
+step = 1
+big_step = 8
+huge_step = 32
+mode = 3
+labels = PoolStringArray(  )
+
+[node name="OP2" parent="Tabs/Macros OP3/Macro/VBC" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 168.0
+margin_right = 1016.0
+margin_bottom = 188.0
+theme = SubResource( 76 )
+__meta__ = {
+"_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
+}
+title = "Op3->Op2"
+parameter = "3_OP2"
+title_width = 128.0
+min_value_rel = -255
+max_value_rel = 255
+center_value = 0
+min_value_abs = 0
+max_value_abs = 255
+step = 1
+big_step = 8
+huge_step = 32
+mode = 3
+labels = PoolStringArray(  )
+
+[node name="OP3" parent="Tabs/Macros OP3/Macro/VBC" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 168.0
+margin_right = 1016.0
+margin_bottom = 188.0
+theme = SubResource( 77 )
+__meta__ = {
+"_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
+}
+title = "Op3->Op3"
+parameter = "3_OP3"
+title_width = 128.0
+min_value_rel = -255
+max_value_rel = 255
+center_value = 0
+min_value_abs = 0
+max_value_abs = 255
+step = 1
+big_step = 8
+huge_step = 32
+mode = 3
+labels = PoolStringArray(  )
+
+[node name="OP4" parent="Tabs/Macros OP3/Macro/VBC" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 168.0
+margin_right = 1016.0
+margin_bottom = 188.0
+theme = SubResource( 78 )
+__meta__ = {
+"_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
+}
+title = "Op3->Op4"
+parameter = "3_OP4"
+title_width = 128.0
+min_value_rel = -255
+max_value_rel = 255
+center_value = 0
+min_value_abs = 0
+max_value_abs = 255
+step = 1
+big_step = 8
+huge_step = 32
+mode = 3
+labels = PoolStringArray(  )
+
+[node name="Output" parent="Tabs/Macros OP3/Macro/VBC" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 168.0
+margin_right = 1016.0
+margin_bottom = 188.0
+theme = SubResource( 79 )
+__meta__ = {
+"_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
+}
+title = "Op3 Out"
+parameter = "3_OUT"
 title_width = 128.0
 min_value_rel = -255
 max_value_rel = 255
@@ -1934,7 +2334,7 @@ scroll_horizontal_enabled = false
 
 [node name="VBC" type="VBoxContainer" parent="Tabs/Macros OP4/Macro"]
 margin_right = 1016.0
-margin_bottom = 452.0
+margin_bottom = 572.0
 size_flags_horizontal = 3
 
 [node name="Tone" parent="Tabs/Macros OP4/Macro/VBC" instance=ExtResource( 3 )]
@@ -1942,7 +2342,7 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 1016.0
 margin_bottom = 20.0
-theme = SubResource( 65 )
+theme = SubResource( 80 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -1966,7 +2366,7 @@ anchor_bottom = 0.0
 margin_top = 48.0
 margin_right = 1016.0
 margin_bottom = 68.0
-theme = SubResource( 66 )
+theme = SubResource( 81 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -1976,7 +2376,7 @@ title_width = 128.0
 min_value_rel = -12
 max_value_rel = 12
 center_value = 0
-min_value_abs = 0
+min_value_abs = 1
 max_value_abs = 5
 step = 1
 big_step = 1
@@ -1990,7 +2390,7 @@ anchor_bottom = 0.0
 margin_top = 24.0
 margin_right = 1016.0
 margin_bottom = 44.0
-theme = SubResource( 67 )
+theme = SubResource( 82 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -2014,7 +2414,7 @@ anchor_bottom = 0.0
 margin_top = 48.0
 margin_right = 1016.0
 margin_bottom = 68.0
-theme = SubResource( 68 )
+theme = SubResource( 83 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -2038,7 +2438,7 @@ anchor_bottom = 0.0
 margin_top = 72.0
 margin_right = 1016.0
 margin_bottom = 92.0
-theme = SubResource( 69 )
+theme = SubResource( 84 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -2062,7 +2462,7 @@ anchor_bottom = 0.0
 margin_top = 96.0
 margin_right = 1016.0
 margin_bottom = 116.0
-theme = SubResource( 70 )
+theme = SubResource( 85 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -2086,7 +2486,7 @@ anchor_bottom = 0.0
 margin_top = 120.0
 margin_right = 1016.0
 margin_bottom = 140.0
-theme = SubResource( 71 )
+theme = SubResource( 86 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -2110,7 +2510,7 @@ anchor_bottom = 0.0
 margin_top = 144.0
 margin_right = 1016.0
 margin_bottom = 164.0
-theme = SubResource( 72 )
+theme = SubResource( 87 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -2134,7 +2534,7 @@ anchor_bottom = 0.0
 margin_top = 168.0
 margin_right = 1016.0
 margin_bottom = 188.0
-theme = SubResource( 73 )
+theme = SubResource( 88 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -2158,7 +2558,7 @@ anchor_bottom = 0.0
 margin_top = 168.0
 margin_right = 1016.0
 margin_bottom = 188.0
-theme = SubResource( 74 )
+theme = SubResource( 89 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -2182,7 +2582,7 @@ anchor_bottom = 0.0
 margin_top = 168.0
 margin_right = 1016.0
 margin_bottom = 188.0
-theme = SubResource( 75 )
+theme = SubResource( 90 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -2206,7 +2606,7 @@ anchor_bottom = 0.0
 margin_top = 168.0
 margin_right = 1016.0
 margin_bottom = 188.0
-theme = SubResource( 76 )
+theme = SubResource( 91 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -2230,7 +2630,7 @@ anchor_bottom = 0.0
 margin_top = 168.0
 margin_right = 1016.0
 margin_bottom = 188.0
-theme = SubResource( 77 )
+theme = SubResource( 92 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -2254,7 +2654,7 @@ anchor_bottom = 0.0
 margin_top = 168.0
 margin_right = 1016.0
 margin_bottom = 188.0
-theme = SubResource( 78 )
+theme = SubResource( 93 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -2278,7 +2678,7 @@ anchor_bottom = 0.0
 margin_top = 168.0
 margin_right = 1016.0
 margin_bottom = 188.0
-theme = SubResource( 79 )
+theme = SubResource( 94 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -2302,7 +2702,7 @@ anchor_bottom = 0.0
 margin_top = 168.0
 margin_right = 1016.0
 margin_bottom = 188.0
-theme = SubResource( 80 )
+theme = SubResource( 95 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
@@ -2326,11 +2726,11 @@ anchor_bottom = 0.0
 margin_top = 168.0
 margin_right = 1016.0
 margin_bottom = 188.0
-theme = SubResource( 81 )
+theme = SubResource( 96 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
-title = "Release"
+title = "AM LFO"
 parameter = "4_AMLFO"
 title_width = 128.0
 min_value_rel = -12
@@ -2341,8 +2741,8 @@ max_value_abs = 3
 step = 1
 big_step = 1
 huge_step = 1
-mode = 0
-labels = PoolStringArray(  )
+mode = 5
+labels = PoolStringArray( "LFO 4", "LFO 3", "LFO 2", "LFO 1" )
 
 [node name="FMLFO" parent="Tabs/Macros OP4/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
@@ -2350,11 +2750,11 @@ anchor_bottom = 0.0
 margin_top = 168.0
 margin_right = 1016.0
 margin_bottom = 188.0
-theme = SubResource( 82 )
+theme = SubResource( 97 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
-title = "Release"
+title = "FM LFO"
 parameter = "4_FMLFO"
 title_width = 128.0
 min_value_rel = -12
@@ -2365,8 +2765,8 @@ max_value_abs = 3
 step = 1
 big_step = 1
 huge_step = 1
-mode = 0
-labels = PoolStringArray(  )
+mode = 5
+labels = PoolStringArray( "LFO 4", "LFO 3", "LFO 2", "LFO 1" )
 
 [node name="Phase" parent="Tabs/Macros OP4/Macro/VBC" instance=ExtResource( 3 )]
 anchor_right = 0.0
@@ -2374,12 +2774,132 @@ anchor_bottom = 0.0
 margin_top = 168.0
 margin_right = 1016.0
 margin_bottom = 188.0
-theme = SubResource( 83 )
+theme = SubResource( 98 )
 __meta__ = {
 "_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
 }
 title = "Phase"
 parameter = "4_PHI"
+title_width = 128.0
+min_value_rel = -255
+max_value_rel = 255
+center_value = 0
+min_value_abs = 0
+max_value_abs = 255
+step = 1
+big_step = 8
+huge_step = 32
+mode = 3
+labels = PoolStringArray(  )
+
+[node name="OP1" parent="Tabs/Macros OP4/Macro/VBC" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 168.0
+margin_right = 1016.0
+margin_bottom = 188.0
+theme = SubResource( 99 )
+__meta__ = {
+"_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
+}
+title = "Op4->Op1"
+parameter = "4_OP1"
+title_width = 128.0
+min_value_rel = -255
+max_value_rel = 255
+center_value = 0
+min_value_abs = 0
+max_value_abs = 255
+step = 1
+big_step = 8
+huge_step = 32
+mode = 3
+labels = PoolStringArray(  )
+
+[node name="OP2" parent="Tabs/Macros OP4/Macro/VBC" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 168.0
+margin_right = 1016.0
+margin_bottom = 188.0
+theme = SubResource( 100 )
+__meta__ = {
+"_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
+}
+title = "Op4->Op2"
+parameter = "4_OP2"
+title_width = 128.0
+min_value_rel = -255
+max_value_rel = 255
+center_value = 0
+min_value_abs = 0
+max_value_abs = 255
+step = 1
+big_step = 8
+huge_step = 32
+mode = 3
+labels = PoolStringArray(  )
+
+[node name="OP3" parent="Tabs/Macros OP4/Macro/VBC" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 168.0
+margin_right = 1016.0
+margin_bottom = 188.0
+theme = SubResource( 101 )
+__meta__ = {
+"_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
+}
+title = "Op4->Op3"
+parameter = "4_OP3"
+title_width = 128.0
+min_value_rel = -255
+max_value_rel = 255
+center_value = 0
+min_value_abs = 0
+max_value_abs = 255
+step = 1
+big_step = 8
+huge_step = 32
+mode = 3
+labels = PoolStringArray(  )
+
+[node name="OP4" parent="Tabs/Macros OP4/Macro/VBC" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 168.0
+margin_right = 1016.0
+margin_bottom = 188.0
+theme = SubResource( 102 )
+__meta__ = {
+"_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
+}
+title = "Op4->Op4"
+parameter = "4_OP4"
+title_width = 128.0
+min_value_rel = -255
+max_value_rel = 255
+center_value = 0
+min_value_abs = 0
+max_value_abs = 255
+step = 1
+big_step = 8
+huge_step = 32
+mode = 3
+labels = PoolStringArray(  )
+
+[node name="Output" parent="Tabs/Macros OP4/Macro/VBC" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 168.0
+margin_right = 1016.0
+margin_bottom = 188.0
+theme = SubResource( 103 )
+__meta__ = {
+"_edit_pinned_properties_": [ "title", "parameter", "title_width", "min_value_rel", "max_value_rel", "center_value", "min_value_abs", "max_value_abs", "step", "big_step", "huge_step", "mode", "labels" ]
+}
+title = "Op4 Out"
+parameter = "4_OUT"
 title_width = 128.0
 min_value_rel = -255
 max_value_rel = 255
@@ -2405,9 +2925,9 @@ labels = PoolStringArray(  )
 [connection signal="macro_changed" from="Tabs/Macros/Macro/VBC/Tone" to="." method="_on_macro_changed"]
 [connection signal="macro_changed" from="Tabs/Macros/Macro/VBC/Volume" to="." method="_on_macro_changed"]
 [connection signal="macro_changed" from="Tabs/Macros/Macro/VBC/Pan" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="Tabs/Macros/Macro/VBC/ChInvert" to="." method="_on_macro_changed"]
 [connection signal="macro_changed" from="Tabs/Macros/Macro/VBC/KeyOn" to="." method="_on_macro_changed"]
 [connection signal="macro_changed" from="Tabs/Macros/Macro/VBC/OpEnable" to="." method="_on_macro_changed"]
-[connection signal="macro_changed" from="Tabs/Macros/Macro/VBC/ChInvert" to="." method="_on_macro_changed"]
 [connection signal="macro_changed" from="Tabs/Macros/Macro/VBC/Clip" to="." method="_on_macro_changed"]
 [connection signal="macro_changed" from="Tabs/Macros OP1/Macro/VBC/Tone" to="." method="_on_macro_changed"]
 [connection signal="macro_changed" from="Tabs/Macros OP1/Macro/VBC/KeyOn" to="." method="_on_macro_changed"]
@@ -2428,6 +2948,11 @@ labels = PoolStringArray(  )
 [connection signal="macro_changed" from="Tabs/Macros OP1/Macro/VBC/AMLFO" to="." method="_on_macro_changed"]
 [connection signal="macro_changed" from="Tabs/Macros OP1/Macro/VBC/FMLFO" to="." method="_on_macro_changed"]
 [connection signal="macro_changed" from="Tabs/Macros OP1/Macro/VBC/Phase" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="Tabs/Macros OP1/Macro/VBC/OP1" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="Tabs/Macros OP1/Macro/VBC/OP2" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="Tabs/Macros OP1/Macro/VBC/OP3" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="Tabs/Macros OP1/Macro/VBC/OP4" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="Tabs/Macros OP1/Macro/VBC/Output" to="." method="_on_macro_changed"]
 [connection signal="macro_changed" from="Tabs/Macros OP2/Macro/VBC/Tone" to="." method="_on_macro_changed"]
 [connection signal="macro_changed" from="Tabs/Macros OP2/Macro/VBC/KeyOn" to="." method="_on_macro_changed"]
 [connection signal="macro_changed" from="Tabs/Macros OP2/Macro/VBC/Duty" to="." method="_on_macro_changed"]
@@ -2447,6 +2972,11 @@ labels = PoolStringArray(  )
 [connection signal="macro_changed" from="Tabs/Macros OP2/Macro/VBC/AMLFO" to="." method="_on_macro_changed"]
 [connection signal="macro_changed" from="Tabs/Macros OP2/Macro/VBC/FMLFO" to="." method="_on_macro_changed"]
 [connection signal="macro_changed" from="Tabs/Macros OP2/Macro/VBC/Phase" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="Tabs/Macros OP2/Macro/VBC/OP1" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="Tabs/Macros OP2/Macro/VBC/OP2" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="Tabs/Macros OP2/Macro/VBC/OP3" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="Tabs/Macros OP2/Macro/VBC/OP4" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="Tabs/Macros OP2/Macro/VBC/Output" to="." method="_on_macro_changed"]
 [connection signal="macro_changed" from="Tabs/Macros OP3/Macro/VBC/Tone" to="." method="_on_macro_changed"]
 [connection signal="macro_changed" from="Tabs/Macros OP3/Macro/VBC/KeyOn" to="." method="_on_macro_changed"]
 [connection signal="macro_changed" from="Tabs/Macros OP3/Macro/VBC/Duty" to="." method="_on_macro_changed"]
@@ -2466,6 +2996,11 @@ labels = PoolStringArray(  )
 [connection signal="macro_changed" from="Tabs/Macros OP3/Macro/VBC/AMLFO" to="." method="_on_macro_changed"]
 [connection signal="macro_changed" from="Tabs/Macros OP3/Macro/VBC/FMLFO" to="." method="_on_macro_changed"]
 [connection signal="macro_changed" from="Tabs/Macros OP3/Macro/VBC/Phase" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="Tabs/Macros OP3/Macro/VBC/OP1" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="Tabs/Macros OP3/Macro/VBC/OP2" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="Tabs/Macros OP3/Macro/VBC/OP3" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="Tabs/Macros OP3/Macro/VBC/OP4" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="Tabs/Macros OP3/Macro/VBC/Output" to="." method="_on_macro_changed"]
 [connection signal="macro_changed" from="Tabs/Macros OP4/Macro/VBC/Tone" to="." method="_on_macro_changed"]
 [connection signal="macro_changed" from="Tabs/Macros OP4/Macro/VBC/KeyOn" to="." method="_on_macro_changed"]
 [connection signal="macro_changed" from="Tabs/Macros OP4/Macro/VBC/Duty" to="." method="_on_macro_changed"]
@@ -2485,3 +3020,8 @@ labels = PoolStringArray(  )
 [connection signal="macro_changed" from="Tabs/Macros OP4/Macro/VBC/AMLFO" to="." method="_on_macro_changed"]
 [connection signal="macro_changed" from="Tabs/Macros OP4/Macro/VBC/FMLFO" to="." method="_on_macro_changed"]
 [connection signal="macro_changed" from="Tabs/Macros OP4/Macro/VBC/Phase" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="Tabs/Macros OP4/Macro/VBC/OP1" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="Tabs/Macros OP4/Macro/VBC/OP2" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="Tabs/Macros OP4/Macro/VBC/OP3" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="Tabs/Macros OP4/Macro/VBC/OP4" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="Tabs/Macros OP4/Macro/VBC/Output" to="." method="_on_macro_changed"]

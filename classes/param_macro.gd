@@ -50,8 +50,7 @@ func get_value(tick:int,release_tick:int,base_value:int)->int:
 		release_tick-=delay
 		macro_tick=get_release_tick(tick-release_tick,get_tick(release_tick,-1))
 	else:
-		release_tick-=delay
-		macro_tick=get_tick(tick,release_tick)
+		macro_tick=get_tick(tick,release_tick-delay)
 	var value:int=values[macro_tick]
 	if value==PASSTHROUGH:
 		return base_value

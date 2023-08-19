@@ -6,6 +6,7 @@
 class Voice{
 private:
 	static const int MAX_OPS=4;
+	static const FixedPoint CLIP=FP_ONE<<8;
 	Operator ops[MAX_OPS];
 	int pms[MAX_OPS][MAX_OPS]={
 		0,0,0,0,

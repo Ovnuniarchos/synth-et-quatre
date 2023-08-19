@@ -1,4 +1,5 @@
 #include <cmath>
+#include <cstdio>
 #include "voice.h"
 
 void Voice::set_wave_list(Wave **list){
@@ -26,8 +27,7 @@ FixedPoint Voice::generate(FixedPoint* lfo_ins){
 	}else if(volume<new_volume){
 		volume++;
 	}
-	out=(out*volume)>>16;
-	return clip?clamp(out,-FP_ONE,FP_ONE):out;
+	return ((clip?clamp(out,-CLIP,CLIP):out)*volume)>>16;
 };
 
 void Voice::set_mix_rate(float mix_rate){
@@ -167,7 +167,8 @@ void Voice::set_fm_lfo(int op_mask,int lfo){
 void Voice::key_on(int op_mask,int vol,bool legato){
 	new_volume=clamp(vol,0,255)+(vol>0?1:0);
 	for(int i=0;i<MAX_OPS;i++,op_mask>>=1){
-		if(op_mask&1) ops[i].key_on(legato);
+		ops[i].key_on(legato);
+		ops[i].set_enable(op_mask&1);
 	}
 }
 
@@ -189,7 +190,7 @@ void Voice::stop(int op_mask){
 
 void Voice::set_enable(int op_mask,int enable_bits){
 	for(int i=0;i<MAX_OPS;i++,op_mask>>=1,enable_bits>>=1){
-		if(op_mask&1) ops[i].enabled=(bool)(enable_bits&1);
+		if(op_mask&1) ops[i].set_enable(enable_bits&1);
 	}
 }
 

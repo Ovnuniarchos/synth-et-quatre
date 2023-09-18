@@ -29,29 +29,41 @@ margin_right = 38.0
 margin_bottom = 19.0
 text = "Name"
 
-[node name="Name" type="LineEdit" parent="Info/HBC"]
+[node name="S2" type="ReferenceRect" parent="Info/HBC"]
 margin_left = 42.0
-margin_right = 298.0
+margin_right = 50.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 8, 0 )
+
+[node name="Name" type="LineEdit" parent="Info/HBC"]
+margin_left = 54.0
+margin_right = 310.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 256, 0 )
 
 [node name="S" type="ReferenceRect" parent="Info/HBC"]
-margin_left = 302.0
-margin_right = 326.0
+margin_left = 314.0
+margin_right = 338.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 24, 0 )
 
 [node name="LabelSize" type="Label" parent="Info/HBC" groups=["Label"]]
-margin_left = 330.0
+margin_left = 342.0
 margin_top = 5.0
-margin_right = 356.0
+margin_right = 368.0
 margin_bottom = 19.0
 text = "Size"
 
+[node name="S3" type="ReferenceRect" parent="Info/HBC"]
+margin_left = 372.0
+margin_right = 380.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 8, 0 )
+
 [node name="Size" type="ProgressBar" parent="Info/HBC"]
-margin_left = 360.0
+margin_left = 384.0
 margin_top = 5.0
-margin_right = 488.0
+margin_right = 512.0
 margin_bottom = 19.0
 rect_min_size = Vector2( 128, 14 )
 size_flags_vertical = 4
@@ -65,9 +77,9 @@ big_step = 1.0
 huge_step = 1.0
 
 [node name="LabelSizeSamples" type="Label" parent="Info/HBC"]
-margin_left = 492.0
+margin_left = 516.0
 margin_top = 5.0
-margin_right = 558.0
+margin_right = 582.0
 margin_bottom = 19.0
 text = "0 samples"
 
@@ -88,7 +100,7 @@ size_flags_vertical = 3
 
 [node name="Components" type="HBoxContainer" parent="Designer/SC"]
 margin_right = 20.0
-margin_bottom = 20.0
+margin_bottom = 548.0
 size_flags_vertical = 3
 
 [node name="New" type="MenuButton" parent="Designer/SC/Components"]

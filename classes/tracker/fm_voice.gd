@@ -4,6 +4,8 @@ class_name FmVoice
 const CONSTS=preload("res://classes/tracker/fm_voice_constants.gd")
 const TRCK=preload("res://classes/tracker/tracker_constants.gd")
 const ATTRS=Pattern.ATTRS
+const FARP_ARP:int=0
+const FARP_SPEED:int=1
 
 enum {KON_PASS,KON_STD,KON_LEGATO,KON_STACCATO,KON_OFF,KON_STOP}
 
@@ -20,14 +22,13 @@ var fx_apply:Array=[false,false,false,false]
 # Index by command
 var fx_vals:Array
 
-var arpeggio_tick:int=0
 var row_tick:int=0
 var macro_tick:int=0
 var release_tick:int=-1
 var freqs:Array=[0,0,0,0]
 var base_freqs:Array=[0,0,0,0]
 var next_freqs:Array=[0,0,0,0]
-var arp_freqs:Array=[0,0,0,0]
+var arpeggio:Arpeggio=null
 var velocity:int=255
 var panning:int=0x1F
 
@@ -141,14 +142,13 @@ func reset()->void:
 			fx_vals[i]=[0,0]
 		else:
 			fx_vals[i]=0
-	arpeggio_tick=0
 	row_tick=0
 	macro_tick=0
 	release_tick=-1
 	freqs=[0,0,0,0]
 	base_freqs=[0,0,0,0]
 	next_freqs=[0,0,0,0]
-	arp_freqs=[0,0,0,0]
+	arpeggio=null
 	velocity=255
 	panning=0x1F
 	instrument_dirty=false
@@ -243,7 +243,6 @@ func process_tick(song:Song,channel:int,curr_order:int,curr_row:int,curr_tick:in
 			process_tick_n(song,channel)
 		row_tick+=1
 		macro_tick+=1
-		arpeggio_tick=(arpeggio_tick+1)%3
 	else:
 		fx_vals[CONSTS.FX_DELAY]-=1
 	return tracker_cmd
@@ -276,10 +275,7 @@ func process_tick_0(note:Array,song:Song,num_fxs:int)->int:
 	var fx_cmd:int=0
 	var fx_opm
 	var fx_val
-	arp_freqs[0]=0
-	arp_freqs[1]=0
-	arp_freqs[2]=0
-	arp_freqs[3]=0
+	arpeggio=null
 	var tracker_cmd:int=0
 	for i in range(num_fxs):
 		fx_apply[i]=false
@@ -298,8 +294,9 @@ func process_tick_0(note:Array,song:Song,num_fxs:int)->int:
 			elif fx_cmd==CONSTS.FX_FRQ_PORTA:
 				slide_frequency_to(fx_val,fx_opm)
 			elif fx_cmd==CONSTS.FX_ARPEGGIO:
-				freqs_dirty_any=set_opmasked(fx_vals[CONSTS.FX_ARPEGGIO][arpeggio_tick],\
-						arp_freqs,freqs_dirty,fx_opm)
+				arpeggio=song.get_arp(fx_vals[CONSTS.FX_ARPEGGIO][0])
+				"""freqs_dirty_any=set_opmasked(fx_vals[CONSTS.FX_ARPEGGIO][arpeggio_tick],
+						arp_freqs,freqs_dirty,fx_opm)"""
 			elif fx_cmd==CONSTS.FX_FMI_SET:
 				fmi_dirty_any=set_opmasked(fx_val,fm_intensity,fmi_dirty,fx_opm)
 			elif fx_cmd==CONSTS.FX_FMI_ADJ or fx_cmd==CONSTS.FX_FMI_SLIDE:
@@ -392,9 +389,9 @@ func process_tick_n(song:Song,channel:int)->void:
 			slide_frequency(fx_vals[CONSTS.FX_FRQ_SLIDE],fx_opmasks[i])
 		elif fx_cmd==CONSTS.FX_FRQ_PORTA:
 			slide_frequency_to(fx_vals[CONSTS.FX_FRQ_PORTA],fx_opmasks[i])
-		elif fx_cmd==CONSTS.FX_ARPEGGIO:
-			freqs_dirty_any=set_opmasked(fx_vals[CONSTS.FX_ARPEGGIO][arpeggio_tick],\
-					arp_freqs,freqs_dirty,fx_opmasks[i])
+			"""elif fx_cmd==CONSTS.FX_ARPEGGIO:
+			freqs_dirty_any=set_opmasked(fx_vals[CONSTS.FX_ARPEGGIO][arpeggio_tick],
+					arp_freqs,freqs_dirty,fx_opmasks[i])"""
 		elif fx_cmd==CONSTS.FX_FMI_SLIDE:
 			slide_fmi(fx_vals[CONSTS.FX_FMI_SLIDE],fx_opmasks[i])
 		elif fx_cmd==CONSTS.FX_AMI_SLIDE:
@@ -438,7 +435,17 @@ func apply_macros()->void:
 		# Global+Op tone
 		old=freqs[i]
 		base_freqs[i]=next_freqs[i]
-		freqs[i]=op_freq_macro[i].get_value(macro_tick,release_tick,freq_macro.get_value(macro_tick,release_tick,base_freqs[i]))+arp_freqs[i]
+		freqs[i]=op_freq_macro[i].get_value(
+			macro_tick,
+			release_tick,
+			freq_macro.get_value(
+				macro_tick,
+				release_tick,
+				base_freqs[i]))
+		if arpeggio!=null:
+			freqs[i]=arpeggio.get_value(
+				macro_tick,release_tick,freqs[i],fx_vals[CONSTS.FX_ARPEGGIO][FARP_SPEED]
+			)
 		freqs_dirty[i]=freqs_dirty[i] or old!=freqs[i]
 		freqs_dirty_any=freqs_dirty_any or freqs_dirty[i]
 		# Global+op key
@@ -528,8 +535,8 @@ func get_fx_val(v,note,cmd:int,cmd_col:int)->int:
 			fx_vals[cmd][3]=note
 			fx_vals[cmd][4]=note
 	elif cmd==CONSTS.FX_ARPEGGIO:
-		fx_vals[cmd][1]=clamp((v>>4)*100,CONSTS.MIN_FREQ,CONSTS.MAX_FREQ)
-		fx_vals[cmd][2]=clamp((v&15)*100,CONSTS.MIN_FREQ,CONSTS.MAX_FREQ)
+		fx_vals[cmd][FARP_ARP]=v&15
+		fx_vals[cmd][FARP_SPEED]=((v>>4)&15)+1
 	elif cmd==CONSTS.FX_FMI_SET:
 		fx_vals[cmd]=clamp(v*50,0,12000)
 	elif cmd==CONSTS.FX_FMI_LFO or cmd==CONSTS.FX_AMI_LFO:

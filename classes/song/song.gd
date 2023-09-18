@@ -4,6 +4,7 @@ class_name Song
 signal wave_changed(wave,wave_ix)
 signal wave_list_changed
 signal instrument_list_changed
+signal arp_list_changed
 signal channels_changed
 signal order_changed(order_ix,channel_ix)
 signal speed_changed
@@ -24,6 +25,7 @@ const DFL_FX_LENGTH:int=1
 const MIN_CUSTOM_WAVE:int=4
 const MAX_WAVES:int=256-MIN_CUSTOM_WAVE
 const MAX_INSTRUMENTS:int=256
+const MAX_ARPEGGIOS:int=256
 const FILE_SIGNATURE:String="SFMM\u000d\u000a\u001a\u000a"
 const FILE_VERSION:int=0
 const CHUNK_HEADER:String="MHDR"
@@ -49,6 +51,7 @@ var pattern_list:Array # [channel,order]
 var orders:Array # [row,channel]
 var wave_list:Array
 var instrument_list:Array
+var arp_list:Array
 var num_channels:int
 var num_fxs:Array
 var pattern_length:int
@@ -82,9 +85,11 @@ func _init(max_channels:int=MAX_CHANNELS,pat_length:int=DFL_PAT_LENGTH,fx_length
 		num_fxs[i]=nfx
 	instrument_list.append(FmInstrument.new())
 	instrument_list[0].name+=" 00"
+	arp_list=[]
 	wave_list=[]
 	emit_signal("wave_list_changed")
 	emit_signal("instrument_list_changed")
+	emit_signal("arp_list_changed")
 	emit_signal("channels_changed")
 	emit_signal("speed_changed")
 	emit_signal("highlights_changed")
@@ -273,6 +278,59 @@ func get_instrument(index:int)->Instrument:
 
 func find_instrument(inst:Instrument)->int:
 	return instrument_list.find(inst)
+
+#
+
+func add_arp(arp:Arpeggio)->void:
+	if can_add_arp() and arp_list.find(arp)==-1:
+		arp_list.append(arp)
+		emit_signal("arp_list_changed")
+
+func delete_arp(arp:Arpeggio)->void:
+	if not can_delete_arp(arp):
+		return
+	var iix:int=arp_list.find(arp)
+	arp_list.erase(arp)
+	for chan in pattern_list:
+		for pat in chan:
+			for note in pat.notes:
+				# TODO: Correct arp refs
+				"""
+				if note[Pattern.ATTRS.INSTR]!=null and note[Pattern.ATTRS.INSTR]>iix:
+					note[Pattern.ATTRS.INSTR]-=1
+				"""
+	emit_signal("arp_list_changed")
+	emit_signal("order_changed",-1,-1)
+
+func can_add_arp()->bool:
+	if arp_list.size()<MAX_ARPEGGIOS:
+		return true
+	emit_signal("error","Limit of %d arpeggios reached."%[MAX_INSTRUMENTS])
+	return false
+
+func can_delete_arp(arp:Arpeggio)->bool:
+	if arp_list.empty():
+		return false
+	var iix:int=arp_list.find(arp)
+	if iix==-1:
+		emit_signal("error","Arpeggio not found.")
+		return false
+	for chan in range(pattern_list.size()):
+		for pat in range(pattern_list[chan].size()):
+			for note in range(pattern_list[chan][pat].notes.size()):
+				# TODO: Detect arp refs
+				"""if pattern_list[chan][pat].notes[note][Pattern.ATTRS.INSTR]==iix:
+					emit_signal("error","Arpeggio is in use on pattern %d of channel %d, row %d."%[pat,chan,note])
+					return false"""
+	return true
+
+func get_arp(index:int)->Arpeggio:
+	if index<0 or index>=arp_list.size():
+		return null
+	return arp_list[index]
+
+func find_arp(arp:Arpeggio)->int:
+	return arp_list.find(arp)
 
 #
 

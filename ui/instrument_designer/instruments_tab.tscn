@@ -13,9 +13,6 @@ margin_right = -4.0
 margin_bottom = -4.0
 rect_clip_content = true
 script = ExtResource( 2 )
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="Cols" type="HSplitContainer" parent="."]
 anchor_right = 1.0

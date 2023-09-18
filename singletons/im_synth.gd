@@ -105,6 +105,8 @@ func _on_macro_timer()->void:
 		kft=(koff_time[chan]*GLOBALS.song.ticks_second)/1000 if koff_time[chan]>-1 else -1
 		# Global+op tone
 		val_b=instr.freq_macro.get_value(kot,kft,notes[chan])
+		if GLOBALS.curr_arp!=null:
+			val_b=GLOBALS.curr_arp.get_value(kot,kft,val_b,GLOBALS.arp_ticks)
 		for op in 4:
 			val=instr.op_freq_macro[op].get_value(kot,kft,val_b)
 			synth.set_note(chan,1<<op,val)

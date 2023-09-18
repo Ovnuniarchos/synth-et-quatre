@@ -8,11 +8,14 @@ var song:Song
 var curr_instrument:int setget set_instrument
 var curr_octave:int setget set_octave
 var curr_order:int setget goto_order
+var curr_arp:Arpeggio
+var arp_ticks:int=1
 var muted_mask:int=0
 
 
 func _init():
 	set_song(Song.new())
+	curr_arp=null
 	curr_instrument=0
 	curr_order=0
 	curr_octave=4
@@ -23,6 +26,7 @@ func set_song(s:Song)->void:
 	song=s
 	curr_instrument=0
 	curr_order=0
+	curr_arp=null
 	emit_signal("song_changed")
 
 func get_instrument(index:int=-1)->Instrument:

@@ -1,0 +1,84 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://ui/widgets/numbered_item_list.tscn" type="PackedScene" id=1]
+[ext_resource path="res://ui/arp_designer/arp_list.gd" type="Script" id=2]
+[ext_resource path="res://ui/widgets/spin_bar.gd" type="Script" id=3]
+
+[node name="ArpList" type="VBoxContainer"]
+margin_right = 130.0
+margin_bottom = 561.0
+rect_clip_content = true
+size_flags_vertical = 3
+script = ExtResource( 2 )
+
+[node name="Speed" type="HBoxContainer" parent="."]
+margin_right = 150.0
+margin_bottom = 14.0
+
+[node name="TicksL" type="Label" parent="Speed"]
+margin_right = 32.0
+margin_bottom = 14.0
+text = "Ticks"
+
+[node name="Ticks" type="ProgressBar" parent="Speed"]
+margin_left = 36.0
+margin_right = 150.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 36, 14 )
+size_flags_horizontal = 3
+min_value = 1.0
+max_value = 256.0
+step = 1.0
+page = 8.0
+value = 1.0
+percent_visible = false
+script = ExtResource( 3 )
+big_step = 8.0
+huge_step = 32.0
+
+[node name="Buttons" type="HBoxContainer" parent="."]
+margin_top = 18.0
+margin_right = 150.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+
+[node name="Add" type="Button" parent="Buttons"]
+margin_right = 37.0
+margin_bottom = 20.0
+shortcut_in_tooltip = false
+text = "Add"
+
+[node name="Copy" type="Button" parent="Buttons"]
+margin_left = 41.0
+margin_right = 84.0
+margin_bottom = 20.0
+shortcut_in_tooltip = false
+text = "Copy"
+
+[node name="S" type="ReferenceRect" parent="Buttons"]
+margin_left = 88.0
+margin_right = 112.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 24, 0 )
+
+[node name="Del" type="Button" parent="Buttons"]
+margin_left = 116.0
+margin_right = 150.0
+margin_bottom = 20.0
+shortcut_in_tooltip = false
+text = "Del"
+
+[node name="Arpeggios" parent="." instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 42.0
+margin_right = 150.0
+margin_bottom = 561.0
+allow_reselect = true
+allow_deselect = true
+
+[connection signal="value_changed" from="Speed/Ticks" to="." method="_on_Ticks_value_changed"]
+[connection signal="pressed" from="Buttons/Add" to="." method="_on_Add_pressed"]
+[connection signal="pressed" from="Buttons/Copy" to="." method="_on_Copy_pressed"]
+[connection signal="pressed" from="Buttons/Del" to="." method="_on_Del_pressed"]
+[connection signal="item_selected" from="Arpeggios" to="." method="_on_Arpeggios_item_selected"]

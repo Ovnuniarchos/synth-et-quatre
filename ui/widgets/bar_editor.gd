@@ -42,6 +42,7 @@ var bar_height:float
 var hiddables:Array
 var heights:PoolRealArray=PoolRealArray([160.0,240.0,320.0])
 
+export (bool) var arpeggio:bool=false
 export (String) var title:String="Macro" setget set_title
 export (String) var parameter:String=""
 export (float) var title_width:float=128.0 setget set_title_width
@@ -93,6 +94,11 @@ func _ready()->void:
 		rel_button.visible=false
 	set_title(title)
 	set_title_width(title_width)
+	if arpeggio:
+		$Params/Relative.visible=false
+		$Params/HBC/LDiv.visible=false
+		$Params/HBC/Div.visible=false
+		pass
 	_on_Title_pressed(0)
 
 func can_switch_modes()->bool:
@@ -433,16 +439,18 @@ func _on_Delay_value_changed(v:float)->void:
 	delay=v
 	emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
 
-func set_macro(m:ParamMacro)->void:
+func set_macro(m:Macro)->void:
 	set_block_signals(true)
 	loop_start=m.loop_start
 	loop_end=m.loop_end
 	release_loop_start=m.release_loop_start
-	relative=m.relative
+	if m is ParamMacro:
+		relative=m.relative
 	init_values()
 	set_values(m.values)
 	steps=m.steps
-	tick_div=m.tick_div
+	if m is ParamMacro:
+		tick_div=m.tick_div
 	delay=m.delay
 	values_graph.update()
 	loop_graph.update()

@@ -2,8 +2,10 @@ extends Control
 
 """
 FIXME
+	Tracker cmds should not alter default tempo
 TODO:
 	X Automation
+		Full arpeggio command
 		File support
 	CycleButtons themable
 	MIDI on/off indicator

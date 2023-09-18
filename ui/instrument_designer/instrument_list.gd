@@ -39,7 +39,7 @@ func select_item(idx:int)->void:
 	emit_signal("instrument_selected",idx)
 
 func _on_Add_pressed()->void:
-	if GLOBALS.song.can_add_wave():
+	if GLOBALS.song.can_add_instrument():
 		var cnt:int=inst_l.get_item_count()
 		var ni:Instrument=FmInstrument.new()
 		var nn:String="%s %02X"%[ni.name,cnt]

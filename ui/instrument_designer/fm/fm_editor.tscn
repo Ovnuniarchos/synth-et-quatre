@@ -264,11 +264,18 @@ margin_right = 38.0
 margin_bottom = 19.0
 text = "Name"
 
-[node name="Name" type="LineEdit" parent="Info/HBC"]
+[node name="S" type="ReferenceRect" parent="Info/HBC"]
 margin_left = 42.0
-margin_right = 234.0
+margin_right = 50.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 8, 0 )
+
+[node name="Name" type="LineEdit" parent="Info/HBC"]
+margin_left = 54.0
+margin_right = 1010.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 192, 0 )
+size_flags_horizontal = 3
 
 [node name="Tabs" type="TabContainer" parent="."]
 margin_top = 190.0

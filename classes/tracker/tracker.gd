@@ -18,6 +18,8 @@ var curr_order:int
 var song_delay:int
 var goto_order:int
 var goto_next:int
+var ticks_second:int
+var ticks_row:int
 var voices:Array
 var synth:Synth
 
@@ -48,6 +50,9 @@ func play(from:int=-1)->void:
 		song_delay=0
 		goto_order=-1
 		goto_next=-1
+	if from==0:
+		ticks_second=GLOBALS.song.ticks_second
+		ticks_row=GLOBALS.song.ticks_row
 	playing=true
 	recording=false
 	loop_track=false
@@ -75,6 +80,8 @@ func stop()->void:
 
 func _on_song_changed()->void:
 	stop()
+	ticks_second=GLOBALS.song.ticks_second
+	ticks_row=GLOBALS.song.ticks_row
 
 #
 
@@ -83,7 +90,7 @@ func gen_commands(song:Song,mix_rate:float,buffer_size:int,cmds:Array,order_star
 		cmds[0]=CONSTS.CMD_END
 		return {"play":false,"loop":-1}
 	var max_wait:int=min(CONSTS.MAX_WAIT_TIME,buffer_size)
-	var samples_tick:float=mix_rate/song.ticks_second
+	var samples_tick:float=mix_rate/ticks_second
 	var ptr:int=0
 	var optr:int=0
 	var buffer_left:float=buffer_size
@@ -143,7 +150,7 @@ func gen_commands(song:Song,mix_rate:float,buffer_size:int,cmds:Array,order_star
 				if needs_stop(song):
 					return {"play":false,"loop":-1}
 				emit_signal("position_changed",curr_order,curr_row)
-			if curr_tick>=song.ticks_row:
+			if curr_tick>=ticks_row:
 				curr_tick=0
 				curr_row=curr_row+1
 				if curr_row>=song.pattern_length:

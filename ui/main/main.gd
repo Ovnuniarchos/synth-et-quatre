@@ -3,6 +3,8 @@ extends Control
 """
 FIXME
 	Tracker cmds should not alter default tempo
+	40XX commands are ignored
+	41XX commands are executed AFTER note commands
 TODO:
 	X Automation
 		Full arpeggio command

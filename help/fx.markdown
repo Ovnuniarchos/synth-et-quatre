@@ -20,7 +20,7 @@ Slide frequency to current note by `xx` cents/tick.
 
 ## 04xy
 
-Arpeggio at note, note+`x` semitones, note+`y` semitones. Each note lasts 1 tick.
+Select arepeggio `y` for this row. Each note lasts `x` ticks.
 
 ## 05xx
 

@@ -209,7 +209,7 @@ Set clipping on/off. 0 deactivates clipping, anything else activates it.
 
 Save for `40xx`, only the last command (in channel order) will be used, and any further delay/repeat will be relative to the end of it.
 
-Delays are executed before jumps.
+Delays are executed before jumps and tempo changes.
 
 ## 40xx
 

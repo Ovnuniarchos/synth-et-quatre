@@ -20,6 +20,7 @@ var goto_order:int
 var goto_next:int
 var ticks_second:int
 var ticks_row:int
+var messages:Array
 var voices:Array
 var synth:Synth
 
@@ -32,6 +33,7 @@ func _init(syn:Synth)->void:
 	curr_order=0
 	song_delay=0
 	voices.resize(Song.MAX_CHANNELS)
+	messages.resize(CONSTS.SIG_MAX)
 	synth=syn
 	for i in range(Song.MAX_CHANNELS):
 		voices[i]=FmVoice.new()
@@ -50,6 +52,7 @@ func play(from:int=-1)->void:
 		song_delay=0
 		goto_order=-1
 		goto_next=-1
+		messages.fill(null)
 	if from==0:
 		ticks_second=GLOBALS.song.ticks_second
 		ticks_row=GLOBALS.song.ticks_row
@@ -105,19 +108,29 @@ func gen_commands(song:Song,mix_rate:float,buffer_size:int,cmds:Array,order_star
 		buffer_left-=wait
 	buffer_pos+=wait
 	#
-	var sig_cmd:int
-	var sig:int
 	while buffer_left>=1.0:
+		if curr_tick==0:
+			messages.fill(null)
 		for chn in range(song.num_channels):
-			sig=voices[chn].process_tick(song,chn,curr_order,curr_row,curr_tick)
-			sig_cmd=sig&CONSTS.SIG_CMD_MASK
-			if sig_cmd==CONSTS.SIG_DELAY_SONG:
-				song_delay=sig&CONSTS.SIG_VAL_MASK
-			elif sig_cmd==CONSTS.SIG_GOTO_ORDER:
-				goto_order=sig&CONSTS.SIG_VAL_MASK
-			elif sig_cmd==CONSTS.SIG_GOTO_NEXT:
-				goto_next=sig&CONSTS.SIG_VAL_MASK
+			voices[chn].process_tick(song,chn,curr_order,curr_row,curr_tick,messages)
 			ptr=voices[chn].commit(chn,cmds,ptr)
+		if messages[CONSTS.SIG_DELAY_SONG]!=null:
+			song_delay=messages[CONSTS.SIG_DELAY_SONG]
+			messages[CONSTS.SIG_DELAY_SONG]=null
+		if messages[CONSTS.SIG_GOTO_NEXT]!=null:
+			goto_next=messages[CONSTS.SIG_GOTO_NEXT]
+			messages[CONSTS.SIG_GOTO_NEXT]=null
+		if messages[CONSTS.SIG_GOTO_ORDER]!=null:
+			goto_order=messages[CONSTS.SIG_GOTO_ORDER]
+			goto_next=-1
+			messages[CONSTS.SIG_GOTO_ORDER]=null
+		if messages[CONSTS.SIG_TICKS_SEC]!=null:
+			ticks_second=messages[CONSTS.SIG_TICKS_SEC]
+			samples_tick=mix_rate/ticks_second
+			messages[CONSTS.SIG_TICKS_SEC]=null
+		if messages[CONSTS.SIG_TICKS_ROW]!=null:
+			ticks_row=messages[CONSTS.SIG_TICKS_ROW]
+			messages[CONSTS.SIG_TICKS_ROW]=null
 		#
 		optr=ptr
 		curr_sample+=samples_tick

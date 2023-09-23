@@ -214,7 +214,7 @@ func reset()->void:
 	lfo_phase_dirty_any=false
 	lfo_phase_dirty=[false,false,false,false]
 
-func process_tick(song:Song,channel:int,curr_order:int,curr_row:int,curr_tick:int)->int:
+func process_tick(song:Song,channel:int,curr_order:int,curr_row:int,curr_tick:int,messages:Array)->void:
 	var pat:Pattern=song.get_order_pattern(curr_order,channel)
 	var note:Array=pat.notes[curr_row]
 	var fx_cmd:int
@@ -232,22 +232,21 @@ func process_tick(song:Song,channel:int,curr_order:int,curr_row:int,curr_tick:in
 			if fx_cmd==CONSTS.FX_DELAY or fx_cmd==CONSTS.FX_DELAY_SONG:
 				fx_vals[fx_cmd]=get_fx_val(note[ATTRS.FV0+j],note[ATTRS.NOTE],fx_cmd,i)
 			j+=3
-	var tracker_cmd:int=0
 	if fx_vals[CONSTS.FX_DELAY_SONG]!=0:
 		if curr_tick==0:
-			return fx_vals[CONSTS.FX_DELAY_SONG]|TRCK.SIG_DELAY_SONG
+			messages[TRCK.SIG_DELAY_SONG]=fx_vals[CONSTS.FX_DELAY_SONG]
+			return
 	if fx_vals[CONSTS.FX_DELAY]==0:
 		if row_tick==0:
-			tracker_cmd=process_tick_0(note,song,song.num_fxs[channel])
+			process_tick_0(note,song,song.num_fxs[channel],messages)
 		else:
 			process_tick_n(song,channel)
 		row_tick+=1
 		macro_tick+=1
 	else:
 		fx_vals[CONSTS.FX_DELAY]-=1
-	return tracker_cmd
 
-func process_tick_0(note:Array,song:Song,num_fxs:int)->int:
+func process_tick_0(note:Array,song:Song,num_fxs:int,messages:Array)->void:
 	var legato:int=KON_STD if note[ATTRS.LG_MODE]==null else LEGATO2KON[note[ATTRS.LG_MODE]]
 	if note[ATTRS.NOTE]!=null:
 		if legato!=KON_LEGATO:
@@ -276,7 +275,6 @@ func process_tick_0(note:Array,song:Song,num_fxs:int)->int:
 	var fx_opm
 	var fx_val
 	arpeggio=null
-	var tracker_cmd:int=0
 	for i in range(num_fxs):
 		fx_apply[i]=false
 		fx_cmd=get_fx_cmd(note[ATTRS.FX0+j],i)
@@ -295,8 +293,6 @@ func process_tick_0(note:Array,song:Song,num_fxs:int)->int:
 				slide_frequency_to(fx_val,fx_opm)
 			elif fx_cmd==CONSTS.FX_ARPEGGIO:
 				arpeggio=song.get_arp(fx_vals[CONSTS.FX_ARPEGGIO][0])
-				"""freqs_dirty_any=set_opmasked(fx_vals[CONSTS.FX_ARPEGGIO][arpeggio_tick],
-						arp_freqs,freqs_dirty,fx_opm)"""
 			elif fx_cmd==CONSTS.FX_FMI_SET:
 				fmi_dirty_any=set_opmasked(fx_val,fm_intensity,fmi_dirty,fx_opm)
 			elif fx_cmd==CONSTS.FX_FMI_ADJ or fx_cmd==CONSTS.FX_FMI_SLIDE:
@@ -366,18 +362,17 @@ func process_tick_0(note:Array,song:Song,num_fxs:int)->int:
 			elif fx_cmd==CONSTS.FX_CLIP_SET:
 				clip_dirty=set_clip(fx_val)
 			elif fx_cmd==CONSTS.FX_GOTO_ORDER:
-				tracker_cmd=fx_val|TRCK.SIG_GOTO_ORDER
-			elif fx_cmd==CONSTS.FX_GOTO_NEXT and tracker_cmd==0:
-				tracker_cmd=fx_val|TRCK.SIG_GOTO_NEXT
+				messages[TRCK.SIG_GOTO_ORDER]=fx_val
+			elif fx_cmd==CONSTS.FX_GOTO_NEXT:
+				messages[TRCK.SIG_GOTO_NEXT]=fx_val
 			elif fx_cmd==CONSTS.FX_TICKSROW_SET:
-				song.ticks_row=fx_val+1
+				messages[TRCK.SIG_TICKS_ROW]=fx_val+1
 			elif fx_cmd==CONSTS.FX_TICKSSEC_SET:
-				song.ticks_second=fx_val+1
+				messages[TRCK.SIG_TICKS_SEC]=fx_val+1
 			elif fx_cmd==CONSTS.FX_DEBUG:
 				breakpoint
 		j+=3
 	apply_macros()
-	return tracker_cmd
 
 func process_tick_n(song:Song,channel:int)->void:
 	var fx_cmd:int
@@ -563,6 +558,8 @@ func get_fx_val(v,note,cmd:int,cmd_col:int)->int:
 #
 
 func commit(channel:int,cmds:Array,ptr:int)->int:
+	if fx_vals[CONSTS.FX_DELAY]>0:
+		return ptr
 	if instrument_dirty:
 		ptr=commit_instrument(channel,cmds,ptr)
 	if key_dirty_any:

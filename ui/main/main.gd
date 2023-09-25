@@ -4,7 +4,7 @@ extends Control
 FIXME
 TODO:
 	X Automation
-		Full arpeggio command
+		X Full arpeggio command
 		File support
 	CycleButtons themable
 	MIDI on/off indicator

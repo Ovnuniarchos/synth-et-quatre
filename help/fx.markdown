@@ -4,15 +4,15 @@ All frequencies are affected by MUL/DIV/DET.
 
 ## 00xx
 
-Set frequency to semitone `(xx÷2)-2`. This affects the ending note of a portamento (0x03).
+Set frequency to semitone `(xx÷2)-2`. This affects the ending note of a portamento (`03xx`).
 
 ## 01xx
 
-Adjust frequency by `xx-128` cents. This affects the ending note of a portamento (0x03).
+Adjust frequency by `xx-128` cents. This affects the ending note of a portamento (`03xx`).
 
 ## 02xx
 
-Slide frequency by `xx-128` cents/tick. This affects the ending note of a portamento (0x03).
+Slide frequency by `xx-128` cents/tick. This affects the ending note of a portamento (`03xx`).
 
 ## 03xx
 
@@ -20,7 +20,7 @@ Slide frequency to current note by `xx` cents/tick.
 
 ## 04xy
 
-Select arepeggio `y` for this row. Each note lasts `x` ticks.
+Select arepeggio `y` for this row. Each note lasts `x+1` ticks. This sets the speed of further `0Exx` commands.
 
 ## 05xx
 
@@ -57,6 +57,14 @@ Adjust detune by `xx-128` millis.
 ## 0Dxx
 
 Slide detune by `xx-128` millis/tick.
+
+## 0Exx
+
+Select arpeggio #`xx`, with the last selected speed (default 3 ticks/note).
+
+## 0Fxx
+
+Set arpeggio speed to `xx+1` ticks/note.
 
 
 
@@ -203,6 +211,7 @@ Set LFO frequency decimal part to `xx÷256`Hz.
 ## 3Exx
 
 Set clipping on/off. 0 deactivates clipping, anything else activates it.
+
 
 
 # Play commands

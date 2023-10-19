@@ -68,6 +68,7 @@ func _on_Copy_pressed()->void:
 		set_buttons()
 
 func _on_Arpeggios_item_selected(index:int)->void:
+	set_buttons()
 	emit_signal("arp_selected",index)
 
 func _on_Name_text_changed(txt:String)->void:

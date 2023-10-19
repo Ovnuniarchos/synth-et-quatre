@@ -294,11 +294,13 @@ func delete_arp(arp:Arpeggio)->void:
 	for chan in pattern_list:
 		for pat in chan:
 			for note in pat.notes:
-				# TODO: Correct arp refs
-				"""
-				if note[Pattern.ATTRS.INSTR]!=null and note[Pattern.ATTRS.INSTR]>iix:
-					note[Pattern.ATTRS.INSTR]-=1
-				"""
+				for fx in range(Pattern.ATTRS.FX0,Pattern.ATTRS.MAX,3):
+					var fc=note[fx]
+					var fv=note[fx+2]
+					if (fc==FMVC.FX_ARP_SET and fv>iix):
+						note[fx+2]=fv-1
+					elif (fc==FMVC.FX_ARPEGGIO and (fv&0xF)>iix):
+						note[fx+2]=(fv&0xF0)|((fv&0xF)-1)
 	emit_signal("arp_list_changed")
 	emit_signal("order_changed",-1,-1)
 
@@ -315,13 +317,15 @@ func can_delete_arp(arp:Arpeggio)->bool:
 	if iix==-1:
 		emit_signal("error","Arpeggio not found.")
 		return false
-	for chan in range(pattern_list.size()):
-		for pat in range(pattern_list[chan].size()):
-			for note in range(pattern_list[chan][pat].notes.size()):
-				# TODO: Detect arp refs
-				"""if pattern_list[chan][pat].notes[note][Pattern.ATTRS.INSTR]==iix:
-					emit_signal("error","Arpeggio is in use on pattern %d of channel %d, row %d."%[pat,chan,note])
-					return false"""
+	for chan in pattern_list.size():
+		for pat in pattern_list[chan].size():
+			for note in pattern_list[chan][pat].notes.size():
+				for fx in range(Pattern.ATTRS.FX0,Pattern.ATTRS.MAX,3):
+					var fc=pattern_list[chan][pat].notes[note][fx]
+					var fv=pattern_list[chan][pat].notes[note][fx+2]
+					if (fc==FMVC.FX_ARP_SET and fv==iix) or (fc==FMVC.FX_ARPEGGIO and (fv&0xF)==iix):
+						emit_signal("error","Instrument is in use on pattern %d of channel %d, row %d."%[pat,chan,note])
+						return false
 	return true
 
 func get_arp(index:int)->Arpeggio:

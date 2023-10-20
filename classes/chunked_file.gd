@@ -47,7 +47,13 @@ func get_ascii(length:int)->String:
 	return get_buffer(length).get_string_from_ascii()
 
 func get_chunk_header()->Dictionary:
-	return {CHUNK_ID:get_ascii(4),CHUNK_VERSION:get_16(),CHUNK_NEXT:get_64()}
+	var pos:int=get_position()
+	var hdr:Dictionary={CHUNK_ID:get_ascii(4),CHUNK_VERSION:get_16(),CHUNK_NEXT:get_64()}
+	if hdr[CHUNK_NEXT]<-1: # Fix for a bugged chunk writer
+		seek(pos)
+		hdr={CHUNK_ID:get_ascii(4),CHUNK_VERSION:0,CHUNK_NEXT:get_64()}
+		seek(pos+14)
+	return hdr
 
 func get_signed_16()->int:
 	var v:int=get_16()

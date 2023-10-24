@@ -53,7 +53,7 @@ var channel:int=-1
 
 
 func _ready()->void:
-	GLOBALS.array_fill(notes_on,-1,Song.MAX_CHANNELS)
+	GLOBALS.array_fill(notes_on,-1,SongLimits.MAX_CHANNELS)
 
 func _unhandled_input(event:InputEvent)->void:
 	if handle_keys(event as InputEventKey):

@@ -19,7 +19,7 @@ func _ready()->void:
 	$VSC/CCHSC/HSC.split_offset=rect_size.x*0.25
 	$VSC/CCVBC/VBC/CNT/Channels/LineColumn.rect_min_size.x=cell_size.x*4.0
 	channels.add_constant_override("separation",cell_size.x*2.0)
-	mute_status.resize(Song.MAX_CHANNELS)
+	mute_status.resize(SongLimits.MAX_CHANNELS)
 	GLOBALS.connect("song_changed",self,"_on_song_changed")
 	_on_song_changed()
 	connect("resized",editor,"_on_container_resized",[self])
@@ -27,7 +27,7 @@ func _ready()->void:
 
 
 func _on_song_changed()->void:
-	for i in range(Song.MAX_CHANNELS):
+	for i in SongLimits.MAX_CHANNELS:
 		mute_status[i]=ENABLED
 	GLOBALS.muted_mask=0
 	SYNTH.mute_voices(0)

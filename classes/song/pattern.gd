@@ -1,6 +1,7 @@
 extends Reference
 class_name Pattern
 
+const SONGL=preload("res://classes/song/song_limits.gd")
 enum LEGATO_MODE{OFF,LEGATO,STACCATO}
 enum ATTRS{LG_MODE,NOTE,INSTR,VOL,PAN,FX0,FM0,FV0,FX1,FM1,FV1,FX2,FM2,FV2,FX3,FM3,FV3,MAX}
 const MIN_FX_COL:int=ATTRS.FX0
@@ -14,15 +15,15 @@ const CHUNK_VERSION:int=0
 
 var notes:Array=[]
 
-func _init(length:int)->void:
+func _init(length:int=SONGL.MAX_PAT_LENGTH)->void:
 	notes.resize(length)
-	for i in range(length):
+	for i in length:
 		notes[i]=[]
-		notes[i].resize(MAX_ATTR+1)
+		notes[i].resize(ATTRS.MAX)
 
 func duplicate()->Pattern:
 	var np:Pattern=get_script().new(notes.size())
-	for i in range(notes.size()):
+	for i in notes.size():
 		np.notes[i]=notes[i].duplicate(true)
 	return np
 
@@ -41,14 +42,14 @@ func remove_row(row:int)->void:
 		return
 	notes.remove(row)
 	var a:Array=[]
-	a.resize(MAX_ATTR+1)
+	a.resize(ATTRS.MAX)
 	notes.append(a)
 
 func insert_row(row:int)->void:
 	if row<0 or row>=notes.size():
 		return
 	var a:Array=[]
-	a.resize(MAX_ATTR+1)
+	a.resize(ATTRS.MAX)
 	notes.insert(row,a)
 	notes.pop_back()
 
@@ -56,7 +57,7 @@ func insert_row(row:int)->void:
 
 func serialize(out:ChunkedFile,length:int,num_fx:int)->void:
 	out.start_chunk(CHUNK_ID,CHUNK_VERSION)
-	for j in range(length):
+	for j in length:
 		var n=notes[j]
 		var mask:int=0
 		if n[ATTRS.LG_MODE]!=null and n[ATTRS.LG_MODE]!=LEGATO_MODE.OFF:
@@ -79,7 +80,7 @@ func deserialize(inf:ChunkedFile,pat:Pattern,length:int,_version:int)->void:
 	for j in range(length):
 		var n:Array=pat.notes[j]
 		var mask:int=inf.get_32()
-		for i in range(MAX_ATTR):
+		for i in MAX_ATTR:
 			if mask&(1<<i):
 				n[i]=inf.get_8()
 		if n[ATTRS.NOTE]==255:

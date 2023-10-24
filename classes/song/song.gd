@@ -13,19 +13,8 @@ signal error(message)
 
 
 const FMVC=preload("res://classes/tracker/fm_voice_constants.gd")
+const SONGL=preload("res://classes/song/song_limits.gd")
 const WAVE=FmInstrument.WAVE
-const MIN_CHANNELS:int=1
-const MAX_CHANNELS:int=32
-const MIN_PAT_LENGTH:int=16
-const MAX_PAT_LENGTH:int=128
-const DFL_PAT_LENGTH:int=64
-const MIN_FX_LENGTH:int=0
-const MAX_FX_LENGTH:int=4
-const DFL_FX_LENGTH:int=1
-const MIN_CUSTOM_WAVE:int=4
-const MAX_WAVES:int=256-MIN_CUSTOM_WAVE
-const MAX_INSTRUMENTS:int=256
-const MAX_ARPEGGIOS:int=256
 const FILE_SIGNATURE:String="SFMM\u000d\u000a\u001a\u000a"
 const FILE_VERSION:int=0
 const CHUNK_HEADER:String="MHDR"
@@ -66,21 +55,21 @@ var lfo_duty_cycles:Array=[0,0,128,0]
 var file_name:String=""
 
 
-func _init(max_channels:int=MAX_CHANNELS,pat_length:int=DFL_PAT_LENGTH,fx_length:int=1,tks_sec:int=50,tks_row:int=6)->void:
-	num_channels=clamp(max_channels,MIN_CHANNELS,MAX_CHANNELS)
-	pattern_length=clamp(pat_length,MIN_PAT_LENGTH,MAX_PAT_LENGTH)
+func _init(max_channels:int=SONGL.MAX_CHANNELS,pat_length:int=SONGL.DFL_PAT_LENGTH,fx_length:int=1,tks_sec:int=50,tks_row:int=6)->void:
+	num_channels=clamp(max_channels,SONGL.MIN_CHANNELS,SONGL.MAX_CHANNELS)
+	pattern_length=clamp(pat_length,SONGL.MIN_PAT_LENGTH,SONGL.MAX_PAT_LENGTH)
 	ticks_second=max(tks_sec,1.0)
 	ticks_row=max(tks_row,1.0)
 	minor_highlight=4
 	major_highlight=16
-	var nfx:int=clamp(fx_length,MIN_FX_LENGTH,MAX_FX_LENGTH)
+	var nfx:int=clamp(fx_length,SONGL.MIN_FX_LENGTH,SONGL.MAX_FX_LENGTH)
 	pattern_list=[]
-	pattern_list.resize(MAX_CHANNELS)
+	pattern_list.resize(SONGL.MAX_CHANNELS)
 	orders=[[]]
-	orders[0].resize(MAX_CHANNELS)
-	num_fxs.resize(MAX_CHANNELS)
-	for i in range(MAX_CHANNELS):
-		pattern_list[i]=[Pattern.new(MAX_PAT_LENGTH)]
+	orders[0].resize(SONGL.MAX_CHANNELS)
+	num_fxs.resize(SONGL.MAX_CHANNELS)
+	for i in SONGL.MAX_CHANNELS:
+		pattern_list[i]=[Pattern.new()]
 		orders[0][i]=0
 		num_fxs[i]=nfx
 	instrument_list.append(FmInstrument.new())
@@ -120,7 +109,7 @@ func add_wave(wave:Waveform)->void:
 func delete_wave(wave:Waveform)->void:
 	if not can_delete_wave(wave):
 		return
-	var ix:int=wave_list.find(wave)+MIN_CUSTOM_WAVE
+	var ix:int=wave_list.find(wave)+SONGL.MIN_CUSTOM_WAVE
 	for inst in instrument_list:
 		inst.delete_waveform(ix)
 	for lfi in 4:
@@ -133,7 +122,7 @@ func delete_wave(wave:Waveform)->void:
 					var cmd=note[fxi]
 					var val=note[fxi+2]
 					if (cmd!=FMVC.FX_WAVE_SET and cmd!=FMVC.FX_LFO_WAVE_SET)\
-								|| val==null || val<MIN_CUSTOM_WAVE:
+								|| val==null || val<SONGL.MIN_CUSTOM_WAVE:
 							continue
 					note[fxi+2]=correct_wave(note[fxi+2])
 	wave_list.erase(wave)
@@ -148,9 +137,9 @@ func correct_wave(w:int)->int:
 	return w
 
 func can_add_wave(count:int=1)->bool:
-	if wave_list.size()+count<MAX_WAVES:
+	if wave_list.size()+count<SONGL.MAX_WAVES:
 		return true
-	emit_signal("error","Limit of %d waveforms reached."%[MAX_WAVES])
+	emit_signal("error","Limit of %d waveforms reached."%[SONGL.MAX_WAVES])
 	return false
 
 func can_delete_wave(wave:Waveform)->bool:
@@ -158,7 +147,7 @@ func can_delete_wave(wave:Waveform)->bool:
 	if wave_ix==-1:
 		emit_signal("error","Wave not found.")
 		return false
-	wave_ix+=MIN_CUSTOM_WAVE
+	wave_ix+=SONGL.MIN_CUSTOM_WAVE
 	for lw in range(lfo_waves.size()):
 		if lfo_waves[lw]==wave_ix:
 			emit_signal("error","Wave is in use by LFO %d."%[lw])
@@ -200,9 +189,9 @@ func send_wave(wave:Waveform,synth:Synth,wave_ix:int=-1)->void:
 	if wave_ix==-1:
 		return
 	if wave is SynthWave:
-		synth.synth.define_wave(wave_ix+MIN_CUSTOM_WAVE,wave.data.duplicate())
+		synth.synth.define_wave(wave_ix+SONGL.MIN_CUSTOM_WAVE,wave.data.duplicate())
 	elif wave is SampleWave:
-		synth.synth.define_sample(wave_ix+MIN_CUSTOM_WAVE,wave.loop_start,wave.loop_end,
+		synth.synth.define_sample(wave_ix+SONGL.MIN_CUSTOM_WAVE,wave.loop_start,wave.loop_end,
 				wave.record_freq,wave.sample_freq,wave.data.duplicate())
 
 func sync_waves(synth:Synth,_from:int)->void:
@@ -211,14 +200,14 @@ func sync_waves(synth:Synth,_from:int)->void:
 	var wave_ix:int=0
 	for wave in wave_list:
 		if wave is SynthWave:
-			synth.synth.define_wave(wave_ix+MIN_CUSTOM_WAVE,wave.data.duplicate())
+			synth.synth.define_wave(wave_ix+SONGL.MIN_CUSTOM_WAVE,wave.data.duplicate())
 		elif wave is SampleWave:
-			synth.synth.define_sample(wave_ix+MIN_CUSTOM_WAVE,wave.loop_start,wave.loop_end,
+			synth.synth.define_sample(wave_ix+SONGL.MIN_CUSTOM_WAVE,wave.loop_start,wave.loop_end,
 					wave.record_freq,wave.sample_freq,wave.data.duplicate())
 		wave_ix+=1
 	var null_wave:Array=[]
-	while wave_ix<MAX_WAVES:
-		synth.synth.define_wave(wave_ix+MIN_CUSTOM_WAVE,null_wave)
+	while wave_ix<SONGL.MAX_WAVES:
+		synth.synth.define_wave(wave_ix+SONGL.MIN_CUSTOM_WAVE,null_wave)
 		wave_ix+=1
 
 #
@@ -250,9 +239,9 @@ func delete_instrument(instr:Instrument)->void:
 	emit_signal("order_changed",-1,-1)
 
 func can_add_instrument()->bool:
-	if instrument_list.size()<MAX_INSTRUMENTS:
+	if instrument_list.size()<SONGL.MAX_INSTRUMENTS:
 		return true
-	emit_signal("error","Limit of %d instruments reached."%[MAX_INSTRUMENTS])
+	emit_signal("error","Limit of %d instruments reached."%[SONGL.MAX_INSTRUMENTS])
 	return false
 
 func can_delete_instrument(instr:Instrument)->bool:
@@ -305,9 +294,9 @@ func delete_arp(arp:Arpeggio)->void:
 	emit_signal("order_changed",-1,-1)
 
 func can_add_arp()->bool:
-	if arp_list.size()<MAX_ARPEGGIOS:
+	if arp_list.size()<SONGL.MAX_ARPEGGIOS:
 		return true
-	emit_signal("error","Limit of %d arpeggios reached."%[MAX_INSTRUMENTS])
+	emit_signal("error","Limit of %d arpeggios reached."%[SONGL.MAX_ARPEGGIOS])
 	return false
 
 func can_delete_arp(arp:Arpeggio)->bool:
@@ -362,12 +351,12 @@ func set_author(t:String)->void:
 	author=t
 
 func set_num_channels(n:int)->void:
-	num_channels=clamp(n,MIN_CHANNELS,MAX_CHANNELS)
+	num_channels=clamp(n,SONGL.MIN_CHANNELS,SONGL.MAX_CHANNELS)
 	emit_signal("channels_changed")
 
 func set_pattern_length(l:int)->void:
 	var ol:int=pattern_length
-	pattern_length=clamp(l,MIN_PAT_LENGTH,MAX_PAT_LENGTH)
+	pattern_length=clamp(l,SONGL.MIN_PAT_LENGTH,SONGL.MAX_PAT_LENGTH)
 	if ol!=pattern_length:
 		emit_signal("channels_changed")
 
@@ -383,7 +372,7 @@ func set_ticks_row(tr:int)->void:
 
 func mod_fx_channel(chan:int,add:int)->void:
 	var o:int=num_fxs[chan]
-	num_fxs[chan]=clamp(num_fxs[chan]+add,MIN_FX_LENGTH,MAX_FX_LENGTH)
+	num_fxs[chan]=clamp(num_fxs[chan]+add,SONGL.MIN_FX_LENGTH,SONGL.MAX_FX_LENGTH)
 	if num_fxs[chan]!=o:
 		emit_signal("channels_changed")
 
@@ -405,7 +394,7 @@ func add_pattern(channel:int,copy_from:int=-1)->int:
 	if pattern_list[channel].size()>=255:
 		return 255
 	if copy_from==-1:
-		pattern_list[channel].append(Pattern.new(MAX_PAT_LENGTH))
+		pattern_list[channel].append(Pattern.new())
 	else:
 		pattern_list[channel].append(pattern_list[channel][copy_from].duplicate())
 	return pattern_list[channel].size()-1
@@ -429,12 +418,12 @@ func add_order(copy_from:int=-1)->void:
 	if orders.size()>=255:
 		return
 	var no:Array=[]
-	no.resize(MAX_CHANNELS)
+	no.resize(SONGL.MAX_CHANNELS)
 	if copy_from<0:
-		for i in range(MAX_CHANNELS):
+		for i in SONGL.MAX_CHANNELS:
 			no[i]=0
 	else:
-		for i in range(MAX_CHANNELS):
+		for i in SONGL.MAX_CHANNELS:
 			no[i]=orders[copy_from][i]
 	orders.append(no)
 	emit_signal("order_changed",orders.size()-1,-1)
@@ -567,20 +556,20 @@ func process_highlights(inf:ChunkedFile,song:Song,_version:int)->void:
 func process_pattern_list(inf:ChunkedFile,song:Song,_version:int)->void:
 	var hdr:Dictionary
 	var pat_l:Array=[]
-	pat_l.resize(MAX_CHANNELS)
+	pat_l.resize(SONGL.MAX_CHANNELS)
 	for i in range(song.num_channels):
 		pat_l[i]=[]
 		pat_l[i].resize(inf.get_16())
 		for j in range(pat_l[i].size()):
 			hdr=inf.get_chunk_header()
 			if hdr[ChunkedFile.CHUNK_ID]==Pattern.CHUNK_ID:
-				var n:Pattern=Pattern.new(MAX_PAT_LENGTH)
+				var n:Pattern=Pattern.new()
 				n.deserialize(inf,n,song.pattern_length,hdr[ChunkedFile.CHUNK_VERSION])
 				pat_l[i][j]=n
 			else:
-				pat_l[i][j]=Pattern.new(MAX_PAT_LENGTH)
-	for i in range(song.num_channels,MAX_CHANNELS):
-		pat_l[i]=[Pattern.new(MAX_PAT_LENGTH)]
+				pat_l[i][j]=Pattern.new()
+	for i in range(song.num_channels,SONGL.MAX_CHANNELS):
+		pat_l[i]=[Pattern.new()]
 	song.pattern_list=pat_l
 
 func process_order_list(inf:ChunkedFile,song:Song,_version:int)->void:
@@ -588,10 +577,10 @@ func process_order_list(inf:ChunkedFile,song:Song,_version:int)->void:
 	ord_l.resize(inf.get_16())
 	for i in range(ord_l.size()):
 		ord_l[i]=[]
-		ord_l[i].resize(MAX_CHANNELS)
+		ord_l[i].resize(SONGL.MAX_CHANNELS)
 		for j in range(song.num_channels):
 			ord_l[i][j]=inf.get_8()
-		for j in range(song.num_channels,MAX_CHANNELS):
+		for j in range(song.num_channels,SONGL.MAX_CHANNELS):
 			ord_l[i][j]=0
 	song.orders=ord_l
 
@@ -638,9 +627,9 @@ func process_instrument_list(inf:ChunkedFile,song:Song,_version:int)->void:
 func process_channel_list(inf:ChunkedFile,song:Song,_version:int)->void:
 	var nc:int=inf.get_16()
 	song.num_channels=nc
-	song.pattern_list.resize(MAX_CHANNELS)
-	song.orders[0].resize(MAX_CHANNELS)
-	song.num_fxs.resize(MAX_CHANNELS)
+	song.pattern_list.resize(SONGL.MAX_CHANNELS)
+	song.orders[0].resize(SONGL.MAX_CHANNELS)
+	song.num_fxs.resize(SONGL.MAX_CHANNELS)
 	for i in range(nc):
 		inf.get_ascii(4) # Unused
 		var nfx:int=inf.get_8()
@@ -684,8 +673,8 @@ func clean_patterns()->void:
 				npl.append(pattern_list[chan][oldp])
 		pattern_list[chan]=npl
 	# Cleanup unused channels BREAKS
-	for i in range(num_channels,MAX_CHANNELS):
-		pattern_list[i]=[Pattern.new(MAX_PAT_LENGTH)]
+	for i in range(num_channels,SONGL.MAX_CHANNELS):
+		pattern_list[i]=[Pattern.new()]
 		num_fxs[i]=1
 		for order in orders:
 			order[i]=0
@@ -729,12 +718,12 @@ func clean_instruments()->void:
 
 func clean_waveforms()->void:
 	var wave_xform:Array=[0,1,2,3]
-	wave_xform.resize(wave_list.size()+MIN_CUSTOM_WAVE)
-	var nwave:int=MIN_CUSTOM_WAVE
+	wave_xform.resize(wave_list.size()+SONGL.MIN_CUSTOM_WAVE)
+	var nwave:int=SONGL.MIN_CUSTOM_WAVE
 	# Set the array of transformations old->new
 	## Capture waves used in LFOs
 	for lfw in lfo_waves:
-		if lfw<MIN_CUSTOM_WAVE:
+		if lfw<SONGL.MIN_CUSTOM_WAVE:
 			continue
 		if wave_xform[lfw]==null:
 			wave_xform[lfw]=nwave
@@ -743,7 +732,7 @@ func clean_waveforms()->void:
 	for inst in instrument_list:
 		if inst is FmInstrument:
 			for wi in inst.waveforms:
-				if wi<MIN_CUSTOM_WAVE:
+				if wi<SONGL.MIN_CUSTOM_WAVE:
 					continue
 				if wave_xform[wi]==null:
 					wave_xform[wi]=nwave
@@ -756,12 +745,12 @@ func clean_waveforms()->void:
 					var cmd=pat.notes[note][fxi]
 					var val=pat.notes[note][fxi+2]
 					if (cmd!=FMVC.FX_WAVE_SET and cmd!=FMVC.FX_LFO_WAVE_SET)\
-							|| val==null || val<MIN_CUSTOM_WAVE:
+							|| val==null || val<SONGL.MIN_CUSTOM_WAVE:
 						continue
 					if wave_xform[val]==null:
 						wave_xform[val]=nwave
 						nwave+=1
-	if nwave==MIN_CUSTOM_WAVE:
+	if nwave==SONGL.MIN_CUSTOM_WAVE:
 		wave_list.clear()
 		emit_signal("wave_list_changed")
 		return
@@ -773,7 +762,7 @@ func clean_waveforms()->void:
 					var cmd=pat.notes[note][fxi]
 					var val=pat.notes[note][fxi+2]
 					if (cmd!=FMVC.FX_WAVE_SET and cmd!=FMVC.FX_LFO_WAVE_SET)\
-							|| val==null || val<MIN_CUSTOM_WAVE:
+							|| val==null || val<SONGL.MIN_CUSTOM_WAVE:
 						continue
 					pat.notes[note][fxi+2]=wave_xform[val]
 	# Scan the instruments to change old->new
@@ -783,9 +772,9 @@ func clean_waveforms()->void:
 				inst.waveforms[wi]=wave_xform[inst.waveforms[wi]]
 	# Make new list from used
 	var w_list:Array=[]
-	for wi in range(MIN_CUSTOM_WAVE,wave_xform.size()):
+	for wi in range(SONGL.MIN_CUSTOM_WAVE,wave_xform.size()):
 		if wave_xform[wi]!=null:
-			w_list.append(wave_list[wi-MIN_CUSTOM_WAVE])
+			w_list.append(wave_list[wi-SONGL.MIN_CUSTOM_WAVE])
 	wave_list=w_list
 	emit_signal("wave_list_changed")
 	emit_signal("instrument_list_changed")

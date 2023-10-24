@@ -2,6 +2,7 @@ extends Control
 
 """
 FIXME
+	DIV 2==DIV 1
 TODO:
 	X Automation
 		X Full arpeggio command

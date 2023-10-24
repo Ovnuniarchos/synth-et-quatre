@@ -19,8 +19,7 @@ func calculate()->void:
 	var buf_size:int=data.size()
 	var buffer:Array=[]
 	buffer.resize(buf_size)
-	for i in range(buf_size):
-		buffer[i]=0.0
+	buffer.fill(0.0)
 	for comp in components:
 		buffer=comp.calculate(buf_size,buffer,null)
 	data=buffer
@@ -31,7 +30,7 @@ func duplicate()->Waveform:
 	nw.components=[]
 	for c in components:
 		nw.components.append(c.duplicate())
-	for i in range(components.size()):
+	for i in components.size():
 		var ii:int=components.find(components[i].input_comp)
 		nw.components[i].input_comp=null if ii==-1 else nw.components[ii]
 	return nw
@@ -43,7 +42,7 @@ func equals(other:Waveform)->bool:
 		return false
 	if other.components.size()!=components.size():
 		return false
-	for i in range(components.size()):
+	for i in components.size():
 		var c0:WaveComponent=components[i]
 		var c1:WaveComponent=other.components[i]
 		if !c0.equals(c1) or components.find(c0.input_comp)!=other.components.find(c1.input_comp):

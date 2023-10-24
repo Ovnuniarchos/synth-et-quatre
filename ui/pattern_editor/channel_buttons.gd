@@ -19,9 +19,9 @@ func _ready()->void:
 	var song:Song=GLOBALS.song
 	var nfx:int=song.num_fxs[channel_ix]
 	rect_min_size.x=(14+nfx*6)*cell_size.x
-	del.disabled=nfx==song.MIN_FX_LENGTH
+	del.disabled=nfx==SongLimits.MIN_FX_LENGTH
 	del.connect("pressed",connection_object,del_method,[channel_ix])
-	add.disabled=nfx==song.MAX_FX_LENGTH
+	add.disabled=nfx==SongLimits.MAX_FX_LENGTH
 	add.connect("pressed",connection_object,add_method,[channel_ix])
 	channel.colors=PoolColorArray([Color.white,t.get_color("solo","Tracker"),t.get_color("muted","Tracker")])
 	channel.text="CHN %d"%[channel_ix+1]

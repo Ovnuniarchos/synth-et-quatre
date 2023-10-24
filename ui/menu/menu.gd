@@ -54,7 +54,7 @@ func _on_file_selected(path:String)->void:
 	match file_mode:
 		FILE_MODE.LOAD_SONG:
 			cfg_dir=CONFIG.CURR_SONG_DIR
-			IO_SONG.obj_load(path)
+			SongReader.new().read(path)
 		FILE_MODE.LOAD_INST:
 			cfg_dir=CONFIG.CURR_INST_DIR
 			IO_INSTRUMENT.obj_load(path)

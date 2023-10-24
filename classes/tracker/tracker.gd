@@ -6,6 +6,7 @@ signal position_changed(order,row)
 
 
 const CONSTS=preload("res://classes/tracker/tracker_constants.gd")
+const SONGL=preload("res://classes/song/song_limits.gd")
 
 
 var playing:bool
@@ -32,15 +33,15 @@ func _init(syn:Synth)->void:
 	curr_row=0
 	curr_order=0
 	song_delay=0
-	voices.resize(Song.MAX_CHANNELS)
+	voices.resize(SONGL.MAX_CHANNELS)
 	messages.resize(CONSTS.SIG_MAX)
 	synth=syn
-	for i in range(Song.MAX_CHANNELS):
+	for i in range(SONGL.MAX_CHANNELS):
 		voices[i]=FmVoice.new()
 	reset()
 
 func reset()->void:
-	for i in range(Song.MAX_CHANNELS):
+	for i in range(SONGL.MAX_CHANNELS):
 		voices[i].reset()
 
 func play(from:int=-1)->void:

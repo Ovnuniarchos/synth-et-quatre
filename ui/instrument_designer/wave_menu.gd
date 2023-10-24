@@ -14,7 +14,7 @@ func _on_song_changed()->void:
 	update_waves()
 
 func _on_wave_changed(wave:Waveform,ix:int)->void:
-	ix+=Song.MIN_CUSTOM_WAVE
+	ix+=SongLimits.MIN_CUSTOM_WAVE
 	if ix>=get_item_count():
 		return
 	set_item_text(ix,item_name(wave,ix))

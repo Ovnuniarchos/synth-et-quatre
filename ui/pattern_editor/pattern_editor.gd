@@ -695,7 +695,7 @@ func update_tilemap(channel:int=-1)->void:
 		var row:int=0
 		var pat:Pattern=song.get_order_pattern(curr_order,chan)
 		col=channel_col0[chan]
-		for i in range(song.pattern_length):
+		for i in song.pattern_length:
 			var note:Array=pat.notes[i]
 			set_legato_cell(row,col,note[ATTRS.LG_MODE])
 			set_note_cells(row,col,note[ATTRS.NOTE])

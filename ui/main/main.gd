@@ -3,6 +3,8 @@ extends Control
 """
 FIXME
 	DIV 2==DIV 1
+	Check opmask in tracker
+	First play skips row 0
 TODO:
 	X Automation
 		X Full arpeggio command

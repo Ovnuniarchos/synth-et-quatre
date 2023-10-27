@@ -2,7 +2,50 @@ extends FmInstrumentIO
 class_name FmInstrumentReader
 
 
-# TODO: File reader
+func read(path:String)->FileResult:
+	if !GLOBALS.song.can_add_instrument():
+		return null
+	var f:ChunkedFile=ChunkedFile.new()
+	f.open(path,File.READ)
+	# Signature
+	var err:int=f.start_file(FILE_SIGNATURE,FILE_VERSION)
+	if err!=OK:
+		return FileResult.new(err,[path,FILE_VERSION])
+	# Instrument
+	var hdr:Dictionary=f.get_chunk_header()
+	var inst:FmInstrument=deserialize(f,hdr)
+	if inst==null:
+		return null
+	hdr=f.get_chunk_header()
+	if f.eof_reached():
+		return FileResult.new()
+	if hdr[ChunkedFile.CHUNK_ID]!=SongIO.CHUNK_WAVES:
+		return null
+	var fr:FileResult=deserialize_wave_list(f,hdr)
+	if fr==null:
+		return null
+	return FileResult.new()
+
+
+func deserialize_wave_list(inf:ChunkedFile,header:Dictionary)->FileResult:
+	if not inf.is_chunk_valid(header,SongIO.CHUNK_WAVES,SongIO.CHUNK_WAVES_VERSION):
+		return null
+	var hdr:Dictionary
+	var wav_l:Array=[]
+	var syn_r:SynthWaveReader=SynthWaveReader.new()
+	var sam_r:SampleWaveReader=SampleWaveReader.new()
+	wav_l.resize(inf.get_16())
+	for i in wav_l.size():
+		hdr=inf.get_chunk_header()
+		match hdr[ChunkedFile.CHUNK_ID]:
+			SynthWaveReader.CHUNK_ID:
+				wav_l[i]=syn_r.deserialize(inf,hdr)
+			SampleWaveReader.CHUNK_ID:
+				wav_l[i]=sam_r.deserialize(inf,hdr)
+			_:
+				inf.invalid_chunk(hdr)
+		inf.skip_chunk(hdr)
+	return FileResult.new(OK,[wav_l])
 
 
 func deserialize(inf:ChunkedFile,header:Dictionary)->FmInstrument:

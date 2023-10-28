@@ -6,6 +6,8 @@ const DEFAULT_VOLUME:float=1.0/32.0
 
 var synth:SynthTracker=preload("res://fm_synth.gdns").new()
 
+var mute_mask:int=0
+
 #
 
 func _ready()->void:
@@ -20,6 +22,18 @@ func _on_song_changed()->void:
 
 func generate(buffer_size:int,command_list:Array,global_volume:float=DEFAULT_VOLUME)->Array:
 	return synth.generate(buffer_size,global_volume,command_list)
+
+#
+
+func mute_voices(mask:int)->int:
+	mute_mask=mask
+	synth.mute_voices(mask)
+	var count:int=GLOBALS.song.num_channels
+	for _i in range(GLOBALS.song.num_channels):
+		if bool(mask&1):
+			count-=1
+		mask>>=1
+	return count
 
 #
 

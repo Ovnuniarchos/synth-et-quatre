@@ -36,13 +36,23 @@ func _init(syn:Synth)->void:
 	voices.resize(SONGL.MAX_CHANNELS)
 	messages.resize(CONSTS.SIG_MAX)
 	synth=syn
-	for i in range(SONGL.MAX_CHANNELS):
+	for i in SONGL.MAX_CHANNELS:
 		voices[i]=FmVoice.new()
 	reset()
 
 func reset()->void:
-	for i in range(SONGL.MAX_CHANNELS):
+	for i in SONGL.MAX_CHANNELS:
 		voices[i].reset()
+	curr_order=0
+	curr_tick=0
+	curr_row=0
+	curr_sample=0.0
+	song_delay=0
+	goto_order=-1
+	goto_next=-1
+	messages.fill(null)
+	ticks_second=GLOBALS.song.ticks_second
+	ticks_row=GLOBALS.song.ticks_row
 
 func play(from:int=-1)->void:
 	if from!=-1:
@@ -112,7 +122,7 @@ func gen_commands(song:Song,mix_rate:float,buffer_size:int,cmds:Array,order_star
 	while buffer_left>=1.0:
 		if curr_tick==0:
 			messages.fill(null)
-		for chn in range(song.num_channels):
+		for chn in song.num_channels:
 			voices[chn].process_tick(song,chn,curr_order,curr_row,curr_tick,messages)
 			ptr=voices[chn].commit(chn,cmds,ptr)
 		if messages[CONSTS.SIG_DELAY_SONG]!=null:

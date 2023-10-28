@@ -134,7 +134,7 @@ func reset()->void:
 	fx_cmds=[0,0,0,0]
 	fx_opmasks=[0,0,0,0]
 	fx_apply=[false,false,false,false]
-	for i in range(256):
+	for i in 256:
 		if i==CONSTS.FX_FRQ_PORTA:
 			fx_vals[i]=[0,0,0,0,0]
 		elif i==CONSTS.FX_ARPEGGIO:

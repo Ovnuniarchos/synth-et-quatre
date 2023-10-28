@@ -180,7 +180,7 @@ func _on_macro_timer()->void:
 			synth.set_freq_mul(chan,mask,val)
 			# Op Divider
 			val=instr.divider_macros[op].get_value(kot,kft,instr.dividers[op])
-			synth.set_freq_div(chan,mask,val-1)
+			synth.set_freq_div(chan,mask,val)
 			# Op Detune
 			val=instr.detune_macros[op].get_value(kot,kft,instr.detunes[op])
 			synth.set_detune(chan,mask,val)

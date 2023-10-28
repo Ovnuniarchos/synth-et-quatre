@@ -2,7 +2,6 @@ extends Control
 
 """
 FIXME
-	DIV 2==DIV 1
 	Check opmask in tracker (opmask-1???)
 	First play skips row 0
 TODO:

@@ -154,7 +154,7 @@ func reset()->void:
 	velocity=255
 	panning=0x1F
 	instrument_dirty=false
-	clip_dirty=true
+	clip_dirty=false
 	new_clip=clip
 	freqs_dirty_any=false
 	freqs_dirty=[false,false,false,false]
@@ -250,6 +250,8 @@ func process_tick(song:Song,channel:int,curr_order:int,curr_row:int,curr_tick:in
 
 func process_tick_0(note:Array,song:Song,num_fxs:int,messages:Array)->void:
 	var legato:int=KON_STD if note[ATTRS.LG_MODE]==null else LEGATO2KON[note[ATTRS.LG_MODE]]
+	if note[ATTRS.INSTR]!=null:
+		set_instrument(song.get_instrument(note[ATTRS.INSTR]) as FmInstrument)
 	if note[ATTRS.NOTE]!=null:
 		if legato!=KON_LEGATO:
 			macro_tick=0
@@ -268,8 +270,6 @@ func process_tick_0(note:Array,song:Song,num_fxs:int,messages:Array)->void:
 			for i in 4:
 				key_dirty[i]=KON_STOP
 			key_dirty_any=true
-	if note[ATTRS.INSTR]!=null:
-		set_instrument(song.get_instrument(note[ATTRS.INSTR]) as FmInstrument)
 	set_velocity(note[ATTRS.VOL])
 	set_panning(note[ATTRS.PAN])
 	var j:int=0
@@ -707,7 +707,7 @@ func commit_opmasked_short(channel:int,cmds:Array,ptr:int,cmd:int,dirties:Array,
 	for i in 4:
 		if dirties[i]:
 			dirties[i]=false
-			cmds[ptr]=cmd|(channel<<8)|(i<<16)|(values[i]<<24)
+			cmds[ptr]=cmd|(channel<<8)|(0x10000<<i)|(values[i]<<24)
 			ptr+=1
 	return ptr
 
@@ -747,11 +747,11 @@ func commit_retrigger(channel:int,cmds:Array,ptr:int)->int:
 		if key_dirty[i]==KON_PASS:
 			continue
 		elif key_dirty[i]==KON_STD:
-			cmds[ptr]=CONSTS.CMD_KEYON|(channel<<8)|(op_mask<<16)|(velocity<<24)
+			cmds[ptr]=CONSTS.CMD_KEYON|(channel<<8)|(0x10000<<i)|(velocity<<24)
 		elif key_dirty[i]==KON_LEGATO:
-			cmds[ptr]=CONSTS.CMD_KEYON_LEGATO|(channel<<8)|(op_mask<<16)|(velocity<<24)
+			cmds[ptr]=CONSTS.CMD_KEYON_LEGATO|(channel<<8)|(0x10000<<i)|(velocity<<24)
 		elif key_dirty[i]==KON_STACCATO:
-			cmds[ptr]=CONSTS.CMD_KEYON_STACCATO|(channel<<8)|(op_mask<<16)|(velocity<<24)
+			cmds[ptr]=CONSTS.CMD_KEYON_STACCATO|(channel<<8)|(0x10000<<i)|(velocity<<24)
 		elif key_dirty[i]==KON_OFF:
 			cmds[ptr]=CONSTS.CMD_KEYOFF|(channel<<8)|(0x10000<<i)
 		elif key_dirty[i]==KON_STOP:

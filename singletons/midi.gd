@@ -9,14 +9,14 @@ func _ready()->void:
 	set_midi_open(false)
 	watchdog=Timer.new()
 	watchdog.one_shot=false
-	watchdog.wait_time=0.02
+	watchdog.wait_time=0.2
 	watchdog.autostart=true
 	watchdog.connect("timeout",self,"_watchdog_thread")
 	add_child(watchdog)
 
 func _notification(n:int)->void:
 	if n==NOTIFICATION_PREDELETE:
-		OS.close_midi_inputs()
+		set_midi_open(false)
 
 func _watchdog_thread()->void:
 	if !midi_open:
@@ -34,12 +34,9 @@ func _watchdog_thread()->void:
 				midi_open=false
 				break
 	set_midi_open(midi_open)
-	if !midi_open:
-		OS.close_midi_inputs()
-		DEBUG.set_var("MIDI","off")
-	else:
-		DEBUG.set_var("MIDI",String(mdl))
 
 func set_midi_open(on:bool)->void:
 	midi_open=on
+	if !midi_open:
+		OS.close_midi_inputs()
 	emit_signal("midi_on",on)

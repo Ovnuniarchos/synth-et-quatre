@@ -188,6 +188,9 @@ func gen_commands(song:Song,mix_rate:float,buffer_size:int,cmds:Array,order_star
 			song_delay-=1
 	if cmds[optr]==CONSTS.CMD_WAIT:
 		ptr=optr
+	if ptr>2:
+		cmds[ptr]=CONSTS.CMD_DEBUG
+		ptr+=1
 	cmds[ptr]=CONSTS.CMD_END
 	curr_sample-=buffer_size
 	return {"play":true,"loop":-1.0}

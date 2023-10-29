@@ -2,8 +2,6 @@ extends Control
 
 """
 FIXME
-	Check opmask in tracker (opmask-1???)
-	First play skips row 0
 TODO:
 	X Automation
 		X Full arpeggio command

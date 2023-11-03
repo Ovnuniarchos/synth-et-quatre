@@ -51,3 +51,12 @@ func _deserialize_start(inf:ChunkedFile,c:WaveComponent,_version:int)->void:
 
 func deserialize(_inf:ChunkedFile,_header:Dictionary)->WaveComponent:
 	return null
+
+
+func _serialize_start(out:ChunkedFile,c:WaveComponent,tag:String,version:int)->void:
+	out.start_chunk(tag,version)
+	out.store_8(c.output_mode)
+	out.store_float(c.vol)
+	out.store_float(c.am)
+	out.store_float(c.xm)
+	out.store_16(components.find(c.input_comp))

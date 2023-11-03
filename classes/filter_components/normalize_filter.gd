@@ -1,6 +1,7 @@
 extends WaveComponent
 class_name NormalizeFilter
 
+const COMPONENT_ID:String="Normalize"
 const CHUNK_ID:String="nORF"
 const CHUNK_VERSION:int=0
 
@@ -17,8 +18,6 @@ func duplicate()->WaveComponent:
 
 func equals(other:WaveComponent)->bool:
 	if !.equals(other):
-		return false
-	if other.get("CHUNK_ID")!=CHUNK_ID:
 		return false
 	return keep_center==other.keep_center
 

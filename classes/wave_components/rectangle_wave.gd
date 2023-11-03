@@ -1,6 +1,7 @@
 extends WaveComponent
 class_name RectangleWave
 
+const COMPONENT_ID:String="Rectangle"
 const CHUNK_ID:String="rECW"
 const CHUNK_VERSION:int=0
 
@@ -34,8 +35,6 @@ func duplicate()->WaveComponent:
 
 func equals(other:WaveComponent)->bool:
 	if !.equals(other):
-		return false
-	if other.get("CHUNK_ID")!=CHUNK_ID:
 		return false
 	if !are_equal_approx([
 				freq_mult,other.freq_mult,phi0,other.phi0,z_start,other.z_start,

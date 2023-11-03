@@ -1,6 +1,7 @@
 extends WaveComponent
 class_name ClampFilter
 
+const COMPONENT_ID:String="Clamp"
 const CHUNK_ID:String="cLAF"
 const CHUNK_VERSION:int=0
 
@@ -23,8 +24,6 @@ func duplicate()->WaveComponent:
 
 func equals(other:WaveComponent)->bool:
 	if !.equals(other):
-		return false
-	if other.get("CHUNK_ID")!=CHUNK_ID:
 		return false
 	if u_clamp_on!=other.u_clamp_on or l_clamp_on!=other.l_clamp_on\
 			or !are_equal_approx([u_clamp,other.u_clamp,l_clamp,other.l_clamp]):

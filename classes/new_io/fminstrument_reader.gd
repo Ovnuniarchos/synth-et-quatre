@@ -14,6 +14,7 @@ func read(path:String)->FileResult:
 	# Instrument
 	var hdr:Dictionary=f.get_chunk_header()
 	var inst:FmInstrument=deserialize(f,hdr)
+	f.skip_chunk(hdr)
 	if inst==null:
 		return null
 	hdr=f.get_chunk_header()
@@ -24,6 +25,39 @@ func read(path:String)->FileResult:
 	var fr:FileResult=deserialize_wave_list(f,hdr)
 	if fr==null:
 		return null
+	f.close()
+	# Scan for equal waves
+	var wave_list:Array=fr.data[0]
+	var waves_add:int=wave_list.size()
+	for in_w in wave_list.size():
+		for song_w in GLOBALS.song.wave_list.size():
+			if GLOBALS.song.wave_list[song_w].equals(wave_list[in_w]):
+				wave_list[in_w]=song_w+FmInstrument.WAVE.CUSTOM
+				waves_add-=1
+				break
+	if !GLOBALS.song.can_add_wave(waves_add):
+		return null
+	# Add waveforms
+	var new_wave_i:int
+	var in_w:int=FmInstrument.WAVE.CUSTOM
+	var tmp_waves:Array=inst.waveforms.duplicate()
+	for wav in wave_list:
+		if typeof(wav)==TYPE_OBJECT:
+			new_wave_i=GLOBALS.song.wave_list.size()+FmInstrument.WAVE.CUSTOM
+			GLOBALS.song.add_wave(wav)
+			wav.calculate()
+			SYNCER.send_wave(wav)
+			for inst_w in 4:
+				if tmp_waves[inst_w]==in_w:
+					inst.waveforms[inst_w]=new_wave_i
+		else:
+			for inst_w in 4:
+				if tmp_waves[inst_w]==in_w:
+					inst.waveforms[inst_w]=wav
+		in_w+=1
+	# Add instrument
+	inst.file_name=path.get_file()
+	GLOBALS.song.add_instrument(inst)
 	return FileResult.new()
 
 

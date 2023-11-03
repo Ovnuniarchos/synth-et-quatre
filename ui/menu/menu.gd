@@ -57,7 +57,7 @@ func _on_file_selected(path:String)->void:
 			SongReader.new().read(path)
 		FILE_MODE.LOAD_INST:
 			cfg_dir=CONFIG.CURR_INST_DIR
-			IO_INSTRUMENT.obj_load(path)
+			FmInstrumentReader.new().read(path)
 		FILE_MODE.SAVE_SONG:
 			cfg_dir=CONFIG.CURR_SONG_DIR
 			IO_SONG.obj_save(path)

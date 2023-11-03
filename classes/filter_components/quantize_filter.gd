@@ -1,6 +1,7 @@
 extends WaveComponent
 class_name QuantizeFilter
 
+const COMPONENT_ID:String="Quantize"
 const CHUNK_ID:String="qUAF"
 const CHUNK_VERSION:int=0
 
@@ -18,8 +19,6 @@ func duplicate()->WaveComponent:
 
 func equals(other:WaveComponent)->bool:
 	if !.equals(other):
-		return false
-	if other.get("CHUNK_ID")!=CHUNK_ID:
 		return false
 	return steps==other.steps
 

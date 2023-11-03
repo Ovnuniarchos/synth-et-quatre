@@ -2,11 +2,8 @@ extends PatternIO
 class_name PatternReader
 
 
-var _length:int
-
-
-func _init(length:int=SongLimits.MAX_PAT_LENGTH)->void:
-	_length=length
+func _init(l:int).(l)->void:
+	pass
 
 
 func deserialize(inf:ChunkedFile,header:Dictionary)->Pattern:

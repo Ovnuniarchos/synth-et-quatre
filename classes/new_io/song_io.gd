@@ -17,6 +17,4 @@ const CHUNK_INSTRUMENTS:String="INSL"
 const CHUNK_INSTRUMENTS_VERSION:int=0
 const CHUNK_WAVES:String="WAVL"
 const CHUNK_WAVES_VERSION:int=0
-"""
 const CHANNEL_FM4:String="CFM4"
-"""

@@ -1,6 +1,7 @@
 extends WaveComponent
 class_name BrfFilter
 
+const COMPONENT_ID:String="BandReject"
 const CHUNK_ID:String="bRFF"
 const CHUNK_VERSION:int=0
 
@@ -25,8 +26,6 @@ func duplicate()->WaveComponent:
 
 func equals(other:WaveComponent)->bool:
 	if !.equals(other):
-		return false
-	if other.get("CHUNK_ID")!=CHUNK_ID:
 		return false
 	if taps!=other.taps or !are_equal_approx([cutoff_lo,other.cutoff_lo,cutoff_hi,other.cutoff_hi]):
 		return false

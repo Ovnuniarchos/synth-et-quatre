@@ -1,6 +1,7 @@
 extends WaveComponent
 class_name SawWave
 
+const COMPONENT_ID:String="Saw"
 const CHUNK_ID:String="sAWW"
 const CHUNK_VERSION:int=0
 
@@ -33,8 +34,6 @@ func duplicate()->WaveComponent:
 
 func equals(other:WaveComponent)->bool:
 	if !.equals(other):
-		return false
-	if other.get("CHUNK_ID")!=CHUNK_ID:
 		return false
 	if halves[0]!=other.halves[0] or halves[1]!=other.halves[1]:
 		return false

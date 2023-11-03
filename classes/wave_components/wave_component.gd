@@ -38,6 +38,8 @@ func are_equal_approx(a:Array)->bool:
 
 func equals(other:WaveComponent)->bool:
 	# input_comp is compared by SynthWave
+	if other.get("COMPONENT_ID")!=get("COMPONENT_ID") and get("COMPONENT_ID")!=null:
+		return false
 	if output_mode!=other.output_mode\
 			or !are_equal_approx([vol,other.vol,am,other.am,xm,other.xm]):
 		return false

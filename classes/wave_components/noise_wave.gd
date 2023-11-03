@@ -1,6 +1,7 @@
 extends WaveComponent
 class_name NoiseWave
 
+const COMPONENT_ID:String="Noise"
 const CHUNK_ID:String="nOIW"
 const CHUNK_VERSION:int=0
 
@@ -29,8 +30,6 @@ func duplicate()->WaveComponent:
 
 func equals(other:WaveComponent)->bool:
 	if !.equals(other):
-		return false
-	if other.get("CHUNK_ID")!=CHUNK_ID:
 		return false
 	if rng_seed!=other.rng_seed\
 			or !are_equal_approx([tone,other.tone,pos0,other.pos0,length,other.length,pm,other.pm]):

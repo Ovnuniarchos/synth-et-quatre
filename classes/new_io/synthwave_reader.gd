@@ -70,7 +70,6 @@ func deserialize(inf:ChunkedFile,header:Dictionary)->SynthWave:
 			inf.skip_chunk(hdr)
 			return null
 		w.components[i]=nw
-		#nw.deserialize(inf,nw,w.components,hdr[ChunkedFile.CHUNK_VERSION])
 		inf.skip_chunk(hdr)
 	w.resize_data(1<<w.size_po2)
 	w.calculate()

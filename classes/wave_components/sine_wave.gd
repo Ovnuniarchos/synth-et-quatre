@@ -1,6 +1,7 @@
 extends WaveComponent
 class_name SineWave
 
+const COMPONENT_ID:String="Sine"
 const CHUNK_ID:String="sINW"
 const CHUNK_VERSION:int=0
 
@@ -33,8 +34,6 @@ func duplicate()->WaveComponent:
 
 func equals(other:WaveComponent)->bool:
 	if !.equals(other):
-		return false
-	if other.get("CHUNK_ID")!=CHUNK_ID:
 		return false
 	for i in 4:
 		if quarters[i]!=other.quarters[i]:

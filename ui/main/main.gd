@@ -6,6 +6,7 @@ TODO:
 	X Automation
 		X Full arpeggio command
 		File support
+			Fix error system
 	CycleButtons themable
 	MIDI on/off indicator
 	Reset per channel parameters (as a command|button)

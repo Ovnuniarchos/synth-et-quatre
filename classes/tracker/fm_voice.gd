@@ -38,6 +38,7 @@ var clip_dirty:bool=true
 var new_clip:bool=true
 var key_dirty_any:bool=true
 var key_dirty:Array=[KON_PASS,KON_PASS,KON_PASS,KON_PASS]
+var new_note:bool=false
 var enable_mask:int=0
 var enable_bits:int=0
 var freqs_dirty_any:bool=true
@@ -160,6 +161,7 @@ func reset()->void:
 	freqs_dirty=[false,false,false,false]
 	key_dirty_any=false
 	key_dirty=[KON_PASS,KON_PASS,KON_PASS,KON_PASS]
+	new_note=false
 	enable_mask=0
 	enable_bits=0
 	fmi_dirty_any=false
@@ -253,6 +255,7 @@ func process_tick_0(note:Array,song:Song,num_fxs:int,messages:Array)->void:
 	if note[ATTRS.INSTR]!=null:
 		set_instrument(song.get_instrument(note[ATTRS.INSTR]) as FmInstrument)
 	if note[ATTRS.NOTE]!=null:
+		new_note=true
 		if legato!=KON_LEGATO:
 			macro_tick=0
 			release_tick=-1
@@ -568,6 +571,9 @@ func commit(channel:int,cmds:Array,ptr:int)->int:
 		ptr=commit_instrument(channel,cmds,ptr)
 	if key_dirty_any:
 		ptr=commit_retrigger(channel,cmds,ptr)
+	if new_note:
+		ptr=commit_opmask(channel,cmds,ptr)
+		new_note=false
 	if enable_mask!=0:
 		ptr=commit_enable(channel,cmds,ptr)
 	if clip_dirty:
@@ -833,7 +839,12 @@ func commit_instrument(channel:int,cmds:Array,ptr:int)->int:
 			ptr+=2
 		cmds[ptr]=CONSTS.CMD_OUT|chn_opm|(routings[i][4]<<24)
 		ptr+=1
-	cmds[ptr]=CONSTS.CMD_ENABLE|(channel<<8)|0xFF0000|(op_mask<<24)
+	if new_note:
+		return ptr
+	return commit_opmask(channel,cmds,ptr)
+
+func commit_opmask(channel:int,cmds:Array,ptr:int)->int:
+	cmds[ptr]=CONSTS.CMD_ENABLE|(channel<<8)|0xF0000|(op_mask<<24)
 	return ptr+1
 
 #

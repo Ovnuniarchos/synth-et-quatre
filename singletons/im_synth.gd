@@ -71,9 +71,9 @@ func play_note(keyon:bool,legato:bool,semi:int)->void:
 func play_fm_note(chan:int,instr:FmInstrument,semi:int,legato:bool)->void:
 	# semitone = semi / 100
 	synth.set_note(chan,instr.op_mask,semi)
-	synth.set_enable(chan,15,instr.op_mask)
 	synth.set_panning(chan,31,false,false)
 	synth.key_on(chan,instr.op_mask,255,legato)
+	synth.set_enable(chan,15,instr.op_mask)
 	volumes[chan]=255
 	panpots[chan]=31
 	channel_invs[chan]=0

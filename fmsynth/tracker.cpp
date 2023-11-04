@@ -95,7 +95,7 @@ void SynthTracker::_init(){
 #define TRACE_DECAY "DER[%d %02x %d] "
 #define TRACE_SUST_LEVEL "SUL[%d %02x %d] "
 #define TRACE_SUST_RATE "SUR[%d %02x %d] "
-#define TRACE_RELEASE "RER[%02x %02x %02x] "
+#define TRACE_RELEASE "RER[%d %02x %d] "
 #define TRACE_ENV_REPEAT "RPM[%d %02x %d] "
 #define TRACE_KEY_SCALE "KSR[%d %02x %d] "
 #define TRACE_PM_FACTOR "PMF[%d %02x %02x %d] "

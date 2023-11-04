@@ -9,7 +9,7 @@ func _init(waves:Array)->void:
 	_waves=waves
 
 
-func write(path:String,inst:FmInstrument,waves:Array)->FileResult:
+func write(path:String,inst:FmInstrument)->FileResult:
 	var out:ChunkedFile=ChunkedFile.new()
 	out.open(path,File.WRITE)
 	inst=inst.duplicate()
@@ -21,6 +21,7 @@ func write(path:String,inst:FmInstrument,waves:Array)->FileResult:
 		if w in wave_list:
 			inst.waveforms[i]=wave_list[w]
 		elif w>FmInstrument.WAVE.NOISE and not w in wave_list:
+			inst.waveforms[i]=min_wave
 			wave_list[w]=min_wave
 			min_wave+=1
 	# Signature: SFMM\0xc\0xa\0x1a\0xa
@@ -30,7 +31,7 @@ func write(path:String,inst:FmInstrument,waves:Array)->FileResult:
 	var res:FileResult=serialize(out,inst)
 	if res.has_error():
 		return res
-	res=serialize_waves(out,inst)
+	res=serialize_waves(out,wave_list)
 	return FileResult.new()
 
 
@@ -63,12 +64,13 @@ func serialize(out:ChunkedFile,inst:FmInstrument)->FileResult:
 	return FileResult.new()
 
 
-func serialize_waves(out:ChunkedFile,inst:FmInstrument)->FileResult:
+func serialize_waves(out:ChunkedFile,packed_waves:Dictionary)->FileResult:
 	out.start_chunk(SongIO.CHUNK_WAVES,SongIO.CHUNK_WAVES_VERSION)
-	out.store_16(_waves.size())
+	out.store_16(packed_waves.size())
 	var syn_w:SynthWaveWriter=SynthWaveWriter.new()
 	var sam_w:SampleWaveWriter=SampleWaveWriter.new()
-	for wave in _waves:
+	for wix in packed_waves.keys():
+		var wave:Waveform=_waves[wix]
 		if wave is SynthWave:
 			syn_w.serialize(out,wave)
 		elif wave is SampleWave:

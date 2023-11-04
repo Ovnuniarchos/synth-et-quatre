@@ -6,7 +6,6 @@ const FILES_SI4=PoolStringArray(["*.si4 ; SynthEtQuatre instrument"])
 const FILES_WAV=PoolStringArray(["*.wav ; WAV file"])
 
 
-var IO_SONG:IOSong=IOSong.new()
 var IO_WAV_EXPORT:IOWavExport=IOWavExport.new()
 var IO_INSTRUMENT:IOInstrument=IOInstrument.new()
 
@@ -60,7 +59,7 @@ func _on_file_selected(path:String)->void:
 			FmInstrumentReader.new().read(path)
 		FILE_MODE.SAVE_SONG:
 			cfg_dir=CONFIG.CURR_SONG_DIR
-			IO_SONG.obj_save(path)
+			SongWriter.new().write(path,GLOBALS.song)
 		FILE_MODE.SAVE_WAV:
 			cfg_dir=CONFIG.CURR_EXPORT_DIR
 			IO_WAV_EXPORT.obj_save(path)

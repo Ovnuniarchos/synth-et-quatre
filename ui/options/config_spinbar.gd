@@ -30,5 +30,5 @@ func _get_configuration_warning()->String:
 
 func _on_value_changed(v:float)->void:
 	._on_value_changed(v)
-	if !Engine.editor_hint:
+	if not Engine.editor_hint and config_key in CONFIG:
 		CONFIG.set_value(CONFIG[config_key],v)

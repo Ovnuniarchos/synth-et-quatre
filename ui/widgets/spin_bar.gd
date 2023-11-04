@@ -78,6 +78,7 @@ func _ready()->void:
 
 func set_value(f:float)->void:
 	.set_value(f)
+	_on_value_changed(f)
 
 
 func set_decimals(v:int)->void:

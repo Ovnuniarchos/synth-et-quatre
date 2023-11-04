@@ -75,8 +75,9 @@ func _on_files_selected(paths:PoolStringArray)->void:
 	match file_mode:
 		FILE_MODE.LOAD_INST:
 			cfg_dir=CONFIG.CURR_INST_DIR
+			var fir:FmInstrumentReader=FmInstrumentReader.new()
 			for path in paths:
-				IO_INSTRUMENT.obj_load(path)
+				fir.read(path)
 	CONFIG.set_value(cfg_dir,paths[0].get_base_dir())
 
 func _on_FileDialog_visibility_changed()->void:

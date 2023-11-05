@@ -6,9 +6,6 @@ const FILES_SI4=PoolStringArray(["*.si4 ; SynthEtQuatre instrument"])
 const FILES_WAV=PoolStringArray(["*.wav ; WAV file"])
 
 
-var IO_WAV_EXPORT:IOWavExport=IOWavExport.new()
-
-
 enum FILE_MODE{LOAD_SONG,LOAD_INST,SAVE_SONG,SAVE_WAV,SAVE_INST}
 
 
@@ -58,7 +55,7 @@ func _on_file_selected(path:String)->void:
 			SongWriter.new().write(path,GLOBALS.song)
 		FILE_MODE.SAVE_WAV:
 			cfg_dir=CONFIG.CURR_EXPORT_DIR
-			IO_WAV_EXPORT.obj_save(path)
+			WaveFileWriter.new().write(path)
 		FILE_MODE.SAVE_INST:
 			cfg_dir=CONFIG.CURR_INST_DIR
 			FmInstrumentWriter.new(GLOBALS.song.wave_list).write(path,GLOBALS.get_instrument())

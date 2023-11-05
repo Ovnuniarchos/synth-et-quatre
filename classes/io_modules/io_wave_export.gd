@@ -1,11 +1,11 @@
 extends Reference
-class_name IOWavExport
+class_name WaveFileWriter
 
 
-const BUFFER_SIZE=2048
+const BUFFER_SIZE:int=2048
 
 
-func obj_save(path:String)->void:
+func write(path:String)->void:
 		var synth:Synth=Synth.new()
 		synth.set_mix_rate(CONFIG.get_value(CONFIG.RECORD_SAMPLERATE))
 		var volume:float=0.0

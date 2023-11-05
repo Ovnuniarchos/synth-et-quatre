@@ -7,7 +7,7 @@ func _init(wc:Array).(wc)->void:
 
 
 func deserialize(inf:ChunkedFile,header:Dictionary)->WaveComponent:
-	if not inf.is_chunk_valid(header,NORMALIZE_ID,NORMALIZE_VERSION):
+	if not inf.is_chunk_valid(header,QUANTIZE_ID,QUANTIZE_VERSION):
 		return null
 	var version:int=header[ChunkedFile.CHUNK_VERSION]
 	var f:QuantizeFilter=QuantizeFilter.new()

@@ -58,8 +58,8 @@ func serialize(out:ChunkedFile,wave:SynthWave)->FileResult:
 	out.store_pascal_string(wave.name)
 	out.store_16(wave.components.size())
 	for comp in wave.components:
-		if writers.has(comp):
-			lazy_load(comp.COMPONENT_ID,wave).deserialize(out,comp)
+		if writers.has(comp.COMPONENT_ID):
+			lazy_load(comp.COMPONENT_ID,wave).serialize(out,comp)
 		else:
 			return null
 	out.end_chunk()

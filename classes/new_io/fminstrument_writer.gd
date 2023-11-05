@@ -70,7 +70,7 @@ func serialize_waves(out:ChunkedFile,packed_waves:Dictionary)->FileResult:
 	var syn_w:SynthWaveWriter=SynthWaveWriter.new()
 	var sam_w:SampleWaveWriter=SampleWaveWriter.new()
 	for wix in packed_waves.keys():
-		var wave:Waveform=_waves[wix]
+		var wave:Waveform=_waves[wix-FmInstrument.WAVE.CUSTOM]
 		if wave is SynthWave:
 			syn_w.serialize(out,wave)
 		elif wave is SampleWave:

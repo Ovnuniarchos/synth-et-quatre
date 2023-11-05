@@ -6,11 +6,7 @@ func _init(wc:Array).(wc)->void:
 	pass
 
 
-func deserialize(inf:ChunkedFile,header:Dictionary)->WaveComponent:
-	if not inf.is_chunk_valid(header,NORMALIZE_ID,NORMALIZE_VERSION):
-		return null
-	var version:int=header[ChunkedFile.CHUNK_VERSION]
-	var f:QuantizeFilter=QuantizeFilter.new()
-	_deserialize_start(inf,f,version)
-	f.steps=bool(inf.get_8())
-	return f
+func serialize(out:ChunkedFile,f:QuantizeFilter)->void:
+	_serialize_start(out,f,QUANTIZE_ID,QUANTIZE_VERSION)
+	out.store_8(f.steps)
+	out.end_chunk()

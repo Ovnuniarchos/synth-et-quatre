@@ -7,7 +7,7 @@ func _init(wc:Array).(wc)->void:
 
 
 func serialize(out:ChunkedFile,w:SawWave)->FileResult:
-	_serialize_start(out,w,TRIANGLE_ID,TRIANGLE_VERSION)
+	_serialize_start(out,w,SAW_ID,SAW_VERSION)
 	out.store_float(w.freq_mult)
 	out.store_float(w.phi0)
 	out.store_8(w.halves[0])

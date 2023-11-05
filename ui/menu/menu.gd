@@ -7,7 +7,6 @@ const FILES_WAV=PoolStringArray(["*.wav ; WAV file"])
 
 
 var IO_WAV_EXPORT:IOWavExport=IOWavExport.new()
-var IO_INSTRUMENT:IOInstrument=IOInstrument.new()
 
 
 enum FILE_MODE{LOAD_SONG,LOAD_INST,SAVE_SONG,SAVE_WAV,SAVE_INST}
@@ -54,9 +53,6 @@ func _on_file_selected(path:String)->void:
 		FILE_MODE.LOAD_SONG:
 			cfg_dir=CONFIG.CURR_SONG_DIR
 			SongReader.new().read(path)
-		FILE_MODE.LOAD_INST:
-			cfg_dir=CONFIG.CURR_INST_DIR
-			FmInstrumentReader.new().read(path)
 		FILE_MODE.SAVE_SONG:
 			cfg_dir=CONFIG.CURR_SONG_DIR
 			SongWriter.new().write(path,GLOBALS.song)
@@ -65,7 +61,7 @@ func _on_file_selected(path:String)->void:
 			IO_WAV_EXPORT.obj_save(path)
 		FILE_MODE.SAVE_INST:
 			cfg_dir=CONFIG.CURR_INST_DIR
-			IO_INSTRUMENT.obj_save(path)
+			FmInstrumentWriter.new(GLOBALS.song.wave_list).write(path,GLOBALS.get_instrument())
 	CONFIG.set_value(cfg_dir,path.get_base_dir())
 
 

@@ -52,25 +52,37 @@ func lazy_load(type:String,sw:SynthWave)->WaveComponentIO:
 	return wio
 
 
-func deserialize(inf:ChunkedFile,header:Dictionary)->SynthWave:
+func deserialize(inf:ChunkedFile,header:Dictionary)->FileResult:
 	if not inf.is_chunk_valid(header,CHUNK_ID,CHUNK_VERSION):
-		return null
+		return FileResult.new(FileResult.ERR_INVALID_CHUNK,{
+			"chunk":inf.get_chunk_id(header),
+			"version":inf.get_chunk_version(header),
+			"ex_chunk":CHUNK_ID,
+			"ex_version":CHUNK_VERSION,
+			"file":inf.get_path()
+		})
 	var w:SynthWave=SynthWave.new()
 	w.size_po2=inf.get_8()
 	w.name=inf.get_pascal_string()
 	w.components=[]
 	w.components.resize(inf.get_16())
+	var fr:FileResult
 	for i in w.components.size():
 		var hdr:Dictionary=inf.get_chunk_header()
-		var nw:WaveComponent=null
-		if readers.has(hdr[ChunkedFile.CHUNK_ID]):
-			nw=lazy_load(hdr[ChunkedFile.CHUNK_ID],w).deserialize(inf,hdr)
+		if inf.get_error():
+			return FileResult.new(inf.get_error(),{"file":inf.get_path()})
+		if readers.has(inf.get_chunk_id(hdr)):
+			fr=lazy_load(inf.get_chunk_id(hdr),w).deserialize(inf,hdr)
+			if fr.has_error():
+				return fr
+			w.components[i]=fr.data
 		else:
 			inf.invalid_chunk(hdr)
 			inf.skip_chunk(hdr)
-			return null
-		w.components[i]=nw
+			return FileResult.new(FileResult.ERR_BAD_WAVE_COMPONENT,{
+				"chunk":inf.get_chunk_id(hdr),"file":inf.get_path()
+			})
 		inf.skip_chunk(hdr)
 	w.resize_data(1<<w.size_po2)
 	w.calculate()
-	return w
+	return FileResult.new(OK,w)

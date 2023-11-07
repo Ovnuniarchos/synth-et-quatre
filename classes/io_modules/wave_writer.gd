@@ -27,12 +27,7 @@ func write(path:String)->void:
 			"thread":thr,
 			"volume":volume
 		})
-		"""export_thread({
-			"synth":synth,
-			"path":path,
-			"thread":null,
-			"volume":volume
-		})"""
+
 
 func export_thread(data:Dictionary)->void:
 	var synth:Synth=data["synth"]

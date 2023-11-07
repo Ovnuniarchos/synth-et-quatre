@@ -92,3 +92,11 @@ func invalid_chunk(hdr:Dictionary)->void:
 
 func chunk_is(hdr:Dictionary,id:String)->bool:
 	return hdr[CHUNK_ID]==id
+
+
+func get_chunk_id(hdr:Dictionary)->String:
+	return hdr[CHUNK_ID]
+
+
+func get_chunk_version(hdr:Dictionary)->int:
+	return hdr[CHUNK_VERSION]

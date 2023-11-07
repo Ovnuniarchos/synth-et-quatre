@@ -452,7 +452,7 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "WaveFileWriter",
 "language": "GDScript",
-"path": "res://classes/io_modules/io_wave_export.gd"
+"path": "res://classes/io_modules/wave_writer.gd"
 }, {
 "base": "Panel",
 "class": "WavePlotter",

@@ -9,10 +9,10 @@ func write(path:String,song:Song)->FileResult:
 	var err:int=out.start_file(FILE_SIGNATURE,FILE_VERSION)
 	if err!=OK:
 		return FileResult.new(err,[path,FILE_VERSION])
-	return deserialize(out,song)
+	return serialize(out,song)
 
 
-func deserialize(out:ChunkedFile,song:Song)->FileResult:
+func serialize(out:ChunkedFile,song:Song)->FileResult:
 	# Header
 	out.start_chunk(CHUNK_HEADER,CHUNK_HEADER_VERSION)
 	out.store_16(song.pattern_length)
@@ -47,7 +47,7 @@ func deserialize(out:ChunkedFile,song:Song)->FileResult:
 	out.start_chunk(CHUNK_WAVES,CHUNK_WAVES_VERSION)
 	out.store_16(song.wave_list.size())
 	for wave in song.wave_list:
-		wave.serialize(out) # TODO: Wave serializer
+		wave.serialize(out)
 	out.end_chunk()
 	out.end_chunk()
 	# Orders

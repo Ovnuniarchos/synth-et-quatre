@@ -13,21 +13,24 @@ func read(path:String)->FileResult:
 		return FileResult.new(err,[path,FILE_VERSION])
 	# Instrument
 	var hdr:Dictionary=f.get_chunk_header()
-	var inst:FmInstrument=deserialize(f,hdr)
+	var fr:FileResult=deserialize(f,hdr)
+	if fr.has_error():
+		return fr
+	var inst:FmInstrument=fr.data
 	f.skip_chunk(hdr)
 	if inst==null:
 		return null
 	hdr=f.get_chunk_header()
 	if f.eof_reached():
-		return FileResult.new()
+		return FileResult.new(OK,inst)
 	if hdr[ChunkedFile.CHUNK_ID]!=SongIO.CHUNK_WAVES:
 		return null
-	var fr:FileResult=deserialize_wave_list(f,hdr)
+	fr=deserialize_wave_list(f,hdr)
 	if fr==null:
 		return null
 	f.close()
 	# Scan for equal waves
-	var wave_list:Array=fr.data[0]
+	var wave_list:Array=fr.data
 	var waves_add:int=wave_list.size()
 	for in_w in wave_list.size():
 		for song_w in GLOBALS.song.wave_list.size():
@@ -63,28 +66,49 @@ func read(path:String)->FileResult:
 
 func deserialize_wave_list(inf:ChunkedFile,header:Dictionary)->FileResult:
 	if not inf.is_chunk_valid(header,SongIO.CHUNK_WAVES,SongIO.CHUNK_WAVES_VERSION):
-		return null
+		return FileResult.new(FileResult.ERR_INVALID_CHUNK,{
+			"chunk":inf.get_chunk_id(header),
+			"version":inf.get_chunk_version(header),
+			"ex_chunk":SongIO.CHUNK_WAVES,
+			"ex_version":SongIO.CHUNK_WAVES_VERSION,
+			"file":inf.get_path()
+		})
 	var hdr:Dictionary
 	var wav_l:Array=[]
 	var syn_r:SynthWaveReader=SynthWaveReader.new()
 	var sam_r:SampleWaveReader=SampleWaveReader.new()
+	var fr:FileResult
 	wav_l.resize(inf.get_16())
 	for i in wav_l.size():
 		hdr=inf.get_chunk_header()
+		if inf.get_error():
+			return FileResult.new(inf.get_error(),{"file":inf.get_path()})
 		match hdr[ChunkedFile.CHUNK_ID]:
 			SynthWaveReader.CHUNK_ID:
-				wav_l[i]=syn_r.deserialize(inf,hdr)
+				fr=syn_r.deserialize(inf,hdr)
 			SampleWaveReader.CHUNK_ID:
-				wav_l[i]=sam_r.deserialize(inf,hdr)
+				fr=sam_r.deserialize(inf,hdr)
 			_:
+				fr=null
 				inf.invalid_chunk(hdr)
+		if fr!=null and fr.has_error():
+			return fr
+		wav_l[i]=fr.data
 		inf.skip_chunk(hdr)
-	return FileResult.new(OK,[wav_l])
+	if inf.get_error():
+		return FileResult.new(inf.get_error(),{"file":inf.get_path()})
+	return FileResult.new(OK,wav_l)
 
 
-func deserialize(inf:ChunkedFile,header:Dictionary)->FmInstrument:
+func deserialize(inf:ChunkedFile,header:Dictionary)->FileResult:
 	if not inf.is_chunk_valid(header,CHUNK_ID,CHUNK_VERSION):
-		return null
+		return FileResult.new(FileResult.ERR_INVALID_CHUNK,{
+			"chunk":inf.get_chunk_id(header),
+			"version":inf.get_chunk_version(header),
+			"ex_chunk":CHUNK_ID,
+			"ex_version":CHUNK_VERSION,
+			"file":inf.get_path()
+		})
 	var version:int=header[ChunkedFile.CHUNK_VERSION]
 	var ins:FmInstrument=FmInstrument.new()
 	ins.op_mask=inf.get_8()
@@ -113,4 +137,6 @@ func deserialize(inf:ChunkedFile,header:Dictionary)->FmInstrument:
 		for j in 5:
 			ins.routings[i][j]=inf.get_8()
 	ins.name=inf.get_pascal_string()
-	return ins
+	if inf.get_error():
+		return FileResult.new(inf.get_error(),{"file":inf.get_path()})
+	return FileResult.new(OK,ins)

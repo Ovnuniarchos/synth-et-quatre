@@ -49,7 +49,7 @@ func _deserialize_start(inf:ChunkedFile,c:WaveComponent,_version:int)->void:
 		c.input_comp=c
 
 
-func deserialize(_inf:ChunkedFile,_header:Dictionary)->WaveComponent:
+func deserialize(_inf:ChunkedFile,_header:Dictionary)->FileResult:
 	return null
 
 

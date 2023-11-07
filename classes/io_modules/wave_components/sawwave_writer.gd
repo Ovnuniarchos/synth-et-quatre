@@ -16,4 +16,6 @@ func serialize(out:ChunkedFile,w:SawWave)->FileResult:
 	out.store_float(w.pos0)
 	out.store_float(w.pm)
 	out.end_chunk()
-	return FileResult.new(out.get_error())
+	if out.get_error():
+		return FileResult.new(out.get_error(),{"file":out.get_path()})
+	return FileResult.new()

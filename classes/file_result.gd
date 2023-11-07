@@ -6,7 +6,9 @@ enum{
 	ERR_INVALID_VERSION,
 	ERR_INVALID_CHUNK,
 	ERR_MISSING_WAVES,
-	ERR_BAD_WAVE_COMPONENT
+	ERR_BAD_WAVE_COMPONENT,
+	ERR_BAD_WAVE_COMPONENT_OUT,
+	ERR_INVALID_WAVE_TYPE
 }
 const ERR_MSGS:Dictionary={
 	OK:"",
@@ -28,6 +30,8 @@ const ERR_MSGS:Dictionary={
 	ERR_INVALID_CHUNK:"Invalid chunk {chunk}:{version} for {file}. Expected {ex_chunk}:{ex_version}.",
 	ERR_MISSING_WAVES:"Standalone instrument is missing its waveforms.",
 	ERR_BAD_WAVE_COMPONENT:"Invalid wave component type {chunk} in file {file}.",
+	ERR_BAD_WAVE_COMPONENT_OUT:"Invalid wave component type {type} writing {file}.",
+	ERR_INVALID_WAVE_TYPE:"Invalid wave type {type} writing {file}.",
 	ERR_BUG:"This should not happen..."
 }
 
@@ -42,7 +46,7 @@ func _init(errn:int=OK,res_data=null)->void:
 		data=res_data
 		error_data={}
 	else:
-		error_data=res_data if typeof(res_data)==TYPE_ARRAY else [res_data]
+		error_data=res_data
 		data=null
 
 

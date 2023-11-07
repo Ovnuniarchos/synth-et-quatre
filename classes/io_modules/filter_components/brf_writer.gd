@@ -12,4 +12,6 @@ func serialize(out:ChunkedFile,f:BrfFilter)->FileResult:
 	out.store_float(f.cutoff_hi)
 	out.store_16(f.taps)
 	out.end_chunk()
-	return FileResult.new(out.get_error())
+	if out.get_error():
+		return FileResult.new(out.get_error(),{"file":out.get_path()})
+	return FileResult.new()

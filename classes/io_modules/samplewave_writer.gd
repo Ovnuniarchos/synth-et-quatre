@@ -26,4 +26,6 @@ func serialize(out:ChunkedFile,wave:SampleWave)->FileResult:
 			out.store_8(sam>>16)
 			out.store_16(sam&0xffff)
 	out.end_chunk()
+	if out.get_error():
+		return FileResult.new(out.get_error(),{"file":out.get_path()})
 	return FileResult.new()

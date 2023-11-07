@@ -13,4 +13,6 @@ func serialize(out:ChunkedFile,w:NoiseWave)->FileResult:
 	out.store_float(w.pos0)
 	out.store_float(w.length)
 	out.end_chunk()
-	return FileResult.new(out.get_error())
+	if out.get_error():
+		return FileResult.new(out.get_error(),{"file":out.get_path()})
+	return FileResult.new()

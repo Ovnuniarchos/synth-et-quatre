@@ -10,8 +10,6 @@ func _init(waves:Array)->void:
 
 
 func write(path:String,inst:FmInstrument)->FileResult:
-	var out:ChunkedFile=ChunkedFile.new()
-	out.open(path,File.WRITE)
 	inst=inst.duplicate()
 	# Pack waveforms
 	var wave_list:Dictionary={}
@@ -25,13 +23,17 @@ func write(path:String,inst:FmInstrument)->FileResult:
 			wave_list[w]=min_wave
 			min_wave+=1
 	# Signature: SFMM\0xc\0xa\0x1a\0xa
+	var out:ChunkedFile=ChunkedFile.new()
+	out.open(path,File.WRITE)
 	var err:int=out.start_file(FILE_SIGNATURE,FILE_VERSION)
 	if err!=OK:
-		return FileResult.new(err,[path,FILE_VERSION])
+		return FileResult.new(err,{"file":out.get_path()})
 	var res:FileResult=serialize(out,inst)
 	if res.has_error():
 		return res
 	res=serialize_waves(out,wave_list)
+	if res.has_error():
+		return res
 	return FileResult.new()
 
 
@@ -61,6 +63,8 @@ func serialize(out:ChunkedFile,inst:FmInstrument)->FileResult:
 			out.store_8(v)
 	out.store_pascal_string(inst.name)
 	out.end_chunk()
+	if out.get_error():
+		return FileResult.new(out.get_error(),{"file":out.get_path()})
 	return FileResult.new()
 
 
@@ -69,11 +73,23 @@ func serialize_waves(out:ChunkedFile,packed_waves:Dictionary)->FileResult:
 	out.store_16(packed_waves.size())
 	var syn_w:SynthWaveWriter=SynthWaveWriter.new()
 	var sam_w:SampleWaveWriter=SampleWaveWriter.new()
+	if out.get_error():
+		return FileResult.new(out.get_error(),{"file":out.get_path()})
+	var fr:FileResult
 	for wix in packed_waves.keys():
 		var wave:Waveform=_waves[wix-FmInstrument.WAVE.CUSTOM]
 		if wave is SynthWave:
-			syn_w.serialize(out,wave)
+			fr=syn_w.serialize(out,wave)
 		elif wave is SampleWave:
-			sam_w.serialize(out,wave)
+			fr=sam_w.serialize(out,wave)
+		else:
+			fr=FileResult.new(FileResult.ERR_INVALID_WAVE_TYPE,{
+				"type":wave.get_class(),
+				"file":out.get_path()
+			})
+		if fr.has_error():
+			return fr
 	out.end_chunk()
+	if out.get_error():
+		return FileResult.new(out.get_error(),{"file":out.get_path()})
 	return FileResult.new()

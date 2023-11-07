@@ -6,7 +6,7 @@ func _init(l:int).(l)->void:
 	pass
 
 
-func serialize(out:ChunkedFile,pat:Pattern,num_fx:int)->void:
+func serialize(out:ChunkedFile,pat:Pattern,num_fx:int)->FileResult:
 	out.start_chunk(CHUNK_ID,CHUNK_VERSION)
 	for j in _length:
 		var n=pat.notes[j]
@@ -24,3 +24,6 @@ func serialize(out:ChunkedFile,pat:Pattern,num_fx:int)->void:
 			if mask&(1<<i):
 				out.store_8(n[i])
 	out.end_chunk()
+	if out.get_error():
+		return FileResult.new(out.get_error(),{"file":out.get_path()})
+	return FileResult.new()

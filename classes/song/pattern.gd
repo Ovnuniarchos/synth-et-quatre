@@ -10,8 +10,6 @@ const MIN_FX:int=0
 const MAX_FX:int=4
 const LEGATO_MIN:int=LEGATO_MODE.OFF
 const LEGATO_MAX:int=LEGATO_MODE.STACCATO
-const CHUNK_ID:String="PATR"
-const CHUNK_VERSION:int=0
 
 var notes:Array=[]
 
@@ -52,38 +50,3 @@ func insert_row(row:int)->void:
 	a.resize(ATTRS.MAX)
 	notes.insert(row,a)
 	notes.pop_back()
-
-#
-
-func serialize(out:ChunkedFile,length:int,num_fx:int)->void:
-	out.start_chunk(CHUNK_ID,CHUNK_VERSION)
-	for j in length:
-		var n=notes[j]
-		var mask:int=0
-		if n[ATTRS.LG_MODE]!=null and n[ATTRS.LG_MODE]!=LEGATO_MODE.OFF:
-			mask|=1
-		for i in range(ATTRS.NOTE,MIN_FX_COL+(num_fx*3)):
-			if i in [ATTRS.FM0,ATTRS.FM1,ATTRS.FM2,ATTRS.FM3]:
-				if n[i]!=null and n[i]!=0:
-					mask|=1<<i
-			elif n[i]!=null:
-				mask|=1<<i
-		out.store_32(mask)
-		for i in range(MAX_ATTR):
-			if mask&(1<<i):
-				out.store_8(n[i])
-	out.end_chunk()
-
-#
-
-func deserialize(inf:ChunkedFile,pat:Pattern,length:int,_version:int)->void:
-	for j in range(length):
-		var n:Array=pat.notes[j]
-		var mask:int=inf.get_32()
-		for i in MAX_ATTR:
-			if mask&(1<<i):
-				n[i]=inf.get_8()
-		if n[ATTRS.NOTE]==255:
-			n[ATTRS.NOTE]=-1
-		elif n[ATTRS.NOTE]==254:
-			n[ATTRS.NOTE]=-2

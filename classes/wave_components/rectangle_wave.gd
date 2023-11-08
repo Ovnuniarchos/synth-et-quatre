@@ -2,8 +2,6 @@ extends WaveComponent
 class_name RectangleWave
 
 const COMPONENT_ID:String="Rectangle"
-const CHUNK_ID:String="rECW"
-const CHUNK_VERSION:int=0
 
 var freq_mult:float=1.0
 var phi0:float=0.0
@@ -47,28 +45,3 @@ func calculate(size:int,input:Array,caller:WaveComponent)->Array:
 	set_modulator(size,pm,input,caller)
 	DSP.rectangle(input,generated,modulator,pos0,phi0,freq_mult,cycles,pm,z_start,n_start,vol,output_mode)
 	return generate_output(size,input,caller)
-
-#
-
-func serialize(out:ChunkedFile,components:Array)->void:
-	serialize_start(out,CHUNK_ID,CHUNK_VERSION,components)
-	out.store_float(freq_mult)
-	out.store_float(phi0)
-	out.store_float(z_start)
-	out.store_float(n_start)
-	out.store_float(cycles)
-	out.store_float(pos0)
-	out.store_float(pm)
-	out.end_chunk()
-
-#
-
-func deserialize(inf:ChunkedFile,c:RectangleWave,components:Array,version:int)->void:
-	deserialize_start(inf,c,components,version)
-	c.freq_mult=inf.get_float()
-	c.phi0=inf.get_float()
-	c.z_start=inf.get_float()
-	c.n_start=inf.get_float()
-	c.cycles=inf.get_float()
-	c.pos0=inf.get_float()
-	c.pm=inf.get_float()

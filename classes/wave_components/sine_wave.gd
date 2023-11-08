@@ -2,8 +2,6 @@ extends WaveComponent
 class_name SineWave
 
 const COMPONENT_ID:String="Sine"
-const CHUNK_ID:String="sINW"
-const CHUNK_VERSION:int=0
 
 enum QUARTER{Q0,Q1,Q2,Q3,QZ,QH,QL}
 
@@ -51,32 +49,3 @@ func calculate(size:int,input:Array,caller:WaveComponent)->Array:
 		quarters[0],quarters[1],quarters[2],quarters[3],vol,output_mode
 	)
 	return generate_output(size,input,caller)
-
-#
-
-func serialize(out:ChunkedFile,components:Array)->void:
-	serialize_start(out,CHUNK_ID,CHUNK_VERSION,components)
-	out.store_float(freq_mult)
-	out.store_float(phi0)
-	out.store_8(quarters[0])
-	out.store_8(quarters[1])
-	out.store_8(quarters[2])
-	out.store_8(quarters[3])
-	out.store_float(cycles)
-	out.store_float(pos0)
-	out.store_float(pm)
-	out.end_chunk()
-
-#
-
-func deserialize(inf:ChunkedFile,c:SineWave,components:Array,version:int)->void:
-	deserialize_start(inf,c,components,version)
-	c.freq_mult=inf.get_float()
-	c.phi0=inf.get_float()
-	c.quarters[0]=inf.get_8()
-	c.quarters[1]=inf.get_8()
-	c.quarters[2]=inf.get_8()
-	c.quarters[3]=inf.get_8()
-	c.cycles=inf.get_float()
-	c.pos0=inf.get_float()
-	c.pm=inf.get_float()

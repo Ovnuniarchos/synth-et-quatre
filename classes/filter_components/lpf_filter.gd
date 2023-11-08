@@ -2,8 +2,6 @@ extends WaveComponent
 class_name LpfFilter
 
 const COMPONENT_ID:String="LowPass"
-const CHUNK_ID:String="lPFF"
-const CHUNK_VERSION:int=0
 
 var cutoff:float=1.0 setget set_cutoff
 var coeffs:Array=[]
@@ -70,18 +68,3 @@ func set_coeffs()->void:
 		sum+=abs(t)
 	for i in range(coeffs.size()):
 		coeffs[i]/=sum
-
-#
-
-func serialize(out:ChunkedFile,components:Array)->void:
-	serialize_start(out,CHUNK_ID,CHUNK_VERSION,components)
-	out.store_float(cutoff)
-	out.store_16(taps)
-	out.end_chunk()
-
-#
-
-func deserialize(inf:ChunkedFile,c:LpfFilter,components:Array,version:int)->void:
-	deserialize_start(inf,c,components,version)
-	c.cutoff=inf.get_float()
-	c.taps=inf.get_16()

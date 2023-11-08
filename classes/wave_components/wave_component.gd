@@ -71,27 +71,3 @@ func generate_output(size:int,input:Array,caller:WaveComponent):
 		return generated
 	output=DSP.mix_waves(input,generated,modulator,output,am,xm,vol,output_mode)
 	return output
-
-#
-
-func serialize_start(out:ChunkedFile,tag:String,version:int,components:Array)->void:
-	out.start_chunk(tag,version)
-	out.store_8(output_mode)
-	out.store_float(vol)
-	out.store_float(am)
-	out.store_float(xm)
-	out.store_16(components.find(input_comp))
-
-func deserialize_start(inf:ChunkedFile,c:WaveComponent,components:Array,_version:int)->void:
-	c.output_mode=inf.get_8()
-	c.vol=inf.get_float()
-	c.am=inf.get_float()
-	c.xm=inf.get_float()
-	var ic:int=inf.get_signed_16()
-	if ic<0:
-		c.input_comp=null
-	elif ic<components.size():
-		c.input_comp=components[ic]
-	else:
-		c.input_comp=c
-

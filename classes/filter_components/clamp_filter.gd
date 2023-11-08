@@ -2,8 +2,6 @@ extends WaveComponent
 class_name ClampFilter
 
 const COMPONENT_ID:String="Clamp"
-const CHUNK_ID:String="cLAF"
-const CHUNK_VERSION:int=0
 
 var u_clamp_on:bool=true
 var u_clamp:float=1.0
@@ -43,22 +41,3 @@ func calculate(size:int,input:Array,caller:WaveComponent)->Array:
 		modulator=input
 	DSP.clamp(modulator,generated,l_clamp,u_clamp,l_clamp_on,u_clamp_on)
 	return generate_output(size,input,caller)
-
-#
-
-func serialize(out:ChunkedFile,components:Array)->void:
-	serialize_start(out,CHUNK_ID,CHUNK_VERSION,components)
-	out.store_8(int(u_clamp_on))
-	out.store_8(int(l_clamp_on))
-	out.store_float(u_clamp)
-	out.store_float(l_clamp)
-	out.end_chunk()
-
-#
-
-func deserialize(inf:ChunkedFile,c:ClampFilter,components:Array,version:int)->void:
-	deserialize_start(inf,c,components,version)
-	c.u_clamp_on=bool(inf.get_8())
-	c.l_clamp_on=bool(inf.get_8())
-	c.u_clamp=inf.get_float()
-	c.l_clamp=inf.get_float()

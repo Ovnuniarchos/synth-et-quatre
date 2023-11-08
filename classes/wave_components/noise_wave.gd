@@ -2,8 +2,6 @@ extends WaveComponent
 class_name NoiseWave
 
 const COMPONENT_ID:String="Noise"
-const CHUNK_ID:String="nOIW"
-const CHUNK_VERSION:int=0
 
 var rng0:RandomNumberGenerator
 var rng_seed:int
@@ -40,22 +38,3 @@ func calculate(size:int,input:Array,caller:WaveComponent)->Array:
 	set_modulator(size,pm,input,caller)
 	DSP.noise(input,generated,pos0,length,rng_seed,tone,vol,output_mode);
 	return generate_output(size,input,caller)
-
-#
-
-func serialize(out:ChunkedFile,components:Array)->void:
-	serialize_start(out,CHUNK_ID,CHUNK_VERSION,components)
-	out.store_32(rng_seed)
-	out.store_float(tone)
-	out.store_float(pos0)
-	out.store_float(length)
-	out.end_chunk()
-
-#
-
-func deserialize(inf:ChunkedFile,c:NoiseWave,components:Array,version:int)->void:
-	deserialize_start(inf,c,components,version)
-	c.rng_seed=inf.get_32()
-	c.tone=inf.get_float()
-	c.pos0=inf.get_float()
-	c.length=inf.get_float()

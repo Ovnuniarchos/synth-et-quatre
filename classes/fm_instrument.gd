@@ -4,8 +4,6 @@ class_name FmInstrument
 enum WAVE{RECTANGLE,SAW,TRIANGLE,NOISE,CUSTOM}
 enum REPEAT{OFF,RELEASE,SUSTAIN,DECAY,ATTACK}
 const TYPE:String="FmInstrument"
-const CHUNK_ID:String="fM4I"
-const CHUNK_VERSION:int=1
 
 var op_mask:int=1
 var clip:bool=false
@@ -198,62 +196,3 @@ func copy_op(from:int,to:int)->void:
 	fm_intensity[to]=fm_intensity[from]
 	fm_lfo[to]=fm_lfo[from]
 	routings[to]=routings[from].duplicate()
-
-#
-
-func serialize(out:ChunkedFile)->void:
-	out.start_chunk(CHUNK_ID,CHUNK_VERSION)
-	out.store_8(op_mask)
-	out.store_8(int(clip))
-	for i in 4:
-		out.store_8(attacks[i])
-		out.store_8(decays[i])
-		out.store_8(sustains[i])
-		out.store_8(sustain_levels[i])
-		out.store_8(releases[i])
-		out.store_8(repeats[i])
-		out.store_8(multipliers[i])
-		out.store_8(dividers[i])
-		out.store_16(detunes[i])
-		out.store_8(duty_cycles[i])
-		out.store_8(waveforms[i])
-		out.store_8(am_intensity[i])
-		out.store_8(am_lfo[i])
-		out.store_16(fm_intensity[i])
-		out.store_8(fm_lfo[i])
-		out.store_8(key_scalers[i])
-	for r in routings:
-		for v in r:
-			out.store_8(v)
-	out.store_pascal_string(name)
-	out.end_chunk()
-
-#
-
-func deserialize(inf:ChunkedFile,ins:FmInstrument,version:int)->void:
-	ins.op_mask=inf.get_8()
-	if version>0:
-		ins.clip=bool(inf.get_8())
-	else:
-		ins.clip=0
-	for i in 4:
-		ins.attacks[i]=inf.get_8()
-		ins.decays[i]=inf.get_8()
-		ins.sustains[i]=inf.get_8()
-		ins.sustain_levels[i]=inf.get_8()
-		ins.releases[i]=inf.get_8()
-		ins.repeats[i]=inf.get_8()
-		ins.multipliers[i]=inf.get_8()
-		ins.dividers[i]=inf.get_8()
-		ins.detunes[i]=inf.get_signed_16()
-		ins.duty_cycles[i]=inf.get_8()
-		ins.waveforms[i]=inf.get_8()
-		ins.am_intensity[i]=inf.get_8()
-		ins.am_lfo[i]=inf.get_8()
-		ins.fm_intensity[i]=inf.get_16()
-		ins.fm_lfo[i]=inf.get_8()
-		ins.key_scalers[i]=inf.get_8()
-	for i in 4:
-		for j in 5:
-			routings[i][j]=inf.get_8()
-	ins.name=inf.get_pascal_string()

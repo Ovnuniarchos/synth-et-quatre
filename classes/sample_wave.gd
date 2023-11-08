@@ -1,8 +1,7 @@
 extends Waveform
 class_name SampleWave
 
-const CHUNK_ID:String="sAMW"
-const CHUNK_VERSION:int=0
+const WAVE_TYPE:String="Sample"
 const DIVISORS:Dictionary={8:128.0,16:32768.0,24:8388608.0,32:1.0}
 
 var original_data:Array=[]
@@ -31,57 +30,7 @@ func duplicate()->Waveform:
 	return nw
 
 func equals(other:Waveform)->bool:
-	if !.equals(other):
-		return false
-	if other.get("CHUNK_ID")!=CHUNK_ID:
-		return false
-	return true
-
-#
-
-func serialize(out:ChunkedFile)->void:
-	out.start_chunk(CHUNK_ID,CHUNK_VERSION)
-	out.store_32(original_data.size())
-	out.store_8(bits_sample)
-	out.store_32(loop_start)
-	out.store_32(loop_end)
-	out.store_float(record_freq)
-	out.store_float(sample_freq)
-	out.store_pascal_string(name)
-	for sam in original_data:
-		if bits_sample==8:
-			out.store_8(sam+0x80)
-		elif bits_sample==16:
-			out.store_16(sam+0x8000)
-		elif bits_sample==32:
-			out.store_float(sam)
-		else:
-			sam+=0x800000
-			out.store_8(sam>>16)
-			out.store_16(sam&0xffff)
-	out.end_chunk()
-
-#
-
-func deserialize(inf:ChunkedFile,w:SampleWave,_version:int)->void:
-	w.size=inf.get_32()
-	w.original_data.resize(w.size)
-	w.bits_sample=inf.get_8()
-	w.loop_start=inf.get_32()
-	w.loop_end=inf.get_32()
-	w.record_freq=inf.get_float()
-	w.sample_freq=inf.get_float()
-	w.name=inf.get_pascal_string()
-	for i in range(w.size):
-		if bits_sample==8:
-			w.original_data[i]=inf.get_8()-0x80
-		elif bits_sample==16:
-			w.original_data[i]=inf.get_16()-0x8000
-		elif bits_sample==32:
-			w.original_data[i]=inf.get_float()
-		else:
-			w.original_data[i]=((inf.get_8()<<16)|inf.get_16())-0x800000
-	w.calculate()
+	return .equals(other)
 
 func load_wave(path:String)->void:
 	var file:WaveFile=WaveFile.new()

@@ -28,4 +28,6 @@ func duplicate()->Waveform:
 
 func equals(other:Waveform)->bool:
 	# Name is irrelevant
+	if other.get("WAVE_TYPE")!=get("WAVE_TYPE") and get("WAVE_TYPE")!=null:
+		return false
 	return size==other.size

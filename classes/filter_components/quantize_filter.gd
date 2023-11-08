@@ -2,8 +2,6 @@ extends WaveComponent
 class_name QuantizeFilter
 
 const COMPONENT_ID:String="Quantize"
-const CHUNK_ID:String="qUAF"
-const CHUNK_VERSION:int=0
 
 var steps:int
 
@@ -34,16 +32,3 @@ func calculate(size:int,input:Array,caller:WaveComponent)->Array:
 		modulator=input
 	DSP.quantize(modulator,generated,steps)
 	return generate_output(size,input,caller)
-
-#
-
-func serialize(out:ChunkedFile,components:Array)->void:
-	serialize_start(out,CHUNK_ID,CHUNK_VERSION,components)
-	out.store_8(steps)
-	out.end_chunk()
-
-#
-
-func deserialize(inf:ChunkedFile,c:QuantizeFilter,components:Array,version:int)->void:
-	deserialize_start(inf,c,components,version)
-	c.steps=inf.get_8()

@@ -2,8 +2,6 @@ extends WaveComponent
 class_name SawWave
 
 const COMPONENT_ID:String="Saw"
-const CHUNK_ID:String="sAWW"
-const CHUNK_VERSION:int=0
 
 enum HALF{H0,H1,H2,H3,HZ,HH,HL}
 
@@ -49,28 +47,3 @@ func calculate(size:int,input:Array,caller:WaveComponent)->Array:
 	set_modulator(size,pm,input,caller)
 	DSP.saw(input,generated,modulator,pos0,phi0,freq_mult,cycles,pm,halves[0],halves[1],vol,output_mode)
 	return generate_output(size,input,caller)
-
-#
-
-func serialize(out:ChunkedFile,components:Array)->void:
-	serialize_start(out,CHUNK_ID,CHUNK_VERSION,components)
-	out.store_float(freq_mult)
-	out.store_float(phi0)
-	out.store_8(halves[0])
-	out.store_8(halves[1])
-	out.store_float(cycles)
-	out.store_float(pos0)
-	out.store_float(pm)
-	out.end_chunk()
-
-#
-
-func deserialize(inf:ChunkedFile,c:SawWave,components:Array,version:int)->void:
-	deserialize_start(inf,c,components,version)
-	c.freq_mult=inf.get_float()
-	c.phi0=inf.get_float()
-	c.halves[0]=inf.get_8()
-	c.halves[1]=inf.get_8()
-	c.cycles=inf.get_float()
-	c.pos0=inf.get_float()
-	c.pm=inf.get_float()

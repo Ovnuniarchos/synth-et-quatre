@@ -2,8 +2,6 @@ extends WaveComponent
 class_name NormalizeFilter
 
 const COMPONENT_ID:String="Normalize"
-const CHUNK_ID:String="nORF"
-const CHUNK_VERSION:int=0
 
 var keep_center:bool=true
 
@@ -33,16 +31,3 @@ func calculate(size:int,input:Array,caller:WaveComponent)->Array:
 		modulator=input
 	DSP.normalize(modulator,generated,keep_center)
 	return generate_output(size,input,caller)
-
-#
-
-func serialize(out:ChunkedFile,components:Array)->void:
-	serialize_start(out,CHUNK_ID,CHUNK_VERSION,components)
-	out.store_8(int(keep_center))
-	out.end_chunk()
-
-#
-
-func deserialize(inf:ChunkedFile,c:NormalizeFilter,components:Array,version:int)->void:
-	deserialize_start(inf,c,components,version)
-	c.keep_center=bool(inf.get_8())

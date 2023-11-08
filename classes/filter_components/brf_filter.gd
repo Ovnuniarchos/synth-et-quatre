@@ -2,8 +2,6 @@ extends WaveComponent
 class_name BrfFilter
 
 const COMPONENT_ID:String="BandReject"
-const CHUNK_ID:String="bRFF"
-const CHUNK_VERSION:int=0
 
 var cutoff_lo:float=1.0 setget set_cutoff_lo
 var cutoff_hi:float=1.0 setget set_cutoff_hi
@@ -79,20 +77,3 @@ func set_coeffs()->void:
 	if sum>0.0:
 		for i in range(coeffs.size()):
 			coeffs[i]/=sum
-
-#
-
-func serialize(out:ChunkedFile,components:Array)->void:
-	serialize_start(out,CHUNK_ID,CHUNK_VERSION,components)
-	out.store_float(cutoff_lo)
-	out.store_float(cutoff_hi)
-	out.store_16(taps)
-	out.end_chunk()
-
-#
-
-func deserialize(inf:ChunkedFile,c:BrfFilter,components:Array,version:int)->void:
-	deserialize_start(inf,c,components,version)
-	c.cutoff_lo=inf.get_float()
-	c.cutoff_hi=inf.get_float()
-	c.taps=inf.get_16()

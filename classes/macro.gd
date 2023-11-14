@@ -1,6 +1,13 @@
 extends Reference
 class_name Macro
 
+const PARAM_LOOP_START:int=0
+const PARAM_LOOP_END:int=1
+const PARAM_RELEASE_LOOP_START:int=2
+const PARAM_VALUES:int=3
+const PARAM_STEPS:int=4
+const PARAM_DELAY:int=5
+
 var loop_start:int=-1 setget set_loop_start
 var loop_end:int=-1 setget set_loop_end
 var release_loop_start:int=-1 setget set_release_loop_start
@@ -11,6 +18,14 @@ var delay:int=0
 var loop_size:int=1
 var release_loop_size:int=1
 
+
+func set_parameters(v:Dictionary)->void:
+	steps=clamp(v[PARAM_STEPS],0,256)
+	set_loop_start(v[PARAM_LOOP_START])
+	set_loop_end(v[PARAM_LOOP_END])
+	set_release_loop_start(v[PARAM_RELEASE_LOOP_START])
+	values=v[PARAM_VALUES].duplicate()
+	delay=v[PARAM_DELAY]
 
 func set_loop_start(v:int)->void:
 	loop_start=clamp(v,-1,steps-1)

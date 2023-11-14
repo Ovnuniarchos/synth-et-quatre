@@ -26,14 +26,14 @@ func start_file(signature:String,version:int)->int:
 			return FileResult.ERR_INVALID_VERSION
 		return get_error()
 	else:
-		store_string((signature+"\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000").left(8))
+		store_ascii(signature,8)
 		store_16(version)
 	return get_error()
 
 
 func start_chunk(name:String,version:int)->void:
 	chunk_start.push_back(get_position())
-	store_string((name+"\u0000\u0000\u0000\u0000").left(4))
+	store_ascii(name)
 	store_16(version)
 	store_64(-1)
 
@@ -57,6 +57,17 @@ func rewind_chunk(d:Dictionary)->void:
 
 func get_ascii(length:int)->String:
 	return get_buffer(length).get_string_from_ascii()
+
+
+func store_ascii(string:String,length:int=4)->void:
+	var t0:PoolByteArray=string.to_ascii()
+	var t1:PoolByteArray=PoolByteArray()
+	var i:int=0
+	t1.resize(length)
+	while i<length and i<t0.size():
+		t1[i]=t0[i]
+		i+=1
+	store_buffer(t1)
 
 
 func get_chunk_header()->Dictionary:

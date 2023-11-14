@@ -80,7 +80,7 @@ func serialize_channels(out:ChunkedFile,song:Song)->FileResult:
 	out.start_chunk(CHUNK_CHANNELS,CHUNK_CHANNELS_VERSION)
 	out.store_16(song.num_channels)
 	for i in song.num_channels:
-		out.store_string(CHANNEL_FM4) # Unused
+		out.store_ascii(CHANNEL_FM4) # Unused
 		out.store_8(song.num_fxs[i])
 	out.end_chunk()
 	if out.get_error():

@@ -6,11 +6,16 @@ const MASK_VALUE_MASK:int=0xffffffff
 const PASSTHROUGH:int=0x7fffffffffffffff
 
 var relative:bool=true
-var tick_div:int=1
+var tick_div:int=1 setget set_tick_div
 
 
 func _init(rel:bool=true)->void:
 	relative=rel
+
+
+func set_tick_div(v:int)->void:
+	tick_div=max(1,v)
+
 
 func get_value(tick:int,release_tick:int,base_value:int)->int:
 	if steps==0 or tick<delay:
@@ -29,6 +34,7 @@ func get_value(tick:int,release_tick:int,base_value:int)->int:
 	if value==PASSTHROUGH:
 		return base_value
 	return base_value+value if relative else value
+
 
 func duplicate()->Macro:
 	var np:ParamMacro=.duplicate()

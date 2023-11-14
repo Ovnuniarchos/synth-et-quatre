@@ -8,7 +8,8 @@ enum{
 	ERR_MISSING_WAVES,
 	ERR_BAD_WAVE_COMPONENT,
 	ERR_BAD_WAVE_COMPONENT_OUT,
-	ERR_INVALID_WAVE_TYPE
+	ERR_INVALID_WAVE_TYPE,
+	ERR_INVALID_MACRO
 }
 const ERR_MSGS:Dictionary={
 	OK:"",
@@ -32,6 +33,7 @@ const ERR_MSGS:Dictionary={
 	ERR_BAD_WAVE_COMPONENT:"Invalid wave component type {chunk} in file {file}.",
 	ERR_BAD_WAVE_COMPONENT_OUT:"Invalid wave component type {type} writing {file}.",
 	ERR_INVALID_WAVE_TYPE:"Invalid wave type {type} writing {file}.",
+	ERR_INVALID_MACRO:"Invalid macro type/operator {type}/{op} in file {file}.",
 	ERR_BUG:"This should not happen..."
 }
 

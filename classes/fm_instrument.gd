@@ -196,3 +196,110 @@ func copy_op(from:int,to:int)->void:
 	fm_intensity[to]=fm_intensity[from]
 	fm_lfo[to]=fm_lfo[from]
 	routings[to]=routings[from].duplicate()
+
+func macros_as_dict()->Dictionary:
+	return {
+		MacroIO.MACRO_TONE:freq_macro,
+		"$"+MacroIO.MACRO_TONE:op_freq_macro,
+		MacroIO.MACRO_VOLUME:volume_macro,
+		MacroIO.MACRO_PAN:pan_macro,
+		MacroIO.MACRO_KEY_ON:key_macro,
+		"$"+MacroIO.MACRO_KEY_ON:op_key_macro,
+		MacroIO.MACRO_OP_ENABLE:op_enable_macro,
+		MacroIO.MACRO_CHANNEL_INVERT:chanl_invert_macro,
+		MacroIO.MACRO_CLIP:clip_macro,
+		MacroIO.MACRO_DUTY_CYCLE:duty_macros,
+		MacroIO.MACRO_WAVE:wave_macros,
+		MacroIO.MACRO_ATTACK:attack_macros,
+		MacroIO.MACRO_DECAY:decay_macros,
+		MacroIO.MACRO_SUSTAIN_LEVEL:sus_level_macros,
+		MacroIO.MACRO_SUSTAIN_RATE:sus_rate_macros,
+		MacroIO.MACRO_RELEASE:release_macros,
+		MacroIO.MACRO_REPEAT:repeat_macros,
+		MacroIO.MACRO_AM_INTENSITY:ami_macros,
+		MacroIO.MACRO_KEY_SCALING:ksr_macros,
+		MacroIO.MACRO_MULTIPLIER:multiplier_macros,
+		MacroIO.MACRO_DIVIDER:divider_macros,
+		MacroIO.MACRO_DETUNE:detune_macros,
+		MacroIO.MACRO_FM_INTENSITY:fmi_macros,
+		MacroIO.MACRO_AM_LFO:am_lfo_macros,
+		MacroIO.MACRO_FM_LFO:fm_lfo_macros,
+		MacroIO.MACRO_PHASE:phase_macros,
+		MacroIO.MACRO_OP1:op_macros[0],
+		MacroIO.MACRO_OP2:op_macros[1],
+		MacroIO.MACRO_OP3:op_macros[2],
+		MacroIO.MACRO_OP4:op_macros[3],
+		MacroIO.MACRO_OUTPUT:out_macros
+	}
+
+func set_macro(id:String,op:int,macro:ParamMacro)->bool:
+	if op<-1 or op>3:
+		return false
+	match id:
+		MacroIO.MACRO_TONE:
+			if op==-1:
+				freq_macro=macro
+			else:
+				op_freq_macro[op]=macro
+		MacroIO.MACRO_VOLUME:
+			volume_macro=macro
+		MacroIO.MACRO_PAN:
+			pan_macro=macro
+		MacroIO.MACRO_KEY_ON:
+			if op==-1:
+				key_macro=macro
+			else:
+				op_key_macro[op]=macro
+		MacroIO.MACRO_OP_ENABLE:
+			op_enable_macro=macro
+		MacroIO.MACRO_CHANNEL_INVERT:
+			chanl_invert_macro=macro
+		MacroIO.MACRO_CLIP:
+			clip_macro=macro
+		MacroIO.MACRO_DUTY_CYCLE:
+			duty_macros[op]=macro
+		MacroIO.MACRO_WAVE:
+			wave_macros[op]=macro
+		MacroIO.MACRO_ATTACK:
+			attack_macros[op]=macro
+		MacroIO.MACRO_DECAY:
+			decay_macros[op]=macro
+		MacroIO.MACRO_SUSTAIN_LEVEL:
+			sus_level_macros[op]=macro
+		MacroIO.MACRO_SUSTAIN_RATE:
+			sus_rate_macros[op]=macro
+		MacroIO.MACRO_RELEASE:
+			release_macros[op]=macro
+		MacroIO.MACRO_REPEAT:
+			repeat_macros[op]=macro
+		MacroIO.MACRO_AM_INTENSITY:
+			ami_macros[op]=macro
+		MacroIO.MACRO_KEY_SCALING:
+			ksr_macros[op]=macro
+		MacroIO.MACRO_MULTIPLIER:
+			multiplier_macros[op]=macro
+		MacroIO.MACRO_DIVIDER:
+			divider_macros[op]=macro
+		MacroIO.MACRO_DETUNE:
+			detune_macros[op]=macro
+		MacroIO.MACRO_FM_INTENSITY:
+			fmi_macros[op]=macro
+		MacroIO.MACRO_AM_LFO:
+			am_lfo_macros[op]=macro
+		MacroIO.MACRO_FM_LFO:
+			fm_lfo_macros[op]=macro
+		MacroIO.MACRO_PHASE:
+			phase_macros[op]=macro
+		MacroIO.MACRO_OP1:
+			op_macros[0][op]=macro
+		MacroIO.MACRO_OP2:
+			op_macros[1][op]=macro
+		MacroIO.MACRO_OP3:
+			op_macros[2][op]=macro
+		MacroIO.MACRO_OP4:
+			op_macros[3][op]=macro
+		MacroIO.MACRO_OUTPUT:
+			out_macros[op]=macro
+		_:
+			return false
+	return true

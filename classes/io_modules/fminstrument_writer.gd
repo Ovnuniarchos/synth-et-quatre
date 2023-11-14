@@ -22,7 +22,7 @@ func write(path:String,inst:FmInstrument)->FileResult:
 			inst.waveforms[i]=min_wave
 			wave_list[w]=min_wave
 			min_wave+=1
-	# Signature: SFMM\0xc\0xa\0x1a\0xa
+	# Signature: SFID\0xc\0xa\0x1a\0xa
 	var out:ChunkedFile=ChunkedFile.new()
 	out.open(path,File.WRITE)
 	var err:int=out.start_file(FILE_SIGNATURE,FILE_VERSION)
@@ -62,9 +62,41 @@ func serialize(out:ChunkedFile,inst:FmInstrument)->FileResult:
 		for v in r:
 			out.store_8(v)
 	out.store_pascal_string(inst.name)
+	var fr:FileResult=serialize_macros(out,inst)
+	if fr.has_error():
+		return fr
 	out.end_chunk()
 	if out.get_error():
 		return FileResult.new(out.get_error(),{"file":out.get_path()})
+	return FileResult.new()
+
+
+func serialize_macros(out:ChunkedFile,inst:FmInstrument)->FileResult:
+	var pw:ParamMacroWriter=ParamMacroWriter.new()
+	var macros:Dictionary=inst.macros_as_dict()
+	var count:int=0
+	for m0 in macros.values():
+		if typeof(m0)==TYPE_ARRAY:
+			for m1 in m0:
+				if m1.steps>0:
+					count+=1
+		elif m0.steps>0:
+			count+=1
+	out.store_16(count)
+	var fr:FileResult
+	for k in macros:
+		var type:String=k.trim_prefix("$")
+		if typeof(macros[k])==TYPE_ARRAY:
+			for opm in macros[k].size():
+				pw.set_macro(type,opm)
+				fr=pw.serialize(out,macros[k][opm])
+				if fr.has_error():
+					return fr
+		else:
+			pw.set_macro(type)
+			fr=pw.serialize(out,macros[k])
+			if fr.has_error():
+				return fr
 	return FileResult.new()
 
 

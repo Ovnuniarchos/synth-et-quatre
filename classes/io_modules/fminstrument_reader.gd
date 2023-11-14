@@ -137,6 +137,31 @@ func deserialize(inf:ChunkedFile,header:Dictionary)->FileResult:
 		for j in 5:
 			ins.routings[i][j]=inf.get_8()
 	ins.name=inf.get_pascal_string()
+	var fr:FileResult
+	if version>1:
+		fr=deserialize_macros(inf,ins)
+		if fr!=null and fr.has_error():
+			return fr
 	if inf.get_error():
 		return FileResult.new(inf.get_error(),{"file":inf.get_path()})
 	return FileResult.new(OK,ins)
+
+
+func deserialize_macros(inf:ChunkedFile,ins:FmInstrument)->FileResult:
+	var count:int=inf.get_16()
+	if inf.get_error():
+		return FileResult.new(inf.get_error(),{"file":inf.get_path()})
+	var pmr:ParamMacroReader=ParamMacroReader.new()
+	var fr:FileResult
+	while count>0:
+		count-=1
+		fr=pmr.deserialize(inf)
+		if fr.has_error():
+			return fr
+		if not ins.set_macro(fr.data["type"],fr.data["op"],fr.data["macro"]):
+			return FileResult.new(FileResult.ERR_INVALID_MACRO,{
+				"file":inf.get_path(),
+				"type":fr.data["type"],
+				"op":fr.data["op"]
+			})
+	return null

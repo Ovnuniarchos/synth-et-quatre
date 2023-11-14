@@ -5,7 +5,7 @@ FIXME
 TODO:
 	X Automation
 		X Full arpeggio command
-		File support
+		File support (missing arpeggios)
 			X Fix error system
 	CycleButtons themable
 	MIDI on/off indicator

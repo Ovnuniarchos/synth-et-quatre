@@ -78,6 +78,7 @@ func get_tick(tick:int,release_tick:int,tick_div:int)->int:
 		if release_tick<0 or (loop_end==steps-1):
 			return ((tick-loop_start)%loop_size)+loop_start
 		else:
+			release_tick/=tick_div
 			tick=((release_tick-loop_start)%loop_size)+loop_start+(tick-release_tick)
 			return tick if tick<steps else steps-1
 	return tick

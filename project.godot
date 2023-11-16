@@ -20,6 +20,11 @@ _global_script_classes=[ {
 "path": "res://classes/arpeggio.gd"
 }, {
 "base": "MacroIO",
+"class": "ArpeggioReader",
+"language": "GDScript",
+"path": "res://classes/io_modules/macros/arpeggio_reader.gd"
+}, {
+"base": "MacroIO",
 "class": "ArpeggioWriter",
 "language": "GDScript",
 "path": "res://classes/io_modules/macros/arpeggio_writer.gd"
@@ -487,6 +492,7 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "AccentButton": "",
 "Arpeggio": "",
+"ArpeggioReader": "",
 "ArpeggioWriter": "",
 "BPFFilterReader": "",
 "BPFFilterWriter": "",

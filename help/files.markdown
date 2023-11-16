@@ -263,6 +263,7 @@
 	<Instruments/>
 	<Orders/>
 	<Patterns/>
+	<Arpeggios/>
 </Song>
 
 <Header>
@@ -343,3 +344,24 @@
 		<Fx4Value type="uint8" option/>
 	</foreach:Column>
 </Pattern>
+
+<Arpeggios>
+	<ChunkHeader id="ARPL"/>
+	<ArpeggioCount type="uint16"/>
+	<foreach:Arpeggio>
+		<Arpeggio/>
+	</foreach:Arpeggio>
+</Arpeggios>
+
+<Arpeggio>
+	<ChunkHeader id="aRPG">
+	<LoopStart type="int16"/>
+	<LoopEnd type="int16"/>
+	<ReleaseLoopStart type="int16"/>
+	<StepCount type="uint16"/>
+	<Delay type="uint16"/>
+	<Name type="string"/>
+	<Index type="uint8"/>
+	<Steps type="array[int64]" length="StepCount"/>
+</Arpeggio>
+

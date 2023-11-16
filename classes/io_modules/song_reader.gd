@@ -64,6 +64,8 @@ func deserialize(inf:ChunkedFile)->FileResult:
 				fr=deserialize_instrument_list(inf,song,hdr)
 			CHUNK_WAVES:
 				fr=deserialize_wave_list(inf,song,hdr)
+			CHUNK_ARPEGGIOS:
+				fr=deserialize_arpeggios(inf,song,hdr)
 			_:
 				inf.invalid_chunk(hdr)
 		inf.skip_chunk(hdr)
@@ -249,4 +251,36 @@ func deserialize_wave_list(inf:ChunkedFile,song:Song,header:Dictionary)->FileRes
 	if inf.get_error():
 		return FileResult.new(inf.get_error(),{"file":inf.get_path()})
 	song.wave_list.append_array(wav_l)
+	return null
+
+
+func deserialize_arpeggios(inf:ChunkedFile,song:Song,header:Dictionary)->FileResult:
+	if not inf.is_chunk_valid(header,CHUNK_ARPEGGIOS,CHUNK_ARPEGGIOS_VERSION):
+		return FileResult.new(FileResult.ERR_INVALID_CHUNK,{
+			"chunk":inf.get_chunk_id(header),
+			"version":inf.get_chunk_version(header),
+			"ex_chunk":CHUNK_ARPEGGIOS,
+			"ex_version":CHUNK_ARPEGGIOS_VERSION,
+			"file":inf.get_path()
+		})
+	var arp_r:ArpeggioReader=ArpeggioReader.new()
+	var count:int=inf.get_16()
+	var ix0:int=song.arp_list.size()-1
+	var ix:int
+	var fr:FileResult
+	while count>0:
+		count-=1
+		fr=arp_r.deserialize(inf)
+		if fr.has_error():
+			return fr
+		ix=fr.data["index"]
+		if ix>ix0:
+			ix0=ix
+			song.arp_list.resize(ix+1)
+		song.arp_list[ix]=fr.data["arpeggio"]
+	if inf.get_error():
+		return FileResult.new(inf.get_error(),{"file":inf.get_path()})
+	for i in song.arp_list.size():
+		if song.arp_list[i]==null:
+			song.arp_list[i]=Arpeggio.new()
 	return null

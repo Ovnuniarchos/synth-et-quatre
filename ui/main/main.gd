@@ -3,10 +3,6 @@ extends Control
 """
 FIXME
 TODO:
-	X Automation
-		X Full arpeggio command
-		File support (missing arpeggios)
-			X Fix error system
 	CycleButtons themable
 	MIDI on/off indicator
 	Reset per channel parameters (as a command|button)

@@ -7,7 +7,12 @@ onready var arp_edit=get_node("%Values")
 
 
 func _ready()->void:
-	GLOBALS.connect("song_changed",self,"_on_arp_selected",[-1])
+	GLOBALS.connect("song_changed",self,"_on_song_changed")
+	_on_arp_selected(-1)
+
+
+func _on_song_changed()->void:
+	GLOBALS.song.connect("arp_list_changed",self,"_on_arp_selected",[-1])
 	_on_arp_selected(-1)
 
 

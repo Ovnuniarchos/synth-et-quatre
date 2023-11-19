@@ -71,7 +71,7 @@ margin_bottom = 20.0
 mouse_filter = 1
 text = "Cleanup"
 flat = false
-items = [ "Clean patterns", null, 0, false, false, 0, 0, null, "", false, "Clean instruments", null, 0, false, false, 1, 0, null, "", false, "Clean waves", null, 0, false, false, 2, 0, null, "", false, "", null, 0, false, true, -1, 0, null, "", true, "Clean all", null, 0, false, false, 3, 0, null, "", false ]
+items = [ "Clean patterns", null, 0, false, false, 0, 0, null, "", false, "Clean instruments", null, 0, false, false, 1, 0, null, "", false, "Clean waves", null, 0, false, false, 2, 0, null, "", false, "Clean arpeggios", null, 0, false, false, 3, 0, null, "", false, "", null, 0, false, true, -1, 0, null, "", true, "Clean all", null, 0, false, false, 4, 0, null, "", false ]
 switch_on_hover = true
 
 [node name="FileDialog" type="FileDialog" parent="."]
@@ -81,8 +81,6 @@ window_title = "Guardar un Archivo"
 mode_overrides_title = false
 access = 2
 filters = PoolStringArray( "*.se4 ; SynthEtQuatre song" )
-current_dir = "/home/jordi/godot/SynthEtQuatre"
-current_path = "/home/jordi/godot/SynthEtQuatre/"
 
 [connection signal="pressed" from="HBC/New" to="." method="_on_New_pressed"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_selected"]

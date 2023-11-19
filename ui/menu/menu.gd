@@ -159,6 +159,9 @@ func _on_Cleanup_id_pressed(id:int)->void:
 	elif id==2:
 		GLOBALS.song.clean_waveforms()
 	elif id==3:
+		GLOBALS.song.clean_arps()
+	elif id==4:
 		GLOBALS.song.clean_patterns()
 		GLOBALS.song.clean_instruments()
 		GLOBALS.song.clean_waveforms()
+		GLOBALS.song.clean_arps()

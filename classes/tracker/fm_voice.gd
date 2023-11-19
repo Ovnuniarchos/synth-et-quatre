@@ -229,6 +229,8 @@ func process_tick(song:Song,channel:int,curr_order:int,curr_row:int,curr_tick:in
 		fx_vals[CONSTS.FX_DELAY]=0
 		fx_vals[CONSTS.FX_DELAY_SONG]=0
 		row_tick=0
+		if curr_row==0:
+			fx_cmds=[0,0,0,0]
 		#
 		var j:int=0
 		for i in range(song.num_fxs[channel]):

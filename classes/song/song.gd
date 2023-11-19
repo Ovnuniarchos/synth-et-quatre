@@ -105,7 +105,7 @@ func delete_wave(wave:Waveform)->void:
 					var cmd=note[fxi]
 					var val=note[fxi+2]
 					if (cmd!=FMVC.FX_WAVE_SET and cmd!=FMVC.FX_LFO_WAVE_SET)\
-								|| val==null || val<SONGL.MIN_CUSTOM_WAVE:
+								or val==null or val<SONGL.MIN_CUSTOM_WAVE:
 							continue
 					note[fxi+2]=correct_wave(note[fxi+2])
 	wave_list.erase(wave)
@@ -529,15 +529,29 @@ func clean_waveforms()->void:
 				if wave_xform[wi]==null:
 					wave_xform[wi]=nwave
 					nwave+=1
+			for macro in inst.wave_macros:
+				for wi in macro.values:
+					if wi<ParamMacro.PASSTHROUGH:
+						if wave_xform[wi]==null:
+							wave_xform[wi]=nwave
+							nwave+=1
 	## Capture waves used in pattern commands
+	var cmd
+	var val
+	var last_cmd:Array=[]
+	last_cmd.resize(Pattern.ATTRS.MAX)
 	for chan in pattern_list:
 		for pat in chan:
+			last_cmd.fill(null)
 			for note in range(pat.notes.size()):
 				for fxi in range(Pattern.ATTRS.FX0,Pattern.MAX_ATTR,3):
-					var cmd=pat.notes[note][fxi]
-					var val=pat.notes[note][fxi+2]
+					if pat.notes[note][fxi]==null and pat.notes[note][fxi+2]==null:
+						continue
+					last_cmd[fxi]=pat.notes[note][fxi] if pat.notes[note][fxi]!=null else last_cmd[fxi]
+					cmd=last_cmd[fxi]
+					val=pat.notes[note][fxi+2]
 					if (cmd!=FMVC.FX_WAVE_SET and cmd!=FMVC.FX_LFO_WAVE_SET)\
-							|| val==null || val<SONGL.MIN_CUSTOM_WAVE:
+							or val==null or val<SONGL.MIN_CUSTOM_WAVE:
 						continue
 					if wave_xform[val]==null:
 						wave_xform[val]=nwave
@@ -549,12 +563,16 @@ func clean_waveforms()->void:
 	# Scan the patterns to change old->new
 	for chan in pattern_list:
 		for pat in chan:
+			last_cmd.fill(null)
 			for note in range(pat.notes.size()):
 				for fxi in range(Pattern.ATTRS.FX0,Pattern.MAX_ATTR,3):
-					var cmd=pat.notes[note][fxi]
-					var val=pat.notes[note][fxi+2]
+					if pat.notes[note][fxi]==null and pat.notes[note][fxi+2]==null:
+						continue
+					last_cmd[fxi]=pat.notes[note][fxi] if pat.notes[note][fxi]!=null else last_cmd[fxi]
+					cmd=last_cmd[fxi]
+					val=pat.notes[note][fxi+2]
 					if (cmd!=FMVC.FX_WAVE_SET and cmd!=FMVC.FX_LFO_WAVE_SET)\
-							|| val==null || val<SONGL.MIN_CUSTOM_WAVE:
+							or val==null or val<SONGL.MIN_CUSTOM_WAVE:
 						continue
 					pat.notes[note][fxi+2]=wave_xform[val]
 	# Scan the instruments to change old->new
@@ -570,4 +588,66 @@ func clean_waveforms()->void:
 	wave_list=w_list
 	emit_signal("wave_list_changed")
 	emit_signal("instrument_list_changed")
+	emit_signal("order_changed",-1,-1)
+
+func clean_arps()->void:
+	var arp_xform:Array=[]
+	var narp:int=0
+	arp_xform.resize(arp_list.size())
+	## Capture arpeggios used in pattern commands
+	var cmd
+	var val
+	var last_cmd:Array=[]
+	last_cmd.resize(Pattern.ATTRS.MAX)
+	for chan in pattern_list:
+		for pat in chan:
+			last_cmd.fill(null)
+			for note in range(pat.notes.size()):
+				for fxi in range(Pattern.ATTRS.FX0,Pattern.MAX_ATTR,3):
+					if pat.notes[note][fxi]==null and pat.notes[note][fxi+2]==null:
+						continue
+					last_cmd[fxi]=pat.notes[note][fxi] if pat.notes[note][fxi]!=null else last_cmd[fxi]
+					cmd=last_cmd[fxi]
+					val=pat.notes[note][fxi+2]
+					if cmd==FMVC.FX_ARPEGGIO:
+						val=val&0xF if val!=null else null
+					elif cmd==FMVC.FX_ARP_SET:
+						val=pat.notes[note][fxi+2]
+					else:
+						continue
+					if val!=null and arp_xform[val]==null:
+						arp_xform[val]=narp
+						narp+=1
+	# Keep arps 0-15 in the range 0-15, to not break fast arps
+	for i in 16:
+		if arp_xform[i]!=null and arp_xform[i]>15:
+			for j in range(i+1,narp):
+				if arp_xform[j]!=null and arp_xform[j]<16:
+					var t:int=arp_xform[i]
+					arp_xform[i]=arp_xform[j]
+					arp_xform[j]=t
+					break
+	# Scan the patterns to change old->new
+	for chan in pattern_list:
+		for pat in chan:
+			last_cmd.fill(null)
+			for note in range(pat.notes.size()):
+				for fxi in range(Pattern.ATTRS.FX0,Pattern.MAX_ATTR,3):
+					if pat.notes[note][fxi]==null and pat.notes[note][fxi+2]==null:
+						continue
+					last_cmd[fxi]=pat.notes[note][fxi] if pat.notes[note][fxi]!=null else last_cmd[fxi]
+					cmd=last_cmd[fxi]
+					val=pat.notes[note][fxi+2]
+					if cmd==FMVC.FX_ARPEGGIO:
+						pat.notes[note][fxi+2]=(val&0xF0)|arp_xform[val&0xF]
+					elif cmd==FMVC.FX_ARP_SET:
+						pat.notes[note][fxi+2]=arp_xform[val]
+	# Make new list from used
+	var narp_list:Array=[]
+	narp_list.resize(narp)
+	for i in arp_xform.size():
+		if arp_xform[i]!=null:
+			narp_list[arp_xform[i]]=arp_list[i]
+	arp_list=narp_list
+	emit_signal("arp_list_changed")
 	emit_signal("order_changed",-1,-1)

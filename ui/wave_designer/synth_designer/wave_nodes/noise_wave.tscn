@@ -10,9 +10,6 @@ margin_bottom = 406.0
 size_flags_horizontal = 9
 size_flags_vertical = 9
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="VBC" type="VBoxContainer" parent="."]
 margin_left = 7.0
@@ -138,45 +135,64 @@ script = ExtResource( 3 )
 big_step = 5.0
 huge_step = 10.0
 
-[node name="ReferenceRect" type="ReferenceRect" parent="VBC/Params"]
+[node name="LabelPower" type="Label" parent="VBC/Params"]
 margin_top = 80.0
 margin_right = 52.0
-margin_bottom = 104.0
+margin_bottom = 94.0
+text = "Power"
+
+[node name="Power" type="ProgressBar" parent="VBC/Params"]
+margin_left = 60.0
+margin_top = 80.0
+margin_right = 157.0
+margin_bottom = 94.0
+rect_min_size = Vector2( 48, 14 )
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 50.0
+percent_visible = false
+script = ExtResource( 3 )
+_decimals = 2
+
+[node name="ReferenceRect" type="ReferenceRect" parent="VBC/Params"]
+margin_top = 96.0
+margin_right = 52.0
+margin_bottom = 120.0
 rect_min_size = Vector2( 0, 24 )
 
 [node name="ReferenceRect2" type="ReferenceRect" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 80.0
+margin_top = 96.0
 margin_right = 157.0
-margin_bottom = 104.0
+margin_bottom = 120.0
 rect_min_size = Vector2( 0, 24 )
 
 [node name="LabelOutput" type="Label" parent="VBC/Params" groups=["Label"]]
-margin_top = 109.0
+margin_top = 125.0
 margin_right = 52.0
-margin_bottom = 123.0
+margin_bottom = 139.0
 text = "Output"
 
 [node name="Output" type="OptionButton" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 106.0
+margin_top = 122.0
 margin_right = 157.0
-margin_bottom = 126.0
+margin_bottom = 142.0
 text = "Off"
 items = [ "Off", null, false, 0, null, "Replace", null, false, 1, null, "Add", null, false, 2, null, "AM", null, false, 3, null, "XM", null, false, 4, null ]
 selected = 0
 
 [node name="LabelFrom" type="Label" parent="VBC/Params" groups=["Label"]]
-margin_top = 128.0
+margin_top = 144.0
 margin_right = 52.0
-margin_bottom = 142.0
+margin_bottom = 158.0
 text = "From"
 
 [node name="From" type="ProgressBar" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 128.0
+margin_top = 144.0
 margin_right = 157.0
-margin_bottom = 142.0
+margin_bottom = 158.0
 rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -189,16 +205,16 @@ big_step = 1.0
 huge_step = 1.0
 
 [node name="LabelAM" type="Label" parent="VBC/Params" groups=["Label"]]
-margin_top = 144.0
+margin_top = 160.0
 margin_right = 52.0
-margin_bottom = 158.0
+margin_bottom = 174.0
 text = "AM"
 
 [node name="AM" type="ProgressBar" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 144.0
+margin_top = 160.0
 margin_right = 157.0
-margin_bottom = 158.0
+margin_bottom = 174.0
 rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -211,9 +227,9 @@ big_step = 1.0
 huge_step = 1.0
 
 [node name="LabelXM" type="Label" parent="VBC/Params" groups=["Label"]]
-margin_top = 160.0
+margin_top = 176.0
 margin_right = 52.0
-margin_bottom = 174.0
+margin_bottom = 190.0
 text = "XM"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -221,9 +237,9 @@ __meta__ = {
 
 [node name="XM" type="ProgressBar" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 160.0
+margin_top = 176.0
 margin_right = 157.0
-margin_bottom = 174.0
+margin_bottom = 190.0
 rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -240,6 +256,7 @@ huge_step = 1.0
 [connection signal="value_changed" from="VBC/Params/Position" to="." method="_on_Position_value_changed"]
 [connection signal="value_changed" from="VBC/Params/Len" to="." method="_on_Len_value_changed"]
 [connection signal="value_changed" from="VBC/Params/Vol" to="." method="_on_Vol_value_changed"]
+[connection signal="value_changed" from="VBC/Params/Power" to="." method="_on_Power_value_changed"]
 [connection signal="item_selected" from="VBC/Params/Output" to="." method="_on_Output_item_selected"]
 [connection signal="value_changed" from="VBC/Params/From" to="." method="_on_From_value_changed"]
 [connection signal="value_changed" from="VBC/Params/AM" to="." method="_on_AM_value_changed"]

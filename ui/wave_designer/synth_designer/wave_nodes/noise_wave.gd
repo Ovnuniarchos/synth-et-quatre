@@ -13,6 +13,7 @@ func setup()->void:
 	$VBC/Params/Position.value=component.pos0*100.0
 	$VBC/Params/Len.value=component.length*100.0
 	$VBC/Params/Vol.value=component.vol*100.0
+	$VBC/Params/Power.value=component.power
 	from_node.value=get_component_index(component.input_comp)
 	from_node.max_value=wave.components.size()-1
 	$VBC/Params/Output.selected=component.output_mode
@@ -56,4 +57,8 @@ func _on_From_value_changed(from:int)->void:
 
 func _on_Output_item_selected(id:int)->void:
 	component.output_mode=id
+	emit_signal("params_changed")
+
+func _on_Power_value_changed(value:float)->void:
+	component.power=value
 	emit_signal("params_changed")

@@ -11,6 +11,7 @@ func setup()->void:
 	$VBC/Params/Mul.value=component.freq_mult
 	$VBC/Params/Ofs.value=component.phi0*100.0
 	$VBC/Params/Vol.value=component.vol*100.0
+	$VBC/Params/Power.value=component.power
 	$VBC/Params/Quad1.selected=component.quarters[0]
 	$VBC/Params/Quad2.selected=component.quarters[1]
 	$VBC/Params/Quad3.selected=component.quarters[2]
@@ -81,4 +82,8 @@ func _on_Cycles_value_changed(value:float)->void:
 
 func _on_Position_value_changed(value:float)->void:
 	component.pos0=value/100.0
+	emit_signal("params_changed")
+
+func _on_Power_value_changed(value:float)->void:
+	component.power=value
 	emit_signal("params_changed")

@@ -10,9 +10,6 @@ margin_bottom = 394.0
 size_flags_horizontal = 9
 size_flags_vertical = 9
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="VBC" type="VBoxContainer" parent="."]
 margin_left = 7.0
@@ -134,30 +131,49 @@ script = ExtResource( 3 )
 big_step = 5.0
 huge_step = 10.0
 
-[node name="ReferenceRect" type="ReferenceRect" parent="VBC/Params"]
+[node name="LabelDecay" type="Label" parent="VBC/Params"]
 margin_top = 80.0
 margin_right = 52.0
-margin_bottom = 104.0
+margin_bottom = 94.0
+text = "Decay"
+
+[node name="Decay" type="ProgressBar" parent="VBC/Params"]
+margin_left = 60.0
+margin_top = 80.0
+margin_right = 146.0
+margin_bottom = 94.0
+rect_min_size = Vector2( 48, 14 )
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+percent_visible = false
+script = ExtResource( 3 )
+_decimals = 2
+
+[node name="ReferenceRect" type="ReferenceRect" parent="VBC/Params"]
+margin_top = 96.0
+margin_right = 52.0
+margin_bottom = 120.0
 rect_min_size = Vector2( 0, 24 )
 
 [node name="ReferenceRect2" type="ReferenceRect" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 80.0
+margin_top = 96.0
 margin_right = 146.0
-margin_bottom = 104.0
+margin_bottom = 120.0
 rect_min_size = Vector2( 0, 24 )
 
 [node name="LabelCycles" type="Label" parent="VBC/Params" groups=["Label"]]
-margin_top = 106.0
+margin_top = 122.0
 margin_right = 52.0
-margin_bottom = 120.0
+margin_bottom = 136.0
 text = "Cycles"
 
 [node name="Cycles" type="ProgressBar" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 106.0
+margin_top = 122.0
 margin_right = 146.0
-margin_bottom = 120.0
+margin_bottom = 136.0
 rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -169,16 +185,16 @@ big_step = 5.0
 huge_step = 10.0
 
 [node name="LabelPosition" type="Label" parent="VBC/Params" groups=["Label"]]
-margin_top = 122.0
+margin_top = 138.0
 margin_right = 52.0
-margin_bottom = 136.0
+margin_bottom = 152.0
 text = "Position"
 
 [node name="Position" type="ProgressBar" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 122.0
+margin_top = 138.0
 margin_right = 146.0
-margin_bottom = 136.0
+margin_bottom = 152.0
 rect_min_size = Vector2( 56, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -190,31 +206,31 @@ huge_step = 10.0
 _decimals = 2
 
 [node name="LabelOutput" type="Label" parent="VBC/Params" groups=["Label"]]
-margin_top = 141.0
+margin_top = 157.0
 margin_right = 52.0
-margin_bottom = 155.0
+margin_bottom = 171.0
 text = "Output"
 
 [node name="Output" type="OptionButton" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 138.0
+margin_top = 154.0
 margin_right = 146.0
-margin_bottom = 158.0
+margin_bottom = 174.0
 text = "Off"
 items = [ "Off", null, false, 0, null, "Replace", null, false, 1, null, "Add", null, false, 2, null, "AM", null, false, 3, null, "XM", null, false, 4, null ]
 selected = 0
 
 [node name="LabelFrom" type="Label" parent="VBC/Params" groups=["Label"]]
-margin_top = 160.0
+margin_top = 176.0
 margin_right = 52.0
-margin_bottom = 174.0
+margin_bottom = 190.0
 text = "From"
 
 [node name="From" type="ProgressBar" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 160.0
+margin_top = 176.0
 margin_right = 146.0
-margin_bottom = 174.0
+margin_bottom = 190.0
 rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -226,16 +242,16 @@ big_step = 1.0
 huge_step = 1.0
 
 [node name="LabelPM" type="Label" parent="VBC/Params" groups=["Label"]]
-margin_top = 176.0
+margin_top = 192.0
 margin_right = 52.0
-margin_bottom = 190.0
+margin_bottom = 206.0
 text = "PM"
 
 [node name="PM" type="ProgressBar" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 176.0
+margin_top = 192.0
 margin_right = 146.0
-margin_bottom = 190.0
+margin_bottom = 206.0
 rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -247,16 +263,16 @@ big_step = 5.0
 huge_step = 10.0
 
 [node name="LabelAM" type="Label" parent="VBC/Params" groups=["Label"]]
-margin_top = 192.0
+margin_top = 208.0
 margin_right = 52.0
-margin_bottom = 206.0
+margin_bottom = 222.0
 text = "AM"
 
 [node name="AM" type="ProgressBar" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 192.0
+margin_top = 208.0
 margin_right = 146.0
-margin_bottom = 206.0
+margin_bottom = 222.0
 rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -268,9 +284,9 @@ big_step = 5.0
 huge_step = 10.0
 
 [node name="LabelXM" type="Label" parent="VBC/Params" groups=["Label"]]
-margin_top = 208.0
+margin_top = 224.0
 margin_right = 52.0
-margin_bottom = 222.0
+margin_bottom = 238.0
 text = "XM"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -278,9 +294,9 @@ __meta__ = {
 
 [node name="XM" type="ProgressBar" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 208.0
+margin_top = 224.0
 margin_right = 146.0
-margin_bottom = 222.0
+margin_bottom = 238.0
 rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -296,6 +312,7 @@ huge_step = 10.0
 [connection signal="value_changed" from="VBC/Params/Vol" to="." method="_on_Vol_value_changed"]
 [connection signal="value_changed" from="VBC/Params/ZStart" to="." method="_on_ZStart_value_changed"]
 [connection signal="value_changed" from="VBC/Params/NStart" to="." method="_on_NStart_value_changed"]
+[connection signal="value_changed" from="VBC/Params/Decay" to="." method="_on_Decay_value_changed"]
 [connection signal="value_changed" from="VBC/Params/Cycles" to="." method="_on_Cycles_value_changed"]
 [connection signal="value_changed" from="VBC/Params/Position" to="." method="_on_Position_value_changed"]
 [connection signal="item_selected" from="VBC/Params/Output" to="." method="_on_Output_item_selected"]

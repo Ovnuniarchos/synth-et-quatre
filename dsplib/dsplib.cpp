@@ -147,7 +147,11 @@ void DSPLib::sine(Array input,Array output,Array modulator,float pos0,float offs
 	int range=(size*cycles)/freqMult;
 	uint64_t dphi=(FIXP_1*freqMult)/size;
 	uint64_t phi=(uint64_t)(offset*FIXP_1)&FIXP_1MASK;
-	I2FConverter i2f;
+	I2FConverter v0;
+	v0.f=-vol;
+	float v;
+	decay=1.0f-((decay/size)*64.0f);
+	float dec=1.0f;
 	for(int i=0,j=(int)(pos0*size)&sz1;i<size;i++,j=(j+1)&sz1){
 		if(cycles>0.0f && i>=range){
 			output[j]=(mode==REPLACE)?variant2Float(input[j]):0.0f;
@@ -159,7 +163,9 @@ void DSPLib::sine(Array input,Array output,Array modulator,float pos0,float offs
 			-sineTable[(rphi>>24UL)&0x3fffUL],-sineTable[(~rphi>>24UL)&0x3fffUL],
 			0.0f,1.0f,-1.0f
 		};
-		output[j]=abspow(values[quadrants[(rphi>>38UL)&3]],power)*vol;
+		v=abspow(values[quadrants[(rphi>>38UL)&3]],power);
+		calc_decay(dec,decay,v0,v);
+		output[j]=v*dec*vol;
 		phi+=dphi;
 	}
 }
@@ -173,6 +179,11 @@ void DSPLib::rectangle(Array input,Array output,Array modulator,float pos0,float
 	uint64_t phi=(uint64_t)(offset*FIXP_1)&FIXP_1MASK;
 	uint64_t zs=(uint64_t)(zStart*FIXP_1)&FIXP_1MASK;
 	uint64_t ns=(uint64_t)(nStart*FIXP_1)&FIXP_1MASK;
+	I2FConverter v0;
+	v0.f=-vol;
+	float v;
+	decay=1.0f-((decay/size)*64.0f);
+	float dec=1.0f;
 	for(int i=0,j=(int)(pos0*size)&sz1;i<size;i++,j=(j+1)&sz1){
 		if(cycles>0.0f && i>=range){
 			output[j]=(mode==REPLACE)?variant2Float(input[j]):0.0f;
@@ -180,12 +191,14 @@ void DSPLib::rectangle(Array input,Array output,Array modulator,float pos0,float
 		}
 		uint64_t rphi=(uint64_t)(phi+(variant2Float(modulator[i])*pm*FIXP_1))&FIXP_1MASK;
 		if(rphi>ns){
-			output[j]=-vol;
+			v=-vol;
 		}else if(rphi>zs){
-			output[j]=0.0f;
+			v=0.0f;
 		}else{
-			output[j]=vol;
+			v=vol;
 		}
+		calc_decay(dec,decay,v0,v);
+		output[j]=v*dec;
 		phi+=dphi;
 	}
 }
@@ -199,6 +212,11 @@ void DSPLib::saw(Array input,Array output,Array modulator,float pos0,float offse
 	uint64_t dphi=(FIXP_1*freqMult)/size;
 	uint64_t phi=(uint64_t)(offset*FIXP_1)&FIXP_1MASK;
 	I2FConverter i2f;
+	I2FConverter v0;
+	v0.f=-vol;
+	float v;
+	decay=1.0f-((decay/size)*64.0f);
+	float dec=1.0f;
 	for(int i=0,j=(int)(pos0*size)&sz1;i<size;i++,j=(j+1)&sz1){
 		if(cycles>0.0f && i>=range){
 			output[j]=(mode==REPLACE)?variant2Float(input[j]):0.0f;
@@ -207,7 +225,9 @@ void DSPLib::saw(Array input,Array output,Array modulator,float pos0,float offse
 		uint64_t rphi=(uint64_t)(phi+(variant2Float(modulator[i])*pm*FIXP_1))&FIXP_1MASK;
 		i2f.setMantissa(rphi>>16);
 		float values[]={i2f.f-1.0f,i2f.f,1.0f-i2f.f,-i2f.f,0.0f,1.0f,-1.0f};
-		output[j]=abspow(values[halves[(rphi>>39)&1]],power)*vol;
+		v=abspow(values[halves[(rphi>>39)&1]],power);
+		calc_decay(dec,decay,v0,v);
+		output[j]=v*dec*vol;
 		phi+=dphi;
 	}
 }
@@ -221,6 +241,11 @@ void DSPLib::triangle(Array input,Array output,Array modulator,float pos0,float 
 	uint64_t dphi=(FIXP_1*freqMult)/size;
 	uint64_t phi=(uint64_t)(offset*FIXP_1)&FIXP_1MASK;
 	I2FConverter i2f;
+	I2FConverter v0;
+	v0.f=-vol;
+	float v;
+	decay=1.0f-((decay/size)*64.0f);
+	float dec=1.0f;
 	for(int i=0,j=(int)(pos0*size)&sz1;i<size;i++,j=(j+1)&sz1){
 		if(cycles>0.0f && i>=range){
 			output[j]=(mode==REPLACE)?variant2Float(input[j]):0.0f;
@@ -230,7 +255,9 @@ void DSPLib::triangle(Array input,Array output,Array modulator,float pos0,float 
 		i2f.setMantissa(rphi>>16);
 		i2f.f=(i2f.f*2.0f)-1.0f;
 		float values[]={i2f.f,-i2f.f,0.0f,1.0f,-1.0f};
-		output[j]=abspow(values[halves[(rphi>>39)&1]],power)*vol;
+		v=abspow(values[halves[(rphi>>39)&1]],power);
+		calc_decay(dec,decay,v0,v);
+		output[j]=v*dec*vol;
 		phi+=dphi;
 	}
 }

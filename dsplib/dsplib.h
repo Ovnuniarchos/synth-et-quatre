@@ -6,6 +6,7 @@
 #include <Vector2.hpp>
 #include <Math.hpp>
 #include <limits>
+//#include <cmath>
 
 namespace godot{
 
@@ -56,6 +57,15 @@ private:
 		i2f.f=pow(i2f.f,power);
 		i2f.setSign(neg);
 		return i2f.f;
+	}
+	inline void calc_decay(float &curr_dec,float &decay,I2FConverter &delta,float &current){
+		delta.f=current-delta.f;
+		if(abs(delta.f)<0.0000001f || delta.isNegative()!=(current<0.0f)){
+			curr_dec*=decay;
+		}else{
+			curr_dec=1.0f;
+		}
+		delta.f=current;
 	}
 	float* arrayG2C(Array in){
 		float *out=new float[in.size()];

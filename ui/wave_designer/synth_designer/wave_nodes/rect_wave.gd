@@ -13,6 +13,7 @@ func setup()->void:
 	$VBC/Params/Vol.value=component.vol*100.0
 	$VBC/Params/ZStart.value=component.z_start*100.0
 	$VBC/Params/NStart.value=component.n_start*100.0
+	$VBC/Params/Decay.value=component.decay
 	$VBC/Params/Cycles.value=component.cycles
 	$VBC/Params/Position.value=component.pos0*100.0
 	$VBC/Params/Output.selected=component.output_mode
@@ -71,4 +72,9 @@ func _on_ZStart_value_changed(value:float)->void:
 
 func _on_NStart_value_changed(value:float)->void:
 	component.n_start=value/100.0
+	emit_signal("params_changed")
+
+
+func _on_Decay_value_changed(value:float)->void:
+	component.decay=value
 	emit_signal("params_changed")

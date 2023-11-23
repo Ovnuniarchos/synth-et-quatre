@@ -10,9 +10,6 @@ margin_bottom = 406.0
 size_flags_horizontal = 9
 size_flags_vertical = 9
 script = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="VBC" type="VBoxContainer" parent="."]
 margin_left = 7.0
@@ -105,7 +102,7 @@ margin_left = 60.0
 margin_top = 48.0
 margin_right = 134.0
 margin_bottom = 62.0
-rect_min_size = Vector2( 41, 14 )
+rect_min_size = Vector2( 48, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
 max_value = 50.0
@@ -113,90 +110,109 @@ percent_visible = false
 script = ExtResource( 3 )
 _decimals = 2
 
-[node name="LabelQ1" type="Label" parent="VBC/Params" groups=["Label"]]
-margin_top = 67.0
+[node name="LabelDecay" type="Label" parent="VBC/Params"]
+margin_top = 64.0
 margin_right = 52.0
-margin_bottom = 81.0
+margin_bottom = 78.0
+text = "Decay"
+
+[node name="Decay" type="ProgressBar" parent="VBC/Params"]
+margin_left = 60.0
+margin_top = 64.0
+margin_right = 134.0
+margin_bottom = 78.0
+rect_min_size = Vector2( 48, 14 )
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+percent_visible = false
+script = ExtResource( 3 )
+_decimals = 2
+
+[node name="LabelQ1" type="Label" parent="VBC/Params" groups=["Label"]]
+margin_top = 83.0
+margin_right = 52.0
+margin_bottom = 97.0
 text = "Quad 1"
 
 [node name="Quad1" type="OptionButton" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 64.0
+margin_top = 80.0
 margin_right = 134.0
-margin_bottom = 84.0
+margin_bottom = 100.0
 text = "0 > 1"
 items = [ "0 > 1", null, false, 0, null, "1 > 0", null, false, 1, null, "0 > -1", null, false, 2, null, "-1 > 0", null, false, 3, null, "0", null, false, 4, null, "+1", null, false, 5, null, "-1", null, false, 6, null ]
 selected = 0
 
 [node name="LabelQ2" type="Label" parent="VBC/Params" groups=["Label"]]
-margin_top = 89.0
+margin_top = 105.0
 margin_right = 52.0
-margin_bottom = 103.0
+margin_bottom = 119.0
 text = "Quad 2"
 
 [node name="Quad2" type="OptionButton" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 86.0
+margin_top = 102.0
 margin_right = 134.0
-margin_bottom = 106.0
+margin_bottom = 122.0
 text = "1 > 0"
 items = [ "0 > 1", null, false, 0, null, "1 > 0", null, false, 1, null, "0 > -1", null, false, 2, null, "-1 > 0", null, false, 3, null, "0", null, false, 4, null, "+1", null, false, 5, null, "-1", null, false, 6, null ]
 selected = 1
 
 [node name="LabelQ3" type="Label" parent="VBC/Params" groups=["Label"]]
-margin_top = 111.0
+margin_top = 127.0
 margin_right = 52.0
-margin_bottom = 125.0
+margin_bottom = 141.0
 text = "Quad 3"
 
 [node name="Quad3" type="OptionButton" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 108.0
+margin_top = 124.0
 margin_right = 134.0
-margin_bottom = 128.0
+margin_bottom = 144.0
 text = "0 > -1"
 items = [ "0 > 1", null, false, 0, null, "1 > 0", null, false, 1, null, "0 > -1", null, false, 2, null, "-1 > 0", null, false, 3, null, "0", null, false, 4, null, "+1", null, false, 5, null, "-1", null, false, 6, null ]
 selected = 2
 
 [node name="LabelQ4" type="Label" parent="VBC/Params" groups=["Label"]]
-margin_top = 133.0
+margin_top = 149.0
 margin_right = 52.0
-margin_bottom = 147.0
+margin_bottom = 163.0
 text = "Quad 4"
 
 [node name="Quad4" type="OptionButton" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 130.0
+margin_top = 146.0
 margin_right = 134.0
-margin_bottom = 150.0
+margin_bottom = 166.0
 text = "-1 > 0"
 items = [ "0 > 1", null, false, 0, null, "1 > 0", null, false, 1, null, "0 > -1", null, false, 2, null, "-1 > 0", null, false, 3, null, "0", null, false, 4, null, "+1", null, false, 5, null, "-1", null, false, 6, null ]
 selected = 3
 
 [node name="ReferenceRect" type="ReferenceRect" parent="VBC/Params"]
-margin_top = 152.0
+margin_top = 168.0
 margin_right = 52.0
-margin_bottom = 176.0
+margin_bottom = 192.0
 rect_min_size = Vector2( 0, 24 )
 
 [node name="ReferenceRect2" type="ReferenceRect" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 152.0
+margin_top = 168.0
 margin_right = 134.0
-margin_bottom = 176.0
+margin_bottom = 192.0
 rect_min_size = Vector2( 0, 24 )
 
 [node name="LabelCycles" type="Label" parent="VBC/Params" groups=["Label"]]
-margin_top = 178.0
+margin_top = 194.0
 margin_right = 52.0
-margin_bottom = 192.0
+margin_bottom = 208.0
 text = "Cycles"
 
 [node name="Cycles" type="ProgressBar" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 178.0
+margin_top = 194.0
 margin_right = 134.0
-margin_bottom = 192.0
+margin_bottom = 208.0
 rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -208,16 +224,16 @@ big_step = 5.0
 huge_step = 10.0
 
 [node name="LabelPosition" type="Label" parent="VBC/Params" groups=["Label"]]
-margin_top = 194.0
+margin_top = 210.0
 margin_right = 52.0
-margin_bottom = 208.0
+margin_bottom = 224.0
 text = "Position"
 
 [node name="Position" type="ProgressBar" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 194.0
+margin_top = 210.0
 margin_right = 134.0
-margin_bottom = 208.0
+margin_bottom = 224.0
 rect_min_size = Vector2( 56, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -227,31 +243,31 @@ script = ExtResource( 3 )
 _decimals = 2
 
 [node name="LabelOutput" type="Label" parent="VBC/Params" groups=["Label"]]
-margin_top = 213.0
+margin_top = 229.0
 margin_right = 52.0
-margin_bottom = 227.0
+margin_bottom = 243.0
 text = "Output"
 
 [node name="Output" type="OptionButton" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 210.0
+margin_top = 226.0
 margin_right = 134.0
-margin_bottom = 230.0
+margin_bottom = 246.0
 text = "Off"
 items = [ "Off", null, false, 0, null, "Replace", null, false, 1, null, "Add", null, false, 2, null, "AM", null, false, 3, null, "XM", null, false, 4, null ]
 selected = 0
 
 [node name="LabelFrom" type="Label" parent="VBC/Params" groups=["Label"]]
-margin_top = 232.0
+margin_top = 248.0
 margin_right = 52.0
-margin_bottom = 246.0
+margin_bottom = 262.0
 text = "From"
 
 [node name="From" type="ProgressBar" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 232.0
+margin_top = 248.0
 margin_right = 134.0
-margin_bottom = 246.0
+margin_bottom = 262.0
 rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -263,16 +279,16 @@ big_step = 1.0
 huge_step = 1.0
 
 [node name="LabelPM" type="Label" parent="VBC/Params" groups=["Label"]]
-margin_top = 248.0
+margin_top = 264.0
 margin_right = 52.0
-margin_bottom = 262.0
+margin_bottom = 278.0
 text = "PM"
 
 [node name="PM" type="ProgressBar" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 248.0
+margin_top = 264.0
 margin_right = 134.0
-margin_bottom = 262.0
+margin_bottom = 278.0
 rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -284,16 +300,16 @@ big_step = 5.0
 huge_step = 10.0
 
 [node name="LabelAM" type="Label" parent="VBC/Params" groups=["Label"]]
-margin_top = 264.0
+margin_top = 280.0
 margin_right = 52.0
-margin_bottom = 278.0
+margin_bottom = 294.0
 text = "AM"
 
 [node name="AM" type="ProgressBar" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 264.0
+margin_top = 280.0
 margin_right = 134.0
-margin_bottom = 278.0
+margin_bottom = 294.0
 rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -305,9 +321,9 @@ big_step = 5.0
 huge_step = 10.0
 
 [node name="LabelXM" type="Label" parent="VBC/Params" groups=["Label"]]
-margin_top = 280.0
+margin_top = 296.0
 margin_right = 52.0
-margin_bottom = 294.0
+margin_bottom = 310.0
 text = "XM"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -315,9 +331,9 @@ __meta__ = {
 
 [node name="XM" type="ProgressBar" parent="VBC/Params"]
 margin_left = 60.0
-margin_top = 280.0
+margin_top = 296.0
 margin_right = 134.0
-margin_bottom = 294.0
+margin_bottom = 310.0
 rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -332,6 +348,7 @@ huge_step = 10.0
 [connection signal="value_changed" from="VBC/Params/Ofs" to="." method="_on_Ofs_value_changed"]
 [connection signal="value_changed" from="VBC/Params/Vol" to="." method="_on_Vol_value_changed"]
 [connection signal="value_changed" from="VBC/Params/Power" to="." method="_on_Power_value_changed"]
+[connection signal="value_changed" from="VBC/Params/Decay" to="." method="_on_Decay_value_changed"]
 [connection signal="item_selected" from="VBC/Params/Quad1" to="." method="_on_Quad1_item_selected"]
 [connection signal="item_selected" from="VBC/Params/Quad2" to="." method="_on_Quad2_item_selected"]
 [connection signal="item_selected" from="VBC/Params/Quad3" to="." method="_on_Quad3_item_selected"]

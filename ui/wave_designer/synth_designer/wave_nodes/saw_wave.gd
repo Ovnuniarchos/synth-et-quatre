@@ -79,3 +79,7 @@ func _on_Position_value_changed(value:float)->void:
 func _on_Power_value_changed(value:float)->void:
 	component.power=value
 	emit_signal("params_changed")
+
+func _on_Decay_value_changed(value:float)->void:
+	component.decay=value
+	emit_signal("params_changed")

@@ -64,6 +64,7 @@ func _on_Half1_item_selected(id:int)->void:
 	component.halves[0]=id
 	emit_signal("params_changed")
 
+
 func _on_Half2_item_selected(id:int)->void:
 	component.halves[1]=id
 	emit_signal("params_changed")
@@ -78,4 +79,8 @@ func _on_Position_value_changed(value:float)->void:
 
 func _on_Power_value_changed(value:float)->void:
 	component.power=value
+	emit_signal("params_changed")
+
+func _on_Decay_value_changed(value:float)->void:
+	component.decay=value
 	emit_signal("params_changed")

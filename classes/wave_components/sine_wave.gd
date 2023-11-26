@@ -53,6 +53,6 @@ func calculate(size:int,input:Array,caller:WaveComponent)->Array:
 	set_modulator(size,pm,input,caller)
 	DSP.sine(
 		input,generated,modulator,pos0,phi0,freq_mult,cycles,pm,power,decay,
-		quarters[0],quarters[1],quarters[2],quarters[3],vol,output_mode
+		vol,output_mode,quarters[0],quarters[1],quarters[2],quarters[3]
 	)
 	return generate_output(size,input,caller)

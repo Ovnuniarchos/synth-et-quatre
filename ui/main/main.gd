@@ -3,6 +3,7 @@ extends Control
 """
 FIXME
 TODO:
+	Power/Decay filters
 	CycleButtons themable
 	MIDI on/off indicator
 	Reset per channel parameters (as a command|button)

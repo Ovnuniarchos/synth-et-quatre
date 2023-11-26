@@ -3,15 +3,15 @@ class_name WaveComponentIO
 
 
 const NOISE_ID:String="nOIW"
-const NOISE_VERSION:int=0
+const NOISE_VERSION:int=1
 const RECTANGLE_ID:String="rECW"
-const RECTANGLE_VERSION:int=0
+const RECTANGLE_VERSION:int=1
 const SAW_ID:String="sAWW"
-const SAW_VERSION:int=0
+const SAW_VERSION:int=1
 const SINE_ID:String="sINW"
-const SINE_VERSION:int=0
+const SINE_VERSION:int=1
 const TRIANGLE_ID:String="tRIW"
-const TRIANGLE_VERSION:int=0
+const TRIANGLE_VERSION:int=1
 const BPF_ID:String="bPFF"
 const BPF_VERSION:int=0
 const BRF_ID:String="bRFF"

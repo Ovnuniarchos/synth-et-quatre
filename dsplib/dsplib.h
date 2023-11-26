@@ -86,11 +86,40 @@ public:
 
 	Array mixWaves(Array input,Array generated,Array modulator,Array output,float am,float xm,float vol,int mode);
 
-	void noise(Array input,Array output,float pos0,float length,int64_t seed,float tone,float power,float vol,int mode);
-	void sine(Array input,Array output,Array modulator,float pos0,float offset,float freqMult,float cycles,float pm,float power,float decay,int q0,int q1,int q2,int q3,float vol,int mode);
-	void rectangle(Array input,Array output,Array modulator,float pos0,float offset,float freqMult,float cycles,float pm,float decay,float zStart,float nStart,float vol,int mode);
-	void saw(Array input,Array output,Array modulator,float pos0,float offset,float freqMult,float cycles,float pm,float power,float decay,int half0,int half1,float vol,int mode);
-	void triangle(Array input,Array output,Array modulator,float pos0,float offset,float freqMult,float cycles,float pm,float power,float decay,int half0,int half1,float vol,int mode);
+	void noise(
+		Array input,Array output,
+		float pos0,float length,
+		int64_t seed,float tone,float power,
+		float vol,int mode
+	);
+	void sine(
+		Array input,Array output,Array modulator,
+		float pos0,float offset,float freqMult,float cycles,
+		float pm,float power,float decay,
+		float vol,int mode,
+		int q0,int q1,int q2,int q3
+	);
+	void rectangle(
+		Array input,Array output,Array modulator,
+		float pos0,float offset,float freqMult,float cycles,
+		float pm,float decay,
+		float vol,int mode,
+		float zStart,float nStart
+	);
+	void saw(
+		Array input,Array output,Array modulator,
+		float pos0,float offset,float freqMult,float cycles,
+		float pm,float power,float decay,
+		float vol,int mode,
+		int q0,int q1,int q2,int q3
+	);
+	void triangle(
+		Array input,Array output,Array modulator,
+		float pos0,float offset,float freqMult,float cycles,
+		float pm,float power,float decay,
+		float vol,int mode,
+		int q0,int q1,int q2,int q3
+	);
 
 	void normalize(Array input,Array output,bool keepCenter);
 	void convolutionFilter(Array input,Array output,Array coeffs);

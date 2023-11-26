@@ -15,6 +15,7 @@ func serialize(out:ChunkedFile,w:RectangleWave)->FileResult:
 	out.store_float(w.cycles)
 	out.store_float(w.pos0)
 	out.store_float(w.pm)
+	out.store_float(w.decay)
 	out.end_chunk()
 	if out.get_error():
 		return FileResult.new(out.get_error(),{"file":out.get_path()})

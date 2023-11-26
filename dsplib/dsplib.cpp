@@ -105,7 +105,12 @@ Array DSPLib::mixWaves(Array input,Array generated,Array modulator,Array output,
 	return input;
 }
 
-void DSPLib::noise(Array input,Array output,float pos0,float length,int64_t seed,float tone,float power,float vol,int mode){
+void DSPLib::noise(
+	Array input,Array output,
+	float pos0,float length,
+	int64_t seed,float tone,float power,
+	float vol,int mode
+){
 	vol=(mode!=REPLACE && mode!=ADD)?1.0f:vol;
 	randomSeed=seed;
 	float fract=0.0f;
@@ -139,7 +144,13 @@ void DSPLib::noise(Array input,Array output,float pos0,float length,int64_t seed
 	}
 }
 
-void DSPLib::sine(Array input,Array output,Array modulator,float pos0,float offset,float freqMult,float cycles,float pm,float power,float decay,int q0,int q1,int q2,int q3,float vol,int mode){
+void DSPLib::sine(
+	Array input,Array output,Array modulator,
+	float pos0,float offset,float freqMult,float cycles,
+	float pm,float power,float decay,
+	float vol,int mode,
+	int q0,int q1,int q2,int q3
+){
 	vol=(mode!=REPLACE && mode!=ADD)?1.0f:vol;
 	int quadrants[]={q0,q1,q2,q3};
 	int size=input.size();
@@ -170,7 +181,13 @@ void DSPLib::sine(Array input,Array output,Array modulator,float pos0,float offs
 	}
 }
 
-void DSPLib::rectangle(Array input,Array output,Array modulator,float pos0,float offset,float freqMult,float cycles,float pm,float decay,float zStart,float nStart,float vol,int mode){
+void DSPLib::rectangle(
+	Array input,Array output,Array modulator,
+	float pos0,float offset,float freqMult,float cycles,
+	float pm,float decay,
+	float vol,int mode,
+	float zStart,float nStart
+){
 	vol=(mode!=REPLACE && mode!=ADD)?1.0f:vol;
 	int size=input.size();
 	int sz1=size-1;
@@ -203,9 +220,15 @@ void DSPLib::rectangle(Array input,Array output,Array modulator,float pos0,float
 	}
 }
 
-void DSPLib::saw(Array input,Array output,Array modulator,float pos0,float offset,float freqMult,float cycles,float pm,float power,float decay,int half0,int half1,float vol,int mode){
+void DSPLib::saw(
+	Array input,Array output,Array modulator,
+	float pos0,float offset,float freqMult,float cycles,
+	float pm,float power,float decay,
+	float vol,int mode,
+	int q0,int q1,int q2,int q3
+){
 	vol=(mode!=REPLACE && mode!=ADD)?1.0f:vol;
-	int halves[]={half0,half1};
+	int quarters[]={q0,q1,q2,q3};
 	int size=input.size();
 	int sz1=size-1;
 	int range=(size*cycles)/freqMult;
@@ -223,18 +246,24 @@ void DSPLib::saw(Array input,Array output,Array modulator,float pos0,float offse
 			continue;
 		}
 		uint64_t rphi=(uint64_t)(phi+(variant2Float(modulator[i])*pm*FIXP_1))&FIXP_1MASK;
-		i2f.setMantissa(rphi>>16);
-		float values[]={i2f.f-1.0f,i2f.f,1.0f-i2f.f,-i2f.f,0.0f,1.0f,-1.0f};
-		v=abspow(values[halves[(rphi>>39)&1]],power);
+		i2f.setMantissa((rphi>>16)&0x3fffff);
+		float values[]={i2f.f-1.0f,i2f.f-0.5f,i2f.f,i2f.f+0.5f,1.0f-i2f.f,0.5f-i2f.f,-i2f.f,-i2f.f-0.5f,1.0f,0.5f,0.0f,-0.5f,-1.0f};
+		v=abspow(values[quarters[(rphi>>38)&3]],power);
 		calc_decay(dec,decay,v0,v);
 		output[j]=v*dec*vol;
 		phi+=dphi;
 	}
 }
 
-void DSPLib::triangle(Array input,Array output,Array modulator,float pos0,float offset,float freqMult,float cycles,float pm,float power,float decay,int half0,int half1,float vol,int mode){
+void DSPLib::triangle(
+	Array input,Array output,Array modulator,
+	float pos0,float offset,float freqMult,float cycles,
+	float pm,float power,float decay,
+	float vol,int mode,
+	int q0,int q1,int q2,int q3
+){
 	vol=(mode!=REPLACE && mode!=ADD)?1.0f:vol;
-	int halves[]={half0,half1};
+	int quarters[]={q0,q1,q2,q3};
 	int size=input.size();
 	int sz1=size-1;
 	int range=(size*cycles)/freqMult;
@@ -252,10 +281,10 @@ void DSPLib::triangle(Array input,Array output,Array modulator,float pos0,float 
 			continue;
 		}
 		uint64_t rphi=(uint64_t)(phi+(variant2Float(modulator[i])*pm*FIXP_1))&FIXP_1MASK;
-		i2f.setMantissa(rphi>>16);
-		i2f.f=(i2f.f*2.0f)-1.0f;
-		float values[]={i2f.f,-i2f.f,0.0f,1.0f,-1.0f};
-		v=abspow(values[halves[(rphi>>39)&1]],power);
+		i2f.setMantissa(rphi>>15);
+		i2f.f=i2f.f-1.0f;
+		float values[]={i2f.f,i2f.f+1.0f,-i2f.f,-i2f.f-1.0f,1.0f,0.0f,-1.0f};
+		v=abspow(values[quarters[(rphi>>38)&3]],power);
 		calc_decay(dec,decay,v0,v);
 		output[j]=v*dec*vol;
 		phi+=dphi;

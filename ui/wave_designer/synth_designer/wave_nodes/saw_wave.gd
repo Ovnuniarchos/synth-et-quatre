@@ -1,10 +1,29 @@
 extends WaveController
 
-enum HALF{H0,H1,H2,H3,HZ,HH,HL}
+const OPS:Array=[
+	"-1 > -0.5",
+	"-0.5 > 0",
+	"0 > 0.5",
+	"0.5 > 1",
+	"1 > 0.5",
+	"0.5 > 0",
+	"0 > -0.5",
+	"-0.5 > -1",
+	"1",
+	"0.5",
+	"0",
+	"-0.5",
+	"-1"
+]
 
 func _ready()->void:
 	from_node=$VBC/Params/From
 	title_node=$VBC/Title
+	for i in OPS.size():
+		$VBC/Params/Quarter1.add_item(OPS[i],i)
+		$VBC/Params/Quarter2.add_item(OPS[i],i)
+		$VBC/Params/Quarter3.add_item(OPS[i],i)
+		$VBC/Params/Quarter4.add_item(OPS[i],i)
 	setup()
 
 func setup()->void:
@@ -14,8 +33,10 @@ func setup()->void:
 	$VBC/Params/Ofs.value=component.phi0*100.0
 	$VBC/Params/Vol.value=component.vol*100.0
 	$VBC/Params/Power.value=component.power
-	$VBC/Params/Half1.selected=component.halves[0]
-	$VBC/Params/Half2.selected=component.halves[1]
+	$VBC/Params/Quarter1.selected=component.quarters[0]
+	$VBC/Params/Quarter2.selected=component.quarters[1]
+	$VBC/Params/Quarter3.selected=component.quarters[2]
+	$VBC/Params/Quarter4.selected=component.quarters[3]
 	$VBC/Params/Cycles.value=component.cycles
 	$VBC/Params/Position.value=component.pos0*100.0
 	$VBC/Params/Output.selected=component.output_mode
@@ -60,14 +81,6 @@ func _on_Output_item_selected(id:int)->void:
 	component.output_mode=id
 	emit_signal("params_changed")
 
-func _on_Half1_item_selected(id:int)->void:
-	component.halves[0]=id
-	emit_signal("params_changed")
-
-func _on_Half2_item_selected(id:int)->void:
-	component.halves[1]=id
-	emit_signal("params_changed")
-
 func _on_Cycles_value_changed(value:float)->void:
 	component.cycles=value
 	emit_signal("params_changed")
@@ -82,4 +95,8 @@ func _on_Power_value_changed(value:float)->void:
 
 func _on_Decay_value_changed(value:float)->void:
 	component.decay=value
+	emit_signal("params_changed")
+
+func _on_Quarter_item_selected(value:int,id:int)->void:
+	component.quarters[id]=value
 	emit_signal("params_changed")

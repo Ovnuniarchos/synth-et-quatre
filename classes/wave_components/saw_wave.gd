@@ -3,11 +3,11 @@ class_name SawWave
 
 const COMPONENT_ID:String="Saw"
 
-enum HALF{H0,H1,H2,H3,HZ,HH,HL}
+enum QUARTER{Q0,Q1,Q2,Q3,Q0I,Q1I,Q2I,Q3I,QH,QMP,QZ,QMN,QL}
 
 var freq_mult:float
 var phi0:float
-var halves:Array
+var quarters:Array
 var cycles:float
 var pos0:float
 var pm:float
@@ -16,7 +16,7 @@ var decay:float
 
 func _init().()->void:
 	freq_mult=1.0
-	halves=[HALF.H0,HALF.H1]
+	quarters=[QUARTER.Q0,QUARTER.Q1,QUARTER.Q2,QUARTER.Q3]
 	phi0=0.0
 	cycles=0.0
 	pos0=0.0
@@ -26,7 +26,7 @@ func _init().()->void:
 
 func duplicate()->WaveComponent:
 	var nc:SawWave=.duplicate() as SawWave
-	nc.halves=halves.duplicate()
+	nc.quarters=quarters.duplicate()
 	nc.freq_mult=freq_mult
 	nc.phi0=phi0
 	nc.cycles=cycles
@@ -39,7 +39,8 @@ func duplicate()->WaveComponent:
 func equals(other:WaveComponent)->bool:
 	if !.equals(other):
 		return false
-	if halves[0]!=other.halves[0] or halves[1]!=other.halves[1]:
+	if quarters[0]!=other.quarters[0] or quarters[1]!=other.quarters[1]\
+		or quarters[2]!=other.quarters[2] or quarters[3]!=other.quarters[3]:
 		return false
 	if !are_equal_approx([
 				freq_mult,other.freq_mult,phi0,other.phi0,cycles,other.cycles,
@@ -53,6 +54,6 @@ func calculate(size:int,input:Array,caller:WaveComponent)->Array:
 	set_modulator(size,pm,input,caller)
 	DSP.saw(
 		input,generated,modulator,pos0,phi0,freq_mult,cycles,pm,power,decay,
-		halves[0],halves[1],vol,output_mode
+		vol,output_mode,quarters[0],quarters[1],quarters[2],quarters[3]
 	)
 	return generate_output(size,input,caller)

@@ -27,6 +27,9 @@ func deserialize(inf:ChunkedFile,header:Dictionary)->FileResult:
 	w.cycles=inf.get_float()
 	w.pos0=inf.get_float()
 	w.pm=inf.get_float()
+	if version>=1:
+		w.power=inf.get_float()
+		w.decay=inf.get_float()
 	if inf.get_error():
 		return FileResult.new(inf.get_error(),{"file":inf.get_path()})
 	return FileResult.new(OK,w)

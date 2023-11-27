@@ -31,6 +31,8 @@ void DSPLib::_register_methods(){
 	register_method("convolution_filter", &DSPLib::convolutionFilter);
 	register_method("clamp", &DSPLib::clamp);
 	register_method("quantize", &DSPLib::quantize);
+	register_method("power", &DSPLib::power);
+	register_method("decay", &DSPLib::decay);
 }
 
 DSPLib::DSPLib(){
@@ -291,22 +293,22 @@ void DSPLib::triangle(
 	}
 }
 
-void DSPLib::normalize(Array input,Array output,bool keepCenter){
+void DSPLib::normalize(Array input,Array output,bool keepCenter,float vol){
 	float vMax=input.max();
 	float vMin=input.min();
 	if (keepCenter){
 		vMax=Math::max(abs(vMax),abs(vMin));
 		for(int i=input.size()-1;i>-1;i--){
-			output[i]=Math::range_lerp(variant2Float(input[i]),-vMax,vMax,-1.0f,1.0f);
+			output[i]=Math::range_lerp(variant2Float(input[i]),-vMax,vMax,-1.0f,1.0f)*vol;
 		}
 	}else{
 		for(int i=input.size()-1;i>-1;i--){
-			output[i]=Math::range_lerp(variant2Float(input[i]),vMin,vMax,-1.0f,1.0f);
+			output[i]=Math::range_lerp(variant2Float(input[i]),vMin,vMax,-1.0f,1.0f)*vol;
 		}
 	}
 }
 
-void DSPLib::convolutionFilter(Array input,Array output,Array coeffs){
+void DSPLib::convolutionFilter(Array input,Array output,Array coeffs,float vol){
 	float *in=arrayG2C(input);
 	float *co=arrayG2C(coeffs);
 	int mask=input.size()-1;
@@ -316,22 +318,44 @@ void DSPLib::convolutionFilter(Array input,Array output,Array coeffs){
 		for(int j=taps-1,k=-(taps>>1);j>-1;j--,k++){
 			val+=in[(i+k)&mask]*co[j];
 		}
-		output[i]=val;
+		output[i]=val*vol;
 	}
 	delete[] in;
 	delete[] co;
 }
 
-void DSPLib::clamp(Array input,Array output,float loLevel,float hiLevel,bool loClamp,bool hiClamp){
+void DSPLib::clamp(Array input,Array output,float loLevel,float hiLevel,bool loClamp,bool hiClamp,float vol){
 	for(int i=input.size()-1;i>-1;i--){
 		float v=variant2Float(input[i]);
-		output[i]=Math::clamp(v,loClamp?loLevel:v,hiClamp?hiLevel:v);
+		output[i]=Math::clamp(v,loClamp?loLevel:v,hiClamp?hiLevel:v)*vol;
 	}
 }
 
-void DSPLib::quantize(Array input,Array output,int steps){
+void DSPLib::quantize(Array input,Array output,int steps,float vol){
 	float st=2.0f/(steps-1.0f);
 	for(int i=input.size()-1;i>-1;i--){
-		output[i]=Math::stepify(variant2Float(input[i])+1.0f,st)-1.0f;
+		output[i]=(Math::stepify(variant2Float(input[i])+1.0f,st)-1.0f)*vol;
 	}
 }
+
+void DSPLib::power(Array input,Array output,float power,float vol){
+	for(int i=input.size()-1;i>-1;i--){
+		output[i]=abspow(variant2Float(input[i]),power)*vol;
+	}
+}
+
+void DSPLib::decay(Array input,Array output,float decay,float vol){
+	int size=input.size();
+	I2FConverter i2f;
+	I2FConverter v0;
+	v0.f=variant2Float(input[size-1]);
+	float v;
+	decay=1.0f-((decay/size)*64.0f);
+	float dec=1.0f;
+	for(int i=0;i<size;i++){
+		v=variant2Float(input[i]);
+		calc_decay(dec,decay,v0,v);
+		output[i]=v*dec*vol;
+	}
+}
+

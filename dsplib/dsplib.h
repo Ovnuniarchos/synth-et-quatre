@@ -6,7 +6,7 @@
 #include <Vector2.hpp>
 #include <Math.hpp>
 #include <limits>
-//#include <cmath>
+
 
 namespace godot{
 
@@ -121,10 +121,12 @@ public:
 		int q0,int q1,int q2,int q3
 	);
 
-	void normalize(Array input,Array output,bool keepCenter);
-	void convolutionFilter(Array input,Array output,Array coeffs);
-	void clamp(Array input,Array output,float loLevel,float hiLevel,bool loClamp,bool hiClamp);
-	void quantize(Array input,Array output,int steps);
+	void convolutionFilter(Array input,Array output,Array coeffs,float vol);
+	void normalize(Array input,Array output,bool keepCenter,float vol);
+	void clamp(Array input,Array output,float loLevel,float hiLevel,bool loClamp,bool hiClamp,float vol);
+	void quantize(Array input,Array output,int steps,float vol);
+	void power(Array input,Array output,float power,float vol);
+	void decay(Array input,Array output,float decay,float vol);
 };
 
 }

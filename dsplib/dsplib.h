@@ -61,11 +61,15 @@ private:
 	inline void calc_decay(float &curr_dec,float &decay,I2FConverter &delta,float &current){
 		delta.f=current-delta.f;
 		if(abs(delta.f)<0.0000001f || delta.isNegative()!=(current<0.0f)){
-			curr_dec*=decay;
+			curr_dec-=decay;
+			if (curr_dec<0.0f) curr_dec=0.0f;
 		}else{
 			curr_dec=1.0f;
 		}
 		delta.f=current;
+	}
+	inline float init_decay(float decay,int size){
+		return (pow(decay,5.0)*128.0f)/size;
 	}
 	float* arrayG2C(Array in){
 		float *out=new float[in.size()];

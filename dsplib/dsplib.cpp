@@ -98,8 +98,8 @@ Array DSPLib::mixWaves(Array input,Array generated,Array modulator,Array output,
 		for(int i=generated.size()-1;i>-1;i--){
 			output[i]=variant2Float(input[i])*Math::lerp(1.0f,
 				variant2Float(generated[i])*
-				Math::lerp(1.0f,full2Positive(variant2Float(modulator[i])),am)
-				*Math::lerp(1.0f,variant2Float(modulator[i]),xm),
+				Math::lerp(1.0f,full2Positive(variant2Float(modulator[i])),am)*
+				Math::lerp(1.0f,variant2Float(modulator[i]),xm),
 			vol);
 		}
 		return output;
@@ -163,7 +163,7 @@ void DSPLib::sine(
 	I2FConverter v0;
 	v0.f=-vol;
 	float v;
-	decay=1.0f-((decay/size)*64.0f);
+	decay=init_decay(decay,size);
 	float dec=1.0f;
 	for(int i=0,j=(int)(pos0*size)&sz1;i<size;i++,j=(j+1)&sz1){
 		if(cycles>0.0f && i>=range){
@@ -201,7 +201,7 @@ void DSPLib::rectangle(
 	I2FConverter v0;
 	v0.f=-vol;
 	float v;
-	decay=1.0f-((decay/size)*64.0f);
+	decay=init_decay(decay,size);
 	float dec=1.0f;
 	for(int i=0,j=(int)(pos0*size)&sz1;i<size;i++,j=(j+1)&sz1){
 		if(cycles>0.0f && i>=range){
@@ -240,7 +240,7 @@ void DSPLib::saw(
 	I2FConverter v0;
 	v0.f=-vol;
 	float v;
-	decay=1.0f-((decay/size)*64.0f);
+	decay=init_decay(decay,size);
 	float dec=1.0f;
 	for(int i=0,j=(int)(pos0*size)&sz1;i<size;i++,j=(j+1)&sz1){
 		if(cycles>0.0f && i>=range){
@@ -275,7 +275,7 @@ void DSPLib::triangle(
 	I2FConverter v0;
 	v0.f=-vol;
 	float v;
-	decay=1.0f-((decay/size)*64.0f);
+	decay=init_decay(decay,size);
 	float dec=1.0f;
 	for(int i=0,j=(int)(pos0*size)&sz1;i<size;i++,j=(j+1)&sz1){
 		if(cycles>0.0f && i>=range){
@@ -350,7 +350,7 @@ void DSPLib::decay(Array input,Array output,float decay,float vol){
 	I2FConverter v0;
 	v0.f=variant2Float(input[size-1]);
 	float v;
-	decay=1.0f-((decay/size)*64.0f);
+	decay=init_decay(decay,size);
 	float dec=1.0f;
 	for(int i=0;i<size;i++){
 		v=variant2Float(input[i]);

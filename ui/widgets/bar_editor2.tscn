@@ -1,0 +1,207 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://ui/widgets/bar_editor2.gd" type="Script" id=1]
+[ext_resource path="res://ui/widgets/spin_bar.gd" type="Script" id=2]
+
+[node name="BarEditor" type="HBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 8
+script = ExtResource( 1 )
+max_value_abs = 31
+mode = 5
+
+[node name="Params" type="VBoxContainer" parent="."]
+margin_right = 128.0
+margin_bottom = 600.0
+rect_min_size = Vector2( 128, 0 )
+size_flags_vertical = 3
+
+[node name="Title" type="Button" parent="Params"]
+unique_name_in_owner = true
+margin_right = 128.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 128, 0 )
+text = "Macro"
+
+[node name="R" type="ReferenceRect" parent="Params"]
+margin_top = 24.0
+margin_right = 128.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 0, 16 )
+mouse_filter = 1
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="Relative" type="Button" parent="Params"]
+unique_name_in_owner = true
+margin_top = 44.0
+margin_right = 128.0
+margin_bottom = 64.0
+toggle_mode = true
+pressed = true
+text = "Relative"
+
+[node name="GC" type="GridContainer" parent="Params"]
+margin_top = 68.0
+margin_right = 128.0
+margin_bottom = 118.0
+columns = 2
+
+[node name="LSteps" type="Label" parent="Params/GC"]
+margin_right = 36.0
+margin_bottom = 14.0
+mouse_filter = 1
+text = "Steps"
+
+[node name="Steps" type="ProgressBar" parent="Params/GC"]
+margin_left = 40.0
+margin_right = 128.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 36, 14 )
+size_flags_horizontal = 3
+max_value = 256.0
+step = 1.0
+percent_visible = false
+script = ExtResource( 2 )
+big_step = 8.0
+huge_step = 32.0
+
+[node name="LDiv" type="Label" parent="Params/GC"]
+margin_top = 18.0
+margin_right = 36.0
+margin_bottom = 32.0
+mouse_filter = 1
+text = "Ticks"
+
+[node name="Div" type="ProgressBar" parent="Params/GC"]
+margin_left = 40.0
+margin_top = 18.0
+margin_right = 128.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 36, 14 )
+min_value = 1.0
+max_value = 256.0
+step = 1.0
+value = 1.0
+percent_visible = false
+script = ExtResource( 2 )
+big_step = 8.0
+huge_step = 32.0
+
+[node name="LDelay" type="Label" parent="Params/GC"]
+margin_top = 36.0
+margin_right = 36.0
+margin_bottom = 50.0
+mouse_filter = 1
+text = "Delay"
+
+[node name="Delay" type="ProgressBar" parent="Params/GC"]
+margin_left = 40.0
+margin_top = 36.0
+margin_right = 128.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 36, 14 )
+max_value = 256.0
+step = 1.0
+value = 1.0
+percent_visible = false
+script = ExtResource( 2 )
+big_step = 8.0
+huge_step = 32.0
+
+[node name="Editor" type="VBoxContainer" parent="."]
+margin_left = 132.0
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 0
+
+[node name="HBC" type="HBoxContainer" parent="Editor"]
+margin_right = 892.0
+margin_bottom = 574.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 0
+
+[node name="Values" type="PanelContainer" parent="Editor/HBC"]
+margin_right = 880.0
+margin_bottom = 574.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VGraph" type="Control" parent="Editor/HBC/Values"]
+unique_name_in_owner = true
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 873.0
+margin_bottom = 567.0
+rect_clip_content = true
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VScroll" type="VScrollBar" parent="Editor/HBC"]
+unique_name_in_owner = true
+margin_left = 880.0
+margin_right = 892.0
+margin_bottom = 574.0
+size_flags_vertical = 3
+
+[node name="HBC2" type="HBoxContainer" parent="Editor"]
+margin_top = 574.0
+margin_right = 892.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+custom_constants/separation = 0
+
+[node name="VBC" type="VBoxContainer" parent="Editor/HBC2"]
+margin_right = 876.0
+margin_bottom = 26.0
+size_flags_horizontal = 3
+custom_constants/separation = 0
+
+[node name="Loop" type="PanelContainer" parent="Editor/HBC2/VBC"]
+margin_right = 876.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="LGraph" type="Control" parent="Editor/HBC2/VBC/Loop"]
+unique_name_in_owner = true
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 869.0
+margin_bottom = 7.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HScroll" type="HScrollBar" parent="Editor/HBC2/VBC"]
+unique_name_in_owner = true
+margin_top = 14.0
+margin_right = 876.0
+margin_bottom = 26.0
+size_flags_horizontal = 3
+
+[node name="CornerFill" type="ReferenceRect" parent="Editor/HBC2"]
+unique_name_in_owner = true
+margin_left = 876.0
+margin_right = 892.0
+margin_bottom = 26.0
+rect_min_size = Vector2( 16, 0 )
+size_flags_horizontal = 0
+editor_only = false
+
+[connection signal="pressed" from="Params/Title" to="." method="_on_Title_pressed" binds= [ 1 ]]
+[connection signal="toggled" from="Params/Relative" to="." method="_on_Relative_toggled"]
+[connection signal="value_changed" from="Params/GC/Steps" to="." method="_on_Steps_value_changed"]
+[connection signal="value_changed" from="Params/GC/Div" to="." method="_on_Div_value_changed"]
+[connection signal="value_changed" from="Params/GC/Delay" to="." method="_on_Delay_value_changed"]
+[connection signal="draw" from="Editor/HBC/Values/VGraph" to="." method="_on_VGraph_draw"]
+[connection signal="gui_input" from="Editor/HBC/Values/VGraph" to="." method="_on_VGraph_gui_input"]
+[connection signal="resized" from="Editor/HBC/Values/VGraph" to="." method="recalc_scrollbars"]
+[connection signal="item_rect_changed" from="Editor/HBC/VScroll" to="." method="_on_VScroll_visuals_changed"]
+[connection signal="value_changed" from="Editor/HBC/VScroll" to="." method="_on_Scroll_value_changed"]
+[connection signal="visibility_changed" from="Editor/HBC/VScroll" to="." method="_on_VScroll_visuals_changed"]
+[connection signal="value_changed" from="Editor/HBC2/VBC/HScroll" to="." method="_on_Scroll_value_changed"]

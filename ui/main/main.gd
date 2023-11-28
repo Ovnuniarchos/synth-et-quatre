@@ -2,6 +2,7 @@ extends Control
 
 """
 FIXME
+	BarEditor for detune gets wrong absolute values
 TODO:
 	CycleButtons themable
 	MIDI on/off indicator

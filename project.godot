@@ -628,6 +628,8 @@ _global_script_class_icons={
 
 config/name="SynthEtQuatre"
 run/main_scene="res://ui/main/main.tscn"
+run/low_processor_mode=true
+run/delta_sync_after_draw=true
 config/icon="res://se4.png"
 
 [audio]
@@ -660,10 +662,6 @@ gdscript/warnings/integer_division=false
 [display]
 
 window/vsync/use_vsync=false
-
-[gdnative]
-
-singletons=[  ]
 
 [input]
 

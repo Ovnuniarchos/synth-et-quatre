@@ -14,7 +14,9 @@ var writers:Dictionary={
 	HpfFilter.COMPONENT_ID:null,
 	LpfFilter.COMPONENT_ID:null,
 	NormalizeFilter.COMPONENT_ID:null,
-	QuantizeFilter.COMPONENT_ID:null
+	QuantizeFilter.COMPONENT_ID:null,
+	PowerFilter.COMPONENT_ID:null,
+	DecayFilter.COMPONENT_ID:null
 }
 
 
@@ -46,6 +48,10 @@ func lazy_load(type:String,sw:SynthWave)->WaveComponentIO:
 				wio=NormalizeFilterWriter.new(sw.components)
 			QuantizeFilter.COMPONENT_ID:
 				wio=QuantizeFilterWriter.new(sw.components)
+			PowerFilter.COMPONENT_ID:
+				wio=PowerFilterWriter.new(sw.components)
+			DecayFilter.COMPONENT_ID:
+				wio=DecayFilterWriter.new(sw.components)
 	else:
 		wio=writers[type]
 	wio.components=sw.components

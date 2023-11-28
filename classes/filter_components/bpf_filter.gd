@@ -42,7 +42,7 @@ func calculate(size:int,input:Array,caller:WaveComponent)->Array:
 		modulator=input_comp.generated
 	else:
 		modulator=input
-	DSP.convolution_filter(modulator,generated,coeffs)
+	DSP.convolution_filter(modulator,generated,coeffs,vol)
 	return generate_output(size,input,caller)
 
 func set_taps(t:int)->void:

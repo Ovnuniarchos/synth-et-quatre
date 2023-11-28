@@ -3,7 +3,7 @@ extends VBoxContainer
 signal wave_calculated(wave_ix)
 signal name_changed(wave_ix,text)
 
-enum WAVE_TYPES{SIN,TRI,SAW,RECT,NOISE,LPF,HPF,BPF,BRF,CLAMP,NORM,QUANT}
+enum WAVE_TYPES{SIN,TRI,SAW,RECT,NOISE,LPF,HPF,BPF,BRF,CLAMP,NORM,QUANT,POWER,DECAY}
 const WAVES=[
 	["Sine",WAVE_TYPES.SIN,preload("wave_nodes/sine_wave.tscn")],
 	["Triangle",WAVE_TYPES.TRI,preload("wave_nodes/triangle_wave.tscn")],
@@ -17,6 +17,8 @@ const WAVES=[
 	["Clamp",WAVE_TYPES.CLAMP,preload("filter_nodes/clamp_filter.tscn")],
 	["Normalize",WAVE_TYPES.NORM,preload("filter_nodes/normalize_filter.tscn")],
 	["Quantize",WAVE_TYPES.QUANT,preload("filter_nodes/quantize_filter.tscn")],
+	["Power",WAVE_TYPES.POWER,preload("filter_nodes/power_filter.tscn")],
+	["Decay",WAVE_TYPES.DECAY,preload("filter_nodes/decay_filter.tscn")],
 ]
 
 var curr_wave_ix:int=-1
@@ -116,6 +118,10 @@ func regen_editor_nodes(wave:SynthWave)->void:
 			insert_component(WAVE_TYPES.NORM,wave,wc)
 		elif wc is QuantizeFilter:
 			insert_component(WAVE_TYPES.QUANT,wave,wc)
+		elif wc is PowerFilter:
+			insert_component(WAVE_TYPES.POWER,wave,wc)
+		elif wc is DecayFilter:
+			insert_component(WAVE_TYPES.DECAY,wave,wc)
 	wave.readjust_inputs()
 	calculate()
 
@@ -157,6 +163,10 @@ func _on_New_id_pressed(id:int)->void:
 		wc=NormalizeFilter.new()
 	elif id==WAVE_TYPES.QUANT:
 		wc=QuantizeFilter.new()
+	elif id==WAVE_TYPES.POWER:
+		wc=PowerFilter.new()
+	elif id==WAVE_TYPES.DECAY:
+		wc=DecayFilter.new()
 	wave.components.append(wc)
 	insert_component(id,wave,wc)
 	wave.readjust_inputs()

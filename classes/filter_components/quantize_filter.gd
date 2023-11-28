@@ -30,5 +30,5 @@ func calculate(size:int,input:Array,caller:WaveComponent)->Array:
 		modulator=input_comp.generated
 	else:
 		modulator=input
-	DSP.quantize(modulator,generated,steps)
+	DSP.quantize(modulator,generated,steps,vol)
 	return generate_output(size,input,caller)

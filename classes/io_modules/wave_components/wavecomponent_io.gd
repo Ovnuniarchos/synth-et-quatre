@@ -26,6 +26,10 @@ const NORMALIZE_ID:String="nORF"
 const NORMALIZE_VERSION:int=0
 const QUANTIZE_ID:String="qUAF"
 const QUANTIZE_VERSION:int=0
+const POWER_ID:String="pOWF"
+const POWER_VERSION:int=0
+const DECAY_ID:String="dECF"
+const DECAY_VERSION:int=0
 
 
 var components:Array

@@ -1,33 +1,24 @@
 extends WaveComponent
-class_name ClampFilter
+class_name DecayFilter
 
-const COMPONENT_ID:String="Clamp"
+const COMPONENT_ID:String="Decay"
 
-var u_clamp_on:bool=true
-var u_clamp:float=1.0
-var l_clamp_on:bool=true
-var l_clamp:float=-1.0
+var decay:float
 
 func _init().()->void:
 	output_mode=OUT_MODE.REPLACE
 	input_comp=null
-	u_clamp_on=true
-	u_clamp=1.0
-	l_clamp_on=true
-	l_clamp=-1.0
+	decay=0.0
 
 func duplicate()->WaveComponent:
-	var nc:ClampFilter=.duplicate() as ClampFilter
+	var nc:DecayFilter=.duplicate() as DecayFilter
+	nc.decay=decay
 	return nc
 
 func equals(other:WaveComponent)->bool:
 	if !.equals(other):
 		return false
-	if u_clamp_on!=other.u_clamp_on or l_clamp_on!=other.l_clamp_on\
-			or !are_equal_approx([u_clamp,other.u_clamp,l_clamp,other.l_clamp]):
-		return false
-	return true
-
+	return is_equal_approx(decay,other.decay)
 
 func calculate(size:int,input:Array,caller:WaveComponent)->Array:
 	if caller==null:
@@ -39,5 +30,5 @@ func calculate(size:int,input:Array,caller:WaveComponent)->Array:
 		modulator=input_comp.generated
 	else:
 		modulator=input
-	DSP.clamp(modulator,generated,l_clamp,u_clamp,l_clamp_on,u_clamp_on,vol)
+	DSP.decay(modulator,generated,decay,vol)
 	return generate_output(size,input,caller)

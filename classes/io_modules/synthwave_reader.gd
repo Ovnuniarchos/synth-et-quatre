@@ -14,7 +14,9 @@ var readers:Dictionary={
 	WaveComponentIO.HPF_ID:null,
 	WaveComponentIO.LPF_ID:null,
 	WaveComponentIO.NORMALIZE_ID:null,
-	WaveComponentIO.QUANTIZE_ID:null
+	WaveComponentIO.QUANTIZE_ID:null,
+	WaveComponentIO.POWER_ID:null,
+	WaveComponentIO.DECAY_ID:null
 }
 
 
@@ -46,6 +48,10 @@ func lazy_load(type:String,sw:SynthWave)->WaveComponentIO:
 				wio=NormalizeFilterReader.new(sw.components)
 			WaveComponentIO.QUANTIZE_ID:
 				wio=QuantizeFilterReader.new(sw.components)
+			WaveComponentIO.POWER_ID:
+				wio=PowerFilterReader.new(sw.components)
+			WaveComponentIO.DECAY_ID:
+				wio=DecayFilterReader.new(sw.components)
 	else:
 		wio=readers[type]
 	wio.components=sw.components

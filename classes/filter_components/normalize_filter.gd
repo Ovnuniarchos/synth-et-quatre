@@ -29,5 +29,5 @@ func calculate(size:int,input:Array,caller:WaveComponent)->Array:
 		modulator=input_comp.generated
 	else:
 		modulator=input
-	DSP.normalize(modulator,generated,keep_center)
+	DSP.normalize(modulator,generated,keep_center,vol)
 	return generate_output(size,input,caller)

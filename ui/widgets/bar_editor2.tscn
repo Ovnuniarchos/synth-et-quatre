@@ -9,8 +9,6 @@ anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 8
 script = ExtResource( 1 )
-max_value_abs = 31
-mode = 5
 
 [node name="Params" type="VBoxContainer" parent="."]
 margin_right = 128.0
@@ -142,6 +140,17 @@ rect_clip_content = true
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
+[node name="Labels" type="Control" parent="Editor/HBC/Values"]
+unique_name_in_owner = true
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 873.0
+margin_bottom = 567.0
+rect_clip_content = true
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
 [node name="VScroll" type="VScrollBar" parent="Editor/HBC"]
 unique_name_in_owner = true
 margin_left = 880.0
@@ -201,7 +210,10 @@ editor_only = false
 [connection signal="draw" from="Editor/HBC/Values/VGraph" to="." method="_on_VGraph_draw"]
 [connection signal="gui_input" from="Editor/HBC/Values/VGraph" to="." method="_on_VGraph_gui_input"]
 [connection signal="resized" from="Editor/HBC/Values/VGraph" to="." method="recalc_scrollbars"]
+[connection signal="draw" from="Editor/HBC/Values/Labels" to="." method="_on_Labels_draw"]
 [connection signal="item_rect_changed" from="Editor/HBC/VScroll" to="." method="_on_VScroll_visuals_changed"]
 [connection signal="value_changed" from="Editor/HBC/VScroll" to="." method="_on_Scroll_value_changed"]
 [connection signal="visibility_changed" from="Editor/HBC/VScroll" to="." method="_on_VScroll_visuals_changed"]
+[connection signal="draw" from="Editor/HBC2/VBC/Loop/LGraph" to="." method="_on_LGraph_draw"]
+[connection signal="gui_input" from="Editor/HBC2/VBC/Loop/LGraph" to="." method="_on_LGraph_gui_input"]
 [connection signal="value_changed" from="Editor/HBC2/VBC/HScroll" to="." method="_on_Scroll_value_changed"]

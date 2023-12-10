@@ -29,7 +29,7 @@ margin_right = 2.0
 margin_top = 2.0
 margin_bottom = 2.0
 
-[node name="BarEditor" type="HBoxContainer"]
+[node name="BarEditor2" type="HBoxContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_bottom = -580.0

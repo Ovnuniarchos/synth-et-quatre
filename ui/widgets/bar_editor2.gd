@@ -15,7 +15,6 @@ export (String) var title:String="Macro" setget set_title
 export (String) var parameter:String=""
 export (int) var min_value_rel:int=-12.0
 export (int) var max_value_rel:int=12.0
-export (int) var center_value:int=0.0
 export (int) var min_value_abs:int=0.0
 export (int) var max_value_abs:int=48.0
 export (int) var step:int=1.0
@@ -181,22 +180,32 @@ func _on_VGraph_gui_input(ev:InputEvent)->void:
 	var yv:float=clamp(vpos.y/ym,0.0,1.0)
 	var max_value:float=max_value_rel if relative else max_value_abs
 	var min_value:float=min_value_rel if relative else min_value_abs
+	var st:float=step*(big_step if ev.shift else 1)*(huge_step if ev.control else 1)
 	if ev.button_mask==BUTTON_LEFT:
 		if mode<MODE_MASK:
 			values[ix]=round(lerp(max_value,min_value,yv))
 		elif mode==MODE_SELECT:
 			values[ix]=get_select_value(yv,min_value_abs,max_value_abs)
 		values_graph.update()
-	elif ev.button_mask==8 and ev.alt:
-		zoom=min(zoom+1.0,256.0)
-		recalc_scrollbars()
-		values_graph.update()
-		value_labels.update()
-	elif ev.button_mask==16 and ev.alt:
-		zoom=max(zoom-1.0,1.0)
-		recalc_scrollbars()
-		values_graph.update()
-		value_labels.update()
+	elif ev.button_mask==8:
+		if ev.alt:
+			zoom=min(zoom+1.0,256.0)
+			recalc_scrollbars()
+			values_graph.update()
+			value_labels.update()
+		else:
+			values[ix]=clamp(values[ix]+st,min_value,max_value)
+			values_graph.update()
+	elif ev.button_mask==16:
+		if ev.alt:
+			zoom=max(zoom-1.0,1.0)
+			recalc_scrollbars()
+			values_graph.update()
+			value_labels.update()
+		else:
+			values[ix]=clamp(values[ix]-st,min_value,max_value)
+			values_graph.update()
+	DEBUG.set_var("v",values[ix])
 
 
 func get_select_value(yv:float,min_v:int,max_v:int)->int:
@@ -271,7 +280,7 @@ func draw_relative()->void:
 	var color:Color=real_theme.get_color("values_color","BarEditor")
 	var ym:float=values_graph.rect_size.y*zoom
 	var bh2:float=bar_height*0.5
-	var yv:float=range_lerp(center_value,min_value_rel,max_value_rel,0.0,ym)
+	var yv:float=ym*0.5
 	values_graph.draw_line(
 		Vector2(0.0,yv),Vector2(bar_width*steps,yv),
 		real_theme.get_color("center_color","BarEditor")
@@ -362,7 +371,6 @@ func _on_Labels_draw()->void:
 		return
 	if not is_ready:
 		yield(self,"ready")
-	var texts:Array
 	var font:Font=real_theme.get_font("font","BarEditorLabel")
 	var color:Color=real_theme.get_color("font_color","BarEditorLabel")
 	var ol_color:Color=real_theme.get_color("font_outline_modulate","BarEditorLabel")
@@ -372,39 +380,106 @@ func _on_Labels_draw()->void:
 		real_theme.get_constant("shadow_offset_y","BarEditorLabel")
 	)
 	var s_outline:bool=real_theme.get_constant("shadow_as_outline","BarEditorLabel")
-	var my:Vector2=values_graph.rect_size*zoom
-	var p0:Vector2
-	var p1:Vector2
-	var dp:Vector2
+	var my:float=values_graph.rect_size.y*zoom
 	if zoom>1.0:
 		var txt:String="x%d "%zoom
-		p0=Vector2(values_graph.rect_size.x-font.get_string_size(txt).x,font.get_ascent())
 		draw_label(
-			txt,p0,value_labels.get_canvas_item(),font,
+			txt,Vector2(values_graph.rect_size.x-font.get_string_size(txt).x,font.get_ascent()),
+			value_labels.get_canvas_item(),font,
 			color,s_color,s_ofs,ol_color,s_outline
 		)
 	value_labels.draw_set_transform(Vector2(0.0,-vscroll.value),0.0,Vector2.ONE)
 	if mode!=MODE_MASK and (relative or labels.empty()):
-		p0=Vector2(0.0,font.get_ascent())
-		p1=Vector2(0.0,my.y-font.get_descent())
-		if relative:
-			texts=[String(max_value_rel),String(center_value),String(min_value_rel)]
-			dp=(p1-p0)*0.5
-		else:
-			texts=[String(max_value_abs),String(min_value_abs)]
-			dp=p1-p0
-	elif not labels.empty():
-		texts=labels
-		p0=Vector2.ZERO
-		p1=Vector2(0.0,my.y)
-		dp=(p1-p0)/texts.size()
-		p0+=Vector2(0.0,dp.y+font.get_ascent())*0.5
-	for t in texts:
+		var max_val:int=max_value_rel if relative else max_value_abs
+		var min_val:int=min_value_rel if relative else min_value_abs
 		draw_label(
-			t,p0,value_labels.get_canvas_item(),font,
+			"%d"%max_val,Vector2(0.0,font.get_ascent()),value_labels.get_canvas_item(),font,
 			color,s_color,s_ofs,ol_color,s_outline
 		)
-		p0+=dp
+		draw_label(
+			"%d"%min_val,Vector2(0.0,my-font.get_descent()),value_labels.get_canvas_item(),font,
+			color,s_color,s_ofs,ol_color,s_outline
+		)
+		if relative:
+			draw_relative_labels(my,max_val,min_val,font,color,s_color,s_ofs,ol_color,s_outline)
+		else:
+			draw_absolute_labels(my,max_val,min_val,font,color,s_color,s_ofs,ol_color,s_outline)
+	elif not labels.empty():
+		draw_user_labels(my,font,color,s_color,s_ofs,ol_color,s_outline)
+
+
+func draw_user_labels(max_y:float,font:Font,
+	color:Color,shadow_color:Color,shadow_offset:Vector2,outline_color:Color,outline:bool
+)->void:
+	var dy:float=max_y/labels.size()
+	var yl:float=(dy+font.get_ascent())*0.5
+	for t in labels:
+		draw_label(
+			t,Vector2(0.0,yl),value_labels.get_canvas_item(),font,
+			color,shadow_color,shadow_offset,outline_color,outline
+		)
+		yl+=dy
+
+
+func draw_absolute_labels(max_y:float,max_val:float,min_val:float,font:Font,
+	color:Color,shadow_color:Color,shadow_offset:Vector2,outline_color:Color,outline:bool
+)->void:
+	var fa2:float=font.get_ascent()*0.5
+	var sz:float=(font.get_ascent()+font.get_descent())*2.0
+	var v:float=min_val
+	var yl:float
+	var oyl:float=max_y
+	var ylm0:float=font.get_ascent()*2.0
+	var ylm1:float=max_y-(font.get_descent()*2.0)
+	while v<max_val:
+		v+=big_step
+		yl=range_lerp(v,max_val,min_val,0.0,max_y)+fa2
+		if yl>ylm0 and yl<ylm1 and yl<oyl-sz:
+			oyl=yl
+			draw_label(
+				"%d"%v,Vector2(0.0,yl),value_labels.get_canvas_item(),font,
+				color,shadow_color,shadow_offset,outline_color,outline
+			)
+
+
+func draw_relative_labels(
+	max_y:float,max_val:float,min_val:float,font:Font,
+	color:Color,shadow_color:Color,shadow_offset:Vector2,outline_color:Color,outline:bool
+)->void:
+	var fa2:float=font.get_ascent()*0.5
+	var sz:float=(font.get_ascent()+font.get_descent())*2.0
+	var v:float
+	var yl:float
+	var oyl:float
+	var ylm:float
+	draw_label(
+		"0",Vector2(0.0,(max_y*0.5)+fa2),value_labels.get_canvas_item(),font,
+		color,shadow_color,shadow_offset,outline_color,outline
+	)
+	v=0.0
+	ylm=font.get_ascent()*2.0
+	oyl=(max_y*0.5)+fa2
+	while v<max_val:
+		v+=big_step
+		yl=range_lerp(v,max_val,min_val,0.0,max_y)+fa2
+		if yl>ylm and yl<oyl-sz:
+			oyl=yl
+			draw_label(
+				"%d"%v,Vector2(0.0,yl),value_labels.get_canvas_item(),font,
+				color,shadow_color,shadow_offset,outline_color,outline
+			)
+	v=0.0
+	ylm=max_y-(font.get_descent()*2.0)
+	oyl=(max_y*0.5)+fa2
+	while v>min_val:
+		v-=big_step
+		yl=range_lerp(v,max_val,min_val,0.0,max_y)+fa2
+		if yl<ylm-fa2 and yl>oyl+sz:
+			oyl=yl
+			draw_label(
+				"%d"%v,Vector2(0.0,yl),value_labels.get_canvas_item(),font,
+				color,shadow_color,shadow_offset,outline_color,outline
+			)
 
 
 func draw_label(

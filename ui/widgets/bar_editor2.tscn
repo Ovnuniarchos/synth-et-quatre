@@ -5,14 +5,15 @@
 
 [node name="BarEditor" type="HBoxContainer"]
 anchor_right = 1.0
-anchor_bottom = 1.0
+margin_bottom = 118.0
 size_flags_horizontal = 3
 size_flags_vertical = 8
 script = ExtResource( 1 )
+max_value_abs = 6
 
 [node name="Params" type="VBoxContainer" parent="."]
 margin_right = 128.0
-margin_bottom = 600.0
+margin_bottom = 118.0
 rect_min_size = Vector2( 128, 0 )
 size_flags_vertical = 3
 
@@ -112,21 +113,21 @@ huge_step = 32.0
 [node name="Editor" type="VBoxContainer" parent="."]
 margin_left = 132.0
 margin_right = 1024.0
-margin_bottom = 600.0
+margin_bottom = 118.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 0
 
 [node name="HBC" type="HBoxContainer" parent="Editor"]
 margin_right = 892.0
-margin_bottom = 574.0
+margin_bottom = 92.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 0
 
 [node name="Values" type="PanelContainer" parent="Editor/HBC"]
 margin_right = 880.0
-margin_bottom = 574.0
+margin_bottom = 92.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
@@ -135,7 +136,7 @@ unique_name_in_owner = true
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 873.0
-margin_bottom = 567.0
+margin_bottom = 85.0
 rect_clip_content = true
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -145,7 +146,7 @@ unique_name_in_owner = true
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 873.0
-margin_bottom = 567.0
+margin_bottom = 85.0
 rect_clip_content = true
 mouse_filter = 2
 size_flags_horizontal = 3
@@ -155,13 +156,13 @@ size_flags_vertical = 3
 unique_name_in_owner = true
 margin_left = 880.0
 margin_right = 892.0
-margin_bottom = 574.0
+margin_bottom = 92.0
 size_flags_vertical = 3
 
 [node name="HBC2" type="HBoxContainer" parent="Editor"]
-margin_top = 574.0
+margin_top = 92.0
 margin_right = 892.0
-margin_bottom = 600.0
+margin_bottom = 118.0
 size_flags_horizontal = 3
 custom_constants/separation = 0
 

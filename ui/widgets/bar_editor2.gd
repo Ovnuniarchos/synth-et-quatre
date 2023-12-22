@@ -156,16 +156,13 @@ func process_mask_input(ev:InputEventMouse)->void:
 	elif ev.button_mask==0:
 		bmode=BIT_SWITCH
 	elif ev.button_mask==8 and ev.alt:
-		zoom=min(zoom+1.0,16.0)
-		recalc_scrollbars()
+		recalc_scrollbars(min(zoom+1.0,16.0),ev.position.y)
 		values_graph.update()
 		value_labels.update()
 	elif ev.button_mask==16 and ev.alt:
-		zoom=max(zoom-1.0,1.0)
-		recalc_scrollbars()
+		recalc_scrollbars(max(zoom-1.0,1.0),ev.position.y)
 		values_graph.update()
 		value_labels.update()
-
 
 
 func _on_VGraph_gui_input(ev:InputEvent)->void:
@@ -189,29 +186,25 @@ func _on_VGraph_gui_input(ev:InputEvent)->void:
 		values_graph.update()
 	elif ev.button_mask==8:
 		if ev.alt:
-			zoom=min(zoom+1.0,256.0)
-			recalc_scrollbars()
+			recalc_scrollbars(min(zoom+1.0,256.0),ev.position.y)
 			values_graph.update()
 			value_labels.update()
-		else:
+		elif values[ix]<ParamMacro.PASSTHROUGH:
 			values[ix]=clamp(values[ix]+st,min_value,max_value)
 			values_graph.update()
 	elif ev.button_mask==16:
 		if ev.alt:
-			zoom=max(zoom-1.0,1.0)
-			recalc_scrollbars()
+			recalc_scrollbars(max(zoom-1.0,1.0),ev.position.y)
 			values_graph.update()
 			value_labels.update()
-		else:
+		elif values[ix]<ParamMacro.PASSTHROUGH:
 			values[ix]=clamp(values[ix]-st,min_value,max_value)
 			values_graph.update()
-	DEBUG.set_var("v",values[ix])
 
 
 func get_select_value(yv:float,min_v:int,max_v:int)->int:
 	var d:float=abs(max_v-min_v)+1
 	return int(clamp(max_v-(floor(yv*d)+min_v),min_v,max_v))
-
 
 
 func _on_Steps_value_changed(value:int)->void:
@@ -223,12 +216,18 @@ func _on_Steps_value_changed(value:int)->void:
 	emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
 
 
-func recalc_scrollbars()->void:
+func recalc_scrollbars(new_zoom:float=-1.0,evy:float=0.0)->void:
+	if new_zoom<1.0:
+		new_zoom=zoom
+	var os:float=vscroll.value
 	get_bar_sizes()
 	hscroll.page=min(values_graph.rect_size.x,steps*bar_width)
 	hscroll.max_value=steps*bar_width
-	vscroll.page=min(values_graph.rect_size.y,values_graph.rect_size.y*zoom)
-	vscroll.max_value=values_graph.rect_size.y*zoom
+	vscroll.page=min(values_graph.rect_size.y,values_graph.rect_size.y*new_zoom)
+	vscroll.max_value=values_graph.rect_size.y*new_zoom
+	print((evy*(zoom-new_zoom))+os)
+	vscroll.value=(evy*(new_zoom-zoom))+os
+	zoom=new_zoom
 
 
 func _on_VGraph_draw():

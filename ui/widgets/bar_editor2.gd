@@ -1,4 +1,4 @@
-extends HBoxContainer
+tool extends HBoxContainer
 
 
 signal macro_changed(parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
@@ -214,7 +214,7 @@ func _on_VGraph_gui_input(ev:InputEvent)->void:
 
 func get_select_value(yv:float,min_v:int,max_v:int)->int:
 	var d:float=abs(max_v-min_v)+1
-	return int(clamp(max_v-(floor(yv*d)+min_v),min_v,max_v))
+	return int(clamp(floor((1.0-yv)*d)+min_v,min_v,max_v))
 
 
 func _on_Steps_value_changed(value:int)->void:
@@ -227,6 +227,8 @@ func _on_Steps_value_changed(value:int)->void:
 
 
 func recalc_scrollbars(new_zoom:float=-1.0,evy:float=0.0)->void:
+	if not is_ready:
+		yield(self,"ready")
 	if new_zoom<1.0:
 		new_zoom=zoom
 	var os:float=vscroll.value
@@ -263,7 +265,7 @@ func draw_select()->void:
 	var ys:float=ym/((max_value_abs-min_value_abs)+1)
 	for i in steps:
 		if values[i]!=ParamMacro.PASSTHROUGH:
-			yv=ym-(values[i]*ys)
+			yv=ym-((values[i]-min_value_abs)*ys)
 			values_graph.draw_rect(Rect2(x0,yv,bar_width-1.0,-ys),color)
 		else:
 			values_graph.draw_rect(Rect2(x0,0.0,bar_width-1.0,ym),color,false)
@@ -329,8 +331,10 @@ func _on_Scroll_value_changed(_v:float)->void:
 
 func set_title(t:String)->void:
 	title=t
-	if not is_ready:
+	print(t,"?")
+	if not (is_ready or Engine.editor_hint):
 		yield(self,"ready")
+	print(t,"!")
 	get_node("%Title").text=t
 
 

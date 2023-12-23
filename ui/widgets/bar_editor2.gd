@@ -17,7 +17,6 @@ export (int) var min_value_rel:int=-12.0
 export (int) var max_value_rel:int=12.0
 export (int) var min_value_abs:int=0.0
 export (int) var max_value_abs:int=48.0
-export (int) var step:int=1.0
 export (int) var big_step:int=4.0
 export (int) var huge_step:int=16.0
 export (int,"Absolute","Relative","SwitchAbs","SwitchRel","Mask","Select") var mode:int=MODE_SWREL
@@ -38,6 +37,7 @@ var zoom:float=1.0
 
 var value_labels:Control
 var values_graph:Control
+var value_tooltip:Control
 var loop_graph:Control
 var hscroll:HScrollBar
 var vscroll:VScrollBar
@@ -84,10 +84,10 @@ func _ready()->void:
 	_on_Title_pressed(0)
 
 
-
 func init_node_caches()->void:
 	value_labels=get_node("%Labels")
 	values_graph=get_node("%VGraph")
+	value_tooltip=get_node("%Value")
 	loop_graph=get_node("%LGraph")
 	hscroll=get_node("%HScroll")
 	vscroll=get_node("%VScroll")
@@ -177,13 +177,16 @@ func _on_VGraph_gui_input(ev:InputEvent)->void:
 	var yv:float=clamp(vpos.y/ym,0.0,1.0)
 	var max_value:float=max_value_rel if relative else max_value_abs
 	var min_value:float=min_value_rel if relative else min_value_abs
-	var st:float=step*(big_step if ev.shift else 1)*(huge_step if ev.control else 1)
+	var st:float=(big_step if ev.shift else 1)*(huge_step if ev.control else 1)
+	var modded:bool=false
 	if ev.button_mask==BUTTON_LEFT:
-		if mode<MODE_MASK:
-			values[ix]=round(lerp(max_value,min_value,yv))
+		if ev.alt:
+			values[ix]=ParamMacro.PASSTHROUGH
 		elif mode==MODE_SELECT:
 			values[ix]=get_select_value(yv,min_value_abs,max_value_abs)
-		values_graph.update()
+		else:
+			values[ix]=round(lerp(max_value,min_value,yv))
+		modded=true
 	elif ev.button_mask==8:
 		if ev.alt:
 			recalc_scrollbars(min(zoom+1.0,256.0),ev.position.y)
@@ -191,7 +194,7 @@ func _on_VGraph_gui_input(ev:InputEvent)->void:
 			value_labels.update()
 		elif values[ix]<ParamMacro.PASSTHROUGH:
 			values[ix]=clamp(values[ix]+st,min_value,max_value)
-			values_graph.update()
+			modded=true
 	elif ev.button_mask==16:
 		if ev.alt:
 			recalc_scrollbars(max(zoom-1.0,1.0),ev.position.y)
@@ -199,7 +202,14 @@ func _on_VGraph_gui_input(ev:InputEvent)->void:
 			value_labels.update()
 		elif values[ix]<ParamMacro.PASSTHROUGH:
 			values[ix]=clamp(values[ix]-st,min_value,max_value)
-			values_graph.update()
+			modded=true
+	if modded:
+		value_tooltip.show_at(
+			"%d"%values[ix] if values[ix]!=ParamMacro.PASSTHROUGH else "Passthrough",
+			ev.position-Vector2(0.0,value_tooltip.rect_size.y*0.5)
+		)
+		values_graph.update()
+		emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
 
 
 func get_select_value(yv:float,min_v:int,max_v:int)->int:
@@ -225,7 +235,6 @@ func recalc_scrollbars(new_zoom:float=-1.0,evy:float=0.0)->void:
 	hscroll.max_value=steps*bar_width
 	vscroll.page=min(values_graph.rect_size.y,values_graph.rect_size.y*new_zoom)
 	vscroll.max_value=values_graph.rect_size.y*new_zoom
-	print((evy*(zoom-new_zoom))+os)
 	vscroll.value=(evy*(new_zoom-zoom))+os
 	zoom=new_zoom
 

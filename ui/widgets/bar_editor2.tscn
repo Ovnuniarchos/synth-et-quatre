@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://ui/widgets/bar_editor2.gd" type="Script" id=1]
 [ext_resource path="res://ui/widgets/spin_bar.gd" type="Script" id=2]
+[ext_resource path="res://ui/widgets/tooltip.gd" type="Script" id=3]
 
 [node name="BarEditor" type="HBoxContainer"]
 anchor_right = 1.0
@@ -9,7 +10,20 @@ margin_bottom = 118.0
 size_flags_horizontal = 3
 size_flags_vertical = 8
 script = ExtResource( 1 )
-max_value_abs = 6
+__meta__ = {
+"_edit_pinned_properties_": [ "min_value_rel", "max_value_rel", "min_value_abs", "max_value_abs", "big_step", "huge_step", "mode", "labels", "parameter", "title", "arpeggio" ]
+}
+arpeggio = false
+title = "Macro"
+parameter = ""
+min_value_rel = -12
+max_value_rel = 12
+min_value_abs = 0
+max_value_abs = 48
+big_step = 4
+huge_step = 16
+mode = 3
+labels = PoolStringArray(  )
 
 [node name="Params" type="VBoxContainer" parent="."]
 margin_right = 128.0
@@ -152,6 +166,15 @@ mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
+[node name="Value" type="PanelContainer" parent="Editor/HBC/Values/Labels"]
+unique_name_in_owner = true
+margin_right = 14.0
+margin_bottom = 14.0
+mouse_filter = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+script = ExtResource( 3 )
+
 [node name="VScroll" type="VScrollBar" parent="Editor/HBC"]
 unique_name_in_owner = true
 margin_left = 880.0
@@ -201,7 +224,6 @@ margin_right = 892.0
 margin_bottom = 26.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_horizontal = 0
-editor_only = false
 
 [connection signal="pressed" from="Params/Title" to="." method="_on_Title_pressed" binds= [ 1 ]]
 [connection signal="toggled" from="Params/Relative" to="." method="_on_Relative_toggled"]

@@ -43,21 +43,24 @@ func read(path:String)->FileResult:
 	# Add waveforms
 	var new_wave_i:int
 	var in_w:int=FmInstrument.WAVE.CUSTOM
-	var tmp_waves:Array=inst.waveforms.duplicate()
+	var xlat:Dictionary={}
 	for wav in wave_list:
 		if typeof(wav)==TYPE_OBJECT:
 			new_wave_i=GLOBALS.song.wave_list.size()+FmInstrument.WAVE.CUSTOM
 			GLOBALS.song.add_wave(wav)
 			wav.calculate()
 			SYNCER.send_wave(wav)
-			for inst_w in 4:
-				if tmp_waves[inst_w]==in_w:
-					inst.waveforms[inst_w]=new_wave_i
+			xlat[in_w]=new_wave_i
 		else:
-			for inst_w in 4:
-				if tmp_waves[inst_w]==in_w:
-					inst.waveforms[inst_w]=wav
+			xlat[in_w]=wav
 		in_w+=1
+	# Translate waveforms
+	for inst_w in 4:
+		if inst.waveforms[inst_w] in xlat:
+			inst.waveforms[inst_w]=xlat[inst.waveforms[inst_w]]
+		for mac_w in inst.wave_macros[inst_w].values.size():
+			if inst.wave_macros[inst_w].values[mac_w] in xlat:
+				inst.wave_macros[inst_w].values[mac_w]=xlat[inst.wave_macros[inst_w].values[mac_w]]
 	# Add instrument
 	inst.file_name=path.get_file()
 	GLOBALS.song.add_instrument(inst)

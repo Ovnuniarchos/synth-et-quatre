@@ -52,22 +52,19 @@ mode = 3
 labels = PoolStringArray(  )
 
 [node name="Params" type="VBoxContainer" parent="."]
-margin_right = 128.0
+margin_right = 51.0
 margin_bottom = 28.0
-rect_min_size = Vector2( 128, 0 )
 size_flags_vertical = 3
 
 [node name="Title" type="Button" parent="Params"]
 unique_name_in_owner = true
-margin_right = 128.0
+margin_right = 51.0
 margin_bottom = 20.0
-rect_min_size = Vector2( 128, 0 )
 text = "Macro"
 
 [node name="R" type="ReferenceRect" parent="Params"]
 visible = false
 margin_top = 24.0
-margin_right = 128.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 16 )
 mouse_filter = 1
@@ -98,6 +95,7 @@ mouse_filter = 1
 text = "Steps"
 
 [node name="Steps" type="ProgressBar" parent="Params/GC"]
+unique_name_in_owner = true
 margin_left = 40.0
 margin_right = 128.0
 margin_bottom = 14.0
@@ -118,6 +116,7 @@ mouse_filter = 1
 text = "Ticks"
 
 [node name="Div" type="ProgressBar" parent="Params/GC"]
+unique_name_in_owner = true
 margin_left = 40.0
 margin_top = 18.0
 margin_right = 128.0
@@ -140,6 +139,7 @@ mouse_filter = 1
 text = "Delay"
 
 [node name="Delay" type="ProgressBar" parent="Params/GC"]
+unique_name_in_owner = true
 margin_left = 40.0
 margin_top = 36.0
 margin_right = 128.0
@@ -154,7 +154,7 @@ big_step = 8.0
 huge_step = 32.0
 
 [node name="Editor" type="VBoxContainer" parent="."]
-margin_left = 132.0
+margin_left = 55.0
 margin_right = 1024.0
 margin_bottom = 28.0
 size_flags_horizontal = 3
@@ -162,15 +162,16 @@ size_flags_vertical = 3
 custom_constants/separation = 0
 
 [node name="HBC" type="HBoxContainer" parent="Editor"]
-margin_right = 892.0
+margin_right = 969.0
 margin_bottom = 12.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 0
 
 [node name="Values" type="PanelContainer" parent="Editor/HBC"]
-margin_right = 880.0
+margin_right = 957.0
 margin_bottom = 12.0
+mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 4 )
@@ -179,7 +180,7 @@ custom_styles/panel = SubResource( 4 )
 unique_name_in_owner = true
 margin_left = 2.0
 margin_top = 2.0
-margin_right = 878.0
+margin_right = 955.0
 margin_bottom = 10.0
 rect_clip_content = true
 size_flags_horizontal = 3
@@ -189,7 +190,7 @@ size_flags_vertical = 3
 unique_name_in_owner = true
 margin_left = 2.0
 margin_top = 2.0
-margin_right = 878.0
+margin_right = 955.0
 margin_bottom = 10.0
 rect_clip_content = true
 mouse_filter = 2
@@ -207,8 +208,8 @@ script = ExtResource( 3 )
 
 [node name="VScroll" type="VScrollBar" parent="Editor/HBC"]
 unique_name_in_owner = true
-margin_left = 880.0
-margin_right = 892.0
+margin_left = 957.0
+margin_right = 969.0
 margin_bottom = 12.0
 size_flags_vertical = 3
 max_value = 8.0
@@ -216,19 +217,19 @@ page = 8.0
 
 [node name="HBC2" type="HBoxContainer" parent="Editor"]
 margin_top = 12.0
-margin_right = 892.0
+margin_right = 969.0
 margin_bottom = 28.0
 size_flags_horizontal = 3
 custom_constants/separation = 0
 
 [node name="VBC" type="VBoxContainer" parent="Editor/HBC2"]
-margin_right = 880.0
+margin_right = 957.0
 margin_bottom = 16.0
 size_flags_horizontal = 3
 custom_constants/separation = 0
 
 [node name="Loop" type="PanelContainer" parent="Editor/HBC2/VBC"]
-margin_right = 880.0
+margin_right = 957.0
 margin_bottom = 4.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -238,7 +239,7 @@ custom_styles/panel = SubResource( 4 )
 unique_name_in_owner = true
 margin_left = 2.0
 margin_top = 2.0
-margin_right = 878.0
+margin_right = 955.0
 margin_bottom = 2.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -246,15 +247,15 @@ size_flags_vertical = 3
 [node name="HScroll" type="HScrollBar" parent="Editor/HBC2/VBC"]
 unique_name_in_owner = true
 margin_top = 4.0
-margin_right = 880.0
+margin_right = 957.0
 margin_bottom = 16.0
 size_flags_horizontal = 3
 max_value = 0.0
 
 [node name="CornerFill" type="ReferenceRect" parent="Editor/HBC2"]
 unique_name_in_owner = true
-margin_left = 880.0
-margin_right = 892.0
+margin_left = 957.0
+margin_right = 969.0
 margin_bottom = 16.0
 rect_min_size = Vector2( 12, 0 )
 size_flags_horizontal = 0
@@ -266,6 +267,7 @@ size_flags_horizontal = 0
 [connection signal="value_changed" from="Params/GC/Delay" to="." method="_on_Delay_value_changed"]
 [connection signal="draw" from="Editor/HBC/Values/VGraph" to="." method="_on_VGraph_draw"]
 [connection signal="gui_input" from="Editor/HBC/Values/VGraph" to="." method="_on_VGraph_gui_input"]
+[connection signal="mouse_exited" from="Editor/HBC/Values/VGraph" to="." method="_on_VGraph_mouse_exited"]
 [connection signal="resized" from="Editor/HBC/Values/VGraph" to="." method="recalc_scrollbars"]
 [connection signal="draw" from="Editor/HBC/Values/Labels" to="." method="_on_Labels_draw"]
 [connection signal="item_rect_changed" from="Editor/HBC/VScroll" to="." method="_on_VScroll_visuals_changed"]

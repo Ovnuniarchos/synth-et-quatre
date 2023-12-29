@@ -26,8 +26,6 @@ var loop_start:int=-1
 var loop_end:int=-1
 var release_loop_start:int=-1
 var values:Array
-var values_abs:Array
-var values_rel:Array
 var relative:bool=true
 var steps:int=0
 var tick_div:int=1
@@ -65,8 +63,6 @@ func _ready()->void:
 	loop_graph.get_parent().add_stylebox_override("panel",real_theme.get_stylebox("loop","BarEditor"))
 	loop_graph.get_parent().rect_min_size.y=real_theme.get_constant("loop_height","BarEditor")
 	is_ready=true
-	values_abs.resize(MAX_STEPS)
-	values_rel.resize(MAX_STEPS)
 	if arpeggio:
 		relative_button.visible=false
 		$Params/GC/LDiv.visible=false
@@ -96,16 +92,8 @@ func init_node_caches()->void:
 
 
 func init_values()->void:
-	values_abs.fill(ParamMacro.PASSTHROUGH if mode!=MODE_MASK else 0)
-	values_rel.fill(ParamMacro.PASSTHROUGH)
-	select_values()
-
-
-func select_values()->void:
-	if mode<MODE_MASK:
-		values=values_rel if relative else values_abs
-	else:
-		values=values_abs
+	values.resize(MAX_STEPS)
+	values.fill(ParamMacro.PASSTHROUGH if mode!=MODE_MASK else 0)
 
 
 func get_bar_sizes()->void:
@@ -168,6 +156,7 @@ func process_mask_input(ev:InputEventMouse)->void:
 func _on_VGraph_gui_input(ev:InputEvent)->void:
 	if not ev is InputEventMouse:
 		return
+	accept_event()
 	if mode==MODE_MASK:
 		process_mask_input(ev as InputEventMouse)
 		return
@@ -331,10 +320,8 @@ func _on_Scroll_value_changed(_v:float)->void:
 
 func set_title(t:String)->void:
 	title=t
-	print(t,"?")
-	if not (is_ready or Engine.editor_hint):
+	if not is_ready:
 		yield(self,"ready")
-	print(t,"!")
 	get_node("%Title").text=t
 
 
@@ -361,8 +348,15 @@ func _on_Title_pressed(delta:int)->void:
 
 
 func _on_Relative_toggled(p:bool)->void:
+	if p!=relative:
+		var min0:float=min_value_abs if p else min_value_rel
+		var max0:float=max_value_abs if p else max_value_rel
+		var min1:float=min_value_rel if p else min_value_abs
+		var max1:float=max_value_rel if p else max_value_abs
+		for i in values.size():
+			if values[i]!=ParamMacro.PASSTHROUGH:
+				values[i]=int(range_lerp(values[i],min0,max0,min1,max1))
 	relative=p
-	select_values()
 	values_graph.update()
 	value_labels.update()
 	emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
@@ -561,3 +555,31 @@ func _on_LGraph_draw()->void:
 		for _i in range(release_loop_start,steps):
 			loop_graph.draw_rect(Rect2(x0,h,bar_width-1.0,h),release_color)
 			x0+=bar_width
+
+
+func set_macro(m:Macro)->void:
+	set_block_signals(true)
+	loop_start=m.loop_start
+	loop_end=m.loop_end
+	release_loop_start=m.release_loop_start
+	if m is ParamMacro:
+		relative=m.relative
+	init_values()
+	for i in m.values.size():
+		values[i]=m.values[i]
+	steps=m.steps
+	if m is ParamMacro:
+		tick_div=m.tick_div
+	delay=m.delay
+	recalc_scrollbars(1.0)
+	values_graph.update()
+	loop_graph.update()
+	relative_button.set_pressed_no_signal(relative)
+	get_node("%Steps").set_value_no_signal(steps)
+	get_node("%Div").set_value_no_signal(tick_div)
+	get_node("%Delay").set_value_no_signal(delay)
+	set_block_signals(false)
+
+
+func _on_VGraph_mouse_exited():
+	value_tooltip.fade()

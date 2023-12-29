@@ -2,8 +2,9 @@ extends Control
 
 """
 FIXME
-	BarEditor for detune gets wrong absolute values
+	Wave macros must be adapted on load (wave selectors too)
 TODO:
+	Adapt Arp editor
 	CycleButtons themable
 	MIDI on/off indicator
 	Reset per channel parameters (as a command|button)

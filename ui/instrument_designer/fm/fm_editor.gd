@@ -1,23 +1,27 @@
 extends VBoxContainer
 
+
 signal instrument_name_changed(index,text)
 signal instrument_changed
+
 
 var params:Node
 var gen_macro:Node
 var ops_macro:Array
 var param_dict:Dictionary
 
+
 func _ready()->void:
 	params=$Tabs/Parameters/Params/VBC
 	gen_macro=$Tabs/Macros/Macro/VBC
 	ops_macro=[
-		$"Tabs/Macros OP1/Macro/VBC",
-		$"Tabs/Macros OP2/Macro/VBC",
-		$"Tabs/Macros OP3/Macro/VBC",
-		$"Tabs/Macros OP4/Macro/VBC",
+		$"Tabs/Macros OP1/Macro",
+		$"Tabs/Macros OP2/Macro",
+		$"Tabs/Macros OP3/Macro",
+		$"Tabs/Macros OP4/Macro"
 	]
 	update_instrument()
+
 
 func update_instrument()->void:
 	if params==null:
@@ -29,6 +33,8 @@ func update_instrument()->void:
 	for i in range(1,5):
 		params.get_node("OPS/OP%d"%[i]).set_sliders(ci)
 	params.get_node("Routing").set_sliders(ci)
+	for opm in ops_macro:
+		opm.update_macros(ci)
 	gen_macro.get_node("Tone").set_macro(ci.freq_macro)
 	gen_macro.get_node("Volume").set_macro(ci.volume_macro)
 	gen_macro.get_node("Pan").set_macro(ci.pan_macro)
@@ -36,31 +42,6 @@ func update_instrument()->void:
 	gen_macro.get_node("OpEnable").set_macro(ci.op_enable_macro)
 	gen_macro.get_node("ChInvert").set_macro(ci.chanl_invert_macro)
 	gen_macro.get_node("Clip").set_macro(ci.clip_macro)
-	for op in 4:
-		ops_macro[op].get_node("Tone").set_macro(ci.op_freq_macro[op])
-		ops_macro[op].get_node("KeyOn").set_macro(ci.op_key_macro[op])
-		ops_macro[op].get_node("Duty").set_macro(ci.duty_macros[op])
-		ops_macro[op].get_node("Wave").set_macro(ci.wave_macros[op])
-		ops_macro[op].get_node("Attack").set_macro(ci.attack_macros[op])
-		ops_macro[op].get_node("Decay").set_macro(ci.decay_macros[op])
-		ops_macro[op].get_node("SusLev").set_macro(ci.sus_level_macros[op])
-		ops_macro[op].get_node("SusRate").set_macro(ci.sus_rate_macros[op])
-		ops_macro[op].get_node("Release").set_macro(ci.release_macros[op])
-		ops_macro[op].get_node("Repeat").set_macro(ci.repeat_macros[op])
-		ops_macro[op].get_node("AMIntensity").set_macro(ci.ami_macros[op])
-		ops_macro[op].get_node("KeyScaling").set_macro(ci.ksr_macros[op])
-		ops_macro[op].get_node("Multiplier").set_macro(ci.multiplier_macros[op])
-		ops_macro[op].get_node("Divider").set_macro(ci.divider_macros[op])
-		ops_macro[op].get_node("Detune").set_macro(ci.detune_macros[op])
-		ops_macro[op].get_node("FMIntensity").set_macro(ci.fmi_macros[op])
-		ops_macro[op].get_node("AMLFO").set_macro(ci.am_lfo_macros[op])
-		ops_macro[op].get_node("FMLFO").set_macro(ci.fm_lfo_macros[op])
-		ops_macro[op].get_node("Phase").set_macro(ci.phase_macros[op])
-		ops_macro[op].get_node("OP1").set_macro(ci.op_macros[op][0])
-		ops_macro[op].get_node("OP2").set_macro(ci.op_macros[op][1])
-		ops_macro[op].get_node("OP3").set_macro(ci.op_macros[op][2])
-		ops_macro[op].get_node("OP4").set_macro(ci.op_macros[op][3])
-		ops_macro[op].get_node("Output").set_macro(ci.out_macros[op])
 	param_dict={
 		"G_TONE":ci.freq_macro,
 		"G_VOLUME":ci.volume_macro,
@@ -96,6 +77,7 @@ func update_instrument()->void:
 		param_dict["%d_OP4"%[i]]=ci.op_macros[i-1][3]
 		param_dict["%d_OUT"%[i]]=ci.out_macros[i-1]
 
+
 func _on_Name_changed(text:String)->void:
 	var ci:Instrument=GLOBALS.get_instrument()
 	if ci==null:
@@ -103,11 +85,14 @@ func _on_Name_changed(text:String)->void:
 	ci.name=text
 	emit_signal("instrument_name_changed",GLOBALS.curr_instrument,text)
 
+
 func _on_instrument_selected(_idx:int)->void:
 	update_instrument()
 
+
 func _on_instrument_changed()->void:
 	emit_signal("instrument_changed")
+
 
 func _on_operator_changed(op:int)->void:
 	var ci:Instrument=GLOBALS.get_instrument()
@@ -116,9 +101,23 @@ func _on_operator_changed(op:int)->void:
 	params.get_node("OPS/OP%d"%[op+1]).set_sliders(ci)
 	params.get_node("Routing").set_sliders(ci)
 
-func _on_macro_changed(parameter:String,values:Array,steps:int,loop_start:int,loop_end:int,release_loop_start:int,relative:bool,tick_div:int,delay:int)->void:
+
+func _on_voice_macro_changed(parameter:String,values:Array,steps:int,loop_start:int,loop_end:int,release_loop_start:int,relative:bool,tick_div:int,delay:int)->void:
 	if param_dict==null or not param_dict.has(parameter):
 		return
+	var pm:ParamMacro=param_dict.get(parameter) as ParamMacro
+	pm.values=values
+	pm.steps=steps
+	pm.loop_start=loop_start
+	pm.loop_end=loop_end
+	pm.release_loop_start=release_loop_start
+	pm.relative=relative
+	pm.tick_div=tick_div
+	pm.delay=delay
+
+
+func _on_op_macro_changed(parameter, operator, values, steps, loop_start, loop_end, release_loop_start, relative, tick_div, delay):
+	parameter="%d_%s"%[operator+1,parameter]
 	var pm:ParamMacro=param_dict.get(parameter) as ParamMacro
 	pm.values=values
 	pm.steps=steps

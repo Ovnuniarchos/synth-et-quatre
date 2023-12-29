@@ -6,7 +6,7 @@
 [ext_resource path="res://ui/instrument_designer/fm/op_panel.tscn" type="PackedScene" id=5]
 [ext_resource path="res://ui/instrument_designer/fm/macro_panel.tscn" type="PackedScene" id=6]
 [ext_resource path="res://ui/widgets/macro_list.gd" type="Script" id=7]
-[ext_resource path="res://ui/widgets/bar_editor2.tscn" type="PackedScene" id=8]
+[ext_resource path="res://ui/widgets/bar_editor.tscn" type="PackedScene" id=8]
 
 [sub_resource type="Theme" id=1]
 

@@ -57,20 +57,11 @@ size_flags_horizontal = 3
 [node name="Values" parent="VS/VBC" instance=ExtResource( 3 )]
 unique_name_in_owner = true
 anchor_right = 0.0
-anchor_bottom = 0.0
 margin_top = 42.0
 margin_right = 862.0
-margin_bottom = 62.0
+margin_bottom = 70.0
 theme = SubResource( 1 )
-arpeggio = true
-title = "Tone (cents)"
-min_value_rel = -14300
-max_value_rel = 14300
-big_step = 10
-huge_step = 100
-mode = 1
 
 [connection signal="arp_selected" from="VS/ArpList" to="." method="_on_arp_selected"]
 [connection signal="text_changed" from="VS/VBC/Name/HBC/Name" to="." method="_on_Name_text_changed"]
 [connection signal="text_changed" from="VS/VBC/Name/HBC/Name" to="VS/ArpList" method="_on_Name_text_changed"]
-[connection signal="macro_changed" from="VS/VBC/Values" to="." method="_on_Values_arp_changed"]

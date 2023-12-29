@@ -2,7 +2,7 @@
 
 [ext_resource path="res://ui/widgets/macro_list.gd" type="Script" id=2]
 [ext_resource path="res://ui/instrument_designer/fm/macro_panel.gd" type="Script" id=3]
-[ext_resource path="res://ui/widgets/bar_editor2.tscn" type="PackedScene" id=4]
+[ext_resource path="res://ui/widgets/bar_editor.tscn" type="PackedScene" id=4]
 
 [sub_resource type="Theme" id=1]
 

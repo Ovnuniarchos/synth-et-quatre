@@ -159,7 +159,8 @@ func _on_macro_timer()->void:
 			synth.set_decay_rate(chan,mask,val)
 			# Op SusLevel
 			val=instr.sus_level_macros[op].get_value(kot,kft,instr.sustain_levels[op])
-			synth.set_sustain_level(chan,mask,val)
+			if val!=instr.sustain_levels[op]:
+				synth.set_sustain_level(chan,mask,val)
 			# Op SusRate
 			val=instr.sus_rate_macros[op].get_value(kot,kft,instr.sustains[op])
 			synth.set_sustain_rate(chan,mask,val)

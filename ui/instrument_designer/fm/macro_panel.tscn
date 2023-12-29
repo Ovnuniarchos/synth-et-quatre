@@ -1,0 +1,421 @@
+[gd_scene load_steps=28 format=2]
+
+[ext_resource path="res://ui/widgets/macro_list.gd" type="Script" id=2]
+[ext_resource path="res://ui/instrument_designer/fm/macro_panel.gd" type="Script" id=3]
+[ext_resource path="res://ui/widgets/bar_editor.tscn" type="PackedScene" id=4]
+
+[sub_resource type="Theme" id=1]
+
+[sub_resource type="Theme" id=2]
+
+[sub_resource type="Theme" id=3]
+
+[sub_resource type="Theme" id=4]
+
+[sub_resource type="Theme" id=5]
+
+[sub_resource type="Theme" id=6]
+
+[sub_resource type="Theme" id=7]
+
+[sub_resource type="Theme" id=8]
+
+[sub_resource type="Theme" id=9]
+
+[sub_resource type="Theme" id=10]
+
+[sub_resource type="Theme" id=11]
+
+[sub_resource type="Theme" id=12]
+
+[sub_resource type="Theme" id=13]
+
+[sub_resource type="Theme" id=14]
+
+[sub_resource type="Theme" id=15]
+
+[sub_resource type="Theme" id=16]
+
+[sub_resource type="Theme" id=17]
+
+[sub_resource type="Theme" id=18]
+
+[sub_resource type="Theme" id=19]
+
+[sub_resource type="Theme" id=20]
+
+[sub_resource type="Theme" id=21]
+
+[sub_resource type="Theme" id=22]
+
+[sub_resource type="Theme" id=23]
+
+[sub_resource type="Theme" id=24]
+
+[node name="Macro" type="ScrollContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+scroll_horizontal_enabled = false
+script = ExtResource( 3 )
+
+[node name="VBC" type="VBoxContainer" parent="."]
+margin_right = 1012.0
+margin_bottom = 764.0
+size_flags_horizontal = 3
+script = ExtResource( 2 )
+
+[node name="Tone" parent="VBC" instance=ExtResource( 4 )]
+anchor_right = 0.0
+margin_right = 1012.0
+theme = SubResource( 1 )
+title = "Tone (cents)"
+parameter = "TONE"
+min_value_rel = -14300
+max_value_rel = 14300
+min_value_abs = -200
+max_value_abs = 14300
+big_step = 10
+huge_step = 100
+
+[node name="KeyOn" parent="VBC" instance=ExtResource( 4 )]
+anchor_right = 0.0
+margin_top = 32.0
+margin_right = 1012.0
+margin_bottom = 60.0
+theme = SubResource( 2 )
+title = "Key On/Off"
+parameter = "KEY"
+min_value_abs = 1
+max_value_abs = 5
+mode = 5
+labels = PoolStringArray( "Stop", "Off", "Staccato", "Legato", "On" )
+
+[node name="Duty" parent="VBC" instance=ExtResource( 4 )]
+anchor_right = 0.0
+margin_top = 64.0
+margin_right = 1012.0
+margin_bottom = 92.0
+theme = SubResource( 3 )
+title = "Duty"
+parameter = "DUTY"
+min_value_rel = -256
+max_value_rel = 256
+max_value_abs = 255
+
+[node name="Wave" parent="VBC" instance=ExtResource( 4 )]
+anchor_right = 0.0
+margin_top = 96.0
+margin_right = 1012.0
+margin_bottom = 124.0
+theme = SubResource( 4 )
+title = "Wave"
+parameter = "WAVE"
+max_value_abs = 255
+mode = 0
+
+[node name="Attack" parent="VBC" instance=ExtResource( 4 )]
+anchor_right = 0.0
+margin_top = 128.0
+margin_right = 1012.0
+margin_bottom = 156.0
+theme = SubResource( 5 )
+title = "Attack"
+parameter = "ATTACK"
+min_value_rel = -256
+max_value_rel = 256
+max_value_abs = 255
+big_step = 8
+huge_step = 32
+
+[node name="Decay" parent="VBC" instance=ExtResource( 4 )]
+anchor_right = 0.0
+margin_top = 160.0
+margin_right = 1012.0
+margin_bottom = 188.0
+theme = SubResource( 6 )
+title = "Decay"
+parameter = "DECAY"
+min_value_rel = -256
+max_value_rel = 256
+max_value_abs = 255
+big_step = 8
+huge_step = 32
+
+[node name="SusLev" parent="VBC" instance=ExtResource( 4 )]
+anchor_right = 0.0
+margin_top = 192.0
+margin_right = 1012.0
+margin_bottom = 220.0
+theme = SubResource( 7 )
+title = "Sus. Level"
+parameter = "SUSLEV"
+min_value_rel = -256
+max_value_rel = 256
+max_value_abs = 255
+big_step = 8
+huge_step = 32
+
+[node name="SusRate" parent="VBC" instance=ExtResource( 4 )]
+anchor_right = 0.0
+margin_top = 224.0
+margin_right = 1012.0
+margin_bottom = 252.0
+theme = SubResource( 8 )
+title = "Sus. Rate"
+parameter = "SUSTAIN"
+min_value_rel = -256
+max_value_rel = 256
+max_value_abs = 255
+big_step = 8
+huge_step = 32
+
+[node name="Release" parent="VBC" instance=ExtResource( 4 )]
+anchor_right = 0.0
+margin_top = 256.0
+margin_right = 1012.0
+margin_bottom = 284.0
+theme = SubResource( 9 )
+title = "Release"
+parameter = "RELEASE"
+min_value_rel = -256
+max_value_rel = 256
+max_value_abs = 255
+big_step = 8
+huge_step = 32
+
+[node name="Repeat" parent="VBC" instance=ExtResource( 4 )]
+anchor_right = 0.0
+margin_top = 288.0
+margin_right = 1012.0
+margin_bottom = 316.0
+theme = SubResource( 10 )
+title = "Repeat"
+parameter = "REPEAT"
+max_value_abs = 4
+mode = 5
+labels = PoolStringArray( "Release", "Sustain", "Decay", "Attack", "Off" )
+
+[node name="AMIntensity" parent="VBC" instance=ExtResource( 4 )]
+anchor_right = 0.0
+margin_top = 320.0
+margin_right = 1012.0
+margin_bottom = 348.0
+theme = SubResource( 11 )
+title = "AM Intensity"
+parameter = "AMS"
+min_value_rel = -256
+max_value_rel = 256
+max_value_abs = 255
+big_step = 8
+huge_step = 32
+
+[node name="AMLFO" parent="VBC" instance=ExtResource( 4 )]
+anchor_right = 0.0
+margin_top = 352.0
+margin_right = 1012.0
+margin_bottom = 380.0
+theme = SubResource( 12 )
+title = "AM LFO"
+parameter = "AMLFO"
+max_value_abs = 3
+big_step = 1
+huge_step = 1
+mode = 5
+labels = PoolStringArray( "LFO 4", "LFO 3", "LFO 2", "LFO 1" )
+
+[node name="KeyScaling" parent="VBC" instance=ExtResource( 4 )]
+anchor_right = 0.0
+margin_top = 384.0
+margin_right = 1012.0
+margin_bottom = 412.0
+theme = SubResource( 13 )
+title = "Key Scaling"
+parameter = "KSR"
+min_value_rel = -8
+max_value_rel = 8
+max_value_abs = 8
+big_step = 2
+huge_step = 4
+
+[node name="Multiplier" parent="VBC" instance=ExtResource( 4 )]
+anchor_right = 0.0
+margin_top = 416.0
+margin_right = 1012.0
+margin_bottom = 444.0
+theme = SubResource( 14 )
+title = "Multiplier"
+parameter = "MUL"
+min_value_rel = -32
+max_value_rel = 32
+max_value_abs = 32
+big_step = 2
+huge_step = 4
+
+[node name="Divider" parent="VBC" instance=ExtResource( 4 )]
+anchor_right = 0.0
+margin_top = 448.0
+margin_right = 1012.0
+margin_bottom = 476.0
+theme = SubResource( 15 )
+title = "Divider"
+parameter = "DIV"
+min_value_rel = -32
+max_value_rel = 32
+min_value_abs = 1
+max_value_abs = 32
+big_step = 2
+huge_step = 4
+
+[node name="Detune" parent="VBC" instance=ExtResource( 4 )]
+anchor_right = 0.0
+margin_top = 480.0
+margin_right = 1012.0
+margin_bottom = 508.0
+theme = SubResource( 16 )
+title = "Detune/FixFreq"
+parameter = "DETUNE"
+min_value_rel = -24000
+max_value_rel = 24000
+min_value_abs = -12000
+max_value_abs = 12000
+big_step = 10
+huge_step = 100
+
+[node name="FMIntensity" parent="VBC" instance=ExtResource( 4 )]
+anchor_right = 0.0
+margin_top = 512.0
+margin_right = 1012.0
+margin_bottom = 540.0
+theme = SubResource( 17 )
+title = "FM Intensity"
+parameter = "FMS"
+min_value_rel = -256
+max_value_rel = 256
+max_value_abs = 255
+big_step = 8
+huge_step = 32
+
+[node name="FMLFO" parent="VBC" instance=ExtResource( 4 )]
+anchor_right = 0.0
+margin_top = 544.0
+margin_right = 1012.0
+margin_bottom = 572.0
+theme = SubResource( 18 )
+title = "FM LFO"
+parameter = "FMLFO"
+max_value_abs = 3
+big_step = 1
+huge_step = 1
+mode = 5
+labels = PoolStringArray( "LFO 4", "LFO 3", "LFO 2", "LFO 1" )
+
+[node name="Phase" parent="VBC" instance=ExtResource( 4 )]
+anchor_right = 0.0
+margin_top = 576.0
+margin_right = 1012.0
+margin_bottom = 604.0
+theme = SubResource( 19 )
+title = "Phase"
+parameter = "PHI"
+min_value_rel = -256
+max_value_rel = 256
+max_value_abs = 255
+big_step = 8
+huge_step = 32
+
+[node name="OP1" parent="VBC" instance=ExtResource( 4 )]
+anchor_right = 0.0
+margin_top = 608.0
+margin_right = 1012.0
+margin_bottom = 636.0
+theme = SubResource( 20 )
+title = "->OP1"
+parameter = "OP1"
+min_value_rel = -256
+max_value_rel = 256
+max_value_abs = 255
+big_step = 8
+huge_step = 32
+
+[node name="OP2" parent="VBC" instance=ExtResource( 4 )]
+anchor_right = 0.0
+margin_top = 640.0
+margin_right = 1012.0
+margin_bottom = 668.0
+theme = SubResource( 21 )
+title = "->OP2"
+parameter = "OP2"
+min_value_rel = -256
+max_value_rel = 256
+max_value_abs = 255
+big_step = 8
+huge_step = 32
+
+[node name="OP3" parent="VBC" instance=ExtResource( 4 )]
+anchor_right = 0.0
+margin_top = 672.0
+margin_right = 1012.0
+margin_bottom = 700.0
+theme = SubResource( 22 )
+title = "->OP3"
+parameter = "OP3"
+min_value_rel = -256
+max_value_rel = 256
+max_value_abs = 255
+big_step = 8
+huge_step = 32
+
+[node name="OP4" parent="VBC" instance=ExtResource( 4 )]
+anchor_right = 0.0
+margin_top = 704.0
+margin_right = 1012.0
+margin_bottom = 732.0
+theme = SubResource( 23 )
+title = "->OP4"
+parameter = "OP4"
+min_value_rel = -256
+max_value_rel = 256
+max_value_abs = 255
+big_step = 8
+huge_step = 32
+
+[node name="Output" parent="VBC" instance=ExtResource( 4 )]
+anchor_right = 0.0
+margin_top = 736.0
+margin_right = 1012.0
+margin_bottom = 764.0
+theme = SubResource( 24 )
+title = "->Output"
+parameter = "OUT"
+min_value_rel = -256
+max_value_rel = 256
+max_value_abs = 255
+big_step = 8
+huge_step = 32
+
+[connection signal="macro_changed" from="VBC/Tone" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="VBC/KeyOn" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="VBC/Duty" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="VBC/Wave" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="VBC/Attack" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="VBC/Decay" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="VBC/SusLev" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="VBC/SusRate" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="VBC/Release" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="VBC/Repeat" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="VBC/AMIntensity" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="VBC/AMLFO" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="VBC/KeyScaling" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="VBC/Multiplier" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="VBC/Divider" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="VBC/Detune" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="VBC/FMIntensity" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="VBC/FMLFO" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="VBC/Phase" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="VBC/OP1" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="VBC/OP2" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="VBC/OP3" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="VBC/OP4" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="VBC/Output" to="." method="_on_macro_changed"]

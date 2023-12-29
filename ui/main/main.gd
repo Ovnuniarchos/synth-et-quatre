@@ -2,6 +2,7 @@ extends Control
 
 """
 FIXME
+	Wave macros must be adapted on load (wave selectors too)
 TODO:
 	CycleButtons themable
 	MIDI on/off indicator

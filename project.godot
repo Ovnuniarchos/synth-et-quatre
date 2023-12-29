@@ -49,11 +49,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://classes/io_modules/wave_components/filters/brf_writer.gd"
 }, {
-"base": "HBoxContainer",
-"class": "BarEditor",
-"language": "GDScript",
-"path": "res://ui/widgets/bar_editor.gd"
-}, {
 "base": "WaveComponent",
 "class": "BpfFilter",
 "language": "GDScript",
@@ -528,7 +523,6 @@ _global_script_class_icons={
 "BPFFilterWriter": "",
 "BRFFilterReader": "",
 "BRFFilterWriter": "",
-"BarEditor": "",
 "BpfFilter": "",
 "BrfFilter": "",
 "ChannelButtons": "",
@@ -628,6 +622,8 @@ _global_script_class_icons={
 
 config/name="SynthEtQuatre"
 run/main_scene="res://ui/main/main.tscn"
+run/low_processor_mode=true
+run/delta_sync_after_draw=true
 config/icon="res://se4.png"
 
 [audio]
@@ -660,10 +656,6 @@ gdscript/warnings/integer_division=false
 [display]
 
 window/vsync/use_vsync=false
-
-[gdnative]
-
-singletons=[  ]
 
 [input]
 

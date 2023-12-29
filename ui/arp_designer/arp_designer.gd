@@ -33,11 +33,11 @@ func _on_Name_text_changed(txt:String)->void:
 		arp.name=txt
 
 
-func _on_Values_arp_changed(_parameter:String, values:Array, steps:int, loop_start:int, loop_end:int, release_loop_start:int, _relative:int, _tick_div:int, _delay:int):
+func _on_arp_changed(_parameter:String, values:Array, steps:int, loop_start:int, loop_end:int, release_loop_start:int, _relative:int, _tick_div:int, _delay:int):
 	if arp==null:
 		return
 	arp.steps=steps
-	arp.values=values
+	arp.values=values.duplicate()
 	arp.loop_start=loop_start
 	arp.loop_end=loop_end
 	arp.release_loop_start=release_loop_start

@@ -45,7 +45,7 @@ parameter = ""
 min_value_rel = -12
 max_value_rel = 12
 min_value_abs = 0
-max_value_abs = 48
+max_value_abs = 12
 big_step = 4
 huge_step = 16
 mode = 3
@@ -206,6 +206,14 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 script = ExtResource( 3 )
 
+[node name="Pos" type="Label" parent="Editor/HBC/Values/Labels" groups=["BarEditorLabel"]]
+unique_name_in_owner = true
+visible = false
+anchor_right = 1.0
+margin_bottom = 14.0
+text = "123454"
+align = 1
+
 [node name="VScroll" type="VScrollBar" parent="Editor/HBC"]
 unique_name_in_owner = true
 margin_left = 957.0
@@ -260,6 +268,23 @@ margin_bottom = 16.0
 rect_min_size = Vector2( 12, 0 )
 size_flags_horizontal = 0
 
+[node name="Control" type="Control" parent="Editor"]
+margin_top = 28.0
+margin_right = 969.0
+margin_bottom = 28.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="Command" type="LineEdit" parent="Editor/Control"]
+unique_name_in_owner = true
+visible = false
+margin_left = 47.65
+margin_top = -26.0
+margin_right = 905.35
+margin_bottom = -2.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
 [connection signal="pressed" from="Params/Title" to="." method="_on_Title_pressed" binds= [ 1 ]]
 [connection signal="toggled" from="Params/Relative" to="." method="_on_Relative_toggled"]
 [connection signal="value_changed" from="Params/GC/Steps" to="." method="_on_Steps_value_changed"]
@@ -270,9 +295,11 @@ size_flags_horizontal = 0
 [connection signal="mouse_exited" from="Editor/HBC/Values/VGraph" to="." method="_on_VGraph_mouse_exited"]
 [connection signal="resized" from="Editor/HBC/Values/VGraph" to="." method="recalc_scrollbars"]
 [connection signal="draw" from="Editor/HBC/Values/Labels" to="." method="_on_Labels_draw"]
+[connection signal="draw" from="Editor/HBC/Values/Labels/Pos" to="." method="_on_PosLabel_draw"]
 [connection signal="item_rect_changed" from="Editor/HBC/VScroll" to="." method="_on_VScroll_visuals_changed"]
 [connection signal="value_changed" from="Editor/HBC/VScroll" to="." method="_on_Scroll_value_changed"]
 [connection signal="visibility_changed" from="Editor/HBC/VScroll" to="." method="_on_VScroll_visuals_changed"]
 [connection signal="draw" from="Editor/HBC2/VBC/Loop/LGraph" to="." method="_on_LGraph_draw"]
 [connection signal="gui_input" from="Editor/HBC2/VBC/Loop/LGraph" to="." method="_on_LGraph_gui_input"]
 [connection signal="value_changed" from="Editor/HBC2/VBC/HScroll" to="." method="_on_Scroll_value_changed"]
+[connection signal="gui_input" from="Editor/Control/Command" to="." method="_on_Command_gui_input"]

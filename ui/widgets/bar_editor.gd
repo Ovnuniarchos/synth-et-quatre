@@ -16,7 +16,7 @@ export (String) var parameter:String=""
 export (int) var min_value_rel:int=-12.0
 export (int) var max_value_rel:int=12.0
 export (int) var min_value_abs:int=0.0
-export (int) var max_value_abs:int=48.0
+export (int) var max_value_abs:int=12.0
 export (int) var big_step:int=4.0
 export (int) var huge_step:int=16.0
 export (int,"Absolute","Relative","SwitchAbs","SwitchRel","Mask","Select") var mode:int=MODE_SWREL
@@ -37,9 +37,11 @@ var value_labels:Control
 var values_graph:Control
 var value_tooltip:Control
 var loop_graph:Control
+var cmd_input:Control
+var pos_label:Control
 var hscroll:HScrollBar
 var vscroll:VScrollBar
-var heights:PoolRealArray=PoolRealArray([160.0,240.0,320.0])
+var heights:PoolRealArray=PoolRealArray([160.0,240.0,320.0,640.0])
 var height_sel:int=0
 var hiddables:Array
 var relative_button:Button
@@ -49,6 +51,12 @@ var bar_width:float
 var bar_height:float
 var real_theme:Theme
 var bmode:int=BIT_SWITCH
+var value_pos:Vector2
+var parser:BarEditorLanguage
+
+
+func _init()->void:
+	parser=BarEditorLanguage.new()
 
 
 func _ready()->void:
@@ -87,7 +95,9 @@ func init_node_caches()->void:
 	loop_graph=get_node("%LGraph")
 	hscroll=get_node("%HScroll")
 	vscroll=get_node("%VScroll")
-	hiddables=[$Params/R,$Params/GC]
+	cmd_input=get_node("%Command")
+	pos_label=get_node("%Pos")
+	hiddables=[$Params/R,$Params/GC,$"%Pos"]
 	relative_button=get_node("%Relative")
 
 
@@ -124,11 +134,8 @@ func bit(ix:int,bit_n:int,bit_op:int)->bool:
 	return false
 
 
-func process_mask_input(ev:InputEventMouse)->void:
+func process_mask_input(ev:InputEventMouse,ym:float,vpos:Vector2,ix:int)->void:
 	if ev.button_mask==BUTTON_MASK_LEFT:
-		var ym:float=values_graph.rect_size.y*zoom
-		var vpos:Vector2=get_VGraph_position(ev.position)
-		var ix:int=clamp(vpos.x/bar_width,0.0,MAX_STEPS-1)
 		var yv:int=get_select_value(vpos.y/ym,0,max_value_abs)
 		var enop:int=BIT_SET
 		if ev.shift:
@@ -157,24 +164,36 @@ func _on_VGraph_gui_input(ev:InputEvent)->void:
 	if not ev is InputEventMouse:
 		return
 	accept_event()
-	if mode==MODE_MASK:
-		process_mask_input(ev as InputEventMouse)
-		return
 	var ym:float=values_graph.rect_size.y*zoom
 	var vpos:Vector2=get_VGraph_position(ev.position)
 	var ix:int=clamp(vpos.x/bar_width,0.0,MAX_STEPS-1)
+	DEBUG.set_var("",ev.button_mask)
+	if ev.button_mask==BUTTON_RIGHT:
+		set_Command_visibility(true,ev.position)
+	if ix>=steps:
+		pos_label.visible=false
+		return
+	pos_label.visible=height_sel!=0
+	if mode==MODE_MASK:
+		process_mask_input(ev as InputEventMouse,ym,vpos,ix)
+		return
 	var yv:float=clamp(vpos.y/ym,0.0,1.0)
 	var max_value:float=max_value_rel if relative else max_value_abs
 	var min_value:float=min_value_rel if relative else min_value_abs
 	var st:float=(big_step if ev.shift else 1)*(huge_step if ev.control else 1)
 	var modded:bool=false
+	var value:int
+	if mode==MODE_SELECT:
+		value=get_select_value(yv,min_value_abs,max_value_abs)
+	else:
+		value=round(lerp(max_value,min_value,yv))
+	value_pos=Vector2(ix,value)
+	pos_label.update()
 	if ev.button_mask==BUTTON_LEFT:
 		if ev.alt:
 			values[ix]=ParamMacro.PASSTHROUGH
-		elif mode==MODE_SELECT:
-			values[ix]=get_select_value(yv,min_value_abs,max_value_abs)
 		else:
-			values[ix]=round(lerp(max_value,min_value,yv))
+			values[ix]=value
 		modded=true
 	elif ev.button_mask==8:
 		if ev.alt:
@@ -339,13 +358,13 @@ func _on_Title_pressed(delta:int)->void:
 			h.visible=false
 		rect_min_size.y=0.0
 		rect_size.y=0.0
+		set_Command_visibility(false)
 	else:
 		relative_button.visible=can_switch_modes()
 		for h in hiddables:
 			h.visible=true
 		rect_min_size.y=heights[height_sel-1]
 		rect_size.y=heights[height_sel-1]
-
 
 func _on_Relative_toggled(p:bool)->void:
 	if p!=relative:
@@ -581,5 +600,42 @@ func set_macro(m:Macro)->void:
 	set_block_signals(false)
 
 
-func _on_VGraph_mouse_exited():
+func _on_VGraph_mouse_exited()->void:
 	value_tooltip.fade()
+
+
+func _on_PosLabel_draw()->void:
+	if not is_ready:
+		yield(self,"ready")
+	pos_label.text="(%d,%d)"%[value_pos.x,value_pos.y]
+
+
+func set_Command_visibility(v:bool,pos:Vector2=Vector2.ZERO)->void:
+	cmd_input.rect_position=Vector2(
+		values_graph.rect_size.x*0.05,
+		(values_graph.rect_global_position.y+pos.y)-cmd_input.get_parent().rect_global_position.y
+	)
+	cmd_input.rect_size.x=values_graph.rect_size.x*0.9
+	cmd_input.visible=v
+	if v:
+		cmd_input.grab_focus()
+	else:
+		cmd_input.release_focus()
+
+
+func _on_Command_gui_input(ev:InputEvent)->void:
+	if not ev is InputEventKey:
+		return
+	if ev.pressed:
+		return
+	if ev.scancode==KEY_ENTER or ev.scancode==KEY_KP_ENTER:
+		parse_command(cmd_input.text)
+		accept_event()
+	elif ev.scancode==KEY_ESCAPE:
+		cmd_input.text=''
+		set_Command_visibility(false)
+		accept_event()
+
+
+func parse_command(text:String)->void:
+	parser.parse(text)

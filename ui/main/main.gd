@@ -18,8 +18,17 @@ FUTURE:
 
 func _ready()->void:
 	theme=THEME.get("theme")
-	ThemeHelper.apply_styles_group(theme,"LabelTitle","Title")
-	ThemeHelper.apply_styles_group(theme,"LabelControl","Label")
+	ThemeHelper.apply_styles_to_group(theme,"LabelTitle","Title")
+	ThemeHelper.apply_styles_to_group(theme,"LabelControl","Label")
+	ThemeHelper.apply_styles_to_group(theme,"BarEditorLabel","BarEditorLabel")
+	var parser:BarEditorLanguage=BarEditorLanguage.new()
+	var pr:LanguageResult=parser.parse("line 1, 2 , 3 ,4 step 10 line 1,2,3")
+	if pr.has_error():
+		print(pr.get_message())
+	else:
+		print(pr.data)
+
+
 
 
 func _on_tab_changed(tab:int)->void:

@@ -2,7 +2,7 @@ extends Node
 class_name ThemeHelper
 
 
-static func apply_styles_group(theme:Theme,from:String,to:String)->void:
+static func apply_styles_to_group(theme:Theme,from:String,to:String)->void:
 	if theme==null:
 		return
 	for n in Engine.get_main_loop().get_nodes_in_group(to):

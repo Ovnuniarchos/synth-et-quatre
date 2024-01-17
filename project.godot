@@ -49,6 +49,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://classes/io_modules/wave_components/filters/brf_writer.gd"
 }, {
+"base": "Resource",
+"class": "BarEditorLanguage",
+"language": "GDScript",
+"path": "res://classes/bar_editor_language.gd"
+}, {
 "base": "WaveComponent",
 "class": "BpfFilter",
 "language": "GDScript",
@@ -124,7 +129,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://classes/io_modules/wave_components/filters/decay_writer.gd"
 }, {
-"base": "Reference",
+"base": "Result",
 "class": "FileResult",
 "language": "GDScript",
 "path": "res://classes/file_result.gd"
@@ -188,6 +193,11 @@ _global_script_classes=[ {
 "class": "LPFFilterWriter",
 "language": "GDScript",
 "path": "res://classes/io_modules/wave_components/filters/lpf_writer.gd"
+}, {
+"base": "Result",
+"class": "LanguageResult",
+"language": "GDScript",
+"path": "res://classes/language_result.gd"
 }, {
 "base": "WaveComponent",
 "class": "LpfFilter",
@@ -323,6 +333,11 @@ _global_script_classes=[ {
 "class": "RectangleWaveWriter",
 "language": "GDScript",
 "path": "res://classes/io_modules/wave_components/waves/rectanglewave_writer.gd"
+}, {
+"base": "Reference",
+"class": "Result",
+"language": "GDScript",
+"path": "res://classes/result.gd"
 }, {
 "base": "Waveform",
 "class": "SampleWave",
@@ -523,6 +538,7 @@ _global_script_class_icons={
 "BPFFilterWriter": "",
 "BRFFilterReader": "",
 "BRFFilterWriter": "",
+"BarEditorLanguage": "",
 "BpfFilter": "",
 "BrfFilter": "",
 "ChannelButtons": "",
@@ -551,6 +567,7 @@ _global_script_class_icons={
 "Instrument": "",
 "LPFFilterReader": "",
 "LPFFilterWriter": "",
+"LanguageResult": "",
 "LpfFilter": "",
 "Macro": "",
 "MacroIO": "",
@@ -578,6 +595,7 @@ _global_script_class_icons={
 "RectangleWave": "",
 "RectangleWaveReader": "",
 "RectangleWaveWriter": "",
+"Result": "",
 "SampleWave": "",
 "SampleWaveIO": "",
 "SampleWaveReader": "",

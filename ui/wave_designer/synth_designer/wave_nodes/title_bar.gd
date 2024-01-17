@@ -8,7 +8,7 @@ export (String) var title setget set_title
 export (int) var index setget set_index
 
 func _ready()->void:
-	ThemeHelper.apply_styles_group(THEME.get("theme"),"LabelTitle","Title")
+	ThemeHelper.apply_styles_to_group(THEME.get("theme"),"LabelTitle","Title")
 
 func set_title(t:String)->void:
 	title=t

@@ -715,6 +715,11 @@ ui_down={
  ]
 }
 
+[locale]
+
+test="en"
+translations=PoolStringArray( "res://locale/en_GB.po", "res://locale/es_ES.po" )
+
 [rendering]
 
 environment/default_clear_color=Color( 0, 0, 0, 1 )

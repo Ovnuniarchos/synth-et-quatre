@@ -21,6 +21,7 @@ func _ready()->void:
 	ThemeHelper.apply_styles_to_group(theme,"LabelTitle","Title")
 	ThemeHelper.apply_styles_to_group(theme,"LabelControl","Label")
 	ThemeHelper.apply_styles_to_group(theme,"BarEditorLabel","BarEditorLabel")
+	GLOBALS.connect("tab_changed",self,"_on_tab_changed")
 	var parser:BarEditorLanguage=BarEditorLanguage.new()
 	var pr:LanguageResult=parser.parse("line 1, 2 , 3 ,4 step 10 line 1,2,3")
 	if pr.has_error():
@@ -32,6 +33,7 @@ func _ready()->void:
 
 
 func _on_tab_changed(tab:int)->void:
+	$Main/Tabs.current_tab=tab
 	var t:Tabs=$Main/Tabs.get_tab_control(tab)
 	if t.has_method("update_ui"):
 		t.update_ui()

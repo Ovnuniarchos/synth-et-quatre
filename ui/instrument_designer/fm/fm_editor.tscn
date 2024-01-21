@@ -10,17 +10,17 @@
 
 [sub_resource type="Theme" id=1]
 
-[sub_resource type="Theme" id=9]
+[sub_resource type="Theme" id=2]
 
-[sub_resource type="Theme" id=10]
+[sub_resource type="Theme" id=3]
 
-[sub_resource type="Theme" id=11]
+[sub_resource type="Theme" id=4]
 
-[sub_resource type="Theme" id=12]
+[sub_resource type="Theme" id=5]
 
-[sub_resource type="Theme" id=13]
+[sub_resource type="Theme" id=6]
 
-[sub_resource type="Theme" id=14]
+[sub_resource type="Theme" id=7]
 
 [node name="FmEditor" type="VBoxContainer"]
 anchor_right = 1.0
@@ -195,7 +195,7 @@ huge_step = 100
 [node name="Volume" parent="Tabs/Macros/Macro/VBC" instance=ExtResource( 8 )]
 anchor_right = 0.0
 margin_right = 1016.0
-theme = SubResource( 9 )
+theme = SubResource( 2 )
 title = "Volume"
 parameter = "G_VOLUME"
 min_value_rel = -256
@@ -206,7 +206,7 @@ huge_step = 8
 [node name="Pan" parent="Tabs/Macros/Macro/VBC" instance=ExtResource( 8 )]
 anchor_right = 0.0
 margin_right = 1016.0
-theme = SubResource( 10 )
+theme = SubResource( 3 )
 title = "Pan"
 parameter = "G_PAN"
 min_value_rel = -62
@@ -217,7 +217,7 @@ huge_step = 8
 [node name="ChInvert" parent="Tabs/Macros/Macro/VBC" instance=ExtResource( 8 )]
 anchor_right = 0.0
 margin_right = 1016.0
-theme = SubResource( 11 )
+theme = SubResource( 4 )
 title = "Channel Invert"
 parameter = "G_CHNINVERT"
 max_value_abs = 1
@@ -227,7 +227,7 @@ labels = PoolStringArray( "Right", "Left" )
 [node name="KeyOn" parent="Tabs/Macros/Macro/VBC" instance=ExtResource( 8 )]
 anchor_right = 0.0
 margin_right = 1016.0
-theme = SubResource( 12 )
+theme = SubResource( 5 )
 title = "Key On/Off"
 parameter = "G_KEY"
 min_value_abs = 1
@@ -238,7 +238,7 @@ labels = PoolStringArray( "Stop", "Off", "Staccato", "Legato", "On" )
 [node name="OpEnable" parent="Tabs/Macros/Macro/VBC" instance=ExtResource( 8 )]
 anchor_right = 0.0
 margin_right = 1016.0
-theme = SubResource( 13 )
+theme = SubResource( 6 )
 title = "Op Enable"
 parameter = "G_OPEN"
 max_value_abs = 3
@@ -248,7 +248,7 @@ labels = PoolStringArray( "Op4", "Op3", "Op2", "Op1" )
 [node name="Clip" parent="Tabs/Macros/Macro/VBC" instance=ExtResource( 8 )]
 anchor_right = 0.0
 margin_right = 1016.0
-theme = SubResource( 14 )
+theme = SubResource( 7 )
 title = "Clip"
 parameter = "G_CLIP"
 max_value_abs = 0

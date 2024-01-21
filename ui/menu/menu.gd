@@ -2,11 +2,39 @@ extends PanelContainer
 
 
 const FILES_SE4=PoolStringArray(["*.se4 ; SynthEtQuatre song"])
-const FILES_SI4=PoolStringArray(["*.si4 ; SynthEtQuatre instrument"])
+# const FILES_SI4=PoolStringArray(["*.si4 ; SynthEtQuatre instrument"])
 const FILES_WAV=PoolStringArray(["*.wav ; WAV file"])
 
+const MENUS:Array=[
+	{"option":"MENU_FILE","options":
+		[
+			{"text":"MENU_NEW","function":"_on_New_pressed"},
+			{"separator":true},
+			{"text":"MENU_OPEN_SONG","function":"_on_Open_pressed"},
+			{"text":"MENU_SAVE_SONG","function":"_on_Save_pressed"},
+			{"text":"MENU_SAVE_WAVE","function":"_on_SaveWave_pressed"},
+			{"separator":true},
+			{"text":"MENU_CLEANUP","options":[
+				{"text":"MENU_CLEANUP_PATTERNS","function":"_on_CleanupPatterns_pressed"},
+				{"text":"MENU_CLEANUP_INSTRUMENTS","function":"_on_CleanupInstruments_pressed"},
+				{"text":"MENU_CLEANUP_WAVES","function":"_on_CleanupWaveforms_pressed"},
+				{"text":"MENU_CLEANUP_ARPEGGIOS","function":"_on_CleanupArpeggios_pressed"},
+				{"separator":true},
+				{"text":"MENU_CLEANUP_ALL","function":"_on_CleanupAll_pressed"},
+			]},
+		]
+	},
+	{"separator":2},
+	{"option":"MENU_PATTERNS","function":"_on_Patterns_pressed"},
+	{"option":"MENU_INSTRUMENTS","function":"_on_Instruments_pressed"},
+	{"option":"MENU_WAVES","function":"_on_Waves_pressed"},
+	{"option":"MENU_ARPEGGIOS","function":"_on_Arpeggios_pressed"},
+	{"option":"MENU_OPTIONS","function":"_on_Options_pressed"},
+	{"separator":-1},
+	{"option":"MENU_QUIT","function":"_on_Quit_pressed"},
+]
 
-enum FILE_MODE{LOAD_SONG,LOAD_INST,SAVE_SONG,SAVE_WAV,SAVE_INST}
+enum FILE_MODE{LOAD_SONG,SAVE_SONG,SAVE_WAV}
 
 
 var file_mode:int
@@ -19,16 +47,57 @@ func _init()->void:
 
 
 func _ready()->void:
-	ThemeHelper.apply_styles(real_theme,"MenuButton",$HBC/New)
-	set_popup($HBC/Cleanup,"_on_Cleanup_id_pressed")
-	set_popup($HBC/Save,"_on_Save_id_pressed")
-	set_popup($HBC/Load,"_on_Load_id_pressed")
+	var hbc:HBoxContainer=get_node("HBC")
+	for op in MENUS:
+		if "option" in op:
+			if "options" in op:
+				var mb:MenuButton=MenuButton.new()
+				mb.flat=false
+				mb.text=op["option"]
+				ThemeHelper.apply_styles(real_theme,"MenuButton",mb)
+				add_options(op["options"],mb.get_popup())
+				hbc.add_child(mb)
+			else:
+				var mb:Button=Button.new()
+				mb.text=op["option"]
+				ThemeHelper.apply_styles(real_theme,"MenuButton",mb)
+				mb.connect("pressed",self,"_on_menu_pressed",[-1,funcref(self,op["function"])])
+				hbc.add_child(mb)
+		else:
+			var sep:Control=Control.new()
+			var w:float=op["separator"]
+			if w>0.0:
+				sep.rect_min_size.x=16*w
+			else:
+				sep.size_flags_horizontal=SIZE_EXPAND_FILL
+				sep.size_flags_stretch_ratio=-w
+			hbc.add_child(sep)
 
 
-func set_popup(mb:MenuButton,sel:String)->void:
-	var pu:PopupMenu=mb.get_popup()
-	pu.connect("id_pressed",self,sel)
-	pu.connect("popup_hide",self,"_on_popup_hide")
+func add_options(ops:Array,menu:PopupMenu)->void:
+	var ix:int=0
+	for op in ops:
+		if "separator" in op:
+			menu.add_separator()
+		elif "options" in op:
+			var new_menu:PopupMenu=PopupMenu.new()
+			new_menu.set_name(op["text"])
+			add_options(op["options"],new_menu)
+			menu.add_child(new_menu)
+			menu.add_submenu_item(op["text"],op["text"])
+		else:
+			menu.add_item(op["text"])
+			menu.set_item_metadata(ix,funcref(self,op["function"]))
+		ix+=1
+	menu.connect("index_pressed",self,"_on_menu_pressed",[menu])
+	menu.connect("popup_hide",self,"_on_popup_hide")
+
+
+func _on_menu_pressed(index:int,menu)->void:
+	if index>-1:
+		menu.get_item_metadata(index).call_func()
+	else:
+		menu.call_func()
 
 
 func _on_popup_hide()->void:
@@ -44,6 +113,39 @@ func _on_New_pressed()->void:
 	GLOBALS.set_song(song)
 
 
+func _on_Open_pressed()->void:
+	file_mode=FILE_MODE.LOAD_SONG
+	$FileDialog.current_dir=CONFIG.get_value(CONFIG.CURR_SONG_DIR)
+	$FileDialog.window_title=tr("MENU_OPEN_SONG")
+	$FileDialog.mode=FileDialog.MODE_OPEN_FILE
+	$FileDialog.filters=FILES_SE4
+	$FileDialog.current_file=""
+	$FileDialog.set_as_toplevel(true)
+	$FileDialog.popup_centered_ratio()
+
+
+func _on_Save_pressed()->void:
+	file_mode=FILE_MODE.SAVE_SONG
+	$FileDialog.current_dir=CONFIG.get_value(CONFIG.CURR_SONG_DIR)
+	$FileDialog.window_title=tr("MENU_SAVE_SONG")
+	$FileDialog.mode=FileDialog.MODE_SAVE_FILE
+	$FileDialog.filters=FILES_SE4
+	$FileDialog.current_file=GLOBALS.song.file_name
+	$FileDialog.set_as_toplevel(true)
+	$FileDialog.popup_centered_ratio()
+
+
+func _on_SaveWave_pressed()->void:
+	file_mode=FILE_MODE.SAVE_WAV
+	$FileDialog.current_dir=CONFIG.get_value(CONFIG.CURR_EXPORT_DIR)
+	$FileDialog.window_title=tr("EXPORT_WAVE")
+	$FileDialog.mode=FileDialog.MODE_SAVE_FILE
+	$FileDialog.filters=FILES_WAV
+	$FileDialog.current_file=""
+	$FileDialog.set_as_toplevel(true)
+	$FileDialog.popup_centered_ratio()
+
+
 func _on_file_selected(path:String)->void:
 	var cfg_dir:Array
 	match file_mode:
@@ -56,9 +158,9 @@ func _on_file_selected(path:String)->void:
 		FILE_MODE.SAVE_WAV:
 			cfg_dir=CONFIG.CURR_EXPORT_DIR
 			WaveFileWriter.new().write(path)
-		FILE_MODE.SAVE_INST:
+			"""FILE_MODE.SAVE_INST:
 			cfg_dir=CONFIG.CURR_INST_DIR
-			FmInstrumentWriter.new(GLOBALS.song.wave_list).write(path,GLOBALS.get_instrument())
+			FmInstrumentWriter.new(GLOBALS.song.wave_list).write(path,GLOBALS.get_instrument())"""
 	CONFIG.set_value(cfg_dir,path.get_base_dir())
 
 
@@ -72,6 +174,7 @@ func _on_files_selected(paths:PoolStringArray)->void:
 				fir.read(path)
 	CONFIG.set_value(cfg_dir,paths[0].get_base_dir())
 
+
 func _on_FileDialog_visibility_changed()->void:
 	if $FileDialog.visible:
 		FADER.open_dialog($FileDialog)
@@ -79,61 +182,59 @@ func _on_FileDialog_visibility_changed()->void:
 		FADER.close_dialog($FileDialog)
 
 
-func _on_Load_id_pressed(id:int)->void:
-	if id==0:
-		load_song()
-	elif id==1:
-		load_instrument()
+func _on_CleanupPatterns_pressed()->void:
+	AUDIO.tracker.stop()
+	GLOBALS.song.clean_patterns()
 
 
-func load_song()->void:
-	file_mode=FILE_MODE.LOAD_SONG
-	$FileDialog.current_dir=CONFIG.get_value(CONFIG.CURR_SONG_DIR)
-	$FileDialog.window_title="Load Song"
-	$FileDialog.mode=FileDialog.MODE_OPEN_FILE
-	$FileDialog.filters=FILES_SE4
-	$FileDialog.current_file=""
-	$FileDialog.set_as_toplevel(true)
-	$FileDialog.popup_centered_ratio()
+func _on_CleanupInstruments_pressed()->void:
+	AUDIO.tracker.stop()
+	GLOBALS.song.clean_instruments()
 
 
-func load_instrument()->void:
+func _on_CleanupWaveforms_pressed()->void:
+	AUDIO.tracker.stop()
+	GLOBALS.song.clean_waveforms()
+
+
+func _on_CleanupArpeggios_pressed()->void:
+	AUDIO.tracker.stop()
+	GLOBALS.song.clean_arps()
+
+
+func _on_CleanupAll_pressed()->void:
+	AUDIO.tracker.stop()
+	GLOBALS.song.clean_patterns()
+	GLOBALS.song.clean_instruments()
+	GLOBALS.song.clean_waveforms()
+	GLOBALS.song.clean_arps()
+
+
+func _on_Patterns_pressed()->void:
+	GLOBALS.emit_signal("tab_changed",0)
+
+func _on_Instruments_pressed()->void:
+	GLOBALS.emit_signal("tab_changed",1)
+
+func _on_Waves_pressed()->void:
+	GLOBALS.emit_signal("tab_changed",2)
+
+func _on_Arpeggios_pressed()->void:
+	GLOBALS.emit_signal("tab_changed",3)
+
+func _on_Options_pressed()->void:
+	GLOBALS.emit_signal("tab_changed",4)
+
+func _on_Quit_pressed()->void:
+	get_tree().quit()
+
+
+"""func load_instrument()->void:
 	file_mode=FILE_MODE.LOAD_INST
 	$FileDialog.current_dir=CONFIG.get_value(CONFIG.CURR_INST_DIR)
 	$FileDialog.window_title="Load Instrument"
 	$FileDialog.mode=FileDialog.MODE_OPEN_FILES
 	$FileDialog.filters=FILES_SI4
-	$FileDialog.current_file=""
-	$FileDialog.set_as_toplevel(true)
-	$FileDialog.popup_centered_ratio()
-
-
-func _on_Save_id_pressed(id:int)->void:
-	if id==0:
-		save_song()
-	elif id==1:
-		save_wave()
-	elif id==2:
-		save_instrument()
-
-
-func save_song()->void:
-	file_mode=FILE_MODE.SAVE_SONG
-	$FileDialog.current_dir=CONFIG.get_value(CONFIG.CURR_SONG_DIR)
-	$FileDialog.window_title="Save Song"
-	$FileDialog.mode=FileDialog.MODE_SAVE_FILE
-	$FileDialog.filters=FILES_SE4
-	$FileDialog.current_file=GLOBALS.song.file_name
-	$FileDialog.set_as_toplevel(true)
-	$FileDialog.popup_centered_ratio()
-
-
-func save_wave()->void:
-	file_mode=FILE_MODE.SAVE_WAV
-	$FileDialog.current_dir=CONFIG.get_value(CONFIG.CURR_EXPORT_DIR)
-	$FileDialog.window_title="Export as Wave"
-	$FileDialog.mode=FileDialog.MODE_SAVE_FILE
-	$FileDialog.filters=FILES_WAV
 	$FileDialog.current_file=""
 	$FileDialog.set_as_toplevel(true)
 	$FileDialog.popup_centered_ratio()
@@ -148,20 +249,4 @@ func save_instrument()->void:
 	$FileDialog.current_file=GLOBALS.song.instrument_list[GLOBALS.curr_instrument].file_name
 	$FileDialog.set_as_toplevel(true)
 	$FileDialog.popup_centered_ratio()
-
-
-func _on_Cleanup_id_pressed(id:int)->void:
-	AUDIO.tracker.stop()
-	if id==0:
-		GLOBALS.song.clean_patterns()
-	elif id==1:
-		GLOBALS.song.clean_instruments()
-	elif id==2:
-		GLOBALS.song.clean_waveforms()
-	elif id==3:
-		GLOBALS.song.clean_arps()
-	elif id==4:
-		GLOBALS.song.clean_patterns()
-		GLOBALS.song.clean_instruments()
-		GLOBALS.song.clean_waveforms()
-		GLOBALS.song.clean_arps()
+"""

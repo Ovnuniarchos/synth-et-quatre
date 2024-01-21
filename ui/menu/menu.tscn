@@ -7,9 +7,6 @@ margin_right = 1024.0
 margin_bottom = 34.0
 size_flags_horizontal = 3
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="HBC" type="HBoxContainer" parent="."]
 margin_left = 7.0
@@ -23,23 +20,37 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="New" type="Button" parent="HBC"]
-margin_right = 40.0
+[node name="Control" type="Control" parent="HBC"]
+visible = false
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="New" type="Button" parent="HBC/Control"]
+margin_left = -444.0
+margin_right = -357.0
 margin_bottom = 20.0
 focus_mode = 0
 mouse_filter = 1
-text = "New"
+text = "MENU_NEW"
 
-[node name="S" type="ReferenceRect" parent="HBC"]
-margin_left = 56.0
-margin_right = 64.0
+[node name="S" type="ReferenceRect" parent="HBC/Control"]
+margin_left = -341.0
+margin_right = -333.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 8, 0 )
 mouse_filter = 2
 
-[node name="Load" type="MenuButton" parent="HBC"]
-margin_left = 80.0
-margin_right = 122.0
+[node name="File" type="MenuButton" parent="HBC/Control"]
+margin_left = -317.0
+margin_right = -234.0
+margin_bottom = 20.0
+text = "MENU_FILE"
+flat = false
+items = [ "MENU_OPEN", null, 0, false, false, 0, 0, null, "", false, "MENU_SAVE", null, 0, false, false, 1, 0, null, "", false, "MENU_CLEANUP", null, 0, false, false, 2, 0, null, "", false ]
+
+[node name="Load" type="MenuButton" parent="HBC/Control"]
+margin_left = -218.0
+margin_right = -176.0
 margin_bottom = 20.0
 mouse_filter = 1
 text = "Load"
@@ -47,9 +58,9 @@ flat = false
 items = [ "Load song", null, 0, false, false, 0, 0, null, "", false, "Load instrument", null, 0, false, false, 1, 0, null, "", false ]
 switch_on_hover = true
 
-[node name="Save" type="MenuButton" parent="HBC"]
-margin_left = 138.0
-margin_right = 179.0
+[node name="Save" type="MenuButton" parent="HBC/Control"]
+margin_left = -160.0
+margin_right = -119.0
 margin_bottom = 20.0
 mouse_filter = 1
 text = "Save"
@@ -57,22 +68,26 @@ flat = false
 items = [ "Save song", null, 0, false, false, 0, 0, null, "", false, "Save instrument", null, 0, false, false, 2, 0, null, "", false, "", null, 0, false, true, -1, 0, null, "", true, "Save WAV", null, 0, false, false, 1, 0, null, "", false ]
 switch_on_hover = true
 
-[node name="S2" type="ReferenceRect" parent="HBC"]
-margin_left = 195.0
-margin_right = 203.0
+[node name="S2" type="ReferenceRect" parent="HBC/Control"]
+margin_left = -103.0
+margin_right = -95.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 8, 0 )
 mouse_filter = 2
 
-[node name="Cleanup" type="MenuButton" parent="HBC"]
-margin_left = 219.0
-margin_right = 282.0
+[node name="Cleanup" type="MenuButton" parent="HBC/Control"]
+margin_left = -79.0
+margin_right = -16.0
 margin_bottom = 20.0
 mouse_filter = 1
 text = "Cleanup"
 flat = false
 items = [ "Clean patterns", null, 0, false, false, 0, 0, null, "", false, "Clean instruments", null, 0, false, false, 1, 0, null, "", false, "Clean waves", null, 0, false, false, 2, 0, null, "", false, "Clean arpeggios", null, 0, false, false, 3, 0, null, "", false, "", null, 0, false, true, -1, 0, null, "", true, "Clean all", null, 0, false, false, 4, 0, null, "", false ]
 switch_on_hover = true
+
+[node name="PopupMenu" type="PopupMenu" parent="HBC/Control"]
+margin_right = 44.0
+margin_bottom = 20.0
 
 [node name="FileDialog" type="FileDialog" parent="."]
 margin_right = 362.0
@@ -82,7 +97,7 @@ mode_overrides_title = false
 access = 2
 filters = PoolStringArray( "*.se4 ; SynthEtQuatre song" )
 
-[connection signal="pressed" from="HBC/New" to="." method="_on_New_pressed"]
+[connection signal="pressed" from="HBC/Control/New" to="." method="_on_New_pressed"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_selected"]
 [connection signal="files_selected" from="FileDialog" to="." method="_on_files_selected"]
 [connection signal="visibility_changed" from="FileDialog" to="." method="_on_FileDialog_visibility_changed"]

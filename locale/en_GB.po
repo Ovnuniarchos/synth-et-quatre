@@ -1,0 +1,121 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: en_GB\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ASCII\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "MENU_FILE"
+msgstr "File"
+
+msgid "MENU_NEW"
+msgstr "New"
+
+msgid "MENU_OPEN_SONG"
+msgstr "Open Song"
+
+msgid "MENU_SAVE_SONG"
+msgstr "Save Song"
+
+msgid "MENU_SAVE_WAVE"
+msgstr "Save .WAV"
+
+msgid "MENU_CLEANUP"
+msgstr "Cleanup"
+
+msgid "MENU_CLEANUP_PATTERNS"
+msgstr "Cleanup Patterns"
+
+msgid "MENU_CLEANUP_INSTRUMENTS"
+msgstr "Cleanup Instruments"
+
+msgid "MENU_CLEANUP_WAVES"
+msgstr "Cleanup Waves"
+
+msgid "MENU_CLEANUP_ARPEGGIOS"
+msgstr "Cleanup Arpeggios"
+
+msgid "MENU_CLEANUP_ALL"
+msgstr "Cleanup All"
+
+msgid "MENU_QUIT"
+msgstr "Quit"
+
+msgid "MENU_PATTERNS"
+msgstr "Patterns"
+
+msgid "MENU_INSTRUMENTS"
+msgstr "Instruments"
+
+msgid "MENU_WAVES"
+msgstr "Waves"
+
+msgid "MENU_ARPEGGIOS"
+msgstr "Arpeggios"
+
+msgid "MENU_OPTIONS"
+msgstr "Options"
+
+msgid "EXPORT_WAVE"
+msgstr "Export as .WAV"
+
+msgid "GEN_MICRO_ADD"
+msgstr " + "
+
+msgid "GEN_MICRO_DUP"
+msgstr " D "
+
+msgid "GEN_MICRO_DEL"
+msgstr " - "
+
+msgid "INFO_TITLE"
+msgstr "Title"
+
+msgid "INFO_AUTHOR"
+msgstr "Author"
+
+msgid "INFO_OCTAVE"
+msgstr "Octave"
+
+msgid "INFO_STEP"
+msgstr "Step"
+
+msgid "INFO_VELOCITY"
+msgstr "Valocity"
+
+msgid "INFO_TICKS_SEC"
+msgstr "Ticks/second"
+
+msgid "INFO_TICKS_ROW"
+msgstr "Ticks/row"
+
+msgid "INFO_ROWS_PATTERN"
+msgstr "Rows/pattern"
+
+msgid "INFO_CHANNELS"
+msgstr "Channels"
+
+msgid "INFO_MIN_HLIGHT"
+msgstr "Minor highlight"
+
+msgid "INFO_MAJ_HLIGHT"
+msgstr "Major highlight"
+
+msgid "IBAR_OCTAVE"
+msgstr "Octave: %-2d"
+
+msgid "IBAR_STEP"
+msgstr "Step: %-3d"
+
+msgid "IBAR_VELOCITY"
+msgstr "Velocity: %-3d"
+
+msgid "IBAR_TEMPO"
+msgstr "Tempo: %-3.2f rows/s"
+
+msgid "IBAR_INSTRUMENT"
+msgstr "Instrument: %s (%02X)"

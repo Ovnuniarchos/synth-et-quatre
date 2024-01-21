@@ -1,0 +1,121 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "MENU_FILE"
+msgstr "Archivo"
+
+msgid "MENU_NEW"
+msgstr "Nuevo"
+
+msgid "MENU_OPEN_SONG"
+msgstr "Abrir Canción"
+
+msgid "MENU_SAVE_SONG"
+msgstr "Guardar Canción"
+
+msgid "MENU_SAVE_WAVE"
+msgstr "Guardar .WAV"
+
+msgid "MENU_CLEANUP"
+msgstr "Limpiar"
+
+msgid "MENU_CLEANUP_PATTERNS"
+msgstr "Limpiar Patrones"
+
+msgid "MENU_CLEANUP_INSTRUMENTS"
+msgstr "Limpiar Instrumentos"
+
+msgid "MENU_CLEANUP_WAVES"
+msgstr "Limpiar Ondas"
+
+msgid "MENU_CLEANUP_ARPEGGIOS"
+msgstr "Limpiar Arpegios"
+
+msgid "MENU_CLEANUP_ALL"
+msgstr "Limpiar Todo"
+
+msgid "MENU_QUIT"
+msgstr "Salir"
+
+msgid "MENU_PATTERNS"
+msgstr "Patrones"
+
+msgid "MENU_INSTRUMENTS"
+msgstr "Instrumentos"
+
+msgid "MENU_WAVES"
+msgstr "Ondas"
+
+msgid "MENU_ARPEGGIOS"
+msgstr "Arpegios"
+
+msgid "MENU_OPTIONS"
+msgstr "Opciones"
+
+msgid "EXPORT_WAVE"
+msgstr "Exportar .WAV"
+
+msgid "GEN_MICRO_ADD"
+msgstr " + "
+
+msgid "GEN_MICRO_DUP"
+msgstr " D "
+
+msgid "GEN_MICRO_DEL"
+msgstr " - "
+
+msgid "INFO_TITLE"
+msgstr "Título"
+
+msgid "INFO_AUTHOR"
+msgstr "Autor"
+
+msgid "INFO_OCTAVE"
+msgstr "Octava"
+
+msgid "INFO_STEP"
+msgstr "Salto"
+
+msgid "INFO_VELOCITY"
+msgstr "Intensidad"
+
+msgid "INFO_TICKS_SEC"
+msgstr "Ticks/segundo"
+
+msgid "INFO_TICKS_ROW"
+msgstr "Ticks/fila"
+
+msgid "INFO_ROWS_PATTERN"
+msgstr "Filas/patrón"
+
+msgid "INFO_CHANNELS"
+msgstr "Canales"
+
+msgid "INFO_MIN_HLIGHT"
+msgstr "Resalte menor"
+
+msgid "INFO_MAJ_HLIGHT"
+msgstr "Resalte mayor"
+
+msgid "IBAR_OCTAVE"
+msgstr "Octava: %-2d"
+
+msgid "IBAR_STEP"
+msgstr "Salto: %-3d"
+
+msgid "IBAR_VELOCITY"
+msgstr "Intensidad: %-3d"
+
+msgid "IBAR_TEMPO"
+msgstr "Tempo: %-3.2f filas/s"
+
+msgid "IBAR_INSTRUMENT"
+msgstr "Instrumento: %s (%02X)"

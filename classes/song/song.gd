@@ -618,30 +618,31 @@ func clean_arps()->void:
 					if val!=null and arp_xform[val]==null:
 						arp_xform[val]=narp
 						narp+=1
-	# Keep arps 0-15 in the range 0-15, to not break fast arps
-	for i in 16:
-		if arp_xform[i]!=null and arp_xform[i]>15:
-			for j in range(i+1,narp):
-				if arp_xform[j]!=null and arp_xform[j]<16:
-					var t:int=arp_xform[i]
-					arp_xform[i]=arp_xform[j]
-					arp_xform[j]=t
-					break
-	# Scan the patterns to change old->new
-	for chan in pattern_list:
-		for pat in chan:
-			last_cmd.fill(null)
-			for note in range(pat.notes.size()):
-				for fxi in range(Pattern.ATTRS.FX0,Pattern.MAX_ATTR,3):
-					if pat.notes[note][fxi]==null and pat.notes[note][fxi+2]==null:
-						continue
-					last_cmd[fxi]=pat.notes[note][fxi] if pat.notes[note][fxi]!=null else last_cmd[fxi]
-					cmd=last_cmd[fxi]
-					val=pat.notes[note][fxi+2]
-					if cmd==FMVC.FX_ARPEGGIO:
-						pat.notes[note][fxi+2]=(val&0xF0)|arp_xform[val&0xF]
-					elif cmd==FMVC.FX_ARP_SET:
-						pat.notes[note][fxi+2]=arp_xform[val]
+	if not arp_xform.empty():
+		# Keep arps 0-15 in the range 0-15, to not break fast arps
+		for i in min(16,arp_xform.size()):
+			if arp_xform[i]!=null and arp_xform[i]>15:
+				for j in range(i+1,narp):
+					if arp_xform[j]!=null and arp_xform[j]<16:
+						var t:int=arp_xform[i]
+						arp_xform[i]=arp_xform[j]
+						arp_xform[j]=t
+						break
+		# Scan the patterns to change old->new
+		for chan in pattern_list:
+			for pat in chan:
+				last_cmd.fill(null)
+				for note in range(pat.notes.size()):
+					for fxi in range(Pattern.ATTRS.FX0,Pattern.MAX_ATTR,3):
+						if pat.notes[note][fxi]==null and pat.notes[note][fxi+2]==null:
+							continue
+						last_cmd[fxi]=pat.notes[note][fxi] if pat.notes[note][fxi]!=null else last_cmd[fxi]
+						cmd=last_cmd[fxi]
+						val=pat.notes[note][fxi+2]
+						if cmd==FMVC.FX_ARPEGGIO:
+							pat.notes[note][fxi+2]=(val&0xF0)|arp_xform[val&0xF]
+						elif cmd==FMVC.FX_ARP_SET:
+							pat.notes[note][fxi+2]=arp_xform[val]
 	# Make new list from used
 	var narp_list:Array=[]
 	narp_list.resize(narp)

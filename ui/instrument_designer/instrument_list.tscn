@@ -14,41 +14,41 @@ __meta__ = {
 }
 
 [node name="Buttons" type="HBoxContainer" parent="."]
-margin_right = 150.0
+margin_right = 130.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 
 [node name="Add" type="Button" parent="Buttons"]
-margin_right = 37.0
+margin_right = 21.0
 margin_bottom = 20.0
 shortcut_in_tooltip = false
-text = "Add"
+text = "A"
 
 [node name="Copy" type="Button" parent="Buttons"]
-margin_left = 41.0
-margin_right = 84.0
+margin_left = 25.0
+margin_right = 47.0
 margin_bottom = 20.0
 shortcut_in_tooltip = false
-text = "Copy"
+text = "D"
 
 [node name="ReferenceRect" type="ReferenceRect" parent="Buttons"]
-margin_left = 88.0
-margin_right = 112.0
+margin_left = 51.0
+margin_right = 75.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 24, 0 )
 
 [node name="Del" type="Button" parent="Buttons"]
-margin_left = 116.0
-margin_right = 150.0
+margin_left = 79.0
+margin_right = 98.0
 margin_bottom = 20.0
 shortcut_in_tooltip = false
-text = "Del"
+text = "E"
 
 [node name="Instruments" parent="." instance=ExtResource( 1 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 24.0
-margin_right = 150.0
+margin_right = 130.0
 margin_bottom = 561.0
 
 [connection signal="pressed" from="Buttons/Add" to="." method="_on_Add_pressed"]

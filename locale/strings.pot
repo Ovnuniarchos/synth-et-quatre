@@ -1,0 +1,126 @@
+# Required by gettext
+msgid ""
+msgstr ""
+
+
+# Top menu
+
+msgid "MENU_FILE"
+msgstr ""
+
+msgid "MENU_NEW"
+msgstr ""
+
+msgid "MENU_OPEN_SONG"
+msgstr ""
+
+msgid "MENU_SAVE_SONG"
+msgstr ""
+
+msgid "MENU_SAVE_WAVE"
+msgstr ""
+
+msgid "MENU_CLEANUP"
+msgstr ""
+
+msgid "MENU_CLEANUP_PATTERNS"
+msgstr ""
+
+msgid "MENU_CLEANUP_INSTRUMENTS"
+msgstr ""
+
+msgid "MENU_CLEANUP_WAVES"
+msgstr ""
+
+msgid "MENU_CLEANUP_ARPEGGIOS"
+msgstr ""
+
+msgid "MENU_CLEANUP_ALL"
+msgstr ""
+
+msgid "MENU_QUIT"
+msgstr ""
+
+msgid "MENU_PATTERNS"
+msgstr ""
+
+msgid "MENU_INSTRUMENTS"
+msgstr ""
+
+msgid "MENU_WAVES"
+msgstr ""
+
+msgid "MENU_ARPEGGIOS"
+msgstr ""
+
+msgid "MENU_OPTIONS"
+msgstr ""
+
+msgid "EXPORT_WAVE"
+msgstr ""
+
+
+# Generic strings
+
+msgid "GEN_MICRO_ADD"
+msgstr ""
+
+msgid "GEN_MICRO_DUP"
+msgstr ""
+
+msgid "GEN_MICRO_DEL"
+msgstr ""
+
+
+# Info panel
+
+msgid "INFO_TITLE"
+msgstr ""
+
+msgid "INFO_AUTHOR"
+msgstr ""
+
+msgid "INFO_OCTAVE"
+msgstr ""
+
+msgid "INFO_STEP"
+msgstr ""
+
+msgid "INFO_VELOCITY"
+msgstr ""
+
+msgid "INFO_TICKS_SEC"
+msgstr ""
+
+msgid "INFO_TICKS_ROW"
+msgstr ""
+
+msgid "INFO_ROWS_PATTERN"
+msgstr ""
+
+msgid "INFO_CHANNELS"
+msgstr ""
+
+msgid "INFO_MIN_HLIGHT"
+msgstr ""
+
+msgid "INFO_MAJ_HLIGHT"
+msgstr ""
+
+
+# Info bar
+
+msgid "IBAR_OCTAVE"
+msgstr ""
+
+msgid "IBAR_STEP"
+msgstr ""
+
+msgid "IBAR_VELOCITY"
+msgstr ""
+
+msgid "IBAR_TEMPO"
+msgstr ""
+
+msgid "IBAR_INSTRUMENT"
+msgstr ""

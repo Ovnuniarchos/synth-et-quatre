@@ -11,16 +11,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Title" type="Label" parent="." groups=[
-"Title",
-]]
-margin_right = 1024.0
-margin_bottom = 14.0
-text = "OP 2"
-align = 1
-
 [node name="Routing" type="GridContainer" parent="."]
-margin_top = 18.0
 margin_right = 1024.0
 margin_bottom = 104.0
 size_flags_horizontal = 3
@@ -30,17 +21,29 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="OP1Label" type="Label" parent="Routing" groups=[
-"Label",
-]]
-margin_right = 27.0
+[node name="ReferenceRect" type="ReferenceRect" parent="Routing"]
+margin_right = 70.0
 margin_bottom = 14.0
+
+[node name="Title" type="Label" parent="Routing" groups=["Title"]]
+margin_left = 74.0
+margin_right = 1024.0
+margin_bottom = 14.0
+text = "OP 2"
+align = 1
+
+[node name="OP1Label" type="Label" parent="Routing" groups=["Label"]]
+margin_top = 18.0
+margin_right = 70.0
+margin_bottom = 32.0
+mouse_filter = 1
 text = "OP1"
 
 [node name="OP1Slider" type="ProgressBar" parent="Routing"]
-margin_left = 31.0
+margin_left = 74.0
+margin_top = 18.0
 margin_right = 1024.0
-margin_bottom = 14.0
+margin_bottom = 32.0
 rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 7
 size_flags_vertical = 4
@@ -51,19 +54,18 @@ script = ExtResource( 1 )
 big_step = 4.0
 huge_step = 16.0
 
-[node name="OP2Label" type="Label" parent="Routing" groups=[
-"Label",
-]]
-margin_top = 18.0
-margin_right = 27.0
-margin_bottom = 32.0
+[node name="OP2Label" type="Label" parent="Routing" groups=["Label"]]
+margin_top = 36.0
+margin_right = 70.0
+margin_bottom = 50.0
+mouse_filter = 1
 text = "OP2"
 
 [node name="OP2Slider" type="ProgressBar" parent="Routing"]
-margin_left = 31.0
-margin_top = 18.0
+margin_left = 74.0
+margin_top = 36.0
 margin_right = 1024.0
-margin_bottom = 32.0
+margin_bottom = 50.0
 rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 7
 size_flags_vertical = 4
@@ -74,19 +76,18 @@ script = ExtResource( 1 )
 big_step = 4.0
 huge_step = 16.0
 
-[node name="OP3Label" type="Label" parent="Routing" groups=[
-"Label",
-]]
-margin_top = 36.0
-margin_right = 27.0
-margin_bottom = 50.0
+[node name="OP3Label" type="Label" parent="Routing" groups=["Label"]]
+margin_top = 54.0
+margin_right = 70.0
+margin_bottom = 68.0
+mouse_filter = 1
 text = "OP3"
 
 [node name="OP3Slider" type="ProgressBar" parent="Routing"]
-margin_left = 31.0
-margin_top = 36.0
+margin_left = 74.0
+margin_top = 54.0
 margin_right = 1024.0
-margin_bottom = 50.0
+margin_bottom = 68.0
 rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 7
 size_flags_vertical = 4
@@ -97,19 +98,18 @@ script = ExtResource( 1 )
 big_step = 4.0
 huge_step = 16.0
 
-[node name="OP4Label" type="Label" parent="Routing" groups=[
-"Label",
-]]
-margin_top = 54.0
-margin_right = 27.0
-margin_bottom = 68.0
+[node name="OP4Label" type="Label" parent="Routing" groups=["Label"]]
+margin_top = 72.0
+margin_right = 70.0
+margin_bottom = 86.0
+mouse_filter = 1
 text = "OP4"
 
 [node name="OP4Slider" type="ProgressBar" parent="Routing"]
-margin_left = 31.0
-margin_top = 54.0
+margin_left = 74.0
+margin_top = 72.0
 margin_right = 1024.0
-margin_bottom = 68.0
+margin_bottom = 86.0
 rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 7
 size_flags_vertical = 4
@@ -120,19 +120,18 @@ script = ExtResource( 1 )
 big_step = 4.0
 huge_step = 16.0
 
-[node name="OutLabel" type="Label" parent="Routing" groups=[
-"Label",
-]]
-margin_top = 72.0
-margin_right = 27.0
-margin_bottom = 86.0
-text = "Out"
+[node name="OutLabel" type="Label" parent="Routing" groups=["Label"]]
+margin_top = 90.0
+margin_right = 70.0
+margin_bottom = 104.0
+mouse_filter = 1
+text = "FMED_OUT"
 
 [node name="OutSlider" type="ProgressBar" parent="Routing"]
-margin_left = 31.0
-margin_top = 72.0
+margin_left = 74.0
+margin_top = 90.0
 margin_right = 1024.0
-margin_bottom = 86.0
+margin_bottom = 104.0
 rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 7
 size_flags_vertical = 4

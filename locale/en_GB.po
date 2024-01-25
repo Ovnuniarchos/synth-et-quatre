@@ -9,6 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+# Top menu
 msgid "MENU_FILE"
 msgstr "File"
 
@@ -63,6 +64,7 @@ msgstr "Options"
 msgid "EXPORT_WAVE"
 msgstr "Export as .WAV"
 
+# Generic strings
 msgid "GEN_MICRO_ADD"
 msgstr " + "
 
@@ -72,6 +74,16 @@ msgstr " D "
 msgid "GEN_MICRO_DEL"
 msgstr " - "
 
+msgid "GEN_NANO_ADD"
+msgstr "+"
+
+msgid "GEN_NANO_DEL"
+msgstr "-"
+
+msgid "GEN_NAME"
+msgstr "Name"
+
+# Info panel
 msgid "INFO_TITLE"
 msgstr "Title"
 
@@ -85,7 +97,7 @@ msgid "INFO_STEP"
 msgstr "Step"
 
 msgid "INFO_VELOCITY"
-msgstr "Valocity"
+msgstr "Velocity"
 
 msgid "INFO_TICKS_SEC"
 msgstr "Ticks/second"
@@ -105,6 +117,7 @@ msgstr "Minor highlight"
 msgid "INFO_MAJ_HLIGHT"
 msgstr "Major highlight"
 
+# Info bar
 msgid "IBAR_OCTAVE"
 msgstr "Octave: %-2d"
 
@@ -119,3 +132,235 @@ msgstr "Tempo: %-3.2f rows/s"
 
 msgid "IBAR_INSTRUMENT"
 msgstr "Instrument: %s (%02X)"
+
+# Pattern editor
+msgid "PTEDIT_CHANNEL_BUTTON"
+msgstr "Channel %d"
+
+msgid "PTEDIT_DEL_FX_TTIP"
+msgstr "Delete effects column"
+
+msgid "PTEDIT_ADD_FX_TTIP"
+msgstr "Add effects column"
+
+msgid "PTEDIT_ADD_TTIP"
+msgstr "Add order"
+
+msgid "PTEDIT_DUP_TTIP"
+msgstr "Duplicate order"
+
+msgid "PTEDIT_UP_TTIP"
+msgstr "Move up"
+
+msgid "PTEDIT_DOWN_TTIP"
+msgstr "Move down"
+
+msgid "PTEDIT_DEL_TTIP"
+msgstr "Delete order"
+
+# Play controls
+msgid "PLAY_TEXT_PLAY"
+msgstr ">"
+
+msgid "PLAY_TEXT_STOP"
+msgstr "||"
+
+# Instrument editor
+msgid "INSTED_ADD_TTIP"
+msgstr "Add instrument"
+
+msgid "INSTED_DUP_TTIP"
+msgstr "Duplicate instrument"
+
+msgid "INSTED_DEL_TTIP"
+msgstr "Delete instrument"
+
+msgid "INSTED_LOAD"
+msgstr "Load"
+
+msgid "INSTED_SAVE"
+msgstr "Save"
+
+msgid "INSTED_DLG_LOAD"
+msgstr "Load Instrument(s)"
+
+msgid "INSTED_DLG_SAVE"
+msgstr "Save Instrument"
+
+# FM editor
+msgid "FMED_LFOX_TITLE"
+msgstr "LFO %d"
+
+msgid "FMED_LFO_DUTY_CYCLE"
+msgstr "DUC"
+
+msgid "FMED_LFO_DUTY_CYCLE_TTIP"
+msgstr "Duty cycle"
+
+msgid "FMED_LFO_WAVE"
+msgstr "WAV"
+
+msgid "FMED_LFO_WAVE_TTIP"
+msgstr "Wave"
+
+msgid "FMED_LFO_FREQUENCY"
+msgstr "FRQ"
+
+msgid "FMED_LFO_FREQUENCY_TTIP"
+msgstr "Frequency (Hz)"
+
+msgid "FMED_OPX"
+msgstr "OP %d"
+
+msgid "FMED_OPX_TTIP"
+msgstr "Operator %d enable/disable"
+
+msgid "FMED_COPY_TO_OPX"
+msgstr "> OP%d"
+
+msgid "FMED_COPY_TO_OPX_TTIP"
+msgstr "Copy to operator %d"
+
+msgid "FMED_WAVE_TITLE"
+msgstr "Wave"
+
+msgid "FMED_DUTY_CYCLE"
+msgstr "DUC"
+
+msgid "FMED_DUTY_CYCLE_TTIP"
+msgstr "Duty cycle"
+
+msgid "FMED_WAVE"
+msgstr "WAV"
+
+msgid "FMED_WAVE_TTIP"
+msgstr "Wave"
+
+msgid "FMED_ENVELOPE_TITLE"
+msgstr "Envelope"
+
+msgid "FMED_ATTACK"
+msgstr "ATR"
+
+msgid "FMED_ATTACK_TTIP"
+msgstr "Attack rate"
+
+msgid "FMED_DECAY"
+msgstr "DER"
+
+msgid "FMED_DECAY_TTIP"
+msgstr "Decay rate"
+
+msgid "FMED_SUSTAIN_LEVEL"
+msgstr "SUL"
+
+msgid "FMED_SUSTAIN_LEVEL_TTIP"
+msgstr "Sustain level"
+
+msgid "FMED_SUSTAIN_RATE"
+msgstr "SUR"
+
+msgid "FMED_SUSTAIN_RATE_TTIP"
+msgstr "Secondary decay rate"
+
+msgid "FMED_RELEASE"
+msgstr "RER"
+
+msgid "FMED_RELEASE_TTIP"
+msgstr "Release rate"
+
+msgid "FMED_REPEAT_MODE"
+msgstr "RPT"
+
+msgid "FMED_REPEAT_MODE_TTIP"
+msgstr "Repeat mode"
+
+msgid "FMED_AM_INTENSITY"
+msgstr "AMI"
+
+msgid "FMED_AM_INTENSITY_TTIP"
+msgstr "AM intensity (tremolo)"
+
+msgid "FMED_KEY_SCALING"
+msgstr "KSR"
+
+msgid "FMED_KEY_SCALING_TTIP"
+msgstr "Key rate scale"
+
+msgid "FMED_FREQUENCY_TITLE"
+msgstr "Frequency"
+
+msgid "FMED_MULTIPLIER"
+msgstr "MUL"
+
+msgid "FMED_MULTIPLIER_TTIP"
+msgstr "Multiplier"
+
+msgid "FMED_DIVIDER"
+msgstr "DIV"
+
+msgid "FMED_DIVIDER_TTIP"
+msgstr "Divisor"
+
+msgid "FMED_DETUNE"
+msgstr "DET"
+
+msgid "FMED_DETUNE_TTIP"
+msgstr "Detune (millis)"
+
+msgid "FMED_FIXED_FREQUENCY"
+msgstr "FFR"
+
+msgid "FMED_FIXED_FREQUENCY_TTIP"
+msgstr "Fixed frequency (Hz)"
+
+msgid "FMED_FM_INTENSITY"
+msgstr "FMI"
+
+msgid "FMED_FM_INTENSITY_TTIP"
+msgstr "FM intensity (vibrato)"
+
+msgid "FMED_LFOS"
+msgstr "LFOs"
+
+msgid "FMED_AM_LFO"
+msgstr "AM"
+
+msgid "FMED_AM_LFO_TTIP"
+msgstr "AM LFO"
+
+msgid "FMED_FM_LFO"
+msgstr "FM"
+
+msgid "FMED_FM_LFO_TTIP"
+msgstr "FM LFO"
+
+msgid "FMED_ROUTING"
+msgstr "Routing"
+
+msgid "FMED_CLIP"
+msgstr "Clip"
+
+msgid "FMED_OP1"
+msgstr "OP1"
+
+msgid "FMED_OP2"
+msgstr "OP2"
+
+msgid "FMED_OP3"
+msgstr "OP3"
+
+msgid "FMED_OP4"
+msgstr "OP4"
+
+msgid "FMED_OPXX_TTIP"
+msgstr "Op %d auto-modulation level"
+
+msgid "FMED_OPXY_TTIP"
+msgstr "Modulation level from Op %d to Op %d"
+
+msgid "FMED_OUT"
+msgstr "Out"
+
+msgid "FMED_OUTX_TTIP"
+msgstr "Operator %d output level"

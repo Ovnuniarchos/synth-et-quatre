@@ -27,7 +27,7 @@ func set_unpressed_icon(v:String)->void:
 func _toggled(p:bool)->void:
 	if p:
 		icon=icon_on
-		text="||" if icon_on==null else ""
+		text=tr("PLAY_TEXT_STOP") if icon_on==null else ""
 	else:
 		icon=icon_off
-		text=">" if icon_off==null else ""
+		text=tr("PLAY_TEXT_PLAY") if icon_off==null else ""

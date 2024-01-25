@@ -99,5 +99,4 @@ filters = PoolStringArray( "*.se4 ; SynthEtQuatre song" )
 
 [connection signal="pressed" from="HBC/Control/New" to="." method="_on_New_pressed"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_selected"]
-[connection signal="files_selected" from="FileDialog" to="." method="_on_files_selected"]
 [connection signal="visibility_changed" from="FileDialog" to="." method="_on_FileDialog_visibility_changed"]

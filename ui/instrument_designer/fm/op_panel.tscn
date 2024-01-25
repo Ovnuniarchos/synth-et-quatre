@@ -27,10 +27,11 @@ custom_constants/separation = 16
 margin_right = 96.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 96, 0 )
+hint_tooltip = "FMED_OPX_TTIP"
 size_flags_horizontal = 0
 toggle_mode = true
 pressed = true
-text = "OPX"
+text = "FMED_OPX"
 script = ExtResource( 1 )
 
 [node name="Sep" type="ReferenceRect" parent="Params/Switches"]
@@ -62,11 +63,11 @@ rect_min_size = Vector2( 0, 16 )
 
 [node name="WaveTitle" type="Label" parent="Params" groups=["Title"]]
 margin_top = 44.0
-margin_right = 35.0
+margin_right = 118.0
 margin_bottom = 58.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-text = "Wave"
+text = "FMED_WAVE_TITLE"
 
 [node name="Wave" type="GridContainer" parent="Params"]
 margin_top = 62.0
@@ -76,17 +77,20 @@ columns = 5
 
 [node name="DUCLabel" type="Label" parent="Params/Wave" groups=["Label"]]
 margin_top = 3.0
-margin_right = 28.0
+margin_right = 119.0
 margin_bottom = 17.0
-text = "DUC"
+hint_tooltip = "FMED_DUTY_CYCLE_TTIP"
+mouse_filter = 1
+text = "FMED_DUTY_CYCLE"
 
 [node name="DUCSlider" type="ProgressBar" parent="Params/Wave"]
-margin_left = 32.0
+margin_left = 123.0
 margin_top = 3.0
-margin_right = 492.0
+margin_right = 513.0
 margin_bottom = 17.0
 grow_vertical = 2
 rect_min_size = Vector2( 36, 14 )
+hint_tooltip = "FMED_DUTY_CYCLE_TTIP"
 size_flags_horizontal = 7
 size_flags_vertical = 4
 max_value = 255.0
@@ -97,23 +101,26 @@ big_step = 4.0
 huge_step = 16.0
 
 [node name="Sep" type="ReferenceRect" parent="Params/Wave"]
-margin_left = 496.0
-margin_right = 512.0
+margin_left = 517.0
+margin_right = 533.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
 [node name="WAVLabel" type="Label" parent="Params/Wave" groups=["Label"]]
-margin_left = 516.0
+margin_left = 537.0
 margin_top = 3.0
-margin_right = 546.0
+margin_right = 616.0
 margin_bottom = 17.0
-text = "WAV"
+hint_tooltip = "FMED_WAVE_TTIP"
+mouse_filter = 1
+text = "FMED_WAVE"
 
 [node name="WAVButton" type="OptionButton" parent="Params/Wave"]
-margin_left = 550.0
+margin_left = 620.0
 margin_right = 1010.0
 margin_bottom = 20.0
+hint_tooltip = "FMED_WAVE_TTIP"
 size_flags_horizontal = 3
 clip_text = true
 script = ExtResource( 4 )
@@ -126,11 +133,11 @@ rect_min_size = Vector2( 0, 16 )
 
 [node name="EnvelopeTitle" type="Label" parent="Params" groups=["Title"]]
 margin_top = 106.0
-margin_right = 58.0
+margin_right = 146.0
 margin_bottom = 120.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-text = "Envelope"
+text = "FMED_ENVELOPE_TITLE"
 
 [node name="ADSR" type="GridContainer" parent="Params"]
 margin_top = 124.0
@@ -140,15 +147,18 @@ custom_constants/hseparation = 2
 columns = 5
 
 [node name="ARLabel" type="Label" parent="Params/ADSR" groups=["Label"]]
-margin_right = 26.0
+margin_right = 139.0
 margin_bottom = 14.0
-text = "ATR"
+hint_tooltip = "FMED_ATTACK_TTIP"
+mouse_filter = 1
+text = "FMED_ATTACK"
 
 [node name="ARSlider" type="ProgressBar" parent="Params/ADSR"]
-margin_left = 28.0
-margin_right = 496.0
+margin_left = 141.0
+margin_right = 498.0
 margin_bottom = 14.0
 rect_min_size = Vector2( 36, 14 )
+hint_tooltip = "FMED_ATTACK_TTIP"
 size_flags_horizontal = 7
 size_flags_vertical = 4
 max_value = 255.0
@@ -159,23 +169,26 @@ big_step = 4.0
 huge_step = 16.0
 
 [node name="Sep" type="ReferenceRect" parent="Params/ADSR"]
-margin_left = 498.0
-margin_right = 514.0
+margin_left = 500.0
+margin_right = 516.0
 margin_bottom = 14.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
 [node name="DRLabel" type="Label" parent="Params/ADSR" groups=["Label"]]
-margin_left = 516.0
-margin_right = 541.0
+margin_left = 518.0
+margin_right = 652.0
 margin_bottom = 14.0
-text = "DER"
+hint_tooltip = "FMED_DECAY_TTIP"
+mouse_filter = 1
+text = "FMED_DECAY"
 
 [node name="DRSlider" type="ProgressBar" parent="Params/ADSR"]
-margin_left = 543.0
+margin_left = 654.0
 margin_right = 1010.0
 margin_bottom = 14.0
 rect_min_size = Vector2( 36, 14 )
+hint_tooltip = "FMED_DECAY_TTIP"
 size_flags_horizontal = 7
 size_flags_vertical = 4
 max_value = 255.0
@@ -187,16 +200,19 @@ huge_step = 16.0
 
 [node name="SLLabel" type="Label" parent="Params/ADSR" groups=["Label"]]
 margin_top = 18.0
-margin_right = 26.0
+margin_right = 139.0
 margin_bottom = 32.0
-text = "SUL"
+hint_tooltip = "FMED_SUSTAIN_LEVEL_TTIP"
+mouse_filter = 1
+text = "FMED_SUSTAIN_LEVEL"
 
 [node name="SLSlider" type="ProgressBar" parent="Params/ADSR"]
-margin_left = 28.0
+margin_left = 141.0
 margin_top = 18.0
-margin_right = 496.0
+margin_right = 498.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 36, 14 )
+hint_tooltip = "FMED_SUSTAIN_LEVEL_TTIP"
 size_flags_horizontal = 7
 size_flags_vertical = 4
 max_value = 255.0
@@ -207,26 +223,29 @@ big_step = 4.0
 huge_step = 16.0
 
 [node name="Sep2" type="ReferenceRect" parent="Params/ADSR"]
-margin_left = 498.0
+margin_left = 500.0
 margin_top = 18.0
-margin_right = 514.0
+margin_right = 516.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
 [node name="SRLabel" type="Label" parent="Params/ADSR" groups=["Label"]]
-margin_left = 516.0
+margin_left = 518.0
 margin_top = 18.0
-margin_right = 541.0
+margin_right = 652.0
 margin_bottom = 32.0
-text = "SUR"
+hint_tooltip = "FMED_SUSTAIN_RATE_TTIP"
+mouse_filter = 1
+text = "FMED_SUSTAIN_RATE"
 
 [node name="SRSlider" type="ProgressBar" parent="Params/ADSR"]
-margin_left = 543.0
+margin_left = 654.0
 margin_top = 18.0
 margin_right = 1010.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 36, 14 )
+hint_tooltip = "FMED_SUSTAIN_RATE_TTIP"
 size_flags_horizontal = 7
 size_flags_vertical = 4
 max_value = 255.0
@@ -238,16 +257,19 @@ huge_step = 16.0
 
 [node name="RRLabel" type="Label" parent="Params/ADSR" groups=["Label"]]
 margin_top = 39.0
-margin_right = 26.0
+margin_right = 139.0
 margin_bottom = 53.0
-text = "RER"
+hint_tooltip = "FMED_RELEASE_TTIP"
+mouse_filter = 1
+text = "FMED_RELEASE"
 
 [node name="RRSlider" type="ProgressBar" parent="Params/ADSR"]
-margin_left = 28.0
+margin_left = 141.0
 margin_top = 39.0
-margin_right = 496.0
+margin_right = 498.0
 margin_bottom = 53.0
 rect_min_size = Vector2( 36, 14 )
+hint_tooltip = "FMED_RELEASE_TTIP"
 size_flags_horizontal = 7
 size_flags_vertical = 4
 max_value = 255.0
@@ -258,41 +280,47 @@ big_step = 4.0
 huge_step = 16.0
 
 [node name="Sep3" type="ReferenceRect" parent="Params/ADSR"]
-margin_left = 498.0
+margin_left = 500.0
 margin_top = 36.0
-margin_right = 514.0
+margin_right = 516.0
 margin_bottom = 56.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
 [node name="RPLabel" type="Label" parent="Params/ADSR" groups=["Label"]]
-margin_left = 516.0
+margin_left = 518.0
 margin_top = 39.0
-margin_right = 541.0
+margin_right = 652.0
 margin_bottom = 53.0
-text = "RPT"
+hint_tooltip = "FMED_REPEAT_MODE_TTIP"
+mouse_filter = 1
+text = "FMED_REPEAT_MODE"
 
 [node name="Repeat" type="OptionButton" parent="Params/ADSR"]
-margin_left = 543.0
+margin_left = 654.0
 margin_top = 36.0
 margin_right = 1010.0
 margin_bottom = 56.0
+hint_tooltip = "FMED_REPEAT_MODE_TTIP"
 text = "OFF"
 items = [ "OFF", null, false, 0, null, "Attack", null, false, 1, null, "Decay", null, false, 2, null, "Sustain", null, false, 3, null, "Release", null, false, 4, null ]
 selected = 0
 
 [node name="AMSLabel" type="Label" parent="Params/ADSR" groups=["Label"]]
 margin_top = 60.0
-margin_right = 26.0
+margin_right = 139.0
 margin_bottom = 74.0
-text = "AMI"
+hint_tooltip = "FMED_AM_INTENSITY_TTIP"
+mouse_filter = 1
+text = "FMED_AM_INTENSITY"
 
 [node name="AMSSlider" type="ProgressBar" parent="Params/ADSR"]
-margin_left = 28.0
+margin_left = 141.0
 margin_top = 60.0
-margin_right = 496.0
+margin_right = 498.0
 margin_bottom = 74.0
 rect_min_size = Vector2( 36, 14 )
+hint_tooltip = "FMED_AM_INTENSITY_TTIP"
 size_flags_horizontal = 7
 size_flags_vertical = 4
 max_value = 255.0
@@ -303,23 +331,23 @@ big_step = 4.0
 huge_step = 16.0
 
 [node name="Sep4" type="ReferenceRect" parent="Params/ADSR"]
-margin_left = 498.0
+margin_left = 500.0
 margin_top = 60.0
-margin_right = 514.0
+margin_right = 516.0
 margin_bottom = 74.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
 [node name="Sep5" type="ReferenceRect" parent="Params/ADSR"]
-margin_left = 516.0
+margin_left = 518.0
 margin_top = 60.0
-margin_right = 541.0
+margin_right = 652.0
 margin_bottom = 74.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
 [node name="Sep6" type="ReferenceRect" parent="Params/ADSR"]
-margin_left = 543.0
+margin_left = 654.0
 margin_top = 60.0
 margin_right = 1010.0
 margin_bottom = 74.0
@@ -328,16 +356,19 @@ size_flags_vertical = 7
 
 [node name="KSRLabel" type="Label" parent="Params/ADSR" groups=["Label"]]
 margin_top = 78.0
-margin_right = 26.0
+margin_right = 139.0
 margin_bottom = 92.0
-text = "KSR"
+hint_tooltip = "FMED_KEY_SCALING_TTIP"
+mouse_filter = 1
+text = "FMED_KEY_SCALING"
 
 [node name="KSRSlider" type="ProgressBar" parent="Params/ADSR"]
-margin_left = 28.0
+margin_left = 141.0
 margin_top = 78.0
-margin_right = 496.0
+margin_right = 498.0
 margin_bottom = 92.0
 rect_min_size = Vector2( 20, 14 )
+hint_tooltip = "FMED_KEY_SCALING_TTIP"
 size_flags_horizontal = 7
 size_flags_vertical = 4
 max_value = 7.0
@@ -355,11 +386,11 @@ rect_min_size = Vector2( 0, 16 )
 
 [node name="FrequencyTitle" type="Label" parent="Params" groups=["Title"]]
 margin_top = 240.0
-margin_right = 66.0
+margin_right = 156.0
 margin_bottom = 254.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-text = "Frequency"
+text = "FMED_FREQUENCY_TITLE"
 
 [node name="Frequency" type="GridContainer" parent="Params"]
 margin_top = 258.0
@@ -369,15 +400,18 @@ custom_constants/hseparation = 2
 columns = 5
 
 [node name="MULLabel" type="Label" parent="Params/Frequency" groups=["Label"]]
-margin_right = 29.0
+margin_right = 118.0
 margin_bottom = 14.0
-text = "MUL"
+hint_tooltip = "FMED_MULTIPLIER_TTIP"
+mouse_filter = 1
+text = "FMED_MULTIPLIER"
 
 [node name="MULSlider" type="ProgressBar" parent="Params/Frequency"]
-margin_left = 31.0
-margin_right = 498.0
+margin_left = 120.0
+margin_right = 507.0
 margin_bottom = 14.0
 rect_min_size = Vector2( 28, 14 )
+hint_tooltip = "FMED_MULTIPLIER_TTIP"
 size_flags_horizontal = 7
 size_flags_vertical = 4
 max_value = 32.0
@@ -388,23 +422,26 @@ big_step = 2.0
 huge_step = 4.0
 
 [node name="Sep" type="ReferenceRect" parent="Params/Frequency"]
-margin_left = 500.0
-margin_right = 516.0
+margin_left = 509.0
+margin_right = 525.0
 margin_bottom = 14.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
 [node name="DIVLabel" type="Label" parent="Params/Frequency" groups=["Label"]]
-margin_left = 518.0
-margin_right = 541.0
+margin_left = 527.0
+margin_right = 622.0
 margin_bottom = 14.0
-text = "DIV"
+hint_tooltip = "FMED_DIVIDER_TTIP"
+mouse_filter = 1
+text = "FMED_DIVIDER"
 
 [node name="DIVSlider" type="ProgressBar" parent="Params/Frequency"]
-margin_left = 543.0
+margin_left = 624.0
 margin_right = 1010.0
 margin_bottom = 14.0
 rect_min_size = Vector2( 28, 14 )
+hint_tooltip = "FMED_DIVIDER_TTIP"
 size_flags_horizontal = 7
 size_flags_vertical = 4
 min_value = 1.0
@@ -425,15 +462,18 @@ __meta__ = {
 }
 
 [node name="DETLabel" type="Label" parent="Params/Detune" groups=["Label"]]
-margin_right = 24.0
+margin_right = 93.0
 margin_bottom = 14.0
-text = "DET"
+hint_tooltip = "FMED_DETUNE_TTIP"
+mouse_filter = 1
+text = "FMED_DETUNE"
 
 [node name="DETSlider" type="ProgressBar" parent="Params/Detune"]
-margin_left = 28.0
+margin_left = 97.0
 margin_right = 1010.0
 margin_bottom = 14.0
 rect_min_size = Vector2( 57, 14 )
+hint_tooltip = "FMED_DETUNE_TTIP"
 size_flags_horizontal = 7
 size_flags_vertical = 4
 min_value = -12000.0
@@ -451,15 +491,18 @@ __meta__ = {
 }
 
 [node name="FMSLabel" type="Label" parent="Params/FMS" groups=["Label"]]
-margin_right = 24.0
+margin_right = 132.0
 margin_bottom = 14.0
-text = "FMI"
+hint_tooltip = "FMED_FM_INTENSITY_TTIP"
+mouse_filter = 1
+text = "FMED_FM_INTENSITY"
 
 [node name="FMSSlider" type="ProgressBar" parent="Params/FMS"]
-margin_left = 28.0
+margin_left = 136.0
 margin_right = 1010.0
 margin_bottom = 14.0
 rect_min_size = Vector2( 52, 14 )
+hint_tooltip = "FMED_FM_INTENSITY_TTIP"
 size_flags_horizontal = 7
 size_flags_vertical = 4
 max_value = 12000.0
@@ -475,13 +518,13 @@ rect_min_size = Vector2( 0, 16 )
 
 [node name="LFOsTitle" type="Label" parent="Params" groups=["Title"]]
 margin_top = 332.0
-margin_right = 32.0
+margin_right = 74.0
 margin_bottom = 346.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 custom_constants/shadow_offset_x = 2
 custom_constants/shadow_offset_y = 2
-text = "LFOs"
+text = "FMED_LFOS"
 
 [node name="LFOs" type="HBoxContainer" parent="Params"]
 margin_top = 350.0
@@ -491,14 +534,17 @@ size_flags_horizontal = 3
 
 [node name="AMFLabel" type="Label" parent="Params/LFOs" groups=["Label"]]
 margin_top = 3.0
-margin_right = 50.0
+margin_right = 94.0
 margin_bottom = 17.0
-text = "AM LFO"
+hint_tooltip = "FMED_AM_LFO_TTIP"
+mouse_filter = 1
+text = "FMED_AM_LFO"
 
 [node name="AmpLFO" type="OptionButton" parent="Params/LFOs"]
-margin_left = 54.0
+margin_left = 98.0
 margin_right = 494.0
 margin_bottom = 20.0
+hint_tooltip = "FMED_AM_LFO_TTIP"
 size_flags_horizontal = 3
 text = "1"
 items = [ "1", null, false, 0, null, "2", null, false, 1, null, "3", null, false, 2, null, "4", null, false, 3, null ]
@@ -514,14 +560,17 @@ size_flags_vertical = 7
 [node name="FMFLabel" type="Label" parent="Params/LFOs" groups=["Label"]]
 margin_left = 518.0
 margin_top = 3.0
-margin_right = 566.0
+margin_right = 610.0
 margin_bottom = 17.0
-text = "FM LFO"
+hint_tooltip = "FMED_FM_LFO_TTIP"
+mouse_filter = 1
+text = "FMED_FM_LFO"
 
 [node name="FreqLFO" type="OptionButton" parent="Params/LFOs"]
-margin_left = 570.0
+margin_left = 614.0
 margin_right = 1010.0
 margin_bottom = 20.0
+hint_tooltip = "FMED_FM_LFO_TTIP"
 size_flags_horizontal = 3
 text = "1"
 items = [ "1", null, false, 0, null, "2", null, false, 1, null, "3", null, false, 2, null, "4", null, false, 3, null ]

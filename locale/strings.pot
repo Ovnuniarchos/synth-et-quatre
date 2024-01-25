@@ -71,6 +71,15 @@ msgstr ""
 msgid "GEN_MICRO_DEL"
 msgstr ""
 
+msgid "GEN_NANO_ADD"
+msgstr ""
+
+msgid "GEN_NANO_DEL"
+msgstr ""
+
+msgid "GEN_NAME"
+msgstr ""
+
 
 # Info panel
 
@@ -124,3 +133,243 @@ msgstr ""
 
 msgid "IBAR_INSTRUMENT"
 msgstr ""
+
+
+# Pattern editor
+
+msgid "PTEDIT_CHANNEL_BUTTON"
+msgstr ""
+
+msgid "PTEDIT_DEL_FX_TTIP"
+msgstr ""
+
+msgid "PTEDIT_ADD_FX_TTIP"
+msgstr ""
+
+msgid "PTEDIT_ADD_TTIP"
+msgstr ""
+
+msgid "PTEDIT_DUP_TTIP"
+msgstr ""
+
+msgid "PTEDIT_UP_TTIP"
+msgstr ""
+
+msgid "PTEDIT_DOWN_TTIP"
+msgstr ""
+
+msgid "PTEDIT_DEL_TTIP"
+msgstr ""
+
+# Play controls
+
+msgid "PLAY_TEXT_PLAY"
+msgstr ""
+
+msgid "PLAY_TEXT_STOP"
+msgstr ""
+
+
+# Instrument editor
+
+msgid "INSTED_ADD_TTIP"
+msgstr "Añadir instrumento"
+
+msgid "INSTED_DUP_TTIP"
+msgstr "Duplicar instrumento"
+
+msgid "INSTED_DEL_TTIP"
+msgstr "Eliminar instrumento"
+
+msgid "INSTED_LOAD"
+msgstr ""
+
+msgid "INSTED_SAVE"
+msgstr ""
+
+msgid "INSTED_DLG_LOAD"
+msgstr ""
+
+msgid "INSTED_DLG_SAVE"
+msgstr ""
+
+
+# FM editor
+
+msgid "FMED_LFOX_TITLE"
+msgstr ""
+
+msgid "FMED_LFO_DUTY_CYCLE"
+msgstr ""
+
+msgid "FMED_LFO_DUTY_CYCLE_TTIP"
+msgstr ""
+
+msgid "FMED_LFO_WAVE"
+msgstr ""
+
+msgid "FMED_LFO_WAVE_TTIP"
+msgstr ""
+
+msgid "FMED_LFO_FREQUENCY"
+msgstr ""
+
+msgid "FMED_LFO_FREQUENCY_TTIP"
+msgstr ""
+
+msgid "FMED_OPX"
+msgstr ""
+
+msgid "FMED_OPX_TTIP"
+msgstr ""
+
+msgid "FMED_COPY_TO_OPX"
+msgstr ""
+
+msgid "FMED_COPY_TO_OPX_TTIP"
+msgstr ""
+
+msgid "FMED_WAVE_TITLE"
+msgstr ""
+
+msgid "FMED_DUTY_CYCLE"
+msgstr ""
+
+msgid "FMED_DUTY_CYCLE_TTIP"
+msgstr ""
+
+msgid "FMED_WAVE"
+msgstr ""
+
+msgid "FMED_WAVE_TTIP"
+msgstr ""
+
+msgid "FMED_ENVELOPE_TITLE"
+msgstr ""
+
+msgid "FMED_ATTACK"
+msgstr ""
+
+msgid "FMED_ATTACK_TTIP"
+msgstr ""
+
+msgid "FMED_DECAY"
+msgstr ""
+
+msgid "FMED_DECAY_TTIP"
+msgstr ""
+
+msgid "FMED_SUSTAIN_LEVEL"
+msgstr ""
+
+msgid "FMED_SUSTAIN_LEVEL_TTIP"
+msgstr ""
+
+msgid "FMED_SUSTAIN_RATE"
+msgstr ""
+
+msgid "FMED_SUSTAIN_RATE_TTIP"
+msgstr ""
+
+msgid "FMED_RELEASE"
+msgstr ""
+
+msgid "FMED_RELEASE_TTIP"
+msgstr ""
+
+msgid "FMED_REPEAT_MODE"
+msgstr ""
+
+msgid "FMED_REPEAT_MODE_TTIP"
+msgstr ""
+
+msgid "FMED_AM_INTENSITY"
+msgstr ""
+
+msgid "FMED_AM_INTENSITY_TTIP"
+msgstr ""
+
+msgid "FMED_KEY_SCALING"
+msgstr ""
+
+msgid "FMED_KEY_SCALING_TTIP"
+msgstr ""
+
+msgid "FMED_FREQUENCY_TITLE"
+msgstr ""
+
+msgid "FMED_MULTIPLIER"
+msgstr ""
+
+msgid "FMED_MULTIPLIER_TTIP"
+msgstr ""
+
+msgid "FMED_DIVIDER"
+msgstr ""
+
+msgid "FMED_DIVIDER_TTIP"
+msgstr ""
+
+msgid "FMED_DETUNE"
+msgstr ""
+
+msgid "FMED_DETUNE_TTIP"
+msgstr ""
+
+msgid "FMED_FIXED_FREQUENCY"
+msgstr ""
+
+msgid "FMED_FIXED_FREQUENCY_TTIP"
+msgstr ""
+
+msgid "FMED_FM_INTENSITY"
+msgstr ""
+
+msgid "FMED_FM_INTENSITY_TTIP"
+msgstr ""
+
+msgid "FMED_LFOS"
+msgstr ""
+
+msgid "FMED_AM_LFO"
+msgstr ""
+
+msgid "FMED_AM_LFO_TTIP"
+msgstr ""
+
+msgid "FMED_FM_LFO"
+msgstr ""
+
+msgid "FMED_FM_LFO_TTIP"
+msgstr ""
+
+msgid "FMED_ROUTING"
+msgstr ""
+
+msgid "FMED_CLIP"
+msgstr ""
+
+msgid "FMED_OP1"
+msgstr ""
+
+msgid "FMED_OP2"
+msgstr ""
+
+msgid "FMED_OP3"
+msgstr ""
+
+msgid "FMED_OP4"
+msgstr ""
+
+msgid "FMED_OPXX_TTIP"
+msgstr ""
+
+msgid "FMED_OPXY_TTIP"
+msgstr ""
+
+msgid "FMED_OUT"
+msgstr ""
+
+msgid "FMED_OUTX_TTIP"
+msgstr ""
+

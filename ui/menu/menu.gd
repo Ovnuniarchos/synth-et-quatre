@@ -2,7 +2,6 @@ extends PanelContainer
 
 
 const FILES_SE4=PoolStringArray(["*.se4 ; SynthEtQuatre song"])
-# const FILES_SI4=PoolStringArray(["*.si4 ; SynthEtQuatre instrument"])
 const FILES_WAV=PoolStringArray(["*.wav ; WAV file"])
 
 const MENUS:Array=[
@@ -38,6 +37,7 @@ enum FILE_MODE{LOAD_SONG,SAVE_SONG,SAVE_WAV}
 
 
 var file_mode:int
+var file_dlg:FileDialog
 var real_theme:Theme
 
 
@@ -47,6 +47,7 @@ func _init()->void:
 
 
 func _ready()->void:
+	file_dlg=$FileDialog
 	var hbc:HBoxContainer=get_node("HBC")
 	for op in MENUS:
 		if "option" in op:
@@ -115,35 +116,35 @@ func _on_New_pressed()->void:
 
 func _on_Open_pressed()->void:
 	file_mode=FILE_MODE.LOAD_SONG
-	$FileDialog.current_dir=CONFIG.get_value(CONFIG.CURR_SONG_DIR)
-	$FileDialog.window_title=tr("MENU_OPEN_SONG")
-	$FileDialog.mode=FileDialog.MODE_OPEN_FILE
-	$FileDialog.filters=FILES_SE4
-	$FileDialog.current_file=""
-	$FileDialog.set_as_toplevel(true)
-	$FileDialog.popup_centered_ratio()
+	file_dlg.current_dir=CONFIG.get_value(CONFIG.CURR_SONG_DIR)
+	file_dlg.window_title=tr("MENU_OPEN_SONG")
+	file_dlg.mode=FileDialog.MODE_OPEN_FILE
+	file_dlg.filters=FILES_SE4
+	file_dlg.current_file=""
+	file_dlg.set_as_toplevel(true)
+	file_dlg.popup_centered_ratio()
 
 
 func _on_Save_pressed()->void:
 	file_mode=FILE_MODE.SAVE_SONG
-	$FileDialog.current_dir=CONFIG.get_value(CONFIG.CURR_SONG_DIR)
-	$FileDialog.window_title=tr("MENU_SAVE_SONG")
-	$FileDialog.mode=FileDialog.MODE_SAVE_FILE
-	$FileDialog.filters=FILES_SE4
-	$FileDialog.current_file=GLOBALS.song.file_name
-	$FileDialog.set_as_toplevel(true)
-	$FileDialog.popup_centered_ratio()
+	file_dlg.current_dir=CONFIG.get_value(CONFIG.CURR_SONG_DIR)
+	file_dlg.window_title=tr("MENU_SAVE_SONG")
+	file_dlg.mode=FileDialog.MODE_SAVE_FILE
+	file_dlg.filters=FILES_SE4
+	file_dlg.current_file=GLOBALS.song.file_name
+	file_dlg.set_as_toplevel(true)
+	file_dlg.popup_centered_ratio()
 
 
 func _on_SaveWave_pressed()->void:
 	file_mode=FILE_MODE.SAVE_WAV
-	$FileDialog.current_dir=CONFIG.get_value(CONFIG.CURR_EXPORT_DIR)
-	$FileDialog.window_title=tr("EXPORT_WAVE")
-	$FileDialog.mode=FileDialog.MODE_SAVE_FILE
-	$FileDialog.filters=FILES_WAV
-	$FileDialog.current_file=""
-	$FileDialog.set_as_toplevel(true)
-	$FileDialog.popup_centered_ratio()
+	file_dlg.current_dir=CONFIG.get_value(CONFIG.CURR_EXPORT_DIR)
+	file_dlg.window_title=tr("MENU_EXPORT_WAVE")
+	file_dlg.mode=FileDialog.MODE_SAVE_FILE
+	file_dlg.filters=FILES_WAV
+	file_dlg.current_file=""
+	file_dlg.set_as_toplevel(true)
+	file_dlg.popup_centered_ratio()
 
 
 func _on_file_selected(path:String)->void:
@@ -158,28 +159,14 @@ func _on_file_selected(path:String)->void:
 		FILE_MODE.SAVE_WAV:
 			cfg_dir=CONFIG.CURR_EXPORT_DIR
 			WaveFileWriter.new().write(path)
-			"""FILE_MODE.SAVE_INST:
-			cfg_dir=CONFIG.CURR_INST_DIR
-			FmInstrumentWriter.new(GLOBALS.song.wave_list).write(path,GLOBALS.get_instrument())"""
 	CONFIG.set_value(cfg_dir,path.get_base_dir())
 
 
-func _on_files_selected(paths:PoolStringArray)->void:
-	var cfg_dir:Array
-	match file_mode:
-		FILE_MODE.LOAD_INST:
-			cfg_dir=CONFIG.CURR_INST_DIR
-			var fir:FmInstrumentReader=FmInstrumentReader.new()
-			for path in paths:
-				fir.read(path)
-	CONFIG.set_value(cfg_dir,paths[0].get_base_dir())
-
-
 func _on_FileDialog_visibility_changed()->void:
-	if $FileDialog.visible:
-		FADER.open_dialog($FileDialog)
+	if file_dlg.visible:
+		FADER.open_dialog(file_dlg)
 	else:
-		FADER.close_dialog($FileDialog)
+		FADER.close_dialog(file_dlg)
 
 
 func _on_CleanupPatterns_pressed()->void:
@@ -227,26 +214,3 @@ func _on_Options_pressed()->void:
 
 func _on_Quit_pressed()->void:
 	get_tree().quit()
-
-
-"""func load_instrument()->void:
-	file_mode=FILE_MODE.LOAD_INST
-	$FileDialog.current_dir=CONFIG.get_value(CONFIG.CURR_INST_DIR)
-	$FileDialog.window_title="Load Instrument"
-	$FileDialog.mode=FileDialog.MODE_OPEN_FILES
-	$FileDialog.filters=FILES_SI4
-	$FileDialog.current_file=""
-	$FileDialog.set_as_toplevel(true)
-	$FileDialog.popup_centered_ratio()
-
-
-func save_instrument()->void:
-	file_mode=FILE_MODE.SAVE_INST
-	$FileDialog.current_dir=CONFIG.get_value(CONFIG.CURR_INST_DIR)
-	$FileDialog.window_title="Save Instrument"
-	$FileDialog.mode=FileDialog.MODE_SAVE_FILE
-	$FileDialog.filters=FILES_SI4
-	$FileDialog.current_file=GLOBALS.song.instrument_list[GLOBALS.curr_instrument].file_name
-	$FileDialog.set_as_toplevel(true)
-	$FileDialog.popup_centered_ratio()
-"""

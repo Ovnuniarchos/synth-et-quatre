@@ -13,12 +13,14 @@ func _ready()->void:
 	ops.sort()
 	for i in 3:
 		var b:Button=get_node("Params/Switches/Copy%d"%[i+1])
-		b.text="> OP%d"%[ops[i]+1]
+		b.text=tr("FMED_COPY_TO_OPX")%[ops[i]+1]
+		b.hint_tooltip=tr("FMED_COPY_TO_OPX_TTIP")%[ops[i]+1]
 		b.connect("pressed",self,"_on_channel_copy",[operator,ops[i]])
 
 func set_op(v:int)->void:
 	operator=v&3
-	$Params/Switches/Switch.text="OP%d"%(operator+1)
+	$Params/Switches/Switch.text=tr("FMED_OPX")%[operator+1]
+	$Params/Switches/Switch.hint_tooltip=tr("FMED_OPX_TTIP")%[operator+1]
 	op_mask=1<<operator
 
 func _on_channel_copy(from:int,to:int)->void:
@@ -94,7 +96,14 @@ func _on_FreqLFO_item_selected(idx:int)->void:
 func _on_MULSlider_value_changed(value:float)->void:
 	GLOBALS.get_instrument().multipliers[operator]=int(value)
 	IM_SYNTH.set_freq_mul(operator,int(value))
-	$Params/Detune/DETLabel.text="DET" if int(value)>0 else "FFR"
+	if int(value)>0:
+		$Params/Detune/DETLabel.text=tr("FMED_DETUNE")
+		$Params/Detune/DETLabel.hint_tooltip=tr("FMED_DETUNE_TTIP")
+		$Params/Detune/DETSlider.hint_tooltip=tr("FMED_DETUNE_TTIP")
+	else:
+		$Params/Detune/DETLabel.text=tr("FMED_FIXED_FREQUENCY")
+		$Params/Detune/DETLabel.hint_tooltip=tr("FMED_FIXED_FREQUENCY_TTIP")
+		$Params/Detune/DETSlider.hint_tooltip=tr("FMED_FIXED_FREQUENCY_TTIP")
 	emit_signal("instrument_changed")
 
 func _on_DIVSlider_value_changed(value:float)->void:
@@ -134,7 +143,14 @@ func set_sliders(inst:FmInstrument)->void:
 	$Params/ADSR/KSRSlider.value=inst.key_scalers[operator]
 	$Params/FMS/FMSSlider.value=inst.fm_intensity[operator]
 	$Params/LFOs/FreqLFO.select($Params/LFOs/FreqLFO.get_item_index(inst.fm_lfo[operator]))
-	$Params/Detune/DETLabel.text="DET" if inst.multipliers[operator]>0 else "FFR"
+	if inst.multipliers[operator]>0:
+		$Params/Detune/DETLabel.text=tr("FMED_DETUNE")
+		$Params/Detune/DETLabel.hint_tooltip=tr("FMED_DETUNE_TTIP")
+		$Params/Detune/DETSlider.hint_tooltip=tr("FMED_DETUNE_TTIP")
+	else:
+		$Params/Detune/DETLabel.text=tr("FMED_FIXED_FREQUENCY")
+		$Params/Detune/DETLabel.hint_tooltip=tr("FMED_FIXED_FREQUENCY_TTIP")
+		$Params/Detune/DETSlider.hint_tooltip=tr("FMED_FIXED_FREQUENCY_TTIP")
 	set_block_signals(false)
 	emit_signal("instrument_changed")
 

@@ -22,13 +22,13 @@ __meta__ = {
 }
 
 [node name="Instrs" parent="Cols" instance=ExtResource( 3 )]
-margin_right = 98.0
+margin_right = 402.0
 
 [node name="FmEditor" parent="Cols" instance=ExtResource( 1 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 110.0
-margin_right = 1016.0
+margin_left = 414.0
+margin_right = 1160.0
 margin_bottom = 561.0
 
 [connection signal="instrument_selected" from="Cols/Instrs" to="Cols/FmEditor" method="_on_instrument_selected"]

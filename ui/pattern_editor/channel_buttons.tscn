@@ -9,23 +9,25 @@ margin_bottom = 24.0
 script = ExtResource( 2 )
 
 [node name="DelFX" type="Button" parent="."]
-margin_right = 17.0
+margin_right = 115.0
 margin_bottom = 24.0
+hint_tooltip = "PTEDIT_DEL_FX_TTIP"
 focus_mode = 0
 shortcut_in_tooltip = false
-text = "-"
+text = "GEN_NANO_DEL"
 
 [node name="AddFX" type="Button" parent="."]
-margin_left = 21.0
-margin_right = 41.0
+margin_left = 119.0
+margin_right = 239.0
 margin_bottom = 24.0
+hint_tooltip = "PTEDIT_ADD_FX_TTIP"
 focus_mode = 0
 shortcut_in_tooltip = false
-text = "+"
+text = "GEN_NANO_ADD"
 
 [node name="Channel" type="Button" parent="."]
-margin_left = 45.0
-margin_right = 144.0
+margin_left = 243.0
+margin_right = 255.0
 margin_bottom = 24.0
 focus_mode = 0
 size_flags_horizontal = 3
@@ -35,3 +37,4 @@ text = "Chn 1"
 clip_text = true
 script = ExtResource( 1 )
 colors = PoolColorArray( 1, 1, 1, 1, 0.501961, 0.752941, 1, 1, 2, 1, 1, 1 )
+texts = PoolStringArray( "", "", "" )

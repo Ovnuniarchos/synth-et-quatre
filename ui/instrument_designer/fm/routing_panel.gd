@@ -8,12 +8,20 @@ export (int,0,3) var from_op=1 setget set_from
 
 
 func _ready()->void:
-	$Title.text="OP %d" % (from_op+1)
+	set_from(from_op)
 
 
 func set_from(v:int)->void:
 	from_op=v
-	$Title.text="OP %d" % (from_op+1)
+	$Routing/Title.text="OP %d"%[from_op+1]
+	var s:String
+	for i in 4:
+		s=tr("FMED_OPXY_TTIP")%[from_op+1,i+1] if from_op!=i else tr("FMED_OPXX_TTIP")%[i+1]
+		get_node("Routing/OP%dLabel"%[i+1]).hint_tooltip=s
+		get_node("Routing/OP%dSlider"%[i+1]).hint_tooltip=s
+	s=tr("FMED_OUTX_TTIP")%[from_op+1]
+	get_node("Routing/OutLabel").hint_tooltip=s
+	get_node("Routing/OutSlider").hint_tooltip=s
 
 
 func _on_Slider_value_changed(value:float,to:int)->void:

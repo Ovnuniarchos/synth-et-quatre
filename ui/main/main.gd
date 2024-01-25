@@ -3,7 +3,7 @@ extends Control
 """
 FIXME
 TODO:
-	CycleButtons themable
+	Copy/Paste buttons for instrument/wave editors
 	MIDI on/off indicator
 	Reset per channel parameters (as a command|button)
 	MIDI input

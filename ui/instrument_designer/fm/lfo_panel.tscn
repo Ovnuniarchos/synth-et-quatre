@@ -9,9 +9,6 @@ margin_right = 1024.0
 margin_bottom = 71.0
 size_flags_horizontal = 3
 script = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="VBC" type="VBoxContainer" parent="."]
 margin_left = 7.0
@@ -20,12 +17,10 @@ margin_right = 1017.0
 margin_bottom = 64.0
 size_flags_horizontal = 3
 
-[node name="Title" type="Label" parent="VBC" groups=[
-"Title",
-]]
+[node name="Title" type="Label" parent="VBC" groups=["Title"]]
 margin_right = 1010.0
 margin_bottom = 14.0
-text = "LFO X"
+text = "FMED_LFOX_TITLE"
 
 [node name="HBC" type="HBoxContainer" parent="VBC"]
 margin_top = 18.0
@@ -33,20 +28,21 @@ margin_right = 1010.0
 margin_bottom = 38.0
 size_flags_horizontal = 3
 
-[node name="DUCLabel" type="Label" parent="VBC/HBC" groups=[
-"Label",
-]]
+[node name="DUCLabel" type="Label" parent="VBC/HBC" groups=["Label"]]
 margin_top = 3.0
-margin_right = 28.0
+margin_right = 150.0
 margin_bottom = 17.0
-text = "DUC"
+hint_tooltip = "FMED_LFO_DUTY_CYCLE_TTIP"
+mouse_filter = 1
+text = "FMED_LFO_DUTY_CYCLE"
 
 [node name="DUCSlider" type="ProgressBar" parent="VBC/HBC"]
-margin_left = 32.0
+margin_left = 154.0
 margin_top = 3.0
-margin_right = 493.0
+margin_right = 513.0
 margin_bottom = 17.0
 rect_min_size = Vector2( 36, 14 )
+hint_tooltip = "FMED_LFO_DUTY_CYCLE_TTIP"
 size_flags_horizontal = 7
 size_flags_vertical = 4
 max_value = 255.0
@@ -57,24 +53,25 @@ big_step = 4.0
 huge_step = 16.0
 
 [node name="ReferenceRect" type="ReferenceRect" parent="VBC/HBC"]
-margin_left = 497.0
-margin_right = 513.0
+margin_left = 517.0
+margin_right = 533.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 16, 0 )
 
-[node name="WAVLabel" type="Label" parent="VBC/HBC" groups=[
-"Label",
-]]
-margin_left = 517.0
+[node name="WAVLabel" type="Label" parent="VBC/HBC" groups=["Label"]]
+margin_left = 537.0
 margin_top = 3.0
-margin_right = 545.0
+margin_right = 647.0
 margin_bottom = 17.0
-text = "DUC"
+hint_tooltip = "FMED_LFO_WAVE_TTIP"
+mouse_filter = 1
+text = "FMED_LFO_WAVE"
 
 [node name="WAVButton" type="OptionButton" parent="VBC/HBC"]
-margin_left = 549.0
+margin_left = 651.0
 margin_right = 1010.0
 margin_bottom = 20.0
+hint_tooltip = "FMED_LFO_WAVE_TTIP"
 size_flags_horizontal = 3
 clip_text = true
 script = ExtResource( 3 )
@@ -85,18 +82,19 @@ margin_right = 1010.0
 margin_bottom = 56.0
 size_flags_horizontal = 3
 
-[node name="FRQLabel" type="Label" parent="VBC/HBC2" groups=[
-"Label",
-]]
-margin_right = 26.0
+[node name="FRQLabel" type="Label" parent="VBC/HBC2" groups=["Label"]]
+margin_right = 148.0
 margin_bottom = 14.0
-text = "FRQ"
+hint_tooltip = "FMED_LFO_FREQUENCY_TTIP"
+mouse_filter = 1
+text = "FMED_LFO_FREQUENCY"
 
 [node name="FRQSlider" type="ProgressBar" parent="VBC/HBC2"]
-margin_left = 30.0
+margin_left = 152.0
 margin_right = 1010.0
 margin_bottom = 14.0
-rect_min_size = Vector2( 36, 14 )
+rect_min_size = Vector2( 56, 14 )
+hint_tooltip = "FMED_LFO_FREQUENCY_TTIP"
 size_flags_horizontal = 7
 size_flags_vertical = 4
 percent_visible = false

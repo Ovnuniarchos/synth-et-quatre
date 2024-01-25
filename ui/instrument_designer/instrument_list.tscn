@@ -9,50 +9,87 @@ margin_bottom = 561.0
 rect_clip_content = true
 size_flags_vertical = 3
 script = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Buttons" type="HBoxContainer" parent="."]
-margin_right = 130.0
+margin_right = 402.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 
 [node name="Add" type="Button" parent="Buttons"]
-margin_right = 21.0
+margin_right = 124.0
 margin_bottom = 20.0
+hint_tooltip = "INSTED_ADD_TTIP"
 shortcut_in_tooltip = false
-text = "A"
+text = "GEN_MICRO_ADD"
 
 [node name="Copy" type="Button" parent="Buttons"]
-margin_left = 25.0
-margin_right = 47.0
+margin_left = 128.0
+margin_right = 251.0
 margin_bottom = 20.0
+hint_tooltip = "INSTED_DUP_TTIP"
 shortcut_in_tooltip = false
-text = "D"
+text = "GEN_MICRO_DUP"
 
 [node name="ReferenceRect" type="ReferenceRect" parent="Buttons"]
-margin_left = 51.0
-margin_right = 75.0
+margin_left = 255.0
+margin_right = 279.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 24, 0 )
+size_flags_horizontal = 3
 
 [node name="Del" type="Button" parent="Buttons"]
-margin_left = 79.0
-margin_right = 98.0
+margin_left = 283.0
+margin_right = 402.0
 margin_bottom = 20.0
+hint_tooltip = "INSTED_DEL_TTIP"
 shortcut_in_tooltip = false
-text = "E"
+text = "GEN_MICRO_DEL"
 
 [node name="Instruments" parent="." instance=ExtResource( 1 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 24.0
-margin_right = 130.0
+margin_right = 402.0
+margin_bottom = 537.0
+
+[node name="Buttons2" type="HBoxContainer" parent="."]
+margin_top = 541.0
+margin_right = 402.0
 margin_bottom = 561.0
+size_flags_horizontal = 3
+
+[node name="Load" type="Button" parent="Buttons2"]
+margin_right = 101.0
+margin_bottom = 20.0
+shortcut_in_tooltip = false
+text = "INSTED_LOAD"
+
+[node name="ReferenceRect" type="ReferenceRect" parent="Buttons2"]
+margin_left = 105.0
+margin_right = 303.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 24, 0 )
+size_flags_horizontal = 3
+
+[node name="Save" type="Button" parent="Buttons2"]
+margin_left = 307.0
+margin_right = 402.0
+margin_bottom = 20.0
+shortcut_in_tooltip = false
+text = "INSTED_SAVE"
+
+[node name="FileDialog" type="FileDialog" parent="."]
+margin_right = 315.0
+margin_bottom = 130.0
+mode_overrides_title = false
+access = 2
 
 [connection signal="pressed" from="Buttons/Add" to="." method="_on_Add_pressed"]
 [connection signal="pressed" from="Buttons/Copy" to="." method="_on_Copy_pressed"]
 [connection signal="pressed" from="Buttons/Del" to="." method="_on_Del_pressed"]
 [connection signal="gui_input" from="Instruments" to="." method="_on_Instruments_gui_input"]
 [connection signal="item_selected" from="Instruments" to="." method="_on_item_selected"]
+[connection signal="pressed" from="Buttons2/Load" to="." method="_on_Load_pressed"]
+[connection signal="pressed" from="Buttons2/Save" to="." method="_on_Save_pressed"]
+[connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]
+[connection signal="files_selected" from="FileDialog" to="." method="_on_FileDialog_files_selected"]

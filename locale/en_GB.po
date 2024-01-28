@@ -17,10 +17,10 @@ msgid "MENU_NEW"
 msgstr "New"
 
 msgid "MENU_OPEN_SONG"
-msgstr "Open Song"
+msgstr "Open song"
 
 msgid "MENU_SAVE_SONG"
-msgstr "Save Song"
+msgstr "Save song"
 
 msgid "MENU_SAVE_WAVE"
 msgstr "Save .WAV"
@@ -29,19 +29,19 @@ msgid "MENU_CLEANUP"
 msgstr "Cleanup"
 
 msgid "MENU_CLEANUP_PATTERNS"
-msgstr "Cleanup Patterns"
+msgstr "Cleanup patterns"
 
 msgid "MENU_CLEANUP_INSTRUMENTS"
-msgstr "Cleanup Instruments"
+msgstr "Cleanup instruments"
 
 msgid "MENU_CLEANUP_WAVES"
-msgstr "Cleanup Waves"
+msgstr "Cleanup waves"
 
 msgid "MENU_CLEANUP_ARPEGGIOS"
-msgstr "Cleanup Arpeggios"
+msgstr "Cleanup arpeggios"
 
 msgid "MENU_CLEANUP_ALL"
-msgstr "Cleanup All"
+msgstr "Cleanup all"
 
 msgid "MENU_QUIT"
 msgstr "Quit"
@@ -165,6 +165,15 @@ msgstr ">"
 msgid "PLAY_TEXT_STOP"
 msgstr "||"
 
+msgid "PLAY_MODE_POLY"
+msgstr "Poly"
+
+msgid "PLAY_MODE_SEMI"
+msgstr "Semi"
+
+msgid "PLAY_MODE_MONO"
+msgstr "Mono"
+
 # Instrument editor
 msgid "INSTED_ADD_TTIP"
 msgstr "Add instrument"
@@ -182,10 +191,10 @@ msgid "INSTED_SAVE"
 msgstr "Save"
 
 msgid "INSTED_DLG_LOAD"
-msgstr "Load Instrument(s)"
+msgstr "Load instrument(s)"
 
 msgid "INSTED_DLG_SAVE"
-msgstr "Save Instrument"
+msgstr "Save instrument"
 
 # FM editor
 msgid "FMED_LFOX_TITLE"
@@ -208,6 +217,9 @@ msgstr "FRQ"
 
 msgid "FMED_LFO_FREQUENCY_TTIP"
 msgstr "Frequency (Hz)"
+
+msgid "FMED_PARAMETERS"
+msgstr "Parameters"
 
 msgid "FMED_OPX"
 msgstr "OP %d"
@@ -357,10 +369,137 @@ msgid "FMED_OPXX_TTIP"
 msgstr "Op %d auto-modulation level"
 
 msgid "FMED_OPXY_TTIP"
-msgstr "Modulation level from Op %d to Op %d"
+msgstr "Modulation level from op %d to op %d"
 
 msgid "FMED_OUT"
 msgstr "Out"
 
 msgid "FMED_OUTX_TTIP"
 msgstr "Operator %d output level"
+
+msgid "FMED_MACROS"
+msgstr "Voice macros"
+
+msgid "FMED_MACROS_OP1"
+msgstr "Op1 macros"
+
+msgid "FMED_MACROS_OP2"
+msgstr "Op2 macros"
+
+msgid "FMED_MACROS_OP3"
+msgstr "Op3 macros"
+
+msgid "FMED_MACROS_OP4"
+msgstr "Op4 macros"
+
+msgid "FMED_MG_TONE"
+msgstr "Tone (cents)"
+
+msgid "FMED_MG_VOLUME"
+msgstr "Volume"
+
+msgid "FMED_MG_PAN"
+msgstr "Pan"
+
+msgid "FMED_MG_CHAN_INVERT"
+msgstr "Channel invert"
+
+msgid "FMED_MG_KEY_ON"
+msgstr "Key on"
+
+msgid "FMED_MG_OP_ENABLE"
+msgstr "Op enable"
+
+msgid "FMED_MG_CLIP"
+msgstr "Clip"
+
+msgid "FMED_MO_TONE"
+msgstr "Tone (cents)"
+
+msgid "FMED_MO_KEY_ON"
+msgstr "Key on"
+
+msgid "FMED_MO_DUTY_CYCLE"
+msgstr "Duty cycle"
+
+msgid "FMED_MO_WAVE"
+msgstr "Wave"
+
+msgid "FMED_MO_ATTACK"
+msgstr "Attack"
+
+msgid "FMED_MO_DECAY"
+msgstr "Decay"
+
+msgid "FMED_MO_SUSTAIN_LEVEL"
+msgstr "Sustain level"
+
+msgid "FMED_MO_SUSTAIN_RATE"
+msgstr "Secondary decay"
+
+msgid "FMED_MO_RELEASE"
+msgstr "Release"
+
+msgid "FMED_MO_REPEAT"
+msgstr "Repeat mode"
+
+msgid "FMED_MO_AM_INTENSITY"
+msgstr "AM intensity"
+
+msgid "FMED_MO_AM_LFO"
+msgstr "AM LFO"
+
+msgid "FMED_MO_KEY_SCALING"
+msgstr "Key scaling"
+
+msgid "FMED_MO_MULTIPLIER"
+msgstr "Multiplier"
+
+msgid "FMED_MO_DIVIDER"
+msgstr "Divider"
+
+msgid "FMED_MO_DETUNE_FIXFREQ"
+msgstr "Detune/Fixed frequency"
+
+msgid "FMED_MO_FM_INTENSITY"
+msgstr "FM intensity"
+
+msgid "FMED_MO_FM_LFO"
+msgstr "FM LFO"
+
+msgid "FMED_MO_PHASE"
+msgstr "Phase"
+
+msgid "FMED_MO_OPXY"
+msgstr "Op%d > Op%d mod."
+
+msgid "FMED_MO_OPXX"
+msgstr "Self mod."
+
+msgid "FMED_MO_OUTPUT"
+msgstr "Output"
+
+# Macro editor
+msgid "MCED_RELATIVE"
+msgstr "Relative"
+
+msgid "MCED_ABSOLUTE"
+msgstr "Absolute"
+
+msgid "MCED_STEPS"
+msgstr "S"
+
+msgid "MCED_STEPS_TTIP"
+msgstr "Steps"
+
+msgid "MCED_TIME_DIV"
+msgstr "T"
+
+msgid "MCED_TIME_DIV_TTIP"
+msgstr "Ticks/step"
+
+msgid "MCED_DELAY"
+msgstr "D"
+
+msgid "MCED_DELAY_TTIP"
+msgstr "Delay"

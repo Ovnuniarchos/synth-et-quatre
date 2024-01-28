@@ -169,6 +169,15 @@ msgstr ""
 msgid "PLAY_TEXT_STOP"
 msgstr ""
 
+msgid "PLAY_MODE_POLY"
+msgstr ""
+
+msgid "PLAY_MODE_SEMI"
+msgstr ""
+
+msgid "PLAY_MODE_MONO"
+msgstr ""
+
 
 # Instrument editor
 
@@ -215,6 +224,9 @@ msgid "FMED_LFO_FREQUENCY"
 msgstr ""
 
 msgid "FMED_LFO_FREQUENCY_TTIP"
+msgstr ""
+
+msgid "FMED_PARAMETERS"
 msgstr ""
 
 msgid "FMED_OPX"
@@ -371,5 +383,134 @@ msgid "FMED_OUT"
 msgstr ""
 
 msgid "FMED_OUTX_TTIP"
+msgstr ""
+
+msgid "FMED_MACROS"
+msgstr ""
+
+msgid "FMED_MACROS_OP1"
+msgstr ""
+
+msgid "FMED_MACROS_OP2"
+msgstr ""
+
+msgid "FMED_MACROS_OP3"
+msgstr ""
+
+msgid "FMED_MACROS_OP4"
+msgstr ""
+
+msgid "FMED_MG_TONE"
+msgstr ""
+
+msgid "FMED_MG_VOLUME"
+msgstr ""
+
+msgid "FMED_MG_PAN"
+msgstr ""
+
+msgid "FMED_MG_CHAN_INVERT"
+msgstr ""
+
+msgid "FMED_MG_KEY_ON"
+msgstr ""
+
+msgid "FMED_MG_OP_ENABLE"
+msgstr ""
+
+msgid "FMED_MG_CLIP"
+msgstr ""
+
+msgid "FMED_MO_TONE"
+msgstr ""
+
+msgid "FMED_MO_KEY_ON"
+msgstr ""
+
+msgid "FMED_MO_DUTY_CYCLE"
+msgstr ""
+
+msgid "FMED_MO_WAVE"
+msgstr ""
+
+msgid "FMED_MO_ATTACK"
+msgstr ""
+
+msgid "FMED_MO_DECAY"
+msgstr ""
+
+msgid "FMED_MO_SUSTAIN_LEVEL"
+msgstr ""
+
+msgid "FMED_MO_SUSTAIN_RATE"
+msgstr ""
+
+msgid "FMED_MO_RELEASE"
+msgstr ""
+
+msgid "FMED_MO_REPEAT"
+msgstr ""
+
+msgid "FMED_MO_AM_INTENSITY"
+msgstr ""
+
+msgid "FMED_MO_AM_LFO"
+msgstr ""
+
+msgid "FMED_MO_KEY_SCALING"
+msgstr ""
+
+msgid "FMED_MO_MULTIPLIER"
+msgstr ""
+
+msgid "FMED_MO_DIVIDER"
+msgstr ""
+
+msgid "FMED_MO_DETUNE_FIXFREQ"
+msgstr ""
+
+msgid "FMED_MO_FM_INTENSITY"
+msgstr ""
+
+msgid "FMED_MO_FM_LFO"
+msgstr ""
+
+msgid "FMED_MO_PHASE"
+msgstr ""
+
+msgid "FMED_MO_OPXY"
+msgstr ""
+
+msgid "FMED_MO_OPXX"
+msgstr ""
+
+msgid "FMED_MO_OUTPUT"
+msgstr ""
+
+
+# Macro editor
+
+msgid "MCED_RELATIVE"
+msgstr ""
+
+msgid "MCED_ABSOLUTE"
+msgstr ""
+
+msgid "MCED_STEPS"
+msgstr ""
+
+msgid "MCED_STEPS_TTIP"
+msgstr ""
+
+msgid "MCED_TIME_DIV"
+msgstr ""
+
+msgid "MCED_TIME_DIV_TTIP"
+msgstr ""
+
+msgid "MCED_DELAY"
+msgstr ""
+
+msgid "MCED_DELAY_TTIP"
 msgstr ""
 

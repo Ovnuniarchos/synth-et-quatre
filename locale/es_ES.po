@@ -165,6 +165,15 @@ msgstr ">"
 msgid "PLAY_TEXT_STOP"
 msgstr "||"
 
+msgid "PLAY_MODE_POLY"
+msgstr "Poli"
+
+msgid "PLAY_MODE_SEMI"
+msgstr "Semi"
+
+msgid "PLAY_MODE_MONO"
+msgstr "Mono"
+
 # Instrument editor
 msgid "INSTED_ADD_TTIP"
 msgstr "Añadir instrumento"
@@ -208,6 +217,9 @@ msgstr "FRQ"
 
 msgid "FMED_LFO_FREQUENCY_TTIP"
 msgstr "Frecuencia (Hz)"
+
+msgid "FMED_PARAMETERS"
+msgstr "Parámetros"
 
 msgid "FMED_OPX"
 msgstr "OP %d"
@@ -279,7 +291,7 @@ msgid "FMED_AM_INTENSITY"
 msgstr "AMI"
 
 msgid "FMED_AM_INTENSITY_TTIP"
-msgstr "Intensidad AM (trémolo)"
+msgstr "Nivel AM (trémolo)"
 
 msgid "FMED_KEY_SCALING"
 msgstr "KSR"
@@ -318,7 +330,7 @@ msgid "FMED_FM_INTENSITY"
 msgstr "FMI"
 
 msgid "FMED_FM_INTENSITY_TTIP"
-msgstr "Intensidad FM (vibrato)"
+msgstr "Nivel FM (vibrato)"
 
 msgid "FMED_LFOS"
 msgstr "LFOs"
@@ -354,13 +366,140 @@ msgid "FMED_OP4"
 msgstr "OP4"
 
 msgid "FMED_OPXX_TTIP"
-msgstr "Nivel de automodulación del Op %d"
+msgstr "Nivel de automodulación del op %d"
 
 msgid "FMED_OPXY_TTIP"
-msgstr "Nivel de modulación del Op %d al Op %d"
+msgstr "Nivel de modulación del op %d al op %d"
 
 msgid "FMED_OUT"
 msgstr "Sal."
 
 msgid "FMED_OUTX_TTIP"
 msgstr "Nivel de salida del operador %d"
+
+msgid "FMED_MACROS"
+msgstr "Macros voz"
+
+msgid "FMED_MACROS_OP1"
+msgstr "Macros op1"
+
+msgid "FMED_MACROS_OP2"
+msgstr "Macros op2"
+
+msgid "FMED_MACROS_OP3"
+msgstr "Macros op3"
+
+msgid "FMED_MACROS_OP4"
+msgstr "Macros op4"
+
+msgid "FMED_MG_TONE"
+msgstr "Tono (centés.)"
+
+msgid "FMED_MG_VOLUME"
+msgstr "Volumen"
+
+msgid "FMED_MG_PAN"
+msgstr "Pan"
+
+msgid "FMED_MG_CHAN_INVERT"
+msgstr "Inversión canal"
+
+msgid "FMED_MG_KEY_ON"
+msgstr "Activar nota"
+
+msgid "FMED_MG_OP_ENABLE"
+msgstr "Activar op"
+
+msgid "FMED_MG_CLIP"
+msgstr "Recorte"
+
+msgid "FMED_MO_TONE"
+msgstr "Tono (centés.)"
+
+msgid "FMED_MO_KEY_ON"
+msgstr "Activar nota"
+
+msgid "FMED_MO_DUTY_CYCLE"
+msgstr "Duty cycle"
+
+msgid "FMED_MO_WAVE"
+msgstr "Onda"
+
+msgid "FMED_MO_ATTACK"
+msgstr "Attaque"
+
+msgid "FMED_MO_DECAY"
+msgstr "Decaimiento"
+
+msgid "FMED_MO_SUSTAIN_LEVEL"
+msgstr "Nivel sosten."
+
+msgid "FMED_MO_SUSTAIN_RATE"
+msgstr "Dec. secundario"
+
+msgid "FMED_MO_RELEASE"
+msgstr "Extinción"
+
+msgid "FMED_MO_REPEAT"
+msgstr "M. repetición"
+
+msgid "FMED_MO_AM_INTENSITY"
+msgstr "Nivel AM"
+
+msgid "FMED_MO_AM_LFO"
+msgstr "LFO AM"
+
+msgid "FMED_MO_KEY_SCALING"
+msgstr "Acort. tono"
+
+msgid "FMED_MO_MULTIPLIER"
+msgstr "Multiplicador"
+
+msgid "FMED_MO_DIVIDER"
+msgstr "Divisor"
+
+msgid "FMED_MO_DETUNE_FIXFREQ"
+msgstr "Desv. (milis)/Frec. fija (Hz)"
+
+msgid "FMED_MO_FM_INTENSITY"
+msgstr "Nivel FM"
+
+msgid "FMED_MO_FM_LFO"
+msgstr "LFO FM"
+
+msgid "FMED_MO_PHASE"
+msgstr "Fase"
+
+msgid "FMED_MO_OPXY"
+msgstr "Mod. Op%d > Op%d"
+
+msgid "FMED_MO_OPXX"
+msgstr "Automod."
+
+msgid "FMED_MO_OUTPUT"
+msgstr "Salida"
+
+# Macro editor
+msgid "MCED_RELATIVE"
+msgstr "Relativo"
+
+msgid "MCED_ABSOLUTE"
+msgstr "Absoluto"
+
+msgid "MCED_STEPS"
+msgstr "P"
+
+msgid "MCED_STEPS_TTIP"
+msgstr "Pasos"
+
+msgid "MCED_TIME_DIV"
+msgstr "T"
+
+msgid "MCED_TIME_DIV_TTIP"
+msgstr "Ticks/paso"
+
+msgid "MCED_DELAY"
+msgstr "R"
+
+msgid "MCED_DELAY_TTIP"
+msgstr "Retraso"

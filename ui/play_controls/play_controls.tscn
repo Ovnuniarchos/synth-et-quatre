@@ -10,18 +10,18 @@ script = ExtResource( 2 )
 [node name="HBC" type="HBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 143.0
+margin_right = 424.0
 margin_bottom = 27.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 16
 
 [node name="Play" type="Button" parent="HBC"]
-margin_right = 20.0
+margin_right = 115.0
 margin_bottom = 20.0
 focus_mode = 0
 toggle_mode = true
-text = ">"
+text = "PLAY_TEXT_PLAY"
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -30,12 +30,12 @@ pressed_icon = "stop"
 unpressed_icon = "play"
 
 [node name="PlayTrack" type="Button" parent="HBC"]
-margin_left = 36.0
-margin_right = 56.0
+margin_left = 131.0
+margin_right = 246.0
 margin_bottom = 20.0
 focus_mode = 0
 toggle_mode = true
-text = ">"
+text = "PLAY_TEXT_PLAY"
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -44,18 +44,18 @@ pressed_icon = "stop"
 unpressed_icon = "play_track"
 
 [node name="ReferenceRect" type="ReferenceRect" parent="HBC"]
-margin_left = 72.0
-margin_right = 72.0
+margin_left = 262.0
+margin_right = 262.0
 margin_bottom = 20.0
 
 [node name="PolyMode" type="Button" parent="HBC"]
-margin_left = 88.0
-margin_right = 136.0
+margin_left = 278.0
+margin_right = 417.0
 margin_bottom = 20.0
-text = "Mono"
+text = "PLAY_MODE_MONO"
 script = ExtResource( 3 )
 colors = PoolColorArray( 1, 1, 1, 1, 1, 0.501961, 0.501961, 1, 1, 1.25, 1.5, 1 )
-texts = PoolStringArray( "Mono", "Semi", "Poly" )
+texts = PoolStringArray( "PLAY_MODE_MONO", "PLAY_MODE_SEMI", "PLAY_MODE_POLY" )
 
 [connection signal="toggled" from="HBC/Play" to="." method="_on_Play_toggled"]
 [connection signal="toggled" from="HBC/PlayTrack" to="." method="_on_PlayTrack_toggled"]

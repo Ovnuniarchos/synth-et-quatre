@@ -376,6 +376,7 @@ func _on_Relative_toggled(p:bool)->void:
 			if values[i]!=ParamMacro.PASSTHROUGH:
 				values[i]=int(range_lerp(values[i],min0,max0,min1,max1))
 	relative=p
+	$"%Relative".text=tr("MCED_RELATIVE" if relative else "MCED_ABSOLUTE")
 	values_graph.update()
 	value_labels.update()
 	emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)

@@ -54,4 +54,4 @@ func _gui_input(ev:InputEvent)->void:
 
 func set_visuals()->void:
 	modulate=colors[status]
-	text=texts[status] if texts[status] else text
+	text=tr(texts[status] if texts[status] else text)

@@ -7,6 +7,14 @@ signal macro_changed(parameter,operator,values,steps,loop_start,loop_end,release
 export (int) var operator:int=0
 
 
+func _ready()->void:
+	for i in range(1,5):
+		if (i-1)==operator:
+			get_node("VBC/OP%d"%[i]).title=tr("FMED_MO_OPXX")
+		else:
+			get_node("VBC/OP%d"%[i]).title=tr("FMED_MO_OPXY")%[operator+1,i]
+
+
 func _on_macro_changed(parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)->void:
 	emit_signal("macro_changed",parameter,operator,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
 

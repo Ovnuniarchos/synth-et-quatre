@@ -20,7 +20,7 @@ margin_right = 124.0
 margin_bottom = 20.0
 hint_tooltip = "INSTED_ADD_TTIP"
 shortcut_in_tooltip = false
-text = "GEN_MICRO_ADD"
+text = "INSTED_ADD"
 
 [node name="Copy" type="Button" parent="Buttons"]
 margin_left = 128.0
@@ -28,7 +28,7 @@ margin_right = 251.0
 margin_bottom = 20.0
 hint_tooltip = "INSTED_DUP_TTIP"
 shortcut_in_tooltip = false
-text = "GEN_MICRO_DUP"
+text = "INSTED_DUP"
 
 [node name="ReferenceRect" type="ReferenceRect" parent="Buttons"]
 margin_left = 255.0
@@ -43,7 +43,7 @@ margin_right = 402.0
 margin_bottom = 20.0
 hint_tooltip = "INSTED_DEL_TTIP"
 shortcut_in_tooltip = false
-text = "GEN_MICRO_DEL"
+text = "INSTED_DEL"
 
 [node name="Instruments" parent="." instance=ExtResource( 1 )]
 anchor_right = 0.0

@@ -26,9 +26,9 @@ func _on_Name_changed(text:String)->void:
 
 func set_size_bytes(size:int)->void:
 	if size>0:
-		$Info/HBC/LabelSizeSamples.text="%d samples"%[size]
+		$Info/HBC/LabelSizeSamples.text=tr("WAVED_SIZE_SAMPLES").format({"i_samples":size})
 	else:
-		$Info/HBC/LabelSizeSamples.text="-- samples"
+		$Info/HBC/LabelSizeSamples.text=tr("WAVED_SIZE_NONE")
 
 func _on_wave_selected(wave:int)->void:
 	curr_wave_ix=wave

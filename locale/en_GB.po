@@ -19,11 +19,20 @@ msgstr "New"
 msgid "MENU_OPEN_SONG"
 msgstr "Open song"
 
+msgid "MENU_OPEN_SONG_DLG"
+msgstr "Open song"
+
 msgid "MENU_SAVE_SONG"
 msgstr "Save song"
 
+msgid "MENU_SAVE_SONG_DLG"
+msgstr "Save song"
+
 msgid "MENU_SAVE_WAVE"
-msgstr "Save .WAV"
+msgstr "Save as .WAV"
+
+msgid "MENU_SAVE_WAVE_DLG"
+msgstr "Save as .WAV"
 
 msgid "MENU_CLEANUP"
 msgstr "Cleanup"
@@ -61,28 +70,6 @@ msgstr "Arpeggios"
 msgid "MENU_OPTIONS"
 msgstr "Options"
 
-msgid "EXPORT_WAVE"
-msgstr "Export as .WAV"
-
-# Generic strings
-msgid "GEN_MICRO_ADD"
-msgstr " + "
-
-msgid "GEN_MICRO_DUP"
-msgstr " D "
-
-msgid "GEN_MICRO_DEL"
-msgstr " - "
-
-msgid "GEN_NANO_ADD"
-msgstr "+"
-
-msgid "GEN_NANO_DEL"
-msgstr "-"
-
-msgid "GEN_NAME"
-msgstr "Name"
-
 # Info panel
 msgid "INFO_TITLE"
 msgstr "Title"
@@ -119,43 +106,58 @@ msgstr "Major highlight"
 
 # Info bar
 msgid "IBAR_OCTAVE"
-msgstr "Octave: %-2d"
+msgstr "Octave: {i_oct}"
 
 msgid "IBAR_STEP"
-msgstr "Step: %-3d"
+msgstr "Step: {i_step}"
 
 msgid "IBAR_VELOCITY"
-msgstr "Velocity: %-3d"
+msgstr "Velocity: {i_vel}"
 
 msgid "IBAR_TEMPO"
-msgstr "Tempo: %-3.2f rows/s"
+msgstr "Tempo: {f_tempo} rows/s"
 
 msgid "IBAR_INSTRUMENT"
-msgstr "Instrument: %s (%02X)"
+msgstr "Instrument: {s_inst} ({i_inst})"
 
 # Pattern editor
 msgid "PTEDIT_CHANNEL_BUTTON"
-msgstr "Channel %d"
+msgstr "Channel {i_chan}"
+
+msgid "PTEDIT_FX_DEL"
+msgstr "-"
 
 msgid "PTEDIT_DEL_FX_TTIP"
 msgstr "Delete effects column"
 
+msgid "PTEDIT_FX_ADD"
+msgstr "+"
+
 msgid "PTEDIT_ADD_FX_TTIP"
 msgstr "Add effects column"
 
-msgid "PTEDIT_ADD_TTIP"
+msgid "PTEDIT_ADD_ORD"
+msgstr " + "
+
+msgid "PTEDIT_ADD_ORD_TTIP"
 msgstr "Add order"
 
-msgid "PTEDIT_DUP_TTIP"
+msgid "PTEDIT_DUP_ORD"
+msgstr " D "
+
+msgid "PTEDIT_DUP_ORD_TTIP"
 msgstr "Duplicate order"
 
-msgid "PTEDIT_UP_TTIP"
-msgstr "Move up"
+msgid "PTEDIT_UP_ORD_TTIP"
+msgstr "Move order up"
 
-msgid "PTEDIT_DOWN_TTIP"
-msgstr "Move down"
+msgid "PTEDIT_DOWN_ORD_TTIP"
+msgstr "Move order down"
 
-msgid "PTEDIT_DEL_TTIP"
+msgid "PTEDIT_DEL_ORD"
+msgstr " - "
+
+msgid "PTEDIT_DEL_ORD_TTIP"
 msgstr "Delete order"
 
 # Play controls
@@ -175,11 +177,20 @@ msgid "PLAY_MODE_MONO"
 msgstr "Mono"
 
 # Instrument editor
+msgid "INSTED_ADD"
+msgstr " + "
+
 msgid "INSTED_ADD_TTIP"
 msgstr "Add instrument"
 
+msgid "INSTED_DUP"
+msgstr " D "
+
 msgid "INSTED_DUP_TTIP"
 msgstr "Duplicate instrument"
+
+msgid "INSTED_DEL"
+msgstr " - "
 
 msgid "INSTED_DEL_TTIP"
 msgstr "Delete instrument"
@@ -196,15 +207,30 @@ msgstr "Load instrument(s)"
 msgid "INSTED_DLG_SAVE"
 msgstr "Save instrument"
 
+msgid "INSTED_NAME"
+msgstr "Name"
+
 # FM editor
 msgid "FMED_LFOX_TITLE"
-msgstr "LFO %d"
+msgstr "LFO {i_lfo}"
 
 msgid "FMED_LFO_DUTY_CYCLE"
 msgstr "DUC"
 
 msgid "FMED_LFO_DUTY_CYCLE_TTIP"
 msgstr "Duty cycle"
+
+msgid "FMED_DEFW_RECTANGLE"
+msgstr "Rectangle"
+
+msgid "FMED_DEFW_SAW"
+msgstr "Saw"
+
+msgid "FMED_DEFW_TRIANGLE"
+msgstr "Triangle"
+
+msgid "FMED_DEFW_NOISE"
+msgstr "Noise"
 
 msgid "FMED_LFO_WAVE"
 msgstr "WAV"
@@ -222,16 +248,16 @@ msgid "FMED_PARAMETERS"
 msgstr "Parameters"
 
 msgid "FMED_OPX"
-msgstr "OP %d"
+msgstr "OP {i_op}"
 
 msgid "FMED_OPX_TTIP"
-msgstr "Operator %d enable/disable"
+msgstr "Operator {i_op} enable/disable"
 
 msgid "FMED_COPY_TO_OPX"
-msgstr "> OP%d"
+msgstr "> OP{i_op}"
 
 msgid "FMED_COPY_TO_OPX_TTIP"
-msgstr "Copy to operator %d"
+msgstr "Copy to operator {i_op}"
 
 msgid "FMED_WAVE_TITLE"
 msgstr "Wave"
@@ -308,10 +334,10 @@ msgstr "MUL"
 msgid "FMED_MULTIPLIER_TTIP"
 msgstr "Multiplier"
 
-msgid "FMED_DIVIDER"
+msgid "FMED_DIVISOR"
 msgstr "DIV"
 
-msgid "FMED_DIVIDER_TTIP"
+msgid "FMED_DIVISOR_TTIP"
 msgstr "Divisor"
 
 msgid "FMED_DETUNE"
@@ -366,16 +392,16 @@ msgid "FMED_OP4"
 msgstr "OP4"
 
 msgid "FMED_OPXX_TTIP"
-msgstr "Op %d auto-modulation level"
+msgstr "Op {i_op} self-modulation level"
 
 msgid "FMED_OPXY_TTIP"
-msgstr "Modulation level from op %d to op %d"
+msgstr "Modulation level from op {i_op_org} to op {i_op_dst}"
 
 msgid "FMED_OUT"
 msgstr "Out"
 
 msgid "FMED_OUTX_TTIP"
-msgstr "Operator %d output level"
+msgstr "Operator {i_op} output level"
 
 msgid "FMED_MACROS"
 msgstr "Voice macros"
@@ -393,91 +419,178 @@ msgid "FMED_MACROS_OP4"
 msgstr "Op4 macros"
 
 msgid "FMED_MG_TONE"
+msgstr "Tone"
+
+msgid "FMED_MG_TONE_TTIP"
 msgstr "Tone (cents)"
 
 msgid "FMED_MG_VOLUME"
 msgstr "Volume"
 
+msgid "FMED_MG_VOLUME_TTIP"
+msgstr "<EMPTY>"
+
 msgid "FMED_MG_PAN"
 msgstr "Pan"
 
+msgid "FMED_MG_PAN_TTIP"
+msgstr "<EMPTY>"
+
 msgid "FMED_MG_CHAN_INVERT"
+msgstr "Invert"
+
+msgid "FMED_MG_CHAN_INVERT_TTIP"
 msgstr "Channel invert"
 
 msgid "FMED_MG_KEY_ON"
 msgstr "Key on"
 
+msgid "FMED_MG_KEY_ON_TTIP"
+msgstr "<EMPTY>"
+
 msgid "FMED_MG_OP_ENABLE"
-msgstr "Op enable"
+msgstr "Enable"
+
+msgid "FMED_MG_OP_ENABLE_TTIP"
+msgstr "Operator enable"
 
 msgid "FMED_MG_CLIP"
 msgstr "Clip"
 
+msgid "FMED_MG_CLIP_TTIP"
+msgstr "<EMPTY>"
+
 msgid "FMED_MO_TONE"
+msgstr "Tone"
+
+msgid "FMED_MO_TONE_TTIP"
 msgstr "Tone (cents)"
 
 msgid "FMED_MO_KEY_ON"
 msgstr "Key on"
 
+msgid "FMED_MO_KEY_ON_TTIP"
+msgstr "<EMPTY>"
+
 msgid "FMED_MO_DUTY_CYCLE"
 msgstr "Duty cycle"
+
+msgid "FMED_MO_DUTY_CYCLE_TTIP"
+msgstr "<EMPTY>"
 
 msgid "FMED_MO_WAVE"
 msgstr "Wave"
 
+msgid "FMED_MO_WAVE_TTIP"
+msgstr "<EMPTY>"
+
 msgid "FMED_MO_ATTACK"
 msgstr "Attack"
+
+msgid "FMED_MO_ATTACK_TTIP"
+msgstr "Attack rate"
 
 msgid "FMED_MO_DECAY"
 msgstr "Decay"
 
+msgid "FMED_MO_DECAY_TTIP"
+msgstr "Decay rate"
+
 msgid "FMED_MO_SUSTAIN_LEVEL"
+msgstr "Sustain"
+
+msgid "FMED_MO_SUSTAIN_LEVEL_TTIP"
 msgstr "Sustain level"
 
 msgid "FMED_MO_SUSTAIN_RATE"
-msgstr "Secondary decay"
+msgstr "Decay 2"
+
+msgid "FMED_MO_SUSTAIN_RATE_TTIP"
+msgstr "Secondary decay rate"
 
 msgid "FMED_MO_RELEASE"
 msgstr "Release"
 
+msgid "FMED_MO_RELEASE_TTIP"
+msgstr "Release rate"
+
 msgid "FMED_MO_REPEAT"
+msgstr "Repeat"
+
+msgid "FMED_MO_REPEAT_TTIP"
 msgstr "Repeat mode"
 
 msgid "FMED_MO_AM_INTENSITY"
 msgstr "AM intensity"
 
+msgid "FMED_MO_AM_INTENSITY_TTIP"
+msgstr "AM intensity (tremolo)"
+
 msgid "FMED_MO_AM_LFO"
 msgstr "AM LFO"
+
+msgid "FMED_MO_AM_LFO_TTIP"
+msgstr "<EMPTY>"
 
 msgid "FMED_MO_KEY_SCALING"
 msgstr "Key scaling"
 
+msgid "FMED_MO_KEY_SCALING_TTIP"
+msgstr "Key rate scale"
+
 msgid "FMED_MO_MULTIPLIER"
 msgstr "Multiplier"
 
-msgid "FMED_MO_DIVIDER"
-msgstr "Divider"
+msgid "FMED_MO_MULTIPLIER_TTIP"
+msgstr "<EMPTY>"
+
+msgid "FMED_MO_DIVISOR"
+msgstr "Divisor"
+
+msgid "FMED_MO_DIVISOR_TTIP"
+msgstr "<EMPTY>"
 
 msgid "FMED_MO_DETUNE_FIXFREQ"
+msgstr "Det. / F.Freq."
+
+msgid "FMED_MO_DETUNE_FIXFREQ_TTIP"
 msgstr "Detune/Fixed frequency"
 
 msgid "FMED_MO_FM_INTENSITY"
 msgstr "FM intensity"
 
+msgid "FMED_MO_FM_INTENSITY_TTIP"
+msgstr "FM intensity (vibrato)"
+
 msgid "FMED_MO_FM_LFO"
 msgstr "FM LFO"
+
+msgid "FMED_MO_FM_LFO_TTIP"
+msgstr "<EMPTY>"
 
 msgid "FMED_MO_PHASE"
 msgstr "Phase"
 
+msgid "FMED_MO_PHASE_TTIP"
+msgstr "<EMPTY>"
+
 msgid "FMED_MO_OPXY"
-msgstr "Op%d > Op%d mod."
+msgstr "Op{i_op_org} > Op{i_op_dst} mod."
+
+msgid "FMED_MO_OPXY_TTIP"
+msgstr "Modulation level from op {i_op_org} to op {i_op_dst}"
 
 msgid "FMED_MO_OPXX"
 msgstr "Self mod."
 
+msgid "FMED_MO_OPXX_TTIP"
+msgstr "Op {i_op} self-modulation level"
+
 msgid "FMED_MO_OUTPUT"
 msgstr "Output"
+
+msgid "FMED_MO_OUTPUT_TTIP"
+msgstr "<EMPTY>"
 
 # Macro editor
 msgid "MCED_RELATIVE"
@@ -502,4 +615,345 @@ msgid "MCED_DELAY"
 msgstr "D"
 
 msgid "MCED_DELAY_TTIP"
-msgstr "Delay"
+msgstr "Delay (ticks)"
+
+# Wave editor
+msgid "WAVED_LOAD"
+msgstr "Load"
+
+msgid "WAVED_LOAD_DLG"
+msgstr "Load wave"
+
+msgid "WAVED_SAVE"
+msgstr "Save"
+
+msgid "WAVED_SAVE_DLG"
+msgstr "Save wave"
+
+msgid "WAVED_ADD"
+msgstr " + "
+
+msgid "WAVED_ADD_TTIP"
+msgstr "Add wave"
+
+msgid "WAVED_DUP"
+msgstr " D "
+
+msgid "WAVED_DUP_TTIP"
+msgstr "Duplicate wave"
+
+msgid "WAVED_DEL"
+msgstr " - "
+
+msgid "WAVED_DEL_TTIP"
+msgstr "Delete wave"
+
+msgid "WAVED_WTYPE_SYNTH"
+msgstr "Synthetic"
+
+msgid "WAVED_WTYPE_SAMPLED"
+msgstr "Sample"
+
+msgid "WAVED_NAME"
+msgstr "Name"
+
+msgid "WAVED_SIZE"
+msgstr "Size"
+
+msgid "WAVED_SIZE_SAMPLES"
+msgstr "{i_samples} samples"
+
+msgid "WAVED_SIZE_NONE"
+msgstr "-- samples"
+
+msgid "WAVED_NEW_SYNTH"
+msgstr " + "
+
+msgid "WAVED_SYN_SINE"
+msgstr "Sine"
+
+msgid "WAVED_SYN_TRIANGLE"
+msgstr "Triangle"
+
+msgid "WAVED_SYN_SAW"
+msgstr "Saw"
+
+msgid "WAVED_SYN_RECTANGLE"
+msgstr "Rectangle"
+
+msgid "WAVED_SYN_NOISE"
+msgstr "Noise"
+
+msgid "WAVED_SYN_LOWPASS"
+msgstr "Low pass"
+
+msgid "WAVED_SYN_HIGHPASS"
+msgstr "High pass"
+
+msgid "WAVED_SYN_BANDPASS"
+msgstr "Band pass"
+
+msgid "WAVED_SYN_BANDREJECT"
+msgstr "Band reject"
+
+msgid "WAVED_SYN_CLAMP"
+msgstr "Clamp"
+
+msgid "WAVED_SYN_NORMALIZE"
+msgstr "Normalize"
+
+msgid "WAVED_SYN_QUANTIZE"
+msgstr "Quantize"
+
+msgid "WAVED_SYN_POWER"
+msgstr "Power"
+
+msgid "WAVED_SYN_DECAY"
+msgstr "Decay"
+
+msgid "WAVED_BAR_LEFT_TTIP"
+msgstr "Move to start"
+
+msgid "WAVED_BAR_RIGHT_TTIP"
+msgstr "Move to end"
+
+msgid "WAVED_BAR_CLOSE_TTIP"
+msgstr "Delete"
+
+msgid "WAVED_STD_FREQUENCY"
+msgstr "Freq."
+
+msgid "WAVED_STD_FREQUENCY_TTIP"
+msgstr "Frequency (Hz)"
+
+msgid "WAVED_STD_OFFSET"
+msgstr "Phase"
+
+msgid "WAVED_STD_OFFSET_TTIP"
+msgstr "Generated wave phase"
+
+msgid "WAVED_STD_VOLUME"
+msgstr "Vol."
+
+msgid "WAVED_STD_VOLUME_TTIP"
+msgstr "Volume"
+
+msgid "WAVED_STD_POWER"
+msgstr "Pow."
+
+msgid "WAVED_STD_POWER_TTIP"
+msgstr "Exponent"
+
+msgid "WAVED_STD_DECAY"
+msgstr "Dec."
+
+msgid "WAVED_STD_DECAY_TTIP"
+msgstr "Decay rate"
+
+msgid "WAVED_STD_CYCLES"
+msgstr "Cyc."
+
+msgid "WAVED_STD_CYCLES_TTIP"
+msgstr "Number of cycles"
+
+msgid "WAVED_STD_POSITION"
+msgstr "Pos."
+
+msgid "WAVED_STD_POSITION_TTIP"
+msgstr "Position"
+
+msgid "WAVED_STD_OUTPUT"
+msgstr "Out"
+
+msgid "WAVED_STD_OUTPUT_TTIP"
+msgstr "Output mode"
+
+msgid "WAVED_STD_OUTPUT_OFF"
+msgstr "Off"
+
+msgid "WAVED_STD_OUTPUT_REPLACE"
+msgstr "Replace"
+
+msgid "WAVED_STD_OUTPUT_ADD"
+msgstr "Add"
+
+msgid "WAVED_STD_OUTPUT_AM"
+msgstr "AM"
+
+msgid "WAVED_STD_OUTPUT_XM"
+msgstr "XM"
+
+msgid "WAVED_STD_FROM"
+msgstr "In"
+
+msgid "WAVED_STD_FROM_TTIP"
+msgstr "Input from component #"
+
+msgid "WAVED_STD_AM"
+msgstr "AM"
+
+msgid "WAVED_STD_AM_TTIP"
+msgstr "AM level"
+
+msgid "WAVED_STD_PM"
+msgstr "PM"
+
+msgid "WAVED_STD_PM_TTIP"
+msgstr "PM level"
+
+msgid "WAVED_STD_XM"
+msgstr "XM"
+
+msgid "WAVED_STD_XM_TTIP"
+msgstr "XM level"
+
+msgid "WAVED_WAV_QUAD1"
+msgstr "Quad 1"
+
+msgid "WAVED_WAV_QUAD1_TTIP"
+msgstr "First quadrant"
+
+msgid "WAVED_WAV_QUAD2"
+msgstr "Quad 2"
+
+msgid "WAVED_WAV_QUAD2_TTIP"
+msgstr "Second quadrant"
+
+msgid "WAVED_WAV_QUAD3"
+msgstr "Quad 3"
+
+msgid "WAVED_WAV_QUAD3_TTIP"
+msgstr "Third quadrant"
+
+msgid "WAVED_WAV_QUAD4"
+msgstr "Quad 4"
+
+msgid "WAVED_WAV_QUAD4_TTIP"
+msgstr "Fourth quadrant"
+
+msgid "WAVED_NOI_TITLE"
+msgstr "{i_index} - NOISE"
+
+msgid "WAVED_NOI_SEED"
+msgstr "Seed"
+
+msgid "WAVED_NOI_SEED_TTIP"
+msgstr "Randomness generator seed"
+
+msgid "WAVED_NOI_TONE"
+msgstr "Tone"
+
+msgid "WAVED_NOI_TONE_TTIP"
+msgstr "<EMPTY>"
+
+msgid "WAVED_NOI_LENGTH"
+msgstr "Len."
+
+msgid "WAVED_NOI_LENGTH_TTIP"
+msgstr "Length"
+
+msgid "WAVED_RECT_TITLE"
+msgstr "{i_index} - RECT."
+
+msgid "WAVED_RECT_ZSTART"
+msgstr "Z Start"
+
+msgid "WAVED_RECT_ZSTART_TTIP"
+msgstr "Start position of zero phase"
+
+msgid "WAVED_RECT_NSTART"
+msgstr "- Start"
+
+msgid "WAVED_RECT_NSTART_TTIP"
+msgstr "Start position of negative phase"
+
+msgid "WAVED_SAW_TITLE"
+msgstr "{i_index} - SAW"
+
+msgid "WAVED_SAW_Q0"
+msgstr "-1 > -0.5"
+
+msgid "WAVED_SAW_Q1"
+msgstr "-0.5 > 0"
+
+msgid "WAVED_SAW_Q2"
+msgstr "0 > 0.5"
+
+msgid "WAVED_SAW_Q3"
+msgstr "0.5 > 1"
+
+msgid "WAVED_SAW_Q4"
+msgstr "1 > 0.5"
+
+msgid "WAVED_SAW_Q5"
+msgstr "0.5 > 0"
+
+msgid "WAVED_SAW_Q6"
+msgstr "0 > -0.5"
+
+msgid "WAVED_SAW_Q7"
+msgstr "-0.5 > -1"
+
+msgid "WAVED_SAW_Q8"
+msgstr "1"
+
+msgid "WAVED_SAW_Q9"
+msgstr "0.5"
+
+msgid "WAVED_SAW_Q10"
+msgstr "0"
+
+msgid "WAVED_SAW_Q11"
+msgstr "-0.5"
+
+msgid "WAVED_SAW_Q12"
+msgstr "-1"
+
+msgid "WAVED_SINE_TITLE"
+msgstr "{i_index} - SINE"
+
+msgid "WAVED_SINE_Q0"
+msgstr "0 > 1"
+
+msgid "WAVED_SINE_Q1"
+msgstr "1 > 0"
+
+msgid "WAVED_SINE_Q2"
+msgstr "0 > -1"
+
+msgid "WAVED_SINE_Q3"
+msgstr "-1 > 0"
+
+msgid "WAVED_SINE_Q4"
+msgstr "0"
+
+msgid "WAVED_SINE_Q5"
+msgstr "1"
+
+msgid "WAVED_SINE_Q6"
+msgstr "-1"
+
+msgid "WAVED_TRI_TITLE"
+msgstr "{i_index} - TRIANGLE"
+
+msgid "WAVED_TRI_Q0"
+msgstr "0 > 1"
+
+msgid "WAVED_TRI_Q1"
+msgstr "1 > 0"
+
+msgid "WAVED_TRI_Q2"
+msgstr "0 > -1"
+
+msgid "WAVED_TRI_Q3"
+msgstr "-1 > 0"
+
+msgid "WAVED_TRI_Q4"
+msgstr "1"
+
+msgid "WAVED_TRI_Q5"
+msgstr "0"
+
+msgid "WAVED_TRI_Q6"
+msgstr "-1"
+

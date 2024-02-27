@@ -14,10 +14,19 @@ msgstr ""
 msgid "MENU_OPEN_SONG"
 msgstr ""
 
+msgid "MENU_OPEN_SONG_DLG"
+msgstr ""
+
 msgid "MENU_SAVE_SONG"
 msgstr ""
 
+msgid "MENU_SAVE_SONG_DLG"
+msgstr ""
+
 msgid "MENU_SAVE_WAVE"
+msgstr ""
+
+msgid "MENU_SAVE_WAVE_DLG"
 msgstr ""
 
 msgid "MENU_CLEANUP"
@@ -54,30 +63,6 @@ msgid "MENU_ARPEGGIOS"
 msgstr ""
 
 msgid "MENU_OPTIONS"
-msgstr ""
-
-msgid "EXPORT_WAVE"
-msgstr ""
-
-
-# Generic strings
-
-msgid "GEN_MICRO_ADD"
-msgstr ""
-
-msgid "GEN_MICRO_DUP"
-msgstr ""
-
-msgid "GEN_MICRO_DEL"
-msgstr ""
-
-msgid "GEN_NANO_ADD"
-msgstr ""
-
-msgid "GEN_NANO_DEL"
-msgstr ""
-
-msgid "GEN_NAME"
 msgstr ""
 
 
@@ -140,25 +125,40 @@ msgstr ""
 msgid "PTEDIT_CHANNEL_BUTTON"
 msgstr ""
 
+msgid "PTEDIT_FX_DEL"
+msgstr ""
+
 msgid "PTEDIT_DEL_FX_TTIP"
+msgstr ""
+
+msgid "PTEDIT_FX_ADD"
 msgstr ""
 
 msgid "PTEDIT_ADD_FX_TTIP"
 msgstr ""
 
-msgid "PTEDIT_ADD_TTIP"
+msgid "PTEDIT_ADD_ORD"
 msgstr ""
 
-msgid "PTEDIT_DUP_TTIP"
+msgid "PTEDIT_ADD_ORD_TTIP"
 msgstr ""
 
-msgid "PTEDIT_UP_TTIP"
+msgid "PTEDIT_DUP_ORD"
 msgstr ""
 
-msgid "PTEDIT_DOWN_TTIP"
+msgid "PTEDIT_DUP_ORD_TTIP"
 msgstr ""
 
-msgid "PTEDIT_DEL_TTIP"
+msgid "PTEDIT_UP_ORD_TTIP"
+msgstr ""
+
+msgid "PTEDIT_DOWN_ORD_TTIP"
+msgstr ""
+
+msgid "PTEDIT_DEL_ORD"
+msgstr ""
+
+msgid "PTEDIT_DEL_ORD_TTIP"
 msgstr ""
 
 # Play controls
@@ -181,14 +181,23 @@ msgstr ""
 
 # Instrument editor
 
+msgid "INSTED_ADD"
+msgstr ""
+
 msgid "INSTED_ADD_TTIP"
-msgstr "Añadir instrumento"
+msgstr ""
+
+msgid "INSTED_DUP"
+msgstr ""
 
 msgid "INSTED_DUP_TTIP"
-msgstr "Duplicar instrumento"
+msgstr ""
+
+msgid "INSTED_DEL"
+msgstr ""
 
 msgid "INSTED_DEL_TTIP"
-msgstr "Eliminar instrumento"
+msgstr ""
 
 msgid "INSTED_LOAD"
 msgstr ""
@@ -202,6 +211,8 @@ msgstr ""
 msgid "INSTED_DLG_SAVE"
 msgstr ""
 
+msgid "INSTED_NAME"
+msgstr ""
 
 # FM editor
 
@@ -212,6 +223,18 @@ msgid "FMED_LFO_DUTY_CYCLE"
 msgstr ""
 
 msgid "FMED_LFO_DUTY_CYCLE_TTIP"
+msgstr ""
+
+msgid "FMED_DEFW_RECTANGLE"
+msgstr ""
+
+msgid "FMED_DEFW_SAW"
+msgstr ""
+
+msgid "FMED_DEFW_TRIANGLE"
+msgstr ""
+
+msgid "FMED_DEFW_NOISE"
 msgstr ""
 
 msgid "FMED_LFO_WAVE"
@@ -403,88 +426,175 @@ msgstr ""
 msgid "FMED_MG_TONE"
 msgstr ""
 
+msgid "FMED_MG_TONE_TTIP"
+msgstr ""
+
 msgid "FMED_MG_VOLUME"
+msgstr ""
+
+msgid "FMED_MG_VOLUME_TTIP"
 msgstr ""
 
 msgid "FMED_MG_PAN"
 msgstr ""
 
+msgid "FMED_MG_PAN_TTIP"
+msgstr ""
+
 msgid "FMED_MG_CHAN_INVERT"
+msgstr ""
+
+msgid "FMED_MG_CHAN_INVERT_TTIP"
 msgstr ""
 
 msgid "FMED_MG_KEY_ON"
 msgstr ""
 
+msgid "FMED_MG_KEY_ON_TTIP"
+msgstr ""
+
 msgid "FMED_MG_OP_ENABLE"
+msgstr ""
+
+msgid "FMED_MG_OP_ENABLE_TTIP"
 msgstr ""
 
 msgid "FMED_MG_CLIP"
 msgstr ""
 
+msgid "FMED_MG_CLIP_TTIP"
+msgstr ""
+
 msgid "FMED_MO_TONE"
+msgstr ""
+
+msgid "FMED_MO_TONE_TTIP"
 msgstr ""
 
 msgid "FMED_MO_KEY_ON"
 msgstr ""
 
+msgid "FMED_MO_KEY_ON_TTIP"
+msgstr ""
+
 msgid "FMED_MO_DUTY_CYCLE"
+msgstr ""
+
+msgid "FMED_MO_DUTY_CYCLE_TTIP"
 msgstr ""
 
 msgid "FMED_MO_WAVE"
 msgstr ""
 
+msgid "FMED_MO_WAVE_TTIP"
+msgstr ""
+
 msgid "FMED_MO_ATTACK"
+msgstr ""
+
+msgid "FMED_MO_ATTACK_TTIP"
 msgstr ""
 
 msgid "FMED_MO_DECAY"
 msgstr ""
 
+msgid "FMED_MO_DECAY_TTIP"
+msgstr ""
+
 msgid "FMED_MO_SUSTAIN_LEVEL"
+msgstr ""
+
+msgid "FMED_MO_SUSTAIN_LEVEL_TTIP"
 msgstr ""
 
 msgid "FMED_MO_SUSTAIN_RATE"
 msgstr ""
 
+msgid "FMED_MO_SUSTAIN_RATE_TTIP"
+msgstr ""
+
 msgid "FMED_MO_RELEASE"
+msgstr ""
+
+msgid "FMED_MO_RELEASE_TTIP"
 msgstr ""
 
 msgid "FMED_MO_REPEAT"
 msgstr ""
 
+msgid "FMED_MO_REPEAT_TTIP"
+msgstr ""
+
 msgid "FMED_MO_AM_INTENSITY"
+msgstr ""
+
+msgid "FMED_MO_AM_INTENSITY_TTIP"
 msgstr ""
 
 msgid "FMED_MO_AM_LFO"
 msgstr ""
 
+msgid "FMED_MO_AM_LFO_TTIP"
+msgstr ""
+
 msgid "FMED_MO_KEY_SCALING"
+msgstr ""
+
+msgid "FMED_MO_KEY_SCALING_TTIP"
 msgstr ""
 
 msgid "FMED_MO_MULTIPLIER"
 msgstr ""
 
+msgid "FMED_MO_MULTIPLIER_TTIP"
+msgstr ""
+
 msgid "FMED_MO_DIVIDER"
+msgstr ""
+
+msgid "FMED_MO_DIVIDER_TTIP"
 msgstr ""
 
 msgid "FMED_MO_DETUNE_FIXFREQ"
 msgstr ""
 
+msgid "FMED_MO_DETUNE_FIXFREQ_TTIP"
+msgstr ""
+
 msgid "FMED_MO_FM_INTENSITY"
+msgstr ""
+
+msgid "FMED_MO_FM_INTENSITY_TTIP"
 msgstr ""
 
 msgid "FMED_MO_FM_LFO"
 msgstr ""
 
+msgid "FMED_MO_FM_LFO_TTIP"
+msgstr ""
+
 msgid "FMED_MO_PHASE"
+msgstr ""
+
+msgid "FMED_MO_PHASE_TTIP"
 msgstr ""
 
 msgid "FMED_MO_OPXY"
 msgstr ""
 
+msgid "FMED_MO_OPXY_TTIP"
+msgstr ""
+
 msgid "FMED_MO_OPXX"
 msgstr ""
 
+msgid "FMED_MO_OPXX_TTIP"
+msgstr ""
+
 msgid "FMED_MO_OUTPUT"
+msgstr ""
+
+msgid "FMED_MO_OUTPUT_TTIP"
 msgstr ""
 
 
@@ -512,5 +622,347 @@ msgid "MCED_DELAY"
 msgstr ""
 
 msgid "MCED_DELAY_TTIP"
+msgstr ""
+
+
+# Wave editor
+
+msgid "WAVED_LOAD"
+msgstr ""
+
+msgid "WAVED_LOAD_DLG"
+msgstr ""
+
+msgid "WAVED_SAVE"
+msgstr ""
+
+msgid "WAVED_SAVE_DLG"
+msgstr ""
+
+msgid "WAVED_ADD"
+msgstr ""
+
+msgid "WAVED_ADD_TTIP"
+msgstr ""
+
+msgid "WAVED_DUP"
+msgstr ""
+
+msgid "WAVED_DUP_TTIP"
+msgstr ""
+
+msgid "WAVED_DEL"
+msgstr ""
+
+msgid "WAVED_DEL_TTIP"
+msgstr ""
+
+msgid "WAVED_WTYPE_SYNTH"
+msgstr ""
+
+msgid "WAVED_WTYPE_SAMPLED"
+msgstr ""
+
+msgid "WAVED_NAME"
+msgstr ""
+
+msgid "WAVED_SIZE"
+msgstr ""
+
+msgid "WAVED_SIZE_SAMPLES"
+msgstr ""
+
+msgid "WAVED_SIZE_NONE"
+msgstr ""
+
+msgid "WAVED_NEW_SYNTH"
+msgstr ""
+
+msgid "WAVED_SYN_SINE"
+msgstr ""
+
+msgid "WAVED_SYN_TRIANGLE"
+msgstr ""
+
+msgid "WAVED_SYN_SAW"
+msgstr ""
+
+msgid "WAVED_SYN_RECTANGLE"
+msgstr ""
+
+msgid "WAVED_SYN_NOISE"
+msgstr ""
+
+msgid "WAVED_SYN_LOWPASS"
+msgstr ""
+
+msgid "WAVED_SYN_HIGHPASS"
+msgstr ""
+
+msgid "WAVED_SYN_BANDPASS"
+msgstr ""
+
+msgid "WAVED_SYN_BANDREJECT"
+msgstr ""
+
+msgid "WAVED_SYN_CLAMP"
+msgstr ""
+
+msgid "WAVED_SYN_NORMALIZE"
+msgstr ""
+
+msgid "WAVED_SYN_QUANTIZE"
+msgstr ""
+
+msgid "WAVED_SYN_POWER"
+msgstr ""
+
+msgid "WAVED_SYN_DECAY"
+msgstr ""
+
+msgid "WAVED_BAR_LEFT_TTIP"
+msgstr ""
+
+msgid "WAVED_BAR_RIGHT_TTIP"
+msgstr ""
+
+msgid "WAVED_BAR_CLOSE_TTIP"
+msgstr ""
+
+msgid "WAVED_STD_FREQUENCY"
+msgstr ""
+
+msgid "WAVED_STD_FREQUENCY_TTIP"
+msgstr ""
+
+msgid "WAVED_STD_OFFSET"
+msgstr ""
+
+msgid "WAVED_STD_OFFSET_TTIP"
+msgstr ""
+
+msgid "WAVED_STD_VOLUME"
+msgstr ""
+
+msgid "WAVED_STD_VOLUME_TTIP"
+msgstr ""
+
+msgid "WAVED_STD_POWER"
+msgstr ""
+
+msgid "WAVED_STD_POWER_TTIP"
+msgstr ""
+
+msgid "WAVED_STD_DECAY"
+msgstr ""
+
+msgid "WAVED_STD_DECAY_TTIP"
+msgstr ""
+
+msgid "WAVED_STD_CYCLES"
+msgstr ""
+
+msgid "WAVED_STD_CYCLES_TTIP"
+msgstr ""
+
+msgid "WAVED_STD_POSITION"
+msgstr ""
+
+msgid "WAVED_STD_POSITION_TTIP"
+msgstr ""
+
+msgid "WAVED_STD_OUTPUT"
+msgstr ""
+
+msgid "WAVED_STD_OUTPUT_TTIP"
+msgstr ""
+
+msgid "WAVED_STD_OUTPUT_OFF"
+msgstr ""
+
+msgid "WAVED_STD_OUTPUT_REPLACE"
+msgstr ""
+
+msgid "WAVED_STD_OUTPUT_ADD"
+msgstr ""
+
+msgid "WAVED_STD_OUTPUT_AM"
+msgstr ""
+
+msgid "WAVED_STD_OUTPUT_XM"
+msgstr ""
+
+msgid "WAVED_STD_FROM"
+msgstr ""
+
+msgid "WAVED_STD_FROM_TTIP"
+msgstr ""
+
+msgid "WAVED_STD_AM"
+msgstr ""
+
+msgid "WAVED_STD_AM_TTIP"
+msgstr ""
+
+msgid "WAVED_STD_PM"
+msgstr ""
+
+msgid "WAVED_STD_PM_TTIP"
+msgstr ""
+
+msgid "WAVED_STD_XM"
+msgstr ""
+
+msgid "WAVED_STD_XM_TTIP"
+msgstr ""
+
+msgid "WAVED_WAV_QUAD1"
+msgstr ""
+
+msgid "WAVED_WAV_QUAD1_TTIP"
+msgstr ""
+
+msgid "WAVED_WAV_QUAD2"
+msgstr ""
+
+msgid "WAVED_WAV_QUAD2_TTIP"
+msgstr ""
+
+msgid "WAVED_WAV_QUAD3"
+msgstr ""
+
+msgid "WAVED_WAV_QUAD3_TTIP"
+msgstr ""
+
+msgid "WAVED_WAV_QUAD4"
+msgstr ""
+
+msgid "WAVED_WAV_QUAD4_TTIP"
+msgstr ""
+
+msgid "WAVED_NOI_TITLE"
+msgstr ""
+
+msgid "WAVED_NOI_SEED"
+msgstr ""
+
+msgid "WAVED_NOI_SEED_TTIP"
+msgstr ""
+
+msgid "WAVED_NOI_TONE"
+msgstr ""
+
+msgid "WAVED_NOI_TONE_TTIP"
+msgstr ""
+
+msgid "WAVED_NOI_LENGTH"
+msgstr ""
+
+msgid "WAVED_NOI_LENGTH_TTIP"
+msgstr ""
+
+msgid "WAVED_RECT_TITLE"
+msgstr ""
+
+msgid "WAVED_RECT_ZSTART"
+msgstr ""
+
+msgid "WAVED_RECT_ZSTART_TTIP"
+msgstr ""
+
+msgid "WAVED_RECT_NSTART"
+msgstr ""
+
+msgid "WAVED_RECT_NSTART_TTIP"
+msgstr ""
+
+msgid "WAVED_SAW_TITLE"
+msgstr ""
+
+msgid "WAVED_SAW_Q0"
+msgstr ""
+
+msgid "WAVED_SAW_Q1"
+msgstr ""
+
+msgid "WAVED_SAW_Q2"
+msgstr ""
+
+msgid "WAVED_SAW_Q3"
+msgstr ""
+
+msgid "WAVED_SAW_Q4"
+msgstr ""
+
+msgid "WAVED_SAW_Q5"
+msgstr ""
+
+msgid "WAVED_SAW_Q6"
+msgstr ""
+
+msgid "WAVED_SAW_Q7"
+msgstr ""
+
+msgid "WAVED_SAW_Q8"
+msgstr ""
+
+msgid "WAVED_SAW_Q9"
+msgstr ""
+
+msgid "WAVED_SAW_Q10"
+msgstr ""
+
+msgid "WAVED_SAW_Q11"
+msgstr ""
+
+msgid "WAVED_SAW_Q12"
+msgstr ""
+
+msgid "WAVED_SINE_TITLE"
+msgstr ""
+
+msgid "WAVED_SINE_Q0"
+msgstr ""
+
+msgid "WAVED_SINE_Q1"
+msgstr ""
+
+msgid "WAVED_SINE_Q2"
+msgstr ""
+
+msgid "WAVED_SINE_Q3"
+msgstr ""
+
+msgid "WAVED_SINE_Q4"
+msgstr ""
+
+msgid "WAVED_SINE_Q5"
+msgstr ""
+
+msgid "WAVED_SINE_Q6"
+msgstr ""
+
+msgid "WAVED_TRI_TITLE"
+msgstr ""
+
+msgid "WAVED_TRI_Q0"
+msgstr ""
+
+msgid "WAVED_TRI_Q1"
+msgstr ""
+
+msgid "WAVED_TRI_Q2"
+msgstr ""
+
+msgid "WAVED_TRI_Q3"
+msgstr ""
+
+msgid "WAVED_TRI_Q4"
+msgstr ""
+
+msgid "WAVED_TRI_Q5"
+msgstr ""
+
+msgid "WAVED_TRI_Q6"
 msgstr ""
 

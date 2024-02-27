@@ -7,46 +7,71 @@
 margin_right = 1024.0
 margin_bottom = 600.0
 script = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Buttons" type="HBoxContainer" parent="."]
 margin_right = 1024.0
 margin_bottom = 20.0
 
 [node name="Add" type="MenuButton" parent="Buttons"]
-margin_right = 37.0
+margin_right = 124.0
 margin_bottom = 20.0
-text = "Add"
+hint_tooltip = "WAVED_ADD_TTIP"
+text = "WAVED_ADD"
 flat = false
-items = [ "Synthesized", null, 0, false, false, 0, 0, null, "", false, "Sample", null, 0, false, false, 1, 0, null, "", false ]
+items = [ "WAVED_WTYPE_SYNTH", null, 0, false, false, 0, 0, null, "", false, "WAVED_WTYPE_SAMPLED", null, 0, false, false, 1, 0, null, "", false ]
 
 [node name="Copy" type="Button" parent="Buttons"]
-margin_left = 41.0
-margin_right = 84.0
+margin_left = 128.0
+margin_right = 251.0
 margin_bottom = 20.0
-text = "Copy"
+hint_tooltip = "WAVED_DUP_TTIP"
+text = "WAVED_DUP"
 
 [node name="S" type="ReferenceRect" parent="Buttons"]
-margin_left = 88.0
-margin_right = 112.0
+margin_left = 255.0
+margin_right = 901.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 24, 0 )
+size_flags_horizontal = 3
 
 [node name="Del" type="Button" parent="Buttons"]
-margin_left = 116.0
-margin_right = 150.0
+margin_left = 905.0
+margin_right = 1024.0
 margin_bottom = 20.0
-text = "Del"
+hint_tooltip = "WAVED_DEL_TTIP"
+text = "WAVED_DEL"
 
 [node name="Waves" parent="." instance=ExtResource( 1 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 24.0
 margin_right = 1024.0
-margin_bottom = 600.0
+margin_bottom = 576.0
 offset = 4
+
+[node name="Buttons2" type="HBoxContainer" parent="."]
+margin_top = 580.0
+margin_right = 1024.0
+margin_bottom = 600.0
+
+[node name="Load" type="Button" parent="Buttons2"]
+margin_right = 102.0
+margin_bottom = 20.0
+disabled = true
+text = "WAVED_LOAD"
+
+[node name="S" type="ReferenceRect" parent="Buttons2"]
+margin_left = 106.0
+margin_right = 924.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+
+[node name="Save" type="Button" parent="Buttons2"]
+margin_left = 928.0
+margin_right = 1024.0
+margin_bottom = 20.0
+disabled = true
+text = "WAVED_SAVE"
 
 [connection signal="pressed" from="Buttons/Copy" to="." method="_on_Copy_pressed"]
 [connection signal="pressed" from="Buttons/Del" to="." method="_on_Del_pressed"]

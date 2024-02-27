@@ -8,11 +8,15 @@ export (int) var operator:int=0
 
 
 func _ready()->void:
+	var c:Control
 	for i in range(1,5):
+		c=get_node("VBC/OP%d"%[i])
 		if (i-1)==operator:
-			get_node("VBC/OP%d"%[i]).title=tr("FMED_MO_OPXX")
+			c.title=tr("FMED_MO_OPXX")
+			c.title_tooltip=tr("FMED_MO_OPXX_TTIP").format({"i_op":i})
 		else:
-			get_node("VBC/OP%d"%[i]).title=tr("FMED_MO_OPXY")%[operator+1,i]
+			c.title=tr("FMED_MO_OPXY").format({"i_op_org":operator+1,"i_op_dst":i})
+			c.title_tooltip=tr("FMED_MO_OPXY_TTIP").format({"i_op_org":operator+1,"i_op_dst":i})
 
 
 func _on_macro_changed(parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)->void:

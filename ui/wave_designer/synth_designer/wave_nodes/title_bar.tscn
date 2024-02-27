@@ -8,13 +8,11 @@ margin_right = 138.0
 margin_bottom = 20.0
 custom_constants/separation = 0
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="MoveL" type="Button" parent="."]
 margin_right = 12.0
 margin_bottom = 20.0
+hint_tooltip = "WAVED_BAR_LEFT_TTIP"
 script = ExtResource( 2 )
 icon_name = "arrow_left"
 
@@ -22,6 +20,7 @@ icon_name = "arrow_left"
 margin_left = 12.0
 margin_right = 24.0
 margin_bottom = 20.0
+hint_tooltip = "WAVED_BAR_RIGHT_TTIP"
 script = ExtResource( 2 )
 icon_name = "arrow_right"
 
@@ -31,9 +30,7 @@ margin_right = 32.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 8, 0 )
 
-[node name="Title" type="Label" parent="." groups=[
-"Title",
-]]
+[node name="Title" type="Label" parent="." groups=["Title"]]
 margin_left = 32.0
 margin_top = 3.0
 margin_right = 118.0
@@ -52,6 +49,7 @@ rect_min_size = Vector2( 8, 0 )
 margin_left = 126.0
 margin_right = 138.0
 margin_bottom = 20.0
+hint_tooltip = "WAVED_BAR_CLOSE_TTIP"
 script = ExtResource( 2 )
 icon_name = "close"
 

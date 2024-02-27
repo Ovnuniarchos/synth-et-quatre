@@ -13,15 +13,13 @@ func _ready()->void:
 
 func set_from(v:int)->void:
 	from_op=v
-	$Routing/Title.text="OP %d"%[from_op+1]
+	$Routing/Title.text=tr("FMED_OPX").format({"i_op":from_op+1})
 	var s:String
 	for i in 4:
-		s=tr("FMED_OPXY_TTIP")%[from_op+1,i+1] if from_op!=i else tr("FMED_OPXX_TTIP")%[i+1]
+		s=tr("FMED_OPXY_TTIP").format({"i_op_org":from_op+1,"i_op_dst":i+1}) if from_op!=i else tr("FMED_OPXX_TTIP").format({"i_op":i+1})
 		get_node("Routing/OP%dLabel"%[i+1]).hint_tooltip=s
-		get_node("Routing/OP%dSlider"%[i+1]).hint_tooltip=s
-	s=tr("FMED_OUTX_TTIP")%[from_op+1]
+	s=tr("FMED_OUTX_TTIP").format({"i_op":from_op+1})
 	get_node("Routing/OutLabel").hint_tooltip=s
-	get_node("Routing/OutSlider").hint_tooltip=s
 
 
 func _on_Slider_value_changed(value:float,to:int)->void:

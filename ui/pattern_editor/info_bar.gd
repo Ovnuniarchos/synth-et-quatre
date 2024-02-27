@@ -17,16 +17,16 @@ func _on_song_changed()->void:
 	GLOBALS.song.connect("speed_changed",self,"_on_speed_changed")
 
 func _on_octave_changed(o:int)->void:
-	$Octave.text=tr("IBAR_OCTAVE")%[o-1]
+	$Octave.text=tr("IBAR_OCTAVE").format({"i_oct":"%-2d"%[o-1]})
 
 func _on_speed_changed()->void:
-	$Tempo.text=tr("IBAR_TEMPO")%[GLOBALS.song.ticks_second/float(GLOBALS.song.ticks_row)]
+	$Tempo.text=tr("IBAR_TEMPO").format({"f_tempo":"%-3.2f"%[GLOBALS.song.ticks_second/float(GLOBALS.song.ticks_row)]})
 
 func _on_step_changed(step:int)->void:
-	$Step.text=tr("IBAR_STEP")%[step]
+	$Step.text=tr("IBAR_STEP").format({"i_step":"%-3d"%[step]})
 
 func _on_velocity_changed(velocity:int)->void:
-	$Velocity.text=tr("IBAR_VELOCITY")%[velocity]
+	$Velocity.text=tr("IBAR_VELOCITY").format({"i_vel":"%-3d"%[velocity]})
 
 func _on_instrument_changed(inst:int,inst_name:String)->void:
-	$Instrument.text=tr("IBAR_INSTRUMENT")%[inst_name,inst]
+	$Instrument.text=tr("IBAR_INSTRUMENT").format({"s_inst":inst_name,"i_inst":"%02X"%inst})

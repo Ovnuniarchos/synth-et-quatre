@@ -14,7 +14,7 @@ margin_bottom = 24.0
 hint_tooltip = "PTEDIT_DEL_FX_TTIP"
 focus_mode = 0
 shortcut_in_tooltip = false
-text = "GEN_NANO_DEL"
+text = "PTEDIT_FX_DEL"
 
 [node name="AddFX" type="Button" parent="."]
 margin_left = 119.0
@@ -23,7 +23,7 @@ margin_bottom = 24.0
 hint_tooltip = "PTEDIT_ADD_FX_TTIP"
 focus_mode = 0
 shortcut_in_tooltip = false
-text = "GEN_NANO_ADD"
+text = "PTEDIT_FX_ADD"
 
 [node name="Channel" type="Button" parent="."]
 margin_left = 243.0

@@ -219,7 +219,7 @@ func macros_as_dict()->Dictionary:
 		MacroIO.MACRO_AM_INTENSITY:ami_macros,
 		MacroIO.MACRO_KEY_SCALING:ksr_macros,
 		MacroIO.MACRO_MULTIPLIER:multiplier_macros,
-		MacroIO.MACRO_DIVIDER:divider_macros,
+		MacroIO.MACRO_DIVISOR:divider_macros,
 		MacroIO.MACRO_DETUNE:detune_macros,
 		MacroIO.MACRO_FM_INTENSITY:fmi_macros,
 		MacroIO.MACRO_AM_LFO:am_lfo_macros,
@@ -278,7 +278,7 @@ func set_macro(id:String,op:int,macro:ParamMacro)->bool:
 			ksr_macros[op]=macro
 		MacroIO.MACRO_MULTIPLIER:
 			multiplier_macros[op]=macro
-		MacroIO.MACRO_DIVIDER:
+		MacroIO.MACRO_DIVISOR:
 			divider_macros[op]=macro
 		MacroIO.MACRO_DETUNE:
 			detune_macros[op]=macro

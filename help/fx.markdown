@@ -222,7 +222,7 @@ Delays are executed before jumps and tempo changes.
 
 ## 40xx
 
-Delays this channel by `xx` ticks. Any other command for this row, and any further delay/repeat will be relative to the end of this command.
+Delays this note by `xx` ticks. Any other command for this row, and any further delay/repeat will be relative to the end of this command.
 
 ## 41xx
 

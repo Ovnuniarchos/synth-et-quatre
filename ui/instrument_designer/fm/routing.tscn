@@ -72,12 +72,12 @@ rect_min_size = Vector2( 0, 8 )
 
 [node name="Clip" type="Button" parent="Routings"]
 margin_top = 138.0
-margin_right = 36.0
+margin_right = 82.0
 margin_bottom = 158.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 toggle_mode = true
-text = "Clip"
+text = "FMED_CLIP"
 script = ExtResource( 2 )
 
 [connection signal="routing_changed" from="Routings/Params/OP1" to="." method="_on_routing_changed"]

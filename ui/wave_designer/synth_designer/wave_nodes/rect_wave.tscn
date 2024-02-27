@@ -14,16 +14,16 @@ script = ExtResource( 1 )
 [node name="VBC" type="VBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 153.0
+margin_right = 234.0
 margin_bottom = 387.0
 
 [node name="Title" parent="VBC" groups=["Title"] instance=ExtResource( 2 )]
-margin_right = 146.0
-title = "RECTANGLE"
+margin_right = 227.0
+title = "WAVED_RECT_TITLE"
 
 [node name="Params" type="GridContainer" parent="VBC"]
 margin_top = 24.0
-margin_right = 146.0
+margin_right = 227.0
 margin_bottom = 380.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -32,13 +32,15 @@ custom_constants/hseparation = 8
 columns = 2
 
 [node name="LabelMul" type="Label" parent="VBC/Params" groups=["Label"]]
-margin_right = 52.0
+margin_right = 158.0
 margin_bottom = 14.0
-text = "Freq"
+hint_tooltip = "WAVED_STD_FREQUENCY_TTIP"
+mouse_filter = 1
+text = "WAVED_STD_FREQUENCY"
 
 [node name="Mul" type="ProgressBar" parent="VBC/Params"]
-margin_left = 60.0
-margin_right = 146.0
+margin_left = 166.0
+margin_right = 227.0
 margin_bottom = 14.0
 rect_min_size = Vector2( 48, 14 )
 size_flags_horizontal = 3
@@ -50,14 +52,16 @@ _decimals = 2
 
 [node name="LabelOfs" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 16.0
-margin_right = 52.0
+margin_right = 158.0
 margin_bottom = 30.0
-text = "Offset"
+hint_tooltip = "WAVED_STD_OFFSET_TTIP"
+mouse_filter = 1
+text = "WAVED_STD_OFFSET"
 
 [node name="Ofs" type="ProgressBar" parent="VBC/Params"]
-margin_left = 60.0
+margin_left = 166.0
 margin_top = 16.0
-margin_right = 146.0
+margin_right = 227.0
 margin_bottom = 30.0
 rect_min_size = Vector2( 61, 14 )
 size_flags_horizontal = 3
@@ -69,17 +73,19 @@ _decimals = 2
 
 [node name="LabelVol" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 32.0
-margin_right = 52.0
+margin_right = 158.0
 margin_bottom = 46.0
-text = "Volume"
+hint_tooltip = "WAVED_STD_VOLUME_TTIP"
+mouse_filter = 1
+text = "WAVED_STD_VOLUME"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Vol" type="ProgressBar" parent="VBC/Params"]
-margin_left = 60.0
+margin_left = 166.0
 margin_top = 32.0
-margin_right = 146.0
+margin_right = 227.0
 margin_bottom = 46.0
 rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
@@ -93,14 +99,16 @@ huge_step = 10.0
 
 [node name="LabelZStart" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 48.0
-margin_right = 52.0
+margin_right = 158.0
 margin_bottom = 62.0
-text = "Z Start"
+hint_tooltip = "WAVED_RECT_ZSTART_TTIP"
+mouse_filter = 1
+text = "WAVED_RECT_ZSTART"
 
 [node name="ZStart" type="ProgressBar" parent="VBC/Params"]
-margin_left = 60.0
+margin_left = 166.0
 margin_top = 48.0
-margin_right = 146.0
+margin_right = 227.0
 margin_bottom = 62.0
 rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 3
@@ -113,14 +121,16 @@ huge_step = 10.0
 
 [node name="LabelNStart" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 64.0
-margin_right = 52.0
+margin_right = 158.0
 margin_bottom = 78.0
-text = "- Start"
+hint_tooltip = "WAVED_RECT_NSTART_TTIP"
+mouse_filter = 1
+text = "WAVED_RECT_NSTART"
 
 [node name="NStart" type="ProgressBar" parent="VBC/Params"]
-margin_left = 60.0
+margin_left = 166.0
 margin_top = 64.0
-margin_right = 146.0
+margin_right = 227.0
 margin_bottom = 78.0
 rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 3
@@ -133,14 +143,14 @@ huge_step = 10.0
 
 [node name="LabelDecay" type="Label" parent="VBC/Params"]
 margin_top = 80.0
-margin_right = 52.0
+margin_right = 158.0
 margin_bottom = 94.0
-text = "Decay"
+text = "WAVED_STD_DECAY"
 
 [node name="Decay" type="ProgressBar" parent="VBC/Params"]
-margin_left = 60.0
+margin_left = 166.0
 margin_top = 80.0
-margin_right = 146.0
+margin_right = 227.0
 margin_bottom = 94.0
 rect_min_size = Vector2( 48, 14 )
 size_flags_horizontal = 3
@@ -152,27 +162,29 @@ _decimals = 2
 
 [node name="ReferenceRect" type="ReferenceRect" parent="VBC/Params"]
 margin_top = 96.0
-margin_right = 52.0
+margin_right = 158.0
 margin_bottom = 120.0
 rect_min_size = Vector2( 0, 24 )
 
 [node name="ReferenceRect2" type="ReferenceRect" parent="VBC/Params"]
-margin_left = 60.0
+margin_left = 166.0
 margin_top = 96.0
-margin_right = 146.0
+margin_right = 227.0
 margin_bottom = 120.0
 rect_min_size = Vector2( 0, 24 )
 
 [node name="LabelCycles" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 122.0
-margin_right = 52.0
+margin_right = 158.0
 margin_bottom = 136.0
-text = "Cycles"
+hint_tooltip = "WAVED_STD_CYCLES_TTIP"
+mouse_filter = 1
+text = "WAVED_STD_CYCLES"
 
 [node name="Cycles" type="ProgressBar" parent="VBC/Params"]
-margin_left = 60.0
+margin_left = 166.0
 margin_top = 122.0
-margin_right = 146.0
+margin_right = 227.0
 margin_bottom = 136.0
 rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 3
@@ -186,14 +198,16 @@ huge_step = 10.0
 
 [node name="LabelPosition" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 138.0
-margin_right = 52.0
+margin_right = 158.0
 margin_bottom = 152.0
-text = "Position"
+hint_tooltip = "WAVED_STD_POSITION_TTIP"
+mouse_filter = 1
+text = "WAVED_STD_POSITION"
 
 [node name="Position" type="ProgressBar" parent="VBC/Params"]
-margin_left = 60.0
+margin_left = 166.0
 margin_top = 138.0
-margin_right = 146.0
+margin_right = 227.0
 margin_bottom = 152.0
 rect_min_size = Vector2( 56, 14 )
 size_flags_horizontal = 3
@@ -207,29 +221,30 @@ _decimals = 2
 
 [node name="LabelOutput" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 157.0
-margin_right = 52.0
+margin_right = 158.0
 margin_bottom = 171.0
-text = "Output"
+hint_tooltip = "WAVED_STD_OUTPUT_TTIP"
+mouse_filter = 1
+text = "WAVED_STD_OUTPUT"
 
 [node name="Output" type="OptionButton" parent="VBC/Params"]
-margin_left = 60.0
+margin_left = 166.0
 margin_top = 154.0
-margin_right = 146.0
+margin_right = 227.0
 margin_bottom = 174.0
-text = "Off"
-items = [ "Off", null, false, 0, null, "Replace", null, false, 1, null, "Add", null, false, 2, null, "AM", null, false, 3, null, "XM", null, false, 4, null ]
-selected = 0
 
 [node name="LabelFrom" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 176.0
-margin_right = 52.0
+margin_right = 158.0
 margin_bottom = 190.0
-text = "From"
+hint_tooltip = "WAVED_STD_FROM_TTIP"
+mouse_filter = 1
+text = "WAVED_STD_FROM"
 
 [node name="From" type="ProgressBar" parent="VBC/Params"]
-margin_left = 60.0
+margin_left = 166.0
 margin_top = 176.0
-margin_right = 146.0
+margin_right = 227.0
 margin_bottom = 190.0
 rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 3
@@ -243,14 +258,16 @@ huge_step = 1.0
 
 [node name="LabelPM" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 192.0
-margin_right = 52.0
+margin_right = 158.0
 margin_bottom = 206.0
-text = "PM"
+hint_tooltip = "WAVED_STD_PM_TTIP"
+mouse_filter = 1
+text = "WAVED_STD_PM"
 
 [node name="PM" type="ProgressBar" parent="VBC/Params"]
-margin_left = 60.0
+margin_left = 166.0
 margin_top = 192.0
-margin_right = 146.0
+margin_right = 227.0
 margin_bottom = 206.0
 rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
@@ -264,14 +281,16 @@ huge_step = 10.0
 
 [node name="LabelAM" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 208.0
-margin_right = 52.0
+margin_right = 158.0
 margin_bottom = 222.0
-text = "AM"
+hint_tooltip = "WAVED_STD_AM_TTIP"
+mouse_filter = 1
+text = "WAVED_STD_AM"
 
 [node name="AM" type="ProgressBar" parent="VBC/Params"]
-margin_left = 60.0
+margin_left = 166.0
 margin_top = 208.0
-margin_right = 146.0
+margin_right = 227.0
 margin_bottom = 222.0
 rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
@@ -285,17 +304,19 @@ huge_step = 10.0
 
 [node name="LabelXM" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 224.0
-margin_right = 52.0
+margin_right = 158.0
 margin_bottom = 238.0
-text = "XM"
+hint_tooltip = "WAVED_STD_XM_TTIP"
+mouse_filter = 1
+text = "WAVED_STD_XM"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="XM" type="ProgressBar" parent="VBC/Params"]
-margin_left = 60.0
+margin_left = 166.0
 margin_top = 224.0
-margin_right = 146.0
+margin_right = 227.0
 margin_bottom = 238.0
 rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3

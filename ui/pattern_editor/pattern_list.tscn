@@ -29,17 +29,17 @@ custom_constants/separation = 4
 [node name="Add" type="Button" parent="VBC/HBC"]
 margin_right = 124.0
 margin_bottom = 20.0
-hint_tooltip = "PTEDIT_ADD_TTIP"
+hint_tooltip = "PTEDIT_ADD_ORD_TTIP"
 focus_mode = 0
-text = "GEN_MICRO_ADD"
+text = "PTEDIT_ADD_ORD"
 
 [node name="Copy" type="Button" parent="VBC/HBC"]
 margin_left = 128.0
 margin_right = 251.0
 margin_bottom = 20.0
-hint_tooltip = "PTEDIT_DUP_TTIP"
+hint_tooltip = "PTEDIT_DUP_ORD_TTIP"
 focus_mode = 0
-text = "GEN_MICRO_DUP"
+text = "PTEDIT_DUP_ORD"
 
 [node name="S" type="ReferenceRect" parent="VBC/HBC"]
 margin_left = 255.0
@@ -51,7 +51,7 @@ rect_min_size = Vector2( 24, 0 )
 margin_left = 283.0
 margin_right = 295.0
 margin_bottom = 20.0
-hint_tooltip = "PTEDIT_UP_TTIP"
+hint_tooltip = "PTEDIT_UP_ORD_TTIP"
 focus_mode = 0
 shortcut_in_tooltip = false
 script = ExtResource( 2 )
@@ -61,7 +61,7 @@ icon_name = "arrow_up"
 margin_left = 299.0
 margin_right = 311.0
 margin_bottom = 20.0
-hint_tooltip = "PTEDIT_DOWN_TTIP"
+hint_tooltip = "PTEDIT_DOWN_ORD_TTIP"
 focus_mode = 0
 shortcut_in_tooltip = false
 script = ExtResource( 2 )
@@ -77,9 +77,9 @@ rect_min_size = Vector2( 24, 0 )
 margin_left = 343.0
 margin_right = 462.0
 margin_bottom = 20.0
-hint_tooltip = "PTEDIT_DEL_TTIP"
+hint_tooltip = "PTEDIT_DEL_ORD_TTIP"
 focus_mode = 0
-text = "GEN_MICRO_DEL"
+text = "PTEDIT_DEL_ORD"
 
 [node name="SC" type="ScrollContainer" parent="VBC"]
 margin_top = 22.0

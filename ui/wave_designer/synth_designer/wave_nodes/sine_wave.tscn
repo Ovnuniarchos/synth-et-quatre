@@ -14,16 +14,16 @@ script = ExtResource( 2 )
 [node name="VBC" type="VBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 141.0
+margin_right = 239.0
 margin_bottom = 399.0
 
 [node name="Title" parent="VBC" instance=ExtResource( 1 )]
-margin_right = 134.0
-title = "SINE"
+margin_right = 232.0
+title = "WAVED_SINE_TITLE"
 
 [node name="Params" type="GridContainer" parent="VBC"]
 margin_top = 24.0
-margin_right = 134.0
+margin_right = 232.0
 margin_bottom = 392.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -32,13 +32,15 @@ custom_constants/hseparation = 8
 columns = 2
 
 [node name="LabelMul" type="Label" parent="VBC/Params" groups=["Label"]]
-margin_right = 52.0
+margin_right = 158.0
 margin_bottom = 14.0
-text = "Freq"
+hint_tooltip = "WAVED_STD_FREQUENCY_TTIP"
+mouse_filter = 1
+text = "WAVED_STD_FREQUENCY"
 
 [node name="Mul" type="ProgressBar" parent="VBC/Params"]
-margin_left = 60.0
-margin_right = 134.0
+margin_left = 166.0
+margin_right = 232.0
 margin_bottom = 14.0
 rect_min_size = Vector2( 48, 14 )
 size_flags_horizontal = 3
@@ -50,14 +52,16 @@ _decimals = 2
 
 [node name="LabelOfs" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 16.0
-margin_right = 52.0
+margin_right = 158.0
 margin_bottom = 30.0
-text = "Offset"
+hint_tooltip = "WAVED_STD_OFFSET_TTIP"
+mouse_filter = 1
+text = "WAVED_STD_OFFSET"
 
 [node name="Ofs" type="ProgressBar" parent="VBC/Params"]
-margin_left = 60.0
+margin_left = 166.0
 margin_top = 16.0
-margin_right = 134.0
+margin_right = 232.0
 margin_bottom = 30.0
 rect_min_size = Vector2( 61, 14 )
 size_flags_horizontal = 3
@@ -69,17 +73,19 @@ _decimals = 2
 
 [node name="LabelVol" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 32.0
-margin_right = 52.0
+margin_right = 158.0
 margin_bottom = 46.0
-text = "Volume"
+hint_tooltip = "WAVED_STD_VOLUME_TTIP"
+mouse_filter = 1
+text = "WAVED_STD_VOLUME"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Vol" type="ProgressBar" parent="VBC/Params"]
-margin_left = 60.0
+margin_left = 166.0
 margin_top = 32.0
-margin_right = 134.0
+margin_right = 232.0
 margin_bottom = 46.0
 rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
@@ -93,14 +99,16 @@ huge_step = 10.0
 
 [node name="LabelPower" type="Label" parent="VBC/Params"]
 margin_top = 48.0
-margin_right = 52.0
+margin_right = 158.0
 margin_bottom = 62.0
-text = "Power"
+hint_tooltip = "WAVED_STD_POWER_TTIP"
+mouse_filter = 1
+text = "WAVED_STD_POWER"
 
 [node name="Power" type="ProgressBar" parent="VBC/Params"]
-margin_left = 60.0
+margin_left = 166.0
 margin_top = 48.0
-margin_right = 134.0
+margin_right = 232.0
 margin_bottom = 62.0
 rect_min_size = Vector2( 48, 14 )
 size_flags_horizontal = 3
@@ -112,14 +120,16 @@ _decimals = 2
 
 [node name="LabelDecay" type="Label" parent="VBC/Params"]
 margin_top = 64.0
-margin_right = 52.0
+margin_right = 158.0
 margin_bottom = 78.0
-text = "Decay"
+hint_tooltip = "WAVED_STD_DECAY_TTIP"
+mouse_filter = 1
+text = "WAVED_STD_DECAY"
 
 [node name="Decay" type="ProgressBar" parent="VBC/Params"]
-margin_left = 60.0
+margin_left = 166.0
 margin_top = 64.0
-margin_right = 134.0
+margin_right = 232.0
 margin_bottom = 78.0
 rect_min_size = Vector2( 48, 14 )
 size_flags_horizontal = 3
@@ -131,87 +141,88 @@ _decimals = 2
 
 [node name="LabelQ1" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 83.0
-margin_right = 52.0
+margin_right = 158.0
 margin_bottom = 97.0
-text = "Quad 1"
+hint_tooltip = "WAVED_WAV_QUAD1_TTIP"
+mouse_filter = 1
+text = "WAVED_WAV_QUAD1"
 
 [node name="Quad1" type="OptionButton" parent="VBC/Params"]
-margin_left = 60.0
+margin_left = 166.0
 margin_top = 80.0
-margin_right = 134.0
+margin_right = 232.0
 margin_bottom = 100.0
-text = "0 > 1"
-items = [ "0 > 1", null, false, 0, null, "1 > 0", null, false, 1, null, "0 > -1", null, false, 2, null, "-1 > 0", null, false, 3, null, "0", null, false, 4, null, "+1", null, false, 5, null, "-1", null, false, 6, null ]
-selected = 0
 
 [node name="LabelQ2" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 105.0
-margin_right = 52.0
+margin_right = 158.0
 margin_bottom = 119.0
-text = "Quad 2"
+hint_tooltip = "WAVED_WAV_QUAD2_TTIP"
+mouse_filter = 1
+text = "WAVED_WAV_QUAD2"
 
 [node name="Quad2" type="OptionButton" parent="VBC/Params"]
-margin_left = 60.0
+margin_left = 166.0
 margin_top = 102.0
-margin_right = 134.0
+margin_right = 232.0
 margin_bottom = 122.0
 text = "1 > 0"
-items = [ "0 > 1", null, false, 0, null, "1 > 0", null, false, 1, null, "0 > -1", null, false, 2, null, "-1 > 0", null, false, 3, null, "0", null, false, 4, null, "+1", null, false, 5, null, "-1", null, false, 6, null ]
-selected = 1
 
 [node name="LabelQ3" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 127.0
-margin_right = 52.0
+margin_right = 158.0
 margin_bottom = 141.0
-text = "Quad 3"
+hint_tooltip = "WAVED_WAV_QUAD3_TTIP"
+mouse_filter = 1
+text = "WAVED_WAV_QUAD3"
 
 [node name="Quad3" type="OptionButton" parent="VBC/Params"]
-margin_left = 60.0
+margin_left = 166.0
 margin_top = 124.0
-margin_right = 134.0
+margin_right = 232.0
 margin_bottom = 144.0
 text = "0 > -1"
-items = [ "0 > 1", null, false, 0, null, "1 > 0", null, false, 1, null, "0 > -1", null, false, 2, null, "-1 > 0", null, false, 3, null, "0", null, false, 4, null, "+1", null, false, 5, null, "-1", null, false, 6, null ]
-selected = 2
 
 [node name="LabelQ4" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 149.0
-margin_right = 52.0
+margin_right = 158.0
 margin_bottom = 163.0
-text = "Quad 4"
+hint_tooltip = "WAVED_WAV_QUAD4_TTIP"
+mouse_filter = 1
+text = "WAVED_WAV_QUAD4"
 
 [node name="Quad4" type="OptionButton" parent="VBC/Params"]
-margin_left = 60.0
+margin_left = 166.0
 margin_top = 146.0
-margin_right = 134.0
+margin_right = 232.0
 margin_bottom = 166.0
 text = "-1 > 0"
-items = [ "0 > 1", null, false, 0, null, "1 > 0", null, false, 1, null, "0 > -1", null, false, 2, null, "-1 > 0", null, false, 3, null, "0", null, false, 4, null, "+1", null, false, 5, null, "-1", null, false, 6, null ]
-selected = 3
 
 [node name="ReferenceRect" type="ReferenceRect" parent="VBC/Params"]
 margin_top = 168.0
-margin_right = 52.0
+margin_right = 158.0
 margin_bottom = 192.0
 rect_min_size = Vector2( 0, 24 )
 
 [node name="ReferenceRect2" type="ReferenceRect" parent="VBC/Params"]
-margin_left = 60.0
+margin_left = 166.0
 margin_top = 168.0
-margin_right = 134.0
+margin_right = 232.0
 margin_bottom = 192.0
 rect_min_size = Vector2( 0, 24 )
 
 [node name="LabelCycles" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 194.0
-margin_right = 52.0
+margin_right = 158.0
 margin_bottom = 208.0
-text = "Cycles"
+hint_tooltip = "WAVED_STD_CYCLES_TTIP"
+mouse_filter = 1
+text = "WAVED_STD_CYCLES"
 
 [node name="Cycles" type="ProgressBar" parent="VBC/Params"]
-margin_left = 60.0
+margin_left = 166.0
 margin_top = 194.0
-margin_right = 134.0
+margin_right = 232.0
 margin_bottom = 208.0
 rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 3
@@ -225,14 +236,16 @@ huge_step = 10.0
 
 [node name="LabelPosition" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 210.0
-margin_right = 52.0
+margin_right = 158.0
 margin_bottom = 224.0
-text = "Position"
+hint_tooltip = "WAVED_STD_POSITION_TTIP"
+mouse_filter = 1
+text = "WAVED_STD_POSITION"
 
 [node name="Position" type="ProgressBar" parent="VBC/Params"]
-margin_left = 60.0
+margin_left = 166.0
 margin_top = 210.0
-margin_right = 134.0
+margin_right = 232.0
 margin_bottom = 224.0
 rect_min_size = Vector2( 56, 14 )
 size_flags_horizontal = 3
@@ -244,29 +257,30 @@ _decimals = 2
 
 [node name="LabelOutput" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 229.0
-margin_right = 52.0
+margin_right = 158.0
 margin_bottom = 243.0
-text = "Output"
+hint_tooltip = "WAVED_STD_OUTPUT_TTIP"
+mouse_filter = 1
+text = "WAVED_STD_OUTPUT"
 
 [node name="Output" type="OptionButton" parent="VBC/Params"]
-margin_left = 60.0
+margin_left = 166.0
 margin_top = 226.0
-margin_right = 134.0
+margin_right = 232.0
 margin_bottom = 246.0
-text = "Off"
-items = [ "Off", null, false, 0, null, "Replace", null, false, 1, null, "Add", null, false, 2, null, "AM", null, false, 3, null, "XM", null, false, 4, null ]
-selected = 0
 
 [node name="LabelFrom" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 248.0
-margin_right = 52.0
+margin_right = 158.0
 margin_bottom = 262.0
-text = "From"
+hint_tooltip = "WAVED_STD_FROM_TTIP"
+mouse_filter = 1
+text = "WAVED_STD_FROM"
 
 [node name="From" type="ProgressBar" parent="VBC/Params"]
-margin_left = 60.0
+margin_left = 166.0
 margin_top = 248.0
-margin_right = 134.0
+margin_right = 232.0
 margin_bottom = 262.0
 rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 3
@@ -280,14 +294,16 @@ huge_step = 1.0
 
 [node name="LabelPM" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 264.0
-margin_right = 52.0
+margin_right = 158.0
 margin_bottom = 278.0
-text = "PM"
+hint_tooltip = "WAVED_STD_PM_TTIP"
+mouse_filter = 1
+text = "WAVED_STD_PM"
 
 [node name="PM" type="ProgressBar" parent="VBC/Params"]
-margin_left = 60.0
+margin_left = 166.0
 margin_top = 264.0
-margin_right = 134.0
+margin_right = 232.0
 margin_bottom = 278.0
 rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
@@ -301,14 +317,16 @@ huge_step = 10.0
 
 [node name="LabelAM" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 280.0
-margin_right = 52.0
+margin_right = 158.0
 margin_bottom = 294.0
-text = "AM"
+hint_tooltip = "WAVED_STD_AM_TTIP"
+mouse_filter = 1
+text = "WAVED_STD_AM"
 
 [node name="AM" type="ProgressBar" parent="VBC/Params"]
-margin_left = 60.0
+margin_left = 166.0
 margin_top = 280.0
-margin_right = 134.0
+margin_right = 232.0
 margin_bottom = 294.0
 rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
@@ -322,17 +340,19 @@ huge_step = 10.0
 
 [node name="LabelXM" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 296.0
-margin_right = 52.0
+margin_right = 158.0
 margin_bottom = 310.0
-text = "XM"
+hint_tooltip = "WAVED_STD_XM_TTIP"
+mouse_filter = 1
+text = "WAVED_STD_XM"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="XM" type="ProgressBar" parent="VBC/Params"]
-margin_left = 60.0
+margin_left = 166.0
 margin_top = 296.0
-margin_right = 134.0
+margin_right = 232.0
 margin_bottom = 310.0
 rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3

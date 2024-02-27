@@ -25,45 +25,45 @@ custom_constants/separation = 4
 
 [node name="LabelName" type="Label" parent="Info/HBC" groups=["Label"]]
 margin_top = 5.0
-margin_right = 38.0
+margin_right = 91.0
 margin_bottom = 19.0
-text = "Name"
+text = "WAVED_NAME"
 
 [node name="S2" type="ReferenceRect" parent="Info/HBC"]
-margin_left = 42.0
-margin_right = 50.0
+margin_left = 95.0
+margin_right = 103.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 8, 0 )
 
 [node name="Name" type="LineEdit" parent="Info/HBC"]
-margin_left = 54.0
-margin_right = 310.0
+margin_left = 107.0
+margin_right = 363.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 256, 0 )
 
 [node name="S" type="ReferenceRect" parent="Info/HBC"]
-margin_left = 314.0
-margin_right = 338.0
+margin_left = 367.0
+margin_right = 391.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 24, 0 )
 
 [node name="LabelSize" type="Label" parent="Info/HBC" groups=["Label"]]
-margin_left = 342.0
+margin_left = 395.0
 margin_top = 5.0
-margin_right = 368.0
+margin_right = 475.0
 margin_bottom = 19.0
-text = "Size"
+text = "WAVED_SIZE"
 
 [node name="S3" type="ReferenceRect" parent="Info/HBC"]
-margin_left = 372.0
-margin_right = 380.0
+margin_left = 479.0
+margin_right = 487.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 8, 0 )
 
 [node name="Size" type="ProgressBar" parent="Info/HBC"]
-margin_left = 384.0
+margin_left = 491.0
 margin_top = 5.0
-margin_right = 512.0
+margin_right = 619.0
 margin_bottom = 19.0
 rect_min_size = Vector2( 128, 14 )
 size_flags_vertical = 4
@@ -77,11 +77,11 @@ big_step = 1.0
 huge_step = 1.0
 
 [node name="LabelSizeSamples" type="Label" parent="Info/HBC"]
-margin_left = 516.0
+margin_left = 623.0
 margin_top = 5.0
-margin_right = 582.0
+margin_right = 631.0
 margin_bottom = 19.0
-text = "0 samples"
+text = "0"
 
 [node name="Designer" type="PanelContainer" parent="."]
 margin_top = 38.0
@@ -95,22 +95,28 @@ margin_left = 7.0
 margin_top = 7.0
 margin_right = 1017.0
 margin_bottom = 555.0
+mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Components" type="HBoxContainer" parent="Designer/SC"]
-margin_right = 20.0
+margin_right = 142.0
 margin_bottom = 548.0
+mouse_filter = 2
 size_flags_vertical = 3
 
-[node name="New" type="MenuButton" parent="Designer/SC/Components"]
-margin_top = 264.0
-margin_right = 20.0
-margin_bottom = 284.0
-size_flags_vertical = 4
-toggle_mode = false
-text = "+"
-flat = false
+[node name="New" type="Button" parent="Designer/SC/Components"]
+margin_right = 142.0
+margin_bottom = 548.0
+size_flags_vertical = 3
+text = "WAVED_NEW_SYNTH"
+
+[node name="NewMenu" type="PopupMenu" parent="Designer"]
+margin_right = 44.0
+margin_bottom = 20.0
+allow_search = true
 
 [connection signal="text_changed" from="Info/HBC/Name" to="." method="_on_Name_changed"]
 [connection signal="value_changed" from="Info/HBC/Size" to="." method="_on_Size_changed"]
+[connection signal="gui_input" from="Designer" to="." method="_on_Designer_gui_input"]
+[connection signal="pressed" from="Designer/SC/Components/New" to="." method="_on_New_pressed"]

@@ -1,25 +1,16 @@
 extends WaveController
 
-enum HALF{H0,H1,HZ,HH,HL}
-
-const OPS:Array=[
-	"-1 > 0",
-	"0 > 1",
-	"1 > 0",
-	"0 > -1",
-	"1",
-	"0",
-	"-1"
-]
 
 func _ready()->void:
 	from_node=$VBC/Params/From
 	title_node=$VBC/Title
-	for i in OPS.size():
-		$VBC/Params/Quarter1.add_item(OPS[i],i)
-		$VBC/Params/Quarter2.add_item(OPS[i],i)
-		$VBC/Params/Quarter3.add_item(OPS[i],i)
-		$VBC/Params/Quarter4.add_item(OPS[i],i)
+	for i in 7:
+		var s:String=tr("WAVED_TRI_Q%d"%[i])
+		$VBC/Params/Quarter1.add_item(s,i)
+		$VBC/Params/Quarter2.add_item(s,i)
+		$VBC/Params/Quarter3.add_item(s,i)
+		$VBC/Params/Quarter4.add_item(s,i)
+	output_node=$VBC/Params/Output
 	setup()
 
 func setup()->void:

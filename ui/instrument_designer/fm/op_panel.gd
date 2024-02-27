@@ -13,14 +13,14 @@ func _ready()->void:
 	ops.sort()
 	for i in 3:
 		var b:Button=get_node("Params/Switches/Copy%d"%[i+1])
-		b.text=tr("FMED_COPY_TO_OPX")%[ops[i]+1]
-		b.hint_tooltip=tr("FMED_COPY_TO_OPX_TTIP")%[ops[i]+1]
+		b.text=tr("FMED_COPY_TO_OPX").format({"i_op":ops[i]+1})
+		b.hint_tooltip=tr("FMED_COPY_TO_OPX_TTIP").format({"i_op":ops[i]+1})
 		b.connect("pressed",self,"_on_channel_copy",[operator,ops[i]])
 
 func set_op(v:int)->void:
 	operator=v&3
-	$Params/Switches/Switch.text=tr("FMED_OPX")%[operator+1]
-	$Params/Switches/Switch.hint_tooltip=tr("FMED_OPX_TTIP")%[operator+1]
+	$Params/Switches/Switch.text=tr("FMED_OPX").format({"i_op":operator+1})
+	$Params/Switches/Switch.hint_tooltip=tr("FMED_OPX_TTIP").format({"i_op":operator+1})
 	op_mask=1<<operator
 
 func _on_channel_copy(from:int,to:int)->void:

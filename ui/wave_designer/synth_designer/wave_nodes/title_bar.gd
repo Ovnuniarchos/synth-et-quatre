@@ -19,7 +19,7 @@ func set_index(i:int)->void:
 	set_title_string()
 
 func set_title_string()->void:
-	$Title.text="%d - %s"%[index,title]
+	$Title.text=tr(title).format({"i_index":index})
 
 func _on_Close_button_up():
 	emit_signal("delete_requested",owner)

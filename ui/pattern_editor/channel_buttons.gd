@@ -24,6 +24,6 @@ func _ready()->void:
 	add.disabled=nfx==SongLimits.MAX_FX_LENGTH
 	add.connect("pressed",connection_object,add_method,[channel_ix])
 	channel.colors=PoolColorArray([Color.white,t.get_color("solo","Tracker"),t.get_color("muted","Tracker")])
-	channel.text=tr("PTEDIT_CHANNEL_BUTTON")%[channel_ix+1]
+	channel.text=tr("PTEDIT_CHANNEL_BUTTON").format({"i_chan":channel_ix+1})
 	channel.status=mute_status
 	channel.connect("cycled",connection_object,mute_method,[channel_ix])

@@ -22,6 +22,7 @@ func _ready()->void:
 	ThemeHelper.apply_styles_to_group(theme,"LabelControl","Label")
 	ThemeHelper.apply_styles_to_group(theme,"BarEditorLabel","BarEditorLabel")
 	GLOBALS.connect("tab_changed",self,"_on_tab_changed")
+	#scan_for_translations(get_tree().root)
 	var parser:BarEditorLanguage=BarEditorLanguage.new()
 	var pr:LanguageResult=parser.parse("line 1, 2 , 3 ,4 step 10 line 1,2,3")
 	if pr.has_error():
@@ -29,6 +30,14 @@ func _ready()->void:
 	else:
 		print(pr.data)
 
+
+func scan_for_translations(p:Node)->void:
+	for n in p.get_children():
+		scan_for_translations(n)
+		if not(n is BaseButton or n is Label or n is Tabs):
+			continue
+		if n.name=="MoveL":
+			print(n.name," > ",n.hint_tooltip)
 
 
 

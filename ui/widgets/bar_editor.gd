@@ -12,6 +12,7 @@ const MAX_STEPS:int=256
 
 export (bool) var arpeggio:bool=false
 export (String) var title:String="Macro" setget set_title
+export (String) var title_tooltip:String="Macro" setget set_title_tooltip
 export (String) var parameter:String=""
 export (int) var min_value_rel:int=-12.0
 export (int) var max_value_rel:int=12.0
@@ -341,7 +342,14 @@ func set_title(t:String)->void:
 	title=t
 	if not is_ready:
 		yield(self,"ready")
-	get_node("%Title").text=t
+	get_node("%Title").text=tr(t)
+
+
+func set_title_tooltip(t:String)->void:
+	title_tooltip=t
+	if not is_ready:
+		yield(self,"ready")
+	get_node("%Title").hint_tooltip=tr(t)
 
 
 func can_switch_modes()->bool:

@@ -1,6 +1,6 @@
 extends OptionButton
 
-const DEFAULT_ITEMS=["Rectangle","Saw","Triangle","Noise"]
+const DEFAULT_ITEMS=["FMED_DEFW_RECTANGLE","FMED_DEFW_SAW","FMED_DEFW_TRIANGLE","FMED_DEFW_NOISE"]
 
 var delayed_ix:int=-1
 

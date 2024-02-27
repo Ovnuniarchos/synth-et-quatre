@@ -9,7 +9,7 @@ func _ready()->void:
 
 func set_lfo(ix:int)->void:
 	lfo=ix&3
-	$VBC/Title.text=tr("FMED_LFOX_TITLE")%[lfo+1]
+	$VBC/Title.text=tr("FMED_LFOX_TITLE").format({"i_lfo":lfo+1})
 
 func update_values()->void:
 	$VBC/HBC/DUCSlider.value=GLOBALS.song.lfo_duty_cycles[lfo]

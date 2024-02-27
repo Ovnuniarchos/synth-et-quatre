@@ -5,33 +5,34 @@ signal name_changed(wave_ix,text)
 
 enum WAVE_TYPES{SIN,TRI,SAW,RECT,NOISE,LPF,HPF,BPF,BRF,CLAMP,NORM,QUANT,POWER,DECAY}
 const WAVES=[
-	["Sine",WAVE_TYPES.SIN,preload("wave_nodes/sine_wave.tscn")],
-	["Triangle",WAVE_TYPES.TRI,preload("wave_nodes/triangle_wave.tscn")],
-	["Saw",WAVE_TYPES.SAW,preload("wave_nodes/saw_wave.tscn")],
-	["Rectangle",WAVE_TYPES.RECT,preload("wave_nodes/rect_wave.tscn")],
-	["Noise",WAVE_TYPES.NOISE,preload("wave_nodes/noise_wave.tscn")],
-	["Low Pass",WAVE_TYPES.LPF,preload("filter_nodes/lpf_filter.tscn")],
-	["High Pass",WAVE_TYPES.HPF,preload("filter_nodes/hpf_filter.tscn")],
-	["Band Pass",WAVE_TYPES.BPF,preload("filter_nodes/bpf_filter.tscn")],
-	["Band Reject",WAVE_TYPES.BRF,preload("filter_nodes/brf_filter.tscn")],
-	["Clamp",WAVE_TYPES.CLAMP,preload("filter_nodes/clamp_filter.tscn")],
-	["Normalize",WAVE_TYPES.NORM,preload("filter_nodes/normalize_filter.tscn")],
-	["Quantize",WAVE_TYPES.QUANT,preload("filter_nodes/quantize_filter.tscn")],
-	["Power",WAVE_TYPES.POWER,preload("filter_nodes/power_filter.tscn")],
-	["Decay",WAVE_TYPES.DECAY,preload("filter_nodes/decay_filter.tscn")],
+	["WAVED_SYN_SINE",WAVE_TYPES.SIN,preload("wave_nodes/sine_wave.tscn")],
+	["WAVED_SYN_TRIANGLE",WAVE_TYPES.TRI,preload("wave_nodes/triangle_wave.tscn")],
+	["WAVED_SYN_SAW",WAVE_TYPES.SAW,preload("wave_nodes/saw_wave.tscn")],
+	["WAVED_SYN_RECTANGLE",WAVE_TYPES.RECT,preload("wave_nodes/rect_wave.tscn")],
+	["WAVED_SYN_NOISE",WAVE_TYPES.NOISE,preload("wave_nodes/noise_wave.tscn")],
+	["WAVED_SYN_LOWPASS",WAVE_TYPES.LPF,preload("filter_nodes/lpf_filter.tscn")],
+	["WAVED_SYN_HIGHPASS",WAVE_TYPES.HPF,preload("filter_nodes/hpf_filter.tscn")],
+	["WAVED_SYN_BANDPASS",WAVE_TYPES.BPF,preload("filter_nodes/bpf_filter.tscn")],
+	["WAVED_SYN_BANDREJECT",WAVE_TYPES.BRF,preload("filter_nodes/brf_filter.tscn")],
+	["WAVED_SYN_CLAMP",WAVE_TYPES.CLAMP,preload("filter_nodes/clamp_filter.tscn")],
+	["WAVED_SYN_NORMALIZE",WAVE_TYPES.NORM,preload("filter_nodes/normalize_filter.tscn")],
+	["WAVED_SYN_QUANTIZE",WAVE_TYPES.QUANT,preload("filter_nodes/quantize_filter.tscn")],
+	["WAVED_SYN_POWER",WAVE_TYPES.POWER,preload("filter_nodes/power_filter.tscn")],
+	["WAVED_SYN_DECAY",WAVE_TYPES.DECAY,preload("filter_nodes/decay_filter.tscn")],
 ]
 
 var curr_wave_ix:int=-1
-var new_but:MenuButton
+var new_but:Button
+var new_menu:PopupMenu
 var components:HBoxContainer
 
 func _ready():
 	new_but=$Designer/SC/Components/New
 	components=$Designer/SC/Components
-	var pp:PopupMenu=new_but.get_popup()
+	new_menu=$Designer/NewMenu
 	for sn in WAVES:
-		pp.add_item(sn[0],sn[1])
-	pp.connect("id_pressed",self,"_on_New_id_pressed")
+		new_menu.add_item(sn[0],sn[1])
+	new_menu.connect("id_pressed",self,"_on_New_id_pressed")
 	update_ui()
 	ThemeHelper.apply_styles(THEME.get("theme"),"Button",new_but)
 
@@ -55,9 +56,9 @@ func _on_Size_changed(value:float)->void:
 
 func set_size_bytes(size:int)->void:
 	if size>0:
-		$Info/HBC/LabelSizeSamples.text="%d samples"%[size]
+		$Info/HBC/LabelSizeSamples.text=tr("WAVED_SIZE_SAMPLES").format({"i_samples":size})
 	else:
-		$Info/HBC/LabelSizeSamples.text="-- samples"
+		$Info/HBC/LabelSizeSamples.text=tr("WAVED_SIZE_NONE")
 
 func _on_wave_selected(wave:int)->void:
 	curr_wave_ix=wave
@@ -198,3 +199,24 @@ func calculate()->void:
 		SYNCER.send_wave(wave)
 	emit_signal("wave_calculated",curr_wave_ix)
 
+
+func _on_Designer_gui_input(ev:InputEvent)->void:
+	if curr_wave_ix==-1 or not (ev is InputEventMouseButton and ev.is_released()):
+		return
+	if ev.button_index==BUTTON_RIGHT:
+		accept_event()
+		new_menu.rect_position=ev.position+$Designer.rect_global_position
+		new_menu.popup()
+
+
+func _on_New_pressed()->void:
+	var ev:InputEventMouseButton=InputEventMouseButton.new()
+	var d:Control=$Designer
+	var n:Control=new_but
+	ev.position=(new_but.rect_size*0.5)
+	while n!=d:
+		ev.position+=n.rect_position
+		n=n.get_parent()
+	ev.button_index=BUTTON_RIGHT
+	ev.pressed=false
+	_on_Designer_gui_input(ev)

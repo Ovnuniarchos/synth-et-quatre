@@ -966,3 +966,105 @@ msgstr ""
 msgid "WAVED_TRI_Q6"
 msgstr ""
 
+msgid "WAVED_FILTER_CUTOFF"
+msgstr ""
+
+msgid "WAVED_FILTER_CUTOFF_TTIP"
+msgstr ""
+
+msgid "WAVED_FILTER_CUTOFF_LO"
+msgstr ""
+
+msgid "WAVED_FILTER_CUTOFF_LO_TTIP"
+msgstr ""
+
+msgid "WAVED_FILTER_CUTOFF_HI"
+msgstr ""
+
+msgid "WAVED_FILTER_CUTOFF_HI_TTIP"
+msgstr ""
+
+msgid "WAVED_FILTER_TAPS"
+msgstr ""
+
+msgid "WAVED_FILTER_TAPS_TTIP"
+msgstr ""
+
+msgid "WAVED_BPF_TITLE"
+msgstr ""
+
+msgid "WAVED_BRF_TITLE"
+msgstr ""
+
+msgid "WAVED_CLAMP_TITLE"
+msgstr ""
+
+msgid "WAVED_CLAMP_HI"
+msgstr ""
+
+msgid "WAVED_CLAMP_HI_TTIP"
+msgstr ""
+
+msgid "WAVED_CLAMP_LIMIT_HI"
+msgstr ""
+
+msgid "WAVED_CLAMP_LIMIT_HI_TTIP"
+msgstr ""
+
+msgid "WAVED_CLAMP_LO"
+msgstr ""
+
+msgid "WAVED_CLAMP_LO_TTIP"
+msgstr ""
+
+msgid "WAVED_CLAMP_LIMIT_LO"
+msgstr ""
+
+msgid "WAVED_CLAMP_LIMIT_LO_TTIP"
+msgstr ""
+
+msgid "WAVED_DECAY_TITLE"
+msgstr ""
+
+msgid "WAVED_DECAY_RATE"
+msgstr ""
+
+msgid "WAVED_DECAY_RATE_TTIP"
+msgstr ""
+
+msgid "WAVED_HPF_TITLE"
+msgstr ""
+
+msgid "WAVED_LPF_TITLE"
+msgstr ""
+
+msgid "WAVED_NORM_TITLE"
+msgstr ""
+
+msgid "WAVE_NORM_KEEP_0"
+msgstr ""
+
+msgid "WAVE_NORM_KEEP_0_TTIP"
+msgstr ""
+
+msgid "WAVE_NORM_KEEP_0_BUT"
+msgstr ""
+
+msgid "WAVED_POWER_TITLE"
+msgstr ""
+
+msgid "WAVED_POWER_VALUE"
+msgstr ""
+
+msgid "WAVED_POWER_VALUE_TTIP"
+msgstr ""
+
+msgid "WAVED_QUANT_TITLE"
+msgstr ""
+
+msgid "WAVED_QUANT_STEPS"
+msgstr ""
+
+msgid "WAVED_QUANT_STEPS_TTIP"
+msgstr ""
+

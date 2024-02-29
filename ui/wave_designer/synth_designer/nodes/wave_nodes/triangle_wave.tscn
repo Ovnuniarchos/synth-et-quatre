@@ -1,12 +1,13 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://ui/wave_designer/synth_designer/wave_nodes/saw_wave.gd" type="Script" id=1]
-[ext_resource path="res://ui/wave_designer/synth_designer/wave_nodes/title_bar.tscn" type="PackedScene" id=2]
+[ext_resource path="res://ui/wave_designer/synth_designer/nodes/wave_nodes/triangle_wave.gd" type="Script" id=1]
+[ext_resource path="res://ui/wave_designer/synth_designer/nodes/title_bar.tscn" type="PackedScene" id=2]
 [ext_resource path="res://ui/widgets/spin_bar.gd" type="Script" id=3]
+[ext_resource path="res://ui/wave_designer/synth_designer/nodes/output_menu.gd" type="Script" id=4]
 
-[node name="SawWave" type="PanelContainer"]
-margin_right = 152.0
-margin_bottom = 386.0
+[node name="TriangleWave" type="PanelContainer"]
+margin_right = 147.0
+margin_bottom = 374.0
 size_flags_horizontal = 9
 size_flags_vertical = 9
 script = ExtResource( 1 )
@@ -15,16 +16,16 @@ script = ExtResource( 1 )
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 234.0
-margin_bottom = 379.0
+margin_bottom = 367.0
 
 [node name="Title" parent="VBC" instance=ExtResource( 2 )]
 margin_right = 227.0
-title = "WAVED_SAW_TITLE"
+title = "WAVED_TRI_TITLE"
 
 [node name="Params" type="GridContainer" parent="VBC"]
 margin_top = 24.0
 margin_right = 227.0
-margin_bottom = 372.0
+margin_bottom = 360.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/vseparation = 2
@@ -267,6 +268,7 @@ margin_left = 166.0
 margin_top = 226.0
 margin_right = 227.0
 margin_bottom = 246.0
+script = ExtResource( 4 )
 
 [node name="LabelFrom" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 248.0

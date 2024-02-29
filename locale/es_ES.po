@@ -957,3 +957,105 @@ msgstr "0"
 msgid "WAVED_TRI_Q6"
 msgstr "-1"
 
+msgid "WAVED_FILTER_CUTOFF"
+msgstr "Corte"
+
+msgid "WAVED_FILTER_CUTOFF_TTIP"
+msgstr "Frecuencia de corte"
+
+msgid "WAVED_FILTER_CUTOFF_LO"
+msgstr "Corte bajo"
+
+msgid "WAVED_FILTER_CUTOFF_LO_TTIP"
+msgstr "Frecuencia de corte inferior"
+
+msgid "WAVED_FILTER_CUTOFF_HI"
+msgstr "Corte alto"
+
+msgid "WAVED_FILTER_CUTOFF_HI_TTIP"
+msgstr "Frecuencia de corte superior"
+
+msgid "WAVED_FILTER_TAPS"
+msgstr "Etapas"
+
+msgid "WAVED_FILTER_TAPS_TTIP"
+msgstr "<EMPTY>"
+
+msgid "WAVED_BPF_TITLE"
+msgstr "{i_index} - P. BANDA"
+
+msgid "WAVED_BRF_TITLE"
+msgstr "{i_index} - E. BANDA"
+
+msgid "WAVED_CLAMP_TITLE"
+msgstr "{i_index} - RECORTAR"
+
+msgid "WAVED_CLAMP_HI"
+msgstr "Rec. Sup."
+
+msgid "WAVED_CLAMP_HI_TTIP"
+msgstr "Activar recorte superior"
+
+msgid "WAVED_CLAMP_LIMIT_HI"
+msgstr "Lím. Sup."
+
+msgid "WAVED_CLAMP_LIMIT_HI_TTIP"
+msgstr "Límite superior de recorte"
+
+msgid "WAVED_CLAMP_LO"
+msgstr "Rec. Inf."
+
+msgid "WAVED_CLAMP_LO_TTIP"
+msgstr "Activar recorte inferior"
+
+msgid "WAVED_CLAMP_LIMIT_LO"
+msgstr "Lím. Inf."
+
+msgid "WAVED_CLAMP_LIMIT_LO_TTIP"
+msgstr "Límite inferior de recorte"
+
+msgid "WAVED_DECAY_TITLE"
+msgstr "{i_index} - DECAIM."
+
+msgid "WAVED_DECAY_RATE"
+msgstr "Decaim."
+
+msgid "WAVED_DECAY_RATE_TTIP"
+msgstr "Velocidad de decaimiento"
+
+msgid "WAVED_HPF_TITLE"
+msgstr "{i_index} - P. ALTO"
+
+msgid "WAVED_LPF_TITLE"
+msgstr "{i_index} - P. BAJO"
+
+msgid "WAVED_NORM_TITLE"
+msgstr "{i_index} - NORMALIZ."
+
+msgid "WAVE_NORM_KEEP_0"
+msgstr "Mant. 0"
+
+msgid "WAVE_NORM_KEEP_0_TTIP"
+msgstr "No centrar el resultado"
+
+msgid "WAVE_NORM_KEEP_0_BUT"
+msgstr "Mant."
+
+msgid "WAVED_POWER_TITLE"
+msgstr "{i_index} - EXPONENTE"
+
+msgid "WAVED_POWER_VALUE"
+msgstr "Exp."
+
+msgid "WAVED_POWER_VALUE_TTIP"
+msgstr "Exponente"
+
+msgid "WAVED_QUANT_TITLE"
+msgstr "{i_index} - CUANTIZ."
+
+msgid "WAVED_QUANT_STEPS"
+msgstr "Niveles"
+
+msgid "WAVED_QUANT_STEPS_TTIP"
+msgstr "<EMPTY>"
+

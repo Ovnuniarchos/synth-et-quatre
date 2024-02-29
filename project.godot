@@ -502,12 +502,12 @@ _global_script_classes=[ {
 "base": "HBoxContainer",
 "class": "WaveComponentTitleBar",
 "language": "GDScript",
-"path": "res://ui/wave_designer/synth_designer/wave_nodes/title_bar.gd"
+"path": "res://ui/wave_designer/synth_designer/nodes/title_bar.gd"
 }, {
 "base": "Node",
 "class": "WaveController",
 "language": "GDScript",
-"path": "res://ui/wave_designer/synth_designer/wave_nodes/wave_controller.gd"
+"path": "res://ui/wave_designer/synth_designer/nodes/wave_controller.gd"
 }, {
 "base": "File",
 "class": "WaveFile",
@@ -717,7 +717,7 @@ ui_down={
 
 [locale]
 
-test="en_GB"
+test="es_ES"
 empty_string_marker="<EMPTY>"
 translations=PoolStringArray( "res://locale/en_GB.po", "res://locale/es_ES.po" )
 

@@ -1,10 +1,12 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://ui/wave_designer/synth_designer/wave_nodes/title_bar.tscn" type="PackedScene" id=1]
-[ext_resource path="res://ui/wave_designer/synth_designer/filter_nodes/decay_filter.gd" type="Script" id=2]
+[ext_resource path="res://ui/wave_designer/synth_designer/nodes/title_bar.tscn" type="PackedScene" id=1]
+[ext_resource path="res://ui/wave_designer/synth_designer/nodes/filter_nodes/normalize_filter.gd" type="Script" id=2]
 [ext_resource path="res://ui/widgets/spin_bar.gd" type="Script" id=3]
+[ext_resource path="res://ui/widgets/accent_button.gd" type="Script" id=4]
+[ext_resource path="res://ui/wave_designer/synth_designer/nodes/output_menu.gd" type="Script" id=5]
 
-[node name="DecayFilter" type="PanelContainer"]
+[node name="NormalizeFilter" type="PanelContainer"]
 margin_right = 170.0
 margin_bottom = 394.0
 size_flags_horizontal = 9
@@ -14,16 +16,16 @@ script = ExtResource( 2 )
 [node name="VBC" type="VBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 163.0
+margin_right = 331.0
 margin_bottom = 387.0
 
 [node name="Title" parent="VBC" instance=ExtResource( 1 )]
-margin_right = 156.0
-title = "DECAY"
+margin_right = 324.0
+title = "WAVED_NORM_TITLE"
 
 [node name="Params" type="GridContainer" parent="VBC"]
 margin_top = 24.0
-margin_right = 156.0
+margin_right = 324.0
 margin_bottom = 380.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -31,38 +33,38 @@ custom_constants/vseparation = 2
 custom_constants/hseparation = 8
 columns = 2
 
-[node name="LabelDecay" type="Label" parent="VBC/Params" groups=["Label"]]
-margin_right = 49.0
-margin_bottom = 14.0
-text = "Decay"
+[node name="LabelKeepCenter" type="Label" parent="VBC/Params" groups=["Label"]]
+margin_top = 3.0
+margin_right = 138.0
+margin_bottom = 17.0
+hint_tooltip = "WAVE_NORM_KEEP_0_TTIP"
+mouse_filter = 1
+text = "WAVE_NORM_KEEP_0"
 
-[node name="Decay" type="ProgressBar" parent="VBC/Params"]
-margin_left = 57.0
-margin_right = 156.0
-margin_bottom = 14.0
-rect_min_size = Vector2( 48, 14 )
-size_flags_horizontal = 3
-size_flags_vertical = 4
-max_value = 1.0
-value = 1.0
-percent_visible = false
-script = ExtResource( 3 )
-_decimals = 2
+[node name="KeepCenter" type="Button" parent="VBC/Params"]
+margin_left = 146.0
+margin_right = 324.0
+margin_bottom = 20.0
+toggle_mode = true
+text = "WAVE_NORM_KEEP_0_BUT"
+script = ExtResource( 4 )
 
 [node name="LabelVol" type="Label" parent="VBC/Params" groups=["Label"]]
-margin_top = 16.0
-margin_right = 49.0
-margin_bottom = 30.0
-text = "Volume"
+margin_top = 22.0
+margin_right = 138.0
+margin_bottom = 36.0
+hint_tooltip = "WAVED_STD_VOLUME_TTIP"
+mouse_filter = 1
+text = "WAVED_STD_VOLUME"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Vol" type="ProgressBar" parent="VBC/Params"]
-margin_left = 57.0
-margin_top = 16.0
-margin_right = 156.0
-margin_bottom = 30.0
+margin_left = 146.0
+margin_top = 22.0
+margin_right = 324.0
+margin_bottom = 36.0
 rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -74,44 +76,46 @@ big_step = 5.0
 huge_step = 10.0
 
 [node name="ReferenceRect" type="ReferenceRect" parent="VBC/Params"]
-margin_top = 32.0
-margin_right = 49.0
-margin_bottom = 56.0
+margin_top = 38.0
+margin_right = 138.0
+margin_bottom = 62.0
 rect_min_size = Vector2( 0, 24 )
 
 [node name="ReferenceRect2" type="ReferenceRect" parent="VBC/Params"]
-margin_left = 57.0
-margin_top = 32.0
-margin_right = 156.0
-margin_bottom = 56.0
+margin_left = 146.0
+margin_top = 38.0
+margin_right = 324.0
+margin_bottom = 62.0
 rect_min_size = Vector2( 0, 24 )
 
 [node name="LabelOutput" type="Label" parent="VBC/Params" groups=["Label"]]
-margin_top = 61.0
-margin_right = 49.0
-margin_bottom = 75.0
-text = "Output"
+margin_top = 67.0
+margin_right = 138.0
+margin_bottom = 81.0
+hint_tooltip = "WAVED_STD_OUTPUT_TTIP"
+mouse_filter = 1
+text = "WAVED_STD_OUTPUT"
 
 [node name="Output" type="OptionButton" parent="VBC/Params"]
-margin_left = 57.0
-margin_top = 58.0
-margin_right = 156.0
-margin_bottom = 78.0
-text = "Off"
-items = [ "Off", null, false, 0, null, "Replace", null, false, 1, null, "Add", null, false, 2, null, "AM", null, false, 4, null, "XM", null, false, 5, null ]
-selected = 0
+margin_left = 146.0
+margin_top = 64.0
+margin_right = 324.0
+margin_bottom = 84.0
+script = ExtResource( 5 )
 
 [node name="LabelFrom" type="Label" parent="VBC/Params" groups=["Label"]]
-margin_top = 80.0
-margin_right = 49.0
-margin_bottom = 94.0
-text = "From"
+margin_top = 86.0
+margin_right = 138.0
+margin_bottom = 100.0
+hint_tooltip = "WAVED_STD_FROM_TTIP"
+mouse_filter = 1
+text = "WAVED_STD_FROM"
 
 [node name="From" type="ProgressBar" parent="VBC/Params"]
-margin_left = 57.0
-margin_top = 80.0
-margin_right = 156.0
-margin_bottom = 94.0
+margin_left = 146.0
+margin_top = 86.0
+margin_right = 324.0
+margin_bottom = 100.0
 rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -123,16 +127,18 @@ big_step = 1.0
 huge_step = 1.0
 
 [node name="LabelAM" type="Label" parent="VBC/Params" groups=["Label"]]
-margin_top = 96.0
-margin_right = 49.0
-margin_bottom = 110.0
-text = "AM"
+margin_top = 102.0
+margin_right = 138.0
+margin_bottom = 116.0
+hint_tooltip = "WAVED_STD_AM_TTIP"
+mouse_filter = 1
+text = "WAVED_STD_AM"
 
 [node name="AM" type="ProgressBar" parent="VBC/Params"]
-margin_left = 57.0
-margin_top = 96.0
-margin_right = 156.0
-margin_bottom = 110.0
+margin_left = 146.0
+margin_top = 102.0
+margin_right = 324.0
+margin_bottom = 116.0
 rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -144,19 +150,21 @@ big_step = 5.0
 huge_step = 10.0
 
 [node name="LabelXM" type="Label" parent="VBC/Params" groups=["Label"]]
-margin_top = 112.0
-margin_right = 49.0
-margin_bottom = 126.0
-text = "XM"
+margin_top = 118.0
+margin_right = 138.0
+margin_bottom = 132.0
+hint_tooltip = "WAVED_STD_XM_TTIP"
+mouse_filter = 1
+text = "WAVED_STD_XM"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="XM" type="ProgressBar" parent="VBC/Params"]
-margin_left = 57.0
-margin_top = 112.0
-margin_right = 156.0
-margin_bottom = 126.0
+margin_left = 146.0
+margin_top = 118.0
+margin_right = 324.0
+margin_bottom = 132.0
 rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -167,7 +175,7 @@ script = ExtResource( 3 )
 big_step = 5.0
 huge_step = 10.0
 
-[connection signal="value_changed" from="VBC/Params/Decay" to="." method="_on_Decay_value_changed"]
+[connection signal="toggled" from="VBC/Params/KeepCenter" to="." method="_on_KeepCenter_toggled"]
 [connection signal="value_changed" from="VBC/Params/Vol" to="." method="_on_Vol_value_changed"]
 [connection signal="item_selected" from="VBC/Params/Output" to="." method="_on_Output_item_selected"]
 [connection signal="value_changed" from="VBC/Params/From" to="." method="_on_From_value_changed"]

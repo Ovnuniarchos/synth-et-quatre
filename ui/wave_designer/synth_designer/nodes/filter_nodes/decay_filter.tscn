@@ -1,0 +1,186 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://ui/wave_designer/synth_designer/nodes/title_bar.tscn" type="PackedScene" id=1]
+[ext_resource path="res://ui/wave_designer/synth_designer/nodes/filter_nodes/decay_filter.gd" type="Script" id=2]
+[ext_resource path="res://ui/widgets/spin_bar.gd" type="Script" id=3]
+[ext_resource path="res://ui/wave_designer/synth_designer/nodes/output_menu.gd" type="Script" id=4]
+
+[node name="DecayFilter" type="PanelContainer"]
+margin_right = 170.0
+margin_bottom = 394.0
+size_flags_horizontal = 9
+size_flags_vertical = 9
+script = ExtResource( 2 )
+
+[node name="VBC" type="VBoxContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 201.0
+margin_bottom = 387.0
+
+[node name="Title" parent="VBC" instance=ExtResource( 1 )]
+margin_right = 194.0
+title = "WAVED_DECAY_TITLE"
+
+[node name="Params" type="GridContainer" parent="VBC"]
+margin_top = 24.0
+margin_right = 194.0
+margin_bottom = 380.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/vseparation = 2
+custom_constants/hseparation = 8
+columns = 2
+
+[node name="LabelDecay" type="Label" parent="VBC/Params" groups=["Label"]]
+margin_right = 138.0
+margin_bottom = 14.0
+hint_tooltip = "WAVED_DECAY_RATE_TTIP"
+mouse_filter = 1
+text = "WAVED_DECAY_RATE"
+
+[node name="Decay" type="ProgressBar" parent="VBC/Params"]
+margin_left = 146.0
+margin_right = 194.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 48, 14 )
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+value = 1.0
+percent_visible = false
+script = ExtResource( 3 )
+_decimals = 2
+
+[node name="LabelVol" type="Label" parent="VBC/Params" groups=["Label"]]
+margin_top = 16.0
+margin_right = 138.0
+margin_bottom = 30.0
+hint_tooltip = "WAVED_STD_VOLUME_TTIP"
+mouse_filter = 1
+text = "WAVED_STD_VOLUME"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Vol" type="ProgressBar" parent="VBC/Params"]
+margin_left = 146.0
+margin_top = 16.0
+margin_right = 194.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 41, 14 )
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = -100.0
+step = 1.0
+percent_visible = false
+script = ExtResource( 3 )
+big_step = 5.0
+huge_step = 10.0
+
+[node name="ReferenceRect" type="ReferenceRect" parent="VBC/Params"]
+margin_top = 32.0
+margin_right = 138.0
+margin_bottom = 56.0
+rect_min_size = Vector2( 0, 24 )
+
+[node name="ReferenceRect2" type="ReferenceRect" parent="VBC/Params"]
+margin_left = 146.0
+margin_top = 32.0
+margin_right = 194.0
+margin_bottom = 56.0
+rect_min_size = Vector2( 0, 24 )
+
+[node name="LabelOutput" type="Label" parent="VBC/Params" groups=["Label"]]
+margin_top = 61.0
+margin_right = 138.0
+margin_bottom = 75.0
+hint_tooltip = "WAVED_STD_OUTPUT_TTIP"
+mouse_filter = 1
+text = "WAVED_STD_OUTPUT"
+
+[node name="Output" type="OptionButton" parent="VBC/Params"]
+margin_left = 146.0
+margin_top = 58.0
+margin_right = 194.0
+margin_bottom = 78.0
+script = ExtResource( 4 )
+
+[node name="LabelFrom" type="Label" parent="VBC/Params" groups=["Label"]]
+margin_top = 80.0
+margin_right = 138.0
+margin_bottom = 94.0
+hint_tooltip = "WAVED_STD_FROM_TTIP"
+mouse_filter = 1
+text = "WAVED_STD_FROM"
+
+[node name="From" type="ProgressBar" parent="VBC/Params"]
+margin_left = 146.0
+margin_top = 80.0
+margin_right = 194.0
+margin_bottom = 94.0
+rect_min_size = Vector2( 36, 14 )
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = -1.0
+step = 1.0
+percent_visible = false
+script = ExtResource( 3 )
+big_step = 1.0
+huge_step = 1.0
+
+[node name="LabelAM" type="Label" parent="VBC/Params" groups=["Label"]]
+margin_top = 96.0
+margin_right = 138.0
+margin_bottom = 110.0
+hint_tooltip = "WAVED_STD_AM_TTIP"
+mouse_filter = 1
+text = "WAVED_STD_AM"
+
+[node name="AM" type="ProgressBar" parent="VBC/Params"]
+margin_left = 146.0
+margin_top = 96.0
+margin_right = 194.0
+margin_bottom = 110.0
+rect_min_size = Vector2( 41, 14 )
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = -100.0
+step = 1.0
+percent_visible = false
+script = ExtResource( 3 )
+big_step = 5.0
+huge_step = 10.0
+
+[node name="LabelXM" type="Label" parent="VBC/Params" groups=["Label"]]
+margin_top = 112.0
+margin_right = 138.0
+margin_bottom = 126.0
+hint_tooltip = "WAVED_STD_XM_TTIP"
+mouse_filter = 1
+text = "WAVED_STD_XM"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="XM" type="ProgressBar" parent="VBC/Params"]
+margin_left = 146.0
+margin_top = 112.0
+margin_right = 194.0
+margin_bottom = 126.0
+rect_min_size = Vector2( 41, 14 )
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = -100.0
+step = 1.0
+percent_visible = false
+script = ExtResource( 3 )
+big_step = 5.0
+huge_step = 10.0
+
+[connection signal="value_changed" from="VBC/Params/Decay" to="." method="_on_Decay_value_changed"]
+[connection signal="value_changed" from="VBC/Params/Vol" to="." method="_on_Vol_value_changed"]
+[connection signal="item_selected" from="VBC/Params/Output" to="." method="_on_Output_item_selected"]
+[connection signal="value_changed" from="VBC/Params/From" to="." method="_on_From_value_changed"]
+[connection signal="value_changed" from="VBC/Params/AM" to="." method="_on_AM_value_changed"]
+[connection signal="value_changed" from="VBC/Params/XM" to="." method="_on_XM_value_changed"]

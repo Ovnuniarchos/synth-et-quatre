@@ -957,3 +957,105 @@ msgstr "0"
 msgid "WAVED_TRI_Q6"
 msgstr "-1"
 
+msgid "WAVED_FILTER_CUTOFF"
+msgstr "Cutoff"
+
+msgid "WAVED_FILTER_CUTOFF_TTIP"
+msgstr "<EMPTY>"
+
+msgid "WAVED_FILTER_CUTOFF_LO"
+msgstr "Cutoff Low"
+
+msgid "WAVED_FILTER_CUTOFF_LO_TTIP"
+msgstr "<EMPTY>"
+
+msgid "WAVED_FILTER_CUTOFF_HI"
+msgstr "Cutoff High"
+
+msgid "WAVED_FILTER_CUTOFF_HI_TTIP"
+msgstr "<EMPTY>"
+
+msgid "WAVED_FILTER_TAPS"
+msgstr "Taps"
+
+msgid "WAVED_FILTER_TAPS_TTIP"
+msgstr "<EMPTY>"
+
+msgid "WAVED_BPF_TITLE"
+msgstr "{i_index} - BPF"
+
+msgid "WAVED_BRF_TITLE"
+msgstr "{i_index} - BRF"
+
+msgid "WAVED_CLAMP_TITLE"
+msgstr "{i_index} - CLAMP"
+
+msgid "WAVED_CLAMP_HI"
+msgstr "Clamp U"
+
+msgid "WAVED_CLAMP_HI_TTIP"
+msgstr "Upper clamp enable"
+
+msgid "WAVED_CLAMP_LIMIT_HI"
+msgstr "Limit U"
+
+msgid "WAVED_CLAMP_LIMIT_HI_TTIP"
+msgstr "Upper clamp limit"
+
+msgid "WAVED_CLAMP_LO"
+msgstr "Clamp L"
+
+msgid "WAVED_CLAMP_LO_TTIP"
+msgstr "Lower clamp enable"
+
+msgid "WAVED_CLAMP_LIMIT_LO"
+msgstr "Limit L"
+
+msgid "WAVED_CLAMP_LIMIT_LO_TTIP"
+msgstr "Lower clamp limit"
+
+msgid "WAVED_DECAY_TITLE"
+msgstr "{i_index} - DECAY"
+
+msgid "WAVED_DECAY_RATE"
+msgstr "Decay"
+
+msgid "WAVED_DECAY_RATE_TTIP"
+msgstr "Decay rate"
+
+msgid "WAVED_HPF_TITLE"
+msgstr "{i_index} - HPF"
+
+msgid "WAVED_LPF_TITLE"
+msgstr "{i_index} - LPF"
+
+msgid "WAVED_NORM_TITLE"
+msgstr "{i_index} - NORMALIZE"
+
+msgid "WAVE_NORM_KEEP_0"
+msgstr "Keep 0"
+
+msgid "WAVE_NORM_KEEP_0_TTIP"
+msgstr "Don't center result"
+
+msgid "WAVE_NORM_KEEP_0_BUT"
+msgstr "Keep"
+
+msgid "WAVED_POWER_TITLE"
+msgstr "{i_index} - POWER"
+
+msgid "WAVED_POWER_VALUE"
+msgstr "Power"
+
+msgid "WAVED_POWER_VALUE_TTIP"
+msgstr "Power exponent"
+
+msgid "WAVED_QUANT_TITLE"
+msgstr "{i_index} - QUANTIZE"
+
+msgid "WAVED_QUANT_STEPS"
+msgstr "Steps"
+
+msgid "WAVED_QUANT_STEPS_TTIP"
+msgstr "<EMPTY>"
+

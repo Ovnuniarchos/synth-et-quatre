@@ -3,7 +3,6 @@ extends WaveController
 func _ready()->void:
 	from_node=$VBC/Params/From
 	title_node=$VBC/Title
-	output_node=$VBC/Params/Output
 	setup()
 
 func setup()->void:

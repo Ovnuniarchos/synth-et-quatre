@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://ui/wave_designer/synth_designer/filter_nodes/bpf_filter.gd" type="Script" id=1]
-[ext_resource path="res://ui/wave_designer/synth_designer/wave_nodes/title_bar.tscn" type="PackedScene" id=2]
+[ext_resource path="res://ui/wave_designer/synth_designer/nodes/filter_nodes/bpf_filter.gd" type="Script" id=1]
+[ext_resource path="res://ui/wave_designer/synth_designer/nodes/title_bar.tscn" type="PackedScene" id=2]
 [ext_resource path="res://ui/widgets/spin_bar.gd" type="Script" id=3]
+[ext_resource path="res://ui/wave_designer/synth_designer/nodes/output_menu.gd" type="Script" id=4]
 
 [node name="BPFFilter" type="PanelContainer"]
 margin_right = 170.0
@@ -10,23 +11,20 @@ margin_bottom = 394.0
 size_flags_horizontal = 9
 size_flags_vertical = 9
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="VBC" type="VBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 163.0
+margin_right = 245.0
 margin_bottom = 387.0
 
 [node name="Title" parent="VBC" instance=ExtResource( 2 )]
-margin_right = 156.0
-title = "BPF"
+margin_right = 238.0
+title = "WAVED_BPF_TITLE"
 
 [node name="Params" type="GridContainer" parent="VBC"]
 margin_top = 24.0
-margin_right = 156.0
+margin_right = 238.0
 margin_bottom = 380.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -34,16 +32,16 @@ custom_constants/vseparation = 2
 custom_constants/hseparation = 8
 columns = 2
 
-[node name="LabelCutoffLo" type="Label" parent="VBC/Params" groups=[
-"Label",
-]]
-margin_right = 56.0
+[node name="LabelCutoffLo" type="Label" parent="VBC/Params" groups=["Label"]]
+margin_right = 174.0
 margin_bottom = 14.0
-text = "Cutoff Lo"
+hint_tooltip = "WAVED_FILTER_CUTOFF_LO_TTIP"
+mouse_filter = 1
+text = "WAVED_FILTER_CUTOFF_LO"
 
 [node name="CutoffLo" type="ProgressBar" parent="VBC/Params"]
-margin_left = 64.0
-margin_right = 156.0
+margin_left = 182.0
+margin_right = 238.0
 margin_bottom = 14.0
 rect_min_size = Vector2( 56, 14 )
 size_flags_horizontal = 3
@@ -58,18 +56,18 @@ big_step = 5.0
 huge_step = 10.0
 _decimals = 1
 
-[node name="LabelCutoffHi" type="Label" parent="VBC/Params" groups=[
-"Label",
-]]
+[node name="LabelCutoffHi" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 16.0
-margin_right = 56.0
+margin_right = 174.0
 margin_bottom = 30.0
-text = "Cutoff Hi"
+hint_tooltip = "WAVED_FILTER_CUTOFF_HI_TTIP"
+mouse_filter = 1
+text = "WAVED_FILTER_CUTOFF_HI"
 
 [node name="CutoffHi" type="ProgressBar" parent="VBC/Params"]
-margin_left = 64.0
+margin_left = 182.0
 margin_top = 16.0
-margin_right = 156.0
+margin_right = 238.0
 margin_bottom = 30.0
 rect_min_size = Vector2( 56, 14 )
 size_flags_horizontal = 3
@@ -84,18 +82,18 @@ big_step = 5.0
 huge_step = 10.0
 _decimals = 1
 
-[node name="LabelTaps" type="Label" parent="VBC/Params" groups=[
-"Label",
-]]
+[node name="LabelTaps" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 32.0
-margin_right = 56.0
+margin_right = 174.0
 margin_bottom = 46.0
-text = "Taps"
+hint_tooltip = "WAVED_FILTER_TAPS_TTIP"
+mouse_filter = 1
+text = "WAVED_FILTER_TAPS"
 
 [node name="Taps" type="ProgressBar" parent="VBC/Params"]
-margin_left = 64.0
+margin_left = 182.0
 margin_top = 32.0
-margin_right = 156.0
+margin_right = 238.0
 margin_bottom = 46.0
 rect_min_size = Vector2( 37, 14 )
 size_flags_horizontal = 3
@@ -109,21 +107,21 @@ script = ExtResource( 3 )
 big_step = 4.0
 huge_step = 8.0
 
-[node name="LabelVol" type="Label" parent="VBC/Params" groups=[
-"Label",
-]]
+[node name="LabelVol" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 48.0
-margin_right = 56.0
+margin_right = 174.0
 margin_bottom = 62.0
-text = "Volume"
+hint_tooltip = "WAVED_STD_VOLUME_TTIP"
+mouse_filter = 1
+text = "WAVED_STD_VOLUME"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Vol" type="ProgressBar" parent="VBC/Params"]
-margin_left = 64.0
+margin_left = 182.0
 margin_top = 48.0
-margin_right = 156.0
+margin_right = 238.0
 margin_bottom = 62.0
 rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
@@ -137,46 +135,44 @@ huge_step = 10.0
 
 [node name="ReferenceRect" type="ReferenceRect" parent="VBC/Params"]
 margin_top = 64.0
-margin_right = 56.0
+margin_right = 174.0
 margin_bottom = 88.0
 rect_min_size = Vector2( 0, 24 )
 
 [node name="ReferenceRect2" type="ReferenceRect" parent="VBC/Params"]
-margin_left = 64.0
+margin_left = 182.0
 margin_top = 64.0
-margin_right = 156.0
+margin_right = 238.0
 margin_bottom = 88.0
 rect_min_size = Vector2( 0, 24 )
 
-[node name="LabelOutput" type="Label" parent="VBC/Params" groups=[
-"Label",
-]]
+[node name="LabelOutput" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 93.0
-margin_right = 56.0
+margin_right = 174.0
 margin_bottom = 107.0
-text = "Output"
+hint_tooltip = "WAVED_STD_OUTPUT_TTIP"
+mouse_filter = 1
+text = "WAVED_STD_OUTPUT"
 
 [node name="Output" type="OptionButton" parent="VBC/Params"]
-margin_left = 64.0
+margin_left = 182.0
 margin_top = 90.0
-margin_right = 156.0
+margin_right = 238.0
 margin_bottom = 110.0
-text = "Off"
-items = [ "Off", null, false, 0, null, "Replace", null, false, 1, null, "Add", null, false, 2, null, "AM", null, false, 4, null, "XM", null, false, 5, null ]
-selected = 0
+script = ExtResource( 4 )
 
-[node name="LabelFrom" type="Label" parent="VBC/Params" groups=[
-"Label",
-]]
+[node name="LabelFrom" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 112.0
-margin_right = 56.0
+margin_right = 174.0
 margin_bottom = 126.0
-text = "From"
+hint_tooltip = "WAVED_STD_FROM_TTIP"
+mouse_filter = 1
+text = "WAVED_STD_FROM"
 
 [node name="From" type="ProgressBar" parent="VBC/Params"]
-margin_left = 64.0
+margin_left = 182.0
 margin_top = 112.0
-margin_right = 156.0
+margin_right = 238.0
 margin_bottom = 126.0
 rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 3
@@ -188,18 +184,18 @@ script = ExtResource( 3 )
 big_step = 1.0
 huge_step = 1.0
 
-[node name="LabelAM" type="Label" parent="VBC/Params" groups=[
-"Label",
-]]
+[node name="LabelAM" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 128.0
-margin_right = 56.0
+margin_right = 174.0
 margin_bottom = 142.0
-text = "AM"
+hint_tooltip = "WAVED_STD_AM_TTIP"
+mouse_filter = 1
+text = "WAVED_STD_AM"
 
 [node name="AM" type="ProgressBar" parent="VBC/Params"]
-margin_left = 64.0
+margin_left = 182.0
 margin_top = 128.0
-margin_right = 156.0
+margin_right = 238.0
 margin_bottom = 142.0
 rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
@@ -211,21 +207,21 @@ script = ExtResource( 3 )
 big_step = 5.0
 huge_step = 10.0
 
-[node name="LabelXM" type="Label" parent="VBC/Params" groups=[
-"Label",
-]]
+[node name="LabelXM" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 144.0
-margin_right = 56.0
+margin_right = 174.0
 margin_bottom = 158.0
-text = "XM"
+hint_tooltip = "WAVED_STD_XM_TTIP"
+mouse_filter = 1
+text = "WAVED_STD_XM"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="XM" type="ProgressBar" parent="VBC/Params"]
-margin_left = 64.0
+margin_left = 182.0
 margin_top = 144.0
-margin_right = 156.0
+margin_right = 238.0
 margin_bottom = 158.0
 rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://ui/wave_designer/synth_designer/wave_nodes/title_bar.gd" type="Script" id=1]
+[ext_resource path="res://ui/wave_designer/synth_designer/nodes/title_bar.gd" type="Script" id=1]
 [ext_resource path="res://ui/widgets/icon_button.gd" type="Script" id=2]
 
 [node name="Title" type="HBoxContainer"]

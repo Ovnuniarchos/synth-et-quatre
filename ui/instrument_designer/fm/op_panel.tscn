@@ -398,7 +398,7 @@ text = "FMED_MULTIPLIER"
 
 [node name="MULSlider" type="ProgressBar" parent="Params/Frequency"]
 margin_left = 120.0
-margin_right = 507.0
+margin_right = 506.0
 margin_bottom = 14.0
 rect_min_size = Vector2( 28, 14 )
 size_flags_horizontal = 7
@@ -411,14 +411,14 @@ big_step = 2.0
 huge_step = 4.0
 
 [node name="Sep" type="ReferenceRect" parent="Params/Frequency"]
-margin_left = 509.0
-margin_right = 525.0
+margin_left = 508.0
+margin_right = 524.0
 margin_bottom = 14.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
 [node name="DIVLabel" type="Label" parent="Params/Frequency" groups=["Label"]]
-margin_left = 527.0
+margin_left = 526.0
 margin_right = 622.0
 margin_bottom = 14.0
 hint_tooltip = "FMED_DIVISOR_TTIP"

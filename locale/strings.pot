@@ -318,6 +318,21 @@ msgstr ""
 msgid "FMED_REPEAT_MODE_TTIP"
 msgstr ""
 
+msgid "FMED_RPT_OFF"
+msgstr ""
+
+msgid "FMED_RPT_ATTACK"
+msgstr ""
+
+msgid "FMED_RPT_DECAY"
+msgstr ""
+
+msgid "FMED_RPT_SUSTAIN"
+msgstr ""
+
+msgid "FMED_RPT_RELEASE"
+msgstr ""
+
 msgid "FMED_AM_INTENSITY"
 msgstr ""
 
@@ -1066,5 +1081,191 @@ msgid "WAVED_QUANT_STEPS"
 msgstr ""
 
 msgid "WAVED_QUANT_STEPS_TTIP"
+msgstr ""
+
+msgid "WAVED_SAM_LOAD_SAMPLE"
+msgstr ""
+
+msgid "WAVED_SAM_RECORDED_FREQ"
+msgstr ""
+
+msgid "WAVED_SAM_RECORDED_FREQ_TTIP"
+msgstr ""
+
+msgid "WAVED_SAM_SAMPLE_FREQ"
+msgstr ""
+
+msgid "WAVED_SAM_SAMPLE_FREQ_TTIP"
+msgstr ""
+
+msgid "WAVED_SAM_LOOP_START"
+msgstr ""
+
+msgid "WAVED_SAM_LOOP_START_TTIP"
+msgstr ""
+
+msgid "WAVED_SAM_LOOP_END"
+msgstr ""
+
+msgid "WAVED_SAM_LOOP_END_TTIP"
+msgstr ""
+
+
+# Arp editor
+
+msgid "ARPED_TIME_DIV"
+msgstr ""
+
+msgid "ARPED_TIME_DIV_TTIP"
+msgstr ""
+
+msgid "ARPED_ADD"
+msgstr ""
+
+msgid "ARPED_ADD_TTIP"
+msgstr ""
+
+msgid "ARPED_DUP"
+msgstr ""
+
+msgid "ARPED_DUP_TTIP"
+msgstr ""
+
+msgid "ARPED_DEL"
+msgstr ""
+
+msgid "ARPED_DEL_TTIP"
+msgstr ""
+
+msgid "ARPED_SAVE"
+msgstr ""
+
+msgid "ARPED_SAVE_DLG"
+msgstr ""
+
+msgid "ARPED_LOAD"
+msgstr ""
+
+msgid "ARPED_LOAD_DLG"
+msgstr ""
+
+msgid "ARPED_NAME"
+msgstr ""
+
+msgid "ARPED_MACRO"
+msgstr ""
+
+msgid "ARPED_MACRO_TTIP"
+msgstr ""
+
+
+# Options
+
+msgid "OPTS_AUDIO_TITLE"
+msgstr ""
+
+msgid "OPTS_AUDIO_SAMPLE_RATE"
+msgstr ""
+
+msgid "OPTS_AUDIO_SAMPLE_RATE_TTIP"
+msgstr ""
+
+msgid "OPTS_AUDIO_BUFFER_LENGTH"
+msgstr ""
+
+msgid "OPTS_AUDIO_BUFFER_LENGTH_TTIP"
+msgstr ""
+
+msgid "OPTS_WAVEXP_TITLE"
+msgstr ""
+
+msgid "OPTS_WAVEXP_SAMPLE_RATE"
+msgstr ""
+
+msgid "OPTS_WAVEXP_SAMPLE_RATE_TTIP"
+msgstr ""
+
+msgid "OPTS_WAVEXP_FPSAMPLES"
+msgstr ""
+
+msgid "OPTS_WAVEXP_FPSAMPLES_TTIP"
+msgstr ""
+
+msgid "OPTS_WAVEXP_SAVE_MUTED"
+msgstr ""
+
+msgid "OPTS_WAVEXP_SAVE_MUTED_TTIP"
+msgstr ""
+
+msgid "OPTS_MIDIIN_TITLE"
+msgstr ""
+
+msgid "OPTS_MIDIIN_NN_VELOCITY"
+msgstr ""
+
+msgid "OPTS_MIDIIN_NN_VELOCITY_TTIP"
+msgstr ""
+
+msgid "OPTS_MIDIIN_NN_SE4VELOCITY"
+msgstr ""
+
+msgid "OPTS_MIDIIN_NN_VELOCITY"
+msgstr ""
+
+msgid "OPTS_MIDIIN_NN_VOLUME"
+msgstr ""
+
+msgid "OPTS_MIDIIN_NN_SE4_VEL"
+msgstr ""
+
+msgid "OPTS_MIDIIN_NN_SE4_VOL"
+msgstr ""
+
+msgid "OPTS_MIDIIN_NN_VEL_VOL"
+msgstr ""
+
+msgid "OPTS_MIDIIN_NN_SE4_VEL_VOL"
+msgstr ""
+
+msgid "OPTS_MIDIIN_REC_NOTEOFF"
+msgstr ""
+
+msgid "OPTS_MIDIIN_REC_NOTEOFF_TTIP"
+msgstr ""
+
+msgid "OPTS_MIDIIN_REC_VOLUME"
+msgstr ""
+
+msgid "OPTS_MIDIIN_REC_VOLUME_TTIP"
+msgstr ""
+
+msgid "OPTS_MIDIIN_REC_AFTERTOUCH"
+msgstr ""
+
+msgid "OPTS_MIDIIN_REC_AFTERTOUCH_TTIP"
+msgstr ""
+
+msgid "OPTS_EDITOR_TITLE"
+msgstr ""
+
+msgid "OPTS_EDITOR_HORIZONTAL_FXED"
+msgstr ""
+
+msgid "OPTS_EDITOR_HORIZONTAL_FXED_TTIP"
+msgstr ""
+
+msgid "OPTS_EDITOR_CURSOR_IN_VALUE"
+msgstr ""
+
+msgid "OPTS_EDITOR_CURSOR_IN_VALUE_TTIP"
+msgstr ""
+
+msgid "OPTS_EDITOR_OSC_RATE"
+msgstr ""
+
+msgid "OPTS_EDITOR_OSC_RATE_TTIP"
+msgstr ""
+
+msgid "OPTS_THEME_TITLE"
 msgstr ""
 

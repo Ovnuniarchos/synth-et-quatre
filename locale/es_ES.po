@@ -313,6 +313,21 @@ msgstr "RPT"
 msgid "FMED_REPEAT_MODE_TTIP"
 msgstr "Modo de repetición"
 
+msgid "FMED_RPT_OFF"
+msgstr "Sin"
+
+msgid "FMED_RPT_ATTACK"
+msgstr "Ataque"
+
+msgid "FMED_RPT_DECAY"
+msgstr "Decaimiento"
+
+msgid "FMED_RPT_SUSTAIN"
+msgstr "Sostenimiento"
+
+msgid "FMED_RPT_RELEASE"
+msgstr "Extinción"
+
 msgid "FMED_AM_INTENSITY"
 msgstr "AMI"
 
@@ -422,13 +437,13 @@ msgid "FMED_MG_TONE"
 msgstr "Tono"
 
 msgid "FMED_MG_TONE_TTIP"
-msgstr "Tono (centés.)"
+msgstr "Tono (centésimas de semitono)"
 
 msgid "FMED_MG_VOLUME"
 msgstr "Volumen"
 
 msgid "FMED_MG_VOLUME_TTIP"
-msgstr " "
+msgstr "<EMPTY>"
 
 msgid "FMED_MG_PAN"
 msgstr "Pan"
@@ -464,7 +479,7 @@ msgid "FMED_MO_TONE"
 msgstr "Tono"
 
 msgid "FMED_MO_TONE_TTIP"
-msgstr "Tono (centés.)"
+msgstr "Tono (centésimas de semitono)"
 
 msgid "FMED_MO_KEY_ON"
 msgstr "Nota"
@@ -1058,4 +1073,186 @@ msgstr "Niveles"
 
 msgid "WAVED_QUANT_STEPS_TTIP"
 msgstr "<EMPTY>"
+
+msgid "WAVED_SAM_LOAD_SAMPLE"
+msgstr "Cargar"
+
+msgid "WAVED_SAM_RECORDED_FREQ"
+msgstr "Frec. grabación"
+
+msgid "WAVED_SAM_RECORDED_FREQ_TTIP"
+msgstr "Frecuencia a la que fue grabado este sonido"
+
+msgid "WAVED_SAM_SAMPLE_FREQ"
+msgstr "Frec. nota"
+
+msgid "WAVED_SAM_SAMPLE_FREQ_TTIP"
+msgstr "Frecuencia representada por este sonido"
+
+msgid "WAVED_SAM_LOOP_START"
+msgstr "Inicio bucle"
+
+msgid "WAVED_SAM_LOOP_START_TTIP"
+msgstr "<EMPTY>"
+
+msgid "WAVED_SAM_LOOP_END"
+msgstr "Fin bucle"
+
+msgid "WAVED_SAM_LOOP_END_TTIP"
+msgstr "<EMPTY>"
+
+# Arp editor
+msgid "ARPED_TIME_DIV"
+msgstr "T/P"
+
+msgid "ARPED_TIME_DIV_TTIP"
+msgstr "Ticks/paso"
+
+msgid "ARPED_ADD"
+msgstr " + "
+
+msgid "ARPED_ADD_TTIP"
+msgstr "Añadir arpegio"
+
+msgid "ARPED_DUP"
+msgstr " D "
+
+msgid "ARPED_DUP_TTIP"
+msgstr "Duplicar arpegio"
+
+msgid "ARPED_DEL"
+msgstr " - "
+
+msgid "ARPED_DEL_TTIP"
+msgstr "Eliminar arpegio"
+
+msgid "ARPED_SAVE"
+msgstr "Guardar"
+
+msgid "ARPED_SAVE_DLG"
+msgstr "Guardar arpegio"
+
+msgid "ARPED_LOAD"
+msgstr "Cargar"
+
+msgid "ARPED_LOAD_DLG"
+msgstr "Cargar arpegio"
+
+msgid "ARPED_NAME"
+msgstr "Nombre"
+
+msgid "ARPED_MACRO"
+msgstr "Tono"
+
+msgid "ARPED_MACRO_TTIP"
+msgstr "Tono (centésimas de semitono)"
+
+# Options
+msgid "OPTS_AUDIO_TITLE"
+msgstr "Audio"
+
+msgid "OPTS_AUDIO_SAMPLE_RATE"
+msgstr "Tasa de muestreo (Hz)"
+
+msgid "OPTS_AUDIO_SAMPLE_RATE_TTIP"
+msgstr "<EMPTY>"
+
+msgid "OPTS_AUDIO_BUFFER_LENGTH"
+msgstr "Tamño del buffer (s)"
+
+msgid "OPTS_AUDIO_BUFFER_LENGTH_TTIP"
+msgstr "<EMPTY>"
+
+msgid "OPTS_WAVEXP_TITLE"
+msgstr "Exportar .WAV"
+
+msgid "OPTS_WAVEXP_SAMPLE_RATE"
+msgstr "Tasa de muestreo (Hz)"
+
+msgid "OPTS_WAVEXP_SAMPLE_RATE_TTIP"
+msgstr "<EMPTY>"
+
+msgid "OPTS_WAVEXP_FPSAMPLES"
+msgstr "Muestras en punto flotante"
+
+msgid "OPTS_WAVEXP_FPSAMPLES_TTIP"
+msgstr "<EMPTY>"
+
+msgid "OPTS_WAVEXP_SAVE_MUTED"
+msgstr "Guardar canales silenciados"
+
+msgid "OPTS_WAVEXP_SAVE_MUTED_TTIP"
+msgstr "<EMPTY>"
+
+msgid "OPTS_MIDIIN_TITLE"
+msgstr "Entrada MIDI"
+
+msgid "OPTS_MIDIIN_NN_VELOCITY"
+msgstr "Intensidad nueva nota"
+
+msgid "OPTS_MIDIIN_NN_VELOCITY_TTIP"
+msgstr "<EMPTY>"
+
+msgid "OPTS_MIDIIN_NN_SE4VELOCITY"
+msgstr "Intensidad Se4"
+
+msgid "OPTS_MIDIIN_NN_VELOCITY"
+msgstr "Intensidad MIDI"
+
+msgid "OPTS_MIDIIN_NN_VOLUME"
+msgstr "Volumen MIDI"
+
+msgid "OPTS_MIDIIN_NN_SE4_VEL"
+msgstr "Se4 × Int. MIDI"
+
+msgid "OPTS_MIDIIN_NN_SE4_VOL"
+msgstr "Se4 × Vol. MIDI"
+
+msgid "OPTS_MIDIIN_NN_VEL_VOL"
+msgstr "Int. MIDI × Vol. MIDI"
+
+msgid "OPTS_MIDIIN_NN_SE4_VEL_VOL"
+msgstr "Se4 × Vel. × Vol."
+
+msgid "OPTS_MIDIIN_REC_NOTEOFF"
+msgstr "Grabar MIDI NoteOff"
+
+msgid "OPTS_MIDIIN_REC_NOTEOFF_TTIP"
+msgstr "<EMPTY>"
+
+msgid "OPTS_MIDIIN_REC_VOLUME"
+msgstr "Grabar volumen MIDI"
+
+msgid "OPTS_MIDIIN_REC_VOLUME_TTIP"
+msgstr "<EMPTY>"
+
+msgid "OPTS_MIDIIN_REC_AFTERTOUCH"
+msgstr "Grabar MIDI Aftertouch"
+
+msgid "OPTS_MIDIIN_REC_AFTERTOUCH_TTIP"
+msgstr "<EMPTY>"
+
+msgid "OPTS_EDITOR_TITLE"
+msgstr "Editor"
+
+msgid "OPTS_EDITOR_HORIZONTAL_FXED"
+msgstr "Edición FX horizontal"
+
+msgid "OPTS_EDITOR_HORIZONTAL_FXED_TTIP"
+msgstr "<EMPTY>"
+
+msgid "OPTS_EDITOR_CURSOR_IN_VALUE"
+msgstr "Mantener cursor en el valor"
+
+msgid "OPTS_EDITOR_CURSOR_IN_VALUE_TTIP"
+msgstr "Mantener el cursor en la columna de valor FX"
+
+msgid "OPTS_EDITOR_OSC_RATE"
+msgstr "Tasa de refresco del osciloscopio"
+
+msgid "OPTS_EDITOR_OSC_RATE_TTIP"
+msgstr "<EMPTY>"
+
+msgid "OPTS_THEME_TITLE"
+msgstr "Tema"
 

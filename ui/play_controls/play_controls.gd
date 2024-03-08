@@ -48,3 +48,7 @@ func _on_PlayTrack_toggled(pressed:bool)->void:
 
 func _on_PolyMode_cycled(status:int)->void:
 	IM_SYNTH.poly=status
+
+
+func _on_PC_sort_children()->void:
+	rect_size.x=0

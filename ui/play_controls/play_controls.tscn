@@ -5,16 +5,19 @@
 [ext_resource path="res://ui/widgets/cycle_button.gd" type="Script" id=3]
 
 [node name="PC" type="PanelContainer"]
+margin_right = 594.0
+margin_bottom = 34.0
+size_flags_horizontal = 8
+size_flags_vertical = 8
 script = ExtResource( 2 )
 
 [node name="HBC" type="HBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 424.0
+margin_right = 587.0
 margin_bottom = 27.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_constants/separation = 16
+size_flags_horizontal = 9
+size_flags_vertical = 9
 
 [node name="Play" type="Button" parent="HBC"]
 margin_right = 115.0
@@ -30,8 +33,8 @@ pressed_icon = "stop"
 unpressed_icon = "play"
 
 [node name="PlayTrack" type="Button" parent="HBC"]
-margin_left = 131.0
-margin_right = 246.0
+margin_left = 119.0
+margin_right = 234.0
 margin_bottom = 20.0
 focus_mode = 0
 toggle_mode = true
@@ -43,20 +46,22 @@ __meta__ = {
 pressed_icon = "stop"
 unpressed_icon = "play_track"
 
-[node name="ReferenceRect" type="ReferenceRect" parent="HBC"]
-margin_left = 262.0
-margin_right = 262.0
+[node name="VSeparator" type="VSeparator" parent="HBC"]
+margin_left = 238.0
+margin_right = 242.0
 margin_bottom = 20.0
+mouse_default_cursor_shape = 6
 
 [node name="PolyMode" type="Button" parent="HBC"]
-margin_left = 278.0
-margin_right = 417.0
+margin_left = 246.0
+margin_right = 385.0
 margin_bottom = 20.0
 text = "PLAY_MODE_MONO"
 script = ExtResource( 3 )
 colors = PoolColorArray( 1, 1, 1, 1, 1, 0.501961, 0.501961, 1, 1, 1.25, 1.5, 1 )
 texts = PoolStringArray( "PLAY_MODE_MONO", "PLAY_MODE_SEMI", "PLAY_MODE_POLY" )
 
+[connection signal="sort_children" from="." to="." method="_on_PC_sort_children"]
 [connection signal="toggled" from="HBC/Play" to="." method="_on_Play_toggled"]
 [connection signal="toggled" from="HBC/PlayTrack" to="." method="_on_PlayTrack_toggled"]
 [connection signal="cycled" from="HBC/PolyMode" to="." method="_on_PolyMode_cycled"]

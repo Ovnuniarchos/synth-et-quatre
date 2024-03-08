@@ -313,6 +313,21 @@ msgstr "RPT"
 msgid "FMED_REPEAT_MODE_TTIP"
 msgstr "Repeat mode"
 
+msgid "FMED_RPT_OFF"
+msgstr "Off"
+
+msgid "FMED_RPT_ATTACK"
+msgstr "Attack"
+
+msgid "FMED_RPT_DECAY"
+msgstr "Decay"
+
+msgid "FMED_RPT_SUSTAIN"
+msgstr "Sustain"
+
+msgid "FMED_RPT_RELEASE"
+msgstr "Release"
+
 msgid "FMED_AM_INTENSITY"
 msgstr "AMI"
 
@@ -422,7 +437,7 @@ msgid "FMED_MG_TONE"
 msgstr "Tone"
 
 msgid "FMED_MG_TONE_TTIP"
-msgstr "Tone (cents)"
+msgstr "Tone (hundredths of a semitone)"
 
 msgid "FMED_MG_VOLUME"
 msgstr "Volume"
@@ -464,7 +479,7 @@ msgid "FMED_MO_TONE"
 msgstr "Tone"
 
 msgid "FMED_MO_TONE_TTIP"
-msgstr "Tone (cents)"
+msgstr "Tone (hundredths of a semitone)"
 
 msgid "FMED_MO_KEY_ON"
 msgstr "Key on"
@@ -1058,4 +1073,186 @@ msgstr "Steps"
 
 msgid "WAVED_QUANT_STEPS_TTIP"
 msgstr "<EMPTY>"
+
+msgid "WAVED_SAM_LOAD_SAMPLE"
+msgstr "Load"
+
+msgid "WAVED_SAM_RECORDED_FREQ"
+msgstr "Recorded freq."
+
+msgid "WAVED_SAM_RECORDED_FREQ_TTIP"
+msgstr "Frequency this sample was recorded at"
+
+msgid "WAVED_SAM_SAMPLE_FREQ"
+msgstr "Note freq."
+
+msgid "WAVED_SAM_SAMPLE_FREQ_TTIP"
+msgstr "Frequency this sample represents"
+
+msgid "WAVED_SAM_LOOP_START"
+msgstr "Loop start"
+
+msgid "WAVED_SAM_LOOP_START_TTIP"
+msgstr "<EMPTY>"
+
+msgid "WAVED_SAM_LOOP_END"
+msgstr "Loop end"
+
+msgid "WAVED_SAM_LOOP_END_TTIP"
+msgstr "<EMPTY>"
+
+# Arp editor
+msgid "ARPED_TIME_DIV"
+msgstr "T/S"
+
+msgid "ARPED_TIME_DIV_TTIP"
+msgstr "Ticks/step"
+
+msgid "ARPED_ADD"
+msgstr " + "
+
+msgid "ARPED_ADD_TTIP"
+msgstr "Add arpeggio"
+
+msgid "ARPED_DUP"
+msgstr " D "
+
+msgid "ARPED_DUP_TTIP"
+msgstr "Duplicate arpeggio"
+
+msgid "ARPED_DEL"
+msgstr " - "
+
+msgid "ARPED_DEL_TTIP"
+msgstr "Delete arpeggio"
+
+msgid "ARPED_SAVE"
+msgstr "Save"
+
+msgid "ARPED_SAVE_DLG"
+msgstr "Save arpeggio"
+
+msgid "ARPED_LOAD"
+msgstr "Load"
+
+msgid "ARPED_LOAD_DLG"
+msgstr "Load arpeggio"
+
+msgid "ARPED_NAME"
+msgstr "Name"
+
+msgid "ARPED_MACRO"
+msgstr "Tone"
+
+msgid "ARPED_MACRO_TTIP"
+msgstr "Tone (hundredths of a semitone)"
+
+# Options
+msgid "OPTS_AUDIO_TITLE"
+msgstr "Audio"
+
+msgid "OPTS_AUDIO_SAMPLE_RATE"
+msgstr "Sample rate (Hz)"
+
+msgid "OPTS_AUDIO_SAMPLE_RATE_TTIP"
+msgstr "<EMPTY>"
+
+msgid "OPTS_AUDIO_BUFFER_LENGTH"
+msgstr "Buffer length (s)"
+
+msgid "OPTS_AUDIO_BUFFER_LENGTH_TTIP"
+msgstr "<EMPTY>"
+
+msgid "OPTS_WAVEXP_TITLE"
+msgstr "Export to .WAV"
+
+msgid "OPTS_WAVEXP_SAMPLE_RATE"
+msgstr "Sample rate (Hz)"
+
+msgid "OPTS_WAVEXP_SAMPLE_RATE_TTIP"
+msgstr "<EMPTY>"
+
+msgid "OPTS_WAVEXP_FPSAMPLES"
+msgstr "Floating point samples"
+
+msgid "OPTS_WAVEXP_FPSAMPLES_TTIP"
+msgstr "<EMPTY>"
+
+msgid "OPTS_WAVEXP_SAVE_MUTED"
+msgstr "Save muted channels"
+
+msgid "OPTS_WAVEXP_SAVE_MUTED_TTIP"
+msgstr "<EMPTY>"
+
+msgid "OPTS_MIDIIN_TITLE"
+msgstr "MIDI input"
+
+msgid "OPTS_MIDIIN_NN_VELOCITY"
+msgstr "New note velocity"
+
+msgid "OPTS_MIDIIN_NN_VELOCITY_TTIP"
+msgstr "<EMPTY>"
+
+msgid "OPTS_MIDIIN_NN_SE4VELOCITY"
+msgstr "Se4 velocity"
+
+msgid "OPTS_MIDIIN_NN_VELOCITY"
+msgstr "MIDI velocity"
+
+msgid "OPTS_MIDIIN_NN_VOLUME"
+msgstr "MIDI volume"
+
+msgid "OPTS_MIDIIN_NN_SE4_VEL"
+msgstr "Se4 × MIDI vel."
+
+msgid "OPTS_MIDIIN_NN_SE4_VOL"
+msgstr "Se4 × MIDI vol."
+
+msgid "OPTS_MIDIIN_NN_VEL_VOL"
+msgstr "MIDI vel. × MIDI vol."
+
+msgid "OPTS_MIDIIN_NN_SE4_VEL_VOL"
+msgstr "Se4 × vel. × vol."
+
+msgid "OPTS_MIDIIN_REC_NOTEOFF"
+msgstr "Record MIDI NoteOff"
+
+msgid "OPTS_MIDIIN_REC_NOTEOFF_TTIP"
+msgstr "<EMPTY>"
+
+msgid "OPTS_MIDIIN_REC_VOLUME"
+msgstr "Record MIDI volume"
+
+msgid "OPTS_MIDIIN_REC_VOLUME_TTIP"
+msgstr "<EMPTY>"
+
+msgid "OPTS_MIDIIN_REC_AFTERTOUCH"
+msgstr "Record MIDI Aftertouch"
+
+msgid "OPTS_MIDIIN_REC_AFTERTOUCH_TTIP"
+msgstr "<EMPTY>"
+
+msgid "OPTS_EDITOR_TITLE"
+msgstr "Editor"
+
+msgid "OPTS_EDITOR_HORIZONTAL_FXED"
+msgstr "Horizontal FX edit"
+
+msgid "OPTS_EDITOR_HORIZONTAL_FXED_TTIP"
+msgstr "<EMPTY>"
+
+msgid "OPTS_EDITOR_CURSOR_IN_VALUE"
+msgstr "Keep cursor in value column"
+
+msgid "OPTS_EDITOR_CURSOR_IN_VALUE_TTIP"
+msgstr "<EMPTY>"
+
+msgid "OPTS_EDITOR_OSC_RATE"
+msgstr "Oscilloscope update rate"
+
+msgid "OPTS_EDITOR_OSC_RATE_TTIP"
+msgstr "<EMPTY>"
+
+msgid "OPTS_THEME_TITLE"
+msgstr "Theme"
 

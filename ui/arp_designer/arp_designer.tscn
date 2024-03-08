@@ -16,41 +16,41 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="ArpList" parent="VS" instance=ExtResource( 2 )]
-margin_right = 150.0
+margin_right = 297.0
 margin_bottom = 600.0
 
 [node name="VBC" type="VBoxContainer" parent="VS"]
-margin_left = 162.0
+margin_left = 309.0
 margin_right = 1024.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
 
 [node name="Name" type="PanelContainer" parent="VS/VBC"]
-margin_right = 862.0
+margin_right = 715.0
 margin_bottom = 38.0
 
 [node name="HBC" type="HBoxContainer" parent="VS/VBC/Name"]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 855.0
+margin_right = 708.0
 margin_bottom = 31.0
 
 [node name="NameLabel" type="Label" parent="VS/VBC/Name/HBC"]
 margin_top = 5.0
-margin_right = 38.0
+margin_right = 86.0
 margin_bottom = 19.0
-text = "Name"
+text = "ARPED_NAME"
 
 [node name="S" type="ReferenceRect" parent="VS/VBC/Name/HBC"]
-margin_left = 42.0
-margin_right = 50.0
+margin_left = 90.0
+margin_right = 98.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 8, 0 )
 
 [node name="Name" type="LineEdit" parent="VS/VBC/Name/HBC"]
 unique_name_in_owner = true
-margin_left = 54.0
-margin_right = 848.0
+margin_left = 102.0
+margin_right = 701.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 
@@ -58,9 +58,18 @@ size_flags_horizontal = 3
 unique_name_in_owner = true
 anchor_right = 0.0
 margin_top = 42.0
-margin_right = 862.0
+margin_right = 715.0
 margin_bottom = 70.0
 theme = SubResource( 1 )
+arpeggio = true
+title = "ARPED_MACRO"
+title_tooltip = "ARPED_MACRO_TTIP"
+min_value_rel = -14300
+max_value_rel = 14300
+min_value_abs = -200
+max_value_abs = 14300
+big_step = 10
+huge_step = 100
 
 [connection signal="arp_selected" from="VS/ArpList" to="." method="_on_arp_selected"]
 [connection signal="text_changed" from="VS/VBC/Name/HBC/Name" to="." method="_on_Name_text_changed"]

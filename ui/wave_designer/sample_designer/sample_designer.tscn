@@ -24,34 +24,34 @@ custom_constants/separation = 4
 
 [node name="LabelName" type="Label" parent="Info/HBC" groups=["Label"]]
 margin_top = 5.0
-margin_right = 38.0
+margin_right = 91.0
 margin_bottom = 19.0
-text = "Name"
+text = "WAVED_NAME"
 
 [node name="S2" type="ReferenceRect" parent="Info/HBC"]
-margin_left = 42.0
-margin_right = 50.0
+margin_left = 95.0
+margin_right = 103.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 8, 0 )
 
 [node name="Name" type="LineEdit" parent="Info/HBC"]
-margin_left = 54.0
-margin_right = 246.0
+margin_left = 107.0
+margin_right = 299.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 192, 0 )
 
 [node name="S" type="ReferenceRect" parent="Info/HBC"]
-margin_left = 250.0
-margin_right = 274.0
+margin_left = 303.0
+margin_right = 327.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 24, 0 )
 
 [node name="LabelSizeSamples" type="Label" parent="Info/HBC"]
-margin_left = 278.0
+margin_left = 331.0
 margin_top = 5.0
-margin_right = 344.0
+margin_right = 464.0
 margin_bottom = 19.0
-text = "0 samples"
+text = "WAVE_SIZE_SAMPLES"
 
 [node name="Designer" type="PanelContainer" parent="."]
 margin_top = 42.0
@@ -74,10 +74,10 @@ margin_bottom = 120.0
 size_flags_horizontal = 3
 
 [node name="Load" type="Button" parent="Designer/SC/VBC"]
-margin_right = 42.0
+margin_right = 192.0
 margin_bottom = 20.0
 size_flags_horizontal = 0
-text = "Load"
+text = "WAVED_SAM_LOAD_SAMPLE"
 
 [node name="S" type="ReferenceRect" parent="Designer/SC/VBC"]
 margin_top = 24.0
@@ -94,12 +94,14 @@ size_flags_vertical = 11
 columns = 2
 
 [node name="LabelRecFreq" type="Label" parent="Designer/SC/VBC/GC" groups=["Label"]]
-margin_right = 124.0
+margin_right = 195.0
 margin_bottom = 14.0
-text = "Recorder frequency"
+hint_tooltip = "WAVED_SAM_RECORDED_FREQ_TTIP"
+mouse_filter = 1
+text = "WAVED_SAM_RECORDED_FREQ"
 
 [node name="RecFreq" type="ProgressBar" parent="Designer/SC/VBC/GC"]
-margin_left = 128.0
+margin_left = 199.0
 margin_right = 1010.0
 margin_bottom = 14.0
 rect_min_size = Vector2( 60, 14 )
@@ -114,12 +116,14 @@ script = ExtResource( 3 )
 
 [node name="LabelSamFreq" type="Label" parent="Designer/SC/VBC/GC" groups=["Label"]]
 margin_top = 18.0
-margin_right = 124.0
+margin_right = 195.0
 margin_bottom = 32.0
-text = "Sample frequency"
+hint_tooltip = "WAVED_SAM_SAMPLE_FREQ_TTIP"
+mouse_filter = 1
+text = "WAVED_SAM_SAMPLE_FREQ"
 
 [node name="SamFreq" type="ProgressBar" parent="Designer/SC/VBC/GC"]
-margin_left = 128.0
+margin_left = 199.0
 margin_top = 18.0
 margin_right = 1010.0
 margin_bottom = 32.0
@@ -135,12 +139,14 @@ script = ExtResource( 3 )
 
 [node name="LabelStart" type="Label" parent="Designer/SC/VBC/GC" groups=["Label"]]
 margin_top = 36.0
-margin_right = 124.0
+margin_right = 195.0
 margin_bottom = 50.0
-text = "Loop start"
+hint_tooltip = "WAVED_SAM_LOOP_START_TTIP"
+mouse_filter = 1
+text = "WAVED_SAM_LOOP_START"
 
 [node name="Start" type="ProgressBar" parent="Designer/SC/VBC/GC"]
-margin_left = 128.0
+margin_left = 199.0
 margin_top = 36.0
 margin_right = 1010.0
 margin_bottom = 50.0
@@ -155,12 +161,14 @@ script = ExtResource( 3 )
 
 [node name="LabelEnd" type="Label" parent="Designer/SC/VBC/GC" groups=["Label"]]
 margin_top = 54.0
-margin_right = 124.0
+margin_right = 195.0
 margin_bottom = 68.0
-text = "Loop end"
+hint_tooltip = "WAVED_SAM_LOOP_END_TTIP"
+mouse_filter = 1
+text = "WAVED_SAM_LOOP_END"
 
 [node name="End" type="ProgressBar" parent="Designer/SC/VBC/GC"]
-margin_left = 128.0
+margin_left = 199.0
 margin_top = 54.0
 margin_right = 1010.0
 margin_bottom = 68.0

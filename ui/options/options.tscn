@@ -29,14 +29,14 @@ columns = 2
 margin_right = 500.0
 margin_bottom = 14.0
 size_flags_horizontal = 3
-text = "Audio"
+text = "OPTS_AUDIO_TITLE"
 
 [node name="ExportTitle" type="Label" parent="SC/GC" groups=["Title"]]
 margin_left = 516.0
 margin_right = 1016.0
 margin_bottom = 14.0
 size_flags_horizontal = 3
-text = "Export to WAV"
+text = "OPTS_WAVEXP_TITLE"
 
 [node name="Audio" type="MarginContainer" parent="SC/GC"]
 margin_top = 18.0
@@ -52,12 +52,14 @@ size_flags_horizontal = 3
 columns = 2
 
 [node name="LabelSampleRate" type="Label" parent="SC/GC/Audio/Audio" groups=["Label"]]
-margin_right = 82.0
+margin_right = 195.0
 margin_bottom = 14.0
-text = "Sample rate"
+hint_tooltip = "OPTS_AUDIO_SAMPLE_RATE_TTIP"
+mouse_filter = 1
+text = "OPTS_AUDIO_SAMPLE_RATE"
 
 [node name="SampleRate" type="ProgressBar" parent="SC/GC/Audio/Audio"]
-margin_left = 86.0
+margin_left = 199.0
 margin_right = 484.0
 margin_bottom = 14.0
 rect_min_size = Vector2( 60, 14 )
@@ -75,12 +77,14 @@ config_key = "AUDIO_SAMPLERATE"
 
 [node name="LabelBufferLength" type="Label" parent="SC/GC/Audio/Audio" groups=["Label"]]
 margin_top = 18.0
-margin_right = 82.0
+margin_right = 195.0
 margin_bottom = 32.0
-text = "Buffer length"
+hint_tooltip = "OPTS_AUDIO_BUFFER_LENGTH_TTIP"
+mouse_filter = 1
+text = "OPTS_AUDIO_BUFFER_LENGTH"
 
 [node name="BufferLength" type="ProgressBar" parent="SC/GC/Audio/Audio"]
-margin_left = 86.0
+margin_left = 199.0
 margin_top = 18.0
 margin_right = 484.0
 margin_bottom = 32.0
@@ -117,12 +121,14 @@ margin_bottom = 14.0
 size_flags_horizontal = 3
 
 [node name="LabelSampleRate" type="Label" parent="SC/GC/Export/Export/HBoxContainer" groups=["Label"]]
-margin_right = 82.0
+margin_right = 185.0
 margin_bottom = 14.0
-text = "Buffer length"
+hint_tooltip = "OPTS_WAVEXP_SAMPLE_RATE_TTIP"
+mouse_filter = 1
+text = "OPTS_WAVEXP_SAMPLE_RATE"
 
 [node name="SampleRate" type="ProgressBar" parent="SC/GC/Export/Export/HBoxContainer"]
-margin_left = 86.0
+margin_left = 189.0
 margin_right = 484.0
 margin_bottom = 14.0
 rect_min_size = Vector2( 60, 14 )
@@ -142,8 +148,9 @@ config_key = "RECORD_SAMPLERATE"
 margin_top = 18.0
 margin_right = 484.0
 margin_bottom = 38.0
+hint_tooltip = "OPTS_WAVEXP_FPSAMPLES_TTIP"
 toggle_mode = true
-text = "Floating point samples"
+text = "OPTS_WAVEXP_FPSAMPLES"
 script = ExtResource( 3 )
 config_key = "RECORD_FPSAMPLES"
 
@@ -151,8 +158,9 @@ config_key = "RECORD_FPSAMPLES"
 margin_top = 42.0
 margin_right = 484.0
 margin_bottom = 62.0
+hint_tooltip = "OPTS_WAVEXP_SAVE_MUTED_TTIP"
 toggle_mode = true
-text = "Save muted channels"
+text = "OPTS_WAVEXP_SAVE_MUTED"
 script = ExtResource( 3 )
 config_key = "RECORD_SAVEMUTED"
 
@@ -173,7 +181,7 @@ margin_top = 104.0
 margin_right = 500.0
 margin_bottom = 118.0
 size_flags_horizontal = 3
-text = "MIDI input"
+text = "OPTS_MIDIIN_TITLE"
 
 [node name="EditorTitle" type="Label" parent="SC/GC" groups=["Title"]]
 margin_left = 516.0
@@ -181,7 +189,7 @@ margin_top = 104.0
 margin_right = 1016.0
 margin_bottom = 118.0
 size_flags_horizontal = 3
-text = "Editor"
+text = "OPTS_EDITOR_TITLE"
 
 [node name="MIDI" type="MarginContainer" parent="SC/GC"]
 margin_top = 122.0
@@ -201,17 +209,19 @@ size_flags_horizontal = 3
 
 [node name="NNV" type="Label" parent="SC/GC/MIDI/MIDI/HBoxContainer" groups=["Label"]]
 margin_top = 3.0
-margin_right = 115.0
+margin_right = 178.0
 margin_bottom = 17.0
-text = "New note velocity"
+hint_tooltip = "OPTS_MIDIIN_NN_VELOCITY_TTIP"
+mouse_filter = 1
+text = "OPTS_MIDIIN_NN_VELOCITY"
 
 [node name="NNVel" type="OptionButton" parent="SC/GC/MIDI/MIDI/HBoxContainer"]
-margin_left = 119.0
+margin_left = 182.0
 margin_right = 484.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
-text = "Se4 velocity"
-items = [ "Se4 velocity", null, false, 0, null, "MIDI velocity", null, false, 1, null, "MIDI volume", null, false, 2, null, "Se4 × MIDI velocity", null, false, 3, null, "Se4 × MIDI volume", null, false, 4, null, "MIDI velocity × MIDI volume", null, false, 5, null, "Se4 × MIDI vel × MIDI vol", null, false, 6, null ]
+text = "OPTS_MIDIIN_NN_SE4VELOCITY"
+items = [ "OPTS_MIDIIN_NN_SE4VELOCITY", null, false, 0, null, "OPTS_MIDIIN_NN_VELOCITY", null, false, 1, null, "OPTS_MIDIIN_NN_VOLUME", null, false, 2, null, "OPTS_MIDIIN_NN_SE4_VEL", null, false, 3, null, "OPTS_MIDIIN_NN_SE4_VOL", null, false, 4, null, "OPTS_MIDIIN_NN_VEL_VOL", null, false, 5, null, "OPTS_MIDIIN_NN_SE4_VEL_VOL", null, false, 6, null ]
 selected = 0
 script = ExtResource( 6 )
 config_key = "MIDI_VELOCITYSRC"
@@ -220,8 +230,9 @@ config_key = "MIDI_VELOCITYSRC"
 margin_top = 24.0
 margin_right = 484.0
 margin_bottom = 44.0
+hint_tooltip = "OPTS_MIDIIN_REC_NOTEOFF_TTIP"
 toggle_mode = true
-text = "Record MIDI Note Off"
+text = "OPTS_MIDIIN_REC_NOTEOFF"
 script = ExtResource( 3 )
 config_key = "MIDI_NOTEOFF"
 
@@ -229,8 +240,9 @@ config_key = "MIDI_NOTEOFF"
 margin_top = 48.0
 margin_right = 484.0
 margin_bottom = 68.0
+hint_tooltip = "OPTS_MIDIIN_REC_VOLUME_TTIP"
 toggle_mode = true
-text = "Record MIDI Volume"
+text = "OPTS_MIDIIN_REC_VOLUME"
 script = ExtResource( 3 )
 config_key = "MIDI_VOLUME"
 
@@ -238,8 +250,9 @@ config_key = "MIDI_VOLUME"
 margin_top = 72.0
 margin_right = 484.0
 margin_bottom = 92.0
+hint_tooltip = "OPTS_MIDIIN_REC_AFTERTOUCH_TTIP"
 toggle_mode = true
-text = "Record MIDI Aftertouch"
+text = "OPTS_MIDIIN_REC_AFTERTOUCH"
 script = ExtResource( 3 )
 config_key = "MIDI_AFTERTOUCH"
 
@@ -259,8 +272,9 @@ size_flags_horizontal = 3
 [node name="HorizFXEdit" type="Button" parent="SC/GC/Editor/Editor"]
 margin_right = 484.0
 margin_bottom = 20.0
+hint_tooltip = "OPTS_EDITOR_HORIZONTAL_FXED_TTIP"
 toggle_mode = true
-text = "Horizontal FX edit"
+text = "OPTS_EDITOR_HORIZONTAL_FXED"
 script = ExtResource( 3 )
 config_key = "EDIT_HORIZ_FX"
 
@@ -268,8 +282,9 @@ config_key = "EDIT_HORIZ_FX"
 margin_top = 24.0
 margin_right = 484.0
 margin_bottom = 44.0
+hint_tooltip = "OPTS_EDITOR_CURSOR_IN_VALUE_TTIP"
 toggle_mode = true
-text = "Keep cursor in value command"
+text = "OPTS_EDITOR_CURSOR_IN_VALUE"
 script = ExtResource( 3 )
 config_key = "EDIT_FX_CRLF"
 
@@ -280,12 +295,14 @@ margin_bottom = 62.0
 columns = 2
 
 [node name="LabelUpdateRate" type="Label" parent="SC/GC/Editor/Editor/Oscilloscope" groups=["Label"]]
-margin_right = 160.0
+margin_right = 156.0
 margin_bottom = 14.0
-text = "Oscilloscope update rate"
+hint_tooltip = "OPTS_EDITOR_OSC_RATE_TTIP"
+mouse_filter = 1
+text = "OPTS_EDITOR_OSC_RATE"
 
 [node name="UpdateRate" type="ProgressBar" parent="SC/GC/Editor/Editor/Oscilloscope"]
-margin_left = 164.0
+margin_left = 160.0
 margin_right = 484.0
 margin_bottom = 14.0
 rect_min_size = Vector2( 60, 14 )
@@ -317,7 +334,7 @@ margin_bottom = 234.0
 margin_top = 238.0
 margin_right = 500.0
 margin_bottom = 252.0
-text = "Theme"
+text = "OPTS_THEME_TITLE"
 __meta__ = {
 "_edit_use_anchors_": false
 }

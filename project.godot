@@ -717,8 +717,9 @@ ui_down={
 
 [locale]
 
+test="es"
 empty_string_marker="<EMPTY>"
-translations=PoolStringArray( "res://locale/en_GB.po", "res://locale/es_ES.po" )
+translations=PoolStringArray( "res://locale/en.po", "res://locale/es.po" )
 
 [rendering]
 

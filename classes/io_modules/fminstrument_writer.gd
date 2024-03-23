@@ -27,7 +27,7 @@ func write(path:String,inst:FmInstrument)->FileResult:
 	out.open(path,File.WRITE)
 	var err:int=out.start_file(FILE_SIGNATURE,FILE_VERSION)
 	if err!=OK:
-		return FileResult.new(err,{"file":out.get_path()})
+		return FileResult.new(err,{FileResult.ERRV_FILE:out.get_path()})
 	var res:FileResult=serialize(out,inst)
 	if res.has_error():
 		return res
@@ -67,7 +67,7 @@ func serialize(out:ChunkedFile,inst:FmInstrument)->FileResult:
 		return fr
 	out.end_chunk()
 	if out.get_error():
-		return FileResult.new(out.get_error(),{"file":out.get_path()})
+		return FileResult.new(out.get_error(),{FileResult.ERRV_FILE:out.get_path()})
 	return FileResult.new()
 
 
@@ -106,7 +106,7 @@ func serialize_waves(out:ChunkedFile,packed_waves:Dictionary)->FileResult:
 	var syn_w:SynthWaveWriter=SynthWaveWriter.new()
 	var sam_w:SampleWaveWriter=SampleWaveWriter.new()
 	if out.get_error():
-		return FileResult.new(out.get_error(),{"file":out.get_path()})
+		return FileResult.new(out.get_error(),{FileResult.ERRV_FILE:out.get_path()})
 	var fr:FileResult
 	for wix in packed_waves.keys():
 		var wave:Waveform=_waves[wix-FmInstrument.WAVE.CUSTOM]
@@ -116,12 +116,12 @@ func serialize_waves(out:ChunkedFile,packed_waves:Dictionary)->FileResult:
 			fr=sam_w.serialize(out,wave)
 		else:
 			fr=FileResult.new(FileResult.ERR_INVALID_WAVE_TYPE,{
-				"type":wave.get_class(),
-				"file":out.get_path()
+				FileResult.ERRV_TYPE:wave.get_class(),
+				FileResult.ERRV_FILE:out.get_path()
 			})
 		if fr.has_error():
 			return fr
 	out.end_chunk()
 	if out.get_error():
-		return FileResult.new(out.get_error(),{"file":out.get_path()})
+		return FileResult.new(out.get_error(),{FileResult.ERRV_FILE:out.get_path()})
 	return FileResult.new()

@@ -632,6 +632,18 @@ msgstr "D"
 msgid "MCED_DELAY_TTIP"
 msgstr "Delay (ticks)"
 
+msgid "MCED_VALUE"
+msgstr "{i_value}"
+
+msgid "MCED_PASSTHROUGH"
+msgstr "Passthrough"
+
+msgid "MCED_ZOOM"
+msgstr "×{i_zoom}"
+
+msgid "MCED_POSITION"
+msgstr "({i_x},{i_y})"
+
 # Wave editor
 msgid "WAVED_LOAD"
 msgstr "Load"
@@ -1255,4 +1267,164 @@ msgstr "<EMPTY>"
 
 msgid "OPTS_THEME_TITLE"
 msgstr "Theme"
+
+# File types
+msgid "FILETYPE_SONG"
+msgstr "SynthEtQuatre song"
+
+msgid "FILETYPE_WAV"
+msgstr "WAV file"
+
+msgid "FILETYPE_INSTRUMENT"
+msgstr "SynthEtQuatre instrument"
+
+msgid "FILETYPE_THEME"
+msgstr "Theme file"
+
+# File dialog
+msgid "Go to parent folder."
+msgstr ""
+
+msgid "Refresh files."
+msgstr ""
+
+msgid "Toggle the visibility of hidden files."
+msgstr ""
+
+# Default names
+msgid "DEFN_SONG"
+msgstr "Untitled"
+
+msgid "DEFN_INSTRUMENT"
+msgstr "Instrument"
+
+msgid "DEFN_FM_INSTRUMENT"
+msgstr "FM Instrument"
+
+msgid "DEFN_SYNTH_WAVE"
+msgstr "Synth Wave"
+
+msgid "DEFN_SAMPLE_WAVE"
+msgstr "Sample"
+
+# Error messages
+msgid "WARN_OPTS_RESTART"
+msgstr "Changes will show after restarting."
+
+msgid "ERR_SONG_MAX_WAVES"
+msgstr "Limit of {i_max_waves} waveforms reached."
+
+msgid "ERR_SONG_WAVE_NOT_FOUND"
+msgstr "Wave not found."
+
+msgid "ERR_SONG_WAVE_IN_LFO"
+msgstr "Wave is in use by LFO {i_lfo}."
+
+msgid "ERR_SONG_WAVE_IN_INSTRUMENT"
+msgstr "Wave is in use by instrument {i_instr} operator {i_op}."
+
+msgid "ERR_SONG_WAVE_IN_SONG"
+msgstr "Wave is in use on pattern {i_pattern} of channel {i_channel}, row {i_row}."
+
+msgid "ERR_SONG_MAX_INSTRUMENTS"
+msgstr "Limit of {i_max_instrs} instruments reached."
+
+msgid "ERR_SONG_MIN_INSTRUMENTS"
+msgstr "Need at least one instrument."
+
+msgid "ERR_SONG_INSTRUMENT_NOT_FOUND"
+msgstr "Instrument not found."
+
+msgid "ERR_SONG_INSTRUMENT_IN_SONG"
+msgstr "Instrument is in use on pattern {i_pattern} of channel {i_channel}, row {i_row}."
+
+msgid "ERR_SONG_MAX_ARPS"
+msgstr "Limit of {i_max_arps} instruments reached."
+
+msgid "ERR_SONG_ARP_NOT_FOUND"
+msgstr "Arpeggio not found."
+
+msgid "ERR_SONG_ARP_IN_SONG"
+msgstr "Arpeggio is in use on pattern {i_pattern} of channel {i_channel}, row {i_row}."
+
+msgid "ERR_CONFIG_KEY_NOT_FOUND"
+msgstr "Config key not found."
+
+
+
+
+msgid "ERR_OK"
+msgstr "Ok."
+
+msgid "ERR_BUG"
+msgstr "Unknown error: {s_data}"
+
+msgid "ERR_FILE_BAD_CHUNK_VERSION"
+msgstr "Bad chunk version {i_version} for [{s_chunk}] @ {i_position}."
+
+msgid "ERR_FILE_BAD_CHUNK"
+msgstr "Bad chunk [{s_chunk}] @ {i_position}."
+
+msgid "ERR_FILE_BAD_DRIVE"
+msgstr "Bad drive opening {s_file}."
+
+msgid "ERR_FILE_BAD_PATH"
+msgstr "Bad path opening {s_file}."
+
+msgid "ERR_FILE_NO_PERMISSION"
+msgstr "No permission to access {s_file}."
+
+msgid "ERR_FILE_ALREADY_IN_USE"
+msgstr "File {s_file} is already in use."
+
+msgid "ERR_FILE_CANT_WRITE"
+msgstr "Can't write to {s_file}."
+
+msgid "ERR_FILE_CANT_READ"
+msgstr "Can't read {s_file}."
+
+msgid "ERR_FILE_MISSING_DEPENDENCIES"
+msgstr "{s_file} is missing dependencies."
+
+msgid "ERR_FILE_EOF"
+msgstr "Unexpected EOF in {s_file}."
+
+msgid "ERR_ALREADY_IN_USE"
+msgstr "{s_file} is already in use by other program."
+
+msgid "ERR_FILE_CANT_OPEN"
+msgstr "Can't open {s_file}."
+
+msgid "ERR_FILE_NOT_FOUND"
+msgstr "{s_file} not found."
+
+msgid "ERR_FILE_UNRECOGNIZED"
+msgstr "Unrecognized pack format opening {s_file}."
+
+msgid "ERR_FILE_CORRUPT"
+msgstr "{s_file} is corrupt."
+
+msgid "ERR_INVALID_TYPE"
+msgstr "{s_file} is not a {type} file."
+
+msgid "ERR_INVALID_VERSION"
+msgstr "Wrong version {i_version} opening {s_file}."
+
+msgid "ERR_INVALID_CHUNK"
+msgstr "Invalid chunk {s_chunk}:{i_version} for {s_file}. Expected {s_ex_chunk}:{i_ex_version}."
+
+msgid "ERR_MISSING_WAVES"
+msgstr "Standalone instrument is missing its waveforms."
+
+msgid "ERR_BAD_WAVE_COMPONENT"
+msgstr "Invalid wave component type {chunk} in file {s_file}."
+
+msgid "ERR_BAD_WAVE_COMPONENT_OUT"
+msgstr "Invalid wave component type {s_type} writing {s_file}."
+
+msgid "ERR_INVALID_WAVE_TYPE"
+msgstr "Invalid wave type {type} writing {s_file}."
+
+msgid "ERR_INVALID_MACRO"
+msgstr "Invalid macro type/operator {type}/{op} in file {s_file}."
 

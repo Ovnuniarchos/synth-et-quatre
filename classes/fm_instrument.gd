@@ -64,7 +64,7 @@ var op_macros:Array=[
 var out_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
 
 func _init()->void:
-	name=TYPE
+	name=tr("DEFN_FM_INSTRUMENT")
 
 func duplicate_op_macros(macros:Array)->Array:
 	var nm:Array=macros.duplicate(true)

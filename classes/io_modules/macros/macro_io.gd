@@ -59,11 +59,11 @@ func _deserialize_start(inf:ChunkedFile,chunk:String,version:int)->FileResult:
 	if not inf.is_chunk_valid(hdr,chunk,version):
 		return FileResult.new(FileResult.ERR_INVALID_CHUNK,{
 			"header":hdr,
-			"chunk":inf.get_chunk_id(hdr),
-			"version":inf.get_chunk_version(hdr),
-			"ex_chunk":chunk,
-			"ex_version":version,
-			"file":inf.get_path()
+			FileResult.ERRV_CHUNK:inf.get_chunk_id(hdr),
+			FileResult.ERRV_VERSION:inf.get_chunk_version(hdr),
+			FileResult.ERRV_EXP_CHUNK:chunk,
+			FileResult.ERRV_EXP_VERSION:version,
+			FileResult.ERRV_FILE:inf.get_path()
 		})
 	var m:Dictionary={
 		Macro.PARAM_LOOP_START:inf.get_signed_16(),
@@ -72,14 +72,14 @@ func _deserialize_start(inf:ChunkedFile,chunk:String,version:int)->FileResult:
 		Macro.PARAM_STEPS:inf.get_16(),
 		Macro.PARAM_DELAY:inf.get_16()
 	}
-	return FileResult.new(inf.get_error(),{"header":hdr,"file":inf.get_path(),"data":m})
+	return FileResult.new(inf.get_error(),{"header":hdr,FileResult.ERRV_FILE:inf.get_path(),"data":m})
 
 
 func _serialize_end(out:ChunkedFile,m:Macro)->FileResult:
 	for i in m.steps:
 		out.store_64(m.values[i])
 	out.end_chunk()
-	return FileResult.new(out.get_error(),{"file":out.get_path()})
+	return FileResult.new(out.get_error(),{FileResult.ERRV_FILE:out.get_path()})
 
 
 func _deserialize_end(inf:ChunkedFile,m:Dictionary)->FileResult:
@@ -87,7 +87,7 @@ func _deserialize_end(inf:ChunkedFile,m:Dictionary)->FileResult:
 	m[Macro.PARAM_VALUES].resize(m[Macro.PARAM_STEPS])
 	for i in m[Macro.PARAM_STEPS]:
 		m[Macro.PARAM_VALUES][i]=inf.get_64()
-	return FileResult.new(inf.get_error(),{"file":inf.get_path()})
+	return FileResult.new(inf.get_error(),{FileResult.ERRV_FILE:inf.get_path()})
 
 
 func is_valid_macro(id:String,op:int)->bool:

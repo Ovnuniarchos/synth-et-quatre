@@ -2,6 +2,8 @@ extends PanelContainer
 
 signal order_selected(ix)
 
+const BTN_PATTERN:String="%03d"
+
 onready var list_scroll:ScrollContainer=$VBC/SC
 onready var list:GridContainer=$VBC/SC/List
 var order_labels:Array
@@ -36,21 +38,23 @@ func update_list(from:int=0,to:int=-1)->void:
 	order_labels.resize(to)
 	for order in range(from,to):
 		l=Button.new()
+		l.set_message_translation(false)
 		l.focus_mode=FOCUS_NONE
 		l.mouse_filter=Control.MOUSE_FILTER_STOP
 		l.name="ord%03d"%[order]
-		l.text="%03d"%[order]
+		l.text=BTN_PATTERN%[order]
 		set_row_style(l,order==GLOBALS.curr_order)
 		list.add_child(l)
 		l.connect("gui_input",self,"_on_order_gui_input",[order])
 		order_labels[order]=l
 		for chn in range(song.num_channels):
 			l=Button.new()
+			l.set_message_translation(false)
 			l.focus_mode=FOCUS_NONE
 			l.mouse_filter=Control.MOUSE_FILTER_STOP
 			l.button_mask=BUTTON_MASK_LEFT|BUTTON_MASK_RIGHT
 			l.name="ord%03dchn%02d"%[order,chn]
-			l.text="%03d"%[song.orders[order][chn]]
+			l.text=BTN_PATTERN%[song.orders[order][chn]]
 			l.connect("gui_input",self,"_on_button_gui_input",[order,chn,l])
 			ThemeHelper.apply_styles(theme,"OrderButton",l)
 			list.add_child(l)
@@ -127,7 +131,7 @@ func _on_button_gui_input(ev:InputEvent,order:int,channel:int,button:Button)->vo
 		elif ev.control:
 			o=song.add_pattern(channel,song.orders[order][channel])
 		song.set_pattern(order,channel,o)
-		button.text="%03d"%[song.orders[order][channel]]
+		button.text=BTN_PATTERN%[song.orders[order][channel]]
 	elif ev.button_index==BUTTON_WHEEL_UP:
 		var o:int=song.orders[order][channel]
 		if ev.shift:
@@ -137,10 +141,10 @@ func _on_button_gui_input(ev:InputEvent,order:int,channel:int,button:Button)->vo
 		elif ev.alt:
 			o+=1
 		song.set_pattern(order,channel,o)
-		button.text="%03d"%[song.orders[order][channel]]
+		button.text=BTN_PATTERN%[song.orders[order][channel]]
 	elif ev.button_index==BUTTON_RIGHT or (ev.button_index==BUTTON_WHEEL_DOWN and ev.alt):
 		song.set_pattern(order,channel,song.orders[order][channel]-1)
-		button.text="%03d"%[song.orders[order][channel]]
+		button.text=BTN_PATTERN%[song.orders[order][channel]]
 	song.set_block_signals(false)
 
 #

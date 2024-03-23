@@ -17,7 +17,7 @@ const SONGL=preload("res://classes/song/song_limits.gd")
 const WAVE=FmInstrument.WAVE
 
 
-var title:String="Untitled"
+var title:String=tr("DEFN_SONG")
 var author:String=""
 var pattern_list:Array # [channel,order]
 var orders:Array # [row,channel]
@@ -122,25 +122,25 @@ func correct_wave(w:int)->int:
 func can_add_wave(count:int=1)->bool:
 	if wave_list.size()+count<SONGL.MAX_WAVES:
 		return true
-	emit_signal("error","Limit of %d waveforms reached."%[SONGL.MAX_WAVES])
+	emit_signal("error",tr("ERR_SONG_MAX_WAVES").format({"i_max_waves":SONGL.MAX_WAVES}))
 	return false
 
 func can_delete_wave(wave:Waveform)->bool:
 	var wave_ix:int=wave_list.find(wave)
 	if wave_ix==-1:
-		emit_signal("error","Wave not found.")
+		emit_signal("error",tr("ERR_SONG_WAVE_NOT_FOUND"))
 		return false
 	wave_ix+=SONGL.MIN_CUSTOM_WAVE
 	for lw in range(lfo_waves.size()):
 		if lfo_waves[lw]==wave_ix:
-			emit_signal("error","Wave is in use by LFO %d."%[lw])
+			emit_signal("error",tr("ERR_SONG_WAVE_IN_LFO").format({"i_lfo":lw}))
 			return false
 	for ins in range(instrument_list.size()):
 		if !(instrument_list[ins] is FmInstrument):
 			continue
 		for w in range(instrument_list[ins].waveforms.size()):
 			if instrument_list[ins].waveforms[w]==wave_ix:
-				emit_signal("error","Wave is in use by instrument %d operator %d."%[ins,w])
+				emit_signal("error",tr("ERR_SONG_WAVE_IN_INSTRUMENT").format({"i_instr":ins,"i:op":w}))
 				return false
 	for chan in range(pattern_list.size()):
 		for pat in range(pattern_list[chan].size()):
@@ -150,7 +150,9 @@ func can_delete_wave(wave:Waveform)->bool:
 					if cmd!=FMVC.FX_WAVE_SET and cmd!=FMVC.FX_LFO_WAVE_SET:
 						continue
 					if pattern_list[chan][pat].notes[note][col+2]==wave_ix:
-						emit_signal("error","Wave is in use on pattern %d of channel %d, row %d."%[pat,chan,note])
+						emit_signal("error",
+							tr("ERR_SONG_WAVE_IN_SONG").format({"i_pattern":pat,"i_channel":chan,"i_row":note})
+						)
 						return false
 	return true
 
@@ -224,22 +226,24 @@ func delete_instrument(instr:Instrument)->void:
 func can_add_instrument()->bool:
 	if instrument_list.size()<SONGL.MAX_INSTRUMENTS:
 		return true
-	emit_signal("error","Limit of %d instruments reached."%[SONGL.MAX_INSTRUMENTS])
+	emit_signal("error",tr("ERR_SONG_MAX_INSTRUMENTS").format({"i_max_instrs":SONGL.MAX_INSTRUMENTS}))
 	return false
 
 func can_delete_instrument(instr:Instrument)->bool:
 	if instrument_list.size()==1:
-		emit_signal("error","Need at least one instrument.")
+		emit_signal("error",tr("ERR_SONG_MIN_INSTRUMENTS"))
 		return false
 	var iix:int=instrument_list.find(instr)
 	if iix==-1:
-		emit_signal("error","Instrument not found.")
+		emit_signal("error",tr("ERR_SONG_INSTRUMENT_NOT_FOUND"))
 		return false
 	for chan in range(pattern_list.size()):
 		for pat in range(pattern_list[chan].size()):
 			for note in range(pattern_list[chan][pat].notes.size()):
 				if pattern_list[chan][pat].notes[note][Pattern.ATTRS.INSTR]==iix:
-					emit_signal("error","Instrument is in use on pattern %d of channel %d, row %d."%[pat,chan,note])
+					emit_signal("error",
+						tr("ERR_SONG_INSTRUMENT_IN_SONG").format({"i_pattern":pat,"i_channel":chan,"i_row":note})
+					)
 					return false
 	return true
 
@@ -279,7 +283,7 @@ func delete_arp(arp:Arpeggio)->void:
 func can_add_arp()->bool:
 	if arp_list.size()<SONGL.MAX_ARPEGGIOS:
 		return true
-	emit_signal("error","Limit of %d arpeggios reached."%[SONGL.MAX_ARPEGGIOS])
+	emit_signal("error",tr("ERR_SONG_MAX_ARPS").format({"i_max_arps":SONGL.MAX_ARPEGGIOS}))
 	return false
 
 func can_delete_arp(arp:Arpeggio)->bool:
@@ -287,7 +291,7 @@ func can_delete_arp(arp:Arpeggio)->bool:
 		return false
 	var iix:int=arp_list.find(arp)
 	if iix==-1:
-		emit_signal("error","Arpeggio not found.")
+		emit_signal("error",tr("ERR_SONG_ARP_NOT_FOUND"))
 		return false
 	for chan in pattern_list.size():
 		for pat in pattern_list[chan].size():
@@ -296,7 +300,9 @@ func can_delete_arp(arp:Arpeggio)->bool:
 					var fc=pattern_list[chan][pat].notes[note][fx]
 					var fv=pattern_list[chan][pat].notes[note][fx+2]
 					if (fc==FMVC.FX_ARP_SET and fv==iix) or (fc==FMVC.FX_ARPEGGIO and (fv&0xF)==iix):
-						emit_signal("error","Instrument is in use on pattern %d of channel %d, row %d."%[pat,chan,note])
+						emit_signal("error",
+							tr("ERR_SONG_ARP_IN_SONG").format({"i_pattern":pat,"i_channel":chan,"i_row":note})
+						)
 						return false
 	return true
 

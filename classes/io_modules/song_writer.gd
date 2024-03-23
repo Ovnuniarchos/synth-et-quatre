@@ -8,10 +8,8 @@ func write(path:String,song:Song)->FileResult:
 	# Signature: SFMM\0xc\0xa\0x1a\0xa
 	var err:int=out.start_file(FILE_SIGNATURE,FILE_VERSION)
 	if err!=OK:
-		return FileResult.new(err,{"file":out.get_path()})
+		return FileResult.new(err,{FileResult.ERRV_FILE:out.get_path()})
 	var fr:FileResult=serialize(out,song)
-	if fr.has_error():
-		ALERT.alert(fr.get_message())
 	return fr
 
 
@@ -42,7 +40,7 @@ func serialize(out:ChunkedFile,song:Song)->FileResult:
 	var pat_w:PatternWriter=PatternWriter.new(song.pattern_length)
 	out.start_chunk(CHUNK_PATTERNS,CHUNK_PATTERNS_VERSION)
 	if out.get_error():
-		return FileResult.new(out.get_error(),{"file":out.get_path()})
+		return FileResult.new(out.get_error(),{FileResult.ERRV_FILE:out.get_path()})
 	for i in song.num_channels:
 		var chn:Array=song.pattern_list[i]
 		out.store_16(chn.size())
@@ -52,7 +50,7 @@ func serialize(out:ChunkedFile,song:Song)->FileResult:
 				return fr
 	out.end_chunk()
 	if out.get_error():
-		return FileResult.new(out.get_error(),{"file":out.get_path()})
+		return FileResult.new(out.get_error(),{FileResult.ERRV_FILE:out.get_path()})
 	return FileResult.new()
 
 
@@ -65,7 +63,7 @@ func serialize_header(out:ChunkedFile,song:Song)->FileResult:
 	out.store_pascal_string(song.author)
 	out.end_chunk()
 	if out.get_error():
-		return FileResult.new(out.get_error(),{"file":out.get_path()})
+		return FileResult.new(out.get_error(),{FileResult.ERRV_FILE:out.get_path()})
 	return null
 
 
@@ -75,7 +73,7 @@ func serialize_highlights(out:ChunkedFile,song:Song)->FileResult:
 	out.store_16(song.major_highlight)
 	out.end_chunk()
 	if out.get_error():
-		return FileResult.new(out.get_error(),{"file":out.get_path()})
+		return FileResult.new(out.get_error(),{FileResult.ERRV_FILE:out.get_path()})
 	return null
 
 
@@ -87,7 +85,7 @@ func serialize_channels(out:ChunkedFile,song:Song)->FileResult:
 		out.store_8(song.num_fxs[i])
 	out.end_chunk()
 	if out.get_error():
-		return FileResult.new(out.get_error(),{"file":out.get_path()})
+		return FileResult.new(out.get_error(),{FileResult.ERRV_FILE:out.get_path()})
 	return null
 
 
@@ -100,7 +98,7 @@ func serialize_instruments(out:ChunkedFile,song:Song)->FileResult:
 		out.store_8(song.lfo_duty_cycles[i])
 	out.store_16(song.instrument_list.size())
 	if out.get_error():
-		return FileResult.new(out.get_error(),{"file":out.get_path()})
+		return FileResult.new(out.get_error(),{FileResult.ERRV_FILE:out.get_path()})
 	var ins_w:FmInstrumentWriter=FmInstrumentWriter.new(song.wave_list)
 	for inst in song.instrument_list:
 		fr=ins_w.serialize(out,inst)
@@ -111,7 +109,7 @@ func serialize_instruments(out:ChunkedFile,song:Song)->FileResult:
 		return fr
 	out.end_chunk()
 	if out.get_error():
-		return FileResult.new(out.get_error(),{"file":out.get_path()})
+		return FileResult.new(out.get_error(),{FileResult.ERRV_FILE:out.get_path()})
 	return null
 
 
@@ -120,7 +118,7 @@ func serialize_waveforms(out:ChunkedFile,song:Song)->FileResult:
 	out.start_chunk(CHUNK_WAVES,CHUNK_WAVES_VERSION)
 	out.store_16(song.wave_list.size())
 	if out.get_error():
-		return FileResult.new(out.get_error(),{"file":out.get_path()})
+		return FileResult.new(out.get_error(),{FileResult.ERRV_FILE:out.get_path()})
 	var syn_w:SynthWaveWriter=SynthWaveWriter.new()
 	var sam_w:SampleWaveWriter=SampleWaveWriter.new()
 	for wave in song.wave_list:
@@ -131,13 +129,13 @@ func serialize_waveforms(out:ChunkedFile,song:Song)->FileResult:
 		else:
 			fr=FileResult.new(FileResult.ERR_INVALID_WAVE_TYPE,{
 				"type":wave.get_class(),
-				"file":out.get_path()
+				FileResult.ERRV_FILE:out.get_path()
 			})
 		if fr.has_error():
 			return fr
 	out.end_chunk()
 	if out.get_error():
-		return FileResult.new(out.get_error(),{"file":out.get_path()})
+		return FileResult.new(out.get_error(),{FileResult.ERRV_FILE:out.get_path()})
 	return null
 
 
@@ -150,7 +148,7 @@ func serialize_macros(out:ChunkedFile,song:Song)->FileResult:
 			count+=1
 	out.store_16(count)
 	if out.get_error():
-		return FileResult.new(out.get_error(),{"file":out.get_path()})
+		return FileResult.new(out.get_error(),{FileResult.ERRV_FILE:out.get_path()})
 	var arp_w:ArpeggioWriter=ArpeggioWriter.new()
 	count=0
 	for arp in song.arp_list:
@@ -161,5 +159,5 @@ func serialize_macros(out:ChunkedFile,song:Song)->FileResult:
 		count+=1
 	out.end_chunk()
 	if out.get_error():
-		return FileResult.new(out.get_error(),{"file":out.get_path()})
+		return FileResult.new(out.get_error(),{FileResult.ERRV_FILE:out.get_path()})
 	return null

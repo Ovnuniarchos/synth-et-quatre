@@ -7,6 +7,7 @@ var size_po2:int=8 setget set_size_po2
 var components:Array=[]
 
 func _init()->void:
+	name=tr("DEFN_SYNTH_WAVE")
 	resize_data(1<<size_po2)
 
 func set_size_po2(s:int)->void:

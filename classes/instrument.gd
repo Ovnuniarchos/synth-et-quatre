@@ -1,7 +1,7 @@
 extends Reference
 class_name Instrument
 
-var name:String="Instrument"
+var name:String=tr("DEFN_INSTRUMENT")
 # Transient
 var file_name:String=""
 

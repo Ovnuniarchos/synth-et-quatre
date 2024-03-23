@@ -25,5 +25,5 @@ func serialize(out:ChunkedFile,pat:Pattern,num_fx:int)->FileResult:
 				out.store_8(n[i])
 	out.end_chunk()
 	if out.get_error():
-		return FileResult.new(out.get_error(),{"file":out.get_path()})
+		return FileResult.new(out.get_error(),{FileResult.ERRV_FILE:out.get_path()})
 	return FileResult.new()

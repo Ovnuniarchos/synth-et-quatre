@@ -70,11 +70,11 @@ func read(path:String)->FileResult:
 func deserialize_wave_list(inf:ChunkedFile,header:Dictionary)->FileResult:
 	if not inf.is_chunk_valid(header,SongIO.CHUNK_WAVES,SongIO.CHUNK_WAVES_VERSION):
 		return FileResult.new(FileResult.ERR_INVALID_CHUNK,{
-			"chunk":inf.get_chunk_id(header),
-			"version":inf.get_chunk_version(header),
-			"ex_chunk":SongIO.CHUNK_WAVES,
-			"ex_version":SongIO.CHUNK_WAVES_VERSION,
-			"file":inf.get_path()
+			FileResult.ERRV_CHUNK:inf.get_chunk_id(header),
+			FileResult.ERRV_VERSION:inf.get_chunk_version(header),
+			FileResult.ERRV_EXP_CHUNK:SongIO.CHUNK_WAVES,
+			FileResult.ERRV_EXP_VERSION:SongIO.CHUNK_WAVES_VERSION,
+			FileResult.ERRV_FILE:inf.get_path()
 		})
 	var hdr:Dictionary
 	var wav_l:Array=[]
@@ -85,7 +85,7 @@ func deserialize_wave_list(inf:ChunkedFile,header:Dictionary)->FileResult:
 	for i in wav_l.size():
 		hdr=inf.get_chunk_header()
 		if inf.get_error():
-			return FileResult.new(inf.get_error(),{"file":inf.get_path()})
+			return FileResult.new(inf.get_error(),{FileResult.ERRV_FILE:inf.get_path()})
 		match hdr[ChunkedFile.CHUNK_ID]:
 			SynthWaveReader.CHUNK_ID:
 				fr=syn_r.deserialize(inf,hdr)
@@ -99,18 +99,18 @@ func deserialize_wave_list(inf:ChunkedFile,header:Dictionary)->FileResult:
 		wav_l[i]=fr.data
 		inf.skip_chunk(hdr)
 	if inf.get_error():
-		return FileResult.new(inf.get_error(),{"file":inf.get_path()})
+		return FileResult.new(inf.get_error(),{FileResult.ERRV_FILE:inf.get_path()})
 	return FileResult.new(OK,wav_l)
 
 
 func deserialize(inf:ChunkedFile,header:Dictionary)->FileResult:
 	if not inf.is_chunk_valid(header,CHUNK_ID,CHUNK_VERSION):
 		return FileResult.new(FileResult.ERR_INVALID_CHUNK,{
-			"chunk":inf.get_chunk_id(header),
-			"version":inf.get_chunk_version(header),
-			"ex_chunk":CHUNK_ID,
-			"ex_version":CHUNK_VERSION,
-			"file":inf.get_path()
+			FileResult.ERRV_CHUNK:inf.get_chunk_id(header),
+			FileResult.ERRV_VERSION:inf.get_chunk_version(header),
+			FileResult.ERRV_EXP_CHUNK:CHUNK_ID,
+			FileResult.ERRV_EXP_VERSION:CHUNK_VERSION,
+			FileResult.ERRV_FILE:inf.get_path()
 		})
 	var version:int=header[ChunkedFile.CHUNK_VERSION]
 	var ins:FmInstrument=FmInstrument.new()
@@ -146,14 +146,14 @@ func deserialize(inf:ChunkedFile,header:Dictionary)->FileResult:
 		if fr!=null and fr.has_error():
 			return fr
 	if inf.get_error():
-		return FileResult.new(inf.get_error(),{"file":inf.get_path()})
+		return FileResult.new(inf.get_error(),{FileResult.ERRV_FILE:inf.get_path()})
 	return FileResult.new(OK,ins)
 
 
 func deserialize_macros(inf:ChunkedFile,ins:FmInstrument)->FileResult:
 	var count:int=inf.get_16()
 	if inf.get_error():
-		return FileResult.new(inf.get_error(),{"file":inf.get_path()})
+		return FileResult.new(inf.get_error(),{FileResult.ERRV_FILE:inf.get_path()})
 	var pmr:ParamMacroReader=ParamMacroReader.new()
 	var fr:FileResult
 	while count>0:
@@ -163,8 +163,8 @@ func deserialize_macros(inf:ChunkedFile,ins:FmInstrument)->FileResult:
 			return fr
 		if not ins.set_macro(fr.data["type"],fr.data["op"],fr.data["macro"]):
 			return FileResult.new(FileResult.ERR_INVALID_MACRO,{
-				"file":inf.get_path(),
-				"type":fr.data["type"],
-				"op":fr.data["op"]
+				FileResult.ERRV_FILE:inf.get_path(),
+				FileResult.ERRV_TYPE:fr.data["type"],
+				FileResult.ERRV_OP:fr.data["op"]
 			})
 	return null

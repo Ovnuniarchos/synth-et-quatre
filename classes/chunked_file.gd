@@ -5,7 +5,7 @@ class_name ChunkedFile
 const CHUNK_NEXT:String="next"
 const CHUNK_ID:String="id"
 const CHUNK_VERSION:String="version"
-const CHUNK_SELF:String="self"
+const CHUNK_POSITION:String="position"
 
 
 var chunk_start:Array
@@ -51,8 +51,8 @@ func skip_chunk(d:Dictionary)->void:
 
 
 func rewind_chunk(d:Dictionary)->void:
-	if d.has(CHUNK_SELF) and typeof(d[CHUNK_SELF]) in [TYPE_INT,TYPE_REAL]:
-		seek(d[CHUNK_SELF])
+	if d.has(CHUNK_POSITION) and typeof(d[CHUNK_POSITION]) in [TYPE_INT,TYPE_REAL]:
+		seek(d[CHUNK_POSITION])
 
 
 func get_ascii(length:int)->String:
@@ -72,10 +72,10 @@ func store_ascii(string:String,length:int=4)->void:
 
 func get_chunk_header()->Dictionary:
 	var pos:int=get_position()
-	var hdr:Dictionary={CHUNK_SELF:pos,CHUNK_ID:get_ascii(4),CHUNK_VERSION:get_16(),CHUNK_NEXT:get_64()}
+	var hdr:Dictionary={CHUNK_POSITION:pos,CHUNK_ID:get_ascii(4),CHUNK_VERSION:get_16(),CHUNK_NEXT:get_64()}
 	if hdr[CHUNK_NEXT]<-1: # Fix for a bugged chunk writer
 		seek(pos)
-		hdr={CHUNK_SELF:pos,CHUNK_ID:get_ascii(4),CHUNK_VERSION:0,CHUNK_NEXT:get_64()}
+		hdr={CHUNK_POSITION:pos,CHUNK_ID:get_ascii(4),CHUNK_VERSION:0,CHUNK_NEXT:get_64()}
 		seek(pos+14)
 	return hdr
 
@@ -92,13 +92,17 @@ func is_chunk_valid(hdr:Dictionary,id:String,version:int)->bool:
 		invalid_chunk(hdr)
 		ret=false
 	if hdr[CHUNK_VERSION]>version:
-		push_error(("Bad chunk version {"+CHUNK_VERSION+"} for {"+CHUNK_ID+"} @ {"+CHUNK_SELF+"}.").format(hdr))
+		push_error(tr("ERR_FILE_BAD_CHUNK_VERSION").format(
+			{"i_version":CHUNK_VERSION,"s_chunk":CHUNK_ID,"i_position":CHUNK_POSITION}
+		).format(hdr))
 		ret=false
 	return ret
 
 
 func invalid_chunk(hdr:Dictionary)->void:
-	push_error(("Bad chunk {"+CHUNK_ID+"} @ {"+CHUNK_SELF+"}.").format(hdr))
+	push_error(tr("ERR_FILE_BAD_CHUNK").format(
+		{"s_chunk":CHUNK_ID,"i_position":CHUNK_POSITION}
+	).format(hdr))
 
 
 func chunk_is(hdr:Dictionary,id:String)->bool:

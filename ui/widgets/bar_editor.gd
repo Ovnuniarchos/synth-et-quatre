@@ -168,7 +168,6 @@ func _on_VGraph_gui_input(ev:InputEvent)->void:
 	var ym:float=values_graph.rect_size.y*zoom
 	var vpos:Vector2=get_VGraph_position(ev.position)
 	var ix:int=clamp(vpos.x/bar_width,0.0,MAX_STEPS-1)
-	DEBUG.set_var("",ev.button_mask)
 	if ev.button_mask==BUTTON_RIGHT:
 		set_Command_visibility(true,ev.position)
 	if ix>=steps:
@@ -214,7 +213,7 @@ func _on_VGraph_gui_input(ev:InputEvent)->void:
 			modded=true
 	if modded:
 		value_tooltip.show_at(
-			"%d"%values[ix] if values[ix]!=ParamMacro.PASSTHROUGH else "Passthrough",
+			tr("MCED_VALUE").format({"i_value":values[ix]}) if values[ix]!=ParamMacro.PASSTHROUGH else "MCED_PASSTHROUGH",
 			ev.position-Vector2(0.0,value_tooltip.rect_size.y*0.5)
 		)
 		values_graph.update()
@@ -342,14 +341,14 @@ func set_title(t:String)->void:
 	title=t
 	if not is_ready:
 		yield(self,"ready")
-	get_node("%Title").text=tr(t)
+	get_node("%Title").text=t
 
 
 func set_title_tooltip(t:String)->void:
 	title_tooltip=t
 	if not is_ready:
 		yield(self,"ready")
-	get_node("%Title").hint_tooltip=tr(t)
+	get_node("%Title").hint_tooltip=t
 
 
 func can_switch_modes()->bool:
@@ -384,7 +383,7 @@ func _on_Relative_toggled(p:bool)->void:
 			if values[i]!=ParamMacro.PASSTHROUGH:
 				values[i]=int(range_lerp(values[i],min0,max0,min1,max1))
 	relative=p
-	$"%Relative".text=tr("MCED_RELATIVE" if relative else "MCED_ABSOLUTE")
+	$"%Relative".text="MCED_RELATIVE" if relative else "MCED_ABSOLUTE"
 	values_graph.update()
 	value_labels.update()
 	emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
@@ -416,7 +415,7 @@ func _on_Labels_draw()->void:
 	var s_outline:bool=real_theme.get_constant("shadow_as_outline","BarEditorLabel")
 	var my:float=values_graph.rect_size.y*zoom
 	if zoom>1.0:
-		var txt:String="x%d "%zoom
+		var txt:String=tr("MCED_ZOOM").format({"i_zoom":zoom})
 		draw_label(
 			txt,Vector2(values_graph.rect_size.x-font.get_string_size(txt).x,font.get_ascent()),
 			value_labels.get_canvas_item(),font,
@@ -616,7 +615,7 @@ func _on_VGraph_mouse_exited()->void:
 func _on_PosLabel_draw()->void:
 	if not is_ready:
 		yield(self,"ready")
-	pos_label.text="(%d,%d)"%[value_pos.x,value_pos.y]
+	pos_label.text=tr("MCED_POSITION").format({"i_x":value_pos.x,"i_y":value_pos.y})
 
 
 func set_Command_visibility(v:bool,pos:Vector2=Vector2.ZERO)->void:

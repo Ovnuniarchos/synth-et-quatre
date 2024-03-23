@@ -7,11 +7,11 @@ var clear_insts:bool
 
 func read(path:String)->FileResult:
 	var f:ChunkedFile=ChunkedFile.new()
-	f.open(path,File.READ)
-	var err:int=f.start_file(FILE_SIGNATURE,FILE_VERSION)
+	var err:int=f.open(path,File.READ)
+	err=f.start_file(FILE_SIGNATURE,FILE_VERSION) if err==OK else err
 	if err!=OK:
 		return FileResult.new(err,{
-			"file":f.get_path(),"version":FILE_VERSION,"type":"song"
+			FileResult.ERRV_FILE:path,FileResult.ERRV_VERSION:FILE_VERSION,FileResult.ERRV_TYPE:"song"
 		})
 	var res:FileResult=deserialize(f)
 	f.close()
@@ -30,11 +30,11 @@ func deserialize(inf:ChunkedFile)->FileResult:
 	var hdr:Dictionary=inf.get_chunk_header()
 	if not inf.is_chunk_valid(hdr,CHUNK_HEADER,CHUNK_HEADER_VERSION):
 		return FileResult.new(FileResult.ERR_INVALID_CHUNK,{
-			"chunk":inf.get_chunk_id(hdr),
-			"version":inf.get_chunk_version(hdr),
-			"ex_chunk":CHUNK_HEADER,
-			"ex_version":CHUNK_HEADER_VERSION,
-			"file":inf.get_path()
+			FileResult.ERRV_CHUNK:inf.get_chunk_id(hdr),
+			FileResult.ERRV_VERSION:inf.get_chunk_version(hdr),
+			FileResult.ERRV_EXP_CHUNK:CHUNK_HEADER,
+			FileResult.ERRV_EXP_VERSION:CHUNK_HEADER_VERSION,
+			FileResult.ERRV_FILE:inf.get_path()
 		})
 	song.pattern_length=inf.get_16()
 	song.ticks_second=inf.get_16()
@@ -43,7 +43,7 @@ func deserialize(inf:ChunkedFile)->FileResult:
 	song.author=inf.get_pascal_string()
 	inf.skip_chunk(hdr)
 	if inf.get_error():
-		return FileResult.new(inf.get_error(),{"file":inf.get_path()})
+		return FileResult.new(inf.get_error(),{FileResult.ERRV_EXP_CHUNK:inf.get_path()})
 	#
 	var fr:FileResult
 	while true:
@@ -79,25 +79,25 @@ func deserialize_highlights(inf:ChunkedFile,song:Song,header:Dictionary)->FileRe
 		song.minor_highlight=inf.get_16()
 		song.major_highlight=inf.get_16()
 		if inf.get_error():
-			return FileResult.new(inf.get_error(),{"file":inf.get_path()})
+			return FileResult.new(inf.get_error(),{FileResult.ERRV_FILE:inf.get_path()})
 		return null
 	return FileResult.new(FileResult.ERR_INVALID_CHUNK,{
-		"chunk":inf.get_chunk_id(header),
-		"version":inf.get_chunk_version(header),
-		"ex_chunk":CHUNK_HIGHLIGHTS,
-		"ex_version":CHUNK_HIGHLIGHTS_VERSION,
-		"file":inf.get_path()
+		FileResult.ERRV_CHUNK:inf.get_chunk_id(header),
+		FileResult.ERRV_VERSION:inf.get_chunk_version(header),
+		FileResult.ERRV_EXP_CHUNK:CHUNK_HIGHLIGHTS,
+		FileResult.ERRV_EXP_VERSION:CHUNK_HIGHLIGHTS_VERSION,
+		FileResult.ERRV_EXP_FILE:inf.get_path()
 	})
 
 
 func deserialize_channel_list(inf:ChunkedFile,song:Song,header:Dictionary)->FileResult:
 	if not inf.is_chunk_valid(header,CHUNK_CHANNELS,CHUNK_CHANNELS_VERSION):
 		return FileResult.new(FileResult.ERR_INVALID_CHUNK,{
-			"chunk":inf.get_chunk_id(header),
-			"version":inf.get_chunk_version(header),
-			"ex_chunk":CHUNK_CHANNELS,
-			"ex_version":CHUNK_CHANNELS_VERSION,
-			"file":inf.get_path()
+			FileResult.ERRV_CHUNK:inf.get_chunk_id(header),
+			FileResult.ERRV_VERSION:inf.get_chunk_version(header),
+			FileResult.ERRV_EXP_CHUNK:CHUNK_CHANNELS,
+			FileResult.ERRV_EXP_VERSION:CHUNK_CHANNELS_VERSION,
+			FileResult.ERRV_FILE:inf.get_path()
 		})
 	var nc:int=inf.get_16()
 	song.num_channels=nc
@@ -106,18 +106,18 @@ func deserialize_channel_list(inf:ChunkedFile,song:Song,header:Dictionary)->File
 		var nfx:int=inf.get_8()
 		song.num_fxs[i]=nfx
 	if inf.get_error():
-		return FileResult.new(inf.get_error(),{"file":inf.get_path()})
+		return FileResult.new(inf.get_error(),{FileResult.ERRV_FILE:inf.get_path()})
 	return null
 
 
 func deserialize_pattern_list(inf:ChunkedFile,song:Song,header:Dictionary)->FileResult:
 	if not inf.is_chunk_valid(header,CHUNK_PATTERNS,CHUNK_PATTERNS_VERSION):
 		return FileResult.new(FileResult.ERR_INVALID_CHUNK,{
-			"chunk":inf.get_chunk_id(header),
-			"version":inf.get_chunk_version(header),
-			"ex_chunk":CHUNK_PATTERNS,
-			"ex_version":CHUNK_PATTERNS_VERSION,
-			"file":inf.get_path()
+			FileResult.ERRV_CHUNK:inf.get_chunk_id(header),
+			FileResult.ERRV_VERSION:inf.get_chunk_version(header),
+			FileResult.ERRV_EXP_CHUNK:CHUNK_PATTERNS,
+			FileResult.ERRV_EXP_VERSION:CHUNK_PATTERNS_VERSION,
+			FileResult.ERRV_FILE:inf.get_path()
 		})
 	var hdr:Dictionary
 	var pat_l:Array=[]
@@ -138,18 +138,18 @@ func deserialize_pattern_list(inf:ChunkedFile,song:Song,header:Dictionary)->File
 		pat_l[i]=[Pattern.new()]
 	song.pattern_list=pat_l
 	if inf.get_error():
-		return FileResult.new(inf.get_error(),{"file":inf.get_path()})
+		return FileResult.new(inf.get_error(),{FileResult.ERRV_FILE:inf.get_path()})
 	return null
 
 
 func deserialize_order_list(inf:ChunkedFile,song:Song,header:Dictionary)->FileResult:
 	if not inf.is_chunk_valid(header,CHUNK_ORDERS,CHUNK_ORDERS_VERSION):
 		return FileResult.new(FileResult.ERR_INVALID_CHUNK,{
-			"chunk":inf.get_chunk_id(header),
-			"version":inf.get_chunk_version(header),
-			"ex_chunk":CHUNK_ORDERS,
-			"ex_version":CHUNK_ORDERS_VERSION,
-			"file":inf.get_path()
+			FileResult.ERRV_CHUNK:inf.get_chunk_id(header),
+			FileResult.ERRV_VERSION:inf.get_chunk_version(header),
+			FileResult.ERRV_EXP_CHUNK:CHUNK_ORDERS,
+			FileResult.ERRV_EXP_VERSION:CHUNK_ORDERS_VERSION,
+			FileResult.ERRV_FILE:inf.get_path()
 		})
 	var ord_l:Array=[]
 	ord_l.resize(inf.get_16())
@@ -162,18 +162,18 @@ func deserialize_order_list(inf:ChunkedFile,song:Song,header:Dictionary)->FileRe
 			ord_l[i][j]=0
 	song.orders=ord_l
 	if inf.get_error():
-		return FileResult.new(inf.get_error(),{"file":inf.get_path()})
+		return FileResult.new(inf.get_error(),{FileResult.ERRV_FILE:inf.get_path()})
 	return null
 
 
 func deserialize_instrument_list(inf:ChunkedFile,song:Song,header:Dictionary)->FileResult:
 	if not inf.is_chunk_valid(header,CHUNK_INSTRUMENTS,CHUNK_INSTRUMENTS_VERSION):
 		return FileResult.new(FileResult.ERR_INVALID_CHUNK,{
-			"chunk":inf.get_chunk_id(header),
-			"version":inf.get_chunk_version(header),
-			"ex_chunk":CHUNK_INSTRUMENTS,
-			"ex_version":CHUNK_INSTRUMENTS_VERSION,
-			"file":inf.get_path()
+			FileResult.ERRV_CHUNK:inf.get_chunk_id(header),
+			FileResult.ERRV_VERSION:inf.get_chunk_version(header),
+			FileResult.ERRV_EXP_CHUNK:CHUNK_INSTRUMENTS,
+			FileResult.ERRV_EXP_VERSION:CHUNK_INSTRUMENTS_VERSION,
+			FileResult.ERRV_FILE:inf.get_path()
 		})
 	var hdr:Dictionary
 	var inst_l:Array=[]
@@ -184,7 +184,7 @@ func deserialize_instrument_list(inf:ChunkedFile,song:Song,header:Dictionary)->F
 		song.lfo_duty_cycles[i]=inf.get_8()
 	inst_l.resize(inf.get_16())
 	if inf.get_error():
-		return FileResult.new(inf.get_error(),{"file":inf.get_path()})
+		return FileResult.new(inf.get_error(),{FileResult.ERRV_FILE:inf.get_path()})
 	var fr:FileResult
 	for i in inst_l.size():
 		hdr=inf.get_chunk_header()
@@ -204,7 +204,7 @@ func deserialize_instrument_list(inf:ChunkedFile,song:Song,header:Dictionary)->F
 	if header[ChunkedFile.CHUNK_VERSION]==0:
 		hdr=inf.get_chunk_header()
 		if inf.get_error():
-			return FileResult.new(inf.get_error(),{"file":inf.get_path()})
+			return FileResult.new(inf.get_error(),{FileResult.ERRV_FILE:inf.get_path()})
 		if hdr[ChunkedFile.CHUNK_ID]==CHUNK_WAVES:
 			fr=deserialize_wave_list(inf,song,hdr)
 			if fr!=null and fr.has_error():
@@ -213,18 +213,18 @@ func deserialize_instrument_list(inf:ChunkedFile,song:Song,header:Dictionary)->F
 		else:
 			inf.rewind_chunk(hdr)
 	if inf.get_error():
-		return FileResult.new(inf.get_error(),{"file":inf.get_path()})
+		return FileResult.new(inf.get_error(),{FileResult.ERRV_FILE:inf.get_path()})
 	return null
 
 
 func deserialize_wave_list(inf:ChunkedFile,song:Song,header:Dictionary)->FileResult:
 	if not inf.is_chunk_valid(header,CHUNK_WAVES,CHUNK_WAVES_VERSION):
 		return FileResult.new(FileResult.ERR_INVALID_CHUNK,{
-			"chunk":inf.get_chunk_id(header),
-			"version":inf.get_chunk_version(header),
-			"ex_chunk":CHUNK_WAVES,
-			"ex_version":CHUNK_WAVES_VERSION,
-			"file":inf.get_path()
+			FileResult.ERRV_CHUNK:inf.get_chunk_id(header),
+			FileResult.ERRV_VERSION:inf.get_chunk_version(header),
+			FileResult.ERRV_EXP_CHUNK:CHUNK_WAVES,
+			FileResult.ERRV_EXP_VERSION:CHUNK_WAVES_VERSION,
+			FileResult.ERRV_FILE:inf.get_path()
 		})
 	var hdr:Dictionary
 	var wav_l:Array=[]
@@ -235,7 +235,7 @@ func deserialize_wave_list(inf:ChunkedFile,song:Song,header:Dictionary)->FileRes
 	for i in wav_l.size():
 		hdr=inf.get_chunk_header()
 		if inf.get_error():
-			return FileResult.new(inf.get_error(),{"file":inf.get_path()})
+			return FileResult.new(inf.get_error(),{FileResult.ERRV_FILE:inf.get_path()})
 		match hdr[ChunkedFile.CHUNK_ID]:
 			SynthWaveReader.CHUNK_ID:
 				fr=syn_r.deserialize(inf,hdr)
@@ -249,7 +249,7 @@ func deserialize_wave_list(inf:ChunkedFile,song:Song,header:Dictionary)->FileRes
 		wav_l[i]=fr.data
 		inf.skip_chunk(hdr)
 	if inf.get_error():
-		return FileResult.new(inf.get_error(),{"file":inf.get_path()})
+		return FileResult.new(inf.get_error(),{FileResult.ERRV_FILE:inf.get_path()})
 	song.wave_list.append_array(wav_l)
 	return null
 
@@ -257,11 +257,11 @@ func deserialize_wave_list(inf:ChunkedFile,song:Song,header:Dictionary)->FileRes
 func deserialize_arpeggios(inf:ChunkedFile,song:Song,header:Dictionary)->FileResult:
 	if not inf.is_chunk_valid(header,CHUNK_ARPEGGIOS,CHUNK_ARPEGGIOS_VERSION):
 		return FileResult.new(FileResult.ERR_INVALID_CHUNK,{
-			"chunk":inf.get_chunk_id(header),
-			"version":inf.get_chunk_version(header),
-			"ex_chunk":CHUNK_ARPEGGIOS,
-			"ex_version":CHUNK_ARPEGGIOS_VERSION,
-			"file":inf.get_path()
+			FileResult.ERRV_CHUNK:inf.get_chunk_id(header),
+			FileResult.ERRV_VERSION:inf.get_chunk_version(header),
+			FileResult.ERRV_EXP_CHUNK:CHUNK_ARPEGGIOS,
+			FileResult.ERRV_EXP_VERSION:CHUNK_ARPEGGIOS_VERSION,
+			FileResult.ERRV_FILE:inf.get_path()
 		})
 	var arp_r:ArpeggioReader=ArpeggioReader.new()
 	var count:int=inf.get_16()
@@ -279,7 +279,7 @@ func deserialize_arpeggios(inf:ChunkedFile,song:Song,header:Dictionary)->FileRes
 			song.arp_list.resize(ix+1)
 		song.arp_list[ix]=fr.data["arpeggio"]
 	if inf.get_error():
-		return FileResult.new(inf.get_error(),{"file":inf.get_path()})
+		return FileResult.new(inf.get_error(),{FileResult.ERRV_FILE:inf.get_path()})
 	for i in song.arp_list.size():
 		if song.arp_list[i]==null:
 			song.arp_list[i]=Arpeggio.new()

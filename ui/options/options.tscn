@@ -364,7 +364,7 @@ window_title = "Select a theme"
 mode_overrides_title = false
 mode = 0
 access = 2
-filters = PoolStringArray( "*.json" )
+filters = PoolStringArray( "*.json ; FILETYPE_THEME" )
 
 [connection signal="value_changed" from="SC/GC/Audio/Audio/SampleRate" to="." method="_on_AudioSampleRate_value_changed"]
 [connection signal="value_changed" from="SC/GC/Audio/Audio/BufferLength" to="." method="_on_AudioBufferSize_value_changed"]

@@ -1,25 +1,6 @@
 extends File
 class_name WaveFile
 
-const ERR_FILE_NOT_OPEN:int=-1
-const ERR_UNRECOGNIZED_ERROR:int=-2
-const ERR_MESSAGES={
-	ERR_FILE_NOT_FOUND:"File %s not found.",
-	ERR_FILE_BAD_DRIVE:"Bad drive trying to write %s.",
-	ERR_FILE_BAD_PATH:"Bad path %s.",
-	ERR_FILE_NO_PERMISSION:"No permission to access %s.",
-	ERR_FILE_ALREADY_IN_USE:"File %s is already in use.",
-	ERR_FILE_CANT_OPEN:"Can't open %s.'",
-	ERR_FILE_CANT_WRITE:"Can't write %s.",
-	ERR_FILE_CANT_READ:"Can't read %s.'",
-	ERR_FILE_UNRECOGNIZED:"Unrecognized file type %s",
-	ERR_FILE_CORRUPT:"File %s is corrupt.",
-	ERR_FILE_MISSING_DEPENDENCIES:"File %s is missing dependencies.",
-	ERR_FILE_EOF:"EOF met in file %s.",
-	ERR_FILE_NOT_OPEN:"File %s is not open.",
-	ERR_UNRECOGNIZED_ERROR:"Unknown error %d."
-}
-
 var float_samples:bool
 var block_bytes:int
 var data_size:int
@@ -51,8 +32,6 @@ func start_file(path:String,fp_samples:bool,sample_rate:int)->int:
 	return OK
 
 func write_chunk(data:Array)->int:
-	if !is_open():
-		return ERR_FILE_NOT_OPEN
 	for block in data:
 		if float_samples:
 			store_float(block.x)
@@ -69,8 +48,6 @@ func write_chunk(data:Array)->int:
 	return OK
 
 func write_cue_points(offsets:Array)->int:
-	if !is_open():
-		return ERR_FILE_NOT_OPEN
 	if offsets.empty():
 		return OK
 	store_string("cue ")
@@ -86,8 +63,6 @@ func write_cue_points(offsets:Array)->int:
 	return OK
 
 func end_file()->int:
-	if !is_open():
-		return ERR_FILE_NOT_OPEN
 	seek(4)
 	var err:int=get_error()
 	if err!=OK:
@@ -109,9 +84,6 @@ func end_file()->int:
 		close()
 		return err
 	close()
-	err=get_error()
-	if err!=OK:
-		return err
 	return OK
 
 #
@@ -182,10 +154,3 @@ func get_sample(bits_sample:int):
 		return get_float()
 	t=(get_8()<<16)|get_16()
 	return t if t<0x800000 else t-0x1000000
-
-#
-
-func get_error_message(err:int)->String:
-	if err in ERR_MESSAGES:
-		return ERR_MESSAGES[err]%[get_path(),err]
-	return ERR_MESSAGES[ERR_UNRECOGNIZED_ERROR]

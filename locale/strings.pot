@@ -639,6 +639,18 @@ msgstr ""
 msgid "MCED_DELAY_TTIP"
 msgstr ""
 
+msgid "MCED_VALUE"
+msgstr ""
+
+msgid "MCED_PASSTHROUGH"
+msgstr ""
+
+msgid "MCED_ZOOM"
+msgstr ""
+
+msgid "MCED_POSITION"
+msgstr ""
+
 
 # Wave editor
 
@@ -1267,5 +1279,175 @@ msgid "OPTS_EDITOR_OSC_RATE_TTIP"
 msgstr ""
 
 msgid "OPTS_THEME_TITLE"
+msgstr ""
+
+
+# File types
+
+msgid "FILETYPE_SONG"
+msgstr ""
+
+msgid "FILETYPE_WAV"
+msgstr ""
+
+msgid "FILETYPE_INSTRUMENT"
+msgstr ""
+
+msgid "FILETYPE_THEME"
+msgstr ""
+
+
+# Default names
+
+msgid "DEFN_SONG"
+msgstr ""
+
+msgid "DEFN_INSTRUMENT"
+msgstr ""
+
+msgid "DEFN_FM_INSTRUMENT"
+msgstr ""
+
+msgid "DEFN_SYNTH_WAVE"
+msgstr ""
+
+msgid "DEFN_SAMPLE_WAVE"
+msgstr ""
+
+
+# File dialog
+
+msgid "Go to parent folder."
+msgstr ""
+
+msgid "Refresh files."
+msgstr ""
+
+msgid "Toggle the visibility of hidden files."
+msgstr ""
+
+
+# Error messages
+
+msgid "WARN_OPTS_RESTART"
+msgstr ""
+
+msgid "ERR_SONG_MAX_WAVES"
+msgstr ""
+
+msgid "ERR_SONG_WAVE_NOT_FOUND"
+msgstr ""
+
+msgid "ERR_SONG_WAVE_IN_LFO"
+msgstr ""
+
+msgid "ERR_SONG_WAVE_IN_INSTRUMENT"
+msgstr ""
+
+msgid "ERR_SONG_WAVE_IN_SONG"
+msgstr ""
+
+msgid "ERR_SONG_MAX_INSTRUMENTS"
+msgstr ""
+
+msgid "ERR_SONG_MIN_INSTRUMENTS"
+msgstr ""
+
+msgid "ERR_SONG_INSTRUMENT_NOT_FOUND"
+msgstr ""
+
+msgid "ERR_SONG_INSTRUMENT_IN_SONG"
+msgstr ""
+
+msgid "ERR_SONG_MAX_ARPS"
+msgstr ""
+
+msgid "ERR_SONG_ARP_NOT_FOUND"
+msgstr ""
+
+msgid "ERR_SONG_ARP_IN_SONG"
+msgstr ""
+
+msgid "ERR_CONFIG_KEY_NOT_FOUND"
+msgstr ""
+
+
+
+
+
+
+msgid "ERR_OK"
+msgstr "Ok."
+
+msgid "ERR_BUG"
+msgstr ""
+
+msgid "ERR_FILE_BAD_CHUNK_VERSION"
+msgstr ""
+
+msgid "ERR_FILE_BAD_CHUNK"
+msgstr ""
+
+msgid "ERR_FILE_BAD_DRIVE"
+msgstr ""
+
+msgid "ERR_FILE_BAD_PATH"
+msgstr ""
+
+msgid "ERR_FILE_NO_PERMISSION"
+msgstr ""
+
+msgid "ERR_FILE_ALREADY_IN_USE"
+msgstr ""
+
+msgid "ERR_FILE_CANT_WRITE"
+msgstr ""
+
+msgid "ERR_FILE_CANT_READ"
+msgstr ""
+
+msgid "ERR_FILE_MISSING_DEPENDENCIES"
+msgstr ""
+
+msgid "ERR_FILE_EOF"
+msgstr ""
+
+msgid "ERR_ALREADY_IN_USE"
+msgstr ""
+
+msgid "ERR_FILE_CANT_OPEN"
+msgstr ""
+
+msgid "ERR_FILE_NOT_FOUND"
+msgstr ""
+
+msgid "ERR_FILE_UNRECOGNIZED"
+msgstr ""
+
+msgid "ERR_FILE_CORRUPT"
+msgstr ""
+
+msgid "ERR_INVALID_TYPE"
+msgstr ""
+
+msgid "ERR_INVALID_VERSION"
+msgstr ""
+
+msgid "ERR_INVALID_CHUNK"
+msgstr ""
+
+msgid "ERR_MISSING_WAVES"
+msgstr ""
+
+msgid "ERR_BAD_WAVE_COMPONENT"
+msgstr ""
+
+msgid "ERR_BAD_WAVE_COMPONENT_OUT"
+msgstr ""
+
+msgid "ERR_INVALID_WAVE_TYPE"
+msgstr ""
+
+msgid "ERR_INVALID_MACRO"
 msgstr ""
 

@@ -11,35 +11,35 @@ size_flags_vertical = 3
 script = ExtResource( 2 )
 
 [node name="Buttons" type="HBoxContainer" parent="."]
-margin_right = 402.0
+margin_right = 309.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 
 [node name="Add" type="Button" parent="Buttons"]
-margin_right = 124.0
+margin_right = 93.0
 margin_bottom = 20.0
 hint_tooltip = "INSTED_ADD_TTIP"
 shortcut_in_tooltip = false
 text = "INSTED_ADD"
 
 [node name="Copy" type="Button" parent="Buttons"]
-margin_left = 128.0
-margin_right = 251.0
+margin_left = 97.0
+margin_right = 189.0
 margin_bottom = 20.0
 hint_tooltip = "INSTED_DUP_TTIP"
 shortcut_in_tooltip = false
 text = "INSTED_DUP"
 
 [node name="ReferenceRect" type="ReferenceRect" parent="Buttons"]
-margin_left = 255.0
-margin_right = 279.0
+margin_left = 193.0
+margin_right = 217.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 24, 0 )
 size_flags_horizontal = 3
 
 [node name="Del" type="Button" parent="Buttons"]
-margin_left = 283.0
-margin_right = 402.0
+margin_left = 221.0
+margin_right = 309.0
 margin_bottom = 20.0
 hint_tooltip = "INSTED_DEL_TTIP"
 shortcut_in_tooltip = false
@@ -49,12 +49,12 @@ text = "INSTED_DEL"
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 24.0
-margin_right = 402.0
+margin_right = 309.0
 margin_bottom = 537.0
 
 [node name="Buttons2" type="HBoxContainer" parent="."]
 margin_top = 541.0
-margin_right = 402.0
+margin_right = 309.0
 margin_bottom = 561.0
 size_flags_horizontal = 3
 
@@ -66,14 +66,14 @@ text = "INSTED_LOAD"
 
 [node name="ReferenceRect" type="ReferenceRect" parent="Buttons2"]
 margin_left = 105.0
-margin_right = 303.0
+margin_right = 210.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 24, 0 )
 size_flags_horizontal = 3
 
 [node name="Save" type="Button" parent="Buttons2"]
-margin_left = 307.0
-margin_right = 402.0
+margin_left = 214.0
+margin_right = 309.0
 margin_bottom = 20.0
 shortcut_in_tooltip = false
 text = "INSTED_SAVE"
@@ -83,6 +83,7 @@ margin_right = 315.0
 margin_bottom = 130.0
 mode_overrides_title = false
 access = 2
+filters = PoolStringArray( "*.si4 ; FILETYPE_INSTRUMENT" )
 
 [connection signal="pressed" from="Buttons/Add" to="." method="_on_Add_pressed"]
 [connection signal="pressed" from="Buttons/Copy" to="." method="_on_Copy_pressed"]

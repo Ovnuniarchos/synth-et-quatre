@@ -3,8 +3,7 @@ class_name Result
 
 
 const ERR_MSGS:Dictionary={
-	OK:"",
-	ERR_BUG:"This should not happen...: %s"
+	OK:"ERR_OK"
 }
 
 
@@ -29,7 +28,7 @@ func get_message()->String:
 	elif error in ERR_MSGS:
 		return tr(ERR_MSGS[error]).format(error_data)
 	else:
-		return tr(ERR_MSGS[ERR_BUG])%[String(error_data)]
+		return tr("ERR_BUG").format({"s_data":String(error_data)})
 
 
 func has_error()->bool:

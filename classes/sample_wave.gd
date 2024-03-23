@@ -11,6 +11,9 @@ var loop_end:int=0
 var record_freq:float=48000.0
 var sample_freq:float=440.0
 
+func _init()->void:
+	name=tr("DEFN_SAMPLE_WAVE")
+
 func calculate()->void:
 	var buf_size:int=original_data.size()
 	data.resize(buf_size)

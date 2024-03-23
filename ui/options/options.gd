@@ -18,4 +18,4 @@ func _on_ThemeFile_pressed()->void:
 func _on_FileDialog_file_selected(path:String)->void:
 	CONFIG.set_value(CONFIG.THEME_FILE,path)
 	$SC/GC/ThemeTitle.text=path
-	ALERT.alert("Changes will show after restarting.")
+	ALERT.alert(tr("WARN_OPTS_RESTART"))

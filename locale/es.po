@@ -632,6 +632,18 @@ msgstr "R"
 msgid "MCED_DELAY_TTIP"
 msgstr "Retraso (ticks)"
 
+msgid "MCED_VALUE"
+msgstr "{i_value}"
+
+msgid "MCED_PASSTHROUGH"
+msgstr "No alterar"
+
+msgid "MCED_ZOOM"
+msgstr "×{i_zoom}"
+
+msgid "MCED_POSITION"
+msgstr "({i_x},{i_y})"
+
 # Wave editor
 msgid "WAVED_LOAD"
 msgstr "Cargar"
@@ -1255,4 +1267,166 @@ msgstr "<EMPTY>"
 
 msgid "OPTS_THEME_TITLE"
 msgstr "Tema"
+
+# File types
+msgid "FILETYPE_SONG"
+msgstr "Canción SynthEtQuatre"
+
+msgid "FILETYPE_WAV"
+msgstr "Archivo WAV"
+
+msgid "FILETYPE_INSTRUMENT"
+msgstr "Instrumento SynthEtQuatre"
+
+msgid "FILETYPE_THEME"
+msgstr "Archivo de tema"
+
+# Default names
+msgid "DEFN_SONG"
+msgstr "Sin título"
+
+msgid "DEFN_INSTRUMENT"
+msgstr "Instrumento"
+
+msgid "DEFN_FM_INSTRUMENT"
+msgstr "Instrumento FM"
+
+msgid "DEFN_SYNTH_WAVE"
+msgstr "Onda sintética"
+
+msgid "DEFN_SAMPLE_WAVE"
+msgstr "Muestra"
+
+# File dialog
+msgid "Go to parent folder."
+msgstr "Carpeta superior."
+
+msgid "Refresh files."
+msgstr "Refrescar."
+
+msgid "Toggle the visibility of hidden files."
+msgstr "Mostrar archivos ocultos act/des."
+
+# Error messages
+msgid "WARN_OPTS_RESTART"
+msgstr "Los cambios se aplicarán después de reiniciar la aplicación."
+
+msgid "ERR_SONG_MAX_WAVES"
+msgstr "No se pueden tener más de {i_max_waves} ondas."
+
+msgid "ERR_SONG_WAVE_NOT_FOUND"
+msgstr "Onda no encontrada."
+
+msgid "ERR_SONG_WAVE_IN_LFO"
+msgstr "El LFO {i_lfo} está usando la onda."
+
+msgid "ERR_SONG_WAVE_IN_INSTRUMENT"
+msgstr "El instrumento {i_instr} está usando la onda en el operador {i_op}."
+
+msgid "ERR_SONG_WAVE_IN_SONG"
+msgstr "El patrón {i_pattern} del canal {i_channel} está usando la onda en la fila {i_row}."
+
+msgid "ERR_SONG_MAX_INSTRUMENTS"
+msgstr "No se pueden tener más de {i_max_instrs} instrumentos."
+
+msgid "ERR_SONG_MIN_INSTRUMENTS"
+msgstr "Hace falta al menos un instrumento."
+
+msgid "ERR_SONG_INSTRUMENT_NOT_FOUND"
+msgstr "Instrumento no encontrado."
+
+msgid "ERR_SONG_INSTRUMENT_IN_SONG"
+msgstr "El patrón {i_pattern} del canal {i_channel} está usando el instrumento en la fila {i_row}."
+
+msgid "ERR_SONG_MAX_ARPS"
+msgstr "No se pueden tener más de {i_max_arps} arpegios."
+
+msgid "ERR_SONG_ARP_NOT_FOUND"
+msgstr "Arpegio no encontrado."
+
+msgid "ERR_SONG_ARP_IN_SONG"
+msgstr "El patrón {i_pattern} del canal {i_channel} está usando el arpegio en la fila {i_row}."
+
+msgid "ERR_CONFIG_KEY_NOT_FOUND"
+msgstr "Ítem de config. no encontrado."
+
+
+
+
+
+
+msgid "ERR_OK"
+msgstr "Ok."
+
+msgid "ERR_BUG"
+msgstr "Error desconocido: {s_data}"
+
+msgid "ERR_FILE_BAD_CHUNK_VERSION"
+msgstr "Versión {v_version} del chunk [{v_chunk}] incorrecta en {v_position}."
+
+msgid "ERR_FILE_BAD_CHUNK"
+msgstr "Chunk [{v_chunk}] incorrecto en {v_position}."
+
+msgid "ERR_FILE_BAD_DRIVE"
+msgstr "Unidad incorrecta abriendo {s_file}."
+
+msgid "ERR_FILE_BAD_PATH"
+msgstr "Ruta incorrecta abriendo {s_file}."
+
+msgid "ERR_FILE_NO_PERMISSION"
+msgstr "No hay permisos para acceder a {s_file}."
+
+msgid "ERR_FILE_ALREADY_IN_USE"
+msgstr "Ya se está usando {s_file}."
+
+msgid "ERR_FILE_CANT_WRITE"
+msgstr "No se puede escribir en {s_file}."
+
+msgid "ERR_FILE_CANT_READ"
+msgstr "No se puede leer {s_file}."
+
+msgid "ERR_FILE_MISSING_DEPENDENCIES"
+msgstr "Faltan dependencias en {s_file}."
+
+msgid "ERR_FILE_EOF"
+msgstr "Fin de archivo inesperado en {s_file}."
+
+msgid "ERR_ALREADY_IN_USE"
+msgstr "{s_file} está siendo usado por otro programa."
+
+msgid "ERR_FILE_CANT_OPEN"
+msgstr "No se puede abrir {s_file}."
+
+msgid "ERR_FILE_NOT_FOUND"
+msgstr "No se encuentra {s_file}."
+
+msgid "ERR_FILE_UNRECOGNIZED"
+msgstr "Compresión desconocida abriendo {s_file}."
+
+msgid "ERR_FILE_CORRUPT"
+msgstr "{s_file} está corrupto."
+
+msgid "ERR_INVALID_TYPE"
+msgstr "{s_file} no es un archivo {s_type}."
+
+msgid "ERR_INVALID_VERSION"
+msgstr "Version errónea {i_version} abriendo {s_file}."
+
+msgid "ERR_INVALID_CHUNK"
+msgstr "Chunk erróneo {s_chunk}:{i_version} en {s_file}. Se esperaba {s_ex_chunk}:{i_ex_version}."
+
+msgid "ERR_MISSING_WAVES"
+msgstr "Instrumento independiente sin formas de onda."
+
+msgid "ERR_BAD_WAVE_COMPONENT"
+msgstr "Componente de onda inválido {s_chunk} en {s_file}."
+
+msgid "ERR_BAD_WAVE_COMPONENT_OUT"
+msgstr "Tipo de componente de onda inválido {s_type} escribiendo {s_file}."
+
+msgid "ERR_INVALID_WAVE_TYPE"
+msgstr "Tipo de onda inválido {s_type} escribiendo {s_file}."
+
+msgid "ERR_INVALID_MACRO"
+msgstr "Tipo/operador de macro inválido {s_type}/{i_op} en {s_file}."
 

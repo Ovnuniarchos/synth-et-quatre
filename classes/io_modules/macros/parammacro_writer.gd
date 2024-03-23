@@ -14,7 +14,7 @@ func set_macro(id:String,op:int=-1)->void:
 func serialize(out:ChunkedFile,m:ParamMacro)->FileResult:
 	if not is_valid_macro(macro_id,macro_op):
 		return FileResult.new(FileResult.ERR_INVALID_MACRO,{
-			"file":out.get_path(),
+			FileResult.ERRV_FILE:out.get_path(),
 			"type":macro_id,
 			"op":macro_op
 		})

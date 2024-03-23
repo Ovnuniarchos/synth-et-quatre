@@ -117,7 +117,7 @@ func _on_New_pressed()->void:
 func _on_Open_pressed()->void:
 	file_mode=FILE_MODE.LOAD_SONG
 	file_dlg.current_dir=CONFIG.get_value(CONFIG.CURR_SONG_DIR)
-	file_dlg.window_title=tr("MENU_OPEN_SONG_DLG")
+	file_dlg.window_title="MENU_OPEN_SONG_DLG"
 	file_dlg.mode=FileDialog.MODE_OPEN_FILE
 	file_dlg.filters=FILES_SE4
 	file_dlg.current_file=""
@@ -128,7 +128,7 @@ func _on_Open_pressed()->void:
 func _on_Save_pressed()->void:
 	file_mode=FILE_MODE.SAVE_SONG
 	file_dlg.current_dir=CONFIG.get_value(CONFIG.CURR_SONG_DIR)
-	file_dlg.window_title=tr("MENU_SAVE_SONG_DLG")
+	file_dlg.window_title="MENU_SAVE_SONG_DLG"
 	file_dlg.mode=FileDialog.MODE_SAVE_FILE
 	file_dlg.filters=FILES_SE4
 	file_dlg.current_file=GLOBALS.song.file_name
@@ -139,7 +139,7 @@ func _on_Save_pressed()->void:
 func _on_SaveWave_pressed()->void:
 	file_mode=FILE_MODE.SAVE_WAV
 	file_dlg.current_dir=CONFIG.get_value(CONFIG.CURR_EXPORT_DIR)
-	file_dlg.window_title=tr("MENU_SAVE_WAVE_DLG")
+	file_dlg.window_title="MENU_SAVE_WAVE_DLG"
 	file_dlg.mode=FileDialog.MODE_SAVE_FILE
 	file_dlg.filters=FILES_WAV
 	file_dlg.current_file=""
@@ -149,17 +149,25 @@ func _on_SaveWave_pressed()->void:
 
 func _on_file_selected(path:String)->void:
 	var cfg_dir:Array
+	var res:FileResult
 	match file_mode:
 		FILE_MODE.LOAD_SONG:
 			cfg_dir=CONFIG.CURR_SONG_DIR
-			SongReader.new().read(path)
+			res=SongReader.new().read(path)
 		FILE_MODE.SAVE_SONG:
 			cfg_dir=CONFIG.CURR_SONG_DIR
-			SongWriter.new().write(path,GLOBALS.song)
+			res=SongWriter.new().write(path,GLOBALS.song)
 		FILE_MODE.SAVE_WAV:
 			cfg_dir=CONFIG.CURR_EXPORT_DIR
-			WaveFileWriter.new().write(path)
-	CONFIG.set_value(cfg_dir,path.get_base_dir())
+			var writer:WaveFileWriter=WaveFileWriter.new()
+			writer.write(path)
+			yield(writer,"export_ended")
+			res=writer.result
+	if res.has_error():
+		ALERT.alert(res.get_message())
+		print(res.get_message())
+	else:
+		CONFIG.set_value(cfg_dir,path.get_base_dir())
 
 
 func _on_FileDialog_visibility_changed()->void:

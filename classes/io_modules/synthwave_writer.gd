@@ -64,7 +64,7 @@ func serialize(out:ChunkedFile,wave:SynthWave)->FileResult:
 	out.store_pascal_string(wave.name)
 	out.store_16(wave.components.size())
 	if out.get_error():
-		return FileResult.new(out.get_error(),{"file":out.get_path()})
+		return FileResult.new(out.get_error(),{FileResult.ERRV_FILE:out.get_path()})
 	var fr:FileResult
 	for comp in wave.components:
 		if writers.has(comp.COMPONENT_ID):
@@ -72,11 +72,11 @@ func serialize(out:ChunkedFile,wave:SynthWave)->FileResult:
 		else:
 			fr=FileResult.new(FileResult.ERR_BAD_WAVE_COMPONENT_OUT,{
 				"type":comp.COMPONENT_ID,
-				"file":out.get_path()
+				FileResult.ERRV_FILE:out.get_path()
 			})
 		if fr.has_error():
 			return fr
 	out.end_chunk()
 	if out.get_error():
-		return FileResult.new(out.get_error(),{"file":out.get_path()})
+		return FileResult.new(out.get_error(),{FileResult.ERRV_FILE:out.get_path()})
 	return FileResult.new()

@@ -72,15 +72,15 @@ func _on_Copy_pressed()->void:
 func _on_Add_id_pressed(id:int)->void:
 	if GLOBALS.song.can_add_wave():
 		var cnt:int=$Waves.get_item_count()
-		var nn:String=("Wave %02X" if id==0 else "Sample %02X")%[cnt]
 		curr_wave_ix=cnt
-		$Waves.add_item(nn)
 		var nw:Waveform
 		if id==0:
 			nw=SynthWave.new()
 		else:
 			nw=SampleWave.new()
+		var nn:String="%s %02X"%[nw.name,cnt]
 		nw.name=nn
+		$Waves.add_item(nn)
 		GLOBALS.song.add_wave(nw)
 		SYNCER.send_wave(nw)
 		emit_signal("wave_added",cnt)

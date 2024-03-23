@@ -25,7 +25,7 @@ func set_config_key(ck:String)->void:
 func _get_configuration_warning()->String:
 	if (config_key in CONFIG) and typeof(CONFIG[config_key])==TYPE_ARRAY:
 		return ""
-	return "Config key not found"
+	return tr("ERR_CONFIG_KEY_NOT_FOUND")
 
 
 func _on_value_changed(v:float)->void:

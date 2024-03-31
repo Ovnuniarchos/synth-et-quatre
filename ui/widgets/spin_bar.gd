@@ -20,7 +20,7 @@ var dragging:bool=false
 var pressed:bool=false
 var press_pos:Vector2
 var label:Label
-var input:LineEdit
+var input:NumberEdit
 var mode:String=MODE_NORMAL
 var __setting:bool=false
 
@@ -35,7 +35,7 @@ func _init()->void:
 	label.size_flags_horizontal=SIZE_EXPAND_FILL|SIZE_SHRINK_CENTER
 	label.size_flags_vertical=SIZE_EXPAND_FILL|SIZE_SHRINK_CENTER
 	label.text=format_value(value)+" "+suffix
-	input=LineEdit.new()
+	input=NumberEdit.new()
 	input.set_anchors_and_margins_preset(Control.PRESET_WIDE)
 	input.align=LineEdit.ALIGN_CENTER
 	input.editable=false
@@ -43,6 +43,7 @@ func _init()->void:
 	input.context_menu_enabled=false
 	if !Engine.editor_hint:
 		input.connect("text_entered",self,"_on_text_entered")
+		input.connect("value_changed",self,"_on_value_changed")
 		input.connect("focus_exited",self,"_on_text_canceled")
 		input.connect("gui_input",self,"_gui_input")
 		if not is_connected("mouse_entered",self,"_on_mouse_enter"):
@@ -72,6 +73,10 @@ func _ready()->void:
 	rect_min_size=Vector2(max(max(s0.x,s1.x),rect_min_size.x),max(max(s0.y,s1.y),rect_min_size.y))
 	rect_min_size+=Vector2(sb.content_margin_left+sb.content_margin_right,sb.content_margin_top+sb.content_margin_bottom)
 	add_child(label)
+	input.set_min_val(min_value)
+	input.set_max_val(max_value)
+	input.set_decimals(_decimals)
+	input.set_negative(min_value<0)
 	add_child(input)
 	switch_input(false)
 
@@ -88,6 +93,7 @@ func set_value_no_signal(f:float)->void:
 
 func set_decimals(v:int)->void:
 	_decimals=v
+	input.set_decimals(v)
 	set_value(value)
 
 
@@ -103,6 +109,7 @@ func set_editable(e:bool)->void:
 
 func _on_value_changed(v:float)->void:
 	value=clamp(v,min_value,max_value)
+	input.set_value_no_signal(v)
 	if label!=null:
 		label.text=format_value(value)+" "+suffix
 

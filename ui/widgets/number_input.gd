@@ -6,7 +6,7 @@ signal value_changed(value)
 
 export (int) var min_value:int=0 setget set_min_val
 export (int) var max_value:int=255 setget set_max_val
-export (bool) var has_decimals:bool=false setget set_has_decimals
+export (int) var _decimals:int=0 setget set_decimals
 export (bool) var negative:bool=false setget set_negative
 
 
@@ -26,8 +26,8 @@ func set_max_val(v:int)->void:
 	adjust_length()
 
 
-func set_has_decimals(v:bool)->void:
-	has_decimals=v
+func set_decimals(v:int)->void:
+	_decimals=v
 	adjust_length()
 
 
@@ -37,7 +37,7 @@ func set_negative(v:bool)->void:
 
 
 func adjust_length()->void:
-	max_length=ceil(log(max(abs(max_value),abs(min_value)))/log(10.0))+int(has_decimals)+int(negative)
+	max_length=ceil(log(max(abs(max_value),abs(min_value)))/log(10.0))+_decimals+int(_decimals>0)+int(negative)
 	add_constant_override("minimum_spaces",max_length)
 
 
@@ -46,16 +46,20 @@ func _on_text_changed(nt:String,invalid_brk:bool)->void:
 	var nt2:String=""
 	var c2:int
 	var pos:int=0
-	var can_dec:bool=true
+	var decs:int=_decimals
+	var int_mode:bool=true
 	for c in nt:
 		c2=ord(c)
-		if has_decimals and c2==0x2E and can_dec:
+		if decs>0 and c2==0x2E and int_mode:
 			nt2+=c
-			can_dec=false
+			int_mode=false
 		elif negative and c2==0x2D and pos==0:
 			nt2+=c
 		elif c2>=0x30 and c2<=0x39:
-			nt2+=c
+			if int_mode or decs>0:
+				nt2+=c
+				if not int_mode:
+					decs-=1
 		elif invalid_brk:
 			break
 		pos+=1
@@ -66,8 +70,8 @@ func _on_text_changed(nt:String,invalid_brk:bool)->void:
 func _on_text_entered(nt:String)->void:
 	set_block_signals(true)
 	_on_text_changed(nt,true)
-	var v=float(text) if has_decimals else int(text)
-	text=("%f" if has_decimals else "%d")%v
+	var v=float(text) if _decimals>0 else int(text)
+	text=("%f" if _decimals>0 else "%d")%v
 	set_block_signals(false)
 	emit_signal("value_changed",v)
 

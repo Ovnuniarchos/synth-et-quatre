@@ -247,7 +247,7 @@ _global_script_classes=[ {
 "base": "LineEdit",
 "class": "NumberEdit",
 "language": "GDScript",
-"path": "res://ui/widgets/number_input.tres.gd"
+"path": "res://ui/widgets/number_input.gd"
 }, {
 "base": "ItemList",
 "class": "NumberedItemList",

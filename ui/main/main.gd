@@ -3,8 +3,6 @@ extends Control
 """
 FIXME
 TODO:
-	Translations
-		Remove unnecessary tr()
 	Copy/Paste buttons for instrument/wave editors
 	MIDI on/off indicator
 	Reset per channel parameters (as a command|button)

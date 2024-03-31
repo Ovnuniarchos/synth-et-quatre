@@ -12,7 +12,7 @@ func _ready()->void:
 	for i in range(1,5):
 		c=get_node("VBC/OP%d"%[i])
 		if (i-1)==operator:
-			c.title=tr("FMED_MO_OPXX")
+			c.title="FMED_MO_OPXX"
 			c.title_tooltip=tr("FMED_MO_OPXX_TTIP").format({"i_op":i})
 		else:
 			c.title=tr("FMED_MO_OPXY").format({"i_op_org":operator+1,"i_op_dst":i})

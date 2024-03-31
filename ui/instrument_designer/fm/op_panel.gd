@@ -97,13 +97,13 @@ func _on_MULSlider_value_changed(value:float)->void:
 	GLOBALS.get_instrument().multipliers[operator]=int(value)
 	IM_SYNTH.set_freq_mul(operator,int(value))
 	if int(value)>0:
-		$Params/Detune/DETLabel.text=tr("FMED_DETUNE")
-		$Params/Detune/DETLabel.hint_tooltip=tr("FMED_DETUNE_TTIP")
-		$Params/Detune/DETSlider.hint_tooltip=tr("FMED_DETUNE_TTIP")
+		$Params/Detune/DETLabel.text="FMED_DETUNE"
+		$Params/Detune/DETLabel.hint_tooltip="FMED_DETUNE_TTIP"
+		$Params/Detune/DETSlider.hint_tooltip="FMED_DETUNE_TTIP"
 	else:
-		$Params/Detune/DETLabel.text=tr("FMED_FIXED_FREQUENCY")
-		$Params/Detune/DETLabel.hint_tooltip=tr("FMED_FIXED_FREQUENCY_TTIP")
-		$Params/Detune/DETSlider.hint_tooltip=tr("FMED_FIXED_FREQUENCY_TTIP")
+		$Params/Detune/DETLabel.text="FMED_FIXED_FREQUENCY"
+		$Params/Detune/DETLabel.hint_tooltip="FMED_FIXED_FREQUENCY_TTIP"
+		$Params/Detune/DETSlider.hint_tooltip="FMED_FIXED_FREQUENCY_TTIP"
 	emit_signal("instrument_changed")
 
 func _on_DIVSlider_value_changed(value:float)->void:
@@ -144,13 +144,13 @@ func set_sliders(inst:FmInstrument)->void:
 	$Params/FMS/FMSSlider.value=inst.fm_intensity[operator]
 	$Params/LFOs/FreqLFO.select($Params/LFOs/FreqLFO.get_item_index(inst.fm_lfo[operator]))
 	if inst.multipliers[operator]>0:
-		$Params/Detune/DETLabel.text=tr("FMED_DETUNE")
-		$Params/Detune/DETLabel.hint_tooltip=tr("FMED_DETUNE_TTIP")
-		$Params/Detune/DETSlider.hint_tooltip=tr("FMED_DETUNE_TTIP")
+		$Params/Detune/DETLabel.text="FMED_DETUNE"
+		$Params/Detune/DETLabel.hint_tooltip="FMED_DETUNE_TTIP"
+		$Params/Detune/DETSlider.hint_tooltip="FMED_DETUNE_TTIP"
 	else:
-		$Params/Detune/DETLabel.text=tr("FMED_FIXED_FREQUENCY")
-		$Params/Detune/DETLabel.hint_tooltip=tr("FMED_FIXED_FREQUENCY_TTIP")
-		$Params/Detune/DETSlider.hint_tooltip=tr("FMED_FIXED_FREQUENCY_TTIP")
+		$Params/Detune/DETLabel.text="FMED_FIXED_FREQUENCY"
+		$Params/Detune/DETLabel.hint_tooltip="FMED_FIXED_FREQUENCY_TTIP"
+		$Params/Detune/DETSlider.hint_tooltip="FMED_FIXED_FREQUENCY_TTIP"
 	set_block_signals(false)
 	emit_signal("instrument_changed")
 

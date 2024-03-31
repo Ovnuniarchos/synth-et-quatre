@@ -123,7 +123,7 @@ func _on_Instruments_gui_input(ev:InputEvent)->void:
 
 func _on_Load_pressed()->void:
 	file_dlg.current_dir=CONFIG.get_value(CONFIG.CURR_INST_DIR)
-	file_dlg.window_title=tr("INSTED_DLG_LOAD")
+	file_dlg.window_title="INSTED_DLG_LOAD"
 	file_dlg.mode=FileDialog.MODE_OPEN_FILES
 	file_dlg.current_file=""
 	file_dlg.set_as_toplevel(true)
@@ -132,7 +132,7 @@ func _on_Load_pressed()->void:
 
 func _on_Save_pressed()->void:
 	file_dlg.current_dir=CONFIG.get_value(CONFIG.CURR_INST_DIR)
-	file_dlg.window_title=tr("INSTED_DLG_SAVE")
+	file_dlg.window_title="INSTED_DLG_SAVE"
 	file_dlg.mode=FileDialog.MODE_SAVE_FILE
 	file_dlg.current_file=GLOBALS.song.instrument_list[GLOBALS.curr_instrument].file_name
 	file_dlg.set_as_toplevel(true)

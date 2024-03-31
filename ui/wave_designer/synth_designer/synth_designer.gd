@@ -58,7 +58,7 @@ func set_size_bytes(size:int)->void:
 	if size>0:
 		$Info/HBC/LabelSizeSamples.text=tr("WAVED_SIZE_SAMPLES").format({"i_samples":size})
 	else:
-		$Info/HBC/LabelSizeSamples.text=tr("WAVED_SIZE_NONE")
+		$Info/HBC/LabelSizeSamples.text="WAVED_SIZE_NONE"
 
 func _on_wave_selected(wave:int)->void:
 	curr_wave_ix=wave

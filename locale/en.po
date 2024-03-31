@@ -1101,6 +1101,42 @@ msgstr "Note freq."
 msgid "WAVED_SAM_SAMPLE_FREQ_TTIP"
 msgstr "Frequency this sample represents"
 
+msgid "WAVED_SAM_SFREQ_STONE0"
+msgstr "C"
+
+msgid "WAVED_SAM_SFREQ_STONE1"
+msgstr "C#"
+
+msgid "WAVED_SAM_SFREQ_STONE2"
+msgstr "D"
+
+msgid "WAVED_SAM_SFREQ_STONE3"
+msgstr "D#"
+
+msgid "WAVED_SAM_SFREQ_STONE4"
+msgstr "E"
+
+msgid "WAVED_SAM_SFREQ_STONE5"
+msgstr "F"
+
+msgid "WAVED_SAM_SFREQ_STONE6"
+msgstr "F#"
+
+msgid "WAVED_SAM_SFREQ_STONE7"
+msgstr "G"
+
+msgid "WAVED_SAM_SFREQ_STONE8"
+msgstr "G#"
+
+msgid "WAVED_SAM_SFREQ_STONE9"
+msgstr "A"
+
+msgid "WAVED_SAM_SFREQ_STONE10"
+msgstr "A#"
+
+msgid "WAVED_SAM_SFREQ_STONE11"
+msgstr "B"
+
 msgid "WAVED_SAM_LOOP_START"
 msgstr "Loop start"
 
@@ -1291,6 +1327,28 @@ msgstr ""
 msgid "Toggle the visibility of hidden files."
 msgstr ""
 
+# Text menu
+msgid "Cut"
+msgstr ""
+
+msgid "Copy"
+msgstr ""
+
+msgid "Paste"
+msgstr ""
+
+msgid "Select All"
+msgstr ""
+
+msgid "Clear"
+msgstr ""
+
+msgid "Undo"
+msgstr ""
+
+msgid "Redo"
+msgstr ""
+
 # Default names
 msgid "DEFN_SONG"
 msgstr "Untitled"
@@ -1350,9 +1408,7 @@ msgstr "Arpeggio is in use on pattern {i_pattern} of channel {i_channel}, row {i
 msgid "ERR_CONFIG_KEY_NOT_FOUND"
 msgstr "Config key not found."
 
-
-
-
+# File-related messages
 msgid "ERR_OK"
 msgstr "Ok."
 

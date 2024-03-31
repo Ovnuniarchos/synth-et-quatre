@@ -1110,6 +1110,42 @@ msgstr ""
 msgid "WAVED_SAM_SAMPLE_FREQ_TTIP"
 msgstr ""
 
+msgid "WAVED_SAM_SFREQ_STONE0"
+msgstr ""
+
+msgid "WAVED_SAM_SFREQ_STONE1"
+msgstr ""
+
+msgid "WAVED_SAM_SFREQ_STONE2"
+msgstr ""
+
+msgid "WAVED_SAM_SFREQ_STONE3"
+msgstr ""
+
+msgid "WAVED_SAM_SFREQ_STONE4"
+msgstr ""
+
+msgid "WAVED_SAM_SFREQ_STONE5"
+msgstr ""
+
+msgid "WAVED_SAM_SFREQ_STONE6"
+msgstr ""
+
+msgid "WAVED_SAM_SFREQ_STONE7"
+msgstr ""
+
+msgid "WAVED_SAM_SFREQ_STONE8"
+msgstr ""
+
+msgid "WAVED_SAM_SFREQ_STONE9"
+msgstr ""
+
+msgid "WAVED_SAM_SFREQ_STONE10"
+msgstr ""
+
+msgid "WAVED_SAM_SFREQ_STONE11"
+msgstr ""
+
 msgid "WAVED_SAM_LOOP_START"
 msgstr ""
 
@@ -1327,6 +1363,30 @@ msgid "Toggle the visibility of hidden files."
 msgstr ""
 
 
+# Text menu
+
+msgid "Cut"
+msgstr ""
+
+msgid "Copy"
+msgstr ""
+
+msgid "Paste"
+msgstr ""
+
+msgid "Select All"
+msgstr ""
+
+msgid "Clear"
+msgstr ""
+
+msgid "Undo"
+msgstr ""
+
+msgid "Redo"
+msgstr ""
+
+
 # Error messages
 
 msgid "WARN_OPTS_RESTART"
@@ -1371,10 +1431,7 @@ msgstr ""
 msgid "ERR_CONFIG_KEY_NOT_FOUND"
 msgstr ""
 
-
-
-
-
+# File-related messages
 
 msgid "ERR_OK"
 msgstr "Ok."

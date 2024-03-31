@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://ui/wave_designer/sample_designer/sample_designer.gd" type="Script" id=1]
+[ext_resource path="res://ui/widgets/number_input.tres.gd" type="Script" id=2]
 [ext_resource path="res://ui/widgets/spin_bar.gd" type="Script" id=3]
 
 [node name="SampleDesigner" type="VBoxContainer"]
@@ -70,7 +71,7 @@ size_flags_vertical = 3
 
 [node name="VBC" type="VBoxContainer" parent="Designer/SC"]
 margin_right = 1010.0
-margin_bottom = 120.0
+margin_bottom = 130.0
 size_flags_horizontal = 3
 
 [node name="Load" type="Button" parent="Designer/SC/VBC"]
@@ -88,7 +89,7 @@ rect_min_size = Vector2( 24, 24 )
 [node name="GC" type="GridContainer" parent="Designer/SC/VBC"]
 margin_top = 52.0
 margin_right = 1010.0
-margin_bottom = 120.0
+margin_bottom = 130.0
 size_flags_horizontal = 11
 size_flags_vertical = 11
 columns = 2
@@ -115,21 +116,28 @@ percent_visible = false
 script = ExtResource( 3 )
 
 [node name="LabelSamFreq" type="Label" parent="Designer/SC/VBC/GC" groups=["Label"]]
-margin_top = 18.0
+margin_top = 23.0
 margin_right = 195.0
-margin_bottom = 32.0
+margin_bottom = 37.0
 hint_tooltip = "WAVED_SAM_SAMPLE_FREQ_TTIP"
 mouse_filter = 1
 text = "WAVED_SAM_SAMPLE_FREQ"
 
-[node name="SamFreq" type="ProgressBar" parent="Designer/SC/VBC/GC"]
+[node name="HBC" type="HBoxContainer" parent="Designer/SC/VBC/GC"]
 margin_left = 199.0
 margin_top = 18.0
 margin_right = 1010.0
-margin_bottom = 32.0
+margin_bottom = 42.0
+size_flags_horizontal = 3
+
+[node name="SamFreq" type="ProgressBar" parent="Designer/SC/VBC/GC/HBC"]
+margin_top = 5.0
+margin_right = 599.0
+margin_bottom = 19.0
 rect_min_size = Vector2( 60, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
+size_flags_stretch_ratio = 9.0
 min_value = 1.0
 max_value = 192000.0
 step = 1.0
@@ -137,19 +145,39 @@ value = 1.0
 percent_visible = false
 script = ExtResource( 3 )
 
+[node name="SamNote" type="OptionButton" parent="Designer/SC/VBC/GC/HBC"]
+margin_left = 603.0
+margin_right = 669.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="SamOctave" type="OptionButton" parent="Designer/SC/VBC/GC/HBC"]
+margin_left = 673.0
+margin_right = 740.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="SamDetune" type="LineEdit" parent="Designer/SC/VBC/GC/HBC"]
+margin_left = 744.0
+margin_right = 811.0
+margin_bottom = 24.0
+size_flags_horizontal = 11
+script = ExtResource( 2 )
+max_value = 999
+
 [node name="LabelStart" type="Label" parent="Designer/SC/VBC/GC" groups=["Label"]]
-margin_top = 36.0
+margin_top = 46.0
 margin_right = 195.0
-margin_bottom = 50.0
+margin_bottom = 60.0
 hint_tooltip = "WAVED_SAM_LOOP_START_TTIP"
 mouse_filter = 1
 text = "WAVED_SAM_LOOP_START"
 
 [node name="Start" type="ProgressBar" parent="Designer/SC/VBC/GC"]
 margin_left = 199.0
-margin_top = 36.0
+margin_top = 46.0
 margin_right = 1010.0
-margin_bottom = 50.0
+margin_bottom = 60.0
 rect_min_size = Vector2( 60, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -160,18 +188,18 @@ percent_visible = false
 script = ExtResource( 3 )
 
 [node name="LabelEnd" type="Label" parent="Designer/SC/VBC/GC" groups=["Label"]]
-margin_top = 54.0
+margin_top = 64.0
 margin_right = 195.0
-margin_bottom = 68.0
+margin_bottom = 78.0
 hint_tooltip = "WAVED_SAM_LOOP_END_TTIP"
 mouse_filter = 1
 text = "WAVED_SAM_LOOP_END"
 
 [node name="End" type="ProgressBar" parent="Designer/SC/VBC/GC"]
 margin_left = 199.0
-margin_top = 54.0
+margin_top = 64.0
 margin_right = 1010.0
-margin_bottom = 68.0
+margin_bottom = 78.0
 rect_min_size = Vector2( 60, 14 )
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -192,7 +220,10 @@ filters = PoolStringArray( "*.wav ; WAV file" )
 [connection signal="text_changed" from="Info/HBC/Name" to="." method="_on_Name_changed"]
 [connection signal="pressed" from="Designer/SC/VBC/Load" to="." method="_on_Load_pressed"]
 [connection signal="value_changed" from="Designer/SC/VBC/GC/RecFreq" to="." method="_on_values_changed"]
-[connection signal="value_changed" from="Designer/SC/VBC/GC/SamFreq" to="." method="_on_values_changed"]
+[connection signal="value_changed" from="Designer/SC/VBC/GC/HBC/SamFreq" to="." method="_on_SamFreq_changed"]
+[connection signal="item_selected" from="Designer/SC/VBC/GC/HBC/SamNote" to="." method="_on_Note_changed"]
+[connection signal="item_selected" from="Designer/SC/VBC/GC/HBC/SamOctave" to="." method="_on_Note_changed"]
+[connection signal="value_changed" from="Designer/SC/VBC/GC/HBC/SamDetune" to="." method="_on_Note_changed"]
 [connection signal="value_changed" from="Designer/SC/VBC/GC/Start" to="." method="_on_values_changed"]
 [connection signal="value_changed" from="Designer/SC/VBC/GC/End" to="." method="_on_values_changed"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_selected"]

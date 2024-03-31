@@ -1101,6 +1101,42 @@ msgstr "Frec. nota"
 msgid "WAVED_SAM_SAMPLE_FREQ_TTIP"
 msgstr "Frecuencia representada por este sonido"
 
+msgid "WAVED_SAM_SFREQ_STONE0"
+msgstr "Do"
+
+msgid "WAVED_SAM_SFREQ_STONE1"
+msgstr "Do#"
+
+msgid "WAVED_SAM_SFREQ_STONE2"
+msgstr "Re"
+
+msgid "WAVED_SAM_SFREQ_STONE3"
+msgstr "Re#"
+
+msgid "WAVED_SAM_SFREQ_STONE4"
+msgstr "Mi"
+
+msgid "WAVED_SAM_SFREQ_STONE5"
+msgstr "Fa"
+
+msgid "WAVED_SAM_SFREQ_STONE6"
+msgstr "Fa#"
+
+msgid "WAVED_SAM_SFREQ_STONE7"
+msgstr "Sol"
+
+msgid "WAVED_SAM_SFREQ_STONE8"
+msgstr "Sol#"
+
+msgid "WAVED_SAM_SFREQ_STONE9"
+msgstr "La"
+
+msgid "WAVED_SAM_SFREQ_STONE10"
+msgstr "La#"
+
+msgid "WAVED_SAM_SFREQ_STONE11"
+msgstr "Si"
+
 msgid "WAVED_SAM_LOOP_START"
 msgstr "Inicio bucle"
 
@@ -1307,6 +1343,28 @@ msgstr "Refrescar."
 msgid "Toggle the visibility of hidden files."
 msgstr "Mostrar archivos ocultos act/des."
 
+# Text menu
+msgid "Cut"
+msgstr "Cortar"
+
+msgid "Copy"
+msgstr "Copiar"
+
+msgid "Paste"
+msgstr "Pegar"
+
+msgid "Select All"
+msgstr "Seleccionar todo"
+
+msgid "Clear"
+msgstr "Borrar"
+
+msgid "Undo"
+msgstr "Deshacer"
+
+msgid "Redo"
+msgstr "Rehacer"
+
 # Error messages
 msgid "WARN_OPTS_RESTART"
 msgstr "Los cambios se aplicarán después de reiniciar la aplicación."
@@ -1350,11 +1408,7 @@ msgstr "El patrón {i_pattern} del canal {i_channel} está usando el arpegio en 
 msgid "ERR_CONFIG_KEY_NOT_FOUND"
 msgstr "Ítem de config. no encontrado."
 
-
-
-
-
-
+# File-related messages
 msgid "ERR_OK"
 msgstr "Ok."
 

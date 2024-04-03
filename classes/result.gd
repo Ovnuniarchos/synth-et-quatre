@@ -2,11 +2,9 @@ extends Reference
 class_name Result
 
 
-const ERR_MSGS:Dictionary={
+var ERR_MSGS:Dictionary={
 	OK:"ERR_OK"
 }
-
-
 var error:int
 var error_data:Dictionary
 var data

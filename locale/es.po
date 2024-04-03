@@ -349,10 +349,12 @@ msgstr "MUL"
 msgid "FMED_MULTIPLIER_TTIP"
 msgstr "Multiplicador"
 
-msgid "FMED_DIVISOR"
+#, fuzzy
+msgid "FMED_DIVIDER"
 msgstr "DIV"
 
-msgid "FMED_DIVISOR_TTIP"
+#, fuzzy
+msgid "FMED_DIVIDER_TTIP"
 msgstr "Divisor"
 
 msgid "FMED_DETUNE"
@@ -559,10 +561,12 @@ msgstr "Mult."
 msgid "FMED_MO_MULTIPLIER_TTIP"
 msgstr "Multiplicador"
 
-msgid "FMED_MO_DIVISOR"
+#, fuzzy
+msgid "FMED_MO_DIVIDER"
 msgstr "Divisor"
 
-msgid "FMED_MO_DIVISOR_TTIP"
+#, fuzzy
+msgid "FMED_MO_DIVIDER_TTIP"
 msgstr "<EMPTY>"
 
 msgid "FMED_MO_DETUNE_FIXFREQ"
@@ -1235,7 +1239,7 @@ msgstr "<EMPTY>"
 msgid "OPTS_MIDIIN_TITLE"
 msgstr "Entrada MIDI"
 
-msgid "OPTS_MIDIIN_NN_VELOCITY"
+msgid "OPTS_MIDIIN_NN_VELOCITY_TITLE"
 msgstr "Intensidad nueva nota"
 
 msgid "OPTS_MIDIIN_NN_VELOCITY_TTIP"
@@ -1382,7 +1386,9 @@ msgid "ERR_SONG_WAVE_IN_INSTRUMENT"
 msgstr "El instrumento {i_instr} está usando la onda en el operador {i_op}."
 
 msgid "ERR_SONG_WAVE_IN_SONG"
-msgstr "El patrón {i_pattern} del canal {i_channel} está usando la onda en la fila {i_row}."
+msgstr ""
+"El patrón {i_pattern} del canal {i_channel} está usando la onda en la fila "
+"{i_row}."
 
 msgid "ERR_SONG_MAX_INSTRUMENTS"
 msgstr "No se pueden tener más de {i_max_instrs} instrumentos."
@@ -1394,7 +1400,9 @@ msgid "ERR_SONG_INSTRUMENT_NOT_FOUND"
 msgstr "Instrumento no encontrado."
 
 msgid "ERR_SONG_INSTRUMENT_IN_SONG"
-msgstr "El patrón {i_pattern} del canal {i_channel} está usando el instrumento en la fila {i_row}."
+msgstr ""
+"El patrón {i_pattern} del canal {i_channel} está usando el instrumento en la "
+"fila {i_row}."
 
 msgid "ERR_SONG_MAX_ARPS"
 msgstr "No se pueden tener más de {i_max_arps} arpegios."
@@ -1403,7 +1411,9 @@ msgid "ERR_SONG_ARP_NOT_FOUND"
 msgstr "Arpegio no encontrado."
 
 msgid "ERR_SONG_ARP_IN_SONG"
-msgstr "El patrón {i_pattern} del canal {i_channel} está usando el arpegio en la fila {i_row}."
+msgstr ""
+"El patrón {i_pattern} del canal {i_channel} está usando el arpegio en la "
+"fila {i_row}."
 
 msgid "ERR_CONFIG_KEY_NOT_FOUND"
 msgstr "Ítem de config. no encontrado."
@@ -1416,10 +1426,10 @@ msgid "ERR_BUG"
 msgstr "Error desconocido: {s_data}"
 
 msgid "ERR_FILE_BAD_CHUNK_VERSION"
-msgstr "Versión {v_version} del chunk [{v_chunk}] incorrecta en {v_position}."
+msgstr "Versión {v_version} del chunk {v_chunk} incorrecta en {v_position}."
 
 msgid "ERR_FILE_BAD_CHUNK"
-msgstr "Chunk [{v_chunk}] incorrecto en {v_position}."
+msgstr "Chunk {v_chunk} incorrecto en {v_position}."
 
 msgid "ERR_FILE_BAD_DRIVE"
 msgstr "Unidad incorrecta abriendo {s_file}."
@@ -1467,7 +1477,9 @@ msgid "ERR_INVALID_VERSION"
 msgstr "Version errónea {i_version} abriendo {s_file}."
 
 msgid "ERR_INVALID_CHUNK"
-msgstr "Chunk erróneo {s_chunk}:{i_version} en {s_file}. Se esperaba {s_ex_chunk}:{i_ex_version}."
+msgstr ""
+"Chunk erróneo {s_chunk}:{i_version} en {s_file}. Se esperaba {s_ex_chunk}:"
+"{i_ex_version}."
 
 msgid "ERR_MISSING_WAVES"
 msgstr "Instrumento independiente sin formas de onda."
@@ -1484,3 +1496,27 @@ msgstr "Tipo de onda inválido {s_type} escribiendo {s_file}."
 msgid "ERR_INVALID_MACRO"
 msgstr "Tipo/operador de macro inválido {s_type}/{i_op} en {s_file}."
 
+# Macro language errors
+msgid "ERR_INVALID_CHARACTER"
+msgstr ""
+
+msgid "ERR_INVALID_NUMBER"
+msgstr ""
+
+msgid "ERR_VALUE_EXPECTED"
+msgstr ""
+
+msgid "ERR_WHITESPACE_EXPECTED"
+msgstr ""
+
+msgid "ERR_BAD_START"
+msgstr ""
+
+msgid "ERR_BAD_COMMAND"
+msgstr ""
+
+msgid "ERR_UNEXPECTED_TOKEN"
+msgstr ""
+
+msgid "ERR_UNEXPECTED_EOL"
+msgstr ""

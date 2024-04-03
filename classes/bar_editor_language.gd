@@ -76,7 +76,7 @@ func tokenize(text:String)->Array:
 			elif chr!=" ":
 				return [token(
 					TOKEN_ERROR,LanguageResult.ERR_INVALID_CHARACTER,0,
-					{"char":chr,"start":i,"end":i}
+					{"s_char":chr,"i_start":i,"i_end":i}
 				)]
 		elif mode==MODE_WORD:
 			if chr in LETTERS or chr in NUMBERS:
@@ -98,7 +98,7 @@ func tokenize(text:String)->Array:
 			else:
 				return [token(
 					TOKEN_ERROR,LanguageResult.ERR_INVALID_CHARACTER,0,
-					{"char":chr,"start":i,"end":i}
+					{"s_char":chr,"i_start":i,"i_end":i}
 				)]
 		elif mode==MODE_NUMBER:
 			if chr in NUMERICS:
@@ -120,7 +120,7 @@ func tokenize(text:String)->Array:
 			else:
 				return [token(
 					TOKEN_ERROR,LanguageResult.ERR_INVALID_CHARACTER,0,
-					{"char":chr,"start":i,"end":i}
+					{"s_char":chr,"i_start":i,"i_end":i}
 				)]
 		elif mode==MODE_SEPARATOR:
 			if chr in NUMERICS:
@@ -140,7 +140,7 @@ func tokenize(text:String)->Array:
 			elif chr!=" ":
 				return [token(
 					TOKEN_ERROR,LanguageResult.ERR_INVALID_CHARACTER,0,
-					{"char":chr,"start":i,"end":i}
+					{"s_char":chr,"i_start":i,"i_end":i}
 				)]
 	if mode==MODE_NUMBER:
 		tokens.push_back(token(TOKEN_NUMBER,token_start,-1,token))
@@ -162,12 +162,12 @@ func syntax_check(tokens:Array)->LanguageResult:
 	if type==TOKEN_WORD:
 		return LanguageResult.new(
 			LanguageResult.ERR_BAD_COMMAND,
-			{"command":value,"start":start,"end":end}
+			{"s_command":value,"i_start":start,"i_end":end}
 		)
 	elif type==TOKEN_NUMBER or type==TOKEN_SEPARATOR:
 		return LanguageResult.new(
 			LanguageResult.ERR_BAD_START,
-			{"start":start,"end":start}
+			{"i_start":start,"i_end":start}
 		)
 	elif type==TOKEN_ERROR:
 		return LanguageResult.new(start,value)
@@ -175,7 +175,7 @@ func syntax_check(tokens:Array)->LanguageResult:
 	if token[TK_TYPE]==TOKEN_SEPARATOR:
 		return LanguageResult.new(
 			LanguageResult.ERR_VALUE_EXPECTED,
-			{"start":token[TK_START],"end":token[TK_END]+1 if token[TK_END]>-1 else -1}
+			{"i_start":token[TK_START],"i_end":token[TK_END]+1 if token[TK_END]>-1 else -1}
 		)
 	#
 	var consecutive_separators:int=0
@@ -189,14 +189,14 @@ func syntax_check(tokens:Array)->LanguageResult:
 			if value.find("-")>0 or value.count(".")>1:
 				return LanguageResult.new(
 					LanguageResult.ERR_INVALID_NUMBER,
-					{"start":start,"end":end}
+					{"i_start":start,"i_end":end}
 				)
 		elif type==TOKEN_SEPARATOR:
 			consecutive_separators+=1
 			if consecutive_separators>1:
 				return LanguageResult.new(
 					LanguageResult.ERR_VALUE_EXPECTED,
-					{"start":start,"end":end}
+					{"i_start":start,"i_end":end}
 				)
 		else:
 			consecutive_separators=0
@@ -221,11 +221,11 @@ func parse_line(tokens:Array)->LanguageResult:
 	if type!=TOKEN_WHITESPACE:
 		return LanguageResult.new(
 			LanguageResult.ERR_WHITESPACE_EXPECTED,
-			{"start":start,"end":start}
+			{"i_start":start,"i_end":start}
 		)
 	var err:int=find_invalid_tokens(tokens,COMMANDS["LINE"][CMD_MIN_PARAMS])
 	if err==tokens.size():
-		return LanguageResult.new(LanguageResult.ERR_UNEXPECTED_EOL,{"start":-1,"end":-1})
+		return LanguageResult.new(LanguageResult.ERR_UNEXPECTED_EOL,{"i_start":-1,"i_end":-1})
 	elif err>-1:
 		token=tokens[err]
 		type=token[TK_TYPE]
@@ -235,12 +235,12 @@ func parse_line(tokens:Array)->LanguageResult:
 		if type==TOKEN_WORD:
 			return LanguageResult.new(
 				LanguageResult.ERR_UNEXPECTED_TOKEN,
-				{"token":"\""+value+"\"","start":start,"end":end}
+				{"s_token":value,"i_start":start,"i_end":end}
 			)
 		else:
 			return LanguageResult.new(
 				LanguageResult.ERR_UNEXPECTED_TOKEN,
-				{"token":TOKEN_NAMES[type],"start":start,"end":end}
+				{"s_token":TOKEN_NAMES[type],"i_start":start,"i_end":end}
 			)
 	return LanguageResult.new(OK,[
 		funcref(self,COMMANDS["LINE"][CMD_EXECUTOR]),

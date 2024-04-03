@@ -1248,7 +1248,7 @@ msgstr ""
 msgid "OPTS_MIDIIN_TITLE"
 msgstr ""
 
-msgid "OPTS_MIDIIN_NN_VELOCITY"
+msgid "OPTS_MIDIIN_NN_VELOCITY_TITLE"
 msgstr ""
 
 msgid "OPTS_MIDIIN_NN_VELOCITY_TTIP"
@@ -1506,5 +1506,31 @@ msgid "ERR_INVALID_WAVE_TYPE"
 msgstr ""
 
 msgid "ERR_INVALID_MACRO"
+msgstr ""
+
+
+# Macro language errors
+msgid "ERR_INVALID_CHARACTER"
+msgstr ""
+
+msgid "ERR_INVALID_NUMBER"
+msgstr ""
+
+msgid "ERR_VALUE_EXPECTED"
+msgstr ""
+
+msgid "ERR_WHITESPACE_EXPECTED"
+msgstr ""
+
+msgid "ERR_BAD_START"
+msgstr ""
+
+msgid "ERR_BAD_COMMAND"
+msgstr ""
+
+msgid "ERR_UNEXPECTED_TOKEN"
+msgstr ""
+
+msgid "ERR_UNEXPECTED_EOL"
 msgstr ""
 

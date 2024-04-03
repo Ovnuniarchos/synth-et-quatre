@@ -3,6 +3,9 @@ extends Control
 """
 FIXME
 TODO:
+	Parser for macro editors
+	I/O for waves
+	I/O for arpeggios
 	Copy/Paste buttons for instrument/wave editors
 	MIDI on/off indicator
 	Reset per channel parameters (as a command|button)
@@ -21,14 +24,12 @@ func _ready()->void:
 	ThemeHelper.apply_styles_to_group(theme,"LabelControl","Label")
 	ThemeHelper.apply_styles_to_group(theme,"BarEditorLabel","BarEditorLabel")
 	GLOBALS.connect("tab_changed",self,"_on_tab_changed")
-	"""
 	var parser:BarEditorLanguage=BarEditorLanguage.new()
 	var pr:LanguageResult=parser.parse("line 1, 2 , 3 ,4 step 10 line 1,2,3")
 	if pr.has_error():
 		print(pr.get_message())
 	else:
 		print(pr.data)
-	"""
 
 
 func _on_tab_changed(tab:int)->void:

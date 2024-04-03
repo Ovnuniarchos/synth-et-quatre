@@ -209,14 +209,14 @@ size_flags_horizontal = 3
 
 [node name="NNV" type="Label" parent="SC/GC/MIDI/MIDI/HBoxContainer" groups=["Label"]]
 margin_top = 3.0
-margin_right = 178.0
+margin_right = 217.0
 margin_bottom = 17.0
 hint_tooltip = "OPTS_MIDIIN_NN_VELOCITY_TTIP"
 mouse_filter = 1
-text = "OPTS_MIDIIN_NN_VELOCITY"
+text = "OPTS_MIDIIN_NN_VELOCITY_TITLE"
 
 [node name="NNVel" type="OptionButton" parent="SC/GC/MIDI/MIDI/HBoxContainer"]
-margin_left = 182.0
+margin_left = 221.0
 margin_right = 484.0
 margin_bottom = 20.0
 size_flags_horizontal = 3

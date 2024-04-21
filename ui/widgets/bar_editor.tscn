@@ -53,18 +53,19 @@ mode = 3
 labels = PoolStringArray(  )
 
 [node name="Params" type="VBoxContainer" parent="."]
-margin_right = 113.0
-margin_bottom = 64.0
+margin_right = 51.0
+margin_bottom = 28.0
 size_flags_vertical = 3
 
 [node name="Title" type="Button" parent="Params"]
 unique_name_in_owner = true
-margin_right = 113.0
+margin_right = 51.0
 margin_bottom = 20.0
 hint_tooltip = "Macro"
 text = "Macro"
 
 [node name="R" type="ReferenceRect" parent="Params"]
+visible = false
 margin_top = 24.0
 margin_right = 113.0
 margin_bottom = 40.0
@@ -75,6 +76,7 @@ size_flags_vertical = 0
 
 [node name="Relative" type="Button" parent="Params"]
 unique_name_in_owner = true
+visible = false
 margin_top = 44.0
 margin_right = 113.0
 margin_bottom = 64.0
@@ -161,23 +163,23 @@ big_step = 8.0
 huge_step = 32.0
 
 [node name="Editor" type="VBoxContainer" parent="."]
-margin_left = 117.0
+margin_left = 55.0
 margin_right = 1024.0
-margin_bottom = 64.0
+margin_bottom = 28.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 0
 
 [node name="HBC" type="HBoxContainer" parent="Editor"]
-margin_right = 907.0
-margin_bottom = 48.0
+margin_right = 969.0
+margin_bottom = 12.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 0
 
 [node name="Values" type="PanelContainer" parent="Editor/HBC"]
-margin_right = 895.0
-margin_bottom = 48.0
+margin_right = 957.0
+margin_bottom = 12.0
 mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -187,8 +189,8 @@ custom_styles/panel = SubResource( 4 )
 unique_name_in_owner = true
 margin_left = 2.0
 margin_top = 2.0
-margin_right = 893.0
-margin_bottom = 46.0
+margin_right = 955.0
+margin_bottom = 10.0
 rect_clip_content = true
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -197,8 +199,8 @@ size_flags_vertical = 3
 unique_name_in_owner = true
 margin_left = 2.0
 margin_top = 2.0
-margin_right = 893.0
-margin_bottom = 46.0
+margin_right = 955.0
+margin_bottom = 10.0
 rect_clip_content = true
 mouse_filter = 2
 size_flags_horizontal = 3
@@ -223,28 +225,28 @@ align = 1
 
 [node name="VScroll" type="VScrollBar" parent="Editor/HBC"]
 unique_name_in_owner = true
-margin_left = 895.0
-margin_right = 907.0
-margin_bottom = 48.0
+margin_left = 957.0
+margin_right = 969.0
+margin_bottom = 12.0
 size_flags_vertical = 3
-max_value = 44.0
-page = 44.0
+max_value = 8.0
+page = 8.0
 
 [node name="HBC2" type="HBoxContainer" parent="Editor"]
-margin_top = 48.0
-margin_right = 907.0
-margin_bottom = 64.0
+margin_top = 12.0
+margin_right = 969.0
+margin_bottom = 28.0
 size_flags_horizontal = 3
 custom_constants/separation = 0
 
 [node name="VBC" type="VBoxContainer" parent="Editor/HBC2"]
-margin_right = 895.0
+margin_right = 957.0
 margin_bottom = 16.0
 size_flags_horizontal = 3
 custom_constants/separation = 0
 
 [node name="Loop" type="PanelContainer" parent="Editor/HBC2/VBC"]
-margin_right = 895.0
+margin_right = 957.0
 margin_bottom = 4.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -254,7 +256,7 @@ custom_styles/panel = SubResource( 4 )
 unique_name_in_owner = true
 margin_left = 2.0
 margin_top = 2.0
-margin_right = 893.0
+margin_right = 955.0
 margin_bottom = 2.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -262,35 +264,55 @@ size_flags_vertical = 3
 [node name="HScroll" type="HScrollBar" parent="Editor/HBC2/VBC"]
 unique_name_in_owner = true
 margin_top = 4.0
-margin_right = 895.0
+margin_right = 957.0
 margin_bottom = 16.0
 size_flags_horizontal = 3
 max_value = 0.0
 
 [node name="CornerFill" type="ReferenceRect" parent="Editor/HBC2"]
 unique_name_in_owner = true
-margin_left = 895.0
-margin_right = 907.0
+margin_left = 957.0
+margin_right = 969.0
 margin_bottom = 16.0
 rect_min_size = Vector2( 12, 0 )
 size_flags_horizontal = 0
 
 [node name="Control" type="Control" parent="Editor"]
-margin_top = 64.0
-margin_right = 907.0
-margin_bottom = 64.0
-size_flags_horizontal = 3
-size_flags_vertical = 0
+margin_top = 28.0
+margin_right = 969.0
+margin_bottom = 28.0
 
-[node name="Command" type="LineEdit" parent="Editor/Control"]
+[node name="CmdPanel" type="PanelContainer" parent="Editor/Control"]
 unique_name_in_owner = true
 visible = false
 margin_left = 47.65
 margin_top = -26.0
 margin_right = 905.35
-margin_bottom = -2.0
-size_flags_horizontal = 0
-size_flags_vertical = 0
+margin_bottom = -12.0
+
+[node name="VBC" type="VBoxContainer" parent="Editor/Control/CmdPanel"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 7.0
+margin_bottom = 7.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Command" type="LineEdit" parent="Editor/Control/CmdPanel/VBC"]
+unique_name_in_owner = true
+margin_left = 37.55
+margin_top = -69.0
+margin_right = 839.45
+margin_bottom = -45.0
+size_flags_horizontal = 3
+size_flags_vertical = 8
+
+[node name="Message" type="Label" parent="Editor/Control/CmdPanel/VBC"]
+unique_name_in_owner = true
+margin_right = 40.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+size_flags_vertical = 8
 
 [connection signal="pressed" from="Params/Title" to="." method="_on_Title_pressed" binds= [ 1 ]]
 [connection signal="toggled" from="Params/Relative" to="." method="_on_Relative_toggled"]
@@ -309,4 +331,4 @@ size_flags_vertical = 0
 [connection signal="draw" from="Editor/HBC2/VBC/Loop/LGraph" to="." method="_on_LGraph_draw"]
 [connection signal="gui_input" from="Editor/HBC2/VBC/Loop/LGraph" to="." method="_on_LGraph_gui_input"]
 [connection signal="value_changed" from="Editor/HBC2/VBC/HScroll" to="." method="_on_Scroll_value_changed"]
-[connection signal="gui_input" from="Editor/Control/Command" to="." method="_on_Command_gui_input"]
+[connection signal="gui_input" from="Editor/Control/CmdPanel/VBC/Command" to="." method="_on_Command_gui_input"]

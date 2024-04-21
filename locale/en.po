@@ -1425,10 +1425,10 @@ msgid "ERR_BUG"
 msgstr "Unknown error: {s_data}"
 
 msgid "ERR_FILE_BAD_CHUNK_VERSION"
-msgstr "Bad chunk version {i_version} for {s_chunk} @ {i_position}."
+msgstr "Bad chunk version {i_version} for {s_chunk} at {i_position}."
 
 msgid "ERR_FILE_BAD_CHUNK"
-msgstr "Bad chunk {s_chunk} @ {i_position}."
+msgstr "Bad chunk {s_chunk} at {i_position}."
 
 msgid "ERR_FILE_BAD_DRIVE"
 msgstr "Bad drive opening {s_file}."
@@ -1497,25 +1497,43 @@ msgstr "Invalid macro type/operator {type}/{op} in file {s_file}."
 
 # Macro language errors
 msgid "ERR_INVALID_CHARACTER"
-msgstr ""
+msgstr "Invalid character {s_char} at {i_start}."
 
 msgid "ERR_INVALID_NUMBER"
-msgstr ""
+msgstr "Invalid number at {i_start}."
 
 msgid "ERR_VALUE_EXPECTED"
-msgstr ""
+msgstr "Value expected at {i_start}."
 
 msgid "ERR_WHITESPACE_EXPECTED"
-msgstr ""
+msgstr "Whitespace expected at {i_start}."
 
-msgid "ERR_BAD_START"
-msgstr ""
+msgid "ERR_COMMAND_EXPECTED"
+msgstr "Command expected at {i_start}."
 
 msgid "ERR_BAD_COMMAND"
-msgstr ""
+msgstr "Unrecognized command at {i_start}."
 
 msgid "ERR_UNEXPECTED_TOKEN"
-msgstr ""
+msgstr "Unexpected {s_token} at {i_start}."
+
+msgid "TOKEN_WHITESPACE"
+msgstr "whitespace"
+
+msgid "TOKEN_WORD"
+msgstr "word"
+
+msgid "TOKEN_NUMBER"
+msgstr "number"
+
+msgid "TOKEN_SEPARATOR"
+msgstr "separator"
+
+msgid "TOKEN_COMMAND"
+msgstr "command"
 
 msgid "ERR_UNEXPECTED_EOL"
-msgstr ""
+msgstr "Unexpected end of line."
+
+msgid "ERR_MISSING_PARAMS"
+msgstr "Missing parameters for command at {i_start}."

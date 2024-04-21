@@ -7,8 +7,6 @@ signal macro_changed(parameter,values,steps,loop_start,loop_end,release_loop_sta
 enum{MODE_ABS,MODE_REL,MODE_SWABS,MODE_SWREL,MODE_MASK,MODE_SELECT}
 enum{BIT_CLEAR,BIT_SWITCH,BIT_SET}
 
-const MAX_STEPS:int=256
-
 
 export (bool) var arpeggio:bool=false
 export (String) var title:String="Macro" setget set_title
@@ -36,9 +34,11 @@ var zoom:float=1.0
 
 var value_labels:Control
 var values_graph:Control
-var value_tooltip:Control
+var value_tooltip:Tooltip
 var loop_graph:Control
-var cmd_input:Control
+var cmd_panel:PanelContainer
+var cmd_input:LineEdit
+var cmd_message:Control
 var pos_label:Control
 var hscroll:HScrollBar
 var vscroll:VScrollBar
@@ -90,20 +90,22 @@ func _ready()->void:
 
 
 func init_node_caches()->void:
-	value_labels=get_node("%Labels")
-	values_graph=get_node("%VGraph")
-	value_tooltip=get_node("%Value")
-	loop_graph=get_node("%LGraph")
-	hscroll=get_node("%HScroll")
-	vscroll=get_node("%VScroll")
-	cmd_input=get_node("%Command")
-	pos_label=get_node("%Pos")
+	value_labels=$"%Labels"
+	values_graph=$"%VGraph"
+	value_tooltip=$"%Value"
+	loop_graph=$"%LGraph"
+	hscroll=$"%HScroll"
+	vscroll=$"%VScroll"
+	cmd_panel=$"%CmdPanel"
+	cmd_input=$"%Command"
+	cmd_message=$"%Message"
+	pos_label=$"%Pos"
 	hiddables=[$Params/R,$Params/GC,$"%Pos"]
-	relative_button=get_node("%Relative")
+	relative_button=$"%Relative"
 
 
 func init_values()->void:
-	values.resize(MAX_STEPS)
+	values.resize(Macro.MAX_STEPS)
 	values.fill(ParamMacro.PASSTHROUGH if mode!=MODE_MASK else 0)
 
 
@@ -167,7 +169,7 @@ func _on_VGraph_gui_input(ev:InputEvent)->void:
 	accept_event()
 	var ym:float=values_graph.rect_size.y*zoom
 	var vpos:Vector2=get_VGraph_position(ev.position)
-	var ix:int=clamp(vpos.x/bar_width,0.0,MAX_STEPS-1)
+	var ix:int=clamp(vpos.x/bar_width,0.0,Macro.MAX_STEPS-1)
 	if ev.button_mask==BUTTON_RIGHT:
 		set_Command_visibility(true,ev.position)
 	if ix>=steps:
@@ -383,7 +385,7 @@ func _on_Relative_toggled(p:bool)->void:
 			if values[i]!=ParamMacro.PASSTHROUGH:
 				values[i]=int(range_lerp(values[i],min0,max0,min1,max1))
 	relative=p
-	$"%Relative".text="MCED_RELATIVE" if relative else "MCED_ABSOLUTE"
+	relative_button.text="MCED_RELATIVE" if relative else "MCED_ABSOLUTE"
 	values_graph.update()
 	value_labels.update()
 	emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
@@ -619,12 +621,12 @@ func _on_PosLabel_draw()->void:
 
 
 func set_Command_visibility(v:bool,pos:Vector2=Vector2.ZERO)->void:
-	cmd_input.rect_position=Vector2(
+	cmd_panel.rect_position=Vector2(
 		values_graph.rect_size.x*0.05,
-		(values_graph.rect_global_position.y+pos.y)-cmd_input.get_parent().rect_global_position.y
+		(values_graph.rect_global_position.y+pos.y)-cmd_panel.get_parent().rect_global_position.y
 	)
-	cmd_input.rect_size.x=values_graph.rect_size.x*0.9
-	cmd_input.visible=v
+	cmd_panel.rect_size.x=values_graph.rect_size.x*0.9
+	cmd_panel.visible=v
 	if v:
 		cmd_input.grab_focus()
 	else:
@@ -646,4 +648,17 @@ func _on_Command_gui_input(ev:InputEvent)->void:
 
 
 func parse_command(text:String)->void:
-	parser.parse(text)
+	var err:LanguageResult=parser.parse(text)
+	if err.has_error():
+		cmd_message.text=err.get_message()
+		cmd_input.select(err.get_error_start(),err.get_error_end())
+		cmd_input.caret_position=err.get_error_start()
+	else:
+		err=parser.execute(values,err.data)
+		if err.has_error():
+			cmd_message.text=err.get_message()
+		else:
+			cmd_input.text=''
+			cmd_message.text=''
+			set_Command_visibility(false)
+

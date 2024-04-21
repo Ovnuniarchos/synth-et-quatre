@@ -1498,25 +1498,46 @@ msgstr "Tipo/operador de macro inválido {s_type}/{i_op} en {s_file}."
 
 # Macro language errors
 msgid "ERR_INVALID_CHARACTER"
-msgstr ""
+msgstr "Carácter inválido {s_char} en {i_start}."
 
 msgid "ERR_INVALID_NUMBER"
-msgstr ""
+msgstr "Número inválido en {i_start}."
 
 msgid "ERR_VALUE_EXPECTED"
-msgstr ""
+msgstr "Se esperaba un valor en {i_start}."
 
 msgid "ERR_WHITESPACE_EXPECTED"
-msgstr ""
+msgstr "Se esperaba espaciado en {i_start}."
 
-msgid "ERR_BAD_START"
-msgstr ""
+msgid "ERR_COMMAND_EXPECTED"
+msgstr "Se esperaba un comando en {i_start}."
 
 msgid "ERR_BAD_COMMAND"
-msgstr ""
+msgstr "Comando desconocido en {i_start}."
 
 msgid "ERR_UNEXPECTED_TOKEN"
-msgstr ""
+msgstr "{s_token} en {i_start}."
+
+msgid "TOKEN_WHITESPACE"
+msgstr "Espacio inesperado"
+
+msgid "TOKEN_WORD"
+msgstr "Palabra inesperada"
+
+msgid "TOKEN_NUMBER"
+msgstr "Número inesperado"
+
+msgid "TOKEN_SEPARATOR"
+msgstr "Separador inesperado"
+
+msgid "TOKEN_COMMAND"
+msgstr "Comando inesperado"
 
 msgid "ERR_UNEXPECTED_EOL"
+msgstr "Fin de línea inesperado."
+
+msgid "ERR_MISSING_PARAMS"
+msgstr "Faltan parámetros para el comando en {i_start}."
+
+msgid "ERR_BAD_MODIFIER"
 msgstr ""

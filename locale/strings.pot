@@ -1522,7 +1522,7 @@ msgstr ""
 msgid "ERR_WHITESPACE_EXPECTED"
 msgstr ""
 
-msgid "ERR_BAD_START"
+msgid "ERR_COMMAND_EXPECTED"
 msgstr ""
 
 msgid "ERR_BAD_COMMAND"
@@ -1531,6 +1531,26 @@ msgstr ""
 msgid "ERR_UNEXPECTED_TOKEN"
 msgstr ""
 
+msgid "TOKEN_WHITESPACE"
+msgstr ""
+
+msgid "TOKEN_WORD"
+msgstr ""
+
+msgid "TOKEN_NUMBER"
+msgstr ""
+
+msgid "TOKEN_SEPARATOR"
+msgstr ""
+
+msgid "TOKEN_COMMAND"
+msgstr ""
+
 msgid "ERR_UNEXPECTED_EOL"
 msgstr ""
 
+msgid "ERR_MISSING_PARAMS"
+msgstr ""
+
+msgid "ERR_BAD_MODIFIER"
+msgstr ""

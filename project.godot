@@ -52,7 +52,7 @@ _global_script_classes=[ {
 "base": "Resource",
 "class": "BarEditorLanguage",
 "language": "GDScript",
-"path": "res://classes/bar_editor_language.gd"
+"path": "res://classes/bar_editor_language/bar_editor_language.gd"
 }, {
 "base": "WaveComponent",
 "class": "BpfFilter",
@@ -674,7 +674,6 @@ MIDI="*res://singletons/midi.gd"
 [debug]
 
 gdscript/warnings/narrowing_conversion=false
-gdscript/warnings/return_value_discarded=false
 gdscript/warnings/integer_division=false
 
 [display]

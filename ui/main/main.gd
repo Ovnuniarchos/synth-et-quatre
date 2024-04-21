@@ -24,13 +24,15 @@ func _ready()->void:
 	ThemeHelper.apply_styles_to_group(theme,"LabelControl","Label")
 	ThemeHelper.apply_styles_to_group(theme,"BarEditorLabel","BarEditorLabel")
 	GLOBALS.connect("tab_changed",self,"_on_tab_changed")
+	"""
 	var parser:BarEditorLanguage=BarEditorLanguage.new()
-	var pr:LanguageResult=parser.parse("line 1, 2 , 3 ,4 step 10 line 1,2,3")
+	var pr:LanguageResult=parser.parse("line 1,200,10,400,1 alpha 1,0,0.5 line 1,10,200")
 	if pr.has_error():
 		print(pr.get_message())
 	else:
 		print(pr.data)
-
+	get_tree().quit()
+	"""
 
 func _on_tab_changed(tab:int)->void:
 	$Main/Tabs.current_tab=tab

@@ -53,11 +53,6 @@ var bar_height:float
 var real_theme:Theme
 var bmode:int=BIT_SWITCH
 var value_pos:Vector2
-var parser:BarEditorLanguage
-
-
-func _init()->void:
-	parser=BarEditorLanguage.new()
 
 
 func _ready()->void:
@@ -648,13 +643,15 @@ func _on_Command_gui_input(ev:InputEvent)->void:
 
 
 func parse_command(text:String)->void:
+	var parser:BarEditorLanguage=BarEditorLanguage.new()
 	var err:LanguageResult=parser.parse(text)
 	if err.has_error():
 		cmd_message.text=err.get_message()
 		cmd_input.select(err.get_error_start(),err.get_error_end())
 		cmd_input.caret_position=err.get_error_start()
 	else:
-		err=parser.execute(values,err.data)
+		var mi:MacroInfo=MacroInfo.new(self)
+		err=parser.execute(mi,err.data)
 		if err.has_error():
 			cmd_message.text=err.get_message()
 		else:

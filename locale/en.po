@@ -1537,3 +1537,6 @@ msgstr "Unexpected end of line."
 
 msgid "ERR_MISSING_PARAMS"
 msgstr "Missing parameters for command at {i_start}."
+
+msgid "ERR_DUPLICATED_MOD"
+msgstr "Duplicated modifier {s_token} at {i_start}."

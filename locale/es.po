@@ -1539,5 +1539,5 @@ msgstr "Fin de línea inesperado."
 msgid "ERR_MISSING_PARAMS"
 msgstr "Faltan parámetros para el comando en {i_start}."
 
-msgid "ERR_BAD_MODIFIER"
-msgstr ""
+msgid "ERR_DUPLICATED_MOD"
+msgstr "Modificador {s_token} duplicado en {i_start}."

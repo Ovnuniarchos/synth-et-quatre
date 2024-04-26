@@ -1552,5 +1552,5 @@ msgstr ""
 msgid "ERR_MISSING_PARAMS"
 msgstr ""
 
-msgid "ERR_BAD_MODIFIER"
+msgid "ERR_DUPLICATED_MOD"
 msgstr ""

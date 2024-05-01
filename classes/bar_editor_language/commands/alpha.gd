@@ -5,26 +5,27 @@ class_name BEAlpha
 const NAME:String="ALPHA"
 
 
-func parse(tokens:Array,from:int,is_cmd:bool)->LanguageResult:
-	var err:LanguageResult=common_checks(tokens,from,is_cmd,false,BEConstants.COMMANDS["ALPHA"])
+func parse(tokens:Array,is_cmd:bool)->LanguageResult:
+	var err:LanguageResult=common_checks(tokens,is_cmd,false,BEConstants.COMMANDS["ALPHA"])
 	if err.has_error():
 		return err
 	var opcodes:Array=[]
-	if token_type_at(tokens,from+3)==BEConstants.TOKEN_WHITESPACE:
+	var next:int
+	if token_type_at(tokens,3)==BEConstants.TOKEN_WHITESPACE:
 		opcodes=[BEConstants.OP_ALPHA,
-			tokens[from+2][BEConstants.TK_VALUE],tokens[from+2][BEConstants.TK_VALUE],1.0
+			tokens[2][BEConstants.TK_VALUE],tokens[2][BEConstants.TK_VALUE],1.0
 		]
-		from+=3
-	elif token_type_at(tokens,from+5)==BEConstants.TOKEN_WHITESPACE:
+		next=3
+	elif token_type_at(tokens,5)==BEConstants.TOKEN_WHITESPACE:
 		opcodes=[BEConstants.OP_ALPHA,
-			tokens[from+2][BEConstants.TK_VALUE],tokens[from+4][BEConstants.TK_VALUE],1.0
+			tokens[2][BEConstants.TK_VALUE],tokens[4][BEConstants.TK_VALUE],1.0
 		]
-		from+=5
+		next=5
 	else:
 		opcodes=[BEConstants.OP_ALPHA,
-			tokens[from+2][BEConstants.TK_VALUE],tokens[from+4][BEConstants.TK_VALUE],tokens[from+6][BEConstants.TK_VALUE]
+			tokens[2][BEConstants.TK_VALUE],tokens[4][BEConstants.TK_VALUE],tokens[6][BEConstants.TK_VALUE]
 		]
-		from+=7
-	return LanguageResult.new(OK,[from,opcodes])
+		next=7
+	return LanguageResult.new(OK,[next,opcodes])
 
 

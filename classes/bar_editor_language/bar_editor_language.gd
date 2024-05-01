@@ -28,10 +28,10 @@ func parse(text:String)->LanguageResult:
 		if err.has_error() or err.data==-1:
 			break
 		from=err.data
-		err=tokens[from][BEConstants.TK_VALUE].parse(tokens,from,true)
+		err=tokens[from][BEConstants.TK_VALUE].parse(tokens.slice(from,-1),true)
 		if err.has_error():
 			break
-		from=err.data[0]
+		from+=err.data[0]
 		opcodes.append(err.data[1])
 	if err.has_error():
 		err.error_data["text"]=text

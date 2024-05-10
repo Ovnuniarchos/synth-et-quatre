@@ -1,4 +1,5 @@
 tool extends HBoxContainer
+class_name BarEditor
 
 
 signal macro_changed(parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
@@ -658,4 +659,6 @@ func parse_command(text:String)->void:
 			cmd_input.text=''
 			cmd_message.text=''
 			set_Command_visibility(false)
+			values_graph.update()
+			emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
 

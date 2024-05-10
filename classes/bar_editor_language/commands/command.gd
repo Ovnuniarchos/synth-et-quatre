@@ -58,3 +58,16 @@ func common_checks(tokens:Array,is_cmd:bool,expected_cmd:bool,command:Array)->La
 			{"s_token":token_error_string(token),"i_start":start,"i_end":end}
 		)
 	return LanguageResult.new()
+
+
+func parse(tokens:Array,is_cmd:bool)->LanguageResult:
+	return LanguageResult.new(LanguageResult.ERR_UNIMPLEMENTED_PARSER,{"s_command":get("NAME")})
+
+
+func get_value(opcodes:Array,index:int,macro:MacroInfo):
+	if typeof(opcodes[index])==TYPE_VECTOR2:
+		return lerp(macro.min_value,macro.max_value,opcodes[index].x)
+	return opcodes[index]
+
+func execute(macro:MacroInfo,opcodes:Array)->LanguageResult:
+	return LanguageResult.new(LanguageResult.ERR_UNIMPLEMENTED_EXEC,{"s_command":get("NAME")})

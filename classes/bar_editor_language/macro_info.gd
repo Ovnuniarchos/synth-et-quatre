@@ -12,10 +12,11 @@ const MODES:Array=[
 var min_value:int
 var max_value:int
 var mode:int
+var values:Array
 
 
 func _init(be:Node)->void:
-	if be.get("min_value_rel")==null:
+	if be==null or be.get("min_value_rel")==null:
 		return
 	mode=MODES[be.get("mode")]
 	if mode==MODE_UNK:
@@ -26,3 +27,4 @@ func _init(be:Node)->void:
 	else:
 		min_value=be.get("min_value_abs")
 		max_value=be.get("max_value_abs")
+	values=be.get("values")

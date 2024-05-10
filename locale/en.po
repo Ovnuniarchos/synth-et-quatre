@@ -1540,3 +1540,13 @@ msgstr "Missing parameters for command at {i_start}."
 
 msgid "ERR_DUPLICATED_MOD"
 msgstr "Duplicated modifier {s_token} at {i_start}."
+
+msgid "ERR_UNIMPLEMENTED_PARSER"
+msgstr "Unimplemented parser for {s_command}."
+
+msgid "ERR_UNIMPLEMENTED_EXEC"
+msgstr "Unimplemented executor for {s_command}."
+
+msgid "ERR_MUST_BE_GE"
+msgstr "Value must be greater or equal than {n_value}."
+

@@ -1541,3 +1541,12 @@ msgstr "Faltan parámetros para el comando en {i_start}."
 
 msgid "ERR_DUPLICATED_MOD"
 msgstr "Modificador {s_token} duplicado en {i_start}."
+
+msgid "ERR_UNIMPLEMENTED_PARSER"
+msgstr "Parser para {s_command} no implementado."
+
+msgid "ERR_UNIMPLEMENTED_EXEC"
+msgstr "Ejecutor para {s_command} no implementado."
+
+msgid "ERR_MUST_BE_GE"
+msgstr "El valor debe ser mayor o igual a {n_value}."

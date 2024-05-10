@@ -3,16 +3,23 @@ class_name BarEditorLanguage
 
 
 const CMD_INIT:Dictionary={
-	"LINE":BELine,
-	"ALPHA":BEAlpha,
-	"EASE":BEEase
+	BEConstants.OP2CMD[BEConstants.OP_LINE]:BELine,
+	BEConstants.OP2CMD[BEConstants.OP_ALPHA]:BEAlpha,
+	BEConstants.OP2CMD[BEConstants.OP_EASE]:BEEase,
+	BEConstants.OP2CMD[BEConstants.OP_HSTEP]:BEHStep,
+	BEConstants.OP2CMD[BEConstants.OP_VSTEP]:BEVStep,
 }
+
+
+var rx_number:RegEx
 
 
 func _init()->void:
 	for c in CMD_INIT.keys():
 		var a:Array=BEConstants.COMMANDS[c]
 		a[0]=CMD_INIT[c].new()
+	rx_number=RegEx.new()
+	rx_number.compile("^-?(\\d+\\.?\\d*|\\d*\\.?\\d+)%?$")
 
 
 func parse(text:String)->LanguageResult:
@@ -189,14 +196,14 @@ func syntax_check(tokens:Array,from:int)->LanguageResult:
 		value=t[BEConstants.TK_VALUE] if type!=BEConstants.TOKEN_WHITESPACE else null
 		if type==BEConstants.TOKEN_NUMBER and not typeof(value) in [TYPE_INT,TYPE_REAL]:
 			consecutive_separators=0
-			if value.find("-")>0 or value.count(".")>1:
+			if rx_number.search(value)==null:
 				return LanguageResult.new(
 					LanguageResult.ERR_INVALID_NUMBER,
 					{"i_start":start,"i_end":end}
 				)
 			# warning-ignore:incompatible_ternary
-			value=float(value) if "." in value or abs(int(value))>0xffffffff else int(value)
-			t[BEConstants.TK_VALUE]=value
+			var v=float(value) if "." in value or abs(int(value))>0xffffffff else int(value)
+			t[BEConstants.TK_VALUE]=v*0.01 if value.ends_with("%") else v
 		elif type==BEConstants.TOKEN_SEPARATOR:
 			consecutive_separators+=1
 			if consecutive_separators>1:
@@ -213,5 +220,8 @@ func execute(macro:MacroInfo,opcodes:Array)->LanguageResult:
 	var ptr:int=0
 	var err:LanguageResult
 	while ptr<opcodes.size():
+		err=BEConstants.COMMANDS[BEConstants.OP2CMD[opcodes[ptr][0]]][BEConstants.CMD_PARSER].execute(macro,opcodes[ptr])
+		if err.has_error():
+			return err
 		ptr+=1
 	return LanguageResult.new()

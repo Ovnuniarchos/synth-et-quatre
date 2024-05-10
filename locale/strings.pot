@@ -1554,3 +1554,13 @@ msgstr ""
 
 msgid "ERR_DUPLICATED_MOD"
 msgstr ""
+
+msgid "ERR_UNIMPLEMENTED_PARSER"
+msgstr ""
+
+msgid "ERR_UNIMPLEMENTED_EXEC"
+msgstr ""
+
+msgid "ERR_MUST_BE_GE"
+msgstr ""
+

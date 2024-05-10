@@ -84,6 +84,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://classes/io_modules/wave_components/filters/brf_writer.gd"
 }, {
+"base": "HBoxContainer",
+"class": "BarEditor",
+"language": "GDScript",
+"path": "res://ui/widgets/bar_editor.gd"
+}, {
 "base": "Resource",
 "class": "BarEditorLanguage",
 "language": "GDScript",
@@ -590,6 +595,7 @@ _global_script_class_icons={
 "BPFFilterWriter": "",
 "BRFFilterReader": "",
 "BRFFilterWriter": "",
+"BarEditor": "",
 "BarEditorLanguage": "",
 "BpfFilter": "",
 "BrfFilter": "",

@@ -3,6 +3,10 @@ class_name BEHStep
 
 
 const NAME:String="HSTEP"
+enum{
+	P_OP,P_S0,P_S1,P_EASE,P_END
+}
+const COMMAND_LENGTH:int=4
 
 
 func parse(tokens:Array,is_cmd:bool)->LanguageResult:

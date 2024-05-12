@@ -3,6 +3,10 @@ class_name BEAlpha
 
 
 const NAME:String="ALPHA"
+enum{
+	P_OP,P_A0,P_A1,P_EASE,P_END
+}
+const COMMAND_LENGTH:int=4
 
 
 func parse(tokens:Array,is_cmd:bool)->LanguageResult:

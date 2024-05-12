@@ -55,6 +55,9 @@ var real_theme:Theme
 var bmode:int=BIT_SWITCH
 var value_pos:Vector2
 
+var cmd_history:Array=[]
+var cmd_ptr:int=0
+
 
 func _ready()->void:
 	if Engine.editor_hint:
@@ -632,20 +635,29 @@ func set_Command_visibility(v:bool,pos:Vector2=Vector2.ZERO)->void:
 func _on_Command_gui_input(ev:InputEvent)->void:
 	if not ev is InputEventKey:
 		return
-	if ev.pressed:
-		return
 	if ev.scancode==KEY_ENTER or ev.scancode==KEY_KP_ENTER:
-		parse_command(cmd_input.text)
+		if not ev.pressed:
+			parse_command(cmd_input.text)
 		accept_event()
 	elif ev.scancode==KEY_ESCAPE:
-		cmd_input.text=''
-		set_Command_visibility(false)
+		if not ev.pressed:
+			cmd_input.text=''
+			set_Command_visibility(false)
+		accept_event()
+	elif ev.scancode==KEY_UP:
+		if not ev.pressed:
+			get_history(cmd_input,1)
+		accept_event()
+	elif ev.scancode==KEY_DOWN:
+		if not ev.pressed:
+			get_history(cmd_input,-1)
 		accept_event()
 
 
 func parse_command(text:String)->void:
 	var parser:BarEditorLanguage=BarEditorLanguage.new()
 	var err:LanguageResult=parser.parse(text)
+	insert_history(text)
 	if err.has_error():
 		cmd_message.text=err.get_message()
 		cmd_input.select(err.get_error_start(),err.get_error_end())
@@ -662,3 +674,20 @@ func parse_command(text:String)->void:
 			values_graph.update()
 			emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
 
+
+func insert_history(text:String)->void:
+	text=text.strip_edges().to_upper()
+	if not cmd_history.has(text):
+		cmd_history.insert(0,text)
+		if cmd_history.size()>64:
+			cmd_history.resize(64)
+	cmd_ptr=0
+
+
+func get_history(input:LineEdit,advance:int)->void:
+	if cmd_history.empty():
+		return
+	input.text=cmd_history[cmd_ptr%cmd_history.size()]
+	cmd_ptr=(cmd_ptr+advance)%cmd_history.size()
+	while cmd_ptr<0:
+		cmd_ptr+=cmd_history.size()

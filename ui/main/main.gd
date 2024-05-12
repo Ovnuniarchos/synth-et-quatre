@@ -26,7 +26,7 @@ func _ready()->void:
 	ThemeHelper.apply_styles_to_group(theme,"BarEditorLabel","BarEditorLabel")
 	GLOBALS.connect("tab_changed",self,"_on_tab_changed")
 	"""var parser:BarEditorLanguage=BarEditorLanguage.new()
-	var pr:LanguageResult=parser.parse("line 1,200,10,400,1 alpha 150% ease 2 line 1,10,200")
+	var pr:LanguageResult=parser.parse("line 1,200,10,400 hstep 4 vstep 1200,1")
 	if pr.has_error():
 		print(pr.get_message())
 	else:

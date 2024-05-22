@@ -1550,3 +1550,13 @@ msgstr "Ejecutor para {s_command} no implementado."
 
 msgid "ERR_MUST_BE_GE"
 msgstr "El valor debe ser mayor o igual a {n_value}."
+
+msgid "ERR_NOT_ON_MASKS_OR_SELS"
+msgstr "{s_command} no se puede usar en máscaras o selectores."
+
+msgid "ERR_ONLY_ON_MASKS"
+msgstr "{s_command} sólo se puede usar en máscaras."
+
+msgid "ERR_ALPHA_ON_MASK_OR_SEL"
+msgstr "No se puede usar alfa en máscaras o selectores."
+

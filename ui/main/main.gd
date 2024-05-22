@@ -3,8 +3,8 @@ extends Control
 """
 FIXME
 TODO:
-	Initialize synthwave_(read|writ)er using class references (see bar_editor_language)
 	Parser for macro editors
+	Initialize synthwave_(read|writ)er using class references (see bar_editor_language)
 	I/O for waves
 	I/O for arpeggios
 	Copy/Paste buttons for instrument/wave editors
@@ -26,19 +26,11 @@ func _ready()->void:
 	ThemeHelper.apply_styles_to_group(theme,"BarEditorLabel","BarEditorLabel")
 	GLOBALS.connect("tab_changed",self,"_on_tab_changed")
 	"""var parser:BarEditorLanguage=BarEditorLanguage.new()
-	var pr:LanguageResult=parser.parse("line 1,200,10,400 hstep 4 vstep 1200,1")
+	var pr:LanguageResult=parser.parse("set 1,10 set 2,10")
 	if pr.has_error():
 		print(pr.get_message())
 	else:
 		print(pr.data)
-		var mi:MacroInfo=MacroInfo.new(null)
-		mi.max_value=12000
-		mi.min_value=12000
-		mi.mode=MacroInfo.MODE_ABS
-		mi.values=Array()
-		mi.values.resize(256)
-		mi.values.fill(0)
-		parser.execute(mi,pr.data)
 	get_tree().quit()"""
 
 

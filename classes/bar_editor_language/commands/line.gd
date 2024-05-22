@@ -4,11 +4,12 @@ class_name BELine
 
 const NAME:String="LINE"
 enum{
-	P_OP,P_X0,P_X1,P_V0,P_V1,P_EASE,P_END
+	P_OP,P_X0,P_X1,P_V0,P_V1,P_EASE,P_ALPHA,P_END
 }
 
+
 func parse(tokens:Array,is_cmd:bool)->LanguageResult:
-	var err:LanguageResult=common_checks(tokens,is_cmd,true,BEConstants.COMMANDS["LINE"])
+	var err:LanguageResult=common_checks(tokens,is_cmd,true,BEConstants.COMMANDS[NAME])
 	if err.has_error():
 		return err
 	var opcodes:Array=[]
@@ -17,44 +18,40 @@ func parse(tokens:Array,is_cmd:bool)->LanguageResult:
 		opcodes=[BEConstants.OP_LINE,
 			tokens[2][BEConstants.TK_VALUE],tokens[4][BEConstants.TK_VALUE],
 			tokens[6][BEConstants.TK_VALUE],tokens[6][BEConstants.TK_VALUE],
-			1.0
+			1.0,1.0
 		]
 		next=7
 	elif token_type_at(tokens,9)==BEConstants.TOKEN_WHITESPACE:
 		opcodes=[BEConstants.OP_LINE,
 			tokens[2][BEConstants.TK_VALUE],tokens[6][BEConstants.TK_VALUE],
 			tokens[4][BEConstants.TK_VALUE],tokens[8][BEConstants.TK_VALUE],
-			1.0
+			1.0,1.0
 		]
 		next=9
+	elif token_type_at(tokens,11)==BEConstants.TOKEN_WHITESPACE:
+		opcodes=[BEConstants.OP_LINE,
+			tokens[2][BEConstants.TK_VALUE],tokens[6][BEConstants.TK_VALUE],
+			tokens[4][BEConstants.TK_VALUE],tokens[8][BEConstants.TK_VALUE],
+			tokens[10][BEConstants.TK_VALUE],1.0
+		]
+		next=11
 	else:
 		opcodes=[BEConstants.OP_LINE,
 			tokens[2][BEConstants.TK_VALUE],tokens[6][BEConstants.TK_VALUE],
 			tokens[4][BEConstants.TK_VALUE],tokens[8][BEConstants.TK_VALUE],
-			tokens[10][BEConstants.TK_VALUE]
+			tokens[10][BEConstants.TK_VALUE],tokens[12][BEConstants.TK_VALUE]
 		]
 		next=11
-	var has_mod:Dictionary={}
-	while next<tokens.size():
-		if tokens[next][BEConstants.TK_TYPE]==BEConstants.TOKEN_WHITESPACE:
-			next+=1
-		elif tokens[next][BEConstants.TK_TYPE] in BEConstants.COMMANDS["LINE"][BEConstants.CMD_MODIFIERS]:
-			if tokens[next][BEConstants.TK_TYPE] in has_mod:
-				return LanguageResult.new(LanguageResult.ERR_DUPLICATED_MOD,
-					{"s_token":tokens[next][BEConstants.TK_VALUE].NAME,"i_start":tokens[next][BEConstants.TK_START],"i_end":tokens[next][BEConstants.TK_END]}
-				)
-			err=tokens[next][BEConstants.TK_VALUE].parse(tokens.slice(next,-1),false)
-			if err.has_error():
-				return err
-			has_mod[tokens[next][BEConstants.TK_TYPE]]=true
-			next+=err.data[0]
-			opcodes.append_array(err.data[1])
-		else:
-			break
+	err=parse_modifiers(tokens,opcodes,next)
+	if err.has_error():
+		return err
+	next=err.data
 	return LanguageResult.new(OK,[next,opcodes])
 
 
 func execute(macro:MacroInfo,opcodes:Array)->LanguageResult:
+	if not macro.can_use_alpha():
+		return LanguageResult.new(LanguageResult.ERR_NOT_ON_MASKS_OR_SELS,{"s_command":NAME})
 	var vals:Array=macro.values.duplicate()
 	var x0:int=get_value(opcodes,P_X0,macro)
 	var x1:int=get_value(opcodes,P_X1,macro)
@@ -63,8 +60,8 @@ func execute(macro:MacroInfo,opcodes:Array)->LanguageResult:
 	var ease0:float=get_value(opcodes,P_EASE,macro)
 	var ease1:float=ease0
 	var ease_ease:float=1.0
-	var alpha0:float=1.0
-	var alpha1:float=1.0
+	var alpha0:float=get_value(opcodes,P_ALPHA,macro)
+	var alpha1:float=alpha0
 	var alpha_ease:float=1.0
 	var hstep0:int=1
 	var hstep1:int=1
@@ -78,22 +75,22 @@ func execute(macro:MacroInfo,opcodes:Array)->LanguageResult:
 			alpha0=opcodes[ptr+BEAlpha.P_A0]
 			alpha1=opcodes[ptr+BEAlpha.P_A1]
 			alpha_ease=opcodes[ptr+BEAlpha.P_EASE]
-			ptr+=BEAlpha.COMMAND_LENGTH
+			ptr+=BEAlpha.P_END
 		elif opcodes[ptr]==BEConstants.OP_EASE:
 			ease0=opcodes[ptr+BEEase.P_E0]
 			ease1=opcodes[ptr+BEEase.P_E1]
 			ease_ease=opcodes[ptr+BEEase.P_EASE]
-			ptr+=BEEase.COMMAND_LENGTH
+			ptr+=BEEase.P_END
 		elif opcodes[ptr]==BEConstants.OP_HSTEP:
 			hstep0=opcodes[ptr+BEHStep.P_S0]
 			hstep1=opcodes[ptr+BEHStep.P_S1]
 			hstep_ease=opcodes[ptr+BEHStep.P_EASE]
-			ptr+=BEHStep.COMMAND_LENGTH
+			ptr+=BEHStep.P_END
 		elif opcodes[ptr]==BEConstants.OP_VSTEP:
 			vstep0=opcodes[ptr+BEVStep.P_S0]
 			vstep1=opcodes[ptr+BEVStep.P_S1]
 			vstep_ease=opcodes[ptr+BEVStep.P_EASE]
-			ptr+=BEVStep.COMMAND_LENGTH
+			ptr+=BEVStep.P_END
 		else:
 			ptr+=1
 	var real_ease:float

@@ -64,10 +64,34 @@ func parse(tokens:Array,is_cmd:bool)->LanguageResult:
 	return LanguageResult.new(LanguageResult.ERR_UNIMPLEMENTED_PARSER,{"s_command":get("NAME")})
 
 
+func parse_modifiers(tokens:Array,opcodes:Array,next:int)->LanguageResult:
+	var name:String=get("NAME")
+	var has_mod:Dictionary={}
+	while next<tokens.size():
+		if tokens[next][BEConstants.TK_TYPE]==BEConstants.TOKEN_WHITESPACE:
+			next+=1
+		elif tokens[next][BEConstants.TK_TYPE] in BEConstants.COMMANDS[name][BEConstants.CMD_MODIFIERS]:
+			if tokens[next][BEConstants.TK_TYPE] in has_mod:
+				return LanguageResult.new(LanguageResult.ERR_DUPLICATED_MOD,
+					{"s_token":tokens[next][BEConstants.TK_VALUE].NAME,"i_start":tokens[next][BEConstants.TK_START],"i_end":tokens[next][BEConstants.TK_END]}
+				)
+			var err:LanguageResult=tokens[next][BEConstants.TK_VALUE].parse(tokens.slice(next,-1),false)
+			if err.has_error():
+				return err
+			has_mod[tokens[next][BEConstants.TK_TYPE]]=true
+			next+=err.data[0]
+			opcodes.append_array(err.data[1])
+		else:
+			break
+	return LanguageResult.new(OK,next)
+
+
+
 func get_value(opcodes:Array,index:int,macro:MacroInfo):
 	if typeof(opcodes[index])==TYPE_VECTOR2:
 		return lerp(macro.min_value,macro.max_value,opcodes[index].x)
 	return opcodes[index]
+
 
 func execute(macro:MacroInfo,opcodes:Array)->LanguageResult:
 	return LanguageResult.new(LanguageResult.ERR_UNIMPLEMENTED_EXEC,{"s_command":get("NAME")})

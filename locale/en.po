@@ -1550,3 +1550,12 @@ msgstr "Unimplemented executor for {s_command}."
 msgid "ERR_MUST_BE_GE"
 msgstr "Value must be greater or equal than {n_value}."
 
+msgid "ERR_NOT_ON_MASKS_OR_SELS"
+msgstr "{s_command} cannot be used on masks or selects."
+
+msgid "ERR_ONLY_ON_MASKS"
+msgstr "{s_command} can only be used on masks."
+
+msgid "ERR_ALPHA_ON_MASK_OR_SEL"
+msgstr "Alphas cannot be used on masks or selects."
+

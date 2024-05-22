@@ -1564,3 +1564,12 @@ msgstr ""
 msgid "ERR_MUST_BE_GE"
 msgstr ""
 
+msgid "ERR_NOT_ON_MASKS_OR_SELS"
+msgstr ""
+
+msgid "ERR_ONLY_ON_MASKS"
+msgstr ""
+
+msgid "ERR_ALPHA_ON_MASK_OR_SEL"
+msgstr ""
+

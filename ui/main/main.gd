@@ -3,7 +3,6 @@ extends Control
 """
 FIXME
 TODO:
-	Parser for macro editors
 	Initialize synthwave_(read|writ)er using class references (see bar_editor_language)
 	I/O for waves
 	I/O for arpeggios
@@ -25,13 +24,6 @@ func _ready()->void:
 	ThemeHelper.apply_styles_to_group(theme,"LabelControl","Label")
 	ThemeHelper.apply_styles_to_group(theme,"BarEditorLabel","BarEditorLabel")
 	GLOBALS.connect("tab_changed",self,"_on_tab_changed")
-	"""var parser:BarEditorLanguage=BarEditorLanguage.new()
-	var pr:LanguageResult=parser.parse("set 1,10 set 2,10")
-	if pr.has_error():
-		print(pr.get_message())
-	else:
-		print(pr.data)
-	get_tree().quit()"""
 
 
 func _on_tab_changed(tab:int)->void:

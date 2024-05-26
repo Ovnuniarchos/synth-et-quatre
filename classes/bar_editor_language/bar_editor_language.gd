@@ -11,6 +11,7 @@ const CMD_INIT:Dictionary={
 	BEConstants.OP2CMD[BEConstants.OP_SET]:BESet,
 	BEConstants.OP2CMD[BEConstants.OP_CLEAR]:BEClear,
 	BEConstants.OP2CMD[BEConstants.OP_UNSET]:BEUnset,
+	BEConstants.OP2CMD[BEConstants.OP_SMOOTH]:BESmooth,
 }
 
 

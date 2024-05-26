@@ -1551,6 +1551,9 @@ msgstr "Ejecutor para {s_command} no implementado."
 msgid "ERR_MUST_BE_GE"
 msgstr "El valor debe ser mayor o igual a {n_value}."
 
+msgid "ERR_MUST_BE_BETWEEN"
+msgstr "El valor debe estar entre {n_min} y {n_max}."
+
 msgid "ERR_NOT_ON_MASKS_OR_SELS"
 msgstr "{s_command} no se puede usar en máscaras o selectores."
 

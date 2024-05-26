@@ -1564,6 +1564,9 @@ msgstr ""
 msgid "ERR_MUST_BE_GE"
 msgstr ""
 
+msgid "ERR_MUST_BE_BETWEEN"
+msgstr ""
+
 msgid "ERR_NOT_ON_MASKS_OR_SELS"
 msgstr ""
 

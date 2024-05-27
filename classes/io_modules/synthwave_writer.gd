@@ -3,57 +3,27 @@ class_name SynthWaveWriter
 
 
 var writers:Dictionary={
-	NoiseWave.COMPONENT_ID:null,
-	RectangleWave.COMPONENT_ID:null,
-	SawWave.COMPONENT_ID:null,
-	SineWave.COMPONENT_ID:null,
-	TriangleWave.COMPONENT_ID:null,
-	BpfFilter.COMPONENT_ID:null,
-	BrfFilter.COMPONENT_ID:null,
-	ClampFilter.COMPONENT_ID:null,
-	HpfFilter.COMPONENT_ID:null,
-	LpfFilter.COMPONENT_ID:null,
-	NormalizeFilter.COMPONENT_ID:null,
-	QuantizeFilter.COMPONENT_ID:null,
-	PowerFilter.COMPONENT_ID:null,
-	DecayFilter.COMPONENT_ID:null
+	NoiseWave.COMPONENT_ID:NoiseWaveWriter,
+	RectangleWave.COMPONENT_ID:RectangleWaveWriter,
+	SawWave.COMPONENT_ID:SawWaveWriter,
+	SineWave.COMPONENT_ID:SineWaveWriter,
+	TriangleWave.COMPONENT_ID:TriangleWaveWriter,
+	BpfFilter.COMPONENT_ID:BPFFilterWriter,
+	BrfFilter.COMPONENT_ID:BRFFilterWriter,
+	ClampFilter.COMPONENT_ID:ClampFilterWriter,
+	HpfFilter.COMPONENT_ID:HPFFilterWriter,
+	LpfFilter.COMPONENT_ID:LPFFilterWriter,
+	NormalizeFilter.COMPONENT_ID:NormalizeFilterWriter,
+	QuantizeFilter.COMPONENT_ID:QuantizeFilterWriter,
+	PowerFilter.COMPONENT_ID:PowerFilterWriter,
+	DecayFilter.COMPONENT_ID:DecayFilterWriter
 }
 
 
 func lazy_load(type:String,sw:SynthWave)->WaveComponentIO:
-	var wio:WaveComponentIO
-	if writers[type]==null:
-		match type:
-			NoiseWave.COMPONENT_ID:
-				wio=NoiseWaveWriter.new(sw.components)
-			RectangleWave.COMPONENT_ID:
-				wio=RectangleWaveWriter.new(sw.components)
-			SawWave.COMPONENT_ID:
-				wio=SawWaveWriter.new(sw.components)
-			SineWave.COMPONENT_ID:
-				wio=SineWaveWriter.new(sw.components)
-			TriangleWave.COMPONENT_ID:
-				wio=TriangleWaveWriter.new(sw.components)
-			BpfFilter.COMPONENT_ID:
-				wio=BPFFilterWriter.new(sw.components)
-			BrfFilter.COMPONENT_ID:
-				wio=BRFFilterWriter.new(sw.components)
-			ClampFilter.COMPONENT_ID:
-				wio=ClampFilterWriter.new(sw.components)
-			HpfFilter.COMPONENT_ID:
-				wio=HPFFilterWriter.new(sw.components)
-			LpfFilter.COMPONENT_ID:
-				wio=LPFFilterWriter.new(sw.components)
-			NormalizeFilter.COMPONENT_ID:
-				wio=NormalizeFilterWriter.new(sw.components)
-			QuantizeFilter.COMPONENT_ID:
-				wio=QuantizeFilterWriter.new(sw.components)
-			PowerFilter.COMPONENT_ID:
-				wio=PowerFilterWriter.new(sw.components)
-			DecayFilter.COMPONENT_ID:
-				wio=DecayFilterWriter.new(sw.components)
-	else:
-		wio=writers[type]
+	if writers[type] is GDScript:
+		writers[type]=writers[type].new([])
+	var wio:WaveComponentIO=writers[type]
 	wio.components=sw.components
 	return wio
 

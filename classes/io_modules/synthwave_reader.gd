@@ -3,57 +3,27 @@ class_name SynthWaveReader
 
 
 var readers:Dictionary={
-	WaveComponentIO.NOISE_ID:null,
-	WaveComponentIO.RECTANGLE_ID:null,
-	WaveComponentIO.SAW_ID:null,
-	WaveComponentIO.SINE_ID:null,
-	WaveComponentIO.TRIANGLE_ID:null,
-	WaveComponentIO.BPF_ID:null,
-	WaveComponentIO.BRF_ID:null,
-	WaveComponentIO.CLAMP_ID:null,
-	WaveComponentIO.HPF_ID:null,
-	WaveComponentIO.LPF_ID:null,
-	WaveComponentIO.NORMALIZE_ID:null,
-	WaveComponentIO.QUANTIZE_ID:null,
-	WaveComponentIO.POWER_ID:null,
-	WaveComponentIO.DECAY_ID:null
+	WaveComponentIO.NOISE_ID:NoiseWaveReader,
+	WaveComponentIO.RECTANGLE_ID:RectangleWaveReader,
+	WaveComponentIO.SAW_ID:SawWaveReader,
+	WaveComponentIO.SINE_ID:SineWaveReader,
+	WaveComponentIO.TRIANGLE_ID:TriangleWaveReader,
+	WaveComponentIO.BPF_ID:BPFFilterReader,
+	WaveComponentIO.BRF_ID:BRFFilterReader,
+	WaveComponentIO.CLAMP_ID:ClampFilterReader,
+	WaveComponentIO.HPF_ID:HPFFilterReader,
+	WaveComponentIO.LPF_ID:LPFFilterReader,
+	WaveComponentIO.NORMALIZE_ID:NormalizeFilterReader,
+	WaveComponentIO.QUANTIZE_ID:QuantizeFilterReader,
+	WaveComponentIO.POWER_ID:PowerFilterReader,
+	WaveComponentIO.DECAY_ID:DecayFilterReader
 }
 
 
 func lazy_load(type:String,sw:SynthWave)->WaveComponentIO:
-	var wio:WaveComponentIO
-	if readers[type]==null:
-		match type:
-			WaveComponentIO.NOISE_ID:
-				wio=NoiseWaveReader.new(sw.components)
-			WaveComponentIO.RECTANGLE_ID:
-				wio=RectangleWaveReader.new(sw.components)
-			WaveComponentIO.SAW_ID:
-				wio=SawWaveReader.new(sw.components)
-			WaveComponentIO.SINE_ID:
-				wio=SineWaveReader.new(sw.components)
-			WaveComponentIO.TRIANGLE_ID:
-				wio=TriangleWaveReader.new(sw.components)
-			WaveComponentIO.BPF_ID:
-				wio=BPFFilterReader.new(sw.components)
-			WaveComponentIO.BRF_ID:
-				wio=BRFFilterReader.new(sw.components)
-			WaveComponentIO.CLAMP_ID:
-				wio=ClampFilterReader.new(sw.components)
-			WaveComponentIO.HPF_ID:
-				wio=HPFFilterReader.new(sw.components)
-			WaveComponentIO.LPF_ID:
-				wio=LPFFilterReader.new(sw.components)
-			WaveComponentIO.NORMALIZE_ID:
-				wio=NormalizeFilterReader.new(sw.components)
-			WaveComponentIO.QUANTIZE_ID:
-				wio=QuantizeFilterReader.new(sw.components)
-			WaveComponentIO.POWER_ID:
-				wio=PowerFilterReader.new(sw.components)
-			WaveComponentIO.DECAY_ID:
-				wio=DecayFilterReader.new(sw.components)
-	else:
-		wio=readers[type]
+	if readers[type] is GDScript:
+		readers[type]=readers[type].new([])
+	var wio:WaveComponentIO=readers[type]
 	wio.components=sw.components
 	return wio
 

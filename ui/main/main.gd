@@ -3,7 +3,6 @@ extends Control
 """
 FIXME
 TODO:
-	Initialize synthwave_(read|writ)er using class references (see bar_editor_language)
 	I/O for waves
 	I/O for arpeggios
 	Copy/Paste buttons for instrument/wave editors

@@ -36,7 +36,7 @@ func equals(other:Waveform)->bool:
 	return .equals(other)
 
 func load_wave(path:String)->void:
-	var file:WaveFile=WaveFile.new()
+	var file:WAVFile=WAVFile.new()
 	var wave:Dictionary=file.obj_load(path)
 	if wave.error==OK:
 		original_data=wave.data

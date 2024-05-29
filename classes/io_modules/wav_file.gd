@@ -1,5 +1,5 @@
 extends File
-class_name WaveFile
+class_name WAVFile
 
 var float_samples:bool
 var block_bytes:int

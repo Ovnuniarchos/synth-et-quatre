@@ -159,7 +159,7 @@ func _on_file_selected(path:String)->void:
 			res=SongWriter.new().write(path,GLOBALS.song)
 		FILE_MODE.SAVE_WAV:
 			cfg_dir=CONFIG.CURR_EXPORT_DIR
-			var writer:WaveFileWriter=WaveFileWriter.new()
+			var writer:WAVFileWriter=WAVFileWriter.new()
 			writer.write(path)
 			yield(writer,"export_ended")
 			res=writer.result

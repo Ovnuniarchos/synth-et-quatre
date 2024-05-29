@@ -1,5 +1,5 @@
 extends Reference
-class_name WaveFileWriter
+class_name WAVFileWriter
 
 
 signal export_ended
@@ -40,7 +40,7 @@ func export_thread(data:Dictionary)->void:
 	var synth:Synth=data["synth"]
 	var err_dict:Dictionary={"s_file":data["path"]}
 	var tracker:Tracker=Tracker.new(synth)
-	var file:WaveFile=WaveFile.new()
+	var file:WAVFile=WAVFile.new()
 	var cue:File=File.new()
 	var sample_rate:int=CONFIG.get_value(CONFIG.RECORD_SAMPLERATE)
 	var cmds:Array=[]

@@ -598,6 +598,21 @@ _global_script_classes=[ {
 "class": "Waveform",
 "language": "GDScript",
 "path": "res://classes/waveform.gd"
+}, {
+"base": "Reference",
+"class": "WaveformIO",
+"language": "GDScript",
+"path": "res://classes/io_modules/waveform_io.gd"
+}, {
+"base": "WaveformIO",
+"class": "WaveformReader",
+"language": "GDScript",
+"path": "res://classes/io_modules/waveform_reader.gd"
+}, {
+"base": "WaveformIO",
+"class": "WaveformWriter",
+"language": "GDScript",
+"path": "res://classes/io_modules/waveform_writer.gd"
 } ]
 _global_script_class_icons={
 "AccentButton": "",
@@ -717,7 +732,10 @@ _global_script_class_icons={
 "WaveComponentTitleBar": "",
 "WaveController": "",
 "WavePlotter": "",
-"Waveform": ""
+"Waveform": "",
+"WaveformIO": "",
+"WaveformReader": "",
+"WaveformWriter": ""
 }
 
 [application]

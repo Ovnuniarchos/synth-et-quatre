@@ -9,6 +9,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+# File types
+msgid "FTYPE_SONG"
+msgstr "SynthEtQuatre song"
+
+msgid "FTYPE_WAV"
+msgstr "WAV file"
+
+msgid "FTYPE_WAVEFORM"
+msgstr "SynthEtQuatre wave"
+
 # Top menu
 msgid "MENU_FILE"
 msgstr "File"
@@ -349,11 +359,9 @@ msgstr "MUL"
 msgid "FMED_MULTIPLIER_TTIP"
 msgstr "Multiplier"
 
-#, fuzzy
 msgid "FMED_DIVIDER"
 msgstr "DIV"
 
-#, fuzzy
 msgid "FMED_DIVIDER_TTIP"
 msgstr "Divisor"
 
@@ -561,11 +569,9 @@ msgstr "Multiplier"
 msgid "FMED_MO_MULTIPLIER_TTIP"
 msgstr "<EMPTY>"
 
-#, fuzzy
 msgid "FMED_MO_DIVIDER"
 msgstr "Divisor"
 
-#, fuzzy
 msgid "FMED_MO_DIVIDER_TTIP"
 msgstr "<EMPTY>"
 
@@ -1347,6 +1353,21 @@ msgstr ""
 msgid "Toggle the visibility of hidden files."
 msgstr ""
 
+msgid "Path:"
+msgstr ""
+
+msgid "File:"
+msgstr ""
+
+msgid "All Files (*)"
+msgstr ""
+
+msgid "Create Folder"
+msgstr ""
+
+msgid "Directories & files:"
+msgstr ""
+
 # Text menu
 msgid "Cut"
 msgstr ""
@@ -1386,8 +1407,7 @@ msgid "ERR_SONG_WAVE_IN_INSTRUMENT"
 msgstr "Wave is in use by instrument {i_instr} operator {i_op}."
 
 msgid "ERR_SONG_WAVE_IN_SONG"
-msgstr ""
-"Wave is in use on pattern {i_pattern} of channel {i_channel}, row {i_row}."
+msgstr "Wave is in use on pattern {i_pattern} of channel {i_channel}, row {i_row}."
 
 msgid "ERR_SONG_MAX_INSTRUMENTS"
 msgstr "Limit of {i_max_instrs} instruments reached."
@@ -1399,9 +1419,7 @@ msgid "ERR_SONG_INSTRUMENT_NOT_FOUND"
 msgstr "Instrument not found."
 
 msgid "ERR_SONG_INSTRUMENT_IN_SONG"
-msgstr ""
-"Instrument is in use on pattern {i_pattern} of channel {i_channel}, row "
-"{i_row}."
+msgstr "Instrument is in use on pattern {i_pattern} of channel {i_channel}, row {i_row}."
 
 msgid "ERR_SONG_MAX_ARPS"
 msgstr "Limit of {i_max_arps} instruments reached."
@@ -1410,9 +1428,7 @@ msgid "ERR_SONG_ARP_NOT_FOUND"
 msgstr "Arpeggio not found."
 
 msgid "ERR_SONG_ARP_IN_SONG"
-msgstr ""
-"Arpeggio is in use on pattern {i_pattern} of channel {i_channel}, row "
-"{i_row}."
+msgstr "Arpeggio is in use on pattern {i_pattern} of channel {i_channel}, row {i_row}."
 
 msgid "ERR_CONFIG_KEY_NOT_FOUND"
 msgstr "Config key not found."
@@ -1476,9 +1492,7 @@ msgid "ERR_INVALID_VERSION"
 msgstr "Wrong version {i_version} opening {s_file}."
 
 msgid "ERR_INVALID_CHUNK"
-msgstr ""
-"Invalid chunk {s_chunk}:{i_version} for {s_file}. Expected {s_ex_chunk}:"
-"{i_ex_version}."
+msgstr "Invalid chunk {s_chunk}:{i_version} for {s_file}. Expected {s_ex_chunk}: {i_ex_version}."
 
 msgid "ERR_MISSING_WAVES"
 msgstr "Standalone instrument is missing its waveforms."

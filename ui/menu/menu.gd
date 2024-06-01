@@ -1,8 +1,9 @@
 extends PanelContainer
 
 
-const FILES_SE4=PoolStringArray(["*.se4 ; SynthEtQuatre song"])
-const FILES_WAV=PoolStringArray(["*.wav ; WAV file"])
+const FILES_SE4:Dictionary={"*.se4":"FTYPE_SONG"}
+const FILES_WAV:Dictionary={"*.wav":"FTYPE_WAV"}
+
 
 const MENUS:Array=[
 	{"option":"MENU_FILE","options":
@@ -119,7 +120,7 @@ func _on_Open_pressed()->void:
 	file_dlg.current_dir=CONFIG.get_value(CONFIG.CURR_SONG_DIR)
 	file_dlg.window_title="MENU_OPEN_SONG_DLG"
 	file_dlg.mode=FileDialog.MODE_OPEN_FILE
-	file_dlg.filters=FILES_SE4
+	file_dlg.filters=GLOBALS.translate_filetypes(FILES_SE4)
 	file_dlg.current_file=""
 	file_dlg.set_as_toplevel(true)
 	file_dlg.popup_centered_ratio()
@@ -130,7 +131,7 @@ func _on_Save_pressed()->void:
 	file_dlg.current_dir=CONFIG.get_value(CONFIG.CURR_SONG_DIR)
 	file_dlg.window_title="MENU_SAVE_SONG_DLG"
 	file_dlg.mode=FileDialog.MODE_SAVE_FILE
-	file_dlg.filters=FILES_SE4
+	file_dlg.filters=GLOBALS.translate_filetypes(FILES_SE4)
 	file_dlg.current_file=GLOBALS.song.file_name
 	file_dlg.set_as_toplevel(true)
 	file_dlg.popup_centered_ratio()
@@ -141,7 +142,7 @@ func _on_SaveWave_pressed()->void:
 	file_dlg.current_dir=CONFIG.get_value(CONFIG.CURR_EXPORT_DIR)
 	file_dlg.window_title="MENU_SAVE_WAVE_DLG"
 	file_dlg.mode=FileDialog.MODE_SAVE_FILE
-	file_dlg.filters=FILES_WAV
+	file_dlg.filters=GLOBALS.translate_filetypes(FILES_WAV)
 	file_dlg.current_file=""
 	file_dlg.set_as_toplevel(true)
 	file_dlg.popup_centered_ratio()

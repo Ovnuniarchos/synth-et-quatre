@@ -143,7 +143,7 @@ func deserialize(inf:ChunkedFile,header:Dictionary)->FileResult:
 	var fr:FileResult
 	if version>1:
 		fr=deserialize_macros(inf,ins)
-		if fr!=null and fr.has_error():
+		if fr.has_error():
 			return fr
 	if inf.get_error():
 		return FileResult.new(inf.get_error(),{FileResult.ERRV_FILE:inf.get_path()})
@@ -167,4 +167,4 @@ func deserialize_macros(inf:ChunkedFile,ins:FmInstrument)->FileResult:
 				FileResult.ERRV_TYPE:fr.data["type"],
 				FileResult.ERRV_OP:fr.data["op"]
 			})
-	return null
+	return FileResult.new()

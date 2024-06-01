@@ -3,6 +3,17 @@ msgid ""
 msgstr ""
 
 
+# File types
+
+msgid "FTYPE_SONG"
+msgstr ""
+
+msgid "FTYPE_WAV"
+msgstr ""
+
+msgid "FTYPE_WAVEFORM"
+msgstr ""
+
 # Top menu
 
 msgid "MENU_FILE"
@@ -1360,6 +1371,21 @@ msgid "Refresh files."
 msgstr ""
 
 msgid "Toggle the visibility of hidden files."
+msgstr ""
+
+msgid "Path:"
+msgstr ""
+
+msgid "File:"
+msgstr ""
+
+msgid "All Files (*)"
+msgstr ""
+
+msgid "Create Folder"
+msgstr ""
+
+msgid "Directories & files:"
 msgstr ""
 
 

@@ -65,3 +65,9 @@ func array_fill(array:Array,value,size:int=-1)->void:
 
 func nvl(value,default):
 	return value if value!=null else default
+
+func translate_filetypes(dict:Dictionary)->PoolStringArray:
+	var a:Array=[]
+	for i in dict:
+		a.append(i+" ; "+tr(dict[i]))
+	return PoolStringArray(a)

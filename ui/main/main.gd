@@ -3,7 +3,7 @@ extends Control
 """
 FIXME
 TODO:
-	I/O for waves
+	I/O functions returning FileResult should never return null
 	I/O for arpeggios
 	Copy/Paste buttons for instrument/wave editors
 	MIDI on/off indicator

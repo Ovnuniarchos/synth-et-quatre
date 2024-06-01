@@ -4,6 +4,12 @@ signal wave_selected(wave_ix)
 signal wave_deleted(wave_ix)
 signal wave_added(wave_ix)
 
+const FILES_SW4:Dictionary={"*.sw4":"FTYPE_WAVEFORM"}
+enum FILE_MODE{LOAD_WAVE,SAVE_WAVE}
+
+
+var file_mode:int
+var file_dlg:FileDialog
 var curr_wave_ix:int=-1
 
 func _ready()->void:
@@ -11,6 +17,7 @@ func _ready()->void:
 	$Buttons/Add.get_popup().connect("id_pressed",self,"_on_Add_id_pressed")
 	_on_song_changed()
 	ThemeHelper.apply_styles(THEME.get("theme"),"Button",$Buttons/Add)
+	file_dlg=$FileDialog
 
 func _on_song_changed()->void:
 	GLOBALS.song.connect("wave_list_changed",self,"update_ui")
@@ -35,6 +42,8 @@ func set_buttons()->void:
 	$Buttons/Add.disabled=!GLOBALS.song.can_add_wave()
 	$Buttons/Copy.disabled=!GLOBALS.song.can_add_wave() or curr_wave_ix==-1
 	$Buttons/Del.disabled=GLOBALS.song.wave_list.empty() or curr_wave_ix==-1
+	$Buttons2/Load.disabled=!GLOBALS.song.can_add_wave()
+	$Buttons2/Save.disabled=GLOBALS.song.wave_list.empty() or curr_wave_ix==-1
 
 func _on_item_selected(index:int)->void:
 	var wave:Waveform=GLOBALS.song.get_wave(index)
@@ -89,3 +98,41 @@ func _on_Add_id_pressed(id:int)->void:
 
 func _on_name_changed(wave:int,text:String)->void:
 	$Waves.set_item_text(wave,text)
+
+func _on_Load_pressed()->void:
+	file_mode=FILE_MODE.LOAD_WAVE
+	file_dlg.current_dir=CONFIG.get_value(CONFIG.CURR_SONG_DIR)
+	file_dlg.window_title="WAVED_LOAD_DLG"
+	file_dlg.mode=FileDialog.MODE_OPEN_FILE
+	file_dlg.current_file=""
+	file_dlg.filters=GLOBALS.translate_filetypes(FILES_SW4)
+	file_dlg.set_as_toplevel(true)
+	file_dlg.popup_centered_ratio()
+
+func _on_Save_pressed()->void:
+	file_mode=FILE_MODE.SAVE_WAVE
+	file_dlg.current_dir=CONFIG.get_value(CONFIG.CURR_WAVE_DIR)
+	file_dlg.window_title="WAVED_SAVE_DLG"
+	file_dlg.mode=FileDialog.MODE_SAVE_FILE
+	file_dlg.current_file=GLOBALS.song.wave_list[curr_wave_ix].file_name
+	file_dlg.filters=GLOBALS.translate_filetypes(FILES_SW4)
+	file_dlg.set_as_toplevel(true)
+	file_dlg.popup_centered_ratio()
+
+
+func _on_file_selected(path:String)->void:
+	var cfg_dir:Array
+	var res:FileResult
+	match file_mode:
+		FILE_MODE.LOAD_WAVE:
+			cfg_dir=CONFIG.CURR_SONG_DIR
+			res=WaveformReader.new().read(path)
+		FILE_MODE.SAVE_WAVE:
+			cfg_dir=CONFIG.CURR_SONG_DIR
+			res=WaveformWriter.new().write(path,GLOBALS.song.wave_list[curr_wave_ix])
+	if res.has_error():
+		ALERT.alert(res.get_message())
+		print(res.get_message())
+	else:
+		CONFIG.set_value(cfg_dir,path.get_base_dir())
+

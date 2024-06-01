@@ -7,6 +7,7 @@ var data:Array=[]
 var size:int=0
 # warning-ignore:unused_class_variable
 var name:String="" setget set_name
+var file_name:String
 
 func set_name(n:String)->void:
 	name=n

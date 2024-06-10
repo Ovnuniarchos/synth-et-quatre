@@ -27,13 +27,16 @@ func write(path:String,inst:FmInstrument)->FileResult:
 	out.open(path,File.WRITE)
 	var err:int=out.start_file(FILE_SIGNATURE,FILE_VERSION)
 	if err!=OK:
+		out.close()
 		return FileResult.new(err,{FileResult.ERRV_FILE:out.get_path()})
 	var res:FileResult=serialize(out,inst)
 	if res.has_error():
+		out.close()
 		return res
 	res=serialize_waves(out,wave_list)
 	if res.has_error():
 		return res
+	out.close()
 	return FileResult.new()
 
 

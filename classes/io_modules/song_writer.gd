@@ -8,8 +8,10 @@ func write(path:String,song:Song)->FileResult:
 	# Signature: SFMM\0xc\0xa\0x1a\0xa
 	var err:int=out.start_file(FILE_SIGNATURE,FILE_VERSION)
 	if err!=OK:
+		out.close()
 		return FileResult.new(err,{FileResult.ERRV_FILE:out.get_path()})
 	var fr:FileResult=serialize(out,song)
+	out.close()
 	return fr
 
 

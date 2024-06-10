@@ -10,6 +10,7 @@ func read(path:String)->FileResult:
 	var err:int=f.open(path,File.READ)
 	err=f.start_file(FILE_SIGNATURE,FILE_VERSION) if err==OK else err
 	if err!=OK:
+		f.close()
 		return FileResult.new(err,{
 			FileResult.ERRV_FILE:path,FileResult.ERRV_VERSION:FILE_VERSION,FileResult.ERRV_TYPE:"song"
 		})

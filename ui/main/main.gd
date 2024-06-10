@@ -3,7 +3,6 @@ extends Control
 """
 FIXME
 TODO:
-	Close file handles when returning error
 	I/O for arpeggios
 	Constant-ify error IDs/params.
 	Copy/Paste buttons for instrument/wave editors
@@ -15,6 +14,8 @@ TODO:
 		Range?: MIDI modulation
 
 FUTURE:
+	Import instruments/waveforms/arpeggios from song
+	Import waveforms from instrument
 """
 
 

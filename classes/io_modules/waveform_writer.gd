@@ -8,8 +8,11 @@ func write(path:String,wave:Waveform)->FileResult:
 	# Signature: SFMM\0xc\0xa\0x1a\0xa
 	var err:int=out.start_file(FILE_SIGNATURE,FILE_VERSION)
 	if err!=OK:
+		out.close()
 		return FileResult.new(err,{FileResult.ERRV_FILE:out.get_path()})
-	return serialize(out,wave)
+	var fr:FileResult=serialize(out,wave)
+	out.close()
+	return fr
 
 
 func serialize(out:ChunkedFile,wave:Waveform)->FileResult:

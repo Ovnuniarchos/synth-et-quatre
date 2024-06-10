@@ -10,10 +10,12 @@ func read(path:String)->FileResult:
 	# Signature
 	var err:int=f.start_file(FILE_SIGNATURE,FILE_VERSION)
 	if err!=OK:
+		f.close()
 		return FileResult.new(err,[path,FILE_VERSION])
 	# Waveform
 	var hdr:Dictionary=f.get_chunk_header()
 	var fr:FileResult=deserialize(f,hdr)
+	f.close()
 	if fr.has_error():
 		return fr
 	GLOBALS.song.add_wave(fr.data)

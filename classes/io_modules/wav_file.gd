@@ -8,6 +8,7 @@ var data_size:int
 func start_file(path:String,fp_samples:bool,sample_rate:int)->int:
 	var err:int=open(path,WRITE)
 	if err!=OK:
+		close()
 		return err
 	float_samples=fp_samples
 	block_bytes=2*(4 if float_samples else 2)
@@ -28,8 +29,7 @@ func start_file(path:String,fp_samples:bool,sample_rate:int)->int:
 	err=get_error()
 	if err!=OK:
 		close()
-		return err
-	return OK
+	return err
 
 func write_chunk(data:Array)->int:
 	for block in data:
@@ -44,8 +44,7 @@ func write_chunk(data:Array)->int:
 	var err:int=get_error()
 	if err!=OK:
 		close()
-		return err
-	return OK
+	return err
 
 func write_cue_points(offsets:Array)->int:
 	if offsets.empty():
@@ -60,7 +59,10 @@ func write_cue_points(offsets:Array)->int:
 		store_32(0)
 		store_32(offsets[i]*block_bytes)
 		store_32(0)
-	return OK
+	var err:int=get_error()
+	if err!=OK:
+		close()
+	return err
 
 func end_file()->int:
 	seek(4)
@@ -80,11 +82,8 @@ func end_file()->int:
 		return err
 	store_32(data_size)
 	err=get_error()
-	if err!=OK:
-		close()
-		return err
 	close()
-	return OK
+	return err
 
 #
 

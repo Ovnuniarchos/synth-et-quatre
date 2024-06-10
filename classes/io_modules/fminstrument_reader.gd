@@ -10,18 +10,22 @@ func read(path:String)->FileResult:
 	# Signature
 	var err:int=f.start_file(FILE_SIGNATURE,FILE_VERSION)
 	if err!=OK:
+		f.close()
 		return FileResult.new(err,[path,FILE_VERSION])
 	# Instrument
 	var hdr:Dictionary=f.get_chunk_header()
 	var fr:FileResult=deserialize(f,hdr)
 	if fr.has_error():
+		f.close()
 		return fr
 	var inst:FmInstrument=fr.data
 	f.skip_chunk(hdr)
 	hdr=f.get_chunk_header()
 	if f.eof_reached():
+		f.close()
 		return FileResult.new(OK,inst)
 	if hdr[ChunkedFile.CHUNK_ID]!=SongIO.CHUNK_WAVES:
+		f.close()
 		return FileResult.new()
 	fr=deserialize_wave_list(f,hdr)
 	if fr.has_error():

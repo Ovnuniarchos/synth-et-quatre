@@ -3,7 +3,6 @@ extends Control
 """
 FIXME
 TODO:
-	Compacting arpeggio list should be SongWriter's responsibility
 	Close file handles when returning error
 	I/O for arpeggios
 	Constant-ify error IDs/params.

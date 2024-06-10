@@ -359,10 +359,10 @@ msgstr "MUL"
 msgid "FMED_MULTIPLIER_TTIP"
 msgstr "Multiplicador"
 
-msgid "FMED_DIVIDER"
+msgid "FMED_DIVISOR"
 msgstr "DIV"
 
-msgid "FMED_DIVIDER_TTIP"
+msgid "FMED_DIVISOR_TTIP"
 msgstr "Divisor"
 
 msgid "FMED_DETUNE"

@@ -365,10 +365,10 @@ msgstr ""
 msgid "FMED_MULTIPLIER_TTIP"
 msgstr ""
 
-msgid "FMED_DIVIDER"
+msgid "FMED_DIVISOR"
 msgstr ""
 
-msgid "FMED_DIVIDER_TTIP"
+msgid "FMED_DIVISOR_TTIP"
 msgstr ""
 
 msgid "FMED_DETUNE"

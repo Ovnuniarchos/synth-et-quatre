@@ -50,7 +50,6 @@ func deserialize(inf:ChunkedFile)->FileResult:
 		hdr=inf.get_chunk_header()
 		if inf.eof_reached():
 			break
-		fr=null
 		match hdr[ChunkedFile.CHUNK_ID]:
 			CHUNK_HIGHLIGHTS:
 				fr=deserialize_highlights(inf,song,hdr)
@@ -67,9 +66,10 @@ func deserialize(inf:ChunkedFile)->FileResult:
 			CHUNK_ARPEGGIOS:
 				fr=deserialize_arpeggios(inf,song,hdr)
 			_:
+				fr=FileResult.new()
 				inf.invalid_chunk(hdr)
 		inf.skip_chunk(hdr)
-		if fr!=null and fr.has_error():
+		if fr.has_error():
 			return fr
 	return FileResult.new(OK,song)
 
@@ -80,7 +80,7 @@ func deserialize_highlights(inf:ChunkedFile,song:Song,header:Dictionary)->FileRe
 		song.major_highlight=inf.get_16()
 		if inf.get_error():
 			return FileResult.new(inf.get_error(),{FileResult.ERRV_FILE:inf.get_path()})
-		return null
+		return FileResult.new()
 	return FileResult.new(FileResult.ERR_INVALID_CHUNK,{
 		FileResult.ERRV_CHUNK:inf.get_chunk_id(header),
 		FileResult.ERRV_VERSION:inf.get_chunk_version(header),
@@ -107,7 +107,7 @@ func deserialize_channel_list(inf:ChunkedFile,song:Song,header:Dictionary)->File
 		song.num_fxs[i]=nfx
 	if inf.get_error():
 		return FileResult.new(inf.get_error(),{FileResult.ERRV_FILE:inf.get_path()})
-	return null
+	return FileResult.new()
 
 
 func deserialize_pattern_list(inf:ChunkedFile,song:Song,header:Dictionary)->FileResult:
@@ -139,7 +139,7 @@ func deserialize_pattern_list(inf:ChunkedFile,song:Song,header:Dictionary)->File
 	song.pattern_list=pat_l
 	if inf.get_error():
 		return FileResult.new(inf.get_error(),{FileResult.ERRV_FILE:inf.get_path()})
-	return null
+	return FileResult.new()
 
 
 func deserialize_order_list(inf:ChunkedFile,song:Song,header:Dictionary)->FileResult:
@@ -163,7 +163,7 @@ func deserialize_order_list(inf:ChunkedFile,song:Song,header:Dictionary)->FileRe
 	song.orders=ord_l
 	if inf.get_error():
 		return FileResult.new(inf.get_error(),{FileResult.ERRV_FILE:inf.get_path()})
-	return null
+	return FileResult.new()
 
 
 func deserialize_instrument_list(inf:ChunkedFile,song:Song,header:Dictionary)->FileResult:
@@ -207,14 +207,14 @@ func deserialize_instrument_list(inf:ChunkedFile,song:Song,header:Dictionary)->F
 			return FileResult.new(inf.get_error(),{FileResult.ERRV_FILE:inf.get_path()})
 		if hdr[ChunkedFile.CHUNK_ID]==CHUNK_WAVES:
 			fr=deserialize_wave_list(inf,song,hdr)
-			if fr!=null and fr.has_error():
+			if fr.has_error():
 				return fr
 			inf.skip_chunk(hdr)
 		else:
 			inf.rewind_chunk(hdr)
 	if inf.get_error():
 		return FileResult.new(inf.get_error(),{FileResult.ERRV_FILE:inf.get_path()})
-	return null
+	return FileResult.new()
 
 
 func deserialize_wave_list(inf:ChunkedFile,song:Song,header:Dictionary)->FileResult:
@@ -228,30 +228,22 @@ func deserialize_wave_list(inf:ChunkedFile,song:Song,header:Dictionary)->FileRes
 		})
 	var hdr:Dictionary
 	var wav_l:Array=[]
-	var syn_r:SynthWaveReader=SynthWaveReader.new()
-	var sam_r:SampleWaveReader=SampleWaveReader.new()
+	var wav_r:WaveformReader=WaveformReader.new()
 	wav_l.resize(inf.get_16())
 	var fr:FileResult
 	for i in wav_l.size():
 		hdr=inf.get_chunk_header()
 		if inf.get_error():
 			return FileResult.new(inf.get_error(),{FileResult.ERRV_FILE:inf.get_path()})
-		match hdr[ChunkedFile.CHUNK_ID]:
-			SynthWaveReader.CHUNK_ID:
-				fr=syn_r.deserialize(inf,hdr)
-			SampleWaveReader.CHUNK_ID:
-				fr=sam_r.deserialize(inf,hdr)
-			_:
-				fr=null
-				inf.invalid_chunk(hdr)
-		if fr!=null and fr.has_error():
+		fr=wav_r.deserialize(inf,hdr)
+		inf.skip_chunk(hdr)
+		if fr.has_error():
 			return fr
 		wav_l[i]=fr.data
-		inf.skip_chunk(hdr)
 	if inf.get_error():
 		return FileResult.new(inf.get_error(),{FileResult.ERRV_FILE:inf.get_path()})
 	song.wave_list.append_array(wav_l)
-	return null
+	return FileResult.new()
 
 
 func deserialize_arpeggios(inf:ChunkedFile,song:Song,header:Dictionary)->FileResult:
@@ -283,4 +275,4 @@ func deserialize_arpeggios(inf:ChunkedFile,song:Song,header:Dictionary)->FileRes
 	for i in song.arp_list.size():
 		if song.arp_list[i]==null:
 			song.arp_list[i]=Arpeggio.new()
-	return null
+	return FileResult.new()

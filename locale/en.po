@@ -359,10 +359,10 @@ msgstr "MUL"
 msgid "FMED_MULTIPLIER_TTIP"
 msgstr "Multiplier"
 
-msgid "FMED_DIVIDER"
+msgid "FMED_DIVISOR"
 msgstr "DIV"
 
-msgid "FMED_DIVIDER_TTIP"
+msgid "FMED_DIVISOR_TTIP"
 msgstr "Divisor"
 
 msgid "FMED_DETUNE"
@@ -1486,7 +1486,7 @@ msgid "ERR_FILE_CORRUPT"
 msgstr "{s_file} is corrupt."
 
 msgid "ERR_INVALID_TYPE"
-msgstr "{s_file} is not a {type} file."
+msgstr "{s_file} is not a {s_type} file."
 
 msgid "ERR_INVALID_VERSION"
 msgstr "Wrong version {i_version} opening {s_file}."
@@ -1498,16 +1498,16 @@ msgid "ERR_MISSING_WAVES"
 msgstr "Standalone instrument is missing its waveforms."
 
 msgid "ERR_BAD_WAVE_COMPONENT"
-msgstr "Invalid wave component type {chunk} in file {s_file}."
+msgstr "Invalid wave component type {s_chunk} in file {s_file}."
 
 msgid "ERR_BAD_WAVE_COMPONENT_OUT"
 msgstr "Invalid wave component type {s_type} writing {s_file}."
 
 msgid "ERR_INVALID_WAVE_TYPE"
-msgstr "Invalid wave type {type} writing {s_file}."
+msgstr "Invalid wave type {s_type} writing {s_file}."
 
 msgid "ERR_INVALID_MACRO"
-msgstr "Invalid macro type/operator {type}/{op} in file {s_file}."
+msgstr "Invalid macro type/operator {s_type}/{i_op} in file {s_file}."
 
 # Macro language errors
 msgid "ERR_INVALID_CHARACTER"

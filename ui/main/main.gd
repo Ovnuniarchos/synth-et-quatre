@@ -3,8 +3,10 @@ extends Control
 """
 FIXME
 TODO:
-	I/O functions returning FileResult should never return null
+	Compacting arpeggio list should be SongWriter's responsibility
+	Close file handles when returning error
 	I/O for arpeggios
+	Constant-ify error IDs/params.
 	Copy/Paste buttons for instrument/wave editors
 	MIDI on/off indicator
 	Reset per channel parameters (as a command|button)

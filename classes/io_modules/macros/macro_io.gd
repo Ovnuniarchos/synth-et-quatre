@@ -79,7 +79,9 @@ func _serialize_end(out:ChunkedFile,m:Macro)->FileResult:
 	for i in m.steps:
 		out.store_64(m.values[i])
 	out.end_chunk()
-	return FileResult.new(out.get_error(),{FileResult.ERRV_FILE:out.get_path()})
+	if out.get_error():
+		return FileResult.new(out.get_error(),{FileResult.ERRV_FILE:out.get_path()})
+	return FileResult.new()
 
 
 func _deserialize_end(inf:ChunkedFile,m:Dictionary)->FileResult:
@@ -87,7 +89,9 @@ func _deserialize_end(inf:ChunkedFile,m:Dictionary)->FileResult:
 	m[Macro.PARAM_VALUES].resize(m[Macro.PARAM_STEPS])
 	for i in m[Macro.PARAM_STEPS]:
 		m[Macro.PARAM_VALUES][i]=inf.get_64()
-	return FileResult.new(inf.get_error(),{FileResult.ERRV_FILE:inf.get_path()})
+	if inf.get_error():
+		return FileResult.new(inf.get_error(),{FileResult.ERRV_FILE:inf.get_path()})
+	return FileResult.new()
 
 
 func is_valid_macro(id:String,op:int)->bool:

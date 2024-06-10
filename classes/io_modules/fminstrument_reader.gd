@@ -3,8 +3,8 @@ class_name FmInstrumentReader
 
 
 func read(path:String)->FileResult:
-	if !GLOBALS.song.can_add_instrument():
-		return null
+	if not GLOBALS.song.can_add_instrument():
+		return FileResult.new(FileResult.ERR_SONG_MAX_INSTRUMENTS,{"i_max_instrs":SongLimits.MAX_INSTRUMENTS})
 	var f:ChunkedFile=ChunkedFile.new()
 	f.open(path,File.READ)
 	# Signature
@@ -18,16 +18,14 @@ func read(path:String)->FileResult:
 		return fr
 	var inst:FmInstrument=fr.data
 	f.skip_chunk(hdr)
-	if inst==null:
-		return null
 	hdr=f.get_chunk_header()
 	if f.eof_reached():
 		return FileResult.new(OK,inst)
 	if hdr[ChunkedFile.CHUNK_ID]!=SongIO.CHUNK_WAVES:
-		return null
+		return FileResult.new()
 	fr=deserialize_wave_list(f,hdr)
-	if fr==null:
-		return null
+	if fr.has_error():
+		return fr
 	f.close()
 	# Scan for equal waves
 	var wave_list:Array=fr.data
@@ -39,7 +37,7 @@ func read(path:String)->FileResult:
 				waves_add-=1
 				break
 	if !GLOBALS.song.can_add_wave(waves_add):
-		return null
+		return FileResult.new(FileResult.ERR_SONG_MAX_WAVES,{"i_max_waves":SongLimits.MAX_WAVES})
 	# Add waveforms
 	var new_wave_i:int
 	var in_w:int=FmInstrument.WAVE.CUSTOM
@@ -78,26 +76,18 @@ func deserialize_wave_list(inf:ChunkedFile,header:Dictionary)->FileResult:
 		})
 	var hdr:Dictionary
 	var wav_l:Array=[]
-	var syn_r:SynthWaveReader=SynthWaveReader.new()
-	var sam_r:SampleWaveReader=SampleWaveReader.new()
+	var wav_r:WaveformReader=WaveformReader.new()
 	var fr:FileResult
 	wav_l.resize(inf.get_16())
 	for i in wav_l.size():
 		hdr=inf.get_chunk_header()
 		if inf.get_error():
 			return FileResult.new(inf.get_error(),{FileResult.ERRV_FILE:inf.get_path()})
-		match hdr[ChunkedFile.CHUNK_ID]:
-			SynthWaveReader.CHUNK_ID:
-				fr=syn_r.deserialize(inf,hdr)
-			SampleWaveReader.CHUNK_ID:
-				fr=sam_r.deserialize(inf,hdr)
-			_:
-				fr=null
-				inf.invalid_chunk(hdr)
-		if fr!=null and fr.has_error():
+		fr=wav_r.deserialize(inf,hdr)
+		inf.skip_chunk(hdr)
+		if fr.has_error():
 			return fr
 		wav_l[i]=fr.data
-		inf.skip_chunk(hdr)
 	if inf.get_error():
 		return FileResult.new(inf.get_error(),{FileResult.ERRV_FILE:inf.get_path()})
 	return FileResult.new(OK,wav_l)

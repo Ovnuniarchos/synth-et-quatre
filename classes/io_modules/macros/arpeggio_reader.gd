@@ -12,8 +12,7 @@ func read(path:String)->FileResult:
 	if err!=OK:
 		f.close()
 		return FileResult.new(err,[path,ARPEGGIO_FILE_VERSION])
-	# Waveform
-	var hdr:Dictionary=f.get_chunk_header()
+	# Arpeggio
 	var fr:FileResult=deserialize(f)
 	f.close()
 	if fr.has_error():
@@ -32,7 +31,6 @@ func deserialize(inf:ChunkedFile)->FileResult:
 	var params:Dictionary=fr.data["data"]
 	var arp:Arpeggio=Arpeggio.new()
 	arp.name=inf.get_pascal_string()
-	var index:int=inf.get_8()
 	fr=_deserialize_end(inf,params)
 	if fr.has_error():
 		inf.skip_chunk(hdr)

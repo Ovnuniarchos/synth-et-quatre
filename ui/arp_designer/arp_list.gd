@@ -96,7 +96,7 @@ func _on_Ticks_value_changed(value:int)->void:
 
 func _on_Load_pressed()->void:
 	file_mode=FILE_MODE.LOAD_ARP
-	file_dlg.current_dir=CONFIG.get_value(CONFIG.CURR_SONG_DIR)
+	file_dlg.current_dir=CONFIG.get_value(CONFIG.CURR_ARP_DIR)
 	file_dlg.window_title="ARPED_LOAD_DLG"
 	file_dlg.mode=FileDialog.MODE_OPEN_FILES
 	file_dlg.current_file=""
@@ -106,7 +106,7 @@ func _on_Load_pressed()->void:
 
 func _on_Save_pressed()->void:
 	file_mode=FILE_MODE.SAVE_ARP
-	file_dlg.current_dir=CONFIG.get_value(CONFIG.CURR_WAVE_DIR)
+	file_dlg.current_dir=CONFIG.get_value(CONFIG.CURR_ARP_DIR)
 	file_dlg.window_title="ARPED_SAVE_DLG"
 	file_dlg.mode=FileDialog.MODE_SAVE_FILE
 	file_dlg.current_file=GLOBALS.song.arp_list[curr_arp_ix].file_name

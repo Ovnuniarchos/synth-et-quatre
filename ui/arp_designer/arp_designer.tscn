@@ -16,7 +16,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="ArpList" parent="VS" instance=ExtResource( 2 )]
-margin_right = 297.0
 margin_bottom = 600.0
 
 [node name="VBC" type="VBoxContainer" parent="VS"]
@@ -74,3 +73,4 @@ huge_step = 100
 [connection signal="arp_selected" from="VS/ArpList" to="." method="_on_arp_selected"]
 [connection signal="text_changed" from="VS/VBC/Name/HBC/Name" to="." method="_on_Name_text_changed"]
 [connection signal="text_changed" from="VS/VBC/Name/HBC/Name" to="VS/ArpList" method="_on_Name_text_changed"]
+[connection signal="macro_changed" from="VS/VBC/Values" to="." method="_on_arp_changed"]

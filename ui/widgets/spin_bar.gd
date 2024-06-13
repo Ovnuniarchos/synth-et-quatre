@@ -89,6 +89,7 @@ func set_value(f:float)->void:
 func set_value_no_signal(f:float)->void:
 	.set_value_no_signal(f)
 	_on_value_changed(f)
+	update()
 
 
 func set_decimals(v:int)->void:

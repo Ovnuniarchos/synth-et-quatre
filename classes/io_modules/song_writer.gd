@@ -25,7 +25,7 @@ func serialize(out:ChunkedFile,song:Song)->FileResult:
 	fr=serialize_instruments(out,song)
 	if fr.has_error():
 		return fr
-	fr=serialize_macros(out,song)
+	fr=serialize_arpeggios(out,song)
 	if fr.has_error():
 		return fr
 	# Orders
@@ -120,24 +120,17 @@ func serialize_waveforms(out:ChunkedFile,song:Song)->FileResult:
 	return FileResult.new()
 
 
-func serialize_macros(out:ChunkedFile,song:Song)->FileResult:
+func serialize_arpeggios(out:ChunkedFile,song:Song)->FileResult:
 	var fr:FileResult
 	out.start_chunk(CHUNK_ARPEGGIOS,CHUNK_ARPEGGIOS_VERSION)
-	var count:int=0
-	for arp in song.arp_list:
-		if arp.steps>0:
-			count+=1
-	out.store_16(count)
+	out.store_16(song.arp_list.size())
 	if out.get_error():
 		return FileResult.new(out.get_error(),{FileResult.ERRV_FILE:out.get_path()})
 	var arp_w:ArpeggioWriter=ArpeggioWriter.new()
-	count=0
-	for arp in song.arp_list:
-		arp_w.set_arpeggio(count)
+	for arp in song.arp_list.size():
 		fr=arp_w.serialize(out,arp)
 		if fr.has_error():
 			return fr
-		count+=1
 	out.end_chunk()
 	if out.get_error():
 		return FileResult.new(out.get_error(),{FileResult.ERRV_FILE:out.get_path()})

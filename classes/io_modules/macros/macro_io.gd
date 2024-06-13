@@ -1,6 +1,8 @@
 extends Resource
 class_name MacroIO
 
+const ARPEGGIO_FILE_SIGNATURE:String="SFAD\u000d\u000a\u001a\u000a"
+const ARPEGGIO_FILE_VERSION:int=0
 
 const ARPEGGIO_ID:String="aRPG"
 const ARPEGGIO_VERSION:int=0

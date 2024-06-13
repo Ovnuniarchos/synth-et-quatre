@@ -33,5 +33,9 @@ func has_error()->bool:
 	return error!=OK
 
 
+func is_ok()->bool:
+	return error==OK
+
+
 func _to_string()->String:
 	return "{error:%d,error_data:%s,data:%s}"%[error,error_data,data]

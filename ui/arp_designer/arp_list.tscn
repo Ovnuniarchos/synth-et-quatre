@@ -5,8 +5,9 @@
 [ext_resource path="res://ui/widgets/spin_bar.gd" type="Script" id=3]
 
 [node name="ArpList" type="VBoxContainer"]
-margin_right = 130.0
+margin_right = 297.0
 margin_bottom = 561.0
+rect_pivot_offset = Vector2( 1201, -124 )
 rect_clip_content = true
 size_flags_vertical = 3
 script = ExtResource( 2 )
@@ -110,10 +111,18 @@ disabled = true
 shortcut_in_tooltip = false
 text = "ARPED_SAVE"
 
+[node name="FileDialog" type="FileDialog" parent="."]
+margin_right = 315.0
+margin_bottom = 130.0
+mode_overrides_title = false
+access = 2
+
 [connection signal="value_changed" from="Speed/Ticks" to="." method="_on_Ticks_value_changed"]
 [connection signal="pressed" from="Buttons/Add" to="." method="_on_Add_pressed"]
 [connection signal="pressed" from="Buttons/Copy" to="." method="_on_Copy_pressed"]
 [connection signal="pressed" from="Buttons/Del" to="." method="_on_Del_pressed"]
 [connection signal="item_selected" from="Arpeggios" to="." method="_on_Arpeggios_item_selected"]
-[connection signal="pressed" from="Buttons2/Load" to="." method="_on_Add_pressed"]
-[connection signal="pressed" from="Buttons2/Save" to="." method="_on_Del_pressed"]
+[connection signal="pressed" from="Buttons2/Load" to="." method="_on_Load_pressed"]
+[connection signal="pressed" from="Buttons2/Save" to="." method="_on_Save_pressed"]
+[connection signal="file_selected" from="FileDialog" to="." method="_on_file_selected"]
+[connection signal="files_selected" from="FileDialog" to="." method="_on_files_selected"]

@@ -258,9 +258,13 @@ func find_instrument(inst:Instrument)->int:
 #
 
 func add_arp(arp:Arpeggio)->void:
-	if can_add_arp() and arp_list.find(arp)==-1:
-		arp_list.append(arp)
-		emit_signal("arp_list_changed")
+	if can_add_arp():
+		if arp_list.find(arp)==-1:
+			arp_list.append(arp)
+			emit_signal("arp_list_changed")
+	else:
+		emit_signal("error",tr("ERR_SONG_MAX_ARPS").format({"i_max_arps":SONGL.MAX_ARPEGGIOS}))
+
 
 func delete_arp(arp:Arpeggio)->void:
 	if not can_delete_arp(arp):
@@ -283,7 +287,6 @@ func delete_arp(arp:Arpeggio)->void:
 func can_add_arp()->bool:
 	if arp_list.size()<SONGL.MAX_ARPEGGIOS:
 		return true
-	emit_signal("error",tr("ERR_SONG_MAX_ARPS").format({"i_max_arps":SONGL.MAX_ARPEGGIOS}))
 	return false
 
 func can_delete_arp(arp:Arpeggio)->bool:

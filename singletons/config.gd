@@ -12,6 +12,7 @@ const CFG_PATH:String="user://se4.ini"
 const CURR_SONG_DIR:Array=["Files","current_song_dir","",TYPE_STRING]
 const CURR_INST_DIR:Array=["Files","current_inst_dir","",TYPE_STRING]
 const CURR_WAVE_DIR:Array=["Files","current_wave_dir","",TYPE_STRING]
+const CURR_ARP_DIR:Array=["Files","current_arp_dir","",TYPE_STRING]
 const CURR_SAMPLE_DIR:Array=["Files","current_sample_dir","",TYPE_STRING]
 const CURR_EXPORT_DIR:Array=["Files","current_export_dir","",TYPE_STRING]
 const AUDIO_SAMPLERATE:Array=["Audio","sample_rate",48000,TYPE_INT,8000,192000,1]

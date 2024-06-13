@@ -103,7 +103,7 @@ func _on_Load_pressed()->void:
 	file_mode=FILE_MODE.LOAD_WAVE
 	file_dlg.current_dir=CONFIG.get_value(CONFIG.CURR_SONG_DIR)
 	file_dlg.window_title="WAVED_LOAD_DLG"
-	file_dlg.mode=FileDialog.MODE_OPEN_FILE
+	file_dlg.mode=FileDialog.MODE_OPEN_FILES
 	file_dlg.current_file=""
 	file_dlg.filters=GLOBALS.translate_filetypes(FILES_SW4)
 	file_dlg.set_as_toplevel(true)
@@ -119,20 +119,27 @@ func _on_Save_pressed()->void:
 	file_dlg.set_as_toplevel(true)
 	file_dlg.popup_centered_ratio()
 
-
 func _on_file_selected(path:String)->void:
-	var cfg_dir:Array
 	var res:FileResult
 	match file_mode:
 		FILE_MODE.LOAD_WAVE:
-			cfg_dir=CONFIG.CURR_SONG_DIR
 			res=WaveformReader.new().read(path)
 		FILE_MODE.SAVE_WAVE:
-			cfg_dir=CONFIG.CURR_SONG_DIR
 			res=WaveformWriter.new().write(path,GLOBALS.song.wave_list[curr_wave_ix])
 	if res.has_error():
 		ALERT.alert(res.get_message())
 		print(res.get_message())
 	else:
-		CONFIG.set_value(cfg_dir,path.get_base_dir())
+		CONFIG.set_value(CONFIG.CURR_WAVE_DIR,path.get_base_dir())
 
+func _on_files_selected(paths:PoolStringArray):
+	var cfg_dir:Array=CONFIG.CURR_WAVE_DIR
+	var res:FileResult=null
+	for path in paths:
+		res=WaveformReader.new().read(path)
+		if res.has_error:
+			ALERT.alert(res.get_message())
+			print(res.get_message())
+			break
+	if res==null or res.is_ok():
+		CONFIG.set_value(cfg_dir,paths[0].get_base_dir())

@@ -19,6 +19,12 @@ msgstr "Archivo WAV"
 msgid "FTYPE_WAVEFORM"
 msgstr "Onda SynthEtQuatre"
 
+msgid "FTYPE_INSTRUMENT"
+msgstr "Instrumento SynthEtQuatre"
+
+msgid "FTYPE_ARPEGGIO"
+msgstr "Arpeggio SynthEtQuatre"
+
 # Top menu
 msgid "MENU_FILE"
 msgstr "Archivo"

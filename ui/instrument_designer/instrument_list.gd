@@ -5,6 +5,7 @@ signal instrument_selected(idx)
 signal instrument_deleted(idx)
 signal instrument_added(idx)
 
+const FILES_SI4:Dictionary={"*.si4":"FTYPE_INSTRUMENT"}
 
 var file_dlg:FileDialog
 var inst_l:ItemList
@@ -126,6 +127,7 @@ func _on_Load_pressed()->void:
 	file_dlg.window_title="INSTED_DLG_LOAD"
 	file_dlg.mode=FileDialog.MODE_OPEN_FILES
 	file_dlg.current_file=""
+	file_dlg.filters=GLOBALS.translate_filetypes(FILES_SI4)
 	file_dlg.set_as_toplevel(true)
 	file_dlg.popup_centered_ratio()
 
@@ -135,21 +137,28 @@ func _on_Save_pressed()->void:
 	file_dlg.window_title="INSTED_DLG_SAVE"
 	file_dlg.mode=FileDialog.MODE_SAVE_FILE
 	file_dlg.current_file=GLOBALS.song.instrument_list[GLOBALS.curr_instrument].file_name
+	file_dlg.filters=GLOBALS.translate_filetypes(FILES_SI4)
 	file_dlg.set_as_toplevel(true)
 	file_dlg.popup_centered_ratio()
 
 
-func _on_FileDialog_file_selected(path:String)->void:
-	var cfg_dir:Array=CONFIG.CURR_INST_DIR
-	FmInstrumentWriter.new(GLOBALS.song.wave_list).write(path,GLOBALS.get_instrument())
-	CONFIG.set_value(cfg_dir,path.get_base_dir())
+func _on_file_selected(path:String)->void:
+	var res:FileResult=FmInstrumentWriter.new(GLOBALS.song.wave_list).write(path,GLOBALS.get_instrument())
+	if res.has_error():
+		ALERT.alert(res.get_message())
+		print(res.get_message())
+	else:
+		CONFIG.set_value(CONFIG.CURR_INST_DIR,path.get_base_dir())
 
 
-func _on_FileDialog_files_selected(paths:PoolStringArray)->void:
-	var cfg_dir:Array=CONFIG.CURR_INST_DIR
+func _on_files_selected(paths:PoolStringArray)->void:
 	var fir:FmInstrumentReader=FmInstrumentReader.new()
+	var res:FileResult=null
 	for path in paths:
-		fir.read(path)
-	CONFIG.set_value(cfg_dir,paths[0].get_base_dir())
-
-
+		res=fir.read(path)
+		if res.has_error():
+			ALERT.alert(res.get_message())
+			print(res.get_message())
+			break
+	if res==null or res.is_ok():
+		CONFIG.set_value(CONFIG.CURR_INST_DIR,paths[0].get_base_dir())

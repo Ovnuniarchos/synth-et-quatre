@@ -18,6 +18,7 @@ func read(path:String)->FileResult:
 	f.close()
 	if fr.has_error():
 		return fr
+	fr.data.file_name=path.get_file()
 	GLOBALS.song.add_wave(fr.data)
 	return FileResult.new()
 

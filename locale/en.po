@@ -19,6 +19,12 @@ msgstr "WAV file"
 msgid "FTYPE_WAVEFORM"
 msgstr "SynthEtQuatre wave"
 
+msgid "FTYPE_INSTRUMENT"
+msgstr "SynthEtQuatre instrument"
+
+msgid "FTYPE_ARPEGGIO"
+msgstr "SynthEtQuatre arpeggio"
+
 # Top menu
 msgid "MENU_FILE"
 msgstr "File"

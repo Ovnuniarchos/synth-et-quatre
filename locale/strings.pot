@@ -14,6 +14,12 @@ msgstr ""
 msgid "FTYPE_WAVEFORM"
 msgstr ""
 
+msgid "FTYPE_INSTRUMENT"
+msgstr ""
+
+msgid "FTYPE_ARPEGGIO"
+msgstr ""
+
 # Top menu
 
 msgid "MENU_FILE"

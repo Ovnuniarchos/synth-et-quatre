@@ -16,7 +16,7 @@ func read(path:String)->FileResult:
 		})
 	var res:FileResult=deserialize(f)
 	f.close()
-	if not res.has_error():
+	if res.is_ok():
 		res.data.file_name=path.get_file()
 		AUDIO.tracker.stop()
 		AUDIO.tracker.reset()
@@ -257,23 +257,13 @@ func deserialize_arpeggios(inf:ChunkedFile,song:Song,header:Dictionary)->FileRes
 			FileResult.ERRV_FILE:inf.get_path()
 		})
 	var arp_r:ArpeggioReader=ArpeggioReader.new()
-	var count:int=inf.get_16()
-	var ix0:int=song.arp_list.size()-1
-	var ix:int
+	song.arp_list.resize(inf.get_16())
 	var fr:FileResult
-	while count>0:
-		count-=1
+	for i in song.arp_list.size():
 		fr=arp_r.deserialize(inf)
 		if fr.has_error():
 			return fr
-		ix=fr.data["index"]
-		if ix>ix0:
-			ix0=ix
-			song.arp_list.resize(ix+1)
-		song.arp_list[ix]=fr.data["arpeggio"]
+		song.arp_list[i]=fr.data
 	if inf.get_error():
 		return FileResult.new(inf.get_error(),{FileResult.ERRV_FILE:inf.get_path()})
-	for i in song.arp_list.size():
-		if song.arp_list[i]==null:
-			song.arp_list[i]=Arpeggio.new()
 	return FileResult.new()

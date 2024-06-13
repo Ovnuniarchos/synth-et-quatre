@@ -2,6 +2,7 @@ extends Macro
 class_name Arpeggio
 
 var name:String
+var file_name:String
 
 
 func _init()->void:

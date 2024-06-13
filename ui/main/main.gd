@@ -3,7 +3,11 @@ extends Control
 """
 FIXME
 TODO:
+	Arpeggio editor loses arpeggio data
 	I/O for arpeggios
+		Implement I/O
+		Song I/O should not compact arpeggio list (or do a better job) X
+			Eliminate arp_ix from (de)serializer (compatibility?) X
 	Constant-ify error IDs/params.
 	Copy/Paste buttons for instrument/wave editors
 	MIDI on/off indicator

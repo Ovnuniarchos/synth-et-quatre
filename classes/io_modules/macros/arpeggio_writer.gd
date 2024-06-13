@@ -2,14 +2,20 @@ extends MacroIO
 class_name ArpeggioWriter
 
 
-var arpeggio_ix:int
+func write(path:String,arp:Arpeggio)->FileResult:
+	var out:ChunkedFile=ChunkedFile.new()
+	out.open(path,File.WRITE)
+	# Signature: SFAD\0xc\0xa\0x1a\0xa
+	var err:int=out.start_file(ARPEGGIO_FILE_SIGNATURE,ARPEGGIO_FILE_VERSION)
+	if err!=OK:
+		out.close()
+		return FileResult.new(err,{FileResult.ERRV_FILE:out.get_path()})
+	var fr:FileResult=serialize(out,arp)
+	out.close()
+	return fr
 
-func set_arpeggio(ix:int)->void:
-	arpeggio_ix=ix
 
-
-func serialize(out:ChunkedFile,a:Arpeggio)->FileResult:
-	_serialize_start(out,a,ARPEGGIO_ID,ARPEGGIO_VERSION)
-	out.store_pascal_string(a.name)
-	out.store_8(arpeggio_ix)
-	return _serialize_end(out,a)
+func serialize(out:ChunkedFile,arp:Arpeggio)->FileResult:
+	_serialize_start(out,arp,ARPEGGIO_ID,ARPEGGIO_VERSION)
+	out.store_pascal_string(arp.name)
+	return _serialize_end(out,arp)

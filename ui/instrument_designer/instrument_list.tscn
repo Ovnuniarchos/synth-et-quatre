@@ -92,5 +92,5 @@ filters = PoolStringArray( "*.si4 ; FILETYPE_INSTRUMENT" )
 [connection signal="item_selected" from="Instruments" to="." method="_on_item_selected"]
 [connection signal="pressed" from="Buttons2/Load" to="." method="_on_Load_pressed"]
 [connection signal="pressed" from="Buttons2/Save" to="." method="_on_Save_pressed"]
-[connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]
-[connection signal="files_selected" from="FileDialog" to="." method="_on_FileDialog_files_selected"]
+[connection signal="file_selected" from="FileDialog" to="." method="_on_file_selected"]
+[connection signal="files_selected" from="FileDialog" to="." method="_on_files_selected"]

@@ -8,6 +8,8 @@ const PARAM_VALUES:int=3
 const PARAM_STEPS:int=4
 const PARAM_DELAY:int=5
 const MAX_STEPS:int=256
+const PASSTHROUGH:int=0x7fffffffffffffff
+
 
 var loop_start:int=-1 setget set_loop_start
 var loop_end:int=-1 setget set_loop_end

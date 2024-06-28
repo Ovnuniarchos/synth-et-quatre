@@ -3,7 +3,6 @@ class_name ParamMacro
 
 const MASK_PASSTHROUGH_SHIFT:int=32
 const MASK_VALUE_MASK:int=0xffffffff
-const PASSTHROUGH:int=0x7fffffffffffffff
 
 var relative:bool=true
 var tick_div:int=1 setget set_tick_div

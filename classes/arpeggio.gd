@@ -21,7 +21,10 @@ func get_value(tick:int,release_tick:int,base_value:int,tick_div:int)->int:
 			tick_div)
 	else:
 		macro_tick=get_tick(tick,release_tick-delay,tick_div)
-	return base_value+values[macro_tick]
+	var value:int=values[macro_tick]
+	if value==PASSTHROUGH:
+		return base_value
+	return base_value+value
 
 func duplicate()->Macro:
 	var na:Arpeggio=.duplicate()

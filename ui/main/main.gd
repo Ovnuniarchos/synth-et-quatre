@@ -3,8 +3,8 @@ extends Control
 """
 FIXME
 	Entering a value on the maximum fx column crashes
-	Using an arpeggio crashes
 TODO:
+	Expand panpot to full 8 bits, and add channel inversion columns
 	Copy/Paste buttons for instrument/wave editors
 	MIDI on/off indicator
 	Reset per channel parameters (as a command|button)

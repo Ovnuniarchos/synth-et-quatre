@@ -29,7 +29,7 @@ var freqs:Array=[0,0,0,0]
 var base_freqs:Array=[0,0,0,0]
 var next_freqs:Array=[0,0,0,0]
 var arpeggio:Arpeggio=null
-var arpeggio_speed:int
+var arpeggio_speed:int=3
 var velocity:int=255
 var panning:int=0x1F
 
@@ -131,6 +131,7 @@ func _init()->void:
 	fx_vals.resize(256)
 	reset()
 
+
 func reset()->void:
 	fx_cmds=[0,0,0,0]
 	fx_opmasks=[0,0,0,0]
@@ -218,6 +219,7 @@ func reset()->void:
 	lfo_phase_dirty_any=false
 	lfo_phase_dirty=[false,false,false,false]
 
+
 func process_tick(song:Song,channel:int,curr_order:int,curr_row:int,curr_tick:int,messages:Array)->void:
 	var pat:Pattern=song.get_order_pattern(curr_order,channel)
 	var note:Array=pat.notes[curr_row]
@@ -251,6 +253,7 @@ func process_tick(song:Song,channel:int,curr_order:int,curr_row:int,curr_tick:in
 		macro_tick+=1
 	else:
 		fx_vals[CONSTS.FX_DELAY]-=1
+
 
 func process_tick_0(note:Array,song:Song,num_fxs:int,messages:Array)->void:
 	var legato:int=KON_STD if note[ATTRS.LG_MODE]==null else LEGATO2KON[note[ATTRS.LG_MODE]]
@@ -386,6 +389,7 @@ func process_tick_0(note:Array,song:Song,num_fxs:int,messages:Array)->void:
 		j+=3
 	apply_macros()
 
+
 func process_tick_n(song:Song,channel:int)->void:
 	var fx_cmd:int
 	for i in range(song.num_fxs[channel]):
@@ -412,6 +416,7 @@ func process_tick_n(song:Song,channel:int)->void:
 		elif fx_cmd==CONSTS.FX_RPT_PHI0:
 			set_repeated_phi_zero(fx_opmasks[i])
 	apply_macros()
+
 
 func apply_macros()->void:
 	var old:int
@@ -502,6 +507,7 @@ func apply_macros()->void:
 		routings[0][4],routings[1][4],routings[2][4],routings[3][4]
 	],out_values,output_dirty,output_dirty_any)
 
+
 func apply_op_macro(macros:Array,values:Array,out:Array,dirty:Array,dirty_any:bool)->bool:
 	var old:int
 	for op in 4:
@@ -511,11 +517,13 @@ func apply_op_macro(macros:Array,values:Array,out:Array,dirty:Array,dirty_any:bo
 		dirty_any=dirty_any or dirty[op]
 	return dirty_any
 
+
 func get_fx_cmd(c,i:int)->int:
 	if c!=null:
 		fx_cmds[i]=c
 		fx_apply[i]=true
 	return fx_cmds[i]
+
 
 func get_fx_val(v,note,cmd:int,cmd_col:int)->int:
 	if v==null:
@@ -659,6 +667,7 @@ func commit(channel:int,cmds:Array,ptr:int)->int:
 		lfo_phase_dirty_any=false
 	return ptr
 
+
 func commit_phase(channel:int,cmds:Array,ptr:int,dirties:Array,values:Array,
 	relatives:Array)->int:
 	var cmd:int
@@ -672,6 +681,7 @@ func commit_phase(channel:int,cmds:Array,ptr:int,dirties:Array,values:Array,
 	phase_dirty_any=false
 	return ptr
 
+
 func commit_lfo_long(cmds:Array,ptr:int,cmd:int,dirties:Array,values:Array,
 		shift:int=0)->int:
 	for i in 4:
@@ -682,6 +692,7 @@ func commit_lfo_long(cmds:Array,ptr:int,cmd:int,dirties:Array,values:Array,
 			ptr+=2
 	return ptr
 
+
 func commit_lfo_short(cmds:Array,ptr:int,cmd:int,dirties:Array,values:Array)->int:
 	for i in 4:
 		if dirties[i]:
@@ -689,6 +700,7 @@ func commit_lfo_short(cmds:Array,ptr:int,cmd:int,dirties:Array,values:Array)->in
 			cmds[ptr]=cmd|(i<<8)|(values[i]<<16)
 			ptr+=1
 	return ptr
+
 
 func commit_output(channel:int,cmds:Array,ptr:int)->int:
 	for i in 4:
@@ -698,6 +710,7 @@ func commit_output(channel:int,cmds:Array,ptr:int)->int:
 			ptr+=1
 	output_dirty_any=false
 	return ptr
+
 
 func commit_pm_level(channel:int,cmds:Array,ptr:int,from:int,dirties:Array,
 		values:Array)->int:
@@ -710,6 +723,7 @@ func commit_pm_level(channel:int,cmds:Array,ptr:int,from:int,dirties:Array,
 			ptr+=2
 	return ptr
 
+
 func commit_opmasked_short(channel:int,cmds:Array,ptr:int,cmd:int,dirties:Array,
 		values:Array)->int:
 	for i in 4:
@@ -718,6 +732,7 @@ func commit_opmasked_short(channel:int,cmds:Array,ptr:int,cmd:int,dirties:Array,
 			cmds[ptr]=cmd|(channel<<8)|(0x10000<<i)|(values[i]<<24)
 			ptr+=1
 	return ptr
+
 
 func commit_opmasked_long(channel:int,cmds:Array,ptr:int,cmd:int,dirties:Array,
 		values:Array,shift:int=0)->int:
@@ -729,25 +744,30 @@ func commit_opmasked_long(channel:int,cmds:Array,ptr:int,cmd:int,dirties:Array,
 			ptr+=2
 	return ptr
 
+
 func commit_panning(channel:int,cmds:Array,ptr:int)->int:
 	cmds[ptr]=CONSTS.CMD_PAN|(channel<<8)|(panning_value<<16)
 	panning_dirty=false
 	return ptr+1
+
 
 func commit_clip(channel:int,cmds:Array,ptr:int)->int:
 	cmds[ptr]=CONSTS.CMD_CLIP|(channel<<8)|(int(new_clip)<<24)
 	clip_dirty=false
 	return ptr+1
 
+
 func commit_velocity(channel:int,cmds:Array,ptr:int)->int:
 	cmds[ptr]=CONSTS.CMD_VEL|(channel<<8)|(velocity_value<<16)
 	velocity_dirty=false
 	return ptr+1
 
+
 func commit_enable(channel:int,cmds:Array,ptr:int)->int:
 	cmds[ptr]=CONSTS.CMD_ENABLE|(channel<<8)|(enable_mask<<16)||(enable_bits<<24)
 	enable_mask=0
 	return ptr+1
+
 
 func commit_retrigger(channel:int,cmds:Array,ptr:int)->int:
 	var optr:int=ptr
@@ -772,6 +792,7 @@ func commit_retrigger(channel:int,cmds:Array,ptr:int)->int:
 		key_dirty[i]=KON_PASS
 	velocity_dirty=false
 	return ptr
+
 
 func commit_instrument(channel:int,cmds:Array,ptr:int)->int:
 	instrument_dirty=false
@@ -845,6 +866,7 @@ func commit_instrument(channel:int,cmds:Array,ptr:int)->int:
 		return ptr
 	return commit_opmask(channel,cmds,ptr)
 
+
 func commit_opmask(channel:int,cmds:Array,ptr:int)->int:
 	cmds[ptr]=CONSTS.CMD_ENABLE|(channel<<8)|0xF0000|(op_mask<<24)
 	return ptr+1
@@ -857,11 +879,11 @@ func set_instrument(inst:FmInstrument)->void:
 	copy(inst)
 	instrument_dirty=true
 
-#
 
 func set_clip(value:int)->bool:
 	new_clip=bool(value)
 	return true
+
 
 func set_lfo_freq(value:int,lfo_mask:int,val_mask:int,val_shift:int)->bool:
 	if (lfo_mask&15)==0:
@@ -873,6 +895,7 @@ func set_lfo_freq(value:int,lfo_mask:int,val_mask:int,val_shift:int)->bool:
 		lfo_mask>>=1
 	return true
 
+
 func set_opmasked(value:int,params:Array,dirties:Array,op:int)->bool:
 	if op==0:
 		return false
@@ -882,6 +905,7 @@ func set_opmasked(value:int,params:Array,dirties:Array,op:int)->bool:
 			params[i]=value
 		op>>=1
 	return true
+
 
 func set_output(value:int,op:int)->void:
 	if op==0:
@@ -893,6 +917,7 @@ func set_output(value:int,op:int)->void:
 		op>>=1
 	output_dirty_any=true
 
+
 func set_fm_level(value:int,from:int,op:int)->void:
 	if op==0:
 		return
@@ -902,6 +927,7 @@ func set_fm_level(value:int,from:int,op:int)->void:
 			routings[from][i]=value
 		op>>=1
 	pm_level_dirty_any[from]=true
+
 
 func set_frequency(f,op:int)->void:
 	if op==0:
@@ -915,6 +941,7 @@ func set_frequency(f,op:int)->void:
 		op>>=1
 	freqs_dirty_any=true
 
+
 func slide_frequency(d,op:int)->void:
 	if op==0:
 		return
@@ -926,6 +953,7 @@ func slide_frequency(d,op:int)->void:
 					fx_vals[CONSTS.FX_FRQ_PORTA][1+i]+d,CONSTS.MIN_FREQ,CONSTS.MAX_FREQ)
 		op>>=1
 	freqs_dirty_any=true
+
 
 func slide_frequency_to(d:Array,op:int)->void:
 	if op==0:
@@ -940,6 +968,7 @@ func slide_frequency_to(d:Array,op:int)->void:
 		op>>=1
 	freqs_dirty_any=true
 
+
 func slide_fmi(d:int,op:int)->void:
 	if op==0:
 		return
@@ -950,6 +979,7 @@ func slide_fmi(d:int,op:int)->void:
 		op>>=1
 	fmi_dirty_any=true
 
+
 func slide_ami(d:int,op:int)->void:
 	if op==0:
 		return
@@ -959,6 +989,7 @@ func slide_ami(d:int,op:int)->void:
 			am_intensity[i]=clamp(am_intensity[i]+d,0,255)
 		op>>=1
 	ami_dirty_any=true
+
 
 func slide_detune(d:int,op:int)->void:
 	if op==0:
@@ -1022,6 +1053,7 @@ func set_delayed_triggers(fx_cmd:int,opm:int)->void:
 			opm>>=1
 		key_dirty_any=true
 
+
 func set_repeated_phi_zero(op:int)->void:
 	fx_vals[CONSTS.FX_RPT_PHI0][0]-=1
 	if fx_vals[CONSTS.FX_RPT_PHI0][0]<=0:
@@ -1035,6 +1067,7 @@ func set_repeated_phi_zero(op:int)->void:
 			phases_rel[i]=false
 		op>>=1
 	phase_dirty_any=true
+
 
 func set_delayed_phi_zero(op:int)->void:
 	fx_vals[CONSTS.FX_DLY_PHI0]-=1

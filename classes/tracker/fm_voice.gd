@@ -468,7 +468,6 @@ func apply_macros()->void:
 			phases[i]=val
 			phases_rel[i]=phase_macros[i].relative
 		# Op routings
-		# FIXME: Don't work past tick 0
 		pm_level_dirty_any[i]=apply_op_macro(op_macros[i],routings[i],pml_values[i],pm_level_dirty[i],pm_level_dirty_any[i])
 	# Op Duty Cycle
 	duty_cycle_dirty_any=apply_op_macro(duty_macros,duty_cycles,duty_values,duty_cycle_dirty,duty_cycle_dirty_any)

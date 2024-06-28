@@ -69,7 +69,7 @@ func _ready()->void:
 	_on_resized()
 	selection.active=false
 	sel_rect.selection=selection
-	last_entered.resize(Pattern.MAX_ATTR)
+	last_entered.resize(ATTRS.MAX)
 	is_ready=true
 
 

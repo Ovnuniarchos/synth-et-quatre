@@ -2,8 +2,8 @@ extends Control
 
 """
 FIXME
-	Entering a value on the maximum fx column crashes
 TODO:
+	Implement Fixed Delta Frequency mode for operators
 	Expand panpot to full 8 bits, and add channel inversion columns
 	Copy/Paste buttons for instrument/wave editors
 	MIDI on/off indicator

@@ -335,7 +335,7 @@ func process_tick_0(note:Array,song:Song,num_fxs:int,messages:Array)->void:
 				repeat_dirty_any=set_opmasked(fx_val,repeats,repeat_dirty,fx_opm)
 			elif fx_cmd==CONSTS.FX_AMI_SET:
 				ami_dirty_any=set_opmasked(fx_val,am_intensity,ami_dirty,fx_opm)
-			elif fx_cmd==CONSTS.FX_FMI_ADJ or fx_cmd==CONSTS.FX_FMI_SLIDE:
+			elif fx_cmd==CONSTS.FX_AMI_ADJ or fx_cmd==CONSTS.FX_AMI_SLIDE:
 				slide_ami(fx_val,fx_opm)
 			elif fx_cmd==CONSTS.FX_AMI_LFO:
 				aml_dirty_any=set_opmasked(fx_val,am_lfo,aml_dirty,fx_opm)

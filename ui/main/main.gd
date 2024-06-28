@@ -2,8 +2,9 @@ extends Control
 
 """
 FIXME
+	Entering a value on the maximum fx column crashes
+	Using an arpeggio crashes
 TODO:
-	Constant-ify error IDs/params.
 	Copy/Paste buttons for instrument/wave editors
 	MIDI on/off indicator
 	Reset per channel parameters (as a command|button)
@@ -13,6 +14,8 @@ TODO:
 		Range?: MIDI modulation
 
 FUTURE:
+	Node-based wave generator
+	Constant-ify error IDs/params
 	Import instruments/waveforms/arpeggios from song
 	Import waveforms from instrument
 """

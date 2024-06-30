@@ -94,16 +94,8 @@ func _on_FreqLFO_item_selected(idx:int)->void:
 	emit_signal("instrument_changed")
 
 func _on_MULSlider_value_changed(value:float)->void:
-	GLOBALS.get_instrument().multipliers[operator]=int(value)
-	IM_SYNTH.set_freq_mul(operator,int(value))
-	if int(value)>0:
-		$Params/Detune/DETLabel.text="FMED_DETUNE"
-		$Params/Detune/DETLabel.hint_tooltip="FMED_DETUNE_TTIP"
-		$Params/Detune/DETSlider.hint_tooltip="FMED_DETUNE_TTIP"
-	else:
-		$Params/Detune/DETLabel.text="FMED_FIXED_FREQUENCY"
-		$Params/Detune/DETLabel.hint_tooltip="FMED_FIXED_FREQUENCY_TTIP"
-		$Params/Detune/DETSlider.hint_tooltip="FMED_FIXED_FREQUENCY_TTIP"
+	GLOBALS.get_instrument().multipliers[operator]=int(value)-1
+	IM_SYNTH.set_freq_mul(operator,int(value)-1)
 	emit_signal("instrument_changed")
 
 func _on_DIVSlider_value_changed(value:float)->void:
@@ -111,7 +103,13 @@ func _on_DIVSlider_value_changed(value:float)->void:
 	IM_SYNTH.set_freq_div(operator,int(value)-1)
 	emit_signal("instrument_changed")
 
-func _on_DETSlider_value_changed(value):
+func _on_DETMode_cycled(mode:int)->void:
+	GLOBALS.get_instrument().detune_modes[operator]=mode
+	IM_SYNTH.set_detune_mode(operator,mode)
+	$Params/FreqMods/DETSlider.hint_tooltip=["FMED_DETUNE_TTIP","FMED_FIXED_FREQUENCY_TTIP","FMED_DELTA_FREQUENCY_TTIP"][mode]
+	emit_signal("instrument_changed")
+
+func _on_DETSlider_value_changed(value:int)->void:
 	GLOBALS.get_instrument().detunes[operator]=int(value)
 	IM_SYNTH.set_detune(operator,int(value))
 	emit_signal("instrument_changed")
@@ -133,25 +131,16 @@ func set_sliders(inst:FmInstrument)->void:
 	$Params/ADSR/SRSlider.value=inst.sustains[operator]
 	$Params/ADSR/RRSlider.value=inst.releases[operator]
 	$Params/ADSR/Repeat.select($Params/ADSR/Repeat.get_item_index(inst.repeats[operator]))
-	$Params/Frequency/MULSlider.value=inst.multipliers[operator]
+	$Params/Frequency/MULSlider.value=inst.multipliers[operator]+1
 	$Params/Frequency/DIVSlider.value=inst.dividers[operator]+1
-	$Params/Detune/DETSlider.value=inst.detunes[operator]
+	$Params/FreqMods/DETSlider.value=inst.detunes[operator]
 	$Params/Wave/DUCSlider.value=inst.duty_cycles[operator]
 	$Params/Wave/WAVButton.select(inst.waveforms[operator])
 	$Params/ADSR/AMSSlider.value=inst.am_intensity[operator]
 	$Params/LFOs/AmpLFO.select($Params/LFOs/AmpLFO.get_item_index(inst.am_lfo[operator]))
 	$Params/ADSR/KSRSlider.value=inst.key_scalers[operator]
-	$Params/FMS/FMSSlider.value=inst.fm_intensity[operator]
+	$Params/FreqMods/FMSSlider.value=inst.fm_intensity[operator]
 	$Params/LFOs/FreqLFO.select($Params/LFOs/FreqLFO.get_item_index(inst.fm_lfo[operator]))
-	if inst.multipliers[operator]>0:
-		$Params/Detune/DETLabel.text="FMED_DETUNE"
-		$Params/Detune/DETLabel.hint_tooltip="FMED_DETUNE_TTIP"
-		$Params/Detune/DETSlider.hint_tooltip="FMED_DETUNE_TTIP"
-	else:
-		$Params/Detune/DETLabel.text="FMED_FIXED_FREQUENCY"
-		$Params/Detune/DETLabel.hint_tooltip="FMED_FIXED_FREQUENCY_TTIP"
-		$Params/Detune/DETSlider.hint_tooltip="FMED_FIXED_FREQUENCY_TTIP"
+	$Params/FreqMods/DETSlider.hint_tooltip=["FMED_DETUNE_TTIP","FMED_FIXED_FREQUENCY_TTIP","FMED_DELTA_FREQUENCY_TTIP"][inst.detune_modes[operator]]
 	set_block_signals(false)
 	emit_signal("instrument_changed")
-
-

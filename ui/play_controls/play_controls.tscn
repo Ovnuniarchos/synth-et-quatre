@@ -56,10 +56,12 @@ mouse_default_cursor_shape = 6
 margin_left = 246.0
 margin_right = 385.0
 margin_bottom = 20.0
+hint_tooltip = "PLAY_MODE_MONO_TTIP"
 text = "PLAY_MODE_MONO"
 script = ExtResource( 3 )
 colors = PoolColorArray( 1, 1, 1, 1, 1, 0.501961, 0.501961, 1, 1, 1.25, 1.5, 1 )
 texts = PoolStringArray( "PLAY_MODE_MONO", "PLAY_MODE_SEMI", "PLAY_MODE_POLY" )
+tooltips = PoolStringArray( "PLAY_MODE_MONO_TTIP", "PLAY_MODE_SEMI_TTIP", "PLAY_MODE_POLY_TTIP" )
 
 [connection signal="sort_children" from="." to="." method="_on_PC_sort_children"]
 [connection signal="toggled" from="HBC/Play" to="." method="_on_Play_toggled"]

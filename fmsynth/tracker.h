@@ -17,18 +17,21 @@ private:
 	enum{
 		CMD_WAIT=0x00,
 		CMD_FREQ,
+		CMD_VEL,
 		CMD_KEYON,
 		CMD_KEYON_LEG,
 		CMD_KEYON_STA,
 		CMD_KEYOFF,
 		CMD_STOP,
-		CMD_ENABLE,
-		CMD_MULT=0x08,
+		CMD_PAN,
+		CMD_CLIP,
+		CMD_ENABLE=0x20,
+		CMD_MULT,
 		CMD_DIV,
 		CMD_DET,
+		CMD_DET_M,
 		CMD_DUC,
-		CMD_WAVE=0x0c,
-		CMD_VOL=0x0d,
+		CMD_WAVE,
 		CMD_AR,
 		CMD_DR,
 		CMD_SL,
@@ -36,20 +39,18 @@ private:
 		CMD_RR,
 		CMD_RM,
 		CMD_KSR,
-		CMD_PM=0x15,
+		CMD_PM,
 		CMD_OUT,
-		CMD_PAN=0x17,
-		CMD_PHI=0x18,
-		CMD_DPHI=0x19,
-		CMD_AMS=0x1a,
+		CMD_PHI,
+		CMD_DPHI,
+		CMD_AMS,
 		CMD_AM_LFO,
 		CMD_FMS,
 		CMD_FM_LFO,
-		CMD_LFO_FREQ=0x1e,
+		CMD_LFO_FREQ=0x40,
 		CMD_LFO_WAVE,
 		CMD_LFO_DUC,
 		CMD_LFO_PHI,
-		CMD_CLIP=0x22,
 		CMD_DEBUG=0xfe,
 		CMD_END=0xff
 	};
@@ -71,6 +72,7 @@ public:
 	void set_freq_mul(int voice,int op_mask,int multiplier);
 	void set_freq_div(int voice,int op_mask,int divider);
 	void set_detune(int voice,int op_mask,int millis);
+	void set_detune_mode(int voice,int op_mask,int mode);
 
 	void set_wave(int voice,int op_mask,int wave_num);
 	void set_duty_cycle(int voice,int op_mask,FixedPoint duty_cycle);
@@ -79,7 +81,7 @@ public:
 	void define_wave(int wave_num,Array wave);
 	void define_sample(int wave_num,int loop_start,int loop_end,float rec_freq,float sam_freq,Array sample);
 
-	void set_volume(int voice,int vel);
+	void set_velocity(int voice,int vel);
 	void set_attack_rate(int voice,int op_mask,int rate);
 	void set_decay_rate(int voice,int op_mask,int rate);
 	void set_sustain_level(int voice,int op_mask,int level);

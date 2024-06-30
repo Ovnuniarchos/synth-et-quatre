@@ -3,20 +3,22 @@ class_name FmInstrument
 
 enum WAVE{RECTANGLE,SAW,TRIANGLE,NOISE,CUSTOM}
 enum REPEAT{OFF,RELEASE,SUSTAIN,DECAY,ATTACK}
+enum {DETMODE_NORMAL,DETMODE_FIXED,DETMODE_DELTA}
 const TYPE:String="FmInstrument"
 
 var op_mask:int=1
 var clip:bool=false
-var attacks:Array=[255,255,255,255]#[240,240,240,240]
-var decays:Array=[255,255,255,255]#[192,192,192,192]
+var attacks:Array=[255,255,255,255]
+var decays:Array=[255,255,255,255]
 var sustains:Array=[0,0,0,0]
-var sustain_levels:Array=[255,255,255,255]#[192,192,192,192]
-var releases:Array=[255,255,255,255]#[32,32,32,32]
+var sustain_levels:Array=[255,255,255,255]
+var releases:Array=[255,255,255,255]
 var key_scalers:Array=[0,0,0,0]
 var repeats:Array=[REPEAT.OFF,REPEAT.OFF,REPEAT.OFF,REPEAT.OFF]
-var multipliers:Array=[1,1,1,1]
+var multipliers:Array=[0,0,0,0]
 var dividers:Array=[0,0,0,0]
 var detunes:Array=[0,0,0,0]
+var detune_modes:Array=[DETMODE_NORMAL,DETMODE_NORMAL,DETMODE_NORMAL,DETMODE_NORMAL]
 var duty_cycles:Array=[0,0,0,0]
 var waveforms:Array=[WAVE.TRIANGLE,WAVE.TRIANGLE,WAVE.TRIANGLE,WAVE.TRIANGLE]
 var am_intensity:Array=[0,0,0,0]
@@ -24,10 +26,10 @@ var am_lfo:Array=[0,0,0,0]
 var fm_intensity:Array=[0,0,0,0]
 var fm_lfo:Array=[0,0,0,0]
 var routings:Array=[
-	[0,0,0,0,255],#[64,0,0,0,255],
-	[0,0,0,0,255],#[0,0,0,0,0],
-	[0,0,0,0,255],#[0,0,0,0,0],
-	[0,0,0,0,255]#[0,0,0,0,0]
+	[0,0,0,0,255],
+	[0,0,0,0,255],
+	[0,0,0,0,255],
+	[0,0,0,0,255]
 ]
 var freq_macro:ParamMacro=ParamMacro.new()
 var op_freq_macro:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
@@ -85,6 +87,7 @@ func duplicate()->Instrument:
 	ni.multipliers=multipliers.duplicate()
 	ni.dividers=dividers.duplicate()
 	ni.detunes=detunes.duplicate()
+	ni.detune_modes=detune_modes.duplicate()
 	ni.duty_cycles=duty_cycles.duplicate()
 	ni.waveforms=waveforms.duplicate()
 	ni.am_intensity=am_intensity.duplicate()
@@ -135,6 +138,7 @@ func copy(from:Instrument,full:bool=false)->void:
 		multipliers=from.multipliers.duplicate()
 		dividers=from.dividers.duplicate()
 		detunes=from.detunes.duplicate()
+		detune_modes=from.detune_modes.duplicate()
 		duty_cycles=from.duty_cycles.duplicate()
 		waveforms=from.waveforms.duplicate()
 		am_intensity=from.am_intensity.duplicate()
@@ -189,6 +193,7 @@ func copy_op(from:int,to:int)->void:
 	multipliers[to]=multipliers[from]
 	dividers[to]=dividers[from]
 	detunes[to]=detunes[from]
+	detune_modes[to]=detune_modes[from]
 	duty_cycles[to]=duty_cycles[from]
 	waveforms[to]=waveforms[from]
 	am_intensity[to]=am_intensity[from]

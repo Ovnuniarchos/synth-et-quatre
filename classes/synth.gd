@@ -53,6 +53,7 @@ func reset(full:bool=false)->void:
 		synth.set_freq_mul(i,15,1)
 		synth.set_freq_div(i,15,0)
 		synth.set_detune(i,15,0)
+		synth.set_detune_mode(i,15,0)
 		synth.set_output(i,1,255)
 		synth.set_output(i,14,0)
 		for j in 4:
@@ -87,6 +88,7 @@ func set_fm_instrument(channel:int,instr:FmInstrument)->void:
 		synth.set_freq_mul(channel,op_mask,instr.multipliers[i])
 		synth.set_freq_div(channel,op_mask,instr.dividers[i])
 		synth.set_detune(channel,op_mask,instr.detunes[i])
+		synth.set_detune_mode(channel,op_mask,instr.detune_modes[i])
 		synth.set_output(channel,op_mask,instr.routings[i][4])
 		for j in 4:
 			synth.set_pm_factor(channel,i,j,instr.routings[i][j])

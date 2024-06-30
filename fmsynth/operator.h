@@ -9,6 +9,7 @@ private:
 	const FixedPoint ENVELOPE_RATE_1S=FP_ONE*EG_DIVIDER*256;
 
 	enum ADSR{OFF,ATTACK,DECAY,SUSTAIN,RELEASE,SUSTAIN_UP};
+	enum DET_MODE{NORMAL,FIXED,DELTA};
 
 	float mix_rate=DEFAULT_MIX_RATE;
 
@@ -19,6 +20,7 @@ private:
 	float freq_mul=1.0;
 	float freq_div=1.0;
 	float detune=1.0;
+	int detune_mode=NORMAL;
 	FixedPoint fixed_freq=0L;
 	FixedPoint delta=0L;
 
@@ -68,6 +70,7 @@ public:
 	void set_freq_mul(int multiplier);
 	void set_freq_div(int divider);
 	void set_detune(int frequency,float detune);
+	void set_detune_mode(int mode);
 
 	void set_wave(int wave_num);
 	void set_duty_cycle(FixedPoint duty_cycle);

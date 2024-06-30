@@ -24,13 +24,14 @@ void SynthTracker::_register_methods(){
 	register_method("set_freq_mul",&SynthTracker::set_freq_mul);
 	register_method("set_freq_div",&SynthTracker::set_freq_div);
 	register_method("set_detune",&SynthTracker::set_detune);
+	register_method("set_detune_mode",&SynthTracker::set_detune_mode);
 
 	register_method("set_wave",&SynthTracker::set_wave);
 	register_method("set_duty_cycle",&SynthTracker::set_duty_cycle);
 	register_method("define_wave",&SynthTracker::define_wave);
 	register_method("define_sample",&SynthTracker::define_sample);
 
-	register_method("set_volume",&SynthTracker::set_volume);
+	register_method("set_velocity",&SynthTracker::set_velocity);
 	register_method("set_attack_rate",&SynthTracker::set_attack_rate);
 	register_method("set_decay_rate",&SynthTracker::set_decay_rate);
 	register_method("set_sustain_level",&SynthTracker::set_sustain_level);
@@ -79,18 +80,20 @@ void SynthTracker::_init(){
 
 #define TRACE_WAIT "WAI[%d] "
 #define TRACE_FREQUENCY "FRQ[%d %02x %d] "
+#define TRACE_VELOCITY "VOL[%d %d] "
 #define TRACE_KEYON "KON[%d %02x %d] "
 #define TRACE_KEYON_LEG "KOL[%d %02x %d] "
 #define TRACE_KEYON_STA "KOS[%d %02x %d] "
 #define TRACE_KEYOFF "KOF[%d %02x] "
 #define TRACE_STOP "STO[%d %02x] "
+#define TRACE_PAN "PAN[%d %02x] "
 #define TRACE_ENABLE "ENA[%d %02x %02x] "
 #define TRACE_MUL "MUL[%d %02x %d] "
 #define TRACE_DIV "DIV[%d %02x %d] "
 #define TRACE_DETUNE "DET[%d %02x %d] "
+#define TRACE_DETUNE_MODE "DTM[%d %02x %d] "
 #define TRACE_DUTY "DUC[%d %02x %06x] "
 #define TRACE_WAVE "WAV[%d %02x %d] "
-#define TRACE_VOLUME "VOL[%d %d] "
 #define TRACE_ATTACK "ATR[%d %02x %d] "
 #define TRACE_DECAY "DER[%d %02x %d] "
 #define TRACE_SUST_LEVEL "SUL[%d %02x %d] "
@@ -100,7 +103,6 @@ void SynthTracker::_init(){
 #define TRACE_KEY_SCALE "KSR[%d %02x %d] "
 #define TRACE_PM_FACTOR "PMF[%d %02x %02x %d] "
 #define TRACE_OUTPUT "OUT[%d %02x %d] "
-#define TRACE_PAN "PAN[%d %02x] "
 #define TRACE_PHI "PHI[%d %02x %06x] "
 #define TRACE_DPHI "DPHI[%d %02x %06x] "
 #define TRACE_AM_FACTOR "AMS[%d %02x %d] "
@@ -193,6 +195,10 @@ Array SynthTracker::generate(int size,float volume,Array cmds){
 					TRACE(TRACE_DETUNE,voice,op_mask,data);
 					synth.set_detune(voice,op_mask,data);
 					break;
+				case CMD_DET_M:
+					TRACE(TRACE_DETUNE_MODE,voice,op_mask,data_8);
+					synth.set_detune_mode(voice,op_mask,data_8);
+					break;
 				case CMD_DUC:
 					data=VAR2INT(cmds[cmd_ptr++]);
 					TRACE(TRACE_DUTY,voice,op_mask,data);
@@ -202,9 +208,9 @@ Array SynthTracker::generate(int size,float volume,Array cmds){
 					TRACE(TRACE_WAVE,voice,op_mask,data_8);
 					synth.set_wave(voice,op_mask,data_8);
 					break;
-				case CMD_VOL:
-					TRACE(TRACE_VOLUME,voice,op_mask);
-					synth.set_volume(voice,op_mask);
+				case CMD_VEL:
+					TRACE(TRACE_VELOCITY,voice,op_mask);
+					synth.set_velocity(voice,op_mask);
 				case CMD_AR:
 					TRACE(TRACE_ATTACK,voice,op_mask,data_8);
 					synth.set_attack_rate(voice,op_mask,data_8);
@@ -366,6 +372,9 @@ void SynthTracker::debug(Array cmds,int end_ix){
 				data=VAR2INT(cmds[cmd_ptr++]);
 				printf(TRACE_DETUNE,voice,op_mask,data);
 				break;
+			case CMD_DET_M:
+				printf(TRACE_DETUNE_MODE,voice,op_mask,data_8);
+				break;
 			case CMD_DUC:
 				data=VAR2INT(cmds[cmd_ptr++]);
 				printf(TRACE_DUTY,voice,op_mask,data);
@@ -373,8 +382,8 @@ void SynthTracker::debug(Array cmds,int end_ix){
 			case CMD_WAVE:
 				printf(TRACE_WAVE,voice,op_mask,data_8);
 				break;
-			case CMD_VOL:
-				printf(TRACE_VOLUME,voice,op_mask);
+			case CMD_VEL:
+				printf(TRACE_VELOCITY,voice,op_mask);
 				break;
 			case CMD_AR:
 				printf(TRACE_ATTACK,voice,op_mask,data_8);
@@ -476,6 +485,10 @@ void SynthTracker::set_detune(int voice,int op_mask,int millis){
 	synth.set_detune(voice,op_mask,millis);
 }
 
+void SynthTracker::set_detune_mode(int voice,int op_mask,int mode){
+	synth.set_detune_mode(voice,op_mask,mode);
+}
+
 
 void SynthTracker::set_wave(int voice,int op_mask,int wave_num){
 	synth.set_wave(voice,op_mask,wave_num);
@@ -504,8 +517,8 @@ void SynthTracker::define_sample(int wave_num,int loop_start,int loop_end,float 
 }
 
 
-void SynthTracker::set_volume(int voice,int vel){
-	synth.set_volume(voice,vel);
+void SynthTracker::set_velocity(int voice,int vel){
+	synth.set_velocity(voice,vel);
 }
 
 void SynthTracker::set_attack_rate(int voice,int op_mask,int rate){

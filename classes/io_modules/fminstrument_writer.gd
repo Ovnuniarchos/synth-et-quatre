@@ -54,6 +54,7 @@ func serialize(out:ChunkedFile,inst:FmInstrument)->FileResult:
 		out.store_8(inst.multipliers[i])
 		out.store_8(inst.dividers[i])
 		out.store_16(inst.detunes[i])
+		out.store_8(inst.detune_modes[i])
 		out.store_8(inst.duty_cycles[i])
 		out.store_8(inst.waveforms[i])
 		out.store_8(inst.am_intensity[i])

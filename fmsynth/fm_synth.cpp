@@ -54,6 +54,10 @@ void FmSynth::set_detune(int voice,int op_mask,int millis){
 	voices[voice%MAX_VOICES].set_detune(op_mask,millis);
 }
 
+void FmSynth::set_detune_mode(int voice,int op_mask,int mode){
+	voices[voice%MAX_VOICES].set_detune_mode(op_mask,mode);
+}
+
 
 void FmSynth::set_wave(int voice,int op_mask,int wave_num){
 	wave_num%=MAX_WAVES;
@@ -101,8 +105,8 @@ void FmSynth::define_sample(int wave_num,int loop_start,int loop_end,float rec_f
 }
 
 
-void FmSynth::set_volume(int voice,int vel){
-	voices[voice%MAX_VOICES].set_volume(vel);
+void FmSynth::set_velocity(int voice,int vel){
+	voices[voice%MAX_VOICES].set_velocity(vel);
 }
 
 void FmSynth::set_attack_rate(int voice,int op_mask,int rate){

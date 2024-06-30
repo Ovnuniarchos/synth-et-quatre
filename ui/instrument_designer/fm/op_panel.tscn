@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://ui/widgets/accent_button.gd" type="Script" id=1]
+[ext_resource path="res://ui/widgets/cycle_button.gd" type="Script" id=2]
 [ext_resource path="res://ui/instrument_designer/fm/op_panel.gd" type="Script" id=3]
 [ext_resource path="res://ui/instrument_designer/wave_menu.gd" type="Script" id=4]
 [ext_resource path="res://ui/widgets/spin_bar.gd" type="Script" id=5]
@@ -15,7 +16,7 @@ script = ExtResource( 3 )
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 1017.0
-margin_bottom = 377.0
+margin_bottom = 383.0
 size_flags_vertical = 0
 
 [node name="Switches" type="HBoxContainer" parent="Params"]
@@ -403,8 +404,10 @@ margin_bottom = 14.0
 rect_min_size = Vector2( 28, 14 )
 size_flags_horizontal = 7
 size_flags_vertical = 4
+min_value = 1.0
 max_value = 32.0
 step = 1.0
+value = 1.0
 percent_visible = false
 script = ExtResource( 5 )
 big_step = 2.0
@@ -441,25 +444,28 @@ script = ExtResource( 5 )
 big_step = 2.0
 huge_step = 4.0
 
-[node name="Detune" type="HBoxContainer" parent="Params"]
+[node name="FreqMods" type="GridContainer" parent="Params"]
 margin_top = 276.0
 margin_right = 1010.0
-margin_bottom = 290.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+margin_bottom = 314.0
+columns = 2
 
-[node name="DETLabel" type="Label" parent="Params/Detune" groups=["Label"]]
-margin_right = 93.0
-margin_bottom = 14.0
+[node name="DETMode" type="Button" parent="Params/FreqMods"]
+margin_right = 132.0
+margin_bottom = 20.0
 hint_tooltip = "FMED_DETUNE_TTIP"
 mouse_filter = 1
 text = "FMED_DETUNE"
+script = ExtResource( 2 )
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 )
+texts = PoolStringArray( "FMED_DETUNE", "FMED_FIXED_FREQUENCY", "FMED_DELTA_FREQUENCY" )
+tooltips = PoolStringArray( "FMED_DETUNE_TTIP", "FMED_FIXED_FREQUENCY_TTIP", "FMED_DELTA_FREQUENCY_TTIP" )
 
-[node name="DETSlider" type="ProgressBar" parent="Params/Detune"]
-margin_left = 97.0
+[node name="DETSlider" type="ProgressBar" parent="Params/FreqMods"]
+margin_left = 136.0
+margin_top = 3.0
 margin_right = 1010.0
-margin_bottom = 14.0
+margin_bottom = 17.0
 rect_min_size = Vector2( 57, 14 )
 size_flags_horizontal = 7
 size_flags_vertical = 4
@@ -469,25 +475,19 @@ step = 1.0
 percent_visible = false
 script = ExtResource( 5 )
 
-[node name="FMS" type="HBoxContainer" parent="Params"]
-margin_top = 294.0
-margin_right = 1010.0
-margin_bottom = 308.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="FMSLabel" type="Label" parent="Params/FMS" groups=["Label"]]
+[node name="FMSLabel" type="Label" parent="Params/FreqMods" groups=["Label"]]
+margin_top = 24.0
 margin_right = 132.0
-margin_bottom = 14.0
+margin_bottom = 38.0
 hint_tooltip = "FMED_FM_INTENSITY_TTIP"
 mouse_filter = 1
 text = "FMED_FM_INTENSITY"
 
-[node name="FMSSlider" type="ProgressBar" parent="Params/FMS"]
+[node name="FMSSlider" type="ProgressBar" parent="Params/FreqMods"]
 margin_left = 136.0
+margin_top = 24.0
 margin_right = 1010.0
-margin_bottom = 14.0
+margin_bottom = 38.0
 rect_min_size = Vector2( 52, 14 )
 size_flags_horizontal = 7
 size_flags_vertical = 4
@@ -497,15 +497,15 @@ percent_visible = false
 script = ExtResource( 5 )
 
 [node name="Sep2" type="ReferenceRect" parent="Params"]
-margin_top = 312.0
+margin_top = 318.0
 margin_right = 1010.0
-margin_bottom = 328.0
+margin_bottom = 334.0
 rect_min_size = Vector2( 0, 16 )
 
 [node name="LFOsTitle" type="Label" parent="Params" groups=["Title"]]
-margin_top = 332.0
+margin_top = 338.0
 margin_right = 74.0
-margin_bottom = 346.0
+margin_bottom = 352.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 custom_constants/shadow_offset_x = 2
@@ -513,9 +513,9 @@ custom_constants/shadow_offset_y = 2
 text = "FMED_LFOS"
 
 [node name="LFOs" type="HBoxContainer" parent="Params"]
-margin_top = 350.0
+margin_top = 356.0
 margin_right = 1010.0
-margin_bottom = 370.0
+margin_bottom = 376.0
 size_flags_horizontal = 3
 
 [node name="AMFLabel" type="Label" parent="Params/LFOs" groups=["Label"]]
@@ -573,7 +573,8 @@ selected = 0
 [connection signal="value_changed" from="Params/ADSR/KSRSlider" to="." method="_on_KSRSlider_value_changed"]
 [connection signal="value_changed" from="Params/Frequency/MULSlider" to="." method="_on_MULSlider_value_changed"]
 [connection signal="value_changed" from="Params/Frequency/DIVSlider" to="." method="_on_DIVSlider_value_changed"]
-[connection signal="value_changed" from="Params/Detune/DETSlider" to="." method="_on_DETSlider_value_changed"]
-[connection signal="value_changed" from="Params/FMS/FMSSlider" to="." method="_on_FMSSlider_value_changed"]
+[connection signal="cycled" from="Params/FreqMods/DETMode" to="." method="_on_DETMode_cycled"]
+[connection signal="value_changed" from="Params/FreqMods/DETSlider" to="." method="_on_DETSlider_value_changed"]
+[connection signal="value_changed" from="Params/FreqMods/FMSSlider" to="." method="_on_FMSSlider_value_changed"]
 [connection signal="item_selected" from="Params/LFOs/AmpLFO" to="." method="_on_AmpLFO_item_selected"]
 [connection signal="item_selected" from="Params/LFOs/FreqLFO" to="." method="_on_FreqLFO_item_selected"]

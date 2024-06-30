@@ -49,7 +49,7 @@ const OSCILLOSCOPE_TOGGLE=KEY_F4
 
 
 var notes_on:Array=[]
-var channel:int=-1
+#var channel:int=-1
 
 
 func _ready()->void:
@@ -111,5 +111,7 @@ func handle_keys(event:InputEventKey)->bool:
 #
 
 func _on_FmEditor_instrument_changed()->void:
+	pass
+	"""DEBUG.set_var("CHN",String(channel))
 	if channel!=-1:
-		SYNCER.set_fm_instrument(channel,GLOBALS.get_instrument())
+		SYNCER.set_fm_instrument(channel,GLOBALS.get_instrument())"""

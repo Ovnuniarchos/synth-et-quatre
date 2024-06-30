@@ -53,6 +53,7 @@ public:
 	void set_freq_mul(int voice,int op_mask,int multiplier);
 	void set_freq_div(int voice,int op_mask,int divider);
 	void set_detune(int voice,int op_mask,int millis);
+	void set_detune_mode(int voice,int op_mask,int mode);
 
 	void set_wave(int voice,int op_mask,int wave_num);
 	void set_duty_cycle(int voice,int op_mask,FixedPoint duty_cycle);
@@ -61,7 +62,7 @@ public:
 	void define_wave(int wave_num,godot::Array wave);
 	void define_sample(int wave_num,int loop_start,int loop_end,float rec_freq,float sam_freq,godot::Array sample);
 
-	void set_volume(int voice,int vel);
+	void set_velocity(int voice,int vel);
 	void set_attack_rate(int voice,int op_mask,int rate);
 	void set_decay_rate(int voice,int op_mask,int rate);
 	void set_sustain_level(int voice,int op_mask,int level);

@@ -189,10 +189,19 @@ msgstr ""
 msgid "PLAY_MODE_POLY"
 msgstr ""
 
+msgid "PLAY_MODE_POLY_TTIP"
+msgstr ""
+
 msgid "PLAY_MODE_SEMI"
 msgstr ""
 
+msgid "PLAY_MODE_SEMI_TTIP"
+msgstr ""
+
 msgid "PLAY_MODE_MONO"
+msgstr ""
+
+msgid "PLAY_MODE_MONO_TTIP"
 msgstr ""
 
 
@@ -387,6 +396,12 @@ msgid "FMED_FIXED_FREQUENCY"
 msgstr ""
 
 msgid "FMED_FIXED_FREQUENCY_TTIP"
+msgstr ""
+
+msgid "FMED_DELTA_FREQUENCY"
+msgstr ""
+
+msgid "FMED_DELTA_FREQUENCY_TTIP"
 msgstr ""
 
 msgid "FMED_FM_INTENSITY"

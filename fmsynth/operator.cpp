@@ -65,12 +65,17 @@ _ALWAYS_INLINE_ bool Operator::is_valid_wave(int ix){
 }
 
 _ALWAYS_INLINE_ void Operator::set_delta(){
-	float rec_freq=is_valid_wave(wave_ix)?waves[wave_ix]->recorded_freq:1.0;
-	float sam_freq=is_valid_wave(wave_ix)?waves[wave_ix]->sample_freq:1.0;
-	if(freq_mul){
-		delta=(frequency*freq_mul*detune*rec_freq*FP_ONE)/(freq_div*mix_rate*sam_freq);
-	}else{
-		delta=(fixed_freq*rec_freq*FP_ONE)/(freq_div*mix_rate*sam_freq);
+	float rec_freq=(is_valid_wave(wave_ix)?waves[wave_ix]->recorded_freq:1.0)*FP_ONE;
+	float sam_freq=(is_valid_wave(wave_ix)?waves[wave_ix]->sample_freq:1.0)*mix_rate;
+	switch(detune_mode){
+		case FIXED:
+			delta=(fixed_freq*freq_mul*rec_freq)/(freq_div*sam_freq);
+			break;
+		case DELTA:
+			delta=(((frequency*freq_mul*rec_freq)/freq_div)+(fixed_freq*rec_freq))/sam_freq;
+			break;
+		default:
+			delta=(frequency*freq_mul*detune*rec_freq)/(freq_div*sam_freq);
 	}
 }
 
@@ -117,7 +122,7 @@ void Operator::set_frequency(int cents,float _frequency){
 }
 
 void Operator::set_freq_mul(int multiplier){
-	freq_mul=clamp(multiplier,0,32);
+	freq_mul=clamp(multiplier,0,31)+1;
 	set_delta();
 }
 
@@ -128,7 +133,12 @@ void Operator::set_freq_div(int divider){
 
 void Operator::set_detune(int frequency,float _detune){
 	detune=_detune;
-	fixed_freq=frequency<0?-frequency:frequency;
+	fixed_freq=frequency;//<0?-frequency:frequency;
+	set_delta();
+}
+
+void Operator::set_detune_mode(int mode){
+	detune_mode=mode;
 	set_delta();
 }
 

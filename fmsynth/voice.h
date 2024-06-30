@@ -35,13 +35,14 @@ public:
 	void set_freq_mul(int op_mask,int multiplier);
 	void set_freq_div(int op_mask,int divider);
 	void set_detune(int op_mask,int millis);
+	void set_detune_mode(int op_mask,int mode);
 
 	void set_wave(int op_mask,int wave_num);
 	void set_duty_cycle(int op_mask,FixedPoint duty_cycle);
 	void set_phase(int op_mask,FixedPoint phi);
 	void shift_phase(int op_mask,FixedPoint delta);
 
-	void set_volume(int vol);
+	void set_velocity(int vel);
 	void set_attack_rate(int op_mask,int rate);
 	void set_decay_rate(int op_mask,int rate);
 	void set_sustain_level(int op_mask,int level);

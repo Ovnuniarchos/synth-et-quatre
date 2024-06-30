@@ -64,6 +64,13 @@ void Voice::set_detune(int op_mask,int millis){
 	}
 }
 
+void Voice::set_detune_mode(int op_mask,int mode){
+	mode=clamp(mode,0,2);
+	for(int i=0;i<MAX_OPS;i++,op_mask>>=1){
+		if(op_mask&1) ops[i].set_detune_mode(mode);
+	}
+}
+
 
 void Voice::set_wave(int op_mask,int wave_num){
 	for(int i=0;i<MAX_OPS;i++,op_mask>>=1){
@@ -90,8 +97,8 @@ void Voice::shift_phase(int op_mask,FixedPoint delta){
 }
 
 
-void Voice::set_volume(int vol){
-	new_volume=clamp(vol,0,255)+(vol==0?0:1);
+void Voice::set_velocity(int vel){
+	new_volume=clamp(vel,0,255)+(vel==0?0:1);
 }
 
 void Voice::set_attack_rate(int op_mask,int rate){

@@ -123,6 +123,13 @@ func deserialize(inf:ChunkedFile,header:Dictionary)->FileResult:
 		ins.multipliers[i]=inf.get_8()
 		ins.dividers[i]=inf.get_8()
 		ins.detunes[i]=inf.get_signed_16()
+		if version>2:
+			ins.detune_modes[i]=inf.get_8()
+		elif ins.multipliers[i]==0:
+			ins.detune_modes[i]=FmInstrument.DETMODE_FIXED
+		else:
+			ins.multipliers[i]=int(max(0,ins.multipliers[i]-1))
+			ins.detune_modes[i]=FmInstrument.DETMODE_NORMAL
 		ins.duty_cycles[i]=inf.get_8()
 		ins.waveforms[i]=inf.get_8()
 		ins.am_intensity[i]=inf.get_8()

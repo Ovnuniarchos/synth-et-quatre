@@ -112,7 +112,7 @@ func _on_macro_timer()->void:
 			synth.set_note(chan,1<<op,val)
 		# Global volume
 		val=instr.volume_macro.get_value(kot,kft,volumes[chan])
-		synth.set_volume(chan,val)
+		synth.set_velocity(chan,val)
 		# Global+op key
 		val_b=instr.key_macro.get_value(kot,kft,0)
 		for op in 4:
@@ -185,6 +185,8 @@ func _on_macro_timer()->void:
 			# Op Detune
 			val=instr.detune_macros[op].get_value(kot,kft,instr.detunes[op])
 			synth.set_detune(chan,mask,val)
+			# Op Detune Mode
+			synth.set_detune_mode(chan,mask,instr.detune_modes[op])
 			# Op FMI
 			val=instr.fmi_macros[op].get_value(kot,kft,instr.fm_intensity[op])
 			synth.set_fm_intensity(chan,mask,val)
@@ -238,6 +240,15 @@ func set_detune(op:int,millis:int)->void:
 	for i in MAX_CHANNELS:
 		if instr_ids[i]==GLOBALS.curr_instrument:
 			synth.set_detune(i,op_mask,millis)
+
+func set_detune_mode(op:int,mode:int)->void:
+	var inst:FmInstrument=GLOBALS.get_instrument()
+	if inst==null:
+		return
+	var op_mask:int=1<<op
+	for i in MAX_CHANNELS:
+		if instr_ids[i]==GLOBALS.curr_instrument:
+			synth.set_detune_mode(i,op_mask,mode)
 
 func set_wave(op:int,ix:int)->void:
 	var inst:FmInstrument=GLOBALS.get_instrument()

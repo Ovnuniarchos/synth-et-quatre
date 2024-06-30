@@ -186,11 +186,20 @@ msgstr "||"
 msgid "PLAY_MODE_POLY"
 msgstr "Poli"
 
+msgid "PLAY_MODE_POLY_TTIP"
+msgstr "Polifónico"
+
 msgid "PLAY_MODE_SEMI"
 msgstr "Semi"
 
+msgid "PLAY_MODE_SEMI_TTIP"
+msgstr "Semipolifónico"
+
 msgid "PLAY_MODE_MONO"
 msgstr "Mono"
+
+msgid "PLAY_MODE_MONO_TTIP"
+msgstr "Monofónico"
 
 # Instrument editor
 msgid "INSTED_ADD"
@@ -382,6 +391,12 @@ msgstr "FFR"
 
 msgid "FMED_FIXED_FREQUENCY_TTIP"
 msgstr "Frecuencia fija (Hz)"
+
+msgid "FMED_DELTA_FREQUENCY"
+msgstr "DFR"
+
+msgid "FMED_DELTA_FREQUENCY_TTIP"
+msgstr "Desviación (Hz)"
 
 msgid "FMED_FM_INTENSITY"
 msgstr "FMI"

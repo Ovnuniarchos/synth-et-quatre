@@ -596,11 +596,26 @@ msgstr "Divisor"
 msgid "FMED_MO_DIVIDER_TTIP"
 msgstr "<EMPTY>"
 
-msgid "FMED_MO_DETUNE_FIXFREQ"
+msgid "FMED_MO_DETUNE_VALUE"
 msgstr "Desv./Fr. fija"
 
-msgid "FMED_MO_DETUNE_FIXFREQ_TTIP"
-msgstr "Desviación (milis) / Frecuencia fija (Hz)"
+msgid "FMED_MO_DETUNE_VALUE_TTIP"
+msgstr "Desviación (milis/Hz) / Frecuencia fija (Hz)"
+
+msgid "FMED_MO_DETUNE_MODE"
+msgstr "Modo Desv."
+
+msgid "FMED_MO_DETUNE_MODE_TTIP"
+msgstr "Modo de desviación"
+
+msgid "FMED_MO_DETMODE_MILLIS"
+msgstr "Milis"
+
+msgid "FMED_MO_DETMODE_FIXED"
+msgstr "F. Fija"
+
+msgid "FMED_MO_DETMODE_DELTA"
+msgstr "F. Desp."
 
 msgid "FMED_MO_FM_INTENSITY"
 msgstr "Nivel FM"

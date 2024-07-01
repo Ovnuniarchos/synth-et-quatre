@@ -2,8 +2,8 @@ extends Control
 
 """
 FIXME
+	Macros don't apply if current calculated value is equal to the base value, even if it's different from the last value
 TODO:
-	Implement macro for detune mode
 	Expand panpot to full 8 bits, and add channel inversion columns
 	Copy/Paste buttons for instrument/wave editors
 	MIDI on/off indicator

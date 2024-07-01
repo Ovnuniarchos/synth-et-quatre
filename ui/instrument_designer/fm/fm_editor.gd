@@ -67,6 +67,7 @@ func update_instrument()->void:
 		param_dict["%d_MUL"%[i]]=ci.multiplier_macros[i-1]
 		param_dict["%d_DIV"%[i]]=ci.divider_macros[i-1]
 		param_dict["%d_DETUNE"%[i]]=ci.detune_macros[i-1]
+		param_dict["%d_DETUNE_M"%[i]]=ci.detune_mode_macros[i-1]
 		param_dict["%d_FMS"%[i]]=ci.fmi_macros[i-1]
 		param_dict["%d_AMLFO"%[i]]=ci.am_lfo_macros[i-1]
 		param_dict["%d_FMLFO"%[i]]=ci.fm_lfo_macros[i-1]

@@ -596,11 +596,26 @@ msgstr "Divisor"
 msgid "FMED_MO_DIVIDER_TTIP"
 msgstr "<EMPTY>"
 
-msgid "FMED_MO_DETUNE_FIXFREQ"
+msgid "FMED_MO_DETUNE_VALUE"
 msgstr "Det. / F.Freq."
 
-msgid "FMED_MO_DETUNE_FIXFREQ_TTIP"
+msgid "FMED_MO_DETUNE_VALUE_TTIP"
 msgstr "Detune/Fixed frequency"
+
+msgid "FMED_MO_DETUNE_MODE"
+msgstr "Detune mode"
+
+msgid "FMED_MO_DETUNE_MODE_TTIP"
+msgstr "<EMPTY>"
+
+msgid "FMED_MO_DETMODE_MILLIS"
+msgstr "Millis"
+
+msgid "FMED_MO_DETMODE_FIXED"
+msgstr "Fixed"
+
+msgid "FMED_MO_DETMODE_DELTA"
+msgstr "Delta"
 
 msgid "FMED_MO_FM_INTENSITY"
 msgstr "FM intensity"

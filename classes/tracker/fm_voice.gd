@@ -58,6 +58,9 @@ var divider_values:Array=[0,0,0,0]
 var detune_dirty_any:bool=false
 var detune_dirty:Array=[false,false,false,false]
 var detune_values:Array=[0,0,0,0]
+var detune_mode_dirty_any:bool=false
+var detune_mode_dirty:Array=[false,false,false,false]
+var detune_mode_values:Array=[0,0,0,0]
 var velocity_dirty:bool=false
 var velocity_value:int=0
 var panning_dirty:bool=false
@@ -495,6 +498,8 @@ func apply_macros()->void:
 	divider_dirty_any=apply_op_macro(divider_macros,dividers,divider_values,divider_dirty,divider_dirty_any)
 	# Op Detune
 	detune_dirty_any=apply_op_macro(detune_macros,detunes,detune_values,detune_dirty,detune_dirty_any)
+	# Op Detune
+	detune_mode_dirty_any=apply_op_macro(detune_mode_macros,detune_modes,detune_mode_values,detune_mode_dirty,detune_mode_dirty_any)
 	# Op FMI
 	fmi_dirty_any=apply_op_macro(fmi_macros,fm_intensity,fmi_values,fmi_dirty,fmi_dirty_any)
 	# Op AM LFO
@@ -509,10 +514,12 @@ func apply_macros()->void:
 
 func apply_op_macro(macros:Array,values:Array,out:Array,dirty:Array,dirty_any:bool)->bool:
 	var old:int
+	var old2:int
 	for op in 4:
 		old=values[op]
+		old2=out[op]
 		out[op]=macros[op].get_value(macro_tick,release_tick,values[op])
-		dirty[op]=dirty[op] or old!=out[op]
+		dirty[op]=dirty[op] or old!=out[op] or old2!=out[op]
 		dirty_any=dirty_any or dirty[op]
 	return dirty_any
 
@@ -607,6 +614,9 @@ func commit(channel:int,cmds:Array,ptr:int)->int:
 	if divider_dirty_any:
 		ptr=commit_opmasked_short(channel,cmds,ptr,CONSTS.CMD_DIV,divider_dirty,divider_values)
 		divider_dirty_any=false
+	if detune_mode_dirty_any:
+		ptr=commit_opmasked_short(channel,cmds,ptr,CONSTS.CMD_DETMODE,detune_mode_dirty,detune_mode_values)
+		detune_mode_dirty_any=false
 	if detune_dirty_any:
 		ptr=commit_opmasked_long(channel,cmds,ptr,CONSTS.CMD_DET,detune_dirty,detune_values)
 		detune_dirty_any=false
@@ -800,6 +810,8 @@ func commit_instrument(channel:int,cmds:Array,ptr:int)->int:
 	fml_dirty_any=false
 	multiplier_dirty_any=false
 	divider_dirty_any=false
+	detune_dirty_any=false
+	detune_mode_dirty_any=false
 	attack_dirty_any=false
 	decay_dirty_any=false
 	suslev_dirty_any=false
@@ -819,6 +831,8 @@ func commit_instrument(channel:int,cmds:Array,ptr:int)->int:
 		fml_dirty[i]=false
 		multiplier_dirty[i]=false
 		divider_dirty[i]=false
+		detune_dirty[i]=false
+		detune_mode_dirty[i]=false
 		attack_dirty[i]=false
 		decay_dirty[i]=false
 		suslev_dirty[i]=false
@@ -845,15 +859,16 @@ func commit_instrument(channel:int,cmds:Array,ptr:int)->int:
 		cmds[ptr+8]=duty_cycles[i]<<16
 		cmds[ptr+9]=CONSTS.CMD_MULT|chn_opm|(multipliers[i]<<24)
 		cmds[ptr+10]=CONSTS.CMD_DIV|chn_opm|(dividers[i]<<24)
-		cmds[ptr+11]=CONSTS.CMD_DET|chn_opm
-		cmds[ptr+12]=detunes[i]
-		cmds[ptr+13]=CONSTS.CMD_FMS|chn_opm
-		cmds[ptr+14]=fm_intensity[i]
-		cmds[ptr+15]=CONSTS.CMD_FML|chn_opm|(fm_lfo[i]<<24)
-		cmds[ptr+16]=CONSTS.CMD_AMS|chn_opm|(am_intensity[i]<<24)
-		cmds[ptr+17]=CONSTS.CMD_AML|chn_opm|(am_lfo[i]<<24)
-		cmds[ptr+18]=CONSTS.CMD_KSR|chn_opm|(key_scalers[i]<<24)
-		ptr+=19
+		cmds[ptr+11]=CONSTS.CMD_DETMODE|chn_opm|(detune_modes[i]<<24)
+		cmds[ptr+12]=CONSTS.CMD_DET|chn_opm
+		cmds[ptr+13]=detunes[i]
+		cmds[ptr+14]=CONSTS.CMD_FMS|chn_opm
+		cmds[ptr+15]=fm_intensity[i]
+		cmds[ptr+16]=CONSTS.CMD_FML|chn_opm|(fm_lfo[i]<<24)
+		cmds[ptr+17]=CONSTS.CMD_AMS|chn_opm|(am_intensity[i]<<24)
+		cmds[ptr+18]=CONSTS.CMD_AML|chn_opm|(am_lfo[i]<<24)
+		cmds[ptr+19]=CONSTS.CMD_KSR|chn_opm|(key_scalers[i]<<24)
+		ptr+=20
 		for j in 4:
 			pm_level_dirty[i][j]=false
 			cmds[ptr]=CONSTS.CMD_PM|(channel<<8)|(j<<16)|(i<<24)

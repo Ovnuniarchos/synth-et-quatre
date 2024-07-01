@@ -53,6 +53,7 @@ var ksr_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMa
 var multiplier_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
 var divider_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
 var detune_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
+var detune_mode_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
 var fmi_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
 var am_lfo_macros:Array=[ParamMacro.new(false),ParamMacro.new(false),ParamMacro.new(false),ParamMacro.new(false)]
 var fm_lfo_macros:Array=[ParamMacro.new(false),ParamMacro.new(false),ParamMacro.new(false),ParamMacro.new(false)]
@@ -115,6 +116,7 @@ func duplicate()->Instrument:
 	ni.multiplier_macros=duplicate_op_macros(multiplier_macros)
 	ni.divider_macros=duplicate_op_macros(divider_macros)
 	ni.detune_macros=duplicate_op_macros(detune_macros)
+	ni.detune_mode_macros=duplicate_op_macros(detune_mode_macros)
 	ni.fmi_macros=duplicate_op_macros(fmi_macros)
 	ni.am_lfo_macros=duplicate_op_macros(am_lfo_macros)
 	ni.fm_lfo_macros=duplicate_op_macros(fm_lfo_macros)
@@ -166,6 +168,7 @@ func copy(from:Instrument,full:bool=false)->void:
 		multiplier_macros=duplicate_op_macros(from.multiplier_macros)
 		divider_macros=duplicate_op_macros(from.divider_macros)
 		detune_macros=duplicate_op_macros(from.detune_macros)
+		detune_mode_macros=duplicate_op_macros(from.detune_mode_macros)
 		fmi_macros=duplicate_op_macros(from.fmi_macros)
 		am_lfo_macros=duplicate_op_macros(from.am_lfo_macros)
 		fm_lfo_macros=duplicate_op_macros(from.fm_lfo_macros)
@@ -226,6 +229,7 @@ func macros_as_dict()->Dictionary:
 		MacroIO.MACRO_MULTIPLIER:multiplier_macros,
 		MacroIO.MACRO_DIVISOR:divider_macros,
 		MacroIO.MACRO_DETUNE:detune_macros,
+		MacroIO.MACRO_DETUNE_MODE:detune_mode_macros,
 		MacroIO.MACRO_FM_INTENSITY:fmi_macros,
 		MacroIO.MACRO_AM_LFO:am_lfo_macros,
 		MacroIO.MACRO_FM_LFO:fm_lfo_macros,
@@ -287,6 +291,8 @@ func set_macro(id:String,op:int,macro:ParamMacro)->bool:
 			divider_macros[op]=macro
 		MacroIO.MACRO_DETUNE:
 			detune_macros[op]=macro
+		MacroIO.MACRO_DETUNE_MODE:
+			detune_mode_macros[op]=macro
 		MacroIO.MACRO_FM_INTENSITY:
 			fmi_macros[op]=macro
 		MacroIO.MACRO_AM_LFO:

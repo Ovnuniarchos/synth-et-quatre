@@ -38,6 +38,7 @@ func update_macros(ci:FmInstrument)->void:
 	get_node("VBC/KeyScaling").set_macro(ci.ksr_macros[operator])
 	get_node("VBC/Multiplier").set_macro(ci.multiplier_macros[operator])
 	get_node("VBC/Divider").set_macro(ci.divider_macros[operator])
+	get_node("VBC/DetuneMode").set_macro(ci.detune_mode_macros[operator])
 	get_node("VBC/Detune").set_macro(ci.detune_macros[operator])
 	get_node("VBC/FMIntensity").set_macro(ci.fmi_macros[operator])
 	get_node("VBC/AMLFO").set_macro(ci.am_lfo_macros[operator])

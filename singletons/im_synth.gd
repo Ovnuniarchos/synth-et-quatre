@@ -186,7 +186,8 @@ func _on_macro_timer()->void:
 			val=instr.detune_macros[op].get_value(kot,kft,instr.detunes[op])
 			synth.set_detune(chan,mask,val)
 			# Op Detune Mode
-			synth.set_detune_mode(chan,mask,instr.detune_modes[op])
+			val=instr.detune_mode_macros[op].get_value(kot,kft,instr.detune_modes[op])
+			synth.set_detune_mode(chan,mask,val)
 			# Op FMI
 			val=instr.fmi_macros[op].get_value(kot,kft,instr.fm_intensity[op])
 			synth.set_fm_intensity(chan,mask,val)

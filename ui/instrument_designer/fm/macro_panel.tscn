@@ -94,7 +94,7 @@ parameter = "KEY"
 min_value_abs = 1
 max_value_abs = 5
 mode = 5
-labels = PoolStringArray( "Stop", "Off", "Staccato", "Legato", "On" )
+labels = PoolStringArray( "FMED_MX_KEYON_STOP", "FMED_MX_KEYON_OFF", "FMED_MX_KEYON_STACCATO", "FMED_MX_KEYON_LEGATO", "FMED_MX_KEYON_ON" )
 
 [node name="Duty" parent="VBC" instance=ExtResource( 4 )]
 anchor_right = 0.0
@@ -207,7 +207,7 @@ title_tooltip = "FMED_MO_REPEAT_TTIP"
 parameter = "REPEAT"
 max_value_abs = 4
 mode = 5
-labels = PoolStringArray( "Release", "Sustain", "Decay", "Attack", "Off" )
+labels = PoolStringArray( "FMED_MO_REPEAT_RELEASE", "FMED_MO_REPEAT_SUSTAIN", "FMED_MO_REPEAT_DECAY", "FMED_MO_REPEAT_ATTACK", "FMED_MO_REPEAT_OFF" )
 
 [node name="AMIntensity" parent="VBC" instance=ExtResource( 4 )]
 anchor_right = 0.0
@@ -237,7 +237,7 @@ max_value_abs = 3
 big_step = 1
 huge_step = 1
 mode = 5
-labels = PoolStringArray( "LFO 4", "LFO 3", "LFO 2", "LFO 1" )
+labels = PoolStringArray( "FMED_MO_LFO4", "FMED_MO_LFO3", "FMED_MO_LFO2", "FMED_MO_LFO1" )
 
 [node name="KeyScaling" parent="VBC" instance=ExtResource( 4 )]
 anchor_right = 0.0
@@ -250,7 +250,7 @@ title_tooltip = "FMED_MO_KEY_SCALING_TTIP"
 parameter = "KSR"
 min_value_rel = -8
 max_value_rel = 8
-max_value_abs = 8
+max_value_abs = 7
 big_step = 2
 huge_step = 4
 
@@ -265,6 +265,7 @@ title_tooltip = "FMED_MO_MULTIPLIER_TTIP"
 parameter = "MUL"
 min_value_rel = -32
 max_value_rel = 32
+min_value_abs = 1
 max_value_abs = 32
 big_step = 2
 huge_step = 4
@@ -300,7 +301,7 @@ max_value_abs = 2
 big_step = 1
 huge_step = 2
 mode = 5
-labels = PoolStringArray( "FMED_MO_DETMODE_MILLIS", "FMED_MO_DETMODE_FIXED", "FMED_MO_DETMODE_DELTA" )
+labels = PoolStringArray( "FMED_MO_DETMODE_DELTA", "FMED_MO_DETMODE_FIXED", "FMED_MO_DETMODE_MILLIS" )
 
 [node name="Detune" parent="VBC" instance=ExtResource( 4 )]
 anchor_right = 0.0
@@ -346,7 +347,7 @@ max_value_abs = 3
 big_step = 1
 huge_step = 1
 mode = 5
-labels = PoolStringArray( "LFO 4", "LFO 3", "LFO 2", "LFO 1" )
+labels = PoolStringArray( "FMED_MO_LFO4", "FMED_MO_LFO3", "FMED_MO_LFO2", "FMED_MO_LFO1" )
 
 [node name="Phase" parent="VBC" instance=ExtResource( 4 )]
 anchor_right = 0.0

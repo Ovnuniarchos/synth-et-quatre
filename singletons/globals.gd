@@ -3,6 +3,7 @@ extends Node
 signal song_changed
 signal octave_changed(octave)
 signal instrument_changed(instrument,inst_name)
+# warning-ignore:unused_signal
 signal tab_changed(tab)
 
 var song:Song

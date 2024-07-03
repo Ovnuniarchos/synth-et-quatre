@@ -127,7 +127,7 @@ func serialize_arpeggios(out:ChunkedFile,song:Song)->FileResult:
 	if out.get_error():
 		return FileResult.new(out.get_error(),{FileResult.ERRV_FILE:out.get_path()})
 	var arp_w:ArpeggioWriter=ArpeggioWriter.new()
-	for arp in song.arp_list.size():
+	for arp in song.arp_list:
 		fr=arp_w.serialize(out,arp)
 		if fr.has_error():
 			return fr

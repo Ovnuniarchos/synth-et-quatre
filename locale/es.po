@@ -339,7 +339,7 @@ msgid "FMED_REPEAT_MODE_TTIP"
 msgstr "Modo de repetición"
 
 msgid "FMED_RPT_OFF"
-msgstr "Sin"
+msgstr "No"
 
 msgid "FMED_RPT_ATTACK"
 msgstr "Ataque"
@@ -488,17 +488,50 @@ msgstr "Inversión"
 msgid "FMED_MG_CHAN_INVERT_TTIP"
 msgstr "Invertir salida del canal"
 
+msgid "FMED_MG_CHANINVERT_RIGHT"
+msgstr "Derecho"
+
+msgid "FMED_MG_CHANINVERT_LEFT"
+msgstr "Izquierdo"
+
 msgid "FMED_MG_KEY_ON"
-msgstr "Nota"
+msgstr "Act. Nota"
 
 msgid "FMED_MG_KEY_ON_TTIP"
-msgstr "Activar nota"
+msgstr "Activación nota"
+
+msgid "FMED_MX_KEYON_STOP"
+msgstr "Cortar"
+
+msgid "FMED_MX_KEYON_OFF"
+msgstr "Apagar"
+
+msgid "FMED_MX_KEYON_STACCATO"
+msgstr "Staccato"
+
+msgid "FMED_MX_KEYON_LEGATO"
+msgstr "Legato"
+
+msgid "FMED_MX_KEYON_ON"
+msgstr "Activar"
 
 msgid "FMED_MG_OP_ENABLE"
 msgstr "Op"
 
 msgid "FMED_MG_OP_ENABLE_TTIP"
 msgstr "Activar operador"
+
+msgid "FMED_MG_OPENABLE_OP1"
+msgstr "Op1"
+
+msgid "FMED_MG_OPENABLE_OP2"
+msgstr "Op2"
+
+msgid "FMED_MG_OPENABLE_OP3"
+msgstr "Op3"
+
+msgid "FMED_MG_OPENABLE_OP4"
+msgstr "Op4"
 
 msgid "FMED_MG_CLIP"
 msgstr "Recorte"
@@ -513,10 +546,10 @@ msgid "FMED_MO_TONE_TTIP"
 msgstr "Tono (centésimas de semitono)"
 
 msgid "FMED_MO_KEY_ON"
-msgstr "Nota"
+msgstr "Act. Nota"
 
 msgid "FMED_MO_KEY_ON_TTIP"
-msgstr "Activar nota"
+msgstr "Activación nota"
 
 msgid "FMED_MO_DUTY_CYCLE"
 msgstr "Duty cycle"
@@ -566,11 +599,38 @@ msgstr "Repet."
 msgid "FMED_MO_REPEAT_TTIP"
 msgstr "Modo repetición"
 
+msgid "FMED_MO_REPEAT_OFF"
+msgstr "No"
+
+msgid "FMED_MO_REPEAT_ATTACK"
+msgstr "Ataque"
+
+msgid "FMED_MO_REPEAT_DECAY"
+msgstr "Decaimiento"
+
+msgid "FMED_MO_REPEAT_SUSTAIN"
+msgstr "Sostenimiento"
+
+msgid "FMED_MO_REPEAT_RELEASE"
+msgstr "Extinción"
+
 msgid "FMED_MO_AM_INTENSITY"
 msgstr "AM"
 
 msgid "FMED_MO_AM_INTENSITY_TTIP"
 msgstr "Nivel AM (trémolo)"
+
+msgid "FMED_MO_LFO1"
+msgstr "LFO 1"
+
+msgid "FMED_MO_LFO2"
+msgstr "LFO 2"
+
+msgid "FMED_MO_LFO3"
+msgstr "LFO 3"
+
+msgid "FMED_MO_LFO4"
+msgstr "LFO 4"
 
 msgid "FMED_MO_AM_LFO"
 msgstr "LFO AM"

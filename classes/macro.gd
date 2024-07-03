@@ -1,12 +1,8 @@
 extends Reference
 class_name Macro
 
-const PARAM_LOOP_START:int=0
-const PARAM_LOOP_END:int=1
-const PARAM_RELEASE_LOOP_START:int=2
-const PARAM_VALUES:int=3
-const PARAM_STEPS:int=4
-const PARAM_DELAY:int=5
+enum {PARAM_LOOP_START=0,PARAM_LOOP_END,PARAM_RELEASE_LOOP_START,PARAM_VALUES,
+	PARAM_STEPS,PARAM_DELAY}
 const MAX_STEPS:int=256
 const PASSTHROUGH:int=0x7fffffffffffffff
 
@@ -30,17 +26,20 @@ func set_parameters(v:Dictionary)->void:
 	values=v[PARAM_VALUES].duplicate()
 	delay=v[PARAM_DELAY]
 
+
 func set_loop_start(v:int)->void:
 	loop_start=clamp(v,-1,steps-1)
 	if loop_start==-1:
 		loop_end=-1
 	normalize_loop_points()
 
+
 func normalize_loop_points()->void:
 	if loop_end<loop_start:
 		loop_end=loop_start
 	loop_size=(loop_end-loop_start)+1
 	release_loop_size=steps-release_loop_start
+
 
 func set_loop_end(v:int)->void:
 	if loop_start==-1:
@@ -49,12 +48,15 @@ func set_loop_end(v:int)->void:
 		loop_end=clamp(v,-1,steps-1)
 	normalize_loop_points()
 
+
 func set_release_loop_start(v:int)->void:
 	release_loop_start=int(max(v,-1)) if v<steps else -1
 	normalize_loop_points()
 
+
 func set_values(a:Array)->void:
 	values=a.duplicate()
+
 
 func set_steps(v:int)->void:
 	steps=clamp(v,0,256)
@@ -62,8 +64,8 @@ func set_steps(v:int)->void:
 	loop_end=min(loop_end,steps)
 	normalize_loop_points()
 
-func duplicate()->Macro:
-	var np:Macro=get_script().new()
+
+func _duplicate(np:Macro)->Macro:
 	np.steps=steps
 	np.loop_start=loop_start
 	np.loop_end=loop_end
@@ -72,6 +74,7 @@ func duplicate()->Macro:
 	np.release_loop_size=release_loop_size
 	np.values=values.duplicate()
 	return np
+
 
 func get_tick(tick:int,release_tick:int,tick_div:int)->int:
 	tick/=tick_div
@@ -85,6 +88,7 @@ func get_tick(tick:int,release_tick:int,tick_div:int)->int:
 			tick=((release_tick-loop_start)%loop_size)+loop_start+(tick-release_tick)
 			return tick if tick<steps else steps-1
 	return tick
+
 
 func get_release_tick(tick:int,tick0:int,tick_div:int)->int:
 	tick=(tick/tick_div)+tick0

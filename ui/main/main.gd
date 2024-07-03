@@ -2,8 +2,10 @@ extends Control
 
 """
 FIXME
-	Macros don't apply if current calculated value is equal to the base value, even if it's different from the last value
+	Correct multiplier/divider range brouhaha
 TODO:
+	Substitute param_dirty_any by [true in param_dirty]
+	Implement voice messages by signal, instead of by array
 	Expand panpot to full 8 bits, and add channel inversion columns
 	Copy/Paste buttons for instrument/wave editors
 	MIDI on/off indicator

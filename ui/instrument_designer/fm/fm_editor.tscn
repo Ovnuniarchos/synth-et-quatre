@@ -113,8 +113,6 @@ title = "FMED_PARAMETERS"
 [node name="Params" type="ScrollContainer" parent="Tabs/Parameters"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_right = -8.0
-margin_bottom = -24.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 scroll_horizontal_enabled = false
@@ -122,12 +120,12 @@ scroll_vertical = 100
 
 [node name="VBC" type="VBoxContainer" parent="Tabs/Parameters/Params"]
 margin_top = -100.0
-margin_right = 996.0
+margin_right = 1004.0
 margin_bottom = 872.0
 size_flags_horizontal = 3
 
 [node name="OPS" type="GridContainer" parent="Tabs/Parameters/Params/VBC"]
-margin_right = 996.0
+margin_right = 1004.0
 margin_bottom = 796.0
 size_flags_horizontal = 3
 custom_constants/vseparation = 16
@@ -136,34 +134,34 @@ columns = 2
 
 [node name="OP1" parent="Tabs/Parameters/Params/VBC/OPS" instance=ExtResource( 5 )]
 anchor_right = 0.0
-margin_right = 490.0
+margin_right = 494.0
 margin_bottom = 390.0
 
 [node name="OP2" parent="Tabs/Parameters/Params/VBC/OPS" instance=ExtResource( 5 )]
 anchor_right = 0.0
-margin_left = 506.0
-margin_right = 996.0
+margin_left = 510.0
+margin_right = 1004.0
 margin_bottom = 390.0
 operator = 1
 
 [node name="OP3" parent="Tabs/Parameters/Params/VBC/OPS" instance=ExtResource( 5 )]
 anchor_right = 0.0
 margin_top = 406.0
-margin_right = 490.0
+margin_right = 494.0
 margin_bottom = 796.0
 operator = 2
 
 [node name="OP4" parent="Tabs/Parameters/Params/VBC/OPS" instance=ExtResource( 5 )]
 anchor_right = 0.0
-margin_left = 506.0
+margin_left = 510.0
 margin_top = 406.0
-margin_right = 996.0
+margin_right = 1004.0
 margin_bottom = 796.0
 operator = 3
 
 [node name="Routing" parent="Tabs/Parameters/Params/VBC" instance=ExtResource( 2 )]
 margin_top = 800.0
-margin_right = 996.0
+margin_right = 1004.0
 margin_bottom = 972.0
 
 [node name="Macros" type="Tabs" parent="Tabs"]
@@ -247,7 +245,7 @@ title_tooltip = "FMED_MG_CHAN_INVERT_TTIP"
 parameter = "G_CHNINVERT"
 max_value_abs = 1
 mode = 4
-labels = PoolStringArray( "Right", "Left" )
+labels = PoolStringArray( "FMED_MG_CHANINVERT_RIGHT", "FMED_MG_CHANINVERT_LEFT" )
 
 [node name="KeyOn" parent="Tabs/Macros/Macro/VBC" instance=ExtResource( 8 )]
 anchor_right = 0.0
@@ -261,7 +259,7 @@ parameter = "G_KEY"
 min_value_abs = 1
 max_value_abs = 5
 mode = 5
-labels = PoolStringArray( "Stop", "Off", "Staccato", "Legato", "On" )
+labels = PoolStringArray( "FMED_MX_KEYON_STOP", "FMED_MX_KEYON_OFF", "FMED_MX_KEYON_STACCATO", "FMED_MX_KEYON_LEGATO", "FMED_MX_KEYON_ON" )
 
 [node name="OpEnable" parent="Tabs/Macros/Macro/VBC" instance=ExtResource( 8 )]
 anchor_right = 0.0
@@ -274,7 +272,7 @@ title_tooltip = "FMED_MG_OP_ENABLE_TTIP"
 parameter = "G_OPEN"
 max_value_abs = 3
 mode = 4
-labels = PoolStringArray( "Op4", "Op3", "Op2", "Op1" )
+labels = PoolStringArray( "FMED_MG_OPENABLE_OP4", "FMED_MG_OPENABLE_OP3", "FMED_MG_OPENABLE_OP2", "FMED_MG_OPENABLE_OP1" )
 
 [node name="Clip" parent="Tabs/Macros/Macro/VBC" instance=ExtResource( 8 )]
 anchor_right = 0.0

@@ -103,7 +103,7 @@ func _on_operator_changed(op:int)->void:
 	params.get_node("Routing").set_sliders(ci)
 
 
-func _on_voice_macro_changed(parameter:String,values:Array,steps:int,loop_start:int,loop_end:int,release_loop_start:int,relative:bool,tick_div:int,delay:int)->void:
+func _on_voice_macro_changed(parameter:String,values:Array,steps:int,loop_start:int,loop_end:int,release_loop_start:int,mode:int,tick_div:int,delay:int)->void:
 	if param_dict==null or not param_dict.has(parameter):
 		return
 	var pm:ParamMacro=param_dict.get(parameter) as ParamMacro
@@ -112,12 +112,12 @@ func _on_voice_macro_changed(parameter:String,values:Array,steps:int,loop_start:
 	pm.loop_start=loop_start
 	pm.loop_end=loop_end
 	pm.release_loop_start=release_loop_start
-	pm.relative=relative
+	pm.mode=mode
 	pm.tick_div=tick_div
 	pm.delay=delay
 
 
-func _on_op_macro_changed(parameter, operator, values, steps, loop_start, loop_end, release_loop_start, relative, tick_div, delay):
+func _on_op_macro_changed(parameter, operator, values, steps, loop_start, loop_end, release_loop_start, mode, tick_div, delay):
 	parameter="%d_%s"%[operator+1,parameter]
 	var pm:ParamMacro=param_dict.get(parameter) as ParamMacro
 	pm.values=values
@@ -125,6 +125,6 @@ func _on_op_macro_changed(parameter, operator, values, steps, loop_start, loop_e
 	pm.loop_start=loop_start
 	pm.loop_end=loop_end
 	pm.release_loop_start=release_loop_start
-	pm.relative=relative
+	pm.mode=mode
 	pm.tick_div=tick_div
 	pm.delay=delay

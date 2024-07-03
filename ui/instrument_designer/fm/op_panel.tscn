@@ -295,8 +295,8 @@ margin_left = 654.0
 margin_top = 36.0
 margin_right = 1010.0
 margin_bottom = 56.0
-text = "OFF"
-items = [ "OFF", null, false, 0, null, "Attack", null, false, 1, null, "Decay", null, false, 2, null, "Sustain", null, false, 3, null, "Release", null, false, 4, null ]
+text = "FMED_RPT_OFF"
+items = [ "FMED_RPT_OFF", null, false, 0, null, "FMED_RPT_ATTACK", null, false, 1, null, "FMED_RPT_DECAY", null, false, 2, null, "FMED_RPT_SUSTAIN", null, false, 3, null, "FMED_RPT_RELEASE", null, false, 4, null ]
 selected = 0
 
 [node name="AMSLabel" type="Label" parent="Params/ADSR" groups=["Label"]]

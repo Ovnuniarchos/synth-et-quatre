@@ -2,7 +2,7 @@ tool extends HBoxContainer
 class_name BarEditor
 
 
-signal macro_changed(parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
+signal macro_changed(parameter,values,steps,loop_start,loop_end,release_loop_start,mode,tick_div,delay)
 
 
 enum{MODE_ABS,MODE_REL,MODE_SWABS,MODE_SWREL,MODE_MASK,MODE_SELECT}
@@ -26,7 +26,7 @@ var loop_start:int=-1
 var loop_end:int=-1
 var release_loop_start:int=-1
 var values:Array
-var relative:bool=true
+var pm_mode:int=ParamMacro.PMM_RELATIVE
 var steps:int=0
 var tick_div:int=1
 var delay:int=0
@@ -75,12 +75,14 @@ func _ready()->void:
 		relative_button.visible=false
 		$Params/GC/LDiv.visible=false
 		$Params/GC/Div.visible=false
-		relative=true
+		pm_mode=ParamMacro.PMM_RELATIVE
+	elif mode==MODE_MASK:
+		pm_mode=ParamMacro.PMM_MASK
 	else:
-		relative=mode==MODE_REL or mode==MODE_SWREL
+		pm_mode=ParamMacro.PMM_RELATIVE if mode==MODE_REL or mode==MODE_SWREL else ParamMacro.PMM_ABSOLUTE
 	init_values()
 	if can_switch_modes():
-		relative_button.set_pressed_no_signal(relative)
+		relative_button.set_pressed_no_signal(pm_mode==ParamMacro.PMM_RELATIVE)
 		relative_button.visible=true
 	else:
 		relative_button.visible=false
@@ -149,7 +151,7 @@ func process_mask_input(ev:InputEventMouse,ym:float,vpos:Vector2,ix:int)->void:
 			bit(ix,yv,bmode)
 		bit(ix,yv+ParamMacro.MASK_PASSTHROUGH_SHIFT,enop)
 		values_graph.update()
-		emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
+		emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,pm_mode,tick_div,delay)
 	elif ev.button_mask==0:
 		bmode=BIT_SWITCH
 	elif ev.button_mask==8 and ev.alt:
@@ -179,6 +181,7 @@ func _on_VGraph_gui_input(ev:InputEvent)->void:
 		process_mask_input(ev as InputEventMouse,ym,vpos,ix)
 		return
 	var yv:float=clamp(vpos.y/ym,0.0,1.0)
+	var relative:bool=pm_mode==ParamMacro.PMM_RELATIVE
 	var max_value:float=max_value_rel if relative else max_value_abs
 	var min_value:float=min_value_rel if relative else min_value_abs
 	var st:float=(big_step if ev.shift else 1)*(huge_step if ev.control else 1)
@@ -218,7 +221,7 @@ func _on_VGraph_gui_input(ev:InputEvent)->void:
 			ev.position-Vector2(0.0,value_tooltip.rect_size.y*0.5)
 		)
 		values_graph.update()
-		emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
+		emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,pm_mode,tick_div,delay)
 
 
 func get_select_value(yv:float,min_v:int,max_v:int)->int:
@@ -232,7 +235,7 @@ func _on_Steps_value_changed(value:int)->void:
 		yield(self,"ready")
 	recalc_scrollbars()
 	values_graph.update()
-	emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
+	emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,pm_mode,tick_div,delay)
 
 
 func recalc_scrollbars(new_zoom:float=-1.0,evy:float=0.0)->void:
@@ -256,7 +259,7 @@ func _on_VGraph_draw():
 	values_graph.draw_set_transform(Vector2(-hscroll.value,-vscroll.value),0.0,Vector2.ONE)
 	#
 	if mode<MODE_MASK:
-		if relative:
+		if pm_mode==ParamMacro.PMM_RELATIVE:
 			draw_relative()
 		else:
 			draw_absolute()
@@ -375,7 +378,7 @@ func _on_Title_pressed(delta:int)->void:
 		rect_size.y=heights[height_sel-1]
 
 func _on_Relative_toggled(p:bool)->void:
-	if p!=relative:
+	if p!=(pm_mode==ParamMacro.PMM_RELATIVE):
 		var min0:float=min_value_abs if p else min_value_rel
 		var max0:float=max_value_abs if p else max_value_rel
 		var min1:float=min_value_rel if p else min_value_abs
@@ -383,21 +386,21 @@ func _on_Relative_toggled(p:bool)->void:
 		for i in values.size():
 			if values[i]!=ParamMacro.PASSTHROUGH:
 				values[i]=int(range_lerp(values[i],min0,max0,min1,max1))
-	relative=p
-	relative_button.text="MCED_RELATIVE" if relative else "MCED_ABSOLUTE"
+	pm_mode=ParamMacro.PMM_RELATIVE if p else ParamMacro.PMM_ABSOLUTE
+	relative_button.text="MCED_RELATIVE" if p else "MCED_ABSOLUTE"
 	values_graph.update()
 	value_labels.update()
-	emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
+	emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,pm_mode,tick_div,delay)
 
 
 func _on_Div_value_changed(v:float)->void:
 	tick_div=v
-	emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
+	emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,pm_mode,tick_div,delay)
 
 
 func _on_Delay_value_changed(v:float)->void:
 	delay=v
-	emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
+	emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,pm_mode,tick_div,delay)
 
 
 func _on_Labels_draw()->void:
@@ -423,6 +426,7 @@ func _on_Labels_draw()->void:
 			color,s_color,s_ofs,ol_color,s_outline
 		)
 	value_labels.draw_set_transform(Vector2(0.0,-vscroll.value),0.0,Vector2.ONE)
+	var relative:bool=pm_mode==ParamMacro.PMM_RELATIVE
 	if mode!=MODE_MASK and (relative or labels.empty()):
 		var max_val:int=max_value_rel if relative else max_value_abs
 		var min_val:int=min_value_rel if relative else min_value_abs
@@ -449,7 +453,7 @@ func draw_user_labels(max_y:float,font:Font,
 	var yl:float=(dy+font.get_ascent())*0.5
 	for t in labels:
 		draw_label(
-			t,Vector2(0.0,yl),value_labels.get_canvas_item(),font,
+			tr(t),Vector2(0.0,yl),value_labels.get_canvas_item(),font,
 			color,shadow_color,shadow_offset,outline_color,outline
 		)
 		yl+=dy
@@ -562,7 +566,7 @@ func _on_LGraph_gui_input(ev:InputEvent)->void:
 		redraw=true
 	if redraw:
 		loop_graph.update()
-		emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
+		emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,pm_mode,tick_div,delay)
 
 
 func _on_LGraph_draw()->void:
@@ -591,7 +595,9 @@ func set_macro(m:Macro)->void:
 	loop_end=m.loop_end
 	release_loop_start=m.release_loop_start
 	if m is ParamMacro:
-		relative=m.relative
+		pm_mode=m.mode==ParamMacro.PMM_RELATIVE
+	else:
+		pm_mode=ParamMacro.PMM_RELATIVE
 	init_values()
 	for i in m.values.size():
 		values[i]=m.values[i]
@@ -602,7 +608,7 @@ func set_macro(m:Macro)->void:
 	recalc_scrollbars(1.0)
 	values_graph.update()
 	loop_graph.update()
-	relative_button.set_pressed_no_signal(relative)
+	relative_button.set_pressed_no_signal(pm_mode==ParamMacro.PMM_RELATIVE)
 	get_node("%Steps").set_value_no_signal(steps)
 	get_node("%Div").set_value_no_signal(tick_div)
 	get_node("%Delay").set_value_no_signal(delay)
@@ -672,7 +678,7 @@ func parse_command(text:String)->void:
 			cmd_message.text=''
 			set_Command_visibility(false)
 			values_graph.update()
-			emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
+			emit_signal("macro_changed",parameter,values,steps,loop_start,loop_end,release_loop_start,pm_mode,tick_div,delay)
 
 
 func insert_history(text:String)->void:

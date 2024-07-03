@@ -19,8 +19,8 @@ func _ready()->void:
 			c.title_tooltip=tr("FMED_MO_OPXY_TTIP").format({"i_op_org":operator+1,"i_op_dst":i})
 
 
-func _on_macro_changed(parameter,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)->void:
-	emit_signal("macro_changed",parameter,operator,values,steps,loop_start,loop_end,release_loop_start,relative,tick_div,delay)
+func _on_macro_changed(parameter,values,steps,loop_start,loop_end,release_loop_start,mode,tick_div,delay)->void:
+	emit_signal("macro_changed",parameter,operator,values,steps,loop_start,loop_end,release_loop_start,mode,tick_div,delay)
 
 
 func update_macros(ci:FmInstrument)->void:

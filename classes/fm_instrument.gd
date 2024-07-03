@@ -5,6 +5,8 @@ enum WAVE{RECTANGLE,SAW,TRIANGLE,NOISE,CUSTOM}
 enum REPEAT{OFF,RELEASE,SUSTAIN,DECAY,ATTACK}
 enum {DETMODE_NORMAL,DETMODE_FIXED,DETMODE_DELTA}
 const TYPE:String="FmInstrument"
+const MLIMITS:Dictionary=MacroIO.MACRO_LIMITS
+
 
 var op_mask:int=1
 var clip:bool=false
@@ -31,40 +33,115 @@ var routings:Array=[
 	[0,0,0,0,255],
 	[0,0,0,0,255]
 ]
-var freq_macro:ParamMacro=ParamMacro.new()
-var op_freq_macro:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
-var volume_macro:ParamMacro=ParamMacro.new()
-var pan_macro:ParamMacro=ParamMacro.new()
-var key_macro:ParamMacro=ParamMacro.new(false)
-var op_key_macro:Array=[ParamMacro.new(false),ParamMacro.new(false),ParamMacro.new(false),ParamMacro.new(false)]
-var op_enable_macro:ParamMacro=ParamMacro.new(false)
-var chanl_invert_macro:ParamMacro=ParamMacro.new(false)
-var clip_macro:ParamMacro=ParamMacro.new(false)
-var duty_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
-var wave_macros:Array=[ParamMacro.new(false),ParamMacro.new(false),ParamMacro.new(false),ParamMacro.new(false)]
-var attack_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
-var decay_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
-var sus_level_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
-var sus_rate_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
-var release_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
-var repeat_macros:Array=[ParamMacro.new(false),ParamMacro.new(false),ParamMacro.new(false),ParamMacro.new(false)]
-var ami_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
-var ksr_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
-var multiplier_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
-var divider_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
-var detune_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
-var detune_mode_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
-var fmi_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
-var am_lfo_macros:Array=[ParamMacro.new(false),ParamMacro.new(false),ParamMacro.new(false),ParamMacro.new(false)]
-var fm_lfo_macros:Array=[ParamMacro.new(false),ParamMacro.new(false),ParamMacro.new(false),ParamMacro.new(false)]
-var phase_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
+var freq_macro:ParamMacro=ParamMacro.new(MLIMITS[MacroIO.MACRO_TONE])
+var op_freq_macro:Array=[ParamMacro.new(MLIMITS[MacroIO.MACRO_TONE]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_TONE]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_TONE]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_TONE])]
+var volume_macro:ParamMacro=ParamMacro.new(MLIMITS[MacroIO.MACRO_VOLUME])
+var pan_macro:ParamMacro=ParamMacro.new(MLIMITS[MacroIO.MACRO_PAN])
+var key_macro:ParamMacro=ParamMacro.new(MLIMITS[MacroIO.MACRO_KEY_ON],ParamMacro.PMM_ABSOLUTE)
+var op_key_macro:Array=[ParamMacro.new(MLIMITS[MacroIO.MACRO_KEY_ON],ParamMacro.PMM_ABSOLUTE),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_KEY_ON],ParamMacro.PMM_ABSOLUTE),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_KEY_ON],ParamMacro.PMM_ABSOLUTE),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_KEY_ON],ParamMacro.PMM_ABSOLUTE)]
+var op_enable_macro:ParamMacro=ParamMacro.new(MLIMITS[MacroIO.MACRO_OP_ENABLE],ParamMacro.PMM_MASK)
+var chanl_invert_macro:ParamMacro=ParamMacro.new(MLIMITS[MacroIO.MACRO_CHANNEL_INVERT],ParamMacro.PMM_MASK)
+var clip_macro:ParamMacro=ParamMacro.new(MLIMITS[MacroIO.MACRO_CLIP],ParamMacro.PMM_MASK)
+var duty_macros:Array=[ParamMacro.new(MLIMITS[MacroIO.MACRO_DUTY_CYCLE]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_DUTY_CYCLE]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_DUTY_CYCLE]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_DUTY_CYCLE])]
+var wave_macros:Array=[ParamMacro.new(MLIMITS[MacroIO.MACRO_WAVE],ParamMacro.PMM_ABSOLUTE),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_WAVE],ParamMacro.PMM_ABSOLUTE),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_WAVE],ParamMacro.PMM_ABSOLUTE),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_WAVE],ParamMacro.PMM_ABSOLUTE)]
+var attack_macros:Array=[ParamMacro.new(MLIMITS[MacroIO.MACRO_ATTACK]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_ATTACK]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_ATTACK]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_ATTACK])]
+var decay_macros:Array=[ParamMacro.new(MLIMITS[MacroIO.MACRO_DECAY]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_DECAY]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_DECAY]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_DECAY])]
+var sus_level_macros:Array=[ParamMacro.new(MLIMITS[MacroIO.MACRO_SUSTAIN_LEVEL]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_SUSTAIN_LEVEL]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_SUSTAIN_LEVEL]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_SUSTAIN_LEVEL])]
+var sus_rate_macros:Array=[ParamMacro.new(MLIMITS[MacroIO.MACRO_SUSTAIN_RATE]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_SUSTAIN_RATE]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_SUSTAIN_RATE]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_SUSTAIN_RATE])]
+var release_macros:Array=[ParamMacro.new(MLIMITS[MacroIO.MACRO_RELEASE]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_RELEASE]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_RELEASE]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_RELEASE])]
+var repeat_macros:Array=[ParamMacro.new(MLIMITS[MacroIO.MACRO_REPEAT],ParamMacro.PMM_ABSOLUTE),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_REPEAT],ParamMacro.PMM_ABSOLUTE),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_REPEAT],ParamMacro.PMM_ABSOLUTE),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_REPEAT],ParamMacro.PMM_ABSOLUTE)]
+var ami_macros:Array=[ParamMacro.new(MLIMITS[MacroIO.MACRO_AM_INTENSITY]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_AM_INTENSITY]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_AM_INTENSITY]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_AM_INTENSITY])]
+var ksr_macros:Array=[ParamMacro.new(MLIMITS[MacroIO.MACRO_KEY_SCALING]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_KEY_SCALING]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_KEY_SCALING]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_KEY_SCALING])]
+var multiplier_macros:Array=[ParamMacro.new(MLIMITS[MacroIO.MACRO_MULTIPLIER]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_MULTIPLIER]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_MULTIPLIER]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_MULTIPLIER])]
+var divider_macros:Array=[ParamMacro.new(MLIMITS[MacroIO.MACRO_DIVIDER]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_DIVIDER]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_DIVIDER]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_DIVIDER])]
+var detune_macros:Array=[ParamMacro.new(MLIMITS[MacroIO.MACRO_DETUNE]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_DETUNE]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_DETUNE]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_DETUNE])]
+var detune_mode_macros:Array=[ParamMacro.new(MLIMITS[MacroIO.MACRO_DETUNE_MODE],false),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_DETUNE_MODE],false),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_DETUNE_MODE],false),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_DETUNE_MODE],false)]
+var fmi_macros:Array=[ParamMacro.new(MLIMITS[MacroIO.MACRO_FM_INTENSITY]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_FM_INTENSITY]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_FM_INTENSITY]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_FM_INTENSITY])]
+var am_lfo_macros:Array=[ParamMacro.new(MLIMITS[MacroIO.MACRO_AM_LFO],ParamMacro.PMM_ABSOLUTE),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_AM_LFO],ParamMacro.PMM_ABSOLUTE),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_AM_LFO],ParamMacro.PMM_ABSOLUTE),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_AM_LFO],ParamMacro.PMM_ABSOLUTE)]
+var fm_lfo_macros:Array=[ParamMacro.new(MLIMITS[MacroIO.MACRO_FM_LFO],ParamMacro.PMM_ABSOLUTE),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_FM_LFO],ParamMacro.PMM_ABSOLUTE),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_FM_LFO],ParamMacro.PMM_ABSOLUTE),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_FM_LFO],ParamMacro.PMM_ABSOLUTE)]
+var phase_macros:Array=[ParamMacro.new(MLIMITS[MacroIO.MACRO_PHASE]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_PHASE]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_PHASE]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_PHASE])]
 var op_macros:Array=[
-	[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()],
-	[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()],
-	[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()],
-	[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
+	[ParamMacro.new(MLIMITS[MacroIO.MACRO_OP1]),
+		ParamMacro.new(MLIMITS[MacroIO.MACRO_OP1]),
+		ParamMacro.new(MLIMITS[MacroIO.MACRO_OP1]),
+		ParamMacro.new(MLIMITS[MacroIO.MACRO_OP1])],
+	[ParamMacro.new(MLIMITS[MacroIO.MACRO_OP2]),
+		ParamMacro.new(MLIMITS[MacroIO.MACRO_OP2]),
+		ParamMacro.new(MLIMITS[MacroIO.MACRO_OP2]),
+		ParamMacro.new(MLIMITS[MacroIO.MACRO_OP2])],
+	[ParamMacro.new(MLIMITS[MacroIO.MACRO_OP3]),
+		ParamMacro.new(MLIMITS[MacroIO.MACRO_OP3]),
+		ParamMacro.new(MLIMITS[MacroIO.MACRO_OP3]),
+		ParamMacro.new(MLIMITS[MacroIO.MACRO_OP3])],
+	[ParamMacro.new(MLIMITS[MacroIO.MACRO_OP4]),
+		ParamMacro.new(MLIMITS[MacroIO.MACRO_OP4]),
+		ParamMacro.new(MLIMITS[MacroIO.MACRO_OP4]),
+		ParamMacro.new(MLIMITS[MacroIO.MACRO_OP4])]
 ]
-var out_macros:Array=[ParamMacro.new(),ParamMacro.new(),ParamMacro.new(),ParamMacro.new()]
+var out_macros:Array=[ParamMacro.new(MLIMITS[MacroIO.MACRO_OUTPUT]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_OUTPUT]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_OUTPUT]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_OUTPUT])]
 
 func _init()->void:
 	name=tr("DEFN_FM_INSTRUMENT")
@@ -227,7 +304,7 @@ func macros_as_dict()->Dictionary:
 		MacroIO.MACRO_AM_INTENSITY:ami_macros,
 		MacroIO.MACRO_KEY_SCALING:ksr_macros,
 		MacroIO.MACRO_MULTIPLIER:multiplier_macros,
-		MacroIO.MACRO_DIVISOR:divider_macros,
+		MacroIO.MACRO_DIVIDER:divider_macros,
 		MacroIO.MACRO_DETUNE:detune_macros,
 		MacroIO.MACRO_DETUNE_MODE:detune_mode_macros,
 		MacroIO.MACRO_FM_INTENSITY:fmi_macros,
@@ -287,7 +364,7 @@ func set_macro(id:String,op:int,macro:ParamMacro)->bool:
 			ksr_macros[op]=macro
 		MacroIO.MACRO_MULTIPLIER:
 			multiplier_macros[op]=macro
-		MacroIO.MACRO_DIVISOR:
+		MacroIO.MACRO_DIVIDER:
 			divider_macros[op]=macro
 		MacroIO.MACRO_DETUNE:
 			detune_macros[op]=macro

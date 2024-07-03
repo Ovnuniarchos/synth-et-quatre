@@ -60,7 +60,7 @@ func common_checks(tokens:Array,is_cmd:bool,expected_cmd:bool,command:Array)->La
 	return LanguageResult.new()
 
 
-func parse(tokens:Array,is_cmd:bool)->LanguageResult:
+func parse(_tokens:Array,_is_cmd:bool)->LanguageResult:
 	return LanguageResult.new(LanguageResult.ERR_UNIMPLEMENTED_PARSER,{"s_command":get("NAME")})
 
 
@@ -93,5 +93,5 @@ func get_value(opcodes:Array,index:int,macro:MacroInfo):
 	return opcodes[index]
 
 
-func execute(macro:MacroInfo,opcodes:Array)->LanguageResult:
+func execute(_macro:MacroInfo,_opcodes:Array)->LanguageResult:
 	return LanguageResult.new(LanguageResult.ERR_UNIMPLEMENTED_EXEC,{"s_command":get("NAME")})

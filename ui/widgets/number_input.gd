@@ -70,6 +70,7 @@ func _on_text_changed(nt:String,invalid_brk:bool)->void:
 func _on_text_entered(nt:String)->void:
 	set_block_signals(true)
 	_on_text_changed(nt,true)
+# warning-ignore:incompatible_ternary
 	var v=float(text) if _decimals>0 else int(text)
 	text=("%f" if _decimals>0 else "%d")%v
 	set_block_signals(false)

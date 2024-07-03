@@ -494,16 +494,49 @@ msgstr ""
 msgid "FMED_MG_CHAN_INVERT_TTIP"
 msgstr ""
 
+msgid "FMED_MG_CHANINVERT_RIGHT"
+msgstr ""
+
+msgid "FMED_MG_CHANINVERT_LEFT"
+msgstr ""
+
 msgid "FMED_MG_KEY_ON"
 msgstr ""
 
 msgid "FMED_MG_KEY_ON_TTIP"
 msgstr ""
 
+msgid "FMED_MX_KEYON_STOP"
+msgstr ""
+
+msgid "FMED_MX_KEYON_OFF"
+msgstr ""
+
+msgid "FMED_MX_KEYON_STACCATO"
+msgstr ""
+
+msgid "FMED_MX_KEYON_LEGATO"
+msgstr ""
+
+msgid "FMED_MX_KEYON_ON"
+msgstr ""
+
 msgid "FMED_MG_OP_ENABLE"
 msgstr ""
 
 msgid "FMED_MG_OP_ENABLE_TTIP"
+msgstr ""
+
+msgid "FMED_MG_OPENABLE_OP1"
+msgstr ""
+
+msgid "FMED_MG_OPENABLE_OP2"
+msgstr ""
+
+msgid "FMED_MG_OPENABLE_OP3"
+msgstr ""
+
+msgid "FMED_MG_OPENABLE_OP4"
 msgstr ""
 
 msgid "FMED_MG_CLIP"
@@ -572,10 +605,37 @@ msgstr ""
 msgid "FMED_MO_REPEAT_TTIP"
 msgstr ""
 
+msgid "FMED_MO_REPEAT_OFF"
+msgstr ""
+
+msgid "FMED_MO_REPEAT_ATTACK"
+msgstr ""
+
+msgid "FMED_MO_REPEAT_DECAY"
+msgstr ""
+
+msgid "FMED_MO_REPEAT_SUSTAIN"
+msgstr ""
+
+msgid "FMED_MO_REPEAT_RELEASE"
+msgstr ""
+
 msgid "FMED_MO_AM_INTENSITY"
 msgstr ""
 
 msgid "FMED_MO_AM_INTENSITY_TTIP"
+msgstr ""
+
+msgid "FMED_MO_LFO1"
+msgstr ""
+
+msgid "FMED_MO_LFO2"
+msgstr ""
+
+msgid "FMED_MO_LFO3"
+msgstr ""
+
+msgid "FMED_MO_LFO4"
 msgstr ""
 
 msgid "FMED_MO_AM_LFO"

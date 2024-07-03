@@ -1,11 +1,17 @@
 extends FmInstrument
 class_name FmVoice
 
+signal delay_song(delay)
+signal goto_order(order)
+signal goto_next(row)
+signal ticks_sec(ticks)
+signal ticks_row(ticks)
+
 const CONSTS=preload("res://classes/tracker/fm_voice_constants.gd")
 const TRCK=preload("res://classes/tracker/tracker_constants.gd")
 const ATTRS=Pattern.ATTRS
-const FARP_ARP:int=0
-const FARP_SPEED:int=1
+const FAST_ARP_IX:int=0
+const FAST_ARP_SPEED:int=1
 
 enum {KON_PASS,KON_STD,KON_LEGATO,KON_STACCATO,KON_OFF,KON_STOP}
 
@@ -25,109 +31,110 @@ var fx_vals:Array
 var row_tick:int=0
 var macro_tick:int=0
 var release_tick:int=-1
-var freqs:Array=[0,0,0,0]
-var base_freqs:Array=[0,0,0,0]
-var next_freqs:Array=[0,0,0,0]
-var arpeggio:Arpeggio=null
-var arpeggio_speed:int=3
-var velocity:int=255
-var panning:int=0x1F
+var freqs_sent:Array
+var base_freqs:Array
+var next_freqs:Array
+var arpeggio:Arpeggio
+var arpeggio_speed:int
+var velocity:int
+var panning:int
 
-var instrument_dirty:bool=false
-var clip_dirty:bool=true
-var new_clip:bool=true
+var clip_dirty:bool
+var clip_sent=null
 var key_dirty_any:bool=true
 var key_dirty:Array=[KON_PASS,KON_PASS,KON_PASS,KON_PASS]
-var new_note:bool=false
+var key_dirty_sent:Array=[KON_PASS,KON_PASS,KON_PASS,KON_PASS]
 var enable_mask:int=0
 var enable_bits:int=0
+var enable_dirty:bool=true
 var freqs_dirty_any:bool=true
-var freqs_dirty:Array=[false,false,false,false]
+var freqs_dirty:Array=[true,true,true,true]
 var fmi_dirty_any:bool=true
-var fmi_dirty:Array=[false,false,false,false]
+var fmi_dirty:Array=[true,true,true,true]
 var fmi_values:Array=[0,0,0,0]
 var fml_dirty_any:bool=true
-var fml_dirty:Array=[false,false,false,false]
+var fml_dirty:Array=[true,true,true,true]
 var fml_values:Array=[0,0,0,0]
-var multiplier_dirty_any:bool=false
-var multiplier_dirty:Array=[false,false,false,false]
+var multiplier_dirty_any:bool=true
+var multiplier_dirty:Array=[true,true,true,true]
 var multiplier_values:Array=[0,0,0,0]
-var divider_dirty_any:bool=false
-var divider_dirty:Array=[false,false,false,false]
+var divider_dirty_any:bool=true
+var divider_dirty:Array=[true,true,true,true]
 var divider_values:Array=[0,0,0,0]
-var detune_dirty_any:bool=false
-var detune_dirty:Array=[false,false,false,false]
+var detune_dirty_any:bool=true
+var detune_dirty:Array=[true,true,true,true]
 var detune_values:Array=[0,0,0,0]
-var detune_mode_dirty_any:bool=false
-var detune_mode_dirty:Array=[false,false,false,false]
+var detune_mode_dirty_any:bool=true
+var detune_mode_dirty:Array=[true,true,true,true]
 var detune_mode_values:Array=[0,0,0,0]
-var velocity_dirty:bool=false
-var velocity_value:int=0
-var panning_dirty:bool=false
+var velocity_dirty:bool=true
+var velocity_sent=null
+var panning_dirty:bool=true
 var panning_value:int=0
-var attack_dirty:Array=[false,false,false,false]
-var attack_dirty_any:bool=false
+var attack_dirty:Array=[true,true,true,true]
+var attack_dirty_any:bool=true
 var attack_values:Array=[0,0,0,0]
-var decay_dirty:Array=[false,false,false,false]
-var decay_dirty_any:bool=false
+var decay_dirty:Array=[true,true,true,true]
+var decay_dirty_any:bool=true
 var decay_values:Array=[0,0,0,0]
-var suslev_dirty:Array=[false,false,false,false]
-var suslev_dirty_any:bool=false
+var suslev_dirty:Array=[true,true,true,true]
+var suslev_dirty_any:bool=true
 var suslev_values:Array=[0,0,0,0]
-var susrate_dirty:Array=[false,false,false,false]
-var susrate_dirty_any:bool=false
+var susrate_dirty:Array=[true,true,true,true]
+var susrate_dirty_any:bool=true
 var susrate_values:Array=[0,0,0,0]
-var release_dirty:Array=[false,false,false,false]
-var release_dirty_any:bool=false
+var release_dirty:Array=[true,true,true,true]
+var release_dirty_any:bool=true
 var release_values:Array=[0,0,0,0]
-var ksr_dirty:Array=[false,false,false,false]
-var ksr_dirty_any:bool=false
+var ksr_dirty:Array=[true,true,true,true]
+var ksr_dirty_any:bool=true
 var ksr_values:Array=[0,0,0,0]
-var repeat_dirty:Array=[false,false,false,false]
-var repeat_dirty_any:bool=false
+var repeat_dirty:Array=[true,true,true,true]
+var repeat_dirty_any:bool=true
 var repeat_values:Array=[0,0,0,0]
-var ami_dirty:Array=[false,false,false,false]
+var ami_dirty:Array=[true,true,true,true]
 var ami_dirty_any:bool=true
 var ami_values:Array=[0,0,0,0]
-var aml_dirty:Array=[false,false,false,false]
+var aml_dirty:Array=[true,true,true,true]
 var aml_dirty_any:bool=true
 var aml_values:Array=[0,0,0,0]
 var pm_level_dirty:Array=[
-		[false,false,false,false],
-		[false,false,false,false],
-		[false,false,false,false],
-		[false,false,false,false]
+		[true,true,true,true],
+		[true,true,true,true],
+		[true,true,true,true],
+		[true,true,true,true]
 	]
-var pm_level_dirty_any:Array=[false,false,false,false]
+var pm_level_dirty_any:Array=[true,true,true,true]
 var pml_values:Array=[
 	[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]
 ]
-var output_dirty:Array=[false,false,false,false]
+var output_dirty:Array=[true,true,true,true]
 var output_dirty_any:bool=true
 var out_values:Array=[0,0,0,0]
-var wave_dirty:Array=[false,false,false,false]
+var wave_dirty:Array=[true,true,true,true]
 var wave_dirty_any:bool=true
 var wave_values:Array=[0,0,0,0]
-var duty_cycle_dirty:Array=[false,false,false,false]
-var duty_cycle_dirty_any:bool=false
+var duty_cycle_dirty:Array=[true,true,true,true]
+var duty_cycle_dirty_any:bool=true
 var duty_values:Array=[0,0,0,0]
-var phase_dirty:Array=[false,false,false,false]
-var phase_dirty_any:bool=false
+var phase_dirty:Array=[true,true,true,true]
+var phase_dirty_any:bool=true
 var phases:Array=[0,0,0,0]
-var phases_rel:Array=[false,false,false,false]
-# ¿Macro-ify?
+var phases_rel:Array=[true,true,true,true]
 var lfo_wave_dirty_any:bool=true
-var lfo_wave_dirty:Array=[false,false,false,false]
+var lfo_wave_dirty:Array=[true,true,true,true]
 var lfo_waves:Array=[0,0,0,0]
 var lfo_freq_dirty_any:bool=true
-var lfo_freq_dirty:Array=[false,false,false,false]
+var lfo_freq_dirty:Array=[true,true,true,true]
 var lfo_freqs:Array=[0,0,0,0]
-var lfo_duty_cycle_dirty_any:bool=false
-var lfo_duty_cycle_dirty:Array=[false,false,false,false]
+var lfo_duty_cycle_dirty_any:bool=true
+var lfo_duty_cycle_dirty:Array=[true,true,true,true]
 var lfo_duty_cycles:Array=[0,0,0,0]
-var lfo_phase_dirty_any:bool=false
-var lfo_phase_dirty:Array=[false,false,false,false]
+var lfo_phase_dirty_any:bool=true
+var lfo_phase_dirty:Array=[true,true,true,true]
 var lfo_phases:Array=[0,0,0,0]
+
+var apply_debug:bool=false
 
 
 func _init()->void:
@@ -151,23 +158,24 @@ func reset()->void:
 	row_tick=0
 	macro_tick=0
 	release_tick=-1
-	freqs=[0,0,0,0]
+	freqs_sent=[0,0,0,0]
 	base_freqs=[0,0,0,0]
 	next_freqs=[0,0,0,0]
 	arpeggio=null
 	arpeggio_speed=3
 	velocity=255
+	velocity_sent=null
+	velocity_dirty=false
 	panning=0x1F
-	instrument_dirty=false
+	clip_sent=null
 	clip_dirty=false
-	new_clip=clip
 	freqs_dirty_any=false
 	freqs_dirty=[false,false,false,false]
 	key_dirty_any=false
 	key_dirty=[KON_PASS,KON_PASS,KON_PASS,KON_PASS]
-	new_note=false
 	enable_mask=0
 	enable_bits=0
+	enable_dirty=false
 	fmi_dirty_any=false
 	fmi_dirty=[false,false,false,false]
 	fml_dirty_any=false
@@ -178,7 +186,6 @@ func reset()->void:
 	divider_dirty=[false,false,false,false]
 	detune_dirty_any=false
 	detune_dirty=[false,false,false,false]
-	velocity_dirty=false
 	panning_dirty=false
 	attack_dirty=[false,false,false,false]
 	attack_dirty_any=false
@@ -221,6 +228,7 @@ func reset()->void:
 	lfo_duty_cycle_dirty=[false,false,false,false]
 	lfo_phase_dirty_any=false
 	lfo_phase_dirty=[false,false,false,false]
+	apply_debug=false
 
 
 func process_tick(song:Song,channel:int,curr_order:int,curr_row:int,curr_tick:int,messages:Array)->void:
@@ -246,6 +254,7 @@ func process_tick(song:Song,channel:int,curr_order:int,curr_row:int,curr_tick:in
 	if fx_vals[CONSTS.FX_DELAY_SONG]!=0:
 		if curr_tick==0:
 			messages[TRCK.SIG_DELAY_SONG]=fx_vals[CONSTS.FX_DELAY_SONG]
+			emit_signal("delay_song",fx_vals[CONSTS.FX_DELAY_SONG])
 			return
 	if fx_vals[CONSTS.FX_DELAY]==0:
 		if row_tick==0:
@@ -259,11 +268,11 @@ func process_tick(song:Song,channel:int,curr_order:int,curr_row:int,curr_tick:in
 
 
 func process_tick_0(note:Array,song:Song,num_fxs:int,messages:Array)->void:
+	apply_debug=false
 	var legato:int=KON_STD if note[ATTRS.LG_MODE]==null else LEGATO2KON[note[ATTRS.LG_MODE]]
 	if note[ATTRS.INSTR]!=null:
 		set_instrument(song.get_instrument(note[ATTRS.INSTR]) as FmInstrument)
 	if note[ATTRS.NOTE]!=null:
-		new_note=true
 		if legato!=KON_LEGATO:
 			macro_tick=0
 			release_tick=-1
@@ -305,8 +314,8 @@ func process_tick_0(note:Array,song:Song,num_fxs:int,messages:Array)->void:
 			elif fx_cmd==CONSTS.FX_FRQ_PORTA:
 				slide_frequency_to(fx_val,fx_opm)
 			elif fx_cmd==CONSTS.FX_ARPEGGIO:
-				arpeggio=song.get_arp(fx_vals[fx_cmd][FARP_ARP])
-				arpeggio_speed=fx_vals[fx_cmd][FARP_SPEED]
+				arpeggio=song.get_arp(fx_vals[fx_cmd][FAST_ARP_IX])
+				arpeggio_speed=fx_vals[fx_cmd][FAST_ARP_SPEED]
 			elif fx_cmd==CONSTS.FX_FMI_SET:
 				fmi_dirty_any=set_opmasked(fx_val,fm_intensity,fmi_dirty,fx_opm)
 			elif fx_cmd==CONSTS.FX_FMI_ADJ or fx_cmd==CONSTS.FX_FMI_SLIDE:
@@ -381,14 +390,18 @@ func process_tick_0(note:Array,song:Song,num_fxs:int,messages:Array)->void:
 				clip_dirty=set_clip(fx_val)
 			elif fx_cmd==CONSTS.FX_GOTO_ORDER:
 				messages[TRCK.SIG_GOTO_ORDER]=fx_val
+				emit_signal("goto_order",fx_val)
 			elif fx_cmd==CONSTS.FX_GOTO_NEXT:
 				messages[TRCK.SIG_GOTO_NEXT]=fx_val
+				emit_signal("goto_next",fx_val)
 			elif fx_cmd==CONSTS.FX_TICKSROW_SET:
 				messages[TRCK.SIG_TICKS_ROW]=fx_val+1
+				emit_signal("ticks_row",fx_val+1)
 			elif fx_cmd==CONSTS.FX_TICKSSEC_SET:
 				messages[TRCK.SIG_TICKS_SEC]=fx_val+1
+				emit_signal("ticks_sec",fx_val+1)
 			elif fx_cmd==CONSTS.FX_DEBUG:
-				breakpoint
+				apply_debug=true
 		j+=3
 	apply_macros()
 
@@ -422,47 +435,46 @@ func process_tick_n(song:Song,channel:int)->void:
 
 
 func apply_macros()->void:
-	var old:int
+	var old
+	var old2
 	var val:int
 	# Global volume
-	old=velocity
-	velocity_value=volume_macro.get_value(macro_tick,release_tick,velocity)
-	velocity_dirty=velocity_dirty or old!=velocity_value
+	old=velocity_sent
+	velocity_sent=volume_macro.get_value(macro_tick,release_tick,velocity)
+	velocity_dirty=velocity_dirty or old!=velocity_sent
 	# Global Op Enable
-	val=op_enable_macro.get_value(macro_tick,release_tick,0)
+	old2=enable_mask
+	old=enable_bits
+	val=op_enable_macro.get_value(macro_tick,release_tick,op_mask|0xF0000)
 	enable_mask=val>>ParamMacro.MASK_PASSTHROUGH_SHIFT
 	enable_bits=val&ParamMacro.MASK_VALUE_MASK
+	enable_dirty=enable_dirty or ((old!=enable_bits or old2!=enable_mask) and enable_mask!=0)
 	# Global Panpot
-	old=panning
+	old=panning_value
 	panning_value=pan_macro.get_value(macro_tick,release_tick,panning)|\
 		chanl_invert_macro.get_value(macro_tick,release_tick,panning>>6)<<6
 	panning_dirty=panning_dirty or old!=panning_value
 	# Global Clip
-	old=int(new_clip)
+	old=clip_sent
 	val=clip_macro.get_value(macro_tick,release_tick,int(clip))
-	if val>=ParamMacro.MASK_VALUE_MASK:
-		new_clip=bool(val&ParamMacro.MASK_VALUE_MASK)
-		clip_dirty=clip_dirty or old!=int(new_clip)
+	clip_sent=bool(val&ParamMacro.MASK_VALUE_MASK)
+	clip_dirty=clip_dirty or (old!=clip_sent and (val>>ParamMacro.MASK_PASSTHROUGH_SHIFT)!=0)
+	# Ops
 	for i in 4:
 		# Global+Op tone
-		old=freqs[i]
+		old=freqs_sent[i]
 		base_freqs[i]=next_freqs[i]
-		freqs[i]=op_freq_macro[i].get_value(
-			macro_tick,
-			release_tick,
-			freq_macro.get_value(
-				macro_tick,
-				release_tick,
-				base_freqs[i]))
+		val=freq_macro.get_value(macro_tick,release_tick,base_freqs[i])
+		freqs_sent[i]=op_freq_macro[i].get_value(macro_tick,release_tick,val)
 		if arpeggio!=null:
-			freqs[i]=arpeggio.get_value(macro_tick,release_tick,freqs[i],arpeggio_speed)
-		freqs_dirty[i]=freqs_dirty[i] or old!=freqs[i]
+			freqs_sent[i]=arpeggio.get_value(macro_tick,release_tick,freqs_sent[i],arpeggio_speed)
+		freqs_dirty[i]=freqs_dirty[i] or old!=freqs_sent[i]
 		freqs_dirty_any=freqs_dirty_any or freqs_dirty[i]
 		# Global+op key
-		old=key_dirty[i]
-		key_dirty[i]=key_macro.get_value(macro_tick,release_tick,key_dirty[i])
-		key_dirty[i]=op_key_macro[i].get_value(macro_tick,release_tick,key_dirty[i])
-		key_dirty_any=key_dirty_any or old!=key_dirty[i]
+		old=key_dirty_sent[i]
+		val=key_macro.get_value(macro_tick,release_tick,key_dirty[i])
+		key_dirty_sent[i]=op_key_macro[i].get_value(macro_tick,release_tick,val)
+		key_dirty_any=key_dirty_any or old!=key_dirty_sent[i]
 		# Op Phase
 		val=phase_macros[i].get_value(macro_tick,release_tick,ParamMacro.PASSTHROUGH)
 		if val!=ParamMacro.PASSTHROUGH:
@@ -551,8 +563,8 @@ func get_fx_val(v,note,cmd:int,cmd_col:int)->int:
 			fx_vals[cmd][3]=note
 			fx_vals[cmd][4]=note
 	elif cmd==CONSTS.FX_ARPEGGIO:
-		fx_vals[cmd][FARP_ARP]=v&15
-		fx_vals[cmd][FARP_SPEED]=((v>>4)&15)+1
+		fx_vals[cmd][FAST_ARP_IX]=v&15
+		fx_vals[cmd][FAST_ARP_SPEED]=((v>>4)&15)+1
 	elif cmd==CONSTS.FX_ARP_SPEED:
 		fx_vals[cmd]=v+1
 	elif cmd==CONSTS.FX_FMI_SET:
@@ -583,19 +595,14 @@ func get_fx_val(v,note,cmd:int,cmd_col:int)->int:
 func commit(channel:int,cmds:Array,ptr:int)->int:
 	if fx_vals[CONSTS.FX_DELAY]>0:
 		return ptr
-	if instrument_dirty:
-		ptr=commit_instrument(channel,cmds,ptr)
 	if key_dirty_any:
 		ptr=commit_retrigger(channel,cmds,ptr)
-	if new_note:
-		ptr=commit_opmask(channel,cmds,ptr)
-		new_note=false
-	if enable_mask!=0:
-		ptr=commit_enable(channel,cmds,ptr)
+	if enable_dirty:
+		ptr=commit_enable(channel,cmds,ptr,enable_mask,enable_bits)
 	if clip_dirty:
 		ptr=commit_clip(channel,cmds,ptr)
 	if freqs_dirty_any:
-		ptr=commit_opmasked_long(channel,cmds,ptr,CONSTS.CMD_FREQ,freqs_dirty,freqs)
+		ptr=commit_opmasked_long(channel,cmds,ptr,CONSTS.CMD_FREQ,freqs_dirty,freqs_sent)
 		freqs_dirty_any=false
 	if velocity_dirty:
 		ptr=commit_velocity(channel,cmds,ptr)
@@ -651,7 +658,8 @@ func commit(channel:int,cmds:Array,ptr:int)->int:
 		if pm_level_dirty_any[i]:
 			ptr=commit_pm_level(channel,cmds,ptr,i,pm_level_dirty[i],pml_values[i])
 	if output_dirty_any:
-		ptr=commit_output(channel,cmds,ptr)
+		ptr=commit_opmasked_short(channel,cmds,ptr,CONSTS.CMD_OUT,output_dirty,out_values)
+		output_dirty_any=false
 	if wave_dirty_any:
 		ptr=commit_opmasked_short(channel,cmds,ptr,CONSTS.CMD_WAV,wave_dirty,wave_values)
 		wave_dirty_any=false
@@ -674,6 +682,9 @@ func commit(channel:int,cmds:Array,ptr:int)->int:
 	if lfo_phase_dirty_any:
 		ptr=commit_lfo_long(cmds,ptr,CONSTS.CMD_LFO_PHI,lfo_phase_dirty,lfo_phases,16)
 		lfo_phase_dirty_any=false
+	if apply_debug:
+		cmds[ptr]=CONSTS.CMD_DEBUG
+		ptr+=1
 	return ptr
 
 
@@ -711,16 +722,6 @@ func commit_lfo_short(cmds:Array,ptr:int,cmd:int,dirties:Array,values:Array)->in
 	return ptr
 
 
-func commit_output(channel:int,cmds:Array,ptr:int)->int:
-	for i in 4:
-		if output_dirty[i]:
-			output_dirty[i]=false
-			cmds[ptr]=CONSTS.CMD_OUT|(channel<<8)|(0x10000<<i)|(out_values[i]<<24)
-			ptr+=1
-	output_dirty_any=false
-	return ptr
-
-
 func commit_pm_level(channel:int,cmds:Array,ptr:int,from:int,dirties:Array,
 		values:Array)->int:
 	pm_level_dirty_any[from]=false
@@ -735,21 +736,35 @@ func commit_pm_level(channel:int,cmds:Array,ptr:int,from:int,dirties:Array,
 
 func commit_opmasked_short(channel:int,cmds:Array,ptr:int,cmd:int,dirties:Array,
 		values:Array)->int:
+	var opm:int
+	var val:int
 	for i in 4:
-		if dirties[i]:
-			dirties[i]=false
-			cmds[ptr]=cmd|(channel<<8)|(0x10000<<i)|(values[i]<<24)
+		opm=0
+		val=values[i]
+		for j in range(i,4):
+			if dirties[j] and values[j]==val:
+				dirties[j]=false
+				opm|=0x10000<<j
+		if opm!=0:
+			cmds[ptr]=cmd|(channel<<8)|opm|(val<<24)
 			ptr+=1
 	return ptr
 
 
 func commit_opmasked_long(channel:int,cmds:Array,ptr:int,cmd:int,dirties:Array,
 		values:Array,shift:int=0)->int:
+	var opm:int
+	var val:int
 	for i in 4:
-		if dirties[i]:
-			dirties[i]=false
-			cmds[ptr]=cmd|(channel<<8)|(0x10000<<i)
-			cmds[ptr+1]=values[i]<<shift
+		opm=0
+		val=values[i]
+		for j in range(i,4):
+			if dirties[j] and values[j]==val:
+				dirties[j]=false
+				opm|=0x10000<<j
+		if opm!=0:
+			cmds[ptr]=cmd|(channel<<8)|opm
+			cmds[ptr+1]=val<<shift
 			ptr+=2
 	return ptr
 
@@ -761,39 +776,52 @@ func commit_panning(channel:int,cmds:Array,ptr:int)->int:
 
 
 func commit_clip(channel:int,cmds:Array,ptr:int)->int:
-	cmds[ptr]=CONSTS.CMD_CLIP|(channel<<8)|(int(new_clip)<<24)
+	cmds[ptr]=CONSTS.CMD_CLIP|(channel<<8)|(int(clip_sent)<<24)
 	clip_dirty=false
 	return ptr+1
 
 
 func commit_velocity(channel:int,cmds:Array,ptr:int)->int:
-	cmds[ptr]=CONSTS.CMD_VEL|(channel<<8)|(velocity_value<<16)
+	cmds[ptr]=CONSTS.CMD_VEL|(channel<<8)|(velocity_sent<<16)
 	velocity_dirty=false
 	return ptr+1
 
 
-func commit_enable(channel:int,cmds:Array,ptr:int)->int:
-	cmds[ptr]=CONSTS.CMD_ENABLE|(channel<<8)|(enable_mask<<16)||(enable_bits<<24)
-	enable_mask=0
+func commit_enable(channel:int,cmds:Array,ptr:int,mask:int,enable:int)->int:
+	enable_mask=mask
+	enable_bits=enable
+	enable_dirty=false
+	if mask==0:
+		return ptr
+	cmds[ptr]=CONSTS.CMD_ENABLE|(channel<<8)|(mask<<16)|(enable<<24)
 	return ptr+1
 
 
 func commit_retrigger(channel:int,cmds:Array,ptr:int)->int:
 	var optr:int=ptr
+	var opm:int
+	var val:int
 	for i in 4:
-		if key_dirty[i]==KON_PASS:
+		if key_dirty_sent[i]==KON_PASS:
 			continue
-		elif key_dirty[i]==KON_STD:
-			cmds[ptr]=CONSTS.CMD_KEYON|(channel<<8)|(0x10000<<i)|(velocity<<24)
-		elif key_dirty[i]==KON_LEGATO:
-			cmds[ptr]=CONSTS.CMD_KEYON_LEGATO|(channel<<8)|(0x10000<<i)|(velocity<<24)
-		elif key_dirty[i]==KON_STACCATO:
-			cmds[ptr]=CONSTS.CMD_KEYON_STACCATO|(channel<<8)|(0x10000<<i)|(velocity<<24)
-		elif key_dirty[i]==KON_OFF:
-			cmds[ptr]=CONSTS.CMD_KEYOFF|(channel<<8)|(0x10000<<i)
-		elif key_dirty[i]==KON_STOP:
-			cmds[ptr]=CONSTS.CMD_STOP|(channel<<8)|(0x10000<<i)
-		ptr+=1
+		val=key_dirty_sent[i]
+		opm=0
+		for j in range(i,4):
+			if key_dirty_sent[j]==val:
+				key_dirty_sent[j]=KON_PASS
+				opm|=0x10000<<j
+		if opm!=0:
+			if val==KON_STD:
+				cmds[ptr]=CONSTS.CMD_KEYON|(channel<<8)|opm|(velocity<<24)
+			elif val==KON_LEGATO:
+				cmds[ptr]=CONSTS.CMD_KEYON_LEGATO|(channel<<8)|opm|(velocity<<24)
+			elif val==KON_STACCATO:
+				cmds[ptr]=CONSTS.CMD_KEYON_STACCATO|(channel<<8)|opm|(velocity<<24)
+			elif val==KON_OFF:
+				cmds[ptr]=CONSTS.CMD_KEYOFF|(channel<<8)|opm
+			elif val==KON_STOP:
+				cmds[ptr]=CONSTS.CMD_STOP|(channel<<8)|opm
+			ptr+=1
 	if optr!=ptr:
 		ptr=commit_panning(channel,cmds,ptr)
 	key_dirty_any=false
@@ -802,100 +830,59 @@ func commit_retrigger(channel:int,cmds:Array,ptr:int)->int:
 	velocity_dirty=false
 	return ptr
 
-
-func commit_instrument(channel:int,cmds:Array,ptr:int)->int:
-	instrument_dirty=false
-	clip_dirty=false
-	fmi_dirty_any=false
-	fml_dirty_any=false
-	multiplier_dirty_any=false
-	divider_dirty_any=false
-	detune_dirty_any=false
-	detune_mode_dirty_any=false
-	attack_dirty_any=false
-	decay_dirty_any=false
-	suslev_dirty_any=false
-	susrate_dirty_any=false
-	release_dirty_any=false
-	ksr_dirty_any=false
-	repeat_dirty_any=false
-	ami_dirty_any=false
-	aml_dirty_any=false
-	output_dirty_any=false
-	wave_dirty_any=false
-	duty_cycle_dirty_any=false
-	cmds[ptr]=CONSTS.CMD_CLIP|(channel<<8)|(int(clip)<<24)
-	ptr+=1
-	for i in 4:
-		fmi_dirty[i]=false
-		fml_dirty[i]=false
-		multiplier_dirty[i]=false
-		divider_dirty[i]=false
-		detune_dirty[i]=false
-		detune_mode_dirty[i]=false
-		attack_dirty[i]=false
-		decay_dirty[i]=false
-		suslev_dirty[i]=false
-		susrate_dirty[i]=false
-		release_dirty[i]=false
-		ksr_dirty[i]=false
-		repeat_dirty[i]=false
-		ami_dirty[i]=false
-		aml_dirty[i]=false
-		pm_level_dirty_any[i]=false
-		output_dirty[i]=false
-		wave_dirty[i]=false
-		duty_cycle_dirty[i]=false
-		var opm:int=1<<i
-		var chn_opm:int=(channel<<8)|(opm<<16)
-		cmds[ptr]=CONSTS.CMD_AR|chn_opm|(attacks[i]<<24)
-		cmds[ptr+1]=CONSTS.CMD_DR|chn_opm|(decays[i]<<24)
-		cmds[ptr+2]=CONSTS.CMD_SL|chn_opm|(sustain_levels[i]<<24)
-		cmds[ptr+3]=CONSTS.CMD_SR|chn_opm|(sustains[i]<<24)
-		cmds[ptr+4]=CONSTS.CMD_RR|chn_opm|(releases[i]<<24)
-		cmds[ptr+5]=CONSTS.CMD_RM|chn_opm|(repeats[i]<<24)
-		cmds[ptr+6]=CONSTS.CMD_WAV|chn_opm|(waveforms[i]<<24)
-		cmds[ptr+7]=CONSTS.CMD_DUC|chn_opm
-		cmds[ptr+8]=duty_cycles[i]<<16
-		cmds[ptr+9]=CONSTS.CMD_MULT|chn_opm|(multipliers[i]<<24)
-		cmds[ptr+10]=CONSTS.CMD_DIV|chn_opm|(dividers[i]<<24)
-		cmds[ptr+11]=CONSTS.CMD_DETMODE|chn_opm|(detune_modes[i]<<24)
-		cmds[ptr+12]=CONSTS.CMD_DET|chn_opm
-		cmds[ptr+13]=detunes[i]
-		cmds[ptr+14]=CONSTS.CMD_FMS|chn_opm
-		cmds[ptr+15]=fm_intensity[i]
-		cmds[ptr+16]=CONSTS.CMD_FML|chn_opm|(fm_lfo[i]<<24)
-		cmds[ptr+17]=CONSTS.CMD_AMS|chn_opm|(am_intensity[i]<<24)
-		cmds[ptr+18]=CONSTS.CMD_AML|chn_opm|(am_lfo[i]<<24)
-		cmds[ptr+19]=CONSTS.CMD_KSR|chn_opm|(key_scalers[i]<<24)
-		ptr+=20
-		for j in 4:
-			pm_level_dirty[i][j]=false
-			cmds[ptr]=CONSTS.CMD_PM|(channel<<8)|(j<<16)|(i<<24)
-			cmds[ptr+1]=routings[i][j]
-			ptr+=2
-		cmds[ptr]=CONSTS.CMD_OUT|chn_opm|(routings[i][4]<<24)
-		ptr+=1
-	if new_note:
-		return ptr
-	return commit_opmask(channel,cmds,ptr)
-
-
-func commit_opmask(channel:int,cmds:Array,ptr:int)->int:
-	cmds[ptr]=CONSTS.CMD_ENABLE|(channel<<8)|0xF0000|(op_mask<<24)
-	return ptr+1
-
 #
 
 func set_instrument(inst:FmInstrument)->void:
 	if inst==null:
 		return
 	copy(inst)
-	instrument_dirty=true
+	clip_dirty=true
+	fmi_dirty_any=true
+	fml_dirty_any=true
+	multiplier_dirty_any=true
+	divider_dirty_any=true
+	detune_dirty_any=true
+	detune_mode_dirty_any=true
+	attack_dirty_any=true
+	decay_dirty_any=true
+	suslev_dirty_any=true
+	susrate_dirty_any=true
+	release_dirty_any=true
+	ksr_dirty_any=true
+	repeat_dirty_any=true
+	ami_dirty_any=true
+	aml_dirty_any=true
+	output_dirty_any=true
+	wave_dirty_any=true
+	duty_cycle_dirty_any=true
+	enable_mask=0xF
+	enable_bits=op_mask
+	for i in 4:
+		fmi_dirty[i]=true
+		fml_dirty[i]=true
+		multiplier_dirty[i]=true
+		divider_dirty[i]=true
+		detune_dirty[i]=true
+		detune_mode_dirty[i]=true
+		attack_dirty[i]=true
+		decay_dirty[i]=true
+		suslev_dirty[i]=true
+		susrate_dirty[i]=true
+		release_dirty[i]=true
+		ksr_dirty[i]=true
+		repeat_dirty[i]=true
+		ami_dirty[i]=true
+		aml_dirty[i]=true
+		pm_level_dirty_any[i]=true
+		output_dirty[i]=true
+		wave_dirty[i]=true
+		duty_cycle_dirty[i]=true
+		for j in 4:
+			pm_level_dirty[i][j]=true
 
 
 func set_clip(value:int)->bool:
-	new_clip=bool(value)
+	clip_sent=bool(value)
 	return true
 
 
@@ -964,7 +951,8 @@ func slide_frequency(d,op:int)->void:
 			freqs_dirty[i]=true
 			next_freqs[i]=clamp(next_freqs[i]+d,CONSTS.MIN_FREQ,CONSTS.MAX_FREQ)
 			fx_vals[CONSTS.FX_FRQ_PORTA][1+i]=clamp(
-					fx_vals[CONSTS.FX_FRQ_PORTA][1+i]+d,CONSTS.MIN_FREQ,CONSTS.MAX_FREQ)
+				fx_vals[CONSTS.FX_FRQ_PORTA][1+i]+d,CONSTS.MIN_FREQ,CONSTS.MAX_FREQ
+			)
 		op>>=1
 	freqs_dirty_any=true
 
@@ -975,7 +963,7 @@ func slide_frequency_to(d:Array,op:int)->void:
 	for i in 4:
 		if op&1:
 			freqs_dirty[i]=true
-			if freqs[i]>d[i+1]:
+			if freqs_sent[i]>d[i+1]:
 				next_freqs[i]=clamp(base_freqs[i]-d[0],d[i+1],CONSTS.MAX_FREQ)
 			else:
 				next_freqs[i]=clamp(base_freqs[i]+d[0],CONSTS.MIN_FREQ,d[i+1])
@@ -1021,6 +1009,7 @@ func set_velocity(v)->void:
 	if v!=null:
 		velocity_dirty=true
 		velocity=v
+		velocity_sent=v
 
 #
 

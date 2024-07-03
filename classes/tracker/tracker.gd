@@ -153,7 +153,9 @@ func gen_commands(song:Song,mix_rate:float,buffer_size:int,cmds:Array,order_star
 		buffer_pos+=wait
 		#
 		curr_tick+=1
-		if song_delay<=0:
+		if song_delay>0:
+			song_delay-=1
+		else:
 			if goto_order!=-1:
 				order_start.append(buffer_pos)
 				curr_tick=0
@@ -184,13 +186,8 @@ func gen_commands(song:Song,mix_rate:float,buffer_size:int,cmds:Array,order_star
 					if needs_stop(song):
 						return {"play":false,"loop":-1}
 				emit_signal("position_changed",curr_order,curr_row)
-		else:
-			song_delay-=1
 	if cmds[optr]==CONSTS.CMD_WAIT:
 		ptr=optr
-	if ptr>2:
-		cmds[ptr]=CONSTS.CMD_DEBUG
-		ptr+=1
 	cmds[ptr]=CONSTS.CMD_END
 	curr_sample-=buffer_size
 	return {"play":true,"loop":-1.0}

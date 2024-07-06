@@ -3,7 +3,6 @@ extends Control
 """
 FIXME
 TODO:
-	Substitute param_dirty_any by [true in param_dirty]
 	Implement voice messages by signal, instead of by array
 	Expand panpot to full 8 bits, and add channel inversion columns
 	Copy/Paste buttons for instrument/wave editors

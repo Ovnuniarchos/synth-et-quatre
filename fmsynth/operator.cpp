@@ -122,12 +122,12 @@ void Operator::set_frequency(int cents,float _frequency){
 }
 
 void Operator::set_freq_mul(int multiplier){
-	freq_mul=clamp(multiplier,0,31)+1;
+	freq_mul=clamp(multiplier,1,32);
 	set_delta();
 }
 
 void Operator::set_freq_div(int divider){
-	freq_div=clamp(divider,0,31)+1;
+	freq_div=clamp(divider,1,32);
 	set_delta();
 }
 

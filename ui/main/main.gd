@@ -2,7 +2,6 @@ extends Control
 
 """
 FIXME
-	Correct multiplier/divider range brouhaha
 TODO:
 	Substitute param_dirty_any by [true in param_dirty]
 	Implement voice messages by signal, instead of by array

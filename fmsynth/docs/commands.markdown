@@ -57,11 +57,11 @@ Disabling an operator stops its waveform and envelope generators, and sets its o
 
 ## `mm:oo:vv:21` (SET OP MULTIPLIER)
 
-Set frequency multiplier in voice `vv`, with operator mask `oo`, to `mm+1`. `mm` is clamped to `[0, 31]`, thus clamping the multiplier to `[1, 32]`.
+Set frequency multiplier in voice `vv`, with operator mask `oo`, to `mm`. `mm` is clamped to `[1, 32]`.
 
 ## `dd:oo:vv:22` (SET OP DIVIDER)
 
-Set frequency divider in voice `vv`, with operator mask `oo`, to `dd+1`. `dd` is clamped to `[0, 31]`, thus clamping the divider to `[1, 32]`.
+Set frequency divider in voice `vv`, with operator mask `oo`, to `dd`. `dd` is clamped to `[1, 32]`.
 
 ## `--:oo:vv:23 mils` (SET OP DETUNE)
 

@@ -120,7 +120,7 @@ func deserialize(inf:ChunkedFile,header:Dictionary)->FileResult:
 		ins.sustain_levels[i]=inf.get_8()
 		ins.releases[i]=inf.get_8()
 		ins.repeats[i]=inf.get_8()
-		ins.multipliers[i]=inf.get_8()
+		ins.multipliers[i]=inf.get_8()+(1 if version>3 else 0)
 		ins.dividers[i]=inf.get_8()
 		ins.detunes[i]=inf.get_signed_16()
 		if version>2:

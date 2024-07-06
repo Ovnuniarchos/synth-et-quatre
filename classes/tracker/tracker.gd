@@ -21,7 +21,6 @@ var goto_order:int
 var goto_next:int
 var ticks_second:int
 var ticks_row:int
-var messages:Array
 var voices:Array
 var synth:Synth
 
@@ -34,10 +33,14 @@ func _init(syn:Synth)->void:
 	curr_order=0
 	song_delay=0
 	voices.resize(SONGL.MAX_CHANNELS)
-	messages.resize(CONSTS.SIG_MAX)
 	synth=syn
 	for i in SONGL.MAX_CHANNELS:
 		voices[i]=FmVoice.new()
+		voices[i].connect("delay_song",self,"_on_voice_delay_song")
+		voices[i].connect("goto_order",self,"_on_voice_goto_order")
+		voices[i].connect("goto_next",self,"_on_voice_goto_next")
+		voices[i].connect("ticks_sec",self,"_on_voice_ticks_sec")
+		voices[i].connect("ticks_row",self,"_on_voice_ticks_row")
 	reset()
 
 func reset()->void:
@@ -50,7 +53,6 @@ func reset()->void:
 	song_delay=0
 	goto_order=-1
 	goto_next=-1
-	messages.fill(null)
 	ticks_second=GLOBALS.song.ticks_second
 	ticks_row=GLOBALS.song.ticks_row
 
@@ -63,7 +65,6 @@ func play(from:int=-1)->void:
 		song_delay=0
 		goto_order=-1
 		goto_next=-1
-		messages.fill(null)
 	if from==0:
 		ticks_second=GLOBALS.song.ticks_second
 		ticks_row=GLOBALS.song.ticks_row
@@ -120,29 +121,11 @@ func gen_commands(song:Song,mix_rate:float,buffer_size:int,cmds:Array,order_star
 	buffer_pos+=wait
 	#
 	while buffer_left>=1.0:
-		if curr_tick==0:
-			messages.fill(null)
 		for chn in song.num_channels:
-			voices[chn].process_tick(song,chn,curr_order,curr_row,curr_tick,messages)
+			voices[chn].process_tick(song,chn,curr_order,curr_row,curr_tick)
 			ptr=voices[chn].commit(chn,cmds,ptr)
-		if messages[CONSTS.SIG_DELAY_SONG]!=null:
-			song_delay=messages[CONSTS.SIG_DELAY_SONG]
-			messages[CONSTS.SIG_DELAY_SONG]=null
-		if messages[CONSTS.SIG_GOTO_NEXT]!=null:
-			goto_next=messages[CONSTS.SIG_GOTO_NEXT]
-			messages[CONSTS.SIG_GOTO_NEXT]=null
-		if messages[CONSTS.SIG_GOTO_ORDER]!=null:
-			goto_order=messages[CONSTS.SIG_GOTO_ORDER]
-			goto_next=-1
-			messages[CONSTS.SIG_GOTO_ORDER]=null
-		if messages[CONSTS.SIG_TICKS_SEC]!=null:
-			ticks_second=messages[CONSTS.SIG_TICKS_SEC]
-			samples_tick=mix_rate/ticks_second
-			messages[CONSTS.SIG_TICKS_SEC]=null
-		if messages[CONSTS.SIG_TICKS_ROW]!=null:
-			ticks_row=messages[CONSTS.SIG_TICKS_ROW]
-			messages[CONSTS.SIG_TICKS_ROW]=null
-		#
+		# Insert tick wait
+		samples_tick=mix_rate/ticks_second
 		optr=ptr
 		curr_sample+=samples_tick
 		wait=floor(min(min(max_wait,buffer_left),samples_tick))
@@ -159,11 +142,12 @@ func gen_commands(song:Song,mix_rate:float,buffer_size:int,cmds:Array,order_star
 			if goto_order!=-1:
 				order_start.append(buffer_pos)
 				curr_tick=0
-				curr_row=0
+				curr_row=0 if goto_next==-1 or goto_next>=song.pattern_length else goto_next
 				if recording and goto_order<=curr_order:
 					return {"play":false,"loop":goto_order}
 				next_order(goto_order)
 				goto_order=-1
+				goto_next=-1
 				if needs_stop(song):
 					return {"play":false,"loop":-1}
 				emit_signal("position_changed",curr_order,curr_row)
@@ -201,3 +185,18 @@ func needs_stop(song:Song)->bool:
 		curr_order=0
 		return recording
 	return false
+
+func _on_voice_delay_song(delay:int)->void:
+	song_delay=delay
+
+func _on_voice_goto_order(order:int)->void:
+	goto_order=order
+
+func _on_voice_goto_next(row:int)->void:
+	goto_next=row
+
+func _on_voice_ticks_sec(ticks:int)->void:
+	ticks_second=ticks
+
+func _on_voice_ticks_row(ticks:int)->void:
+	ticks_row=ticks

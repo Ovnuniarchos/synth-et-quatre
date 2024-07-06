@@ -232,7 +232,7 @@ Delay all channels by `xx` ticks.
 
 Jump to order `xx`. If order `xx` does not exist, jump to order 0.
 
-This command cancels `43xx`.
+This command can be combined with `43xx`, to jump to the xx row of an arbitrary order.
 
 ## 43xx
 

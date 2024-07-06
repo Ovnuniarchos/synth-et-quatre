@@ -1,20 +1,10 @@
 extends Reference
 
-enum{
-	CMD_WAIT=0,
-	CMD_DEBUG=254,
-	CMD_END=255
-}
+const FMVC=preload("res://classes/tracker/fm_voice_constants.gd")
+
+const CMD_WAIT=FMVC.CMD_WAIT
+const CMD_DEBUG=FMVC.CMD_DEBUG
+const CMD_END=FMVC.CMD_END
 const ATTRS=Pattern.ATTRS
 const LG_MODE=Pattern.LEGATO_MODE
-const DEFAULT_VOLUME:int=255
-const DEFAULT_PAN:int=31
-enum{
-	SIG_DELAY_SONG,
-	SIG_GOTO_ORDER,
-	SIG_GOTO_NEXT,
-	SIG_TICKS_SEC,
-	SIG_TICKS_ROW,
-	SIG_MAX
-}
 const MAX_WAIT_TIME:float=float(0x1000000)

@@ -179,7 +179,7 @@ func reset()->void:
 	apply_debug=false
 
 
-func process_tick(song:Song,channel:int,curr_order:int,curr_row:int,curr_tick:int,messages:Array)->void:
+func process_tick(song:Song,channel:int,curr_order:int,curr_row:int,curr_tick:int)->void:
 	var pat:Pattern=song.get_order_pattern(curr_order,channel)
 	var note:Array=pat.notes[curr_row]
 	var fx_cmd:int
@@ -201,12 +201,11 @@ func process_tick(song:Song,channel:int,curr_order:int,curr_row:int,curr_tick:in
 			j+=3
 	if fx_vals[CONSTS.FX_DELAY_SONG]!=0:
 		if curr_tick==0:
-			messages[TRCK.SIG_DELAY_SONG]=fx_vals[CONSTS.FX_DELAY_SONG]
 			emit_signal("delay_song",fx_vals[CONSTS.FX_DELAY_SONG])
 			return
 	if fx_vals[CONSTS.FX_DELAY]==0:
 		if row_tick==0:
-			process_tick_0(note,song,song.num_fxs[channel],messages)
+			process_tick_0(note,song,song.num_fxs[channel])
 		else:
 			process_tick_n(song,channel)
 		row_tick+=1
@@ -215,7 +214,7 @@ func process_tick(song:Song,channel:int,curr_order:int,curr_row:int,curr_tick:in
 		fx_vals[CONSTS.FX_DELAY]-=1
 
 
-func process_tick_0(note:Array,song:Song,num_fxs:int,messages:Array)->void:
+func process_tick_0(note:Array,song:Song,num_fxs:int)->void:
 	apply_debug=false
 	var legato:int=KON_STD if note[ATTRS.LG_MODE]==null else LEGATO2KON[note[ATTRS.LG_MODE]]
 	if note[ATTRS.INSTR]!=null:
@@ -333,16 +332,12 @@ func process_tick_0(note:Array,song:Song,num_fxs:int,messages:Array)->void:
 			elif fx_cmd==CONSTS.FX_CLIP_SET:
 				clip_dirty=set_clip(fx_val)
 			elif fx_cmd==CONSTS.FX_GOTO_ORDER:
-				messages[TRCK.SIG_GOTO_ORDER]=fx_val
 				emit_signal("goto_order",fx_val)
 			elif fx_cmd==CONSTS.FX_GOTO_NEXT:
-				messages[TRCK.SIG_GOTO_NEXT]=fx_val
 				emit_signal("goto_next",fx_val)
 			elif fx_cmd==CONSTS.FX_TICKSROW_SET:
-				messages[TRCK.SIG_TICKS_ROW]=fx_val+1
 				emit_signal("ticks_row",fx_val+1)
 			elif fx_cmd==CONSTS.FX_TICKSSEC_SET:
-				messages[TRCK.SIG_TICKS_SEC]=fx_val+1
 				emit_signal("ticks_sec",fx_val+1)
 			elif fx_cmd==CONSTS.FX_DEBUG:
 				apply_debug=true

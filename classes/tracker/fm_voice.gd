@@ -38,6 +38,7 @@ var arpeggio:Arpeggio
 var arpeggio_speed:int
 var velocity:int
 var panning:int
+var channel_invert:int
 
 var clip_dirty:bool
 var clip_sent=null
@@ -62,7 +63,8 @@ var detune_mode_values:Array=[0,0,0,0]
 var velocity_dirty:bool=true
 var velocity_sent=null
 var panning_dirty:bool=true
-var panning_value:int=0
+var panning_sent:int=0
+var channel_invert_sent:int=0
 var attack_dirty:Array=[true,true,true,true]
 var attack_values:Array=[0,0,0,0]
 var decay_dirty:Array=[true,true,true,true]
@@ -235,7 +237,7 @@ func process_tick_0(note:Array,song:Song,num_fxs:int)->void:
 			for i in 4:
 				key_dirty[i]=KON_STOP
 	set_velocity(note[ATTRS.VOL])
-	set_panning(note[ATTRS.PAN])
+	set_panning(note[ATTRS.PAN],note[ATTRS.INVL],note[ATTRS.INVR])
 	var j:int=0
 	var fx_cmd:int=0
 	var fx_opm
@@ -389,10 +391,11 @@ func apply_macros()->void:
 	enable_bits=val&ParamMacro.MASK_VALUE_MASK
 	enable_dirty=enable_dirty or ((old!=enable_bits or old2!=enable_mask) and enable_mask!=0)
 	# Global Panpot
-	old=panning_value
-	panning_value=pan_macro.get_value(macro_tick,release_tick,panning)|\
-		chanl_invert_macro.get_value(macro_tick,release_tick,panning>>6)<<6
-	panning_dirty=panning_dirty or old!=panning_value
+	old=panning_sent
+	old2=channel_invert_sent
+	panning_sent=pan_macro.get_value(macro_tick,release_tick,panning)
+	channel_invert_sent=chanl_invert_macro.get_value(macro_tick,release_tick,channel_invert)
+	panning_dirty=panning_dirty or old!=panning_sent or old2!=channel_invert_sent
 	# Global Clip
 	old=clip_sent
 	val=clip_macro.get_value(macro_tick,release_tick,int(clip))
@@ -679,7 +682,7 @@ func commit_opmasked_long(channel:int,cmds:Array,ptr:int,cmd:int,dirties:Array,
 
 
 func commit_panning(channel:int,cmds:Array,ptr:int)->int:
-	cmds[ptr]=CONSTS.CMD_PAN|(channel<<8)|(panning_value<<16)
+	cmds[ptr]=CONSTS.CMD_PAN|(channel<<8)|(panning_sent<<16)|(channel_invert_sent<<24)
 	panning_dirty=false
 	return ptr+1
 
@@ -888,18 +891,23 @@ func slide_detune(d:int,op:int)->void:
 
 #
 
-func set_velocity(v)->void:
-	if v!=null:
+func set_velocity(vel)->void:
+	if vel!=null:
 		velocity_dirty=true
-		velocity=v
-		velocity_sent=v
+		velocity=vel
 
 #
 
-func set_panning(p)->void:
-	if p!=null:
+func set_panning(pan,invert_l,invert_r)->void:
+	if pan!=null:
+		panning=pan
 		panning_dirty=true
-		panning=p
+	if invert_l!=null:
+		channel_invert=(channel_invert&~1)|int(bool(invert_l))
+		panning_dirty=true
+	if invert_r!=null:
+		channel_invert=(channel_invert&~2)|(int(bool(invert_r))<<1)
+		panning_dirty=true
 
 #
 

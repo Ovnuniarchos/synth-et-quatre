@@ -89,5 +89,5 @@ func _on_Channel_cycled(status:int,chan:int)->void:
 
 
 func _on_Info_focus_exited():
-	if editor!=null && editor.is_ready:
+	if editor!=null and editor.is_ready:
 		editor.grab_focus()

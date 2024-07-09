@@ -220,14 +220,12 @@ void Voice::set_output(int op_mask,int vol){
 
 
 void Voice::set_panning(int panning,bool invert_left,bool invert_right){
-	panning=clamp(panning,0,62);
-	vol_left=62-panning;
-	vol_left+=(vol_left>0)?2:0;
+	panning=clamp(panning,1,255);
+	vol_left=(256-panning)+(panning<255?1:-1);
 	if(invert_left){
 		vol_left=-vol_left;
 	}
-	vol_right=panning;
-	vol_right+=(vol_right>0)?2:0;
+	vol_right=(panning>1)?panning+1:0;
 	if(invert_right){
 		vol_right=-vol_right;
 	}

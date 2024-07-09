@@ -229,9 +229,10 @@ theme = SubResource( 3 )
 title = "FMED_MG_PAN"
 title_tooltip = "FMED_MG_PAN_TTIP"
 parameter = "G_PAN"
-min_value_rel = -62
-max_value_rel = 62
-max_value_abs = 62
+min_value_rel = -256
+max_value_rel = -256
+min_value_abs = 1
+max_value_abs = 255
 huge_step = 8
 
 [node name="ChInvert" parent="Tabs/Macros/Macro/VBC" instance=ExtResource( 8 )]

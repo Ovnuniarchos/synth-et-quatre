@@ -36,11 +36,11 @@ Release (key off) voice `vv`, with operator mask `oo`. This puts the envelope ge
 
 Silence voice `vv`, with operator mask `oo`. This ends envelopes, and disables operators immediately.
 
-## `--:pp:vv:08` (SET PANPOT)
+## `ii:pp:vv:08` (SET PANPOT)
 
-Set pan position for voice `vv` to bits 0-5 of `pp`. 0 is left, 62-63 is right, and 31 is center.
+Set pan position for voice `vv` to `pp`. 0-1 is left, 255 is right, and 128 is center.
 
-Bit 6 inverts the left channel, and bit 7 the right one. This allows for pseudo-surround effects.
+Bit 0 of `ii` inverts the left channel, and bit 1 the right one. This allows for pseudo-surround effects.
 
 ## `cc:--:vv:09` (SET CLIP)
 

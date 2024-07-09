@@ -86,7 +86,7 @@ void SynthTracker::_init(){
 #define TRACE_KEYON_STA "KOS[%d %02x %d] "
 #define TRACE_KEYOFF "KOF[%d %02x] "
 #define TRACE_STOP "STO[%d %02x] "
-#define TRACE_PAN "PAN[%d %02x] "
+#define TRACE_PAN "PAN[%d %02x %02x] "
 #define TRACE_ENABLE "ENA[%d %02x %02x] "
 #define TRACE_MUL "MUL[%d %02x %d] "
 #define TRACE_DIV "DIV[%d %02x %d] "
@@ -249,8 +249,8 @@ Array SynthTracker::generate(int size,float volume,Array cmds){
 					synth.set_output(voice,op_mask,data_8);
 					break;
 				case CMD_PAN:
-					TRACE(TRACE_PAN,voice,op_mask);
-					synth.set_panning(voice,op_mask&0x3f,op_mask&0x40,op_mask&0x80);
+					TRACE(TRACE_PAN,voice,op_mask,data_8);
+					synth.set_panning(voice,op_mask,data_8&1,data_8&2);
 					break;
 				case CMD_PHI:
 					data=VAR2INT(cmds[cmd_ptr++]);
@@ -414,7 +414,7 @@ void SynthTracker::debug(Array cmds,int end_ix){
 				printf(TRACE_OUTPUT,voice,op_mask,data_8);
 				break;
 			case CMD_PAN:
-				printf(TRACE_PAN,voice,op_mask);
+				printf(TRACE_PAN,voice,op_mask,data_8);
 				break;
 			case CMD_PHI:
 				data=VAR2INT(cmds[cmd_ptr++]);

@@ -13,11 +13,14 @@ const STACCATO:int=21
 const DOT:int=20
 const SHARP:int=17
 const MINUS:int=18
+const PLUS:int=37
 const OP_MASK:int=21
 const SEMI2TILE:Array=[12,12,13,13,14,15,15,16,16,10,10,11]
 const SHARP2TILE:Array=[DOT,SHARP,DOT,SHARP,DOT,DOT,SHARP,DOT,SHARP,DOT,SHARP,DOT]
-const COL_WIDTH:Array=[1,4,2,2,2,2,1,2,2,1,2,2,1,2,2,1,2]
-const COLS:Array=[0,1,6,9,12,15,17,18,21,23,24,27,29,30,33,35,36]
+const COL_WIDTH:Array=[1,4,2,2,1,1,2,2,1,2,2,1,2,2,1,2,2,1,2]
+const COL_SPACE:Array=[0,1,1,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1]
+const COLS:Array=[]
+var FX_MINCOL:int=0
 
 const KEYOFF:int=-1
 const KEYCUT:int=-2
@@ -53,6 +56,14 @@ var kbd_drag:bool=false
 var scroll_lock:bool=false
 var last_entered:Array=[]
 
+
+func _init()->void:
+	var col:int=0
+	for i in COL_WIDTH.size():
+		if i==ATTRS.FX0:
+			FX_MINCOL=col
+		COLS.append(col)
+		col+=COL_WIDTH[i]+COL_SPACE[i]
 
 
 func _ready()->void:
@@ -449,26 +460,18 @@ func process_keyboard(ev:InputEventKey)->bool:
 			if ev.pressed:
 				put_opmask(0,-1)
 			return true
-	elif curr_column==ATTRS.PAN:
+	elif curr_column in [ATTRS.INVL,ATTRS.INVR]:
 		if ev.scancode==GKBD.CLEAR:
 			if !ev.pressed:
-				put_cmd_or_val(null)
-			return true
-		elif ev.scancode in GKBD.HEX_INPUT:
-			if !ev.pressed:
-				put_cmd_or_val(GKBD.HEX_INPUT.find(ev.scancode))
-			return true
-		elif ev.scancode in GKBD.HEX_INPUT_KP:
-			if !ev.pressed:
-				put_cmd_or_val(GKBD.HEX_INPUT_KP.find(ev.scancode))
+				put_inverter(null)
 			return true
 		elif ev.scancode in GKBD.VALUE_UP:
 			if ev.pressed:
-				adjust_pan(4 if ev.shift else 1,ev.control)
+				put_inverter(0)
 			return true
 		elif ev.scancode in GKBD.VALUE_DOWN:
 			if ev.pressed:
-				adjust_pan(-4 if ev.shift else -1,ev.control)
+				put_inverter(1)
 			return true
 	elif curr_column>ATTRS.NOTE:
 		if ev.scancode==GKBD.CLEAR:
@@ -528,23 +531,9 @@ func put_opmask(val:int,add:int=0)->void:
 	last_entered[curr_column]=val
 	set_opmask(curr_row,channel_col0[curr_channel]+COLS[curr_column],val)
 	if add==0 and CONFIG.get_value(CONFIG.EDIT_HORIZ_FX):
-			set_column(curr_column+1)
-			return
+		set_column(curr_column+1)
+		return
 	advance(step if add==0 else 0)
-
-
-func adjust_pan(delta:int,invert:bool)->void:
-	var val=song.get_note(curr_order,curr_channel,curr_row,curr_column)
-	if invert:
-		if val==null:
-			val=31
-		val^=(128 if delta<0 else 0)|(64 if delta>0 else 0)
-	else:
-		if val==null:
-			val=31-delta
-		val=clamp(delta+(val&63),0,63)|(val&192)
-	song.set_note(curr_order,curr_channel,curr_row,curr_column,val)
-	set_2_digits(curr_row,channel_col0[curr_channel]+COLS[curr_column],val)
 
 
 func put_cmd_or_val(val,add:int=0)->void:
@@ -647,6 +636,14 @@ func calculate_velocity(base:int,vel:int,vol:int)->int:
 	return (base*vel*vol)/16129
 
 
+func put_inverter(val)->void:
+	song.set_note(curr_order,curr_channel,curr_row,curr_column,val)
+	set_inverter(curr_row,COLS[curr_column],val)
+	if CONFIG.get_value(CONFIG.EDIT_HORIZ_FX):
+		set_column(curr_column+1)
+	else:
+		advance(step)
+
 #
 
 
@@ -655,7 +652,7 @@ func _on_channels_changed()->void:
 	var col0:int=0
 	for i in range(channel_col0.size()):
 		channel_col0[i]=col0
-		col0+=16+song.num_fxs[i]*6
+		col0+=FX_MINCOL+song.num_fxs[i]*6
 	channel_col0.append(col0)
 	update_tilemap()
 	set_channel(curr_channel)
@@ -700,6 +697,8 @@ func update_tilemap(channel:int=-1)->void:
 			set_legato_cell(row,col,note[ATTRS.LG_MODE])
 			set_note_cells(row,col,note[ATTRS.NOTE])
 			set_2_digits(row,col+COLS[ATTRS.VOL],note[ATTRS.VOL])
+			set_inverter(row,col+COLS[ATTRS.INVL],note[ATTRS.INVL])
+			set_inverter(row,col+COLS[ATTRS.INVR],note[ATTRS.INVR])
 			set_2_digits(row,col+COLS[ATTRS.PAN],note[ATTRS.PAN])
 			set_2_digits(row,col+COLS[ATTRS.INSTR],note[ATTRS.INSTR])
 			for fx in range(0,song.num_fxs[chan]*3,3):
@@ -725,12 +724,23 @@ func update_row(row:int,channel:int=-1)->void:
 		set_legato_cell(row,col,note[ATTRS.LG_MODE])
 		set_note_cells(row,col,note[ATTRS.NOTE])
 		set_2_digits(row,col+COLS[ATTRS.VOL],note[ATTRS.VOL])
+		set_inverter(row,col+COLS[ATTRS.INVL],note[ATTRS.INVL])
+		set_inverter(row,col+COLS[ATTRS.INVR],note[ATTRS.INVR])
 		set_2_digits(row,col+COLS[ATTRS.PAN],note[ATTRS.PAN])
 		set_2_digits(row,col+COLS[ATTRS.INSTR],note[ATTRS.INSTR])
 		for fx in range(0,song.num_fxs[chan]*3,3):
 			set_2_digits(row,col+COLS[ATTRS.FX0+fx],note[ATTRS.FX0+fx])
 			set_opmask(row,col+COLS[ATTRS.FM0+fx],note[ATTRS.FM0+fx])
 			set_2_digits(row,col+COLS[ATTRS.FV0+fx],note[ATTRS.FV0+fx])
+
+
+func set_inverter(row:int,col:int,value)->void:
+	if value==null:
+		editor.set_cell(col,row,DOT)
+	elif value==0:
+		editor.set_cell(col,row,PLUS)
+	else:
+		editor.set_cell(col,row,MINUS)
 
 
 func set_opmask(row:int,col:int,value)->void:

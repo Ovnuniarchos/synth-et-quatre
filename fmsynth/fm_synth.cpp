@@ -21,8 +21,8 @@ void FmSynth::generate(FixedPoint &left,FixedPoint &right){
 		if(mute_voice[i]){
 			continue;
 		}
-		left+=(s*voices[i].get_volume_left())>>6;
-		right+=(s*voices[i].get_volume_right())>>6;
+		left+=(s*voices[i].get_volume_left())>>8;
+		right+=(s*voices[i].get_volume_right())>>8;
 	}
 };
 

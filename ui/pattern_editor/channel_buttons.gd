@@ -18,7 +18,7 @@ func _ready()->void:
 	var channel:CycleButton=$Channel
 	var song:Song=GLOBALS.song
 	var nfx:int=song.num_fxs[channel_ix]
-	rect_min_size.x=(14+nfx*6)*cell_size.x
+	rect_min_size.x=(15+nfx*6)*cell_size.x
 	del.disabled=nfx==SongLimits.MIN_FX_LENGTH
 	del.connect("pressed",connection_object,del_method,[channel_ix])
 	add.disabled=nfx==SongLimits.MAX_FX_LENGTH

@@ -102,6 +102,15 @@ msgstr "Step"
 msgid "INFO_VELOCITY"
 msgstr "Velocity"
 
+msgid "INFO_PAN"
+msgstr "Panning"
+
+msgid "INFO_INVERT_L"
+msgstr "Invert left"
+
+msgid "INFO_INVERT_R"
+msgstr "Invert right"
+
 msgid "INFO_TICKS_SEC"
 msgstr "Ticks/second"
 

@@ -112,8 +112,7 @@ colors: {
 default-image: string
 glyphs: {
 	arrow-up + arrow-down + arrow-left + arrow-right +
-	close +
-	play + play-track + stop: GLYPH_TYPE
+	close +	play + play-track + stop + record: GLYPH_TYPE
 }
 spacing: SPACING_TYPE
 font: FONT_TYPE

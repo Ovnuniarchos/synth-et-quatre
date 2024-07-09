@@ -3,6 +3,8 @@ extends PanelContainer
 
 signal step_changed(step)
 signal velocity_changed(velocity)
+signal pan_changed(pan)
+signal invert_changed(invl,invr)
 
 
 func _ready()->void:
@@ -72,8 +74,16 @@ func _on_Author_text_changed(t:String)->void:
 
 
 func _on_Editor_step_changed(step:int)->void:
-	var st:SpinBar=$SC/VBC/GC/Step
-	st.value=step
+	$SC/VBC/GC/Step.value=step
+
+
+func _on_Editor_pan_changed(pan:int)->void:
+	$SC/VBC/GC/Pan.value=pan
+
+
+func _on_Editor_invert_changed(invl:bool,invr:bool)->void:
+	$SC/VBC/GC/InvertLeft.pressed=invl
+	$SC/VBC/GC/InvertRight.pressed=invr
 
 
 func _on_MinHlite_value_changed(value:int)->void:
@@ -90,3 +100,15 @@ func _on_slider_focus_exited()->void:
 
 func _on_text_entered(_new_text:String)->void:
 	emit_signal("focus_exited")
+
+
+func _on_InvertLeft_toggled(_p:bool)->void:
+	emit_signal("invert_changed",$SC/VBC/GC/InvertLeft.pressed,$SC/VBC/GC/InvertRight.pressed)
+
+
+func _on_InvertRight_toggled(_p:bool)->void:
+	emit_signal("invert_changed",$SC/VBC/GC/InvertLeft.pressed,$SC/VBC/GC/InvertRight.pressed)
+
+
+func _on_Pan_value_changed(value:int)->void:
+	emit_signal("pan_changed",value)

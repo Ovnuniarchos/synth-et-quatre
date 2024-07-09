@@ -102,6 +102,15 @@ msgstr "Salto"
 msgid "INFO_VELOCITY"
 msgstr "Intensidad"
 
+msgid "INFO_PAN"
+msgstr "Pan"
+
+msgid "INFO_INVERT_L"
+msgstr "Invertir izq."
+
+msgid "INFO_INVERT_R"
+msgstr "Invertir dcha."
+
 msgid "INFO_TICKS_SEC"
 msgstr "Ticks/segundo"
 

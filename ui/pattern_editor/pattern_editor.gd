@@ -3,6 +3,8 @@ extends PanelContainer
 signal horizontal_scroll(offset)
 signal step_changed(step)
 signal velocity_changed(velocity)
+signal pan_changed(pan)
+signal invert_changed(invl,invr)
 signal order_changed(order)
 signal scroll_locked(lock)
 
@@ -48,6 +50,9 @@ var channel_col0:Array
 var focused:bool=false
 var digit_ix:int=0
 var dflt_velocity:int=128
+var dflt_pan:int=128
+var dflt_invl:bool=false
+var dflt_invr:bool=false
 var selection:Selection=Selection.new()
 var copy_buffer:Selection=Selection.new()
 var dragging:bool=false
@@ -115,6 +120,8 @@ func _on_song_changed()->void:
 	_on_highlights_changed()
 	emit_signal("step_changed",step)
 	emit_signal("velocity_changed",dflt_velocity)
+	emit_signal("pan_changed",dflt_pan)
+	emit_signal("invert_changed",dflt_invl,dflt_invr)
 
 
 func _gui_input(event:InputEvent)->void:
@@ -616,6 +623,12 @@ func put_note(semitone,octave:int,instrument,add:int=0,adv:int=step)->void:
 		set_2_digits(curr_row,COLS[ATTRS.VOL]+channel_col0[curr_channel],null)
 	else:
 		set_2_digits(curr_row,COLS[ATTRS.VOL]+channel_col0[curr_channel],velocity)
+	song.set_note(curr_order,curr_channel,curr_row,ATTRS.INVL,int(dflt_invl))
+	song.set_note(curr_order,curr_channel,curr_row,ATTRS.INVR,int(dflt_invr))
+	song.set_note(curr_order,curr_channel,curr_row,ATTRS.PAN,dflt_pan)
+	set_inverter(curr_row,COLS[ATTRS.INVL]+channel_col0[curr_channel],int(dflt_invl))
+	set_inverter(curr_row,COLS[ATTRS.INVR]+channel_col0[curr_channel],int(dflt_invr))
+	set_2_digits(curr_row,COLS[ATTRS.PAN]+channel_col0[curr_channel],dflt_pan)
 	advance(adv)
 
 
@@ -897,3 +910,14 @@ func _on_Info_velocity_changed(vel:int)->void:
 func _on_highlights_changed()->void:
 	background.every_min=GLOBALS.song.minor_highlight
 	background.every_maj=GLOBALS.song.major_highlight
+
+
+func _on_Info_pan_changed(pan:int)->void:
+	dflt_pan=pan
+	emit_signal("pan_changed",pan)
+
+
+func _on_Info_invert_changed(invl:bool,invr:bool)->void:
+	dflt_invl=invl
+	dflt_invr=invr
+	emit_signal("invert_changed",invl,invr)

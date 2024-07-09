@@ -61,37 +61,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LabelOctave" type="Label" parent="SC/VBC/GC" groups=["Label"]]
-margin_right = 140.0
-margin_bottom = 14.0
-text = "INFO_OCTAVE"
-
-[node name="Octave" type="ProgressBar" parent="SC/VBC/GC"]
-margin_left = 148.0
-margin_right = 1010.0
-margin_bottom = 14.0
-rect_min_size = Vector2( 25, 14 )
-size_flags_horizontal = 7
-size_flags_vertical = 5
-min_value = -1.0
-max_value = 9.0
-step = 1.0
-percent_visible = false
-script = ExtResource( 2 )
-big_step = 1.0
-huge_step = 1.0
-
 [node name="LabelStep" type="Label" parent="SC/VBC/GC" groups=["Label"]]
-margin_top = 18.0
 margin_right = 140.0
-margin_bottom = 32.0
+margin_bottom = 14.0
 text = "INFO_STEP"
 
 [node name="Step" type="ProgressBar" parent="SC/VBC/GC"]
 margin_left = 148.0
-margin_top = 18.0
 margin_right = 1010.0
-margin_bottom = 32.0
+margin_bottom = 14.0
 rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 7
 size_flags_vertical = 5
@@ -102,6 +80,28 @@ percent_visible = false
 script = ExtResource( 2 )
 big_step = 2.0
 huge_step = 8.0
+
+[node name="LabelOctave" type="Label" parent="SC/VBC/GC" groups=["Label"]]
+margin_top = 18.0
+margin_right = 140.0
+margin_bottom = 32.0
+text = "INFO_OCTAVE"
+
+[node name="Octave" type="ProgressBar" parent="SC/VBC/GC"]
+margin_left = 148.0
+margin_top = 18.0
+margin_right = 1010.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 25, 14 )
+size_flags_horizontal = 7
+size_flags_vertical = 5
+min_value = -1.0
+max_value = 9.0
+step = 1.0
+percent_visible = false
+script = ExtResource( 2 )
+big_step = 1.0
+huge_step = 1.0
 
 [node name="LabelVelocity" type="Label" parent="SC/VBC/GC" groups=["Label"]]
 margin_top = 36.0
@@ -125,17 +125,68 @@ script = ExtResource( 2 )
 big_step = 4.0
 huge_step = 16.0
 
-[node name="LabelTicksSec" type="Label" parent="SC/VBC/GC" groups=["Label"]]
+[node name="LabelPan" type="Label" parent="SC/VBC/GC" groups=["Label"]]
 margin_top = 54.0
 margin_right = 140.0
 margin_bottom = 68.0
-text = "INFO_TICKS_SEC"
+text = "INFO_PAN"
 
-[node name="TicksSec" type="ProgressBar" parent="SC/VBC/GC"]
+[node name="Pan" type="ProgressBar" parent="SC/VBC/GC"]
 margin_left = 148.0
 margin_top = 54.0
 margin_right = 1010.0
 margin_bottom = 68.0
+rect_min_size = Vector2( 36, 14 )
+size_flags_horizontal = 7
+size_flags_vertical = 5
+min_value = 1.0
+max_value = 255.0
+step = 1.0
+value = 128.0
+percent_visible = false
+script = ExtResource( 2 )
+big_step = 4.0
+huge_step = 16.0
+
+[node name="LabelInvertLeft" type="Label" parent="SC/VBC/GC" groups=["Label"]]
+margin_top = 75.0
+margin_right = 140.0
+margin_bottom = 89.0
+text = "INFO_INVERT_L"
+
+[node name="InvertLeft" type="Button" parent="SC/VBC/GC"]
+margin_left = 148.0
+margin_top = 72.0
+margin_right = 1010.0
+margin_bottom = 92.0
+toggle_mode = true
+text = "INFO_INVERT_L"
+
+[node name="LabelInvertRight" type="Label" parent="SC/VBC/GC" groups=["Label"]]
+margin_top = 99.0
+margin_right = 140.0
+margin_bottom = 113.0
+text = "INFO_INVERT_R"
+
+[node name="InvertRight" type="Button" parent="SC/VBC/GC"]
+margin_left = 148.0
+margin_top = 96.0
+margin_right = 1010.0
+margin_bottom = 116.0
+toggle_mode = true
+text = "INFO_INVERT_R"
+
+[node name="LabelTicksSec" type="Label" parent="SC/VBC/GC" groups=["Label"]]
+margin_top = 120.0
+margin_right = 140.0
+margin_bottom = 134.0
+text = "INFO_TICKS_SEC"
+
+[node name="TicksSec" type="ProgressBar" parent="SC/VBC/GC"]
+margin_left = 148.0
+margin_top = 120.0
+margin_right = 1010.0
+margin_bottom = 134.0
 rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 7
 size_flags_vertical = 5
@@ -149,16 +200,16 @@ big_step = 4.0
 huge_step = 16.0
 
 [node name="LabelTicksRow" type="Label" parent="SC/VBC/GC" groups=["Label"]]
-margin_top = 72.0
+margin_top = 138.0
 margin_right = 140.0
-margin_bottom = 86.0
+margin_bottom = 152.0
 text = "INFO_TICKS_ROW"
 
 [node name="TicksRow" type="ProgressBar" parent="SC/VBC/GC"]
 margin_left = 148.0
-margin_top = 72.0
+margin_top = 138.0
 margin_right = 1010.0
-margin_bottom = 86.0
+margin_bottom = 152.0
 rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 7
 size_flags_vertical = 5
@@ -171,40 +222,17 @@ script = ExtResource( 2 )
 big_step = 4.0
 huge_step = 16.0
 
-[node name="LabelRowsPat" type="Label" parent="SC/VBC/GC" groups=["Label"]]
-margin_top = 90.0
-margin_right = 140.0
-margin_bottom = 104.0
-text = "INFO_ROWS_PATTERN"
-
-[node name="RowsPat" type="ProgressBar" parent="SC/VBC/GC"]
-margin_left = 148.0
-margin_top = 90.0
-margin_right = 1010.0
-margin_bottom = 104.0
-rect_min_size = Vector2( 36, 14 )
-size_flags_horizontal = 7
-size_flags_vertical = 5
-min_value = 16.0
-max_value = 128.0
-step = 1.0
-value = 16.0
-percent_visible = false
-script = ExtResource( 2 )
-big_step = 2.0
-huge_step = 4.0
-
 [node name="LabelChannels" type="Label" parent="SC/VBC/GC" groups=["Label"]]
-margin_top = 108.0
+margin_top = 156.0
 margin_right = 140.0
-margin_bottom = 122.0
+margin_bottom = 170.0
 text = "INFO_CHANNELS"
 
 [node name="Channels" type="ProgressBar" parent="SC/VBC/GC"]
 margin_left = 148.0
-margin_top = 108.0
+margin_top = 156.0
 margin_right = 1010.0
-margin_bottom = 122.0
+margin_bottom = 170.0
 rect_min_size = Vector2( 28, 14 )
 size_flags_horizontal = 7
 size_flags_vertical = 5
@@ -217,17 +245,40 @@ script = ExtResource( 2 )
 big_step = 1.0
 huge_step = 1.0
 
-[node name="LabelMinHlite" type="Label" parent="SC/VBC/GC" groups=["Label"]]
-margin_top = 126.0
+[node name="LabelRowsPat" type="Label" parent="SC/VBC/GC" groups=["Label"]]
+margin_top = 174.0
 margin_right = 140.0
-margin_bottom = 140.0
+margin_bottom = 188.0
+text = "INFO_ROWS_PATTERN"
+
+[node name="RowsPat" type="ProgressBar" parent="SC/VBC/GC"]
+margin_left = 148.0
+margin_top = 174.0
+margin_right = 1010.0
+margin_bottom = 188.0
+rect_min_size = Vector2( 36, 14 )
+size_flags_horizontal = 7
+size_flags_vertical = 5
+min_value = 16.0
+max_value = 128.0
+step = 1.0
+value = 16.0
+percent_visible = false
+script = ExtResource( 2 )
+big_step = 2.0
+huge_step = 4.0
+
+[node name="LabelMinHlite" type="Label" parent="SC/VBC/GC" groups=["Label"]]
+margin_top = 192.0
+margin_right = 140.0
+margin_bottom = 206.0
 text = "INFO_MIN_HLIGHT"
 
 [node name="MinHlite" type="ProgressBar" parent="SC/VBC/GC"]
 margin_left = 148.0
-margin_top = 126.0
+margin_top = 192.0
 margin_right = 1010.0
-margin_bottom = 140.0
+margin_bottom = 206.0
 rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 7
 size_flags_vertical = 5
@@ -241,16 +292,16 @@ big_step = 2.0
 huge_step = 8.0
 
 [node name="LabelMajHlite" type="Label" parent="SC/VBC/GC" groups=["Label"]]
-margin_top = 144.0
+margin_top = 210.0
 margin_right = 140.0
-margin_bottom = 158.0
+margin_bottom = 224.0
 text = "INFO_MAJ_HLIGHT"
 
 [node name="MajHlite" type="ProgressBar" parent="SC/VBC/GC"]
 margin_left = 148.0
-margin_top = 144.0
+margin_top = 210.0
 margin_right = 1010.0
-margin_bottom = 158.0
+margin_bottom = 224.0
 rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 7
 size_flags_vertical = 5
@@ -267,20 +318,24 @@ huge_step = 8.0
 [connection signal="text_entered" from="SC/VBC/Title" to="." method="_on_text_entered"]
 [connection signal="text_changed" from="SC/VBC/Author" to="." method="_on_Author_text_changed"]
 [connection signal="text_entered" from="SC/VBC/Author" to="." method="_on_text_entered"]
-[connection signal="focus_exited" from="SC/VBC/GC/Octave" to="." method="_on_slider_focus_exited"]
-[connection signal="value_changed" from="SC/VBC/GC/Octave" to="." method="_on_Octave_value_changed"]
 [connection signal="focus_exited" from="SC/VBC/GC/Step" to="." method="_on_slider_focus_exited"]
 [connection signal="value_changed" from="SC/VBC/GC/Step" to="." method="_on_Step_value_changed"]
+[connection signal="focus_exited" from="SC/VBC/GC/Octave" to="." method="_on_slider_focus_exited"]
+[connection signal="value_changed" from="SC/VBC/GC/Octave" to="." method="_on_Octave_value_changed"]
 [connection signal="focus_exited" from="SC/VBC/GC/Velocity" to="." method="_on_slider_focus_exited"]
 [connection signal="value_changed" from="SC/VBC/GC/Velocity" to="." method="_on_Velocity_value_changed"]
+[connection signal="focus_exited" from="SC/VBC/GC/Pan" to="." method="_on_slider_focus_exited"]
+[connection signal="value_changed" from="SC/VBC/GC/Pan" to="." method="_on_Pan_value_changed"]
+[connection signal="toggled" from="SC/VBC/GC/InvertLeft" to="." method="_on_InvertLeft_toggled"]
+[connection signal="toggled" from="SC/VBC/GC/InvertRight" to="." method="_on_InvertRight_toggled"]
 [connection signal="focus_exited" from="SC/VBC/GC/TicksSec" to="." method="_on_slider_focus_exited"]
 [connection signal="value_changed" from="SC/VBC/GC/TicksSec" to="." method="_on_TicksSec_value_changed"]
 [connection signal="focus_exited" from="SC/VBC/GC/TicksRow" to="." method="_on_slider_focus_exited"]
 [connection signal="value_changed" from="SC/VBC/GC/TicksRow" to="." method="_on_TicksRow_value_changed"]
-[connection signal="focus_exited" from="SC/VBC/GC/RowsPat" to="." method="_on_slider_focus_exited"]
-[connection signal="value_changed" from="SC/VBC/GC/RowsPat" to="." method="_on_RowsPat_value_changed"]
 [connection signal="focus_exited" from="SC/VBC/GC/Channels" to="." method="_on_slider_focus_exited"]
 [connection signal="value_changed" from="SC/VBC/GC/Channels" to="." method="_on_Channels_value_changed"]
+[connection signal="focus_exited" from="SC/VBC/GC/RowsPat" to="." method="_on_slider_focus_exited"]
+[connection signal="value_changed" from="SC/VBC/GC/RowsPat" to="." method="_on_RowsPat_value_changed"]
 [connection signal="focus_exited" from="SC/VBC/GC/MinHlite" to="." method="_on_slider_focus_exited"]
 [connection signal="value_changed" from="SC/VBC/GC/MinHlite" to="." method="_on_MinHlite_value_changed"]
 [connection signal="focus_exited" from="SC/VBC/GC/MajHlite" to="." method="_on_slider_focus_exited"]

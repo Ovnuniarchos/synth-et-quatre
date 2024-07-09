@@ -100,6 +100,15 @@ msgstr ""
 msgid "INFO_VELOCITY"
 msgstr ""
 
+msgid "INFO_PAN"
+msgstr ""
+
+msgid "INFO_INVERT_L"
+msgstr ""
+
+msgid "INFO_INVERT_R"
+msgstr ""
+
 msgid "INFO_TICKS_SEC"
 msgstr ""
 

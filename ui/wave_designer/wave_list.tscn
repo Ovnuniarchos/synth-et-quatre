@@ -20,7 +20,7 @@ text = "WAVED_ADD"
 flat = false
 items = [ "WAVED_WTYPE_SYNTH", null, 0, false, false, 0, 0, null, "", false, "WAVED_WTYPE_SAMPLED", null, 0, false, false, 1, 0, null, "", false ]
 
-[node name="Copy" type="Button" parent="Buttons"]
+[node name="Duplicate" type="Button" parent="Buttons"]
 margin_left = 98.0
 margin_right = 191.0
 margin_bottom = 20.0
@@ -79,8 +79,9 @@ margin_bottom = 130.0
 mode_overrides_title = false
 access = 2
 
-[connection signal="pressed" from="Buttons/Copy" to="." method="_on_Copy_pressed"]
+[connection signal="pressed" from="Buttons/Duplicate" to="." method="_on_Duplicate_pressed"]
 [connection signal="pressed" from="Buttons/Del" to="." method="_on_Del_pressed"]
+[connection signal="gui_input" from="Waves" to="." method="_on_Waves_gui_input"]
 [connection signal="item_selected" from="Waves" to="." method="_on_item_selected"]
 [connection signal="pressed" from="Buttons2/Load" to="." method="_on_Load_pressed"]
 [connection signal="pressed" from="Buttons2/Save" to="." method="_on_Save_pressed"]

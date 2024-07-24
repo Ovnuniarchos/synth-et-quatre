@@ -111,11 +111,13 @@ func do_load()->Dictionary:
 	var bits_sample:int
 	var format:bool=false
 	var data:Array=[]
-	while !eof_reached():
+	while true:
 		chunk_id=get_buffer(4).get_string_from_ascii()
 		size=get_32()
 		pos=get_position()
-		if chunk_id=="fmt ":
+		if eof_reached():
+			break
+		elif chunk_id=="fmt ":
 			mode=get_16()
 			channels=get_16()
 			frequency=get_32()

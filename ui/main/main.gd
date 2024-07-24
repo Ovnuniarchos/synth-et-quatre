@@ -3,8 +3,6 @@ extends Control
 """
 FIXME
 TODO:
-	Copy/Paste buttons for instrument/wave editors
-		X Instrument C/P via kbd commands
 	MIDI on/off indicator
 	Reset per channel parameters (as a command|button)
 	MIDI input

@@ -1,7 +1,6 @@
 extends Tabs
 
 func _ready()->void:
-	# $Cols/FmEditor.connect("instrument_changed",GKBD,"_on_FmEditor_instrument_changed")
 	GLOBALS.connect("song_changed",self,"_on_song_changed")
 	update_instrument()
 

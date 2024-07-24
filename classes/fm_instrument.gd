@@ -204,8 +204,8 @@ func duplicate()->Instrument:
 	return ni
 
 func copy(from:Instrument,full:bool=false)->void:
-	.copy(from,full)
 	if from.get("TYPE")=="FmInstrument":
+		.copy(from,full)
 		op_mask=from.op_mask
 		clip=from.clip
 		attacks=from.attacks.duplicate()

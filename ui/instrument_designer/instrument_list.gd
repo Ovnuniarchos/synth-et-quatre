@@ -40,7 +40,7 @@ func update_ui()->void:
 func set_buttons()->void:
 	$Buttons2/Save.disabled=not inst_l.is_anything_selected()
 	$Buttons/Add.disabled=!GLOBALS.song.can_add_instrument()
-	$Buttons/Copy.disabled=!GLOBALS.song.can_add_instrument() or GLOBALS.curr_instrument==-1
+	$Buttons/Duplicate.disabled=!GLOBALS.song.can_add_instrument() or GLOBALS.curr_instrument==-1
 	$Buttons/Del.disabled=GLOBALS.song.instrument_list.size()==1 or GLOBALS.curr_instrument==-1
 
 
@@ -78,7 +78,7 @@ func _on_Del_pressed()->void:
 			set_buttons()
 
 
-func _on_Copy_pressed()->void:
+func _on_Duplicate_pressed()->void:
 	var i:Instrument=GLOBALS.song.get_instrument(GLOBALS.curr_instrument)
 	if i!=null and GLOBALS.song.can_add_instrument():
 		var cnt:int=inst_l.get_item_count()
@@ -90,6 +90,11 @@ func _on_Copy_pressed()->void:
 		select_item(cnt)
 	set_buttons()
 
+
+func _on_Copy_pressed()->void:
+	var i:Instrument=GLOBALS.song.get_instrument(GLOBALS.curr_instrument)
+	if i!=null:
+		pass
 
 func _on_instrument_changed(index:int,_name:String)->void:
 	$Instruments.set_block_signals(true)

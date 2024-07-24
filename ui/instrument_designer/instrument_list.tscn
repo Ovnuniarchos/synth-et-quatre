@@ -22,7 +22,7 @@ hint_tooltip = "INSTED_ADD_TTIP"
 shortcut_in_tooltip = false
 text = "INSTED_ADD"
 
-[node name="Copy" type="Button" parent="Buttons"]
+[node name="Duplicate" type="Button" parent="Buttons"]
 margin_left = 97.0
 margin_right = 189.0
 margin_bottom = 20.0
@@ -86,7 +86,7 @@ access = 2
 filters = PoolStringArray( "*.si4 ; FILETYPE_INSTRUMENT" )
 
 [connection signal="pressed" from="Buttons/Add" to="." method="_on_Add_pressed"]
-[connection signal="pressed" from="Buttons/Copy" to="." method="_on_Copy_pressed"]
+[connection signal="pressed" from="Buttons/Duplicate" to="." method="_on_Duplicate_pressed"]
 [connection signal="pressed" from="Buttons/Del" to="." method="_on_Del_pressed"]
 [connection signal="gui_input" from="Instruments" to="." method="_on_Instruments_gui_input"]
 [connection signal="item_selected" from="Instruments" to="." method="_on_item_selected"]

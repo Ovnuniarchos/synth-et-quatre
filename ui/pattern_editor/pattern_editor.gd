@@ -143,6 +143,12 @@ func process_midi(ev:InputEventMIDI)->bool:
 	if ev==null:
 		return false
 	var velocity:int
+	if ev.message==MIDI_MESSAGE_NOTE_ON and ev.pitch==midi_note and ev.velocity==0:
+		midi_note=-1
+		if CONFIG.get_value(CONFIG.MIDI_NOTEOFF):
+			put_note(KEYOFF,0,null)
+		IM_SYNTH.play_note(false,false,ev.pitch)
+		return true
 	if ev.message==MIDI_MESSAGE_NOTE_ON and midi_note==-1:
 		midi_vel=ev.velocity
 		midi_note=ev.pitch

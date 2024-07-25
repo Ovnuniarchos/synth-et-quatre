@@ -65,7 +65,10 @@ func handle_midi(event:InputEventMIDI)->bool:
 	if event==null:
 		return false
 	if event.message==MIDI_MESSAGE_NOTE_ON:
-		IM_SYNTH.play_note(true,false,event.pitch)
+		if event.velocity>0:
+			IM_SYNTH.play_note(true,false,event.pitch)
+		else:
+			IM_SYNTH.play_note(false,false,event.pitch)
 	elif event.message==MIDI_MESSAGE_NOTE_OFF:
 		IM_SYNTH.play_note(false,false,event.pitch)
 	else:

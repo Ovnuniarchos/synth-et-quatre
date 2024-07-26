@@ -48,6 +48,10 @@
 			"comment":"FUTURE USE",
 			"rect":[74,112,8,16],
 			"margin":[8,0]
+		},
+		"midi":{
+			"rect":[98,112,13,16],
+			"margin":[4,0]
 		}
 	},
 	"font":{

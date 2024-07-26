@@ -3,6 +3,7 @@ extends Node
 signal midi_on(on)
 
 var midi_open:bool
+var midi_on:bool
 var watchdog:Timer
 
 func _ready()->void:
@@ -26,17 +27,19 @@ func _watchdog_thread()->void:
 	for md in OS.get_connected_midi_inputs():
 		if md.to_lower().find("virtual")==-1: # Ignore ALSA virtual devices
 			mdl.append(md)
-	if mdl.empty():
-		midi_open=false
-	else:
+	var on:bool=false
+	if not mdl.empty():
+		on=true
 		for md in mdl:
 			if md.empty():
-				midi_open=false
+				on=false
 				break
-	set_midi_open(midi_open)
+	set_midi_open(on)
 
 func set_midi_open(on:bool)->void:
-	midi_open=on
-	if !midi_open:
+	if not on:
 		OS.close_midi_inputs()
-	emit_signal("midi_on",on)
+		midi_open=false
+	if on!=midi_on:
+		emit_signal("midi_on",on)
+	midi_on=on

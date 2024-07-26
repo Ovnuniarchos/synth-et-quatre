@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://ui/widgets/play_button.gd" type="Script" id=1]
 [ext_resource path="res://ui/play_controls/play_controls.gd" type="Script" id=2]
 [ext_resource path="res://ui/widgets/cycle_button.gd" type="Script" id=3]
+[ext_resource path="res://ui/widgets/icon_button.gd" type="Script" id=4]
 
 [node name="PC" type="PanelContainer"]
 margin_right = 594.0
@@ -57,13 +58,28 @@ margin_left = 246.0
 margin_right = 385.0
 margin_bottom = 20.0
 hint_tooltip = "PLAY_MODE_MONO_TTIP"
+focus_mode = 0
 text = "PLAY_MODE_MONO"
 script = ExtResource( 3 )
 colors = PoolColorArray( 1, 1, 1, 1, 1, 0.501961, 0.501961, 1, 1, 1.25, 1.5, 1 )
 texts = PoolStringArray( "PLAY_MODE_MONO", "PLAY_MODE_SEMI", "PLAY_MODE_POLY" )
 tooltips = PoolStringArray( "PLAY_MODE_MONO_TTIP", "PLAY_MODE_SEMI_TTIP", "PLAY_MODE_POLY_TTIP" )
 
+[node name="Midi" type="Button" parent="HBC"]
+margin_left = 389.0
+margin_right = 413.0
+margin_bottom = 20.0
+focus_mode = 0
+mouse_filter = 2
+toggle_mode = true
+shortcut_in_tooltip = false
+button_mask = 0
+text = "M"
+script = ExtResource( 4 )
+icon_name = "midi"
+
 [connection signal="sort_children" from="." to="." method="_on_PC_sort_children"]
 [connection signal="toggled" from="HBC/Play" to="." method="_on_Play_toggled"]
 [connection signal="toggled" from="HBC/PlayTrack" to="." method="_on_PlayTrack_toggled"]
+[connection signal="gui_input" from="HBC/VSeparator" to="." method="_on_VSeparator_gui_input"]
 [connection signal="cycled" from="HBC/PolyMode" to="." method="_on_PolyMode_cycled"]

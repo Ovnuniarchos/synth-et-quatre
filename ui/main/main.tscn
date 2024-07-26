@@ -76,7 +76,7 @@ rect_clip_content = true
 script = ExtResource( 1 )
 
 [node name="PlayControls" parent="." instance=ExtResource( 5 )]
-margin_left = 668.11
-margin_right = 818.11
+margin_left = 668.0
+margin_right = 1067.0
 
 [connection signal="tab_changed" from="Main/Tabs" to="." method="_on_tab_changed"]

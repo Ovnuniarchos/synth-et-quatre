@@ -3,7 +3,6 @@ extends Control
 """
 FIXME
 TODO:
-	MIDI on/off indicator
 	Reset per channel parameters (as a command|button)
 	MIDI input
 		Flag?: MIDI Pitch bend

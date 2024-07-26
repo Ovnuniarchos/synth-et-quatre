@@ -329,6 +329,9 @@
 		<Note type="uint8" option/>
 		<InstrumentId type="uint8" option/>
 		<Volume type="uint8" option/>
+		<if test="InstrumentParameters.version > 0">
+			<ChannelInvert type="uint8" option/>
+		</if>
 		<Panpot type="uint8" option/>
 		<Fx1Type type="uint8" option/>
 		<Fx1Opmask type="uint8" option/>

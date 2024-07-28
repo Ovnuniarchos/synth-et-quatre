@@ -18,7 +18,7 @@ FUTURE:
 
 
 func _ready()->void:
-	theme=THEME.get("theme")
+	theme=ThemeHelper.get_theme()
 	ThemeHelper.apply_styles_to_group(theme,"LabelTitle","Title")
 	ThemeHelper.apply_styles_to_group(theme,"LabelControl","Label")
 	ThemeHelper.apply_styles_to_group(theme,"BarEditorLabel","BarEditorLabel")

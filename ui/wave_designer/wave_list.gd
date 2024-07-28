@@ -19,7 +19,7 @@ func _ready()->void:
 	GLOBALS.connect("song_changed",self,"_on_song_changed")
 	$Buttons/Add.get_popup().connect("id_pressed",self,"_on_Add_id_pressed")
 	_on_song_changed()
-	ThemeHelper.apply_styles(THEME.get("theme"),"Button",$Buttons/Add)
+	ThemeHelper.apply_styles(ThemeHelper.get_theme(),"Button",$Buttons/Add)
 	file_dlg=$FileDialog
 
 

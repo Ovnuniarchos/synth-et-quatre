@@ -15,7 +15,6 @@ export (String) var suffix:String="" setget set_suffix
 export (bool) var editable:bool=true setget set_editable
 
 
-var real_theme:Theme
 var dragging:bool=false
 var pressed:bool=false
 var press_pos:Vector2
@@ -55,17 +54,15 @@ func _init()->void:
 
 
 func _ready()->void:
-	real_theme=THEME.get("theme")
 	for c in get_children():
 		remove_child(c)
-	if real_theme!=null:
-		ThemeHelper.apply_styles(real_theme,"SpinBar",label)
-		ThemeHelper.apply_styles(real_theme,"SpinBar",input)
-		input.add_constant_override("minimum_spaces",0)
-		input.add_stylebox_override("read_only",real_theme.get_stylebox("empty_panel",""))
-		input.add_stylebox_override("focus",real_theme.get_stylebox("empty_panel",""))
-		input.add_stylebox_override("normal",real_theme.get_stylebox("empty_panel",""))
-		ThemeHelper.apply_styles(real_theme,"SpinBar",self)
+	ThemeHelper.apply_styles(ThemeHelper.get_theme(),"SpinBar",label)
+	ThemeHelper.apply_styles(ThemeHelper.get_theme(),"SpinBar",input)
+	ThemeHelper.apply_styles(ThemeHelper.get_theme(),"SpinBar",self)
+	input.add_constant_override("minimum_spaces",0)
+	input.add_stylebox_override("read_only",ThemeHelper.get_stylebox("empty_panel",""))
+	input.add_stylebox_override("focus",ThemeHelper.get_stylebox("empty_panel",""))
+	input.add_stylebox_override("normal",ThemeHelper.get_stylebox("empty_panel",""))
 	var sb:StyleBox=get_stylebox("bg")
 	var f:Font=get_font("font")
 	var s0:Vector2=f.get_string_size(format_value(min_value)+"   "+suffix)
@@ -221,13 +218,11 @@ func _on_mouse_exit()->void:
 
 func set_mode(s:String)->void:
 	mode=s
-	if real_theme==null:
-		return
 	if not editable:
 		s=MODE_DISABLED
-	add_stylebox_override("fg",real_theme.get_stylebox("fg_"+s,"SpinBar"))
-	add_stylebox_override("bg",real_theme.get_stylebox("bg_"+s,"SpinBar"))
-	label.add_color_override("font_color",real_theme.get_color("font_color_"+s,"SpinBar"))
-	label.add_font_override("font",real_theme.get_font("font_"+s,"SpinBar"))
-	input.add_color_override("font_color",real_theme.get_color("font_color_"+s,"SpinBar"))
-	input.add_font_override("font",real_theme.get_font("font_"+s,"SpinBar"))
+	add_stylebox_override("fg",ThemeHelper.get_stylebox("fg_"+s,"SpinBar"))
+	add_stylebox_override("bg",ThemeHelper.get_stylebox("bg_"+s,"SpinBar"))
+	label.add_color_override("font_color",ThemeHelper.get_color("font_color_"+s,"SpinBar"))
+	label.add_font_override("font",ThemeHelper.get_font("font_"+s,"SpinBar"))
+	input.add_color_override("font_color",ThemeHelper.get_color("font_color_"+s,"SpinBar"))
+	input.add_font_override("font",ThemeHelper.get_font("font_"+s,"SpinBar"))

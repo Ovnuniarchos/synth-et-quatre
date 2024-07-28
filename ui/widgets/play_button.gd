@@ -1,33 +1,32 @@
 tool extends AccentButton
 class_name PlayButton
 
-export (String) var pressed_icon="Stop" setget set_pressed_icon
-export (String) var unpressed_icon="Play" setget set_unpressed_icon
+export (String) var pressed_icon="stop" setget set_pressed_icon
+export (String) var pressed_text="PLAY_TEXT_STOP"
+export (String) var unpressed_icon="play" setget set_unpressed_icon
+export (String) var unpressed_text="PLAY_TEXT_PLAY"
 
 var icon_on:Texture
 var icon_off:Texture
 
 func _ready()->void:
-	real_theme=THEME.get("theme")
-	if real_theme!=null:
-		icon_on=real_theme.get_icon(pressed_icon,"Glyphs")
-		icon_off=real_theme.get_icon(unpressed_icon,"Glyphs")
-	_toggled(pressed)
+	set_pressed_icon(pressed_icon)
+	set_unpressed_icon(unpressed_icon)
 
 func set_pressed_icon(v:String)->void:
 	pressed_icon=v
-	if real_theme!=null:
-		icon_on=real_theme.get_icon(pressed_icon,"Glyphs")
+	icon_on=ThemeHelper.get_icon(pressed_icon,"Glyphs")
+	_toggled(pressed)
 
 func set_unpressed_icon(v:String)->void:
 	unpressed_icon=v
-	if real_theme!=null:
-		icon_off=real_theme.get_icon(unpressed_icon,"Glyphs")
+	icon_off=ThemeHelper.get_icon(unpressed_icon,"Glyphs")
+	_toggled(pressed)
 
 func _toggled(p:bool)->void:
 	if p:
 		icon=icon_on
-		text="PLAY_TEXT_STOP" if icon_on==null else ""
+		text=pressed_text if icon_on==null else ""
 	else:
 		icon=icon_off
-		text="PLAY_TEXT_PLAY" if icon_off==null else ""
+		text=unpressed_text if icon_off==null else ""

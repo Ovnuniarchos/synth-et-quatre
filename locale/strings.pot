@@ -192,6 +192,9 @@ msgstr ""
 msgid "PLAY_TEXT_PLAY"
 msgstr ""
 
+msgid "PLAY_TEXT_PLAY_TRACK"
+msgstr ""
+
 msgid "PLAY_TEXT_STOP"
 msgstr ""
 
@@ -213,6 +216,8 @@ msgstr ""
 msgid "PLAY_MODE_MONO_TTIP"
 msgstr ""
 
+msgid "PLAY_MIDI_INDICATOR"
+msgstr ""
 
 # Instrument editor
 

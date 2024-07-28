@@ -13,8 +13,7 @@ var channel_group:PackedScene=preload("channel_buttons.tscn")
 
 
 func _ready()->void:
-	var t:Theme=THEME.get("theme")
-	cell_size=Vector2(t.get_constant("cell_w","Tracker"),t.get_constant("cell_h","Tracker"))
+	cell_size=Vector2(ThemeHelper.get_constant("cell_w","Tracker"),ThemeHelper.get_constant("cell_h","Tracker"))
 	$VSC.split_offset=rect_size.y*-0.25
 	$VSC/CCHSC/HSC.split_offset=rect_size.x*0.25
 	$VSC/CCVBC/VBC/CNT/Channels/LineColumn.rect_min_size.x=cell_size.x*4.0

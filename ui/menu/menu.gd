@@ -39,12 +39,10 @@ enum FILE_MODE{LOAD_SONG,SAVE_SONG,SAVE_WAV}
 
 var file_mode:int
 var file_dlg:FileDialog
-var real_theme:Theme
 
 
 func _init()->void:
-	real_theme=THEME.get("theme")
-	theme=real_theme
+	theme=ThemeHelper.get_theme()
 
 
 func _ready()->void:
@@ -56,13 +54,13 @@ func _ready()->void:
 				var mb:MenuButton=MenuButton.new()
 				mb.flat=false
 				mb.text=op["option"]
-				ThemeHelper.apply_styles(real_theme,"MenuButton",mb)
+				ThemeHelper.apply_styles(ThemeHelper.get_theme(),"MenuButton",mb)
 				add_options(op["options"],mb.get_popup())
 				hbc.add_child(mb)
 			else:
 				var mb:Button=Button.new()
 				mb.text=op["option"]
-				ThemeHelper.apply_styles(real_theme,"MenuButton",mb)
+				ThemeHelper.apply_styles(ThemeHelper.get_theme(),"MenuButton",mb)
 				mb.connect("pressed",self,"_on_menu_pressed",[-1,funcref(self,op["function"])])
 				hbc.add_child(mb)
 		else:

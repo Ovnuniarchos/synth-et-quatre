@@ -25,7 +25,7 @@ var from_node:SpinBar
 
 
 func _ready()->void:
-	ThemeHelper.apply_styles_to_group(THEME.get("theme"),"LabelControl","Label")
+	ThemeHelper.apply_styles_to_group(ThemeHelper.get_theme(),"LabelControl","Label")
 
 
 func get_component_index(wc:WaveComponent)->int:

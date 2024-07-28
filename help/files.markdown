@@ -41,7 +41,7 @@
 		<SustainRate type="uint8"/>
 		<SustainLevel type="uint8"/>
 		<ReleaseRate type="uint8"/>
-		<RepeatMode type="uint8"/>
+		<RepeatMode type="uint8(OFF|ATTACK|DECAY|SUSTAIN|RELEASE)"/>
 		<Multiplier type="uint8"/>
 		<Divider type="uint8"/>
 		<Detune type="int16"/>
@@ -76,7 +76,7 @@
 	<ReleaseLoopStart type="int16"/>
 	<StepCount type="uint16"/>
 	<Delay type="uint16"/>
-	<Relative type="boolean"/>
+	<Mode type="uint8(ABSOLUTE|RELATIVE|MASK)"/>
 	<TicksPerStep type="uint16"/>
 	<Type type="ascii(4)"/>
 	<Operator type="uint8"/>

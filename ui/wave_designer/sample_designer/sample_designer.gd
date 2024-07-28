@@ -10,7 +10,7 @@ var sam_detune:NumberEdit
 var curr_wave_ix:int=-1
 
 func _init()->void:
-	theme=THEME.get("theme")
+	theme=ThemeHelper.get_theme()
 
 func _ready()->void:
 	sam_freq=$Designer/SC/VBC/GC/HBC/SamFreq

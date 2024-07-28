@@ -71,11 +71,11 @@ func play_note(keyon:bool,legato:bool,semi:int)->void:
 func play_fm_note(chan:int,instr:FmInstrument,semi:int,legato:bool)->void:
 	# semitone = semi / 100
 	synth.set_note(chan,instr.op_mask,semi)
-	synth.set_panning(chan,31,false,false)
+	synth.set_panning(chan,128,false,false)
 	synth.key_on(chan,instr.op_mask,255,legato)
 	synth.set_enable(chan,15,instr.op_mask)
 	volumes[chan]=255
-	panpots[chan]=31
+	panpots[chan]=128
 	channel_invs[chan]=0
 	if !legato:
 		kon_time[chan]=0
@@ -407,7 +407,6 @@ func set_output(op:int,output:int)->void:
 //void SynthTracker::key_on(int voice,int op_mask,int velocity,bool legato)
 //void SynthTracker::key_off(int voice,int op_mask)
 //void SynthTracker::stop(int voice,int op_mask)
-//void SynthTracker::set_panning(int voice,int panning,bool invert_left,bool invert_right)
-// void SynthTracker::set_lfo_phase(int lfo,FixedPoint phi)
+//void SynthTracker::set_lfo_phase(int lfo,FixedPoint phi)
 //void SynthTracker::mute_voices(int mute_mask)
 """

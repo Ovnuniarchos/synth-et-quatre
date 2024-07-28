@@ -44,6 +44,26 @@ func _init()->void:
 	theme=parse_theme(CONFIG.get_value(CONFIG.THEME_FILE))
 
 
+func get_color(color:String,type:String)->Color:
+	return theme.get_color(color,type) if theme.has_color(color,type) else DEFAULT_COLORS[CO_DEFAULT_FG]
+
+
+func get_constant(constant:String,type:String)->int:
+	return theme.get_constant(constant,type) if theme.has_constant(constant,type) else 0
+
+
+func get_font(font:String,type:String)->Font:
+	return theme.get_font(font,type) if theme.has_font(font,type) else null
+
+
+func get_icon(icon:String,type:String)->Texture:
+	return theme.get_icon(icon,type) if theme.has_icon(icon,type) else null
+
+
+func get_stylebox(stylebox:String,type:String)->StyleBox:
+	return theme.get_stylebox(stylebox,type) if theme.has_stylebox(stylebox,type) else null
+
+
 func parse_theme(file:String)->Theme:
 	var f:File=File.new()
 	var theme_data:Dictionary={}

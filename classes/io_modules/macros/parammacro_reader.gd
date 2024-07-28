@@ -10,7 +10,7 @@ func deserialize(inf:ChunkedFile)->FileResult:
 	var hdr:Dictionary=fr.data["header"]
 	var params:Dictionary=fr.data["data"]
 	var pm:ParamMacro=ParamMacro.new([])
-	pm.relative=bool(inf.get_8())
+	pm.mode=inf.get_8()
 	pm.tick_div=inf.get_16()
 	var type:String=inf.get_ascii(4)
 	var op:int=inf.get_8()

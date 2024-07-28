@@ -90,20 +90,19 @@ func _ready()->void:
 
 
 func setup_styles()->void:
-	var t:Theme=THEME.get("theme")
-	lines.tile_set=t.get_meta("tileset")
-	lines.cell_size=Vector2(t.get_constant("cell_w","Tracker"),t.get_constant("cell_h","Tracker"))
+	lines.tile_set=ThemeHelper.get_theme_meta("tileset")
+	lines.cell_size=Vector2(ThemeHelper.get_constant("cell_w","Tracker"),ThemeHelper.get_constant("cell_h","Tracker"))
 	editor.tile_set=lines.tile_set
 	editor.cell_size=lines.cell_size
 	cursor.cell_size=lines.cell_size
 	sel_rect.cell_size=lines.cell_size
 	sel_rect.set_arrays(COL_WIDTH,COLS,channel_col0)
 	$PatternOrg.position.x=lines.cell_size.x*4.0
-	editor.modulate=t.get_color("color","Tracker")
-	background.color_base=t.get_color("background","Tracker")
-	background.color_min=t.get_color("minor","Tracker")
-	background.color_maj=t.get_color("major","Tracker")
-	background.color_active=t.get_color("active","Tracker")
+	editor.modulate=ThemeHelper.get_color("color","Tracker")
+	background.color_base=ThemeHelper.get_color("background","Tracker")
+	background.color_min=ThemeHelper.get_color("minor","Tracker")
+	background.color_maj=ThemeHelper.get_color("major","Tracker")
+	background.color_active=ThemeHelper.get_color("active","Tracker")
 
 
 func _on_song_changed()->void:

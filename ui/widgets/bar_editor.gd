@@ -60,16 +60,12 @@ var cmd_ptr:int=0
 
 
 func _ready()->void:
-	if Engine.editor_hint:
-		real_theme=Theme.new()
-	else:
-		real_theme=THEME.theme
-	theme=real_theme
 	init_node_caches()
 	recalc_scrollbars()
-	values_graph.get_parent().add_stylebox_override("panel",real_theme.get_stylebox("values","BarEditor"))
-	loop_graph.get_parent().add_stylebox_override("panel",real_theme.get_stylebox("loop","BarEditor"))
-	loop_graph.get_parent().rect_min_size.y=real_theme.get_constant("loop_height","BarEditor")
+	if not Engine.editor_hint:
+		values_graph.get_parent().add_stylebox_override("panel",ThemeHelper.get_stylebox("values","BarEditor"))
+		loop_graph.get_parent().add_stylebox_override("panel",ThemeHelper.get_stylebox("loop","BarEditor"))
+		loop_graph.get_parent().rect_min_size.y=ThemeHelper.get_constant("loop_height","BarEditor")
 	is_ready=true
 	if arpeggio:
 		relative_button.visible=false
@@ -111,8 +107,8 @@ func init_values()->void:
 
 
 func get_bar_sizes()->void:
-	bar_width=real_theme.get_constant("bar_size_x","BarEditor")
-	bar_height=real_theme.get_constant("bar_size_y","BarEditor")
+	bar_width=ThemeHelper.get_constant("bar_size_x","BarEditor")
+	bar_height=ThemeHelper.get_constant("bar_size_y","BarEditor")
 
 
 func _on_VScroll_visuals_changed()->void:
@@ -270,7 +266,7 @@ func _on_VGraph_draw():
 
 
 func draw_select()->void:
-	var color:Color=real_theme.get_color("values_color","BarEditor")
+	var color:Color=ThemeHelper.get_color("values_color","BarEditor")
 	var ym:float=values_graph.rect_size.y*zoom
 	var x0:float=0.0
 	var yv:float
@@ -285,7 +281,7 @@ func draw_select()->void:
 
 
 func draw_absolute()->void:
-	var color:Color=real_theme.get_color("values_color","BarEditor")
+	var color:Color=ThemeHelper.get_color("values_color","BarEditor")
 	var ym:float=values_graph.rect_size.y*zoom
 	var x0:float=0.0
 	var yv:float
@@ -299,13 +295,13 @@ func draw_absolute()->void:
 
 
 func draw_relative()->void:
-	var color:Color=real_theme.get_color("values_color","BarEditor")
+	var color:Color=ThemeHelper.get_color("values_color","BarEditor")
 	var ym:float=values_graph.rect_size.y*zoom
 	var bh2:float=bar_height*0.5
 	var yv:float=ym*0.5
 	values_graph.draw_line(
 		Vector2(0.0,yv),Vector2(bar_width*steps,yv),
-		real_theme.get_color("center_color","BarEditor")
+		ThemeHelper.get_color("center_color","BarEditor")
 	)
 	var x0:float=0.0
 	for i in steps:
@@ -320,7 +316,7 @@ func draw_relative()->void:
 func draw_mask()->void:
 	var ym:float=values_graph.rect_size.y*zoom
 	var hb:float=ym/(max_value_abs+1.0)
-	var color:Color=real_theme.get_color("mask_color","BarEditor")
+	var color:Color=ThemeHelper.get_color("mask_color","BarEditor")
 	var j:int
 	var yv:float
 	var x0:float=0.0
@@ -408,15 +404,15 @@ func _on_Labels_draw()->void:
 		return
 	if not is_ready:
 		yield(self,"ready")
-	var font:Font=real_theme.get_font("font","BarEditorLabel")
-	var color:Color=real_theme.get_color("font_color","BarEditorLabel")
-	var ol_color:Color=real_theme.get_color("font_outline_modulate","BarEditorLabel")
-	var s_color:Color=real_theme.get_color("font_color_shadow","BarEditorLabel")
+	var font:Font=ThemeHelper.get_font("font","BarEditorLabel")
+	var color:Color=ThemeHelper.get_color("font_color","BarEditorLabel")
+	var ol_color:Color=ThemeHelper.get_color("font_outline_modulate","BarEditorLabel")
+	var s_color:Color=ThemeHelper.get_color("font_color_shadow","BarEditorLabel")
 	var s_ofs:Vector2=Vector2(
-		real_theme.get_constant("shadow_offset_x","BarEditorLabel"),
-		real_theme.get_constant("shadow_offset_y","BarEditorLabel")
+		ThemeHelper.get_constant("shadow_offset_x","BarEditorLabel"),
+		ThemeHelper.get_constant("shadow_offset_y","BarEditorLabel")
 	)
-	var s_outline:bool=real_theme.get_constant("shadow_as_outline","BarEditorLabel")
+	var s_outline:bool=ThemeHelper.get_constant("shadow_as_outline","BarEditorLabel")
 	var my:float=values_graph.rect_size.y*zoom
 	if zoom>1.0:
 		var txt:String=tr("MCED_ZOOM").format({"i_zoom":zoom})
@@ -573,8 +569,8 @@ func _on_LGraph_draw()->void:
 	if not is_ready:
 		yield(self,"ready")
 	loop_graph.draw_set_transform(Vector2(-hscroll.value,0.0),0.0,Vector2.ONE)
-	var loop_color:Color=real_theme.get_color("loop_color","BarEditor")
-	var release_color:Color=real_theme.get_color("release_color","BarEditor")
+	var loop_color:Color=ThemeHelper.get_color("loop_color","BarEditor")
+	var release_color:Color=ThemeHelper.get_color("release_color","BarEditor")
 	var x0:float
 	var h:float=loop_graph.rect_size.y*0.5
 	if loop_start>-1 and loop_end>-1:

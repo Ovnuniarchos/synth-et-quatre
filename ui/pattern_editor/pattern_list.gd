@@ -11,7 +11,7 @@ var curr_highlight:int
 var scroll_lock:bool=false
 
 func _ready()->void:
-	theme=THEME.get("theme")
+	theme=THEME.theme
 	GLOBALS.connect("song_changed",self,"_on_song_changed")
 	AUDIO.tracker.connect("position_changed",self,"_on_playing_pos_changed")
 	_on_song_changed()

@@ -30,32 +30,30 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-pressed_icon = "stop"
-unpressed_icon = "play"
 
 [node name="PlayTrack" type="Button" parent="HBC"]
 margin_left = 119.0
-margin_right = 234.0
+margin_right = 280.0
 margin_bottom = 20.0
 focus_mode = 0
 toggle_mode = true
-text = "PLAY_TEXT_PLAY"
+text = "PLAY_TEXT_PLAY_TRACK"
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-pressed_icon = "stop"
 unpressed_icon = "play_track"
+unpressed_text = "PLAY_TEXT_PLAY_TRACK"
 
 [node name="VSeparator" type="VSeparator" parent="HBC"]
-margin_left = 238.0
-margin_right = 242.0
+margin_left = 284.0
+margin_right = 288.0
 margin_bottom = 20.0
 mouse_default_cursor_shape = 6
 
 [node name="PolyMode" type="Button" parent="HBC"]
-margin_left = 246.0
-margin_right = 385.0
+margin_left = 292.0
+margin_right = 431.0
 margin_bottom = 20.0
 hint_tooltip = "PLAY_MODE_MONO_TTIP"
 focus_mode = 0
@@ -66,17 +64,17 @@ texts = PoolStringArray( "PLAY_MODE_MONO", "PLAY_MODE_SEMI", "PLAY_MODE_POLY" )
 tooltips = PoolStringArray( "PLAY_MODE_MONO_TTIP", "PLAY_MODE_SEMI_TTIP", "PLAY_MODE_POLY_TTIP" )
 
 [node name="Midi" type="Button" parent="HBC"]
-margin_left = 389.0
-margin_right = 413.0
+margin_left = 435.0
+margin_right = 447.0
 margin_bottom = 20.0
 focus_mode = 0
 mouse_filter = 2
 toggle_mode = true
 shortcut_in_tooltip = false
 button_mask = 0
-text = "M"
 script = ExtResource( 4 )
 icon_name = "midi"
+default_text = "PLAY_MIDI_INDICATOR"
 
 [connection signal="sort_children" from="." to="." method="_on_PC_sort_children"]
 [connection signal="toggled" from="HBC/Play" to="." method="_on_Play_toggled"]

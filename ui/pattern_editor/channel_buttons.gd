@@ -12,7 +12,6 @@ var mute_method:String
 
 
 func _ready()->void:
-	var t:Theme=THEME.get("theme")
 	var del:Button=$DelFX
 	var add:Button=$AddFX
 	var channel:CycleButton=$Channel
@@ -23,7 +22,7 @@ func _ready()->void:
 	del.connect("pressed",connection_object,del_method,[channel_ix])
 	add.disabled=nfx==SongLimits.MAX_FX_LENGTH
 	add.connect("pressed",connection_object,add_method,[channel_ix])
-	channel.colors=PoolColorArray([Color.white,t.get_color("solo","Tracker"),t.get_color("muted","Tracker")])
+	channel.colors=PoolColorArray([Color.white,ThemeHelper.get_color("solo","Tracker"),ThemeHelper.get_color("muted","Tracker")])
 	channel.set_text(tr("PTEDIT_CHANNEL_BUTTON").format({"i_chan":channel_ix+1}))
 	channel.status=mute_status
 	channel.connect("cycled",connection_object,mute_method,[channel_ix])

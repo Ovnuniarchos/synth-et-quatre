@@ -21,7 +21,7 @@ func serialize(out:ChunkedFile,m:ParamMacro)->FileResult:
 	if m.steps<1:
 		return FileResult.new()
 	_serialize_start(out,m,MACRO_ID,MACRO_VERSION)
-	out.store_8(int(m.relative))
+	out.store_8(m.mode)
 	out.store_16(m.tick_div)
 	out.store_ascii(macro_id)
 	out.store_8(macro_op)

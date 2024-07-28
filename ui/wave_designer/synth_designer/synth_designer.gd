@@ -34,7 +34,7 @@ func _ready():
 		new_menu.add_item(sn[0],sn[1])
 	new_menu.connect("id_pressed",self,"_on_New_id_pressed")
 	update_ui()
-	ThemeHelper.apply_styles(THEME.get("theme"),"Button",new_but)
+	ThemeHelper.apply_styles(ThemeHelper.get_theme(),"Button",new_but)
 
 func update_ui()->void:
 	_on_wave_selected(curr_wave_ix)

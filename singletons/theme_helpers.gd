@@ -39,3 +39,29 @@ static func apply_styles(theme:Theme,from:String,to:Control)->void:
 		to.add_stylebox_override(sb,theme.get_stylebox(sb,from))
 
 
+static func get_theme()->Theme:
+	return null if Engine.editor_hint else THEME.theme
+
+
+static func get_color(color:String,type:String)->Color:
+	return Color.red if Engine.editor_hint else THEME.get_color(color,type)
+
+
+static func get_constant(constant:String,type:String)->int:
+	return 0 if Engine.editor_hint else THEME.get_constant(constant,type)
+
+
+static func get_font(font:String,type:String)->Font:
+	return null if Engine.editor_hint else THEME.get_font(font,type)
+
+
+static func get_icon(icon:String,type:String)->Texture:
+	return null if Engine.editor_hint else THEME.get_icon(icon,type)
+
+
+static func get_stylebox(stylebox:String,type:String)->StyleBox:
+	return null if Engine.editor_hint else THEME.get_stylebox(stylebox,type)
+
+
+static func get_theme_meta(key:String):
+	return null if Engine.editor_hint else THEME.theme.get_meta(key,null)

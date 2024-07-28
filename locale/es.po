@@ -189,6 +189,9 @@ msgstr "Eliminar orden"
 msgid "PLAY_TEXT_PLAY"
 msgstr ">"
 
+msgid "PLAY_TEXT_PLAY_TRACK"
+msgstr ">|"
+
 msgid "PLAY_TEXT_STOP"
 msgstr "||"
 
@@ -209,6 +212,9 @@ msgstr "Mono"
 
 msgid "PLAY_MODE_MONO_TTIP"
 msgstr "Monofónico"
+
+msgid "PLAY_MIDI_INDICATOR"
+msgstr "M"
 
 # Instrument editor
 msgid "INSTED_ADD"

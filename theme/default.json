@@ -13,45 +13,48 @@
 	"glyphs":{
 		"arrow-up":{
 			"rect":[24,112,8,16],
-			"margin":[8,0]
+			"margin":[0,8]
 		},
 		"arrow-down":{
 			"rect":[32,112,8,16],
-			"margin":[8,0]
+			"margin":[0,8]
 		},
 		"arrow-left":{
 			"rect":[48,112,8,16],
-			"margin":[8,0]
+			"margin":[0,8]
 		},
 		"arrow-right":{
 			"rect":[40,112,8,16],
-			"margin":[8,0]
+			"margin":[0,8]
 		},
 		"close":{
-			"comment":"UNKNOWN USE",
 			"rect":[56,112,8,16],
-			"margin":[8,8]
+			"margin":0
 		},
 		"play":{
 			"rect":[82,112,8,16],
-			"margin":[8,0]
+			"margin":[0,8]
 		},
 		"play-track":{
 			"rect":[64,112,10,16],
-			"margin":[6,0]
+			"margin":[0,6]
 		},
 		"stop":{
 			"rect":[90,112,8,16],
-			"margin":[8,0]
+			"margin":[0,8]
 		},
 		"record":{
 			"comment":"FUTURE USE",
 			"rect":[74,112,8,16],
-			"margin":[8,0]
+			"margin":[0,8]
 		},
 		"midi":{
 			"rect":[98,112,13,16],
-			"margin":[4,0]
+			"margin":[0,4]
+		},
+		"resizer":{
+			"rect":[48,104,8,8],
+			"margin":4
 		}
 	},
 	"font":{
@@ -210,10 +213,10 @@
 	},
 	"dialog":{
 		"closer":{
-			"rect":[0,104,12]
+			"rect":[0,104,12],
+			"margin":4
 		},
 		"title-margin":4,
-		"closer-margin":4
 	},
 	"file-dialog":{
 		"file":{
@@ -272,6 +275,24 @@
 			},
 			"color":"fff",
 			"outline":"000"
+		}
+	},
+	"node-editor":{
+		"node":{
+			"title-margin":4,
+			"closer":{
+				"margin":[-2,0]
+			},
+			"resizer":{
+				"margin":4
+			},
+			"port":{
+				"rect":[111,115,10,10],
+				"color":"foregroundhover"
+			},
+			"normal":{
+				"margin":[4,8]
+			}
 		}
 	}
 }

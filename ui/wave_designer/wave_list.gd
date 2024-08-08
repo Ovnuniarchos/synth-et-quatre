@@ -94,7 +94,7 @@ func _on_Add_id_pressed(id:int)->void:
 		curr_wave_ix=cnt
 		var nw:Waveform
 		if id==0:
-			nw=SynthWave.new()
+			nw=NodeWave.new()
 		else:
 			nw=SampleWave.new()
 		var nn:String="%s %02X"%[nw.name,cnt]

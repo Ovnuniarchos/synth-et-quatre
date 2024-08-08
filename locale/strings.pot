@@ -1498,6 +1498,9 @@ msgstr ""
 msgid "Directories & files:"
 msgstr ""
 
+msgid "Open"
+msgstr ""
+
 
 # Text menu
 
@@ -1566,6 +1569,7 @@ msgstr ""
 
 msgid "ERR_CONFIG_KEY_NOT_FOUND"
 msgstr ""
+
 
 # File-related messages
 
@@ -1646,6 +1650,7 @@ msgstr ""
 
 
 # Macro language errors
+
 msgid "ERR_INVALID_CHARACTER"
 msgstr ""
 
@@ -1712,3 +1717,11 @@ msgstr ""
 msgid "ERR_ALPHA_ON_MASK_OR_SEL"
 msgstr ""
 
+
+# Node editor
+
+msgid "NODE_OUTPUT_TITLE"
+msgstr ""
+
+msgid "NODE_OUTPUT_PORT"
+msgstr ""

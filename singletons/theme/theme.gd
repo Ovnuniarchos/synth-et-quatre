@@ -184,7 +184,74 @@ func parse_theme(file:String)->Theme:
 	set_tracker_styles(new_theme,theme_data,"tracker",base_dir)
 	# Bar editor
 	set_bar_editor_styles(new_theme,theme_data,"bar-editor",base_dir)
+	# Node editor
+	set_node_editor_styles(new_theme,theme_data,"node-editor",base_dir)
+	# Node
 	return new_theme
+
+
+func set_node_editor_styles(new_theme:Theme,data:Dictionary,key:String,base_dir:String)->void:
+	var frag:Dictionary=ThemeParser.typesafe_get(data,key,{})
+	var sb:StyleBox=ThemeParser.create_stylebox(data,key,base_dir,box_colorsets[BS_NORMAL],panel_st[BS_NORMAL],std_image)
+	if sb==panel_st[BS_NORMAL]:
+		sb=panel_st[BS_NORMAL].duplicate()
+	new_theme.set_stylebox("bg","GraphEdit",sb)
+	new_theme.set_color("selection_fill","GraphEdit",ThemeParser.parse_color(frag,"selector-fill",std_colors[CO_FADED_BG]))
+	new_theme.set_color("selection_stroke","GraphEdit",ThemeParser.parse_color(frag,"selector-stroke",std_colors[CO_DEFAULT_FG]))
+	#
+	frag=ThemeParser.typesafe_get(frag,"node",{})
+	new_theme.set_constant("port_offset","GraphNode",ThemeParser.typesafe_get(frag,"port-offset",0.0))
+	new_theme.set_constant("separation","GraphNode",ThemeParser.typesafe_get(frag,"spacing",0.0))
+	var title_font:Font=ThemeParser.parse_font(frag,"title-font",base_dir,std_font)
+	if title_font==null:
+		title_font=Label.new().get_font("")
+	new_theme.set_font("title_font","GraphNode",title_font)
+	var title_adjust:float=title_font.get_height()+ThemeParser.typesafe_get(frag,"title-margin",0.0)
+	new_theme.set_constant("title_offset","GraphNode",title_adjust)
+	new_theme.set_color("title_color","GraphNode",ThemeParser.parse_color(frag,"title-color",std_colors[CO_DEFAULT_FG]))
+	set_node_glyphs(new_theme,frag,"closer",base_dir)
+	set_node_glyphs(new_theme,frag,"resizer",base_dir)
+	set_node_glyphs(new_theme,frag,"port",base_dir)
+	var frag2:Dictionary=ThemeParser.typesafe_get(frag,"port",{})
+	new_theme.set_constant(
+		"port_offset","GraphNode",
+		ThemeParser.parse_number_list(frag2,"h-offset",1,0.0)[0]
+	)
+	new_theme.set_color(
+		"port_color","GraphNode",
+		ThemeParser.parse_color(frag2,"color",std_colors[CO_DEFAULT_BG])
+	)
+	set_node_styles(new_theme,frag,"normal",panel_st[BS_NORMAL],base_dir,title_adjust)
+	set_node_styles(new_theme,frag,"selected",new_theme.get_stylebox("frame","GraphNode"),base_dir,title_adjust)
+
+
+func set_node_glyphs(new_theme:Theme,data:Dictionary,key:String,base_dir:String)->void:
+	var frag:Dictionary=ThemeParser.typesafe_get(data,key,{})
+	var icn:AtlasTexture=ThemeParser.parse_glyph(frag,base_dir,std_image)
+	var tmp:String={"closer":"close","resizer":"resizer","port":""}[key]
+	if not tmp.empty():
+		if icn==null and new_theme.has_icon(tmp,"Glyphs"):
+			icn=new_theme.get_icon(tmp,"Glyphs")
+			if frag.has("margin"):
+				icn=icn.duplicate()
+				ThemeParser.apply_image_margin(icn,ThemeParser.parse_sides_corners(frag,"margin",0.0))
+		tmp={"closer":"close_color","resizer":"resizer_color"}[key]
+		new_theme.set_color(tmp,"GraphNode",ThemeParser.parse_color(frag,"color",std_colors[CO_DEFAULT_FG]))
+	tmp={"closer":"close","resizer":"resizer","port":"port"}[key]
+	new_theme.set_icon(tmp,"GraphNode",icn)
+
+
+func set_node_styles(new_theme:Theme,data:Dictionary,key:String,base_style:StyleBox,base_dir:String,title_offset:float)->void:
+	var frag:Dictionary=ThemeParser.typesafe_get(data,key,{})
+	var st:StyleBox=ThemeParser.create_stylebox(data,key,base_dir,{
+			"fg":{"normal":std_colors[CO_DEFAULT_FG],"selected":std_colors[CO_HOVER_FG]}[key],
+			"bg":std_colors[CO_DEFAULT_BG]
+		},base_style,std_image)
+	if st==panel_st[BS_NORMAL]:
+		st=panel_st[BS_NORMAL].duplicate()
+	if frag.has("margin"):
+		st.content_margin_top+=title_offset
+	new_theme.set_stylebox({"normal":"frame","selected":"selectedframe"}[key],"GraphNode",st)
 
 
 func set_bar_editor_margins(sb:StyleBox,frag:Dictionary)->void:
@@ -199,6 +266,7 @@ func set_bar_editor_margins(sb:StyleBox,frag:Dictionary)->void:
 			sb.content_margin_right=sb.margin_right
 			sb.content_margin_top=sb.margin_top
 			sb.content_margin_bottom=sb.margin_bottom
+
 
 func set_bar_editor_styles(new_theme:Theme,data:Dictionary,key:String,base_dir:String)->void:
 	var frag:Dictionary=ThemeParser.typesafe_get(data,key,{})
@@ -325,16 +393,14 @@ func set_dialog_styles(new_theme:Theme,data:Dictionary,key:String,base_dir:Strin
 	new_theme.set_constant("title_height","WindowDialog",th)
 	new_theme.set_color("title_color","WindowDialog",ThemeParser.parse_color(frag,"title-color",std_colors[CO_DEFAULT_FG]))
 	new_theme.set_stylebox("panel","WindowDialog",st)
-	var icn:AtlasTexture=ThemeParser.parse_image(ThemeParser.typesafe_get(frag,"closer",{}),base_dir,std_image)
-	if icn==null:
-		icn=new_theme.get_icon("close","Glyphs") if new_theme.has_icon("close","Glyphs") else null
+	frag=ThemeParser.typesafe_get(frag,"closer",{})
+	var icn:AtlasTexture=ThemeParser.parse_glyph(frag,base_dir,std_image)
+	if icn==null and new_theme.has_icon("close","Glyphs"):
+		icn=new_theme.get_icon("close","Glyphs").duplicate()
+		if frag.has("margin"):
+			ThemeParser.apply_image_margin(icn,ThemeParser.parse_sides_corners(frag,"margin",0.0))
 	new_theme.set_icon("close","WindowDialog",icn)
 	new_theme.set_icon("close_highlight","WindowDialog",icn)
-	if icn!=null:
-		var ofs:Array=ThemeParser.parse_number_list(frag,"closer-margin",2,0.0)
-		new_theme.set_constant("close_h_ofs","WindowDialog",icn.region.size.x+ofs[0])
-		new_theme.set_constant("close_v_ofs","WindowDialog",th-ofs[1])
-
 
 
 func set_splitter_styles(new_theme:Theme,data:Dictionary,key:String,splitter_type:String,base_dir:String)->void:

@@ -279,6 +279,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://classes/bar_editor_language/macro_info.gd"
 }, {
+"base": "Waveform",
+"class": "NodeWave",
+"language": "GDScript",
+"path": "res://classes/node_wave.gd"
+}, {
 "base": "WaveComponent",
 "class": "NoiseWave",
 "language": "GDScript",
@@ -318,6 +323,11 @@ _global_script_classes=[ {
 "class": "NumberedItemList",
 "language": "GDScript",
 "path": "res://ui/widgets/numbered_item_list.gd"
+}, {
+"base": "WaveNode",
+"class": "OutputNode",
+"language": "GDScript",
+"path": "res://ui/wave_designer/synth_designer2/nodes/output_node.gd"
 }, {
 "base": "Macro",
 "class": "ParamMacro",
@@ -527,12 +537,12 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "ThemeHelper",
 "language": "GDScript",
-"path": "res://singletons/theme_helpers.gd"
+"path": "res://singletons/theme/theme_helpers.gd"
 }, {
 "base": "Object",
 "class": "ThemeParser",
 "language": "GDScript",
-"path": "res://singletons/theme_parsers.gd"
+"path": "res://singletons/theme/theme_parsers.gd"
 }, {
 "base": "PanelContainer",
 "class": "Tooltip",
@@ -588,6 +598,11 @@ _global_script_classes=[ {
 "class": "WaveController",
 "language": "GDScript",
 "path": "res://ui/wave_designer/synth_designer/nodes/wave_controller.gd"
+}, {
+"base": "GraphNode",
+"class": "WaveNode",
+"language": "GDScript",
+"path": "res://ui/wave_designer/synth_designer2/nodes/wave_node.gd"
 }, {
 "base": "Panel",
 "class": "WavePlotter",
@@ -669,6 +684,7 @@ _global_script_class_icons={
 "Macro": "",
 "MacroIO": "",
 "MacroInfo": "",
+"NodeWave": "",
 "NoiseWave": "",
 "NoiseWaveReader": "",
 "NoiseWaveWriter": "",
@@ -677,6 +693,7 @@ _global_script_class_icons={
 "NormalizeFilterWriter": "",
 "NumberEdit": "",
 "NumberedItemList": "",
+"OutputNode": "",
 "ParamMacro": "",
 "ParamMacroReader": "",
 "ParamMacroWriter": "",
@@ -731,6 +748,7 @@ _global_script_class_icons={
 "WaveComponentIO": "",
 "WaveComponentTitleBar": "",
 "WaveController": "",
+"WaveNode": "",
 "WavePlotter": "",
 "Waveform": "",
 "WaveformIO": "",
@@ -755,7 +773,7 @@ mix_rate=48000
 DSP="*res://dsp_lib.gdns"
 GLOBALS="*res://singletons/globals.gd"
 CONFIG="*res://singletons/config.gd"
-THEME="*res://singletons/theme.gd"
+THEME="*res://singletons/theme/theme.gd"
 SYNTH="*res://classes/synth.gd"
 IM_SYNTH="*res://singletons/im_synth.gd"
 SYNCER="*res://singletons/synth_syncer.gd"

@@ -357,10 +357,12 @@ static func parse_glyph(data:Dictionary,base_dir:String,default:Texture)->AtlasT
 	var at:AtlasTexture=parse_image(data,base_dir,default)
 	if at==null:
 		return null
-	var margin:Array=parse_number_list(data,"margin",2,0.0)
-	var offset:Array=parse_number_list(data,"offset",2,0.0)
-	at.margin=Rect2(offset[0]+margin[0],offset[1]+margin[1],margin[0]*2.0,margin[1]*2.0)
+	apply_image_margin(at,parse_sides_corners(data,"margin",0.0))
 	return at
+
+
+static func apply_image_margin(img:AtlasTexture,margin:Array)->void:
+	img.margin=Rect2(margin[3],margin[0],margin[3]+margin[1],margin[0]+margin[2])
 
 
 static func parse_text_styles(data:Dictionary,key:String,base_dir:String,default:Dictionary)->Dictionary:

@@ -1,0 +1,108 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://ui/widgets/spin_bar.gd" type="Script" id=1]
+[ext_resource path="res://ui/wave_designer/synth_designer2/synth_designer2.gd" type="Script" id=2]
+[ext_resource path="res://ui/wave_designer/synth_designer2/nodes/output_node.tscn" type="PackedScene" id=3]
+[ext_resource path="res://ui/wave_designer/synth_designer2/nodes/output_node.gd" type="Script" id=4]
+
+[node name="SynthDesigner" type="VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 4
+script = ExtResource( 2 )
+
+[node name="Info" type="PanelContainer" parent="."]
+margin_right = 1024.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+
+[node name="HBC" type="HBoxContainer" parent="Info"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1017.0
+margin_bottom = 31.0
+custom_constants/separation = 4
+
+[node name="LabelName" type="Label" parent="Info/HBC" groups=["Label"]]
+margin_top = 5.0
+margin_right = 91.0
+margin_bottom = 19.0
+text = "WAVED_NAME"
+
+[node name="S2" type="ReferenceRect" parent="Info/HBC"]
+margin_left = 95.0
+margin_right = 103.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 8, 0 )
+
+[node name="Name" type="LineEdit" parent="Info/HBC"]
+margin_left = 107.0
+margin_right = 363.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 256, 0 )
+
+[node name="S" type="ReferenceRect" parent="Info/HBC"]
+margin_left = 367.0
+margin_right = 391.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 24, 0 )
+
+[node name="LabelSize" type="Label" parent="Info/HBC" groups=["Label"]]
+margin_left = 395.0
+margin_top = 5.0
+margin_right = 475.0
+margin_bottom = 19.0
+text = "WAVED_SIZE"
+
+[node name="S3" type="ReferenceRect" parent="Info/HBC"]
+margin_left = 479.0
+margin_right = 487.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 8, 0 )
+
+[node name="Size" type="ProgressBar" parent="Info/HBC"]
+margin_left = 491.0
+margin_top = 5.0
+margin_right = 619.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 128, 14 )
+size_flags_vertical = 4
+min_value = 4.0
+max_value = 16.0
+step = 1.0
+value = 4.0
+percent_visible = false
+script = ExtResource( 1 )
+big_step = 1.0
+huge_step = 1.0
+
+[node name="LabelSizeSamples" type="Label" parent="Info/HBC"]
+margin_left = 623.0
+margin_top = 5.0
+margin_right = 631.0
+margin_bottom = 19.0
+text = "0"
+
+[node name="Designer" type="GraphEdit" parent="."]
+margin_top = 42.0
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+use_snap = false
+minimap_enabled = false
+
+[node name="NewMenu" type="PopupMenu" parent="Designer"]
+margin_right = 44.0
+margin_bottom = 20.0
+items = [ "Item 0", null, 0, false, false, 0, 0, null, "", false, "Item 1", null, 0, false, false, 1, 0, null, "", false, "Item 2", null, 0, false, false, 2, 0, null, "", false, "Item 3", null, 0, false, false, 3, 0, null, "", false, "Item 4", null, 0, false, false, 4, 0, null, "", false, "Item 5", null, 0, false, false, 5, 0, null, "", false, "Item 6", null, 0, false, false, 6, 0, null, "", false, "Item 7", null, 0, false, false, 7, 0, null, "", false, "Item 8", null, 0, false, false, 8, 0, null, "", false, "Item 9", null, 0, false, false, 9, 0, null, "", false, "Item 10", null, 0, false, false, 10, 0, null, "", false, "Item 11", null, 0, false, false, 11, 0, null, "", false, "Item 12", null, 0, false, false, 12, 0, null, "", false, "Item 13", null, 0, false, false, 13, 0, null, "", false, "Item 14", null, 0, false, false, 14, 0, null, "", false, "Item 15", null, 0, false, false, 15, 0, null, "", false, "Item 16", null, 0, false, false, 16, 0, null, "", false, "Item 17", null, 0, false, false, 17, 0, null, "", false, "Item 18", null, 0, false, false, 18, 0, null, "", false, "Item 19", null, 0, false, false, 19, 0, null, "", false, "Item 20", null, 0, false, false, 20, 0, null, "", false, "Item 21", null, 0, false, false, 21, 0, null, "", false, "Item 22", null, 0, false, false, 22, 0, null, "", false, "Item 23", null, 0, false, false, 23, 0, null, "", false, "Item 24", null, 0, false, false, 24, 0, null, "", false, "Item 25", null, 0, false, false, 25, 0, null, "", false, "Item 26", null, 0, false, false, 26, 0, null, "", false, "Item 27", null, 0, false, false, 27, 0, null, "", false, "Item 28", null, 0, false, false, 28, 0, null, "", false, "Item 29", null, 0, false, false, 29, 0, null, "", false, "Item 30", null, 0, false, false, 30, 0, null, "", false, "Item 31", null, 0, false, false, 31, 0, null, "", false, "Item 32", null, 0, false, false, 32, 0, null, "", false ]
+allow_search = true
+
+[node name="Output" parent="Designer" instance=ExtResource( 3 )]
+script = ExtResource( 4 )
+
+[connection signal="text_changed" from="Info/HBC/Name" to="." method="_on_Name_changed"]
+[connection signal="value_changed" from="Info/HBC/Size" to="." method="_on_Size_changed"]
+[connection signal="gui_input" from="Designer" to="." method="_on_Designer_gui_input"]

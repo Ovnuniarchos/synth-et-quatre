@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://ui/wave_designer/synth_designer2/nodes/wave_node.gd" type="Script" id=1]
+
+[node name="Output" type="GraphNode"]
+margin_right = 181.0
+margin_bottom = 59.0
+mouse_filter = 1
+resizable = true
+slot/0/left_enabled = true
+slot/0/left_type = 0
+slot/0/left_color = Color( 1, 1, 1, 1 )
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color( 1, 1, 1, 1 )
+script = ExtResource( 1 )
+base_title = "NODE_OUTPUT_TITLE"
+
+[node name="Output" type="Label" parent="."]
+margin_left = 16.0
+margin_top = 24.0
+margin_right = 165.0
+margin_bottom = 38.0
+text = "NODE_OUTPUT_PORT"
+
+[connection signal="close_request" from="." to="." method="_on_close_request"]
+[connection signal="resize_request" from="." to="." method="_on_resize_request"]

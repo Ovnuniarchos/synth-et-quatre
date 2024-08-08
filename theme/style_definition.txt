@@ -6,7 +6,9 @@ STRETCH_MODE: "stretch" | "tile" | "fit"
 
 HINT_MODE: "none" | "light" | "normal"
 
-COLOR_TYPE: /#?([:xdigit:]{2})?[:xdigit:]{6}/i | COLOR_NAME | number<R,G,B> | [number<R,G,B>] | [number<R,G,B>,number<A>] | [number<R>,number<G>,number<B>] | [number<R>,number<G>,number<B>,number<A>]
+UNIT_NUM: number(0.0 ... 1.0)
+
+COLOR_TYPE: /#?[:xdigit:]{3,4}/i | /#?([:xdigit:]{2})?[:xdigit:]{6}/i | COLOR_NAME | UNIT_NUM<R,G,B> | [UNIT_NUM<R,G,B>] | [UNIT_NUM<R,G,B>,UNIT_NUM<A>] | [UNIT_NUM<R>,UNIT_NUM<G>,UNIT_NUM<B>] | [UNIT_NUM<R>,UNIT_NUM<G>,UNIT_NUM<B>,UNIT_NUM<A>]
 
 SHADOW_TYPE: "none" | "drop" | "outline"
 
@@ -89,8 +91,7 @@ IMAGE_TYPE: {
 
 GLYPH_TYPE: {
 	IMAGE_TYPE
-	margin: COORDS_TYPE
-	offset: COORDS_TYPE
+	margin: SIDES_TYPE
 }
 
 TEXT_STYLE: {
@@ -109,15 +110,23 @@ TEXT_STYLE: {
 colors: {
 	default-fg + default-bg + faded-fg + faded-bg + accent-fg + accent-bg: COLOR_TYPE
 }
+
 default-image: string
+
 glyphs: {
 	arrow-up + arrow-down + arrow-left + arrow-right +
-	close +	play + play-track + stop + record + midi: GLYPH_TYPE
+	close +	play + play-track + stop + record + midi +
+	resizer: GLYPH_TYPE
 }
+
 spacing: SPACING_TYPE
+
 font: FONT_TYPE
+
 panel: BOX_TYPE
+
 text | title | label: TEXT_STYLE
+
 tab:{
 	normal + selected: {
 		BOX_TYPE
@@ -125,6 +134,7 @@ tab:{
 	}
 	font: FONT_TYPE
 }
+
 button | accent-button | menu: {
 	normal + disabled + hover + pressed: {
 		BOX_TYPE
@@ -132,6 +142,7 @@ button | accent-button | menu: {
 	}
 	font: FONT_TYPE
 }
+
 popup: {
 	normal + hover: BOX_TYPE
 	separator: SEPARATOR_TYPE
@@ -140,19 +151,23 @@ popup: {
 	unchecked: GLYPH_TYPE
 	dropper: GLYPH_TYPE
 }
+
 scrollbar: {
 	normal + hover + pressed: SCROLLBAR_TYPE
 	background: BOX_TYPE
 }
+
 listbox: {
 	background + selected: BOX_TYPE
 	separation: number
 	font: FONT_TYPE
 }
+
 input: {
 	normal + focus + disabled: BOX_TYPE
 	font: FONT_TYPE
 }
+
 spinbar | progress: {
 	normal + disabled + hover: {
 		background: BOX_TYPE
@@ -161,33 +176,38 @@ spinbar | progress: {
 		font: FONT_TYPE
 	}
 }
+
 title: {
 	font: FONT_TYPE
 }
+
 splitter: {
 	horizontal + vertical: {
 		IMAGE_TYPE
 		margin: number
 	}
 }
+
 dialog: {
 	BOX_TYPE
 	title-margin: number
 	title-color: COLOR_TYPE
 	title-font: FONT_TYPE
-	closer: IMAGE_TYPE
-	closer-margin: COORDS_TYPE
+	closer: GLYPH_TYPE
 }
+
 file-dialog: {
 	file-list + file-list-selected: BOX_TYPE
 	color + color-selected + color-disabled + file-color + folder-color: COLOR_TYPE
 	file + folder + parent + reload + hide: IMAGE_TYPE
 }
+
 tooltip: {
 	BOX_TYPE
 	font: FONT_TYPE
 	color: COLOR_TYPE
 }
+
 tracker: {
 	IMAGE_TYPE
 	cell-size: COORDS_TYPE
@@ -199,6 +219,7 @@ tracker: {
 	muted: COLOR_TYPE
 	solo: COLOR_TYPE
 }
+
 order-matrix: {
 	item + item-hover +
 	rownum + rownum-hover + rownum-sel + rownum-sel-hover: {
@@ -208,10 +229,39 @@ order-matrix: {
 	margin: COORDS_TYPE
 	font: FONT_TYPE
 }
+
 bar-editor: {
 	bar-size: COORDS_TYPE
 	loop-height + separation: number
 	color + relative-color + mask-color + center-color + loop-color + release-color: COLOR_TYPE
 	values + loop: BOX_TYPE
 	labels: TEXT_STYLE
+}
+
+node-editor: {
+	BOX_TYPE
+	selector-fill: COLOR_TYPE
+	selector-border: COLOR_TYPE
+	node: {
+		spacing: number
+		labels-font: TEXT_STYLE
+		title-font: FONT_TYPE
+		title-margin: number
+		title-color: COLOR_TYPE
+		closer: {
+			GLYPH_TYPE
+			color: COLOR_TYPE
+		}
+		resizer: {
+			GLYPH_TYPE
+			color: COLOR_TYPE
+		}
+		port: {
+			GLYPH_TYPE
+			h-offset: number
+			color: COLOR_TYPE
+		}
+		normal: BOX_TYPE
+		selected: BOX_TYPE
+	}
 }

@@ -51,7 +51,6 @@ var relative_button:Button
 var is_ready:bool=false
 var bar_width:float
 var bar_height:float
-var real_theme:Theme
 var bmode:int=BIT_SWITCH
 var value_pos:Vector2
 

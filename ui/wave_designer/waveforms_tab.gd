@@ -2,7 +2,8 @@ extends Tabs
 
 
 onready var tabs:TabContainer=$HS/VS/Tabs
-onready var synth:VBoxContainer=$HS/VS/Tabs/SynthDesigner2
+onready var synth:VBoxContainer=$HS/VS/Tabs/SynthDesigner
+onready var node:VBoxContainer=$HS/VS/Tabs/NodeDesigner
 onready var sample:VBoxContainer=$HS/VS/Tabs/SampleDesigner
 var delayed_wave_ix:int
 
@@ -15,14 +16,17 @@ func _ready()->void:
 func _on_song_changed()->void:
 	synth._on_wave_selected(-1)
 	sample._on_wave_selected(-1)
+	node._on_wave_selected(-1)
 
 
 func _on_wave_deleted(wave_ix:int)->void:
 	var w:Waveform=GLOBALS.song.get_wave(wave_ix)
-	if w is NodeWave:
+	if w is SynthWave:
 		synth._on_wave_deleted(wave_ix)
 	elif w is SampleWave:
 		sample._on_wave_deleted(wave_ix)
+	elif w is NodeWave:
+		node._on_wave_deleted(wave_ix)
 
 
 func _on_wave_selected(wave_ix:int)->void:
@@ -30,9 +34,12 @@ func _on_wave_selected(wave_ix:int)->void:
 	if tabs==null:
 		return
 	var w:Waveform=GLOBALS.song.get_wave(wave_ix)
-	synth._on_wave_selected(wave_ix)
-	sample._on_wave_selected(wave_ix)
-	if w is NodeWave:
+	if w is SynthWave:
 		tabs.current_tab=0
+		synth._on_wave_selected(wave_ix)
 	elif w is SampleWave:
 		tabs.current_tab=1
+		sample._on_wave_selected(wave_ix)
+	elif w is NodeWave:
+		tabs.current_tab=2
+		node._on_wave_selected(wave_ix)

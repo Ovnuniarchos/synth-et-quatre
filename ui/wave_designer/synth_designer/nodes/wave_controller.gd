@@ -5,15 +5,6 @@ class_name WaveController
 signal params_changed
 
 
-const OUTPUTS:Array=[
-	"WAVED_STD_OUTPUT_OFF",
-	"WAVED_STD_OUTPUT_REPLACE",
-	"WAVED_STD_OUTPUT_ADD",
-	"WAVED_STD_OUTPUT_AM",
-	"WAVED_STD_OUTPUT_XM"
-]
-
-
 var wave:SynthWave
 # warning-ignore:unused_class_variable
 var component:WaveComponent

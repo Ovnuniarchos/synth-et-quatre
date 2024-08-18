@@ -531,7 +531,9 @@ func set_popup_styles(new_theme:Theme,data:Dictionary,base_dir:String)->void:
 	new_theme.set_stylebox("separator","PopupMenu",sep_st)
 	new_theme.set_icon("radio_checked","PopupMenu",ThemeParser.parse_glyph(ThemeParser.typesafe_get(frag,"checked",{}),base_dir,std_image))
 	new_theme.set_icon("radio_unchecked","PopupMenu",ThemeParser.parse_glyph(ThemeParser.typesafe_get(frag,"unchecked",{}),base_dir,std_image))
-	var t:Texture=ThemeParser.parse_glyph(ThemeParser.typesafe_get(frag,"dropper",{}),base_dir,null)
+	var t:Texture=ThemeParser.parse_glyph(ThemeParser.typesafe_get(frag,"submenu",{}),base_dir,std_image)
+	new_theme.set_icon("submenu","PopupMenu",new_theme.get_icon("arrow_right","Glyphs") if t==null else t)
+	t=ThemeParser.parse_glyph(ThemeParser.typesafe_get(frag,"dropper",{}),base_dir,std_image)
 	new_theme.set_icon("arrow","OptionButton",new_theme.get_icon("arrow_down","Glyphs") if t==null else t)
 	# Another undocumented style
 	new_theme.set_constant("modulate_arrow","OptionButton",1)

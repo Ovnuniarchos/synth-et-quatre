@@ -5,59 +5,76 @@ const WAVE_TYPE:String="Node"
 
 
 var size_po2:int=8 setget set_size_po2
-var components:Array=[]
+var components:Array
+var output:OutputNodeComponent
 
 
 func _init()->void:
-	name=tr("DEFN_SYNTH_WAVE")
+	name=tr("DEFN_NODE_WAVE")
+	output=OutputNodeComponent.new()
+	components=[output]
+	data=output.output
 	resize_data(1<<size_po2)
 
 
 func set_size_po2(s:int)->void:
 	size_po2=int(clamp(s,4.0,16.0))
 	size=1<<size_po2
-	resize_data(size)
+	for c in components:
+		c.set_size_po2(size_po2)
 
 
 func calculate()->void:
-	var buf_size:int=data.size()
-	var buffer:Array=[]
-	buffer.resize(buf_size)
-	buffer.fill(0.0)
-	# TODO
-	data=buffer
+	data=output.calculate()
 
 
 func duplicate()->Waveform:
-	var nw:SynthWave=.duplicate() as SynthWave
+	var nw:NodeWave=.duplicate() as NodeWave
 	nw.size_po2=size_po2
 	nw.components=[]
 	for c in components:
-		nw.components.append(c.duplicate())
-	# TODO?
+		var nc:WaveNodeComponent=c.duplicate()
+		nw.components.append(nc)
+		if nc is OutputNodeComponent:
+			nw.output=nc
 	nw.calculate()
 	return nw
 
 
 func copy(from:Waveform,full:bool=false)->void:
-	if from.WAVE_TYPE==WAVE_TYPE:
-		.copy(from,full)
-		size_po2=from.size_po2
-		components=[]
-		for c in from.components:
-			components.append(c.duplicate())
-		# TODO?
-		calculate()
+	if (from as NodeWave)==null:
+		return
+	.copy(from,full)
+	size_po2=from.size_po2
+	components=[]
+	for c in from.components:
+		var nc:WaveNodeComponent=c.duplicate()
+		components.append(nc)
+		if nc is OutputNodeComponent:
+			output=nc
+	calculate()
 
 
 func equals(other:Waveform)->bool:
-	if !.equals(other):
+	if not .equals(other):
 		return false
 	if other.components.size()!=components.size():
 		return false
-	for i in components.size():
-		var c0:WaveComponent=components[i]
-		var c1:WaveComponent=other.components[i]
-		if not c0.equals(c1) or components.find(c0.input_comp)!=other.components.find(c1.input_comp):
+	for i in components:
+		var found:bool=false
+		for j in other.components:
+			if i.equals(j):
+				found=true
+				break
+		if not found:
 			return false
 	return true
+
+
+func add_component(node:WaveNodeComponent)->void:
+	if not node in components:
+		components.append(node)
+
+
+func remove_component(node:WaveNodeComponent)->void:
+	components.erase(node)

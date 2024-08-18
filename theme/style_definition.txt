@@ -150,6 +150,7 @@ popup: {
 	checked: GLYPH_TYPE
 	unchecked: GLYPH_TYPE
 	dropper: GLYPH_TYPE
+	submenu: GLYPH_TYPE
 }
 
 scrollbar: {

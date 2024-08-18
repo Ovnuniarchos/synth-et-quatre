@@ -5,7 +5,7 @@
 [ext_resource path="res://ui/wave_designer/synth_designer/synth_designer.tscn" type="PackedScene" id=3]
 [ext_resource path="res://ui/wave_designer/sample_designer/sample_designer.tscn" type="PackedScene" id=4]
 [ext_resource path="res://ui/wave_designer/waveforms_tab.gd" type="Script" id=5]
-[ext_resource path="res://ui/wave_designer/synth_designer2/synth_designer2.tscn" type="PackedScene" id=6]
+[ext_resource path="res://ui/wave_designer/node_designer/node_designer.tscn" type="PackedScene" id=6]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 content_margin_left = 0.0
@@ -44,12 +44,12 @@ size_flags_vertical = 3
 custom_styles/panel = SubResource( 1 )
 tabs_visible = false
 
-[node name="SynthDesigner2" parent="HS/VS/Tabs" instance=ExtResource( 6 )]
+[node name="SynthDesigner" parent="HS/VS/Tabs" instance=ExtResource( 3 )]
 
 [node name="SampleDesigner" parent="HS/VS/Tabs" instance=ExtResource( 4 )]
 visible = false
 
-[node name="SynthDesigner" parent="HS/VS/Tabs" instance=ExtResource( 3 )]
+[node name="NodeDesigner" parent="HS/VS/Tabs" instance=ExtResource( 6 )]
 visible = false
 
 [node name="Plotter" parent="HS/VS" instance=ExtResource( 2 )]
@@ -61,7 +61,9 @@ margin_bottom = 600.0
 
 [connection signal="wave_deleted" from="HS/WaveList" to="." method="_on_wave_deleted"]
 [connection signal="wave_selected" from="HS/WaveList" to="." method="_on_wave_selected"]
-[connection signal="name_changed" from="HS/VS/Tabs/SampleDesigner" to="HS/WaveList" method="_on_name_changed"]
-[connection signal="wave_calculated" from="HS/VS/Tabs/SampleDesigner" to="HS/VS/Plotter" method="_on_wave_calculated"]
 [connection signal="name_changed" from="HS/VS/Tabs/SynthDesigner" to="HS/WaveList" method="_on_name_changed"]
 [connection signal="wave_calculated" from="HS/VS/Tabs/SynthDesigner" to="HS/VS/Plotter" method="_on_wave_calculated"]
+[connection signal="name_changed" from="HS/VS/Tabs/SampleDesigner" to="HS/WaveList" method="_on_name_changed"]
+[connection signal="wave_calculated" from="HS/VS/Tabs/SampleDesigner" to="HS/VS/Plotter" method="_on_wave_calculated"]
+[connection signal="name_changed" from="HS/VS/Tabs/NodeDesigner" to="HS/WaveList" method="_on_name_changed"]
+[connection signal="wave_calculated" from="HS/VS/Tabs/NodeDesigner" to="HS/VS/Plotter" method="_on_wave_calculated"]

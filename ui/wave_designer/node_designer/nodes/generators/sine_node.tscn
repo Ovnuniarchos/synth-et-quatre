@@ -1,0 +1,228 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://ui/wave_designer/node_designer/nodes/generators/sine_node.gd" type="Script" id=1]
+[ext_resource path="res://ui/widgets/spin_bar.gd" type="Script" id=2]
+
+[node name="Sine" type="GraphNode"]
+margin_right = 181.0
+margin_bottom = 59.0
+show_close = true
+resizable = true
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color( 1, 1, 1, 1 )
+slot/0/right_enabled = true
+slot/0/right_type = 0
+slot/0/right_color = Color( 1, 1, 1, 1 )
+slot/1/left_enabled = true
+slot/1/left_type = 0
+slot/1/left_color = Color( 1, 1, 1, 1 )
+slot/1/right_enabled = false
+slot/1/right_type = 0
+slot/1/right_color = Color( 1, 1, 1, 1 )
+slot/2/left_enabled = true
+slot/2/left_type = 0
+slot/2/left_color = Color( 1, 1, 1, 1 )
+slot/2/right_enabled = false
+slot/2/right_type = 0
+slot/2/right_color = Color( 1, 1, 1, 1 )
+slot/3/left_enabled = true
+slot/3/left_type = 0
+slot/3/left_color = Color( 1, 1, 1, 1 )
+slot/3/right_enabled = false
+slot/3/right_type = 0
+slot/3/right_color = Color( 1, 1, 1, 1 )
+slot/4/left_enabled = true
+slot/4/left_type = 0
+slot/4/left_color = Color( 1, 1, 1, 1 )
+slot/4/right_enabled = false
+slot/4/right_type = 0
+slot/4/right_color = Color( 1, 1, 1, 1 )
+slot/5/left_enabled = true
+slot/5/left_type = 0
+slot/5/left_color = Color( 1, 1, 1, 1 )
+slot/5/right_enabled = false
+slot/5/right_type = 0
+slot/5/right_color = Color( 1, 1, 1, 1 )
+slot/6/left_enabled = true
+slot/6/left_type = 0
+slot/6/left_color = Color( 1, 1, 1, 1 )
+slot/6/right_enabled = false
+slot/6/right_type = 0
+slot/6/right_color = Color( 1, 1, 1, 1 )
+script = ExtResource( 1 )
+base_title = "NODE_SINE_TITLE"
+
+[node name="Output" type="Label" parent="."]
+margin_left = 16.0
+margin_top = 24.0
+margin_right = 232.0
+margin_bottom = 38.0
+text = "NODE_OUTPUT_PORT"
+align = 2
+
+[node name="Freq" type="HBoxContainer" parent="."]
+margin_left = 16.0
+margin_top = 39.0
+margin_right = 232.0
+margin_bottom = 53.0
+
+[node name="Label" type="Label" parent="Freq"]
+margin_right = 159.0
+margin_bottom = 14.0
+size_flags_horizontal = 2
+text = "NODE_FREQUENCY_PORT"
+
+[node name="SpinBar" type="ProgressBar" parent="Freq"]
+margin_left = 163.0
+margin_right = 216.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 53, 14 )
+size_flags_horizontal = 11
+size_flags_stretch_ratio = 2.0
+min_value = -32.0
+max_value = 32.0
+percent_visible = false
+script = ExtResource( 2 )
+big_step = 400.0
+huge_step = 800.0
+_decimals = 2
+
+[node name="Amplitude" type="HBoxContainer" parent="."]
+margin_left = 16.0
+margin_top = 54.0
+margin_right = 232.0
+margin_bottom = 68.0
+
+[node name="Label" type="Label" parent="Amplitude"]
+margin_right = 159.0
+margin_bottom = 14.0
+size_flags_horizontal = 2
+text = "NODE_AMPLITUDE_PORT"
+
+[node name="SpinBar" type="ProgressBar" parent="Amplitude"]
+margin_left = 163.0
+margin_right = 216.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 53, 14 )
+size_flags_horizontal = 11
+size_flags_stretch_ratio = 2.0
+min_value = -1.0
+max_value = 1.0
+percent_visible = false
+script = ExtResource( 2 )
+big_step = 5.0
+huge_step = 20.0
+_decimals = 2
+
+[node name="Phi0" type="HBoxContainer" parent="."]
+margin_left = 16.0
+margin_top = 69.0
+margin_right = 232.0
+margin_bottom = 83.0
+
+[node name="Label" type="Label" parent="Phi0"]
+margin_right = 115.0
+margin_bottom = 14.0
+size_flags_horizontal = 2
+text = "NODE_PHI0_PORT"
+
+[node name="SpinBar" type="ProgressBar" parent="Phi0"]
+margin_left = 119.0
+margin_right = 216.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 53, 14 )
+size_flags_horizontal = 11
+size_flags_stretch_ratio = 2.0
+min_value = -1.0
+max_value = 1.0
+percent_visible = false
+script = ExtResource( 2 )
+big_step = 5.0
+huge_step = 20.0
+_decimals = 2
+
+[node name="Power" type="HBoxContainer" parent="."]
+margin_left = 16.0
+margin_top = 84.0
+margin_right = 232.0
+margin_bottom = 98.0
+
+[node name="Label" type="Label" parent="Power"]
+margin_right = 131.0
+margin_bottom = 14.0
+size_flags_horizontal = 2
+text = "NODE_POWER_PORT"
+
+[node name="SpinBar" type="ProgressBar" parent="Power"]
+margin_left = 135.0
+margin_right = 216.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 53, 14 )
+size_flags_horizontal = 11
+size_flags_stretch_ratio = 2.0
+max_value = 50.0
+percent_visible = false
+script = ExtResource( 2 )
+huge_step = 50.0
+_decimals = 2
+
+[node name="Decay" type="HBoxContainer" parent="."]
+margin_left = 16.0
+margin_top = 99.0
+margin_right = 232.0
+margin_bottom = 113.0
+
+[node name="Label" type="Label" parent="Decay"]
+margin_right = 125.0
+margin_bottom = 14.0
+size_flags_horizontal = 2
+text = "NODE_DECAY_PORT"
+
+[node name="SpinBar" type="ProgressBar" parent="Decay"]
+margin_left = 129.0
+margin_right = 216.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 53, 14 )
+size_flags_horizontal = 11
+size_flags_stretch_ratio = 2.0
+max_value = 1.0
+percent_visible = false
+script = ExtResource( 2 )
+big_step = 5.0
+huge_step = 20.0
+_decimals = 2
+
+[node name="DCOffset" type="HBoxContainer" parent="."]
+margin_left = 16.0
+margin_top = 114.0
+margin_right = 232.0
+margin_bottom = 128.0
+
+[node name="Label" type="Label" parent="DCOffset"]
+margin_right = 154.0
+margin_bottom = 14.0
+size_flags_horizontal = 2
+text = "NODE_DC_OFFSET_PORT"
+
+[node name="SpinBar" type="ProgressBar" parent="DCOffset"]
+margin_left = 158.0
+margin_right = 216.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 53, 14 )
+size_flags_horizontal = 11
+size_flags_stretch_ratio = 2.0
+min_value = -1.0
+max_value = 1.0
+percent_visible = false
+script = ExtResource( 2 )
+big_step = 5.0
+huge_step = 20.0
+_decimals = 2
+
+[connection signal="value_changed" from="Freq/SpinBar" to="." method="_on_Freq_value_changed"]
+[connection signal="value_changed" from="Amplitude/SpinBar" to="." method="_on_Amplitude_value_changed"]
+[connection signal="value_changed" from="Phi0/SpinBar" to="." method="_on_Phi0_value_changed"]
+[connection signal="value_changed" from="Power/SpinBar" to="." method="_on_Power_value_changed"]
+[connection signal="value_changed" from="Decay/SpinBar" to="." method="_on_Decay_value_changed"]
+[connection signal="value_changed" from="DCOffset/SpinBar" to="." method="_on_DCOffset_value_changed"]

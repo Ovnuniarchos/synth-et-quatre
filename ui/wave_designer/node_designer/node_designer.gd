@@ -5,15 +5,9 @@ signal name_changed(wave_ix,text)
 
 
 var curr_wave_ix:int=-1
-var new_menu:PopupMenu
-# var components:HBoxContainer
 
 
 func _ready():
-	# components=$Designer/SC/Components
-	new_menu=$Designer/NewMenu
-	new_menu.connect("id_pressed",self,"_on_New_id_pressed")
-	$Designer.get_zoom_hbox().hide()
 	update_ui()
 
 
@@ -25,7 +19,7 @@ func update_ui()->void:
 
 
 func _on_Name_changed(text:String)->void:
-	var w:Waveform=GLOBALS.song.get_wave(curr_wave_ix)
+	var w:NodeWave=GLOBALS.song.get_wave(curr_wave_ix)
 	if w!=null:
 		w.name=text
 		emit_signal("name_changed",curr_wave_ix,text)
@@ -60,8 +54,7 @@ func _on_wave_selected(wave:int)->void:
 		$Info/HBC/Size.value=w.size_po2
 		set_size_bytes(w.size)
 		$Designer.visible=true
-	"""if components!=null:
-		regen_editor_nodes(w)"""
+	$Designer.regen_editor_nodes(w)
 	calculate()
 
 
@@ -70,56 +63,47 @@ func _on_wave_deleted(_wave:int)->void:
 	$Info/HBC/Name.editable=false
 	$Info/HBC/Name.text=""
 	set_size_bytes(-1)
-	# regen_editor_nodes(null)
+	$Designer.regen_editor_nodes(null)
 	calculate()
 
-
-#
-
-"""func regen_editor_nodes(wave:NodeWave)->void:
-	for n in components.get_children():
-		if n is WaveController:
-			n.queue_free()
-	if wave==null:
-		return
-	# TODO
-
-
-func insert_component(type:int,wave:NodeWave,wc:WaveComponent)->void:
-	pass
-	# TODO
-
-
-func _on_New_id_pressed(id:int)->void:
-	var wave:Waveform=GLOBALS.song.get_wave(curr_wave_ix)
-	if wave==null:
-		return
-	var wc:WaveComponent=null
-	# TODO
-	wave.components.append(wc)
-	insert_component(id,wave,wc)
-	wave.readjust_inputs()
-	calculate()
-
-
-func _on_delete_requested(control:WaveController)->void:
-	var wave:NodeWave=control.wave
-	# TODO
-	regen_editor_nodes(wave)
-"""
 
 #
 
 
 func calculate()->void:
-	var wave:Waveform=GLOBALS.song.get_wave(curr_wave_ix)
+	var wave:NodeWave=GLOBALS.song.get_wave(curr_wave_ix) as NodeWave
 	if wave!=null:
 		wave.calculate()
 		SYNCER.send_wave(wave)
-	emit_signal("wave_calculated",curr_wave_ix)
+		emit_signal("wave_calculated",curr_wave_ix)
 
 
-func _on_Designer_gui_input(ev:InputEvent)->void:
-	if ev is InputEventMouseButton and not ev.pressed and ev.button_index==2:
-		new_menu.rect_position=ev.global_position
-		new_menu.popup()
+func _on_Designer_node_deleted(node:WaveNodeComponent)->void:
+	var wave:NodeWave=GLOBALS.song.get_wave(curr_wave_ix) as NodeWave
+	if wave==null:
+		return
+	wave.remove_component(node)
+	calculate()
+
+
+func _on_Designer_node_added(node:WaveNodeComponent)->void:
+	var wave:NodeWave=GLOBALS.song.get_wave(curr_wave_ix) as NodeWave
+	if wave==null:
+		return
+	wave.add_component(node)
+
+
+func _on_Designer_connections_changed(connections:Array)->void:
+	var wave:NodeWave=GLOBALS.song.get_wave(curr_wave_ix) as NodeWave
+	if wave==null:
+		return
+	for comp in wave.components:
+		for inp in comp.inputs:
+			inp.clear()
+	for conn in connections:
+		conn.to.inputs[conn.to_port].append(conn.from)
+	calculate()
+
+
+func _on_Designer_params_changed()->void:
+	calculate()

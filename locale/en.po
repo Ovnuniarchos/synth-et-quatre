@@ -489,13 +489,13 @@ msgid "FMED_MG_VOLUME"
 msgstr "Volume"
 
 msgid "FMED_MG_VOLUME_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "FMED_MG_PAN"
 msgstr "Pan"
 
 msgid "FMED_MG_PAN_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "FMED_MG_CHAN_INVERT"
 msgstr "Invert"
@@ -513,7 +513,7 @@ msgid "FMED_MG_KEY_ON"
 msgstr "Key on"
 
 msgid "FMED_MG_KEY_ON_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "FMED_MX_KEYON_STOP"
 msgstr "Stop"
@@ -552,7 +552,7 @@ msgid "FMED_MG_CLIP"
 msgstr "Clip"
 
 msgid "FMED_MG_CLIP_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "FMED_MO_TONE"
 msgstr "Tone"
@@ -564,19 +564,19 @@ msgid "FMED_MO_KEY_ON"
 msgstr "Key on"
 
 msgid "FMED_MO_KEY_ON_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "FMED_MO_DUTY_CYCLE"
 msgstr "Duty cycle"
 
 msgid "FMED_MO_DUTY_CYCLE_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "FMED_MO_WAVE"
 msgstr "Wave"
 
 msgid "FMED_MO_WAVE_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "FMED_MO_ATTACK"
 msgstr "Attack"
@@ -651,7 +651,7 @@ msgid "FMED_MO_AM_LFO"
 msgstr "AM LFO"
 
 msgid "FMED_MO_AM_LFO_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "FMED_MO_KEY_SCALING"
 msgstr "Key scaling"
@@ -663,13 +663,13 @@ msgid "FMED_MO_MULTIPLIER"
 msgstr "Multiplier"
 
 msgid "FMED_MO_MULTIPLIER_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "FMED_MO_DIVIDER"
 msgstr "Divisor"
 
 msgid "FMED_MO_DIVIDER_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "FMED_MO_DETUNE_VALUE"
 msgstr "Det. / F.Freq."
@@ -681,7 +681,7 @@ msgid "FMED_MO_DETUNE_MODE"
 msgstr "Detune mode"
 
 msgid "FMED_MO_DETUNE_MODE_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "FMED_MO_DETMODE_MILLIS"
 msgstr "Millis"
@@ -702,13 +702,13 @@ msgid "FMED_MO_FM_LFO"
 msgstr "FM LFO"
 
 msgid "FMED_MO_FM_LFO_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "FMED_MO_PHASE"
 msgstr "Phase"
 
 msgid "FMED_MO_PHASE_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "FMED_MO_OPXY"
 msgstr "Op{i_op_org} > Op{i_op_dst} mod."
@@ -726,7 +726,7 @@ msgid "FMED_MO_OUTPUT"
 msgstr "Output"
 
 msgid "FMED_MO_OUTPUT_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 # Macro editor
 msgid "MCED_RELATIVE"
@@ -801,6 +801,9 @@ msgstr "Synthetic"
 
 msgid "WAVED_WTYPE_SAMPLED"
 msgstr "Sample"
+
+msgid "WAVED_WTYPE_NODE"
+msgstr "Nodal"
 
 msgid "WAVED_NAME"
 msgstr "Name"
@@ -992,7 +995,7 @@ msgid "WAVED_NOI_TONE"
 msgstr "Tone"
 
 msgid "WAVED_NOI_TONE_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "WAVED_NOI_LENGTH"
 msgstr "Len."
@@ -1109,25 +1112,25 @@ msgid "WAVED_FILTER_CUTOFF"
 msgstr "Cutoff"
 
 msgid "WAVED_FILTER_CUTOFF_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "WAVED_FILTER_CUTOFF_LO"
 msgstr "Cutoff Low"
 
 msgid "WAVED_FILTER_CUTOFF_LO_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "WAVED_FILTER_CUTOFF_HI"
 msgstr "Cutoff High"
 
 msgid "WAVED_FILTER_CUTOFF_HI_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "WAVED_FILTER_TAPS"
 msgstr "Taps"
 
 msgid "WAVED_FILTER_TAPS_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "WAVED_BPF_TITLE"
 msgstr "{i_index} - BPF"
@@ -1205,7 +1208,7 @@ msgid "WAVED_QUANT_STEPS"
 msgstr "Steps"
 
 msgid "WAVED_QUANT_STEPS_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "WAVED_SAM_LOAD_SAMPLE"
 msgstr "Load"
@@ -1262,13 +1265,13 @@ msgid "WAVED_SAM_LOOP_START"
 msgstr "Loop start"
 
 msgid "WAVED_SAM_LOOP_START_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "WAVED_SAM_LOOP_END"
 msgstr "Loop end"
 
 msgid "WAVED_SAM_LOOP_END_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 # Arp editor
 msgid "ARPED_TIME_DIV"
@@ -1324,13 +1327,13 @@ msgid "OPTS_AUDIO_SAMPLE_RATE"
 msgstr "Sample rate (Hz)"
 
 msgid "OPTS_AUDIO_SAMPLE_RATE_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "OPTS_AUDIO_BUFFER_LENGTH"
 msgstr "Buffer length (s)"
 
 msgid "OPTS_AUDIO_BUFFER_LENGTH_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "OPTS_WAVEXP_TITLE"
 msgstr "Export to .WAV"
@@ -1339,19 +1342,19 @@ msgid "OPTS_WAVEXP_SAMPLE_RATE"
 msgstr "Sample rate (Hz)"
 
 msgid "OPTS_WAVEXP_SAMPLE_RATE_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "OPTS_WAVEXP_FPSAMPLES"
 msgstr "Floating point samples"
 
 msgid "OPTS_WAVEXP_FPSAMPLES_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "OPTS_WAVEXP_SAVE_MUTED"
 msgstr "Save muted channels"
 
 msgid "OPTS_WAVEXP_SAVE_MUTED_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "OPTS_MIDIIN_TITLE"
 msgstr "MIDI input"
@@ -1360,7 +1363,7 @@ msgid "OPTS_MIDIIN_NN_VELOCITY_TITLE"
 msgstr "New note velocity"
 
 msgid "OPTS_MIDIIN_NN_VELOCITY_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "OPTS_MIDIIN_NN_SE4VELOCITY"
 msgstr "Se4 velocity"
@@ -1387,19 +1390,19 @@ msgid "OPTS_MIDIIN_REC_NOTEOFF"
 msgstr "Record MIDI NoteOff"
 
 msgid "OPTS_MIDIIN_REC_NOTEOFF_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "OPTS_MIDIIN_REC_VOLUME"
 msgstr "Record MIDI volume"
 
 msgid "OPTS_MIDIIN_REC_VOLUME_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "OPTS_MIDIIN_REC_AFTERTOUCH"
 msgstr "Record MIDI Aftertouch"
 
 msgid "OPTS_MIDIIN_REC_AFTERTOUCH_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "OPTS_EDITOR_TITLE"
 msgstr "Editor"
@@ -1408,19 +1411,19 @@ msgid "OPTS_EDITOR_HORIZONTAL_FXED"
 msgstr "Horizontal FX edit"
 
 msgid "OPTS_EDITOR_HORIZONTAL_FXED_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "OPTS_EDITOR_CURSOR_IN_VALUE"
 msgstr "Keep cursor in value column"
 
 msgid "OPTS_EDITOR_CURSOR_IN_VALUE_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "OPTS_EDITOR_OSC_RATE"
 msgstr "Oscilloscope update rate"
 
 msgid "OPTS_EDITOR_OSC_RATE_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "OPTS_THEME_TITLE"
 msgstr "Theme"
@@ -1453,6 +1456,9 @@ msgstr "Synth Wave"
 
 msgid "DEFN_SAMPLE_WAVE"
 msgstr "Sample"
+
+msgid "DEFN_NODE_WAVE"
+msgstr "Node"
 
 # File dialog
 msgid "Go to parent folder."
@@ -1691,8 +1697,38 @@ msgid "ERR_ALPHA_ON_MASK_OR_SEL"
 msgstr "Alphas cannot be used on masks or selects."
 
 # Node editor
+msgid "NODED_MENU_GENERATORS"
+msgstr "Generators"
+
+msgid "NODED_MENU_SINE"
+msgstr "Sine"
+
+msgid "NODED_MENU_TRANSFORMS"
+msgstr "Transforms"
+
 msgid "NODE_OUTPUT_TITLE"
 msgstr "OUTPUT"
 
 msgid "NODE_OUTPUT_PORT"
 msgstr "Output"
+
+msgid "NODE_FREQUENCY_PORT"
+msgstr "Frequency"
+
+msgid "NODE_AMPLITUDE_PORT"
+msgstr "Amplitude"
+
+msgid "NODE_PHI0_PORT"
+msgstr "Offset"
+
+msgid "NODE_POWER_PORT"
+msgstr "Power"
+
+msgid "NODE_DECAY_PORT"
+msgstr "Decay"
+
+msgid "NODE_DC_OFFSET_PORT"
+msgstr "DC offset"
+
+msgid "NODE_SINE_TITLE"
+msgstr "SINE"

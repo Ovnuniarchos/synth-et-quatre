@@ -117,12 +117,12 @@ _global_script_classes=[ {
 "base": "WaveComponent",
 "class": "BpfFilter",
 "language": "GDScript",
-"path": "res://classes/filter_components/bpf_filter.gd"
+"path": "res://classes/synth_wave/filter_components/bpf_filter.gd"
 }, {
 "base": "WaveComponent",
 "class": "BrfFilter",
 "language": "GDScript",
-"path": "res://classes/filter_components/brf_filter.gd"
+"path": "res://classes/synth_wave/filter_components/brf_filter.gd"
 }, {
 "base": "HBoxContainer",
 "class": "ChannelButtons",
@@ -137,7 +137,7 @@ _global_script_classes=[ {
 "base": "WaveComponent",
 "class": "ClampFilter",
 "language": "GDScript",
-"path": "res://classes/filter_components/clamp_filter.gd"
+"path": "res://classes/synth_wave/filter_components/clamp_filter.gd"
 }, {
 "base": "WaveComponentIO",
 "class": "ClampFilterReader",
@@ -177,7 +177,7 @@ _global_script_classes=[ {
 "base": "WaveComponent",
 "class": "DecayFilter",
 "language": "GDScript",
-"path": "res://classes/filter_components/decay_filter.gd"
+"path": "res://classes/synth_wave/filter_components/decay_filter.gd"
 }, {
 "base": "WaveComponentIO",
 "class": "DecayFilterReader",
@@ -232,7 +232,7 @@ _global_script_classes=[ {
 "base": "WaveComponent",
 "class": "HpfFilter",
 "language": "GDScript",
-"path": "res://classes/filter_components/hpf_filter.gd"
+"path": "res://classes/synth_wave/filter_components/hpf_filter.gd"
 }, {
 "base": "Button",
 "class": "IconButton",
@@ -262,7 +262,7 @@ _global_script_classes=[ {
 "base": "WaveComponent",
 "class": "LpfFilter",
 "language": "GDScript",
-"path": "res://classes/filter_components/lpf_filter.gd"
+"path": "res://classes/synth_wave/filter_components/lpf_filter.gd"
 }, {
 "base": "Reference",
 "class": "Macro",
@@ -279,6 +279,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://classes/bar_editor_language/macro_info.gd"
 }, {
+"base": "GraphNode",
+"class": "NodeController",
+"language": "GDScript",
+"path": "res://ui/wave_designer/node_designer/nodes/node_controller.gd"
+}, {
 "base": "Waveform",
 "class": "NodeWave",
 "language": "GDScript",
@@ -287,7 +292,7 @@ _global_script_classes=[ {
 "base": "WaveComponent",
 "class": "NoiseWave",
 "language": "GDScript",
-"path": "res://classes/wave_components/noise_wave.gd"
+"path": "res://classes/synth_wave/wave_components/noise_wave.gd"
 }, {
 "base": "WaveComponentIO",
 "class": "NoiseWaveReader",
@@ -302,7 +307,7 @@ _global_script_classes=[ {
 "base": "WaveComponent",
 "class": "NormalizeFilter",
 "language": "GDScript",
-"path": "res://classes/filter_components/normalize_filter.gd"
+"path": "res://classes/synth_wave/filter_components/normalize_filter.gd"
 }, {
 "base": "WaveComponentIO",
 "class": "NormalizeFilterReader",
@@ -324,10 +329,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://ui/widgets/numbered_item_list.gd"
 }, {
-"base": "WaveNode",
-"class": "OutputNode",
+"base": "WaveNodeComponent",
+"class": "OutputNodeComponent",
 "language": "GDScript",
-"path": "res://ui/wave_designer/synth_designer2/nodes/output_node.gd"
+"path": "res://classes/node_wave/output_node__component.gd"
 }, {
 "base": "Macro",
 "class": "ParamMacro",
@@ -372,7 +377,7 @@ _global_script_classes=[ {
 "base": "WaveComponent",
 "class": "PowerFilter",
 "language": "GDScript",
-"path": "res://classes/filter_components/power_filter.gd"
+"path": "res://classes/synth_wave/filter_components/power_filter.gd"
 }, {
 "base": "WaveComponentIO",
 "class": "PowerFilterReader",
@@ -387,7 +392,7 @@ _global_script_classes=[ {
 "base": "WaveComponent",
 "class": "QuantizeFilter",
 "language": "GDScript",
-"path": "res://classes/filter_components/quantize_filter.gd"
+"path": "res://classes/synth_wave/filter_components/quantize_filter.gd"
 }, {
 "base": "WaveComponentIO",
 "class": "QuantizeFilterReader",
@@ -402,7 +407,7 @@ _global_script_classes=[ {
 "base": "WaveComponent",
 "class": "RectangleWave",
 "language": "GDScript",
-"path": "res://classes/wave_components/rectangle_wave.gd"
+"path": "res://classes/synth_wave/wave_components/rectangle_wave.gd"
 }, {
 "base": "WaveComponentIO",
 "class": "RectangleWaveReader",
@@ -442,7 +447,7 @@ _global_script_classes=[ {
 "base": "WaveComponent",
 "class": "SawWave",
 "language": "GDScript",
-"path": "res://classes/wave_components/saw_wave.gd"
+"path": "res://classes/synth_wave/wave_components/saw_wave.gd"
 }, {
 "base": "WaveComponentIO",
 "class": "SawWaveReader",
@@ -459,10 +464,15 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://ui/pattern_editor/selection.gd"
 }, {
+"base": "WaveNodeComponent",
+"class": "SineNodeComponent",
+"language": "GDScript",
+"path": "res://classes/node_wave/generators/sine_node_component.gd"
+}, {
 "base": "WaveComponent",
 "class": "SineWave",
 "language": "GDScript",
-"path": "res://classes/wave_components/sine_wave.gd"
+"path": "res://classes/synth_wave/wave_components/sine_wave.gd"
 }, {
 "base": "WaveComponentIO",
 "class": "SineWaveReader",
@@ -557,7 +567,7 @@ _global_script_classes=[ {
 "base": "WaveComponent",
 "class": "TriangleWave",
 "language": "GDScript",
-"path": "res://classes/wave_components/triangle_wave.gd"
+"path": "res://classes/synth_wave/wave_components/triangle_wave.gd"
 }, {
 "base": "WaveComponentIO",
 "class": "TriangleWaveReader",
@@ -582,7 +592,7 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "WaveComponent",
 "language": "GDScript",
-"path": "res://classes/wave_components/wave_component.gd"
+"path": "res://classes/synth_wave/wave_component.gd"
 }, {
 "base": "Reference",
 "class": "WaveComponentIO",
@@ -599,10 +609,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://ui/wave_designer/synth_designer/nodes/wave_controller.gd"
 }, {
-"base": "GraphNode",
-"class": "WaveNode",
+"base": "Resource",
+"class": "WaveNodeComponent",
 "language": "GDScript",
-"path": "res://ui/wave_designer/synth_designer2/nodes/wave_node.gd"
+"path": "res://classes/node_wave/wave_node_component.gd"
 }, {
 "base": "Panel",
 "class": "WavePlotter",
@@ -684,6 +694,7 @@ _global_script_class_icons={
 "Macro": "",
 "MacroIO": "",
 "MacroInfo": "",
+"NodeController": "",
 "NodeWave": "",
 "NoiseWave": "",
 "NoiseWaveReader": "",
@@ -693,7 +704,7 @@ _global_script_class_icons={
 "NormalizeFilterWriter": "",
 "NumberEdit": "",
 "NumberedItemList": "",
-"OutputNode": "",
+"OutputNodeComponent": "",
 "ParamMacro": "",
 "ParamMacroReader": "",
 "ParamMacroWriter": "",
@@ -720,6 +731,7 @@ _global_script_class_icons={
 "SawWaveReader": "",
 "SawWaveWriter": "",
 "Selection": "",
+"SineNodeComponent": "",
 "SineWave": "",
 "SineWaveReader": "",
 "SineWaveWriter": "",
@@ -748,7 +760,7 @@ _global_script_class_icons={
 "WaveComponentIO": "",
 "WaveComponentTitleBar": "",
 "WaveController": "",
-"WaveNode": "",
+"WaveNodeComponent": "",
 "WavePlotter": "",
 "Waveform": "",
 "WaveformIO": "",

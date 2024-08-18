@@ -87,19 +87,13 @@ func _on_Duplicate_pressed()->void:
 		emit_signal("wave_selected",cnt)
 	set_buttons()
 
-
 func _on_Add_id_pressed(id:int)->void:
 	if GLOBALS.song.can_add_wave():
 		var cnt:int=$Waves.get_item_count()
 		curr_wave_ix=cnt
-		var nw:Waveform
-		if id==0:
-			nw=NodeWave.new()
-		else:
-			nw=SampleWave.new()
-		var nn:String="%s %02X"%[nw.name,cnt]
-		nw.name=nn
-		$Waves.add_item(nn)
+		var nw:Waveform=[SynthWave,SampleWave,NodeWave][id].new()
+		nw.name="%s %02X"%[nw.name,cnt]
+		$Waves.add_item(nw.name)
 		GLOBALS.song.add_wave(nw)
 		SYNCER.send_wave(nw)
 		emit_signal("wave_added",cnt)

@@ -138,8 +138,11 @@
 			"rect":[12,116,12]
 		},
 		"unchecked":{
-			"rect":[0,116,12],
+			"rect":[0,116,12]
 		},
+		"submenu":{
+			"rect":[48,98,6]
+		}
 	},
 	"scrollbar":{
 		"normal":{

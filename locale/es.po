@@ -489,13 +489,13 @@ msgid "FMED_MG_VOLUME"
 msgstr "Volumen"
 
 msgid "FMED_MG_VOLUME_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "FMED_MG_PAN"
 msgstr "Pan"
 
 msgid "FMED_MG_PAN_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "FMED_MG_CHAN_INVERT"
 msgstr "Inversión"
@@ -552,7 +552,7 @@ msgid "FMED_MG_CLIP"
 msgstr "Recorte"
 
 msgid "FMED_MG_CLIP_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "FMED_MO_TONE"
 msgstr "Tono"
@@ -570,13 +570,13 @@ msgid "FMED_MO_DUTY_CYCLE"
 msgstr "Duty cycle"
 
 msgid "FMED_MO_DUTY_CYCLE_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "FMED_MO_WAVE"
 msgstr "Onda"
 
 msgid "FMED_MO_WAVE_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "FMED_MO_ATTACK"
 msgstr "Ataque"
@@ -651,7 +651,7 @@ msgid "FMED_MO_AM_LFO"
 msgstr "LFO AM"
 
 msgid "FMED_MO_AM_LFO_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "FMED_MO_KEY_SCALING"
 msgstr "Ac. tono"
@@ -669,7 +669,7 @@ msgid "FMED_MO_DIVIDER"
 msgstr "Divisor"
 
 msgid "FMED_MO_DIVIDER_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "FMED_MO_DETUNE_VALUE"
 msgstr "Desv./Fr. fija"
@@ -702,13 +702,13 @@ msgid "FMED_MO_FM_LFO"
 msgstr "LFO FM"
 
 msgid "FMED_MO_FM_LFO_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "FMED_MO_PHASE"
 msgstr "Fase"
 
 msgid "FMED_MO_PHASE_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "FMED_MO_OPXY"
 msgstr "Mod. Op{i_op_org} > Op{i_op_dst}"
@@ -726,7 +726,7 @@ msgid "FMED_MO_OUTPUT"
 msgstr "Salida"
 
 msgid "FMED_MO_OUTPUT_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 # Macro editor
 msgid "MCED_RELATIVE"
@@ -801,6 +801,9 @@ msgstr "Sintetizada"
 
 msgid "WAVED_WTYPE_SAMPLED"
 msgstr "Muestreada"
+
+msgid "WAVED_WTYPE_NODE"
+msgstr "Nodal"
 
 msgid "WAVED_NAME"
 msgstr "Nombre"
@@ -992,7 +995,7 @@ msgid "WAVED_NOI_TONE"
 msgstr "Tono"
 
 msgid "WAVED_NOI_TONE_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "WAVED_NOI_LENGTH"
 msgstr "Lon."
@@ -1127,7 +1130,7 @@ msgid "WAVED_FILTER_TAPS"
 msgstr "Etapas"
 
 msgid "WAVED_FILTER_TAPS_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "WAVED_BPF_TITLE"
 msgstr "{i_index} - P. BANDA"
@@ -1205,7 +1208,7 @@ msgid "WAVED_QUANT_STEPS"
 msgstr "Niveles"
 
 msgid "WAVED_QUANT_STEPS_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "WAVED_SAM_LOAD_SAMPLE"
 msgstr "Cargar"
@@ -1262,13 +1265,13 @@ msgid "WAVED_SAM_LOOP_START"
 msgstr "Inicio bucle"
 
 msgid "WAVED_SAM_LOOP_START_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "WAVED_SAM_LOOP_END"
 msgstr "Fin bucle"
 
 msgid "WAVED_SAM_LOOP_END_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 # Arp editor
 msgid "ARPED_TIME_DIV"
@@ -1324,13 +1327,13 @@ msgid "OPTS_AUDIO_SAMPLE_RATE"
 msgstr "Tasa de muestreo (Hz)"
 
 msgid "OPTS_AUDIO_SAMPLE_RATE_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "OPTS_AUDIO_BUFFER_LENGTH"
 msgstr "Tamño del buffer (s)"
 
 msgid "OPTS_AUDIO_BUFFER_LENGTH_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "OPTS_WAVEXP_TITLE"
 msgstr "Exportar .WAV"
@@ -1339,19 +1342,19 @@ msgid "OPTS_WAVEXP_SAMPLE_RATE"
 msgstr "Tasa de muestreo (Hz)"
 
 msgid "OPTS_WAVEXP_SAMPLE_RATE_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "OPTS_WAVEXP_FPSAMPLES"
 msgstr "Muestras en punto flotante"
 
 msgid "OPTS_WAVEXP_FPSAMPLES_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "OPTS_WAVEXP_SAVE_MUTED"
 msgstr "Guardar canales silenciados"
 
 msgid "OPTS_WAVEXP_SAVE_MUTED_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "OPTS_MIDIIN_TITLE"
 msgstr "Entrada MIDI"
@@ -1360,7 +1363,7 @@ msgid "OPTS_MIDIIN_NN_VELOCITY_TITLE"
 msgstr "Intensidad nueva nota"
 
 msgid "OPTS_MIDIIN_NN_VELOCITY_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "OPTS_MIDIIN_NN_SE4VELOCITY"
 msgstr "Intensidad Se4"
@@ -1387,19 +1390,19 @@ msgid "OPTS_MIDIIN_REC_NOTEOFF"
 msgstr "Grabar MIDI NoteOff"
 
 msgid "OPTS_MIDIIN_REC_NOTEOFF_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "OPTS_MIDIIN_REC_VOLUME"
 msgstr "Grabar volumen MIDI"
 
 msgid "OPTS_MIDIIN_REC_VOLUME_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "OPTS_MIDIIN_REC_AFTERTOUCH"
 msgstr "Grabar MIDI Aftertouch"
 
 msgid "OPTS_MIDIIN_REC_AFTERTOUCH_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "OPTS_EDITOR_TITLE"
 msgstr "Editor"
@@ -1408,7 +1411,7 @@ msgid "OPTS_EDITOR_HORIZONTAL_FXED"
 msgstr "Edición FX horizontal"
 
 msgid "OPTS_EDITOR_HORIZONTAL_FXED_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "OPTS_EDITOR_CURSOR_IN_VALUE"
 msgstr "Mantener cursor en el valor"
@@ -1420,7 +1423,7 @@ msgid "OPTS_EDITOR_OSC_RATE"
 msgstr "Tasa de refresco del osciloscopio"
 
 msgid "OPTS_EDITOR_OSC_RATE_TTIP"
-msgstr "<EMPTY>"
+msgstr "<EMPTY STRING>"
 
 msgid "OPTS_THEME_TITLE"
 msgstr "Tema"
@@ -1453,6 +1456,9 @@ msgstr "Onda sintética"
 
 msgid "DEFN_SAMPLE_WAVE"
 msgstr "Muestra"
+
+msgid "DEFN_NODE_WAVE"
+msgstr "Onda nodal"
 
 # File dialog
 msgid "Go to parent folder."
@@ -1691,8 +1697,38 @@ msgid "ERR_ALPHA_ON_MASK_OR_SEL"
 msgstr "No se puede usar alfa en máscaras o selectores."
 
 # Node editor
+msgid "NODED_MENU_GENERATORS"
+msgstr "Generadores"
+
+msgid "NODED_MENU_SINE"
+msgstr "Seno"
+
+msgid "NODED_MENU_TRANSFORMS"
+msgstr "Transformaciones"
+
 msgid "NODE_OUTPUT_TITLE"
-msgstr "OUTPUT"
+msgstr "SALIDA"
 
 msgid "NODE_OUTPUT_PORT"
 msgstr "Salida"
+
+msgid "NODE_FREQUENCY_PORT"
+msgstr "Frecuencia"
+
+msgid "NODE_AMPLITUDE_PORT"
+msgstr "Amplitud"
+
+msgid "NODE_PHI0_PORT"
+msgstr "Fase"
+
+msgid "NODE_POWER_PORT"
+msgstr "Exponente"
+
+msgid "NODE_DECAY_PORT"
+msgstr "Extinción"
+
+msgid "NODE_DC_OFFSET_PORT"
+msgstr "Nivel base"
+
+msgid "NODE_SINE_TITLE"
+msgstr "SENO"

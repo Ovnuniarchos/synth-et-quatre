@@ -1,0 +1,110 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://ui/widgets/spin_bar.gd" type="Script" id=1]
+[ext_resource path="res://ui/wave_designer/node_designer/node_designer.gd" type="Script" id=3]
+[ext_resource path="res://ui/wave_designer/node_designer/designer_graph.gd" type="Script" id=4]
+
+[node name="NodeDesigner" type="VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 4
+script = ExtResource( 3 )
+
+[node name="Info" type="PanelContainer" parent="."]
+margin_right = 1024.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+
+[node name="HBC" type="HBoxContainer" parent="Info"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1017.0
+margin_bottom = 31.0
+custom_constants/separation = 4
+
+[node name="LabelName" type="Label" parent="Info/HBC" groups=["Label"]]
+margin_top = 5.0
+margin_right = 91.0
+margin_bottom = 19.0
+text = "WAVED_NAME"
+
+[node name="S2" type="ReferenceRect" parent="Info/HBC"]
+margin_left = 95.0
+margin_right = 103.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 8, 0 )
+
+[node name="Name" type="LineEdit" parent="Info/HBC"]
+margin_left = 107.0
+margin_right = 363.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 256, 0 )
+
+[node name="S" type="ReferenceRect" parent="Info/HBC"]
+margin_left = 367.0
+margin_right = 391.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 24, 0 )
+
+[node name="LabelSize" type="Label" parent="Info/HBC" groups=["Label"]]
+margin_left = 395.0
+margin_top = 5.0
+margin_right = 475.0
+margin_bottom = 19.0
+text = "WAVED_SIZE"
+
+[node name="S3" type="ReferenceRect" parent="Info/HBC"]
+margin_left = 479.0
+margin_right = 487.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 8, 0 )
+
+[node name="Size" type="ProgressBar" parent="Info/HBC"]
+margin_left = 491.0
+margin_top = 5.0
+margin_right = 619.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 128, 14 )
+size_flags_vertical = 4
+min_value = 4.0
+max_value = 16.0
+step = 1.0
+value = 4.0
+percent_visible = false
+script = ExtResource( 1 )
+big_step = 1.0
+huge_step = 1.0
+
+[node name="LabelSizeSamples" type="Label" parent="Info/HBC"]
+margin_left = 623.0
+margin_top = 5.0
+margin_right = 631.0
+margin_bottom = 19.0
+text = "0"
+
+[node name="Designer" type="GraphEdit" parent="."]
+margin_top = 42.0
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+right_disconnects = true
+use_snap = false
+minimap_enabled = false
+script = ExtResource( 4 )
+
+[node name="PopupMenu" type="PopupMenu" parent="Designer"]
+margin_right = 44.0
+margin_bottom = 20.0
+
+[connection signal="text_changed" from="Info/HBC/Name" to="." method="_on_Name_changed"]
+[connection signal="value_changed" from="Info/HBC/Size" to="." method="_on_Size_changed"]
+[connection signal="connection_request" from="Designer" to="Designer" method="_on_connection_request"]
+[connection signal="connections_changed" from="Designer" to="." method="_on_Designer_connections_changed"]
+[connection signal="disconnection_request" from="Designer" to="Designer" method="_on_disconnection_request"]
+[connection signal="gui_input" from="Designer" to="Designer" method="_on_gui_input"]
+[connection signal="node_added" from="Designer" to="." method="_on_Designer_node_added"]
+[connection signal="node_deleted" from="Designer" to="." method="_on_Designer_node_deleted"]
+[connection signal="params_changed" from="Designer" to="." method="_on_Designer_params_changed"]

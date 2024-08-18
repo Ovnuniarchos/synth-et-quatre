@@ -178,6 +178,8 @@ func send_wave(wave:Waveform,synth:Synth,wave_ix:int=-1)->void:
 	elif wave is SampleWave:
 		synth.synth.define_sample(wave_ix+SONGL.MIN_CUSTOM_WAVE,wave.loop_start,wave.loop_end,
 				wave.record_freq,wave.sample_freq,wave.data.duplicate())
+	elif wave is NodeWave:
+		synth.synth.define_wave(wave_ix+SONGL.MIN_CUSTOM_WAVE,wave.output.duplicate())
 
 func sync_waves(synth:Synth,_from:int)->void:
 	if synth==null:

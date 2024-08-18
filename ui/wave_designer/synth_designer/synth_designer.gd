@@ -10,7 +10,7 @@ const WAVES=[
 	["WAVED_SYN_SAW",WAVE_TYPES.SAW,preload("nodes/wave_nodes/saw_wave.tscn")],
 	["WAVED_SYN_RECTANGLE",WAVE_TYPES.RECT,preload("nodes/wave_nodes/rect_wave.tscn")],
 	["WAVED_SYN_NOISE",WAVE_TYPES.NOISE,preload("nodes/wave_nodes/noise_wave.tscn")],
-["WAVED_SYN_LOWPASS",WAVE_TYPES.LPF,preload("nodes/filter_nodes/lpf_filter.tscn")],
+	["WAVED_SYN_LOWPASS",WAVE_TYPES.LPF,preload("nodes/filter_nodes/lpf_filter.tscn")],
 	["WAVED_SYN_HIGHPASS",WAVE_TYPES.HPF,preload("nodes/filter_nodes/hpf_filter.tscn")],
 	["WAVED_SYN_BANDPASS",WAVE_TYPES.BPF,preload("nodes/filter_nodes/bpf_filter.tscn")],
 	["WAVED_SYN_BANDREJECT",WAVE_TYPES.BRF,preload("nodes/filter_nodes/brf_filter.tscn")],

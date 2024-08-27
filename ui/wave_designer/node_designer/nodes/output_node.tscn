@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://ui/wave_designer/node_designer/nodes/output_node.gd" type="Script" id=1]
+[ext_resource path="res://ui/widgets/spin_bar.gd" type="Script" id=2]
 
 [node name="Output" type="GraphNode"]
 margin_right = 181.0
@@ -12,12 +13,51 @@ slot/0/left_color = Color( 1, 1, 1, 1 )
 slot/0/right_enabled = false
 slot/0/right_type = 0
 slot/0/right_color = Color( 1, 1, 1, 1 )
+slot/1/left_enabled = false
+slot/1/left_type = 0
+slot/1/left_color = Color( 1, 1, 1, 1 )
+slot/1/right_enabled = false
+slot/1/right_type = 0
+slot/1/right_color = Color( 1, 1, 1, 1 )
 script = ExtResource( 1 )
 base_title = "NODE_OUTPUT_TITLE"
 
 [node name="Output" type="Label" parent="."]
 margin_left = 16.0
 margin_top = 24.0
-margin_right = 165.0
+margin_right = 185.0
 margin_bottom = 38.0
+hint_tooltip = "NODE_OUTPUT_PORT_TTIP"
+mouse_filter = 1
 text = "NODE_OUTPUT_PORT"
+
+[node name="Clip" type="HBoxContainer" parent="."]
+margin_left = 16.0
+margin_top = 39.0
+margin_right = 185.0
+margin_bottom = 53.0
+
+[node name="Label" type="Label" parent="Clip"]
+margin_right = 112.0
+margin_bottom = 14.0
+hint_tooltip = "NODE_CLIP_PORT_TTIP"
+mouse_filter = 1
+size_flags_horizontal = 2
+text = "NODE_CLIP_PORT"
+
+[node name="SpinBar" type="ProgressBar" parent="Clip"]
+margin_left = 116.0
+margin_right = 169.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 53, 14 )
+size_flags_horizontal = 11
+size_flags_stretch_ratio = 2.0
+max_value = 32.0
+value = 1.0
+percent_visible = false
+script = ExtResource( 2 )
+big_step = 100.0
+huge_step = 800.0
+_decimals = 2
+
+[connection signal="value_changed" from="Clip/SpinBar" to="." method="_on_Clip_value_changed"]

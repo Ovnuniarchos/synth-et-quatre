@@ -5,12 +5,11 @@ onready var tabs:TabContainer=$HS/VS/Tabs
 onready var synth:VBoxContainer=$HS/VS/Tabs/SynthDesigner
 onready var node:VBoxContainer=$HS/VS/Tabs/NodeDesigner
 onready var sample:VBoxContainer=$HS/VS/Tabs/SampleDesigner
-var delayed_wave_ix:int
 
 
 func _ready()->void:
 	GLOBALS.connect("song_changed",self,"_on_song_changed")
-	_on_wave_selected(delayed_wave_ix)
+	_on_wave_selected(-1)
 
 
 func _on_song_changed()->void:
@@ -20,6 +19,7 @@ func _on_song_changed()->void:
 
 
 func _on_wave_deleted(wave_ix:int)->void:
+	print(wave_ix)
 	var w:Waveform=GLOBALS.song.get_wave(wave_ix)
 	if w is SynthWave:
 		synth._on_wave_deleted(wave_ix)
@@ -30,8 +30,10 @@ func _on_wave_deleted(wave_ix:int)->void:
 
 
 func _on_wave_selected(wave_ix:int)->void:
-	delayed_wave_ix=wave_ix
-	if tabs==null:
+	if not is_node_ready():
+		yield(self,"ready")
+	if wave_ix==-1:
+		_on_song_changed()
 		return
 	var w:Waveform=GLOBALS.song.get_wave(wave_ix)
 	if w is SynthWave:

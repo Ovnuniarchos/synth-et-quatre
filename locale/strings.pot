@@ -1725,6 +1725,7 @@ msgstr ""
 
 
 # Node editor
+# Menus
 
 msgid "NODED_MENU_GENERATORS"
 msgstr ""
@@ -1735,29 +1736,117 @@ msgstr ""
 msgid "NODED_MENU_TRANSFORMS"
 msgstr ""
 
-msgid "NODE_OUTPUT_TITLE"
-msgstr ""
+# Common ports
 
 msgid "NODE_OUTPUT_PORT"
+msgstr ""
+
+msgid "NODE_OUTPUT_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_CLIP_PORT"
+msgstr ""
+
+msgid "NODE_CLIP_PORT_TTIP"
 msgstr ""
 
 msgid "NODE_FREQUENCY_PORT"
 msgstr ""
 
+msgid "NODE_FREQUENCY_PORT_TTIP"
+msgstr ""
+
 msgid "NODE_AMPLITUDE_PORT"
+msgstr ""
+
+msgid "NODE_AMPLITUDE_PORT_TTIP"
 msgstr ""
 
 msgid "NODE_PHI0_PORT"
 msgstr ""
 
+msgid "NODE_PHI0_PORT_TTIP"
+msgstr ""
+
 msgid "NODE_POWER_PORT"
+msgstr ""
+
+msgid "NODE_POWER_PORT_TTIP"
 msgstr ""
 
 msgid "NODE_DECAY_PORT"
 msgstr ""
 
+msgid "NODE_DECAY_PORT_TTIP"
+msgstr ""
+
 msgid "NODE_DC_OFFSET_PORT"
 msgstr ""
 
+msgid "NODE_DC_OFFSET_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_RANGE_FROM_PORT"
+msgstr ""
+
+msgid "NODE_RANGE_FROM_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_RANGE_LEN_PORT"
+msgstr ""
+
+msgid "NODE_RANGE_LEN_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_QUAD1_PORT"
+msgstr ""
+
+msgid "NODE_QUAD1_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_QUAD2_PORT"
+msgstr ""
+
+msgid "NODE_QUAD2_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_QUAD3_PORT"
+msgstr ""
+
+msgid "NODE_QUAD3_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_QUAD4_PORT"
+msgstr ""
+
+msgid "NODE_QUAD4_PORT_TTIP"
+msgstr ""
+
+# Nodes
+
+msgid "NODE_OUTPUT_TITLE"
+msgstr ""
+
 msgid "NODE_SINE_TITLE"
+msgstr ""
+
+msgid "NODE_SINE_Q0"
+msgstr ""
+
+msgid "NODE_SINE_Q1"
+msgstr ""
+
+msgid "NODE_SINE_Q2"
+msgstr ""
+
+msgid "NODE_SINE_Q3"
+msgstr ""
+
+msgid "NODE_SINE_Q4"
+msgstr ""
+
+msgid "NODE_SINE_Q5"
+msgstr ""
+
+msgid "NODE_SINE_Q6"
 msgstr ""

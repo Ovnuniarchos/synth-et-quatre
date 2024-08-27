@@ -52,7 +52,7 @@ func send_sample(sample:Array,freq:float)->void:
 		sam[i]=sample[i]*127.0
 	std.data=PoolByteArray(sam)
 	var w:Waveform=get_wave()
-	if w is SynthWave:
+	if w is SynthWave or w is NodeWave:
 		std.loop_begin=0
 		std.loop_end=std.data.size()-1
 		std.loop_mode=AudioStreamSample.LOOP_FORWARD
@@ -75,7 +75,7 @@ func change_frequency(freq:float)->void:
 	if std.data.size()==0:
 		return
 	var w:Waveform=get_wave()
-	if w is SynthWave:
+	if w is SynthWave or w is NodeWave:
 		std.mix_rate=std.data.size()*freq
 	elif w is SampleWave:
 		std.mix_rate=w.record_freq*(freq/w.sample_freq)

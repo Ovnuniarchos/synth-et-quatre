@@ -23,11 +23,19 @@ var decay:float=0.0
 var dc_slot:Array=[]
 var dc_values:Array=[]
 var dc:float=0.0
+var range_from:float=0.0
+var range_length:float=1.0
+var quarter_slots:Array=[[],[],[],[]]
+var quarter_values:Array=[[],[],[],[]]
+var quarters:Array=[0,1,2,3]
 
 
 func _init()->void:
 	._init()
-	inputs=[frequency_slot,amplitude_slot,phi0_slot,power_slot,decay_slot,dc_slot]
+	inputs=[
+		frequency_slot,amplitude_slot,phi0_slot,power_slot,decay_slot,dc_slot,
+		quarter_slots[0],quarter_slots[1],quarter_slots[2],quarter_slots[3]
+	]
 
 
 func calculate()->Array:
@@ -37,12 +45,41 @@ func calculate()->Array:
 	calculate_slot(amplitude_values,amplitude_slot,amplitude)
 	calculate_slot(phi0_values,phi0_slot,phi0)
 	calculate_slot(power_values,power_slot,power)
-	calculate_slot(decay_values,decay_slot,decay)
+	calculate_slot(decay_values,decay_slot,decay) # TODO Calculate
 	calculate_slot(dc_values,dc_slot,dc)
+	for i in 4:
+		calculate_option_slot(
+			quarter_values[i],quarter_slots[i],
+			[0,1,2,3,4,5,6],
+			quarters[i]
+		)
 	clear_array(output,size)
-	var cycle:float=1.0/size
-	for i in size:
-		output[i]=dc_values[i]+sin(((i*cycle*frequency_values[i])+phi0_values[i])*TAU)*amplitude_values[i]
+	var sz:int=max(1.0,size*range_length)
+	var cycle:float=1.0/sz
+	var phi:float
+	var iphi:float=0.0
+	var q:float
+	var optr:int=fposmod(range_from*size,size)
+	var qts:Array=[0.0,0.0,0.0,0.0,1.0,0.0,-1.0]
+	var out0:float=-amplitude
+	var dec:float=1.0
+	for i in sz:
+		phi=(iphi*frequency_values[i])+phi0_values[i]
+		q=fposmod(phi,0.25)
+		qts[0]=sin(q*TAU)
+		qts[1]=sin((0.25-q)*TAU)
+		qts[2]=-qts[0]
+		qts[3]=-qts[1]
+		q=fposmod(phi,1.0)*4.0
+		output[optr]=dc_values[i]+pow(qts[quarter_values[q][i]],power_values[i])*amplitude_values[i]
+		if abs(output[optr])<=abs(out0):
+			dec=max(0.0,dec-(pow(decay_values[i],1.0)*128.0/sz))
+		else:
+			dec=1.0
+		out0=output[optr]
+		output[optr]*=dec
+		iphi+=cycle
+		optr=(optr+1)&(size-1)
 	output_valid=true
 	return output
 
@@ -52,4 +89,6 @@ func equals(other:WaveNodeComponent)->bool:
 		return false
 	return is_equal_approx(other.frequency,frequency) and is_equal_approx(other.amplitude,amplitude)\
 		and is_equal_approx(other.phi0,phi0) and is_equal_approx(other.power,power)\
-		and is_equal_approx(other.decay,decay)
+		and is_equal_approx(other.decay,decay) and is_equal_approx(dc,other.dc)\
+		and quarters[0]==other.quarters[0] and quarters[1]==other.quarters[1]\
+		and quarters[2]==other.quarters[2] and quarters[3]==other.quarters[3]

@@ -20,8 +20,10 @@ func _ready()->void:
 	if not Engine.editor_hint:
 		var c:Color=ThemeHelper.get_color("port_color","GraphNode")
 		for i in get_child_count():
-			set_slot_color_left(i,c)
-			set_slot_color_right(i,c)
+			if is_slot_enabled_left(i):
+				set_slot_color_left(i,c)
+			if is_slot_enabled_right(i):
+				set_slot_color_right(i,c)
 	if node.viz_rect.is_equal_approx(Rect2(Vector2.ZERO,Vector2.ZERO)):
 		node.viz_rect=Rect2(offset,rect_size)
 	else:
@@ -53,8 +55,8 @@ func _on_close_request()->void:
 
 
 func _on_resize_request(sz:Vector2)->void:
-	rect_size=sz
-	node.viz_rect.size=sz
+	rect_size.x=sz.x
+	node.viz_rect.size.x=sz.x
 
 
 func _on_offset_changed()->void:

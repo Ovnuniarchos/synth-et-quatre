@@ -1697,6 +1697,7 @@ msgid "ERR_ALPHA_ON_MASK_OR_SEL"
 msgstr "No se puede usar alfa en máscaras o selectores."
 
 # Node editor
+# Menu
 msgid "NODED_MENU_GENERATORS"
 msgstr "Generadores"
 
@@ -1706,29 +1707,115 @@ msgstr "Seno"
 msgid "NODED_MENU_TRANSFORMS"
 msgstr "Transformaciones"
 
-msgid "NODE_OUTPUT_TITLE"
-msgstr "SALIDA"
-
+# Common ports
 msgid "NODE_OUTPUT_PORT"
 msgstr "Salida"
+
+msgid "NODE_OUTPUT_PORT_TTIP"
+msgstr "<EMPTY STRING>"
+
+msgid "NODE_CLIP_PORT"
+msgstr "Recorte"
+
+msgid "NODE_CLIP_PORT_TTIP"
+msgstr "<EMPTY STRING>"
 
 msgid "NODE_FREQUENCY_PORT"
 msgstr "Frecuencia"
 
+msgid "NODE_FREQUENCY_PORT_TTIP"
+msgstr "<EMPTY STRING>"
+
 msgid "NODE_AMPLITUDE_PORT"
 msgstr "Amplitud"
+
+msgid "NODE_AMPLITUDE_PORT_TTIP"
+msgstr "<EMPTY STRING>"
 
 msgid "NODE_PHI0_PORT"
 msgstr "Fase"
 
+msgid "NODE_PHI0_PORT_TTIP"
+msgstr "<EMPTY STRING>"
+
 msgid "NODE_POWER_PORT"
 msgstr "Exponente"
+
+msgid "NODE_POWER_PORT_TTIP"
+msgstr "<EMPTY STRING>"
 
 msgid "NODE_DECAY_PORT"
 msgstr "Extinción"
 
+msgid "NODE_DECAY_PORT_TTIP"
+msgstr "<EMPTY STRING>"
+
 msgid "NODE_DC_OFFSET_PORT"
-msgstr "Nivel base"
+msgstr "Base"
+
+msgid "NODE_DC_OFFSET_PORT_TTIP"
+msgstr "<EMPTY STRING>"
+
+msgid "NODE_RANGE_FROM_PORT"
+msgstr "De"
+
+msgid "NODE_RANGE_FROM_PORT_TTIP"
+msgstr "<EMPTY STRING>"
+
+msgid "NODE_RANGE_LEN_PORT"
+msgstr "Longitud"
+
+msgid "NODE_RANGE_LEN_PORT_TTIP"
+msgstr "<EMPTY STRING>"
+
+msgid "NODE_QUAD1_PORT"
+msgstr "Cuad. 1"
+
+msgid "NODE_QUAD1_PORT_TTIP"
+msgstr "1er cuadrante"
+
+msgid "NODE_QUAD2_PORT"
+msgstr "Cuad. 2"
+
+msgid "NODE_QUAD2_PORT_TTIP"
+msgstr "2º cuadrante"
+
+msgid "NODE_QUAD3_PORT"
+msgstr "Cuad. 3"
+
+msgid "NODE_QUAD3_PORT_TTIP"
+msgstr "3er cuadrante"
+
+msgid "NODE_QUAD4_PORT"
+msgstr "Cuad. 4"
+
+msgid "NODE_QUAD4_PORT_TTIP"
+msgstr "4º cuadrante"
+
+# Nodes
+msgid "NODE_OUTPUT_TITLE"
+msgstr "SALIDA"
 
 msgid "NODE_SINE_TITLE"
 msgstr "SENO"
+
+msgid "NODE_SINE_Q0"
+msgstr "0 > 1"
+
+msgid "NODE_SINE_Q1"
+msgstr "1 > 0"
+
+msgid "NODE_SINE_Q2"
+msgstr "0 > -1"
+
+msgid "NODE_SINE_Q3"
+msgstr "-1 > 0"
+
+msgid "NODE_SINE_Q4"
+msgstr "1"
+
+msgid "NODE_SINE_Q5"
+msgstr "0"
+
+msgid "NODE_SINE_Q6"
+msgstr "-1"

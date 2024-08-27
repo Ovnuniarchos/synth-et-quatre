@@ -50,6 +50,10 @@ func set_base_title(t:String)->void:
 	title=tr(t)
 
 
+func set_size_po2(s:int)->void:
+	node.size_po2=s
+
+
 func _on_close_request()->void:
 	emit_signal("about_to_close",self)
 

@@ -13,23 +13,26 @@ class Sorter:
 
 
 enum{
-	GEN_SINE
+	GEN_SINE,GEN_SAW
 }
 const MENU:Array=[
 	"unsorted",
 	{"option":"NODED_MENU_GENERATORS","submenu":[
-		{"option":"NODED_MENU_SINE","id":GEN_SINE}
+		{"option":"NODED_MENU_SINE","id":GEN_SINE},
+		{"option":"NODED_MENU_SAW","id":GEN_SAW}
 	]},
 	{"separator":true},
 	{"option":"NODED_MENU_TRANSFORMS","submenu":[
 	]}
 ]
 const NODES:Dictionary={
-	GEN_SINE:preload("res://ui/wave_designer/node_designer/nodes/generators/sine_node.tscn")
+	GEN_SINE:preload("res://ui/wave_designer/node_designer/nodes/generators/sine_node.tscn"),
+	GEN_SAW:preload("res://ui/wave_designer/node_designer/nodes/generators/saw_node.tscn")
 }
 const NODES_CLASS:Dictionary={
 	OutputNodeComponent.NODE_TYPE:preload("res://ui/wave_designer/node_designer/nodes/output_node.tscn"),
-	SineNodeComponent.NODE_TYPE:NODES[GEN_SINE]
+	SineNodeComponent.NODE_TYPE:NODES[GEN_SINE],
+	SawNodeComponent.NODE_TYPE:NODES[GEN_SAW]
 }
 
 
@@ -37,12 +40,14 @@ var new_menu:PopupMenu
 var add_position:Vector2
 var node_graph:Dictionary={}
 var reverse_graph:Dictionary={}
+var size_po2:int=0
 
 
 func _ready() -> void:
 	new_menu=create_menu(MENU)
 	get_parent().call_deferred("add_child",new_menu)
 	get_zoom_hbox().hide()
+
 
 func _on_gui_input(ev:InputEvent)->void:
 	if ev is InputEventMouseButton and not ev.pressed and ev.button_index==2:
@@ -80,6 +85,7 @@ func _on_add_node(type:int)->void:
 	nn.connect("about_to_close",self,"_on_node_about_to_close")
 	nn.offset=add_position
 	nn.set_parameters()
+	nn.set_size_po2(size_po2)
 	add_child(nn)
 	emit_signal("node_added",nn.node)
 

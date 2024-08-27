@@ -1733,6 +1733,9 @@ msgstr ""
 msgid "NODED_MENU_SINE"
 msgstr ""
 
+msgid "NODED_MENU_SAW"
+msgstr ""
+
 msgid "NODED_MENU_TRANSFORMS"
 msgstr ""
 
@@ -1850,3 +1853,46 @@ msgstr ""
 
 msgid "NODE_SINE_Q6"
 msgstr ""
+
+msgid "NODE_SAW_TITLE"
+msgstr ""
+
+msgid "NODE_SAW_Q0"
+msgstr ""
+
+msgid "NODE_SAW_Q1"
+msgstr ""
+
+msgid "NODE_SAW_Q2"
+msgstr ""
+
+msgid "NODE_SAW_Q3"
+msgstr ""
+
+msgid "NODE_SAW_Q4"
+msgstr ""
+
+msgid "NODE_SAW_Q5"
+msgstr ""
+
+msgid "NODE_SAW_Q6"
+msgstr ""
+
+msgid "NODE_SAW_Q7"
+msgstr ""
+
+msgid "NODE_SAW_Q8"
+msgstr ""
+
+msgid "NODE_SAW_Q9"
+msgstr ""
+
+msgid "NODE_SAW_Q10"
+msgstr ""
+
+msgid "NODE_SAW_Q11"
+msgstr ""
+
+msgid "NODE_SAW_Q12"
+msgstr ""
+

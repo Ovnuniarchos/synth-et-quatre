@@ -444,6 +444,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://classes/io_modules/samplewave_writer.gd"
 }, {
+"base": "WaveNodeComponent",
+"class": "SawNodeComponent",
+"language": "GDScript",
+"path": "res://classes/node_wave/generators/saw_node_component.gd"
+}, {
 "base": "WaveComponent",
 "class": "SawWave",
 "language": "GDScript",
@@ -727,6 +732,7 @@ _global_script_class_icons={
 "SampleWaveIO": "",
 "SampleWaveReader": "",
 "SampleWaveWriter": "",
+"SawNodeComponent": "",
 "SawWave": "",
 "SawWaveReader": "",
 "SawWaveWriter": "",

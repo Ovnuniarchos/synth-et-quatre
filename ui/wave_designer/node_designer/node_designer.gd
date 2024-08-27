@@ -12,6 +12,7 @@ func _ready():
 
 
 func update_ui()->void:
+	$Designer.size_po2=$Info/HBC/Size.value
 	_on_wave_selected(curr_wave_ix)
 
 
@@ -28,6 +29,7 @@ func _on_Name_changed(text:String)->void:
 func _on_Size_changed(value:float)->void:
 	var w:NodeWave=GLOBALS.song.get_wave(curr_wave_ix) as NodeWave
 	if w!=null:
+		$Designer.size_po2=value
 		w.size_po2=value
 		calculate()
 		set_size_bytes(w.size)

@@ -1707,6 +1707,12 @@ msgstr "Sine"
 msgid "NODED_MENU_SAW"
 msgstr "Saw"
 
+msgid "NODED_MENU_PULSE"
+msgstr "Pulse"
+
+msgid "NODED_MENU_TRIANGLE"
+msgstr "Triangle"
+
 msgid "NODED_MENU_TRANSFORMS"
 msgstr "Transforms"
 
@@ -1860,5 +1866,68 @@ msgid "NODE_SAW_Q11"
 msgstr "-0.5"
 
 msgid "NODE_SAW_Q12"
+msgstr "-1"
+
+msgid "NODE_PULSE_TITLE"
+msgstr "PULSE"
+
+msgid "NODE_POS_START_PORT"
+msgstr "+ Start"
+
+msgid "NODE_POS_START_PORT_TTIP"
+msgstr "Positive pulse start"
+
+msgid "NODE_POS_LEN_PORT"
+msgstr "+ Length"
+
+msgid "NODE_POS_LEN_PORT_TTIP"
+msgstr "Positive pulse length"
+
+msgid "NODE_POS_AMP_PORT"
+msgstr "+ Amplitude"
+
+msgid "NODE_POS_AMP_PORT_TTIP"
+msgstr "Positive pulse amplitude"
+
+msgid "NODE_NEG_START_PORT"
+msgstr "- Start"
+
+msgid "NODE_NEG_START_PORT_TTIP"
+msgstr "Negative pulse start"
+
+msgid "NODE_NEG_LEN_PORT"
+msgstr "- Length"
+
+msgid "NODE_NEG_LEN_PORT_TTIP"
+msgstr "Negative pulse length"
+
+msgid "NODE_NEG_AMP_PORT"
+msgstr "- Amplitude"
+
+msgid "NODE_NEG_AMP_PORT_TTIP"
+msgstr "Negative pulse amplitude"
+
+msgid "NODE_TRIANGLE_TITLE"
+msgstr "TRIANGLE"
+
+msgid "NODE_TRI_Q0"
+msgstr "0 > 1"
+
+msgid "NODE_TRI_Q1"
+msgstr "1 > 0"
+
+msgid "NODE_TRI_Q2"
+msgstr "0 > -1"
+
+msgid "NODE_TRI_Q3"
+msgstr "-1 > 0"
+
+msgid "NODE_TRI_Q4"
+msgstr "1"
+
+msgid "NODE_TRI_Q5"
+msgstr "0"
+
+msgid "NODE_TRI_Q6"
 msgstr "-1"
 

@@ -1736,6 +1736,12 @@ msgstr ""
 msgid "NODED_MENU_SAW"
 msgstr ""
 
+msgid "NODED_MENU_PULSE"
+msgstr ""
+
+msgid "NODED_MENU_TRIANGLE"
+msgstr ""
+
 msgid "NODED_MENU_TRANSFORMS"
 msgstr ""
 
@@ -1894,5 +1900,68 @@ msgid "NODE_SAW_Q11"
 msgstr ""
 
 msgid "NODE_SAW_Q12"
+msgstr ""
+
+msgid "NODE_PULSE_TITLE"
+msgstr ""
+
+msgid "NODE_POS_START_PORT"
+msgstr ""
+
+msgid "NODE_POS_START_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_POS_LEN_PORT"
+msgstr ""
+
+msgid "NODE_POS_LEN_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_POS_AMP_PORT"
+msgstr ""
+
+msgid "NODE_POS_AMP_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_NEG_START_PORT"
+msgstr ""
+
+msgid "NODE_NEG_START_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_NEG_LEN_PORT"
+msgstr ""
+
+msgid "NODE_NEG_LEN_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_NEG_AMP_PORT"
+msgstr ""
+
+msgid "NODE_NEG_AMP_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_TRIANGLE_TITLE"
+msgstr ""
+
+msgid "NODE_TRI_Q0"
+msgstr ""
+
+msgid "NODE_TRI_Q1"
+msgstr ""
+
+msgid "NODE_TRI_Q2"
+msgstr ""
+
+msgid "NODE_TRI_Q3"
+msgstr ""
+
+msgid "NODE_TRI_Q4"
+msgstr ""
+
+msgid "NODE_TRI_Q5"
+msgstr ""
+
+msgid "NODE_TRI_Q6"
 msgstr ""
 

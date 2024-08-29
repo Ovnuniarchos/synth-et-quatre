@@ -45,7 +45,7 @@ func calculate()->Array:
 	calculate_slot(amplitude_values,amplitude_slot,amplitude)
 	calculate_slot(phi0_values,phi0_slot,phi0)
 	calculate_slot(power_values,power_slot,power)
-	calculate_slot(decay_values,decay_slot,decay) # TODO Calculate
+	calculate_slot(decay_values,decay_slot,decay)
 	calculate_slot(dc_values,dc_slot,dc)
 	for i in 4:
 		calculate_option_slot(
@@ -61,8 +61,7 @@ func calculate()->Array:
 	var q:float
 	var optr:int=fposmod(range_from*size,size)
 	var qts:Array=[0.0,0.0,0.0,0.0,1.0,0.0,-1.0]
-	var out0:float=-amplitude
-	var dec:float=1.0
+	reset_decay()
 	for i in sz:
 		phi=(iphi*frequency_values[i])+phi0_values[i]
 		q=fposmod(phi,0.25)
@@ -71,14 +70,8 @@ func calculate()->Array:
 		qts[2]=-qts[0]
 		qts[3]=-qts[1]
 		q=qts[quarter_values[fposmod(phi,1.0)*4.0][i]]
-		output[optr]=dc_values[i]+pow(abs(q),power_values[i])*sign(q)*amplitude_values[i]
-		q=output[optr]-out0
-		if abs(q)>0.0001 and sign(q)!=sign(output[optr]):
-			dec=max(0.0,dec-(pow(decay_values[i],1.0)*128.0/sz))
-		else:
-			dec=1.0
-		out0=output[optr]
-		output[optr]*=dec
+		q=dc_values[i]+pow(abs(q),power_values[i])*sign(q)*amplitude_values[i]
+		output[optr]=calculate_decay(q,decay_values[i],sz)
 		iphi+=cycle
 		optr=(optr+1)&(size-1)
 	output_valid=true

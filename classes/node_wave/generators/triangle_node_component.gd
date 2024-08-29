@@ -1,8 +1,8 @@
 extends WaveNodeComponent
-class_name SawNodeComponent
+class_name TriangleNodeComponent
 
 
-const NODE_TYPE:String="Saw"
+const NODE_TYPE:String="Triangle"
 
 
 var frequency_slot:Array=[]
@@ -50,7 +50,7 @@ func calculate()->Array:
 	for i in 4:
 		calculate_option_slot(
 			quarter_values[i],quarter_slots[i],
-			[0,1,2,3,4,5,6,7,8,9,10,11,12],
+			[0,1,2,3,4,5,6],
 			quarters[i]
 		)
 	clear_array(output,size)
@@ -60,19 +60,15 @@ func calculate()->Array:
 	var iphi:float=0.0
 	var q:float
 	var optr:int=fposmod(range_from*size,size)
-	var qts:Array=[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.5,0.0,-0.5,-1.0]
+	var qts:Array=[0.0,0.0,0.0,0.0,1.0,0.0,-1.0]
 	reset_decay()
 	for i in sz:
 		phi=(iphi*frequency_values[i])+phi0_values[i]
-		q=fposmod(phi,0.25)*2.0
-		qts[0]=q-1.0
-		qts[1]=q-0.5
-		qts[2]=q
-		qts[3]=q+0.5
-		qts[4]=1.0-q
-		qts[5]=0.5-q
-		qts[6]=-q
-		qts[7]=-0.5-q
+		q=fposmod(phi,0.25)*4.0
+		qts[0]=q
+		qts[1]=1.0-q
+		qts[2]=-qts[0]
+		qts[3]=-qts[1]
 		q=qts[quarter_values[fposmod(phi,1.0)*4.0][i]]
 		q=dc_values[i]+pow(abs(q),power_values[i])*sign(q)*amplitude_values[i]
 		output[optr]=calculate_decay(q,decay_values[i],sz)
@@ -83,7 +79,7 @@ func calculate()->Array:
 
 
 func equals(other:WaveNodeComponent)->bool:
-	if (other as SawNodeComponent)==null:
+	if (other as SineNodeComponent)==null:
 		return false
 	return is_equal_approx(other.frequency,frequency) and is_equal_approx(other.amplitude,amplitude)\
 		and is_equal_approx(other.phi0,phi0) and is_equal_approx(other.power,power)\

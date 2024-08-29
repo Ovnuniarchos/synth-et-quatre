@@ -9,6 +9,9 @@ var output:Array
 var output_valid:bool
 var inputs:Array
 
+var _decay:float
+var _last_value:float
+
 
 func _init()->void:
 	output=[]
@@ -56,6 +59,21 @@ func calculate_option_slot(result:Array,slot:Array,values:Array,def_value:float)
 			lerp(0.0,vsz,def_value if is_nan(result[optr]) else result[optr]),
 			0.0,vsz-1
 		)
+
+
+func reset_decay()->void:
+	_last_value=0.0
+	_decay=1.0
+
+
+func calculate_decay(new_value:float,decay_value:float,cycle_size:float)->float:
+	var t:float=new_value-_last_value
+	if abs(t)<0.0001 and sign(t)!=sign(new_value):
+		_decay=max(0.0,_decay-(pow(decay_value,4.0)*128.0/cycle_size))
+	else:
+		_decay=1.0
+	_last_value=new_value
+	return new_value*_decay
 
 
 func invalidate()->void:

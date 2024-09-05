@@ -70,7 +70,7 @@ func reset_decay()->void:
 
 func calculate_decay(new_value:float,decay_value:float,cycle_size:float)->float:
 	var t:float=new_value-_last_value
-	if abs(t)<0.0001 and sign(t)!=sign(new_value):
+	if abs(t)<0.0001 or sign(t)!=sign(new_value):
 		_decay=max(0.0,_decay-(pow(decay_value,4.0)*128.0/cycle_size))
 	else:
 		_decay=1.0

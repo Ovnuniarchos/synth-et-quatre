@@ -92,6 +92,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 right_disconnects = true
 use_snap = false
+zoom_min = 1.0
+zoom_max = 1.0
 minimap_enabled = false
 script = ExtResource( 4 )
 

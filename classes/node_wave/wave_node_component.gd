@@ -5,6 +5,8 @@ class_name WaveNodeComponent
 var viz_rect:Rect2
 var size_po2:int setget set_size_po2
 var size:int
+var range_from:float=0.0
+var range_length:float=1.0
 var output:Array
 var output_valid:bool
 var inputs:Array
@@ -93,7 +95,8 @@ func disconnect_node(from:WaveNodeComponent,to:int)->void:
 
 
 func equals(other:WaveNodeComponent)->bool:
-	if other.inputs.size()!=inputs.size():
+	if not (other.inputs.size()==inputs.size() and is_equal_approx(range_from,other.range_from)\
+		and is_equal_approx(range_length,other.range_length)):
 		return false
 	for i in inputs.size():
 		if other.inputs[i].size()!=inputs[i].size():

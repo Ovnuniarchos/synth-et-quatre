@@ -38,8 +38,6 @@ var decay:float=0.0
 var dc_slot:Array=[]
 var dc_values:Array=[]
 var dc:float=0.0
-var range_from:float=0.0
-var range_length:float=1.0
 
 
 func _init()->void:
@@ -93,7 +91,7 @@ func calculate()->Array:
 func equals(other:WaveNodeComponent)->bool:
 	if (other as PulseNodeComponent)==null:
 		return false
-	return is_equal_approx(other.ppulse_start,ppulse_start) and is_equal_approx(other.ppulse_length,ppulse_length)\
+	return .equals(other) and is_equal_approx(other.ppulse_start,ppulse_start) and is_equal_approx(other.ppulse_length,ppulse_length)\
 		and is_equal_approx(other.ppulse_amplitude,ppulse_amplitude) and is_equal_approx(other.npulse_start,npulse_start)\
 		and is_equal_approx(other.npulse_length,npulse_length) and is_equal_approx(other.npulse_amplitude,npulse_amplitude)\
 		and is_equal_approx(other.frequency,frequency) and is_equal_approx(other.amplitude,amplitude)\

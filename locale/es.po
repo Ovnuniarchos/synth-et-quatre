@@ -1713,6 +1713,9 @@ msgstr "Pulso"
 msgid "NODED_MENU_TRIANGLE"
 msgstr "Triángulo"
 
+msgid "NODED_MENU_NOISE"
+msgstr "Ruido"
+
 msgid "NODED_MENU_TRANSFORMS"
 msgstr "Transformaciones"
 
@@ -1766,7 +1769,7 @@ msgid "NODE_DC_OFFSET_PORT_TTIP"
 msgstr "<EMPTY STRING>"
 
 msgid "NODE_RANGE_FROM_PORT"
-msgstr "De"
+msgstr "Inicio"
 
 msgid "NODE_RANGE_FROM_PORT_TTIP"
 msgstr "<EMPTY STRING>"
@@ -1933,4 +1936,43 @@ msgstr "0"
 
 msgid "NODE_TRI_Q6"
 msgstr "-1"
+
+msgid "NODE_NOISE_TITLE"
+msgstr "RUIDO"
+
+msgid "NODE_SEED_PORT"
+msgstr "Semilla"
+
+msgid "NODE_SEED_PORT_TTIP"
+msgstr "<EMPTY STRING>"
+
+msgid "NODE_OCTAVES_PORT"
+msgstr "Octavas"
+
+msgid "NODE_OCTAVES_PORT_TTIP"
+msgstr "<EMPTY STRING>"
+
+msgid "NODE_NOISE_FREQUENCY_PORT"
+msgstr "Frecuencia"
+
+msgid "NODE_NOISE_FREQUENCY_PORT_TTIP"
+msgstr "<EMPTY STRING>"
+
+msgid "NODE_PERSISTENCE_PORT"
+msgstr "Persistencia"
+
+msgid "NODE_PERSISTENCE_PORT_TTIP"
+msgstr "Multiplicador de amplitud/octava"
+
+msgid "NODE_LACUNARITY_PORT"
+msgstr "Lacunaridad"
+
+msgid "NODE_LACUNARITY_PORT_TTIP"
+msgstr "Multiplicador de frecuencia/octava"
+
+msgid "NODE_RANDOMNESS_PORT"
+msgstr "Aleatoriedad"
+
+msgid "NODE_RANDOMNESS_PORT_TTIP"
+msgstr "<EMPTY STRING>"
 

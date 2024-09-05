@@ -1742,6 +1742,9 @@ msgstr ""
 msgid "NODED_MENU_TRIANGLE"
 msgstr ""
 
+msgid "NODED_MENU_NOISE"
+msgstr ""
+
 msgid "NODED_MENU_TRANSFORMS"
 msgstr ""
 
@@ -1963,5 +1966,44 @@ msgid "NODE_TRI_Q5"
 msgstr ""
 
 msgid "NODE_TRI_Q6"
+msgstr ""
+
+msgid "NODE_NOISE_TITLE"
+msgstr ""
+
+msgid "NODE_SEED_PORT"
+msgstr ""
+
+msgid "NODE_SEED_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_OCTAVES_PORT"
+msgstr ""
+
+msgid "NODE_OCTAVES_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_NOISE_FREQUENCY_PORT"
+msgstr ""
+
+msgid "NODE_NOISE_FREQUENCY_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_PERSISTENCE_PORT"
+msgstr ""
+
+msgid "NODE_PERSISTENCE_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_LACUNARITY_PORT"
+msgstr ""
+
+msgid "NODE_LACUNARITY_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_RANDOMNESS_PORT"
+msgstr ""
+
+msgid "NODE_RANDOMNESS_PORT_TTIP"
 msgstr ""
 

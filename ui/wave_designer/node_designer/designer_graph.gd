@@ -13,7 +13,7 @@ class Sorter:
 
 
 enum{
-	GEN_SINE,GEN_SAW,GEN_PULSE,GEN_TRIANGLE
+	GEN_SINE,GEN_SAW,GEN_PULSE,GEN_TRIANGLE,GEN_NOISE
 }
 const MENU:Array=[
 	"unsorted",
@@ -21,7 +21,8 @@ const MENU:Array=[
 		{"option":"NODED_MENU_SINE","id":GEN_SINE},
 		{"option":"NODED_MENU_SAW","id":GEN_SAW},
 		{"option":"NODED_MENU_PULSE","id":GEN_PULSE},
-		{"option":"NODED_MENU_TRIANGLE","id":GEN_TRIANGLE}
+		{"option":"NODED_MENU_TRIANGLE","id":GEN_TRIANGLE},
+		{"option":"NODED_MENU_NOISE","id":GEN_NOISE}
 	]},
 	{"separator":true},
 	{"option":"NODED_MENU_TRANSFORMS","submenu":[
@@ -31,13 +32,16 @@ const NODES:Dictionary={
 	GEN_SINE:preload("res://ui/wave_designer/node_designer/nodes/generators/sine_node.tscn"),
 	GEN_SAW:preload("res://ui/wave_designer/node_designer/nodes/generators/saw_node.tscn"),
 	GEN_PULSE:preload("res://ui/wave_designer/node_designer/nodes/generators/pulse_node.tscn"),
-	GEN_TRIANGLE:preload("res://ui/wave_designer/node_designer/nodes/generators/triangle_node.tscn")
+	GEN_TRIANGLE:preload("res://ui/wave_designer/node_designer/nodes/generators/triangle_node.tscn"),
+	GEN_NOISE:preload("res://ui/wave_designer/node_designer/nodes/generators/noise_node.tscn")
 }
 const NODES_CLASS:Dictionary={
 	OutputNodeComponent.NODE_TYPE:preload("res://ui/wave_designer/node_designer/nodes/output_node.tscn"),
 	SineNodeComponent.NODE_TYPE:NODES[GEN_SINE],
 	SawNodeComponent.NODE_TYPE:NODES[GEN_SAW],
-	PulseNodeComponent.NODE_TYPE:NODES[GEN_PULSE]
+	PulseNodeComponent.NODE_TYPE:NODES[GEN_PULSE],
+	TriangleNodeComponent.NODE_TYPE:NODES[GEN_TRIANGLE],
+	NoiseNodeComponent.NODE_TYPE:NODES[GEN_NOISE]
 }
 
 

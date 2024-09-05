@@ -1713,6 +1713,9 @@ msgstr "Pulse"
 msgid "NODED_MENU_TRIANGLE"
 msgstr "Triangle"
 
+msgid "NODED_MENU_NOISE"
+msgstr "Noise"
+
 msgid "NODED_MENU_TRANSFORMS"
 msgstr "Transforms"
 
@@ -1930,4 +1933,43 @@ msgstr "0"
 
 msgid "NODE_TRI_Q6"
 msgstr "-1"
+
+msgid "NODE_NOISE_TITLE"
+msgstr "NOISE"
+
+msgid "NODE_SEED_PORT"
+msgstr "Seed"
+
+msgid "NODE_SEED_PORT_TTIP"
+msgstr "<EMPTY STRING>"
+
+msgid "NODE_OCTAVES_PORT"
+msgstr "Ocatves"
+
+msgid "NODE_OCTAVES_PORT_TTIP"
+msgstr "<EMPTY STRING>"
+
+msgid "NODE_NOISE_FREQUENCY_PORT"
+msgstr "Frequency"
+
+msgid "NODE_NOISE_FREQUENCY_PORT_TTIP"
+msgstr "<EMPTY STRING>"
+
+msgid "NODE_PERSISTENCE_PORT"
+msgstr "Persistence"
+
+msgid "NODE_PERSISTENCE_PORT_TTIP"
+msgstr "Amplitude multiplier/octave"
+
+msgid "NODE_LACUNARITY_PORT"
+msgstr "Lacunarity"
+
+msgid "NODE_LACUNARITY_PORT_TTIP"
+msgstr "Frequency multiplier/octave"
+
+msgid "NODE_RANDOMNESS_PORT"
+msgstr "Randomness"
+
+msgid "NODE_RANDOMNESS_PORT_TTIP"
+msgstr "<EMPTY STRING>"
 

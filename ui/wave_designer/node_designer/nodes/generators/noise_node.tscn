@@ -1,0 +1,421 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://ui/wave_designer/node_designer/nodes/generators/noise_node.gd" type="Script" id=1]
+[ext_resource path="res://ui/widgets/spin_bar.gd" type="Script" id=2]
+
+[node name="Noise" type="GraphNode"]
+margin_right = 338.0
+margin_bottom = 209.0
+show_close = true
+resizable = true
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color( 1, 1, 1, 1 )
+slot/0/right_enabled = true
+slot/0/right_type = 0
+slot/0/right_color = Color( 1, 1, 1, 1 )
+slot/1/left_enabled = false
+slot/1/left_type = 0
+slot/1/left_color = Color( 1, 1, 1, 1 )
+slot/1/right_enabled = false
+slot/1/right_type = 0
+slot/1/right_color = Color( 1, 1, 1, 1 )
+slot/2/left_enabled = true
+slot/2/left_type = 0
+slot/2/left_color = Color( 1, 1, 1, 1 )
+slot/2/right_enabled = false
+slot/2/right_type = 0
+slot/2/right_color = Color( 1, 1, 1, 1 )
+slot/3/left_enabled = true
+slot/3/left_type = 0
+slot/3/left_color = Color( 1, 1, 1, 1 )
+slot/3/right_enabled = false
+slot/3/right_type = 0
+slot/3/right_color = Color( 1, 1, 1, 1 )
+slot/4/left_enabled = true
+slot/4/left_type = 0
+slot/4/left_color = Color( 1, 1, 1, 1 )
+slot/4/right_enabled = false
+slot/4/right_type = 0
+slot/4/right_color = Color( 1, 1, 1, 1 )
+slot/5/left_enabled = true
+slot/5/left_type = 0
+slot/5/left_color = Color( 1, 1, 1, 1 )
+slot/5/right_enabled = false
+slot/5/right_type = 0
+slot/5/right_color = Color( 1, 1, 1, 1 )
+slot/6/left_enabled = true
+slot/6/left_type = 0
+slot/6/left_color = Color( 1, 1, 1, 1 )
+slot/6/right_enabled = false
+slot/6/right_type = 0
+slot/6/right_color = Color( 1, 1, 1, 1 )
+slot/7/left_enabled = true
+slot/7/left_type = 0
+slot/7/left_color = Color( 1, 1, 1, 1 )
+slot/7/right_enabled = false
+slot/7/right_type = 0
+slot/7/right_color = Color( 1, 1, 1, 1 )
+slot/8/left_enabled = true
+slot/8/left_type = 0
+slot/8/left_color = Color( 1, 1, 1, 1 )
+slot/8/right_enabled = false
+slot/8/right_type = 0
+slot/8/right_color = Color( 1, 1, 1, 1 )
+slot/9/left_enabled = true
+slot/9/left_type = 0
+slot/9/left_color = Color( 1, 1, 1, 1 )
+slot/9/right_enabled = false
+slot/9/right_type = 0
+slot/9/right_color = Color( 1, 1, 1, 1 )
+slot/10/left_enabled = false
+slot/10/left_type = 0
+slot/10/left_color = Color( 1, 1, 1, 1 )
+slot/10/right_enabled = false
+slot/10/right_type = 0
+slot/10/right_color = Color( 1, 1, 1, 1 )
+slot/11/left_enabled = false
+slot/11/left_type = 0
+slot/11/left_color = Color( 1, 1, 1, 1 )
+slot/11/right_enabled = false
+slot/11/right_type = 0
+slot/11/right_color = Color( 1, 1, 1, 1 )
+script = ExtResource( 1 )
+base_title = "NODE_NOISE_TITLE"
+
+[node name="Output" type="Label" parent="."]
+margin_left = 16.0
+margin_top = 24.0
+margin_right = 322.0
+margin_bottom = 38.0
+hint_tooltip = "NODE_OUTPUT_PORT_TTIP"
+mouse_filter = 1
+text = "NODE_OUTPUT_PORT"
+align = 2
+
+[node name="Seed" type="HBoxContainer" parent="."]
+margin_left = 16.0
+margin_top = 39.0
+margin_right = 322.0
+margin_bottom = 53.0
+
+[node name="Label" type="Label" parent="Seed"]
+margin_right = 115.0
+margin_bottom = 14.0
+hint_tooltip = "NODE_SEED_PORT_TTIP"
+mouse_filter = 1
+size_flags_horizontal = 2
+text = "NODE_SEED_PORT"
+
+[node name="SpinBar" type="ProgressBar" parent="Seed"]
+margin_left = 119.0
+margin_right = 306.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 97, 14 )
+size_flags_horizontal = 11
+size_flags_stretch_ratio = 2.0
+min_value = -2.14748e+09
+max_value = 2.14748e+09
+step = 1.0
+percent_visible = false
+script = ExtResource( 2 )
+big_step = 32.0
+huge_step = 128.0
+
+[node name="Amplitude" type="HBoxContainer" parent="."]
+margin_left = 16.0
+margin_top = 54.0
+margin_right = 322.0
+margin_bottom = 68.0
+
+[node name="Label" type="Label" parent="Amplitude"]
+margin_right = 159.0
+margin_bottom = 14.0
+hint_tooltip = "NODE_AMPLITUDE_PORT_TTIP"
+mouse_filter = 1
+size_flags_horizontal = 2
+text = "NODE_AMPLITUDE_PORT"
+
+[node name="SpinBar" type="ProgressBar" parent="Amplitude"]
+margin_left = 163.0
+margin_right = 306.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 97, 14 )
+size_flags_horizontal = 11
+size_flags_stretch_ratio = 2.0
+max_value = 1.0
+percent_visible = false
+script = ExtResource( 2 )
+big_step = 20.0
+huge_step = 50.0
+_decimals = 2
+
+[node name="Decay" type="HBoxContainer" parent="."]
+margin_left = 16.0
+margin_top = 69.0
+margin_right = 322.0
+margin_bottom = 83.0
+
+[node name="Label" type="Label" parent="Decay"]
+margin_right = 125.0
+margin_bottom = 14.0
+hint_tooltip = "NODE_DECAY_PORT_TTIP"
+mouse_filter = 1
+size_flags_horizontal = 2
+text = "NODE_DECAY_PORT"
+
+[node name="SpinBar" type="ProgressBar" parent="Decay"]
+margin_left = 129.0
+margin_right = 306.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 97, 14 )
+size_flags_horizontal = 11
+size_flags_stretch_ratio = 2.0
+max_value = 1.0
+percent_visible = false
+script = ExtResource( 2 )
+big_step = 20.0
+huge_step = 50.0
+_decimals = 2
+
+[node name="DCOffset" type="HBoxContainer" parent="."]
+margin_left = 16.0
+margin_top = 84.0
+margin_right = 322.0
+margin_bottom = 98.0
+
+[node name="Label" type="Label" parent="DCOffset"]
+margin_right = 154.0
+margin_bottom = 14.0
+hint_tooltip = "NODE_DC_OFFSET_PORT_TTIP"
+mouse_filter = 1
+size_flags_horizontal = 2
+text = "NODE_DC_OFFSET_PORT"
+
+[node name="SpinBar" type="ProgressBar" parent="DCOffset"]
+margin_left = 158.0
+margin_right = 306.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 97, 14 )
+size_flags_horizontal = 11
+size_flags_stretch_ratio = 2.0
+max_value = 1.0
+percent_visible = false
+script = ExtResource( 2 )
+big_step = 20.0
+huge_step = 50.0
+_decimals = 2
+
+[node name="Octaves" type="HBoxContainer" parent="."]
+margin_left = 16.0
+margin_top = 99.0
+margin_right = 322.0
+margin_bottom = 113.0
+
+[node name="Label" type="Label" parent="Octaves"]
+margin_right = 141.0
+margin_bottom = 14.0
+hint_tooltip = "NODE_OCTAVES_PORT_TTIP"
+mouse_filter = 1
+size_flags_horizontal = 2
+text = "NODE_OCTAVES_PORT"
+
+[node name="SpinBar" type="ProgressBar" parent="Octaves"]
+margin_left = 145.0
+margin_right = 306.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 97, 14 )
+size_flags_horizontal = 11
+size_flags_stretch_ratio = 2.0
+min_value = 1.0
+max_value = 9.0
+step = 1.0
+value = 1.0
+percent_visible = false
+script = ExtResource( 2 )
+big_step = 2.0
+huge_step = 3.0
+
+[node name="Frequency" type="HBoxContainer" parent="."]
+margin_left = 16.0
+margin_top = 114.0
+margin_right = 322.0
+margin_bottom = 128.0
+
+[node name="Label" type="Label" parent="Frequency"]
+margin_right = 205.0
+margin_bottom = 14.0
+hint_tooltip = "NODE_NOISE_FREQUENCY_PORT_TTIP"
+mouse_filter = 1
+size_flags_horizontal = 2
+text = "NODE_NOISE_FREQUENCY_PORT"
+
+[node name="SpinBar" type="ProgressBar" parent="Frequency"]
+margin_left = 209.0
+margin_right = 306.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 97, 14 )
+size_flags_horizontal = 11
+size_flags_stretch_ratio = 2.0
+max_value = 129.0
+value = 1.0
+percent_visible = false
+script = ExtResource( 2 )
+big_step = 20.0
+_decimals = 2
+
+[node name="Persistence" type="HBoxContainer" parent="."]
+margin_left = 16.0
+margin_top = 129.0
+margin_right = 322.0
+margin_bottom = 143.0
+
+[node name="Label" type="Label" parent="Persistence"]
+margin_right = 165.0
+margin_bottom = 14.0
+hint_tooltip = "NODE_PERSISTENCE_PORT_TTIP"
+mouse_filter = 1
+size_flags_horizontal = 2
+text = "NODE_PERSISTENCE_PORT"
+
+[node name="SpinBar" type="ProgressBar" parent="Persistence"]
+margin_left = 169.0
+margin_right = 306.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 97, 14 )
+size_flags_horizontal = 11
+size_flags_stretch_ratio = 2.0
+max_value = 1.0
+value = 1.0
+percent_visible = false
+script = ExtResource( 2 )
+big_step = 20.0
+huge_step = 40.0
+_decimals = 2
+
+[node name="Lacunarity" type="HBoxContainer" parent="."]
+margin_left = 16.0
+margin_top = 144.0
+margin_right = 322.0
+margin_bottom = 158.0
+
+[node name="Label" type="Label" parent="Lacunarity"]
+margin_right = 164.0
+margin_bottom = 14.0
+hint_tooltip = "NODE_LACUNARITY_PORT_TTIP"
+mouse_filter = 1
+size_flags_horizontal = 2
+text = "NODE_LACUNARITY_PORT"
+
+[node name="SpinBar" type="ProgressBar" parent="Lacunarity"]
+margin_left = 168.0
+margin_right = 306.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 97, 14 )
+size_flags_horizontal = 11
+size_flags_stretch_ratio = 2.0
+max_value = 129.0
+value = 1.0
+percent_visible = false
+script = ExtResource( 2 )
+big_step = 20.0
+_decimals = 2
+
+[node name="Randomness" type="HBoxContainer" parent="."]
+margin_left = 16.0
+margin_top = 159.0
+margin_right = 322.0
+margin_bottom = 173.0
+
+[node name="Label" type="Label" parent="Randomness"]
+margin_right = 175.0
+margin_bottom = 14.0
+hint_tooltip = "NODE_RANDOMNESS_PORT_TTIP"
+mouse_filter = 1
+size_flags_horizontal = 2
+text = "NODE_RANDOMNESS_PORT"
+
+[node name="SpinBar" type="ProgressBar" parent="Randomness"]
+margin_left = 179.0
+margin_right = 306.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 97, 14 )
+size_flags_horizontal = 11
+size_flags_stretch_ratio = 2.0
+max_value = 1.0
+value = 1.0
+percent_visible = false
+script = ExtResource( 2 )
+big_step = 20.0
+huge_step = 40.0
+_decimals = 2
+
+[node name="RangeFrom" type="HBoxContainer" parent="."]
+margin_left = 16.0
+margin_top = 174.0
+margin_right = 322.0
+margin_bottom = 188.0
+
+[node name="Label" type="Label" parent="RangeFrom"]
+margin_right = 172.0
+margin_bottom = 14.0
+hint_tooltip = "NODE_RANGE_FROM_PORT_TTIP"
+mouse_filter = 1
+size_flags_horizontal = 2
+text = "NODE_RANGE_FROM_PORT"
+
+[node name="SpinBar" type="ProgressBar" parent="RangeFrom"]
+margin_left = 176.0
+margin_right = 306.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 53, 14 )
+size_flags_horizontal = 11
+size_flags_stretch_ratio = 2.0
+min_value = -1.0
+max_value = 1.0
+percent_visible = false
+script = ExtResource( 2 )
+big_step = 5.0
+huge_step = 20.0
+_decimals = 2
+
+[node name="RangeLength" type="HBoxContainer" parent="."]
+margin_left = 16.0
+margin_top = 189.0
+margin_right = 322.0
+margin_bottom = 203.0
+
+[node name="Label" type="Label" parent="RangeLength"]
+margin_right = 158.0
+margin_bottom = 14.0
+hint_tooltip = "NODE_RANGE_LEN_PORT_TTIP"
+mouse_filter = 1
+size_flags_horizontal = 2
+text = "NODE_RANGE_LEN_PORT"
+
+[node name="SpinBar" type="ProgressBar" parent="RangeLength"]
+margin_left = 162.0
+margin_right = 306.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 53, 14 )
+size_flags_horizontal = 11
+size_flags_stretch_ratio = 2.0
+max_value = 1.0
+value = 1.0
+percent_visible = false
+script = ExtResource( 2 )
+big_step = 5.0
+huge_step = 20.0
+_decimals = 2
+
+[connection signal="value_changed" from="Seed/SpinBar" to="." method="_on_Seed_value_changed"]
+[connection signal="value_changed" from="Amplitude/SpinBar" to="." method="_on_Amplitude_value_changed"]
+[connection signal="value_changed" from="Decay/SpinBar" to="." method="_on_Decay_value_changed"]
+[connection signal="value_changed" from="DCOffset/SpinBar" to="." method="_on_DCOffset_value_changed"]
+[connection signal="value_changed" from="Octaves/SpinBar" to="." method="_on_Octaves_value_changed"]
+[connection signal="value_changed" from="Frequency/SpinBar" to="." method="_on_Frequency_value_changed"]
+[connection signal="value_changed" from="Persistence/SpinBar" to="." method="_on_Persistence_value_changed"]
+[connection signal="value_changed" from="Lacunarity/SpinBar" to="." method="_on_Lacunarity_value_changed"]
+[connection signal="value_changed" from="Randomness/SpinBar" to="." method="_on_Randomness_value_changed"]
+[connection signal="value_changed" from="RangeFrom/SpinBar" to="." method="_on_RangeFrom_value_changed"]
+[connection signal="value_changed" from="RangeLength/SpinBar" to="." method="_on_RangeLength_value_changed"]

@@ -48,7 +48,7 @@ func calculate()->Array:
 	for i in 4:
 		calculate_option_slot(
 			quarter_values[i],quarter_slots[i],
-			[0,1,2,3,4,5,6,7,8,9,10,11,12],
+			range(13),
 			quarters[i]
 		)
 	clear_array(output,size)

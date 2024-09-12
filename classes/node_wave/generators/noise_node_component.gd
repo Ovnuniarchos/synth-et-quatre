@@ -73,7 +73,7 @@ func calculate()->Array:
 		optr=(optr+1)&(size-1)
 		phi+=cycle
 	optr=fposmod(range_from*size,size)
-	reset_decay() # Is it working?
+	reset_decay()
 	for i in sz:
 		output[optr]=calculate_decay(
 			range_lerp(output[optr],mn,mx,-amplitude_values[i],amplitude_values[i])+dc_values[i],
@@ -86,4 +86,7 @@ func calculate()->Array:
 func equals(other:WaveNodeComponent)->bool:
 	if (other as NoiseNodeComponent)==null:
 		return false
-	return .equals(other)
+	return .equals(other) and noise_seed==other.noise_seed and is_equal_approx(amplitude,other.amplitude)\
+		and is_equal_approx(decay,other.decay) and is_equal_approx(dc,other.dc) and octaves==other.octaves\
+		and is_equal_approx(frequency,other.frequency) and is_equal_approx(persistence,other.persistence)\
+		and is_equal_approx(lacunarity,other.lacunarity) and is_equal_approx(randomness,other.randomness)

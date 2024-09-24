@@ -106,7 +106,14 @@ func set_editable(e:bool)->void:
 
 
 func _on_value_changed(v:float)->void:
-	value=clamp(v,min_value,max_value)
+	if allow_greater and allow_lesser:
+		value=v
+	elif allow_greater:
+		value=max(min_value,v)
+	elif allow_lesser:
+		value=min(max_value,v)
+	else:
+		value=clamp(v,min_value,max_value)
 	input.set_value_no_signal(v)
 	if label!=null:
 		label.text=format_value(value)+" "+suffix

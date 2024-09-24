@@ -13,6 +13,9 @@ var amplitude:float=1.0
 var decay_slot:Array=[]
 var decay_values:Array=[]
 var decay:float=0.0
+var power_slot:Array=[]
+var power_values:Array=[]
+var power:float=1.0
 var dc_slot:Array=[]
 var dc_values:Array=[]
 var dc:float=0.0
@@ -36,7 +39,7 @@ var randomness:float=1.0
 func _init()->void:
 	._init()
 	inputs=[
-		amplitude_slot,decay_slot,dc_slot,octaves_slot,frequency_slot,
+		amplitude_slot,decay_slot,power_slot,dc_slot,octaves_slot,frequency_slot,
 		persistence_slot,lacunarity_slot,randomness_slot
 	]
 
@@ -44,9 +47,10 @@ func _init()->void:
 func calculate()->Array:
 	if output_valid:
 		return output
-	clear_array(output,size)
+	clear_array(output,size,NAN)
 	calculate_slot(amplitude_values,amplitude_slot,amplitude)
 	calculate_slot(decay_values,decay_slot,decay)
+	calculate_slot(power_values,power_slot,power)
 	calculate_slot(dc_values,dc_slot,dc)
 	calculate_slot(octaves_values,octaves_slot,octaves)
 	calculate_slot(frequency_values,frequency_slot,frequency)
@@ -61,13 +65,15 @@ func calculate()->Array:
 	var phi:float=0.0
 	var mx:float=-INF
 	var mn:float=INF
+	var q:float
 	for i in sz:
 		noiz.persistence=persistence_values[i]
 		noiz.lacunarity=lacunarity_values[i]
 		noiz.period=1.0/frequency_values[i] if abs(frequency_values[i])>0.0001 else 0.0
 		noiz.octaves=octaves_values[i]
-		output[optr]=lerp(noiz.get_noise_1d(phi),noiz.get_noise_1d(phi-1.0),phi)\
+		q=lerp(noiz.get_noise_1d(phi),noiz.get_noise_1d(phi-1.0),phi)\
 			+rand_range(-randomness_values[i],randomness_values[i])
+		output[optr]=pow(abs(q),power_values[i])*sign(q)
 		mx=max(mx,output[optr])
 		mn=min(mn,output[optr])
 		optr=(optr+1)&(size-1)

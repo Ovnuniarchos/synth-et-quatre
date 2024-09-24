@@ -25,7 +25,7 @@ var dc_values:Array=[]
 var dc:float=0.0
 var quarter_slots:Array=[[],[],[],[]]
 var quarter_values:Array=[[],[],[],[]]
-var quarters:Array=[0,1,2,3]
+var quarters:Array=TriangleNodeConstants.get_defaults()
 
 
 func _init()->void:
@@ -39,6 +39,7 @@ func _init()->void:
 func calculate()->Array:
 	if output_valid:
 		return output
+	clear_array(output,size,NAN)
 	calculate_slot(frequency_values,frequency_slot,frequency)
 	calculate_slot(amplitude_values,amplitude_slot,amplitude)
 	calculate_slot(phi0_values,phi0_slot,phi0)
@@ -51,22 +52,21 @@ func calculate()->Array:
 			range(7),
 			quarters[i]
 		)
-	clear_array(output,size)
 	var sz:int=max(1.0,size*range_length)
 	var cycle:float=1.0/sz
 	var phi:float
 	var iphi:float=0.0
 	var q:float
 	var optr:int=fposmod(range_from*size,size)
-	var qts:Array=[0.0,0.0,0.0,0.0,1.0,0.0,-1.0]
+	var qts:Array=TriangleNodeConstants.get_calc_array()
 	reset_decay()
 	for i in sz:
 		phi=(iphi*frequency_values[i])+phi0_values[i]
 		q=fposmod(phi,0.25)*4.0
 		qts[0]=q
 		qts[1]=1.0-q
-		qts[2]=-qts[0]
-		qts[3]=-qts[1]
+		qts[2]=-q
+		qts[3]=q-1.0
 		q=qts[quarter_values[fposmod(phi,1.0)*4.0][i]]
 		q=dc_values[i]+pow(abs(q),power_values[i])*sign(q)*amplitude_values[i]
 		output[optr]=calculate_decay(q,decay_values[i],sz)

@@ -284,6 +284,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://classes/node_wave/transforms/mix_node_component.gd"
 }, {
+"base": "Reference",
+"class": "MixNodeConstants",
+"language": "GDScript",
+"path": "res://classes/node_wave/transforms/mix_node_constants.gd"
+}, {
 "base": "GraphNode",
 "class": "NodeController",
 "language": "GDScript",
@@ -464,6 +469,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://classes/node_wave/generators/saw_node_component.gd"
 }, {
+"base": "Reference",
+"class": "SawNodeConstants",
+"language": "GDScript",
+"path": "res://classes/node_wave/generators/saw_node_constants.gd"
+}, {
 "base": "WaveComponent",
 "class": "SawWave",
 "language": "GDScript",
@@ -488,6 +498,11 @@ _global_script_classes=[ {
 "class": "SineNodeComponent",
 "language": "GDScript",
 "path": "res://classes/node_wave/generators/sine_node_component.gd"
+}, {
+"base": "Reference",
+"class": "SineNodeConstants",
+"language": "GDScript",
+"path": "res://classes/node_wave/generators/sine_node_constants.gd"
 }, {
 "base": "WaveComponent",
 "class": "SineWave",
@@ -588,6 +603,11 @@ _global_script_classes=[ {
 "class": "TriangleNodeComponent",
 "language": "GDScript",
 "path": "res://classes/node_wave/generators/triangle_node_component.gd"
+}, {
+"base": "Reference",
+"class": "TriangleNodeConstants",
+"language": "GDScript",
+"path": "res://classes/node_wave/generators/triangle_node_constants.gd"
 }, {
 "base": "WaveComponent",
 "class": "TriangleWave",
@@ -720,6 +740,7 @@ _global_script_class_icons={
 "MacroIO": "",
 "MacroInfo": "",
 "MixNodeComponent": "",
+"MixNodeConstants": "",
 "NodeController": "",
 "NodeWave": "",
 "NoiseNodeComponent": "",
@@ -756,11 +777,13 @@ _global_script_class_icons={
 "SampleWaveReader": "",
 "SampleWaveWriter": "",
 "SawNodeComponent": "",
+"SawNodeConstants": "",
 "SawWave": "",
 "SawWaveReader": "",
 "SawWaveWriter": "",
 "Selection": "",
 "SineNodeComponent": "",
+"SineNodeConstants": "",
 "SineWave": "",
 "SineWaveReader": "",
 "SineWaveWriter": "",
@@ -781,6 +804,7 @@ _global_script_class_icons={
 "Tooltip": "",
 "Tracker": "",
 "TriangleNodeComponent": "",
+"TriangleNodeConstants": "",
 "TriangleWave": "",
 "TriangleWaveReader": "",
 "TriangleWaveWriter": "",

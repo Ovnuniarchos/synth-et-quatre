@@ -25,7 +25,7 @@ var dc_values:Array=[]
 var dc:float=0.0
 var quarter_slots:Array=[[],[],[],[]]
 var quarter_values:Array=[[],[],[],[]]
-var quarters:Array=[0,1,2,3]
+var quarters:Array=SawNodeConstants.get_defaults()
 
 
 func _init()->void:
@@ -39,6 +39,7 @@ func _init()->void:
 func calculate()->Array:
 	if output_valid:
 		return output
+	clear_array(output,size,NAN)
 	calculate_slot(frequency_values,frequency_slot,frequency)
 	calculate_slot(amplitude_values,amplitude_slot,amplitude)
 	calculate_slot(phi0_values,phi0_slot,phi0)
@@ -51,14 +52,13 @@ func calculate()->Array:
 			range(13),
 			quarters[i]
 		)
-	clear_array(output,size)
 	var sz:int=max(1.0,size*range_length)
 	var cycle:float=1.0/sz
 	var phi:float
 	var iphi:float=0.0
 	var q:float
 	var optr:int=fposmod(range_from*size,size)
-	var qts:Array=[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.5,0.0,-0.5,-1.0]
+	var qts:Array=SawNodeConstants.get_calc_array()
 	reset_decay()
 	for i in sz:
 		phi=(iphi*frequency_values[i])+phi0_values[i]

@@ -6,6 +6,8 @@ signal instrument_changed(instrument,inst_name)
 # warning-ignore:unused_signal
 signal tab_changed(tab)
 
+const SIN:Array=[]
+
 var song:Song
 var curr_instrument:int setget set_instrument
 var curr_octave:int setget set_octave
@@ -16,6 +18,9 @@ var muted_mask:int=0
 
 
 func _init():
+	SIN.resize(16384)
+	for i in 16384:
+		SIN[i]=sin(TAU*i/65536.0)
 	set_song(Song.new())
 	curr_arp=null
 	curr_instrument=0

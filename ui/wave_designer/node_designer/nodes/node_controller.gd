@@ -35,14 +35,22 @@ func _ready()->void:
 func _notification(n:int)->void:
 	if n==NOTIFICATION_TRANSLATION_CHANGED:
 		var min_width:float=0.0
+		var l:Label
+		var f:Font
 		for n in get_children():
 			if n is HBoxContainer:
-				var l:Label=n.get_child(0)
-				var f:Font=l.get_font("font")
-				min_width=max(min_width,f.get_string_size(tr(l.text)).x)
+				l=n.get_child(0)
+			elif n.has_method("get_label_control"):
+				l=n.get_label()
+			else:
+				continue
+			f=l.get_font("font")
+			min_width=max(min_width,f.get_string_size(tr(l.text)).x)
 		for n in get_children():
 			if n is HBoxContainer:
 				n.get_child(0).rect_min_size.x=min_width
+			elif n.has_method("get_label_control"):
+				n.get_label_control().rect_min_size.x=min_width
 
 
 func set_base_title(t:String)->void:

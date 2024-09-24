@@ -35,45 +35,33 @@ func clear_array(arr:Array,new_size:int,value:float=0.0)->void:
 	arr.resize(new_size)
 	arr.fill(value)
 
-# TODO: Should be able to have NANs?
+
 func calculate_slot(result:Array,slot:Array,selected_value:float)->void:
-	clear_array(result,size,selected_value if not slot.empty() else 0.0)
+	clear_array(result,size,selected_value if slot.empty() else NAN)
+	if slot.empty():
+		return
 	for inp in slot:
 		var in_val:Array=inp.calculate()
 		for optr in size:
 			if not is_nan(in_val[optr]):
-				result[optr]+=in_val[optr]
+				result[optr]=(0.0 if is_nan(result[optr]) else result[optr])+in_val[optr]
+	for optr in size:
+		if is_nan(result[optr]):
+			result[optr]=selected_value
 
 
-# TODO: Should be able to have NANs?
 func calculate_boolean_slot(result:Array,slot:Array,selected_value:float)->void:
-	clear_array(result,size,selected_value if not slot.empty() else 0.0)
-	for inp in slot:
-		var in_val:Array=inp.calculate()
-		for optr in size:
-			if not is_nan(in_val[optr]):
-				result[optr]+=in_val[optr]
+	calculate_slot(result,slot,selected_value)
 	for optr in size:
 		result[optr]=float(abs(result[optr])>=0.5)
 
 
-# TODO: Should be able to have NANs?
 func calculate_option_slot(result:Array,slot:Array,values:Array,selected_value:float)->void:
-	clear_array(result,size,NAN)
 	var vsz:float=values.size()
 	selected_value=range_lerp(selected_value,0.0,vsz,0.0,1.0)
-	for inp in slot:
-		var in_val:Array=inp.calculate()
-		for optr in size:
-			if not is_nan(in_val[optr]):
-				if is_nan(result[optr]):
-					result[optr]=selected_value
-				result[optr]+=in_val[optr]
+	calculate_slot(result,slot,selected_value)
 	for optr in size:
-		result[optr]=clamp(
-			lerp(0.0,vsz,selected_value if is_nan(result[optr]) else result[optr]),
-			0.0,vsz-1
-		)
+		result[optr]=values[clamp(lerp(0.0,vsz,abs(result[optr])),0.0,vsz-1)]
 
 
 func reset_decay()->void:

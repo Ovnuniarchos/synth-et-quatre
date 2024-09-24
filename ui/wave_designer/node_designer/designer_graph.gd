@@ -13,7 +13,9 @@ class Sorter:
 
 
 enum{
-	GEN_SINE,GEN_SAW,GEN_PULSE,GEN_TRIANGLE,GEN_NOISE
+	OUTPUT,
+	GEN_SINE,GEN_SAW,GEN_PULSE,GEN_TRIANGLE,GEN_NOISE,
+	XFR_MIX
 }
 const MENU:Array=[
 	"unsorted",
@@ -26,17 +28,20 @@ const MENU:Array=[
 	]},
 	{"separator":true},
 	{"option":"NODED_MENU_TRANSFORMS","submenu":[
+		{"option":"NODED_MENU_MIX","id":XFR_MIX},
 	]}
 ]
 const NODES:Dictionary={
+	OUTPUT:preload("res://ui/wave_designer/node_designer/nodes/output_node.tscn"),
 	GEN_SINE:preload("res://ui/wave_designer/node_designer/nodes/generators/sine_node.tscn"),
 	GEN_SAW:preload("res://ui/wave_designer/node_designer/nodes/generators/saw_node.tscn"),
 	GEN_PULSE:preload("res://ui/wave_designer/node_designer/nodes/generators/pulse_node.tscn"),
 	GEN_TRIANGLE:preload("res://ui/wave_designer/node_designer/nodes/generators/triangle_node.tscn"),
-	GEN_NOISE:preload("res://ui/wave_designer/node_designer/nodes/generators/noise_node.tscn")
+	GEN_NOISE:preload("res://ui/wave_designer/node_designer/nodes/generators/noise_node.tscn"),
+	XFR_MIX:preload("res://ui/wave_designer/node_designer/nodes/transforms/mix_node.tscn")
 }
 const NODES_CLASS:Dictionary={
-	OutputNodeComponent.NODE_TYPE:preload("res://ui/wave_designer/node_designer/nodes/output_node.tscn"),
+	OutputNodeComponent.NODE_TYPE:NODES[OUTPUT],
 	SineNodeComponent.NODE_TYPE:NODES[GEN_SINE],
 	SawNodeComponent.NODE_TYPE:NODES[GEN_SAW],
 	PulseNodeComponent.NODE_TYPE:NODES[GEN_PULSE],
@@ -218,5 +223,6 @@ func _on_node_about_to_close(node:NodeController)->void:
 
 
 func _on_params_changed(node:NodeController)->void:
+	update_connection_graph()
 	invalidate_dependants(node.name)
 	emit_signal("params_changed")

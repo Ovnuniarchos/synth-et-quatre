@@ -52,6 +52,7 @@ func _init()->void:
 func calculate()->Array:
 	if output_valid:
 		return output
+	clear_array(output,size,NAN)
 	calculate_slot(ppulse_start_values,ppulse_start_slot,ppulse_start)
 	calculate_slot(ppulse_length_values,ppulse_length_slot,ppulse_length)
 	calculate_slot(ppulse_amplitude_values,ppulse_amplitude_slot,ppulse_amplitude)
@@ -68,7 +69,6 @@ func calculate()->Array:
 	calculate_slot(phi0_values,phi0_slot,phi0)
 	calculate_slot(decay_values,decay_slot,decay)
 	calculate_slot(dc_values,dc_slot,dc)
-	clear_array(output,size)
 	var sz:int=max(1.0,size*range_length)
 	var cycle:float=1.0/sz
 	var phi:float

@@ -6,24 +6,30 @@ func _init()->void:
 
 
 func _ready()->void:
-	for i in 7:
-		$Quarter0/OptionButton.add_item("NODE_SINE_Q%d"%[i],i)
-		$Quarter1/OptionButton.add_item("NODE_SINE_Q%d"%[i],i)
-		$Quarter2/OptionButton.add_item("NODE_SINE_Q%d"%[i],i)
-		$Quarter3/OptionButton.add_item("NODE_SINE_Q%d"%[i],i)
+	var ops:Array=[]
+	for i in SineNodeConstants.SNQ_MAX:
+		ops.append({"label":SineNodeConstants.STRINGS[i],"id":i})
+	$Quarter0.set_options(ops)
+	$Quarter1.set_options(ops)
+	$Quarter2.set_options(ops)
+	$Quarter3.set_options(ops)
 
 
 func set_parameters()->void:
 	if not is_node_ready():
 		yield(self,"ready")
-	$Freq/SpinBar.set_value_no_signal(node.frequency)
-	$Amplitude/SpinBar.set_value_no_signal(node.amplitude)
-	$Phi0/SpinBar.set_value_no_signal(node.phi0)
-	$Power/SpinBar.set_value_no_signal(node.power)
-	$Decay/SpinBar.set_value_no_signal(node.decay)
-	$DCOffset/SpinBar.set_value_no_signal(node.dc)
-	for i in 4:
-		get_node("Quarter%d/OptionButton"%[i]).select(node.quarters[i])
+	$Freq.set_value(node.frequency)
+	$Amplitude.set_value(node.amplitude)
+	$Phi0.set_value(node.phi0)
+	$Power.set_value(node.power)
+	$Decay.set_value(node.decay)
+	$DCOffset.set_value(node.dc)
+	$Quarter0.select(node.quarters[0])
+	$Quarter1.select(node.quarters[1])
+	$Quarter2.select(node.quarters[2])
+	$Quarter3.select(node.quarters[3])
+	$RangeFrom.set_value(node.range_from)
+	$RangeLength.set_value(node.range_length)
 
 
 func _on_Freq_value_changed(value:float)->void:

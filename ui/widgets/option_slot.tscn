@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://ui/widgets/option_slot.gd" type="Script" id=2]
+
+[node name="Slot" type="HBoxContainer"]
+margin_right = 242.0
+margin_bottom = 20.0
+script = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="."]
+margin_top = 3.0
+margin_bottom = 17.0
+mouse_filter = 1
+size_flags_horizontal = 0
+
+[node name="OptionButton" type="OptionButton" parent="."]
+margin_left = 4.0
+margin_right = 242.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+
+[connection signal="item_selected" from="OptionButton" to="." method="_on_OptionButton_item_selected"]

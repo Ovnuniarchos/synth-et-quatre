@@ -1805,75 +1805,78 @@ msgid "NODE_QUAD4_PORT_TTIP"
 msgstr "4º cuadrante"
 
 # Nodes
+# Sine node
 msgid "NODE_OUTPUT_TITLE"
 msgstr "SALIDA"
 
 msgid "NODE_SINE_TITLE"
 msgstr "SENO"
 
-msgid "NODE_SINE_Q0"
+msgid "NODE_SINEQ_0_1"
 msgstr "0 > 1"
 
-msgid "NODE_SINE_Q1"
+msgid "NODE_SINEQ_1_0"
 msgstr "1 > 0"
 
-msgid "NODE_SINE_Q2"
+msgid "NODE_SINEQ_0_-1"
 msgstr "0 > -1"
 
-msgid "NODE_SINE_Q3"
+msgid "NODE_SINEQ_-1_0"
 msgstr "-1 > 0"
 
-msgid "NODE_SINE_Q4"
+msgid "NODE_SINEQ_1"
 msgstr "1"
 
-msgid "NODE_SINE_Q5"
+msgid "NODE_SINEQ_0"
 msgstr "0"
 
-msgid "NODE_SINE_Q6"
+msgid "NODE_SINEQ_-1"
 msgstr "-1"
 
+# Saw node
 msgid "NODE_SAW_TITLE"
 msgstr "SIERRA"
 
-msgid "NODE_SAW_Q0"
+msgid "NODE_SAWQ_-1_-0.5"
 msgstr "-1 > -0.5"
 
-msgid "NODE_SAW_Q1"
+msgid "NODE_SAWQ_-0.5_0"
 msgstr "-0.5 > 0"
 
-msgid "NODE_SAW_Q2"
+msgid "NODE_SAWQ_0_0.5"
 msgstr "0 > 0.5"
 
-msgid "NODE_SAW_Q3"
+msgid "NODE_SAWQ_0.5_1"
 msgstr "0.5 > 1"
 
-msgid "NODE_SAW_Q4"
+msgid "NODE_SAWQ_1_0.5"
 msgstr "1 > 0.5"
 
-msgid "NODE_SAW_Q5"
+msgid "NODE_SAWQ_0.5_0"
 msgstr "0.5 > 0"
 
-msgid "NODE_SAW_Q6"
+msgid "NODE_SAWQ_0_-0.5"
 msgstr "0 > -0.5"
 
-msgid "NODE_SAW_Q7"
+msgid "NODE_SAWQ_-0.5_-1"
 msgstr "-0.5 > -1"
 
-msgid "NODE_SAW_Q8"
+msgid "NODE_SAWQ_1"
 msgstr "1"
 
-msgid "NODE_SAW_Q9"
+msgid "NODE_SAWQ_0.5"
 msgstr "0.5"
 
-msgid "NODE_SAW_Q10"
+msgid "NODE_SAWQ_0"
 msgstr "0"
 
-msgid "NODE_SAW_Q11"
+msgid "NODE_SAWQ_-0.5"
 msgstr "-0.5"
 
-msgid "NODE_SAW_Q12"
+msgid "NODE_SAWQ_-1"
 msgstr "-1"
 
+# Pulse node
 msgid "NODE_PULSE_TITLE"
 msgstr "PULSO"
 
@@ -1916,27 +1919,28 @@ msgstr "Amplitud del pulso negativo"
 msgid "NODE_TRIANGLE_TITLE"
 msgstr "TRIÁNGULO"
 
-msgid "NODE_TRI_Q0"
+msgid "NODE_TRIQ_0_1"
 msgstr "0 > 1"
 
-msgid "NODE_TRI_Q1"
+msgid "NODE_TRIQ_1_0"
 msgstr "1 > 0"
 
-msgid "NODE_TRI_Q2"
+msgid "NODE_TRIQ_0_-1"
 msgstr "0 > -1"
 
-msgid "NODE_TRI_Q3"
+msgid "NODE_TRIQ_-1_0"
 msgstr "-1 > 0"
 
-msgid "NODE_TRI_Q4"
+msgid "NODE_TRIQ_1"
 msgstr "1"
 
-msgid "NODE_TRI_Q5"
+msgid "NODE_TRIQ_0"
 msgstr "0"
 
-msgid "NODE_TRI_Q6"
+msgid "NODE_TRIQ_-1"
 msgstr "-1"
 
+# Noise node
 msgid "NODE_NOISE_TITLE"
 msgstr "RUIDO"
 

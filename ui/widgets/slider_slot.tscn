@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://ui/widgets/spin_bar.gd" type="Script" id=1]
+[ext_resource path="res://ui/widgets/slider_slot.gd" type="Script" id=2]
+
+[node name="Slot" type="HBoxContainer"]
+margin_right = 229.0
+margin_bottom = 14.0
+script = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="."]
+margin_bottom = 14.0
+mouse_filter = 1
+size_flags_horizontal = 0
+
+[node name="SpinBar" type="ProgressBar" parent="."]
+margin_left = 4.0
+margin_right = 229.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 53, 14 )
+size_flags_horizontal = 11
+size_flags_stretch_ratio = 2.0
+min_value = -1.0
+max_value = 1.0
+percent_visible = false
+script = ExtResource( 1 )
+big_step = 5.0
+huge_step = 20.0
+_decimals = 2
+
+[connection signal="value_changed" from="SpinBar" to="." method="_on_SpinBar_value_changed"]

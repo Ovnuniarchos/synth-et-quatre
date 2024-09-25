@@ -67,13 +67,13 @@ func calculate()->Array:
 	var mn:float=INF
 	var q:float
 	for i in sz:
-		noiz.persistence=persistence_values[i]
-		noiz.lacunarity=lacunarity_values[i]
-		noiz.period=1.0/frequency_values[i] if abs(frequency_values[i])>0.0001 else 0.0
-		noiz.octaves=octaves_values[i]
+		noiz.persistence=persistence_values[optr]
+		noiz.lacunarity=lacunarity_values[optr]
+		noiz.period=1.0/frequency_values[optr] if abs(frequency_values[optr])>0.0001 else 0.0
+		noiz.octaves=octaves_values[optr]
 		q=lerp(noiz.get_noise_1d(phi),noiz.get_noise_1d(phi-1.0),phi)\
-			+rand_range(-randomness_values[i],randomness_values[i])
-		output[optr]=pow(abs(q),power_values[i])*sign(q)
+			+rand_range(-randomness_values[optr],randomness_values[optr])
+		output[optr]=pow(abs(q),power_values[optr])*sign(q)
 		mx=max(mx,output[optr])
 		mn=min(mn,output[optr])
 		optr=(optr+1)&(size-1)
@@ -82,8 +82,8 @@ func calculate()->Array:
 	reset_decay()
 	for i in sz:
 		output[optr]=calculate_decay(
-			range_lerp(output[optr],mn,mx,-amplitude_values[i],amplitude_values[i])+dc_values[i],
-			decay_values[i],sz
+			range_lerp(output[optr],mn,mx,-amplitude_values[optr],amplitude_values[optr])+dc_values[optr],
+			decay_values[optr],sz
 		)
 		optr=(optr+1)&(size-1)
 	return output

@@ -77,11 +77,11 @@ func calculate()->Array:
 	var q:float
 	reset_decay()
 	for i in sz:
-		phi=fposmod((iphi*frequency_values[i])+phi0_values[i],1.0)
-		q=float(phi<ppulse_length_values[i]-1.0 or (phi>=ppulse_start_values[i] and phi<ppulse_length_values[i]))*ppulse_amplitude_values[i]
-		q-=float(phi<npulse_length_values[i]-1.0 or (phi>=npulse_start_values[i] and phi<npulse_length_values[i]))*npulse_amplitude_values[i]
-		q=dc_values[i]+q*amplitude_values[i]
-		output[optr]=calculate_decay(q,decay_values[i],sz)
+		phi=fposmod((iphi*frequency_values[optr])+phi0_values[optr],1.0)
+		q=float(phi<ppulse_length_values[optr]-1.0 or (phi>=ppulse_start_values[optr] and phi<ppulse_length_values[optr]))*ppulse_amplitude_values[optr]
+		q-=float(phi<npulse_length_values[optr]-1.0 or (phi>=npulse_start_values[optr] and phi<npulse_length_values[optr]))*npulse_amplitude_values[optr]
+		q=dc_values[optr]+q*amplitude_values[optr]
+		output[optr]=calculate_decay(q,decay_values[optr],sz)
 		iphi+=cycle
 		optr=(optr+1)&(size-1)
 	output_valid=true

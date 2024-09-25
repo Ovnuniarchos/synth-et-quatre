@@ -116,29 +116,28 @@ margin_bottom = 83.0
 label = "NODE_MIX_FACTOR_PORT"
 tooltip = "NODE_MIX_FACTOR_PORT_TTIP"
 
-[node name="ClampIn" type="Button" parent="."]
+[node name="ClampIn" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
 margin_top = 84.0
 margin_right = 245.0
-margin_bottom = 104.0
-hint_tooltip = "NODE_CLAMP_IN_PORT_TTIP"
-size_flags_horizontal = 3
-toggle_mode = true
-text = "NODE_CLAMP_IN_PORT"
+margin_bottom = 98.0
+label = "NODE_CLAMP_IN_PORT"
+tooltip = "NODE_CLAMP_IN_PORT_TTIP"
+min_value = 0.0
 
 [node name="Op" parent="." instance=ExtResource( 1 )]
 margin_left = 16.0
-margin_top = 105.0
+margin_top = 99.0
 margin_right = 245.0
-margin_bottom = 125.0
+margin_bottom = 119.0
 label = "NODE_OP_PORT"
 tooltip = "NODE_OP_PORT_TTIP"
 
 [node name="Power" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
-margin_top = 126.0
+margin_top = 120.0
 margin_right = 245.0
-margin_bottom = 140.0
+margin_bottom = 134.0
 type = 4
 label = "NODE_POWER_PORT"
 tooltip = "NODE_POWER_PORT_TTIP"
@@ -150,9 +149,9 @@ value = 1.0
 
 [node name="Decay" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
-margin_top = 141.0
+margin_top = 135.0
 margin_right = 245.0
-margin_bottom = 155.0
+margin_bottom = 149.0
 type = 5
 label = "NODE_DECAY_PORT"
 tooltip = "NODE_DECAY_PORT_TTIP"
@@ -160,27 +159,27 @@ min_value = 0.0
 
 [node name="DCOffset" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
-margin_top = 156.0
+margin_top = 150.0
 margin_right = 245.0
-margin_bottom = 170.0
+margin_bottom = 164.0
 type = 6
 label = "NODE_DC_OFFSET_PORT"
 tooltip = "NODE_DC_OFFSET_PORT_TTIP"
 
 [node name="RangeFrom" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
-margin_top = 171.0
+margin_top = 165.0
 margin_right = 245.0
-margin_bottom = 185.0
+margin_bottom = 179.0
 type = 7
 label = "NODE_RANGE_FROM_PORT"
 tooltip = "NODE_RANGE_FROM_PORT_TTIP"
 
 [node name="RangeLength" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
-margin_top = 186.0
+margin_top = 180.0
 margin_right = 245.0
-margin_bottom = 200.0
+margin_bottom = 194.0
 type = 8
 label = "NODE_RANGE_LEN_PORT"
 tooltip = "NODE_RANGE_LEN_PORT_TTIP"
@@ -188,7 +187,7 @@ min_value = 0.0
 value = 1.0
 
 [connection signal="value_changed" from="Mix" to="." method="_on_Mix_value_changed"]
-[connection signal="toggled" from="ClampIn" to="." method="_on_ClampIn_toggled"]
+[connection signal="value_changed" from="ClampIn" to="." method="_on_ClampIn_value_changed"]
 [connection signal="item_selected" from="Op" to="." method="_on_Op_item_selected"]
 [connection signal="value_changed" from="Power" to="." method="_on_Power_value_changed"]
 [connection signal="value_changed" from="Decay" to="." method="_on_Decay_value_changed"]

@@ -55,45 +55,57 @@ func calculate()->Array:
 	var mix:float
 	var bidi_lerp:bool
 	for i in sz:
-		mix=mix_values[i]
-		if op_values[i]==MixNodeConstants.MIX_MIX:
-			t=lerp(a_values[i],b_values[i],(mix+1.0)*0.5)
+		mix=lerp(mix_values[optr],clamp(mix_values[optr],0.0,1.0),clamp_in_values[optr])
+		if op_values[optr]==MixNodeConstants.MIX_MIX:
+			t=lerp(a_values[optr],b_values[optr],(mix+1.0)*0.5)
 			bidi_lerp=false
-		elif op_values[i]==MixNodeConstants.MIX_ADD:
-			t=a_values[i]+b_values[i]
+		elif op_values[optr]==MixNodeConstants.MIX_ADD:
+			t=a_values[optr]+b_values[optr]
 			bidi_lerp=true
-		elif op_values[i]==MixNodeConstants.MIX_SUB:
-			t=a_values[i]-b_values[i]
+		elif op_values[optr]==MixNodeConstants.MIX_SUB:
+			t=a_values[optr]-b_values[optr]
 			bidi_lerp=true
-		elif op_values[i]==MixNodeConstants.MIX_MUL:
-			t=a_values[i]*b_values[i]
+		elif op_values[optr]==MixNodeConstants.MIX_MUL:
+			t=a_values[optr]*b_values[optr]
 			bidi_lerp=true
-		elif op_values[i]==MixNodeConstants.MIX_DIV:
-			t=a_values[i]/b_values[i] if b_values[i]!=0.0 else 0.0
+		elif op_values[optr]==MixNodeConstants.MIX_DIV:
+			t=a_values[optr]/b_values[optr] if b_values[optr]!=0.0 else 0.0
 			bidi_lerp=true
-		elif op_values[i]==MixNodeConstants.MIX_MOD:
-			t=fmod(a_values[i],b_values[i]) if b_values[i]!=0.0 else 0.0
+		elif op_values[optr]==MixNodeConstants.MIX_MOD:
+			t=fmod(a_values[optr],b_values[optr]) if b_values[optr]!=0.0 else 0.0
 			bidi_lerp=true
-		elif op_values[i]==MixNodeConstants.MIX_FMOD:
-			t=fposmod(a_values[i],b_values[i]) if b_values[i]!=0.0 else 0.0
+		elif op_values[optr]==MixNodeConstants.MIX_FMOD:
+			t=fposmod(a_values[optr],b_values[optr]) if b_values[optr]!=0.0 else 0.0
 			bidi_lerp=true
-		elif op_values[i]==MixNodeConstants.MIX_POWER:
-			t=pow(abs(a_values[i]),b_values[i])*sign(a_values[i])
+		elif op_values[optr]==MixNodeConstants.MIX_POWER:
+			t=pow(abs(a_values[optr]),b_values[optr])*sign(a_values[optr])
 			bidi_lerp=true
-		elif op_values[i]==MixNodeConstants.MIX_MAX:
-			t=max(a_values[i],b_values[i])
+		elif op_values[optr]==MixNodeConstants.MIX_MAX:
+			t=max(a_values[optr],b_values[optr])
 			bidi_lerp=true
-		elif op_values[i]==MixNodeConstants.MIX_MIN:
-			t=min(a_values[i],b_values[i])
+		elif op_values[optr]==MixNodeConstants.MIX_MIN:
+			t=min(a_values[optr],b_values[optr])
 			bidi_lerp=true
-		elif op_values[i]==MixNodeConstants.MIX_CMP:
-			t=sign(a_values[i]-b_values[i])
+		elif op_values[optr]==MixNodeConstants.MIX_GT:
+			t=float(b_values[optr]>a_values[optr])
 			bidi_lerp=true
-		elif op_values[i]==MixNodeConstants.MIX_SIGN_CP:
-			t=abs(a_values[i]) if b_values[i]>0.0 else -abs(a_values[i]) if b_values[i]<0.0 else 0.0
+		elif op_values[optr]==MixNodeConstants.MIX_GE:
+			t=float(b_values[optr]>=a_values[optr])
+			bidi_lerp=true
+		elif op_values[optr]==MixNodeConstants.MIX_LT:
+			t=float(b_values[optr]<a_values[optr])
+			bidi_lerp=true
+		elif op_values[optr]==MixNodeConstants.MIX_LE:
+			t=float(b_values[optr]<=a_values[optr])
+			bidi_lerp=true
+		elif op_values[optr]==MixNodeConstants.MIX_CMP:
+			t=sign(b_values[optr]-a_values[optr])
+			bidi_lerp=true
+		elif op_values[optr]==MixNodeConstants.MIX_SIGN_CP:
+			t=abs(a_values[optr]) if b_values[optr]>0.0 else -abs(a_values[optr]) if b_values[optr]<0.0 else 0.0
 			bidi_lerp=true
 		if bidi_lerp:
-			t=lerp(t,b_values[i],mix) if mix>0.0 else lerp(t,a_values[i],-mix)
-		output[optr]=calculate_decay(pow(abs(t),power_values[i])*sign(t),decay_values[i],sz)+dc_values[i]
+			t=lerp(t,b_values[optr],mix) if mix>0.0 else lerp(t,a_values[optr],-mix)
+		output[optr]=calculate_decay(pow(abs(t),power_values[optr])*sign(t),decay_values[optr],sz)+dc_values[optr]
 		optr=(optr+1)&(size-1)
 	return output

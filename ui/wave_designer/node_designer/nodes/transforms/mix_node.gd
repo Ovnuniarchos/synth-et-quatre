@@ -15,9 +15,11 @@ func _ready()->void:
 func set_parameters()->void:
 	if not is_node_ready():
 		yield(self,"ready")
-	$Clamp.set_pressed_no_signal(abs(node.clamp_in_value)<0.5)
-	$Op.select(node.op_value)
+	$A.set_value(node.a_value)
+	$B.set_value(node.b_value)
 	$Mix.set_value(node.mix_value)
+	$ClampIn.set_value(node.clamp_in_value)
+	$Op.select(node.op_value)
 	$Power.set_value(node.power)
 	$Decay.set_value(node.decay)
 	$DCOffset.set_value(node.dc)
@@ -25,8 +27,8 @@ func set_parameters()->void:
 	$RangeLength.set_value(node.range_length)
 
 
-func _on_ClampIn_toggled(button_pressed:bool)->void:
-	node.clamp_in_value=float(button_pressed)
+func _on_ClampIn_value_changed(value:float)->void:
+	node.clamp_in_value=value
 	emit_signal("params_changed",self)
 
 
@@ -63,3 +65,5 @@ func _on_RangeFrom_value_changed(value:float)->void:
 func _on_RangeLength_value_changed(value:float)->void:
 	node.range_length=value
 	emit_signal("params_changed",self)
+
+

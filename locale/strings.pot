@@ -2081,6 +2081,18 @@ msgstr ""
 msgid "NODE_MIX_MIN"
 msgstr ""
 
+msgid "NODE_MIX_GT"
+msgstr ""
+
+msgid "NODE_MIX_GE"
+msgstr ""
+
+msgid "NODE_MIX_LT"
+msgstr ""
+
+msgid "NODE_MIX_LE"
+msgstr ""
+
 msgid "NODE_MIX_CMP"
 msgstr ""
 

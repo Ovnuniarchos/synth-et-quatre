@@ -53,7 +53,7 @@ func calculate_slot(result:Array,slot:Array,selected_value:float)->void:
 func calculate_boolean_slot(result:Array,slot:Array,selected_value:float)->void:
 	calculate_slot(result,slot,selected_value)
 	for optr in size:
-		result[optr]=float(abs(result[optr])>=0.5)
+		result[optr]=clamp(abs(result[optr]),0.0,1.0)
 
 
 func calculate_option_slot(result:Array,slot:Array,values:Array,selected_value:float)->void:

@@ -1980,3 +1980,84 @@ msgstr "Aleatoriedad"
 msgid "NODE_RANDOMNESS_PORT_TTIP"
 msgstr "<EMPTY STRING>"
 
+# Mix node
+msgid "NODE_MIX_TITLE"
+msgstr "MEZCLA"
+
+msgid "NODE_INPUT_A_PORT"
+msgstr "A"
+
+msgid "NODE_INPUT_A_PORT_TTIP"
+msgstr "<EMPTY STRING>"
+
+msgid "NODE_INPUT_B_PORT"
+msgstr "B"
+
+msgid "NODE_INPUT_B_PORT_TTIP"
+msgstr "<EMPTY STRING>"
+
+msgid "NODE_MIX_FACTOR_PORT"
+msgstr "Mezcla"
+
+msgid "NODE_MIX_FACTOR_PORT_TTIP"
+msgstr "Factor de mezcla"
+
+msgid "NODE_CLAMP_IN_PORT"
+msgstr "Limitar"
+
+msgid "NODE_CLAMP_IN_PORT_TTIP"
+msgstr "Limita los valors de mezcla al rango -1.0 - 1.0"
+
+msgid "NODE_OP_PORT"
+msgstr "Modo"
+
+msgid "NODE_OP_PORT_TTIP"
+msgstr "<EMPTY STRING>"
+
+msgid "NODE_MIX_MIX"
+msgstr "Mezclar"
+
+msgid "NODE_MIX_ADD"
+msgstr "Sumar"
+
+msgid "NODE_MIX_SUB"
+msgstr "Restar"
+
+msgid "NODE_MIX_MUL"
+msgstr "Multiplicar"
+
+msgid "NODE_MIX_DIV"
+msgstr "Dividir"
+
+msgid "NODE_MIX_MOD"
+msgstr "Módulo"
+
+msgid "NODE_MIX_FMOD"
+msgstr "Resto"
+
+msgid "NODE_MIX_POW"
+msgstr "Exponente"
+
+msgid "NODE_MIX_MAX"
+msgstr "Máximo"
+
+msgid "NODE_MIX_MIN"
+msgstr "Mínimo"
+
+msgid "NODE_MIX_GT"
+msgstr "B > A"
+
+msgid "NODE_MIX_GE"
+msgstr "B >= A"
+
+msgid "NODE_MIX_LT"
+msgstr "B < A"
+
+msgid "NODE_MIX_LE"
+msgstr "B <= A"
+
+msgid "NODE_MIX_CMP"
+msgstr "Comparar"
+
+msgid "NODE_MIX_SIGN_CP"
+msgstr "Copiar signo"

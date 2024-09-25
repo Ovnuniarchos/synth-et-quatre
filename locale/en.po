@@ -2042,6 +2042,18 @@ msgstr "Maximum"
 msgid "NODE_MIX_MIN"
 msgstr "Minimum"
 
+msgid "NODE_MIX_GT"
+msgstr "B > A"
+
+msgid "NODE_MIX_GE"
+msgstr "B >= A"
+
+msgid "NODE_MIX_LT"
+msgstr "B < A"
+
+msgid "NODE_MIX_LE"
+msgstr "B <= A"
+
 msgid "NODE_MIX_CMP"
 msgstr "Compare"
 

@@ -61,7 +61,7 @@ func calculate()->Array:
 	var qts:Array=SawNodeConstants.get_calc_array()
 	reset_decay()
 	for i in sz:
-		phi=(iphi*frequency_values[i])+phi0_values[i]
+		phi=(iphi*frequency_values[optr])+phi0_values[optr]
 		q=fposmod(phi,0.25)*2.0
 		qts[0]=q-1.0
 		qts[1]=q-0.5
@@ -71,9 +71,9 @@ func calculate()->Array:
 		qts[5]=0.5-q
 		qts[6]=-q
 		qts[7]=-0.5-q
-		q=qts[quarter_values[fposmod(phi,1.0)*4.0][i]]
-		q=dc_values[i]+pow(abs(q),power_values[i])*sign(q)*amplitude_values[i]
-		output[optr]=calculate_decay(q,decay_values[i],sz)
+		q=qts[quarter_values[fposmod(phi,1.0)*4.0][optr]]
+		q=dc_values[optr]+pow(abs(q),power_values[optr])*sign(q)*amplitude_values[optr]
+		output[optr]=calculate_decay(q,decay_values[optr],sz)
 		iphi+=cycle
 		optr=(optr+1)&(size-1)
 	output_valid=true

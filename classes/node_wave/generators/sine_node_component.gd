@@ -63,7 +63,7 @@ func calculate()->Array:
 	var si:Array=GLOBALS.SIN
 	reset_decay()
 	for i in sz:
-		phi=(iphi*frequency_values[i])+phi0_values[i]
+		phi=(iphi*frequency_values[optr])+phi0_values[optr]
 		q=fposmod(phi,0.25)*65536
 		t=si[q]
 		qts[0]=t
@@ -71,9 +71,9 @@ func calculate()->Array:
 		t=si[16383-q]
 		qts[1]=t
 		qts[3]=-t
-		q=qts[quarter_values[fposmod(phi,1.0)*4.0][i]]
-		q=dc_values[i]+pow(abs(q),power_values[i])*sign(q)*amplitude_values[i]
-		output[optr]=calculate_decay(q,decay_values[i],sz)
+		q=qts[quarter_values[fposmod(phi,1.0)*4.0][optr]]
+		q=dc_values[optr]+pow(abs(q),power_values[optr])*sign(q)*amplitude_values[optr]
+		output[optr]=calculate_decay(q,decay_values[optr],sz)
 		iphi+=cycle
 		optr=(optr+1)&(size-1)
 	output_valid=true

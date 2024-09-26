@@ -86,6 +86,7 @@ func calculate()->Array:
 			decay_values[optr],sz
 		)
 		optr=(optr+1)&(size-1)
+	output_valid=true
 	return output
 
 

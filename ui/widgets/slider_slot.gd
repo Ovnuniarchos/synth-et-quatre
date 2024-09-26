@@ -6,14 +6,14 @@ signal value_changed(value)
 
 const DEFAULTS:Array=[
 	null,
-	{"label":"NODE_FREQUENCY_PORT","big":5,"huge":20,"decs":2,"min":-32,"max":32,"val":1},
-	{"label":"NODE_AMPLITUDE_PORT","big":5,"huge":20,"decs":2,"min":-1,"max":1,"val":1},
-	{"label":"NODE_PHI0_PORT","big":5,"huge":20,"decs":2,"min":-1,"max":1,"val":0},
-	{"label":"NODE_POWER_PORT","big":100,"huge":500,"decs":2,"min":0,"max":500,"val":1},
-	{"label":"NODE_DECAY_PORT","big":5,"huge":20,"decs":2,"min":0,"max":1,"val":0},
-	{"label":"NODE_DC_OFFSET_PORT","big":5,"huge":20,"decs":2,"min":-1,"max":1,"val":0},
-	{"label":"NODE_RANGE_FROM_PORT","big":5,"huge":20,"decs":2,"min":-1,"max":1,"val":0},
-	{"label":"NODE_RANGE_LEN_PORT","big":5,"huge":20,"decs":2,"min":0,"max":1,"val":1},
+	{"label":"NODE_FREQUENCY_PORT","big":5,"huge":20,"decs":2,"min":-32,"max":32,"val":1,"chi":false,"clo":false},
+	{"label":"NODE_AMPLITUDE_PORT","big":5,"huge":20,"decs":2,"min":-1,"max":1,"val":1,"chi":false,"clo":false},
+	{"label":"NODE_PHI0_PORT","big":5,"huge":20,"decs":2,"min":-1,"max":1,"val":0,"chi":true,"clo":true},
+	{"label":"NODE_POWER_PORT","big":100,"huge":500,"decs":2,"min":0,"max":500,"val":1,"chi":false,"clo":true},
+	{"label":"NODE_DECAY_PORT","big":5,"huge":20,"decs":2,"min":0,"max":1,"val":0,"chi":true,"clo":true},
+	{"label":"NODE_DC_OFFSET_PORT","big":5,"huge":20,"decs":2,"min":-1,"max":1,"val":0,"chi":false,"clo":false},
+	{"label":"NODE_RANGE_FROM_PORT","big":5,"huge":20,"decs":2,"min":-1,"max":1,"val":0,"chi":true,"clo":true},
+	{"label":"NODE_RANGE_LEN_PORT","big":5,"huge":20,"decs":2,"min":0,"max":1,"val":1,"chi":true,"clo":true},
 ]
 
 export (int,
@@ -46,8 +46,8 @@ func set_type(t:int)->void:
 		set_min_value(DEFAULTS[t]["min"])
 		set_max_value(DEFAULTS[t]["max"])
 		set_value(DEFAULTS[t]["val"])
-		set_clamp_lo(true)
-		set_clamp_hi(true)
+		set_clamp_lo(DEFAULTS[t]["clo"])
+		set_clamp_hi(DEFAULTS[t]["chi"])
 		property_list_changed_notify()
 
 

@@ -1748,12 +1748,24 @@ msgstr ""
 msgid "NODED_MENU_TRANSFORMS"
 msgstr ""
 
+msgid "NODED_MENU_MIX"
+msgstr ""
+
+msgid "NODED_MENU_CLAMP"
+msgstr ""
+
 # Common ports
 
 msgid "NODE_OUTPUT_PORT"
 msgstr ""
 
 msgid "NODE_OUTPUT_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_INPUT_PORT"
+msgstr ""
+
+msgid "NODE_INPUT_PORT_TTIP"
 msgstr ""
 
 msgid "NODE_CLIP_PORT"
@@ -1835,10 +1847,12 @@ msgid "NODE_QUAD4_PORT_TTIP"
 msgstr ""
 
 # Nodes
-# Sine node
+# Output node
 
 msgid "NODE_OUTPUT_TITLE"
 msgstr ""
+
+# Sine node
 
 msgid "NODE_SINE_TITLE"
 msgstr ""
@@ -2097,4 +2111,33 @@ msgid "NODE_MIX_CMP"
 msgstr ""
 
 msgid "NODE_MIX_SIGN_CP"
+msgstr ""
+
+# Clamp node
+
+msgid "NODE_CLAMP_TITLE"
+msgstr ""
+
+msgid "NODE_LEVEL_HI_PORT"
+msgstr ""
+
+msgid "NODE_LEVEL_HI_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_CLAMP_HI_PORT"
+msgstr ""
+
+msgid "NODE_CLAMP_HI_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_LEVEL_LO_PORT"
+msgstr ""
+
+msgid "NODE_LEVEL_LO_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_CLAMP_LO_PORT"
+msgstr ""
+
+msgid "NODE_CLAMP_LO_PORT_TTIP"
 msgstr ""

@@ -149,6 +149,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://classes/io_modules/wave_components/filters/clamp_writer.gd"
 }, {
+"base": "WaveNodeComponent",
+"class": "ClampNodeComponent",
+"language": "GDScript",
+"path": "res://classes/node_wave/transforms/clamp_node_component.gd"
+}, {
 "base": "Container",
 "class": "ClipContainer",
 "language": "GDScript",
@@ -713,6 +718,7 @@ _global_script_class_icons={
 "ClampFilter": "",
 "ClampFilterReader": "",
 "ClampFilterWriter": "",
+"ClampNodeComponent": "",
 "ClipContainer": "",
 "ConfigButton": "",
 "ConfigSpinBar": "",

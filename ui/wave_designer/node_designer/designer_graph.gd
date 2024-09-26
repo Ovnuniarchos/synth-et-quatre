@@ -9,13 +9,13 @@ signal connections_changed(connections)
 
 class Sorter:
 	static func sort(a,b)->bool:
-		return a["option"]<b["option"]
+		return TranslationServer.translate(a["option"])<TranslationServer.translate(b["option"])
 
 
 enum{
 	OUTPUT,
 	GEN_SINE,GEN_SAW,GEN_PULSE,GEN_TRIANGLE,GEN_NOISE,
-	XFR_MIX
+	XFR_MIX,XFR_CLAMP
 }
 const MENU:Array=[
 	"unsorted",
@@ -29,6 +29,7 @@ const MENU:Array=[
 	{"separator":true},
 	{"option":"NODED_MENU_TRANSFORMS","submenu":[
 		{"option":"NODED_MENU_MIX","id":XFR_MIX},
+		{"option":"NODED_MENU_CLAMP","id":XFR_CLAMP},
 	]}
 ]
 const NODES:Dictionary={
@@ -38,7 +39,8 @@ const NODES:Dictionary={
 	GEN_PULSE:preload("res://ui/wave_designer/node_designer/nodes/generators/pulse_node.tscn"),
 	GEN_TRIANGLE:preload("res://ui/wave_designer/node_designer/nodes/generators/triangle_node.tscn"),
 	GEN_NOISE:preload("res://ui/wave_designer/node_designer/nodes/generators/noise_node.tscn"),
-	XFR_MIX:preload("res://ui/wave_designer/node_designer/nodes/transforms/mix_node.tscn")
+	XFR_MIX:preload("res://ui/wave_designer/node_designer/nodes/transforms/mix_node.tscn"),
+	XFR_CLAMP:preload("res://ui/wave_designer/node_designer/nodes/transforms/clamp_node.tscn")
 }
 const NODES_CLASS:Dictionary={
 	OutputNodeComponent.NODE_TYPE:NODES[OUTPUT],
@@ -46,7 +48,9 @@ const NODES_CLASS:Dictionary={
 	SawNodeComponent.NODE_TYPE:NODES[GEN_SAW],
 	PulseNodeComponent.NODE_TYPE:NODES[GEN_PULSE],
 	TriangleNodeComponent.NODE_TYPE:NODES[GEN_TRIANGLE],
-	NoiseNodeComponent.NODE_TYPE:NODES[GEN_NOISE]
+	NoiseNodeComponent.NODE_TYPE:NODES[GEN_NOISE],
+	MixNodeComponent.NODE_TYPE:NODES[XFR_MIX],
+	ClampNodeComponent.NODE_TYPE:NODES[XFR_CLAMP]
 }
 
 

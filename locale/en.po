@@ -1719,11 +1719,23 @@ msgstr "Noise"
 msgid "NODED_MENU_TRANSFORMS"
 msgstr "Transforms"
 
+msgid "NODED_MENU_MIX"
+msgstr "Mix"
+
+msgid "NODED_MENU_CLAMP"
+msgstr "Clamp"
+
 # Common ports
 msgid "NODE_OUTPUT_PORT"
 msgstr "Output"
 
 msgid "NODE_OUTPUT_PORT_TTIP"
+msgstr "<EMPTY STRING>"
+
+msgid "NODE_INPUT_PORT"
+msgstr "Input"
+
+msgid "NODE_INPUT_PORT_TTIP"
 msgstr "<EMPTY STRING>"
 
 msgid "NODE_CLIP_PORT"
@@ -1802,10 +1814,12 @@ msgid "NODE_QUAD4_PORT_TTIP"
 msgstr "4th quadrant"
 
 # Nodes
-# Sine node
+# Output node
 msgid "NODE_OUTPUT_TITLE"
 msgstr "OUTPUT"
 
+# Nodes
+# Sine node
 msgid "NODE_SINE_TITLE"
 msgstr "SINE"
 
@@ -2059,3 +2073,31 @@ msgstr "Compare"
 
 msgid "NODE_MIX_SIGN_CP"
 msgstr "Sign copy"
+
+# Clamp node
+msgid "NODE_CLAMP_TITLE"
+msgstr "CLAMP"
+
+msgid "NODE_LEVEL_HI_PORT"
+msgstr "Upper limit"
+
+msgid "NODE_LEVEL_HI_PORT_TTIP"
+msgstr "<EMPTY STRING>"
+
+msgid "NODE_CLAMP_HI_PORT"
+msgstr "Clamp upper"
+
+msgid "NODE_CLAMP_HI_PORT_TTIP"
+msgstr "<EMPTY STRING>"
+
+msgid "NODE_LEVEL_LO_PORT"
+msgstr "Lower limit"
+
+msgid "NODE_LEVEL_LO_PORT_TTIP"
+msgstr "<EMPTY STRING>"
+
+msgid "NODE_CLAMP_LO_PORT"
+msgstr "Clamp lower"
+
+msgid "NODE_CLAMP_LO_PORT_TTIP"
+msgstr "<EMPTY STRING>"

@@ -1,10 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://ui/widgets/option_slot.tscn" type="PackedScene" id=1]
-[ext_resource path="res://ui/wave_designer/node_designer/nodes/transforms/mix_node.gd" type="Script" id=2]
+[ext_resource path="res://ui/wave_designer/node_designer/nodes/transforms/clamp_node.gd" type="Script" id=1]
 [ext_resource path="res://ui/widgets/slider_slot.tscn" type="PackedScene" id=3]
 
-[node name="Mix" type="GraphNode"]
+[node name="Clamp" type="GraphNode"]
 margin_right = 171.0
 margin_bottom = 74.0
 show_close = true
@@ -63,7 +62,7 @@ slot/8/left_color = Color( 1, 1, 1, 1 )
 slot/8/right_enabled = false
 slot/8/right_type = 0
 slot/8/right_color = Color( 1, 1, 1, 1 )
-slot/9/left_enabled = false
+slot/9/left_enabled = true
 slot/9/left_type = 0
 slot/9/left_color = Color( 1, 1, 1, 1 )
 slot/9/right_enabled = false
@@ -75,8 +74,14 @@ slot/10/left_color = Color( 1, 1, 1, 1 )
 slot/10/right_enabled = false
 slot/10/right_type = 0
 slot/10/right_color = Color( 1, 1, 1, 1 )
-script = ExtResource( 2 )
-base_title = "NODE_MIX_TITLE"
+slot/11/left_enabled = false
+slot/11/left_type = 0
+slot/11/left_color = Color( 1, 1, 1, 1 )
+slot/11/right_enabled = false
+slot/11/right_type = 0
+slot/11/right_color = Color( 1, 1, 1, 1 )
+script = ExtResource( 1 )
+base_title = "NODE_CLAMP_TITLE"
 
 [node name="Output" type="Label" parent="."]
 margin_left = 16.0
@@ -88,56 +93,68 @@ mouse_filter = 1
 text = "NODE_OUTPUT_PORT"
 align = 2
 
-[node name="A" parent="." instance=ExtResource( 3 )]
+[node name="Input" type="Label" parent="."]
 margin_left = 16.0
 margin_top = 39.0
 margin_right = 245.0
 margin_bottom = 53.0
-label = "NODE_INPUT_A_PORT"
-tooltip = "NODE_INPUT_A_PORT_TTIP"
-clamp_lo = false
-clamp_hi = false
+hint_tooltip = "NODE_INPUT_PORT_TTIP"
+mouse_filter = 1
+text = "NODE_INPUT_PORT"
 
-[node name="B" parent="." instance=ExtResource( 3 )]
+[node name="LevelHi" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
 margin_top = 54.0
 margin_right = 245.0
 margin_bottom = 68.0
-label = "NODE_INPUT_B_PORT"
-tooltip = "NODE_INPUT_B_PORT_TTIP"
+label = "NODE_LEVEL_HI_PORT"
+tooltip = "NODE_LEVEL_HI_PORT_TTIP"
 clamp_lo = false
 clamp_hi = false
 
-[node name="Mix" parent="." instance=ExtResource( 3 )]
+[node name="ClampHi" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
 margin_top = 69.0
 margin_right = 245.0
 margin_bottom = 83.0
-label = "NODE_MIX_FACTOR_PORT"
-tooltip = "NODE_MIX_FACTOR_PORT_TTIP"
+label = "NODE_CLAMP_HI_PORT"
+tooltip = "NODE_CLAMP_HI_PORT_TTIP"
+min_value = 0.0
 
-[node name="ClampIn" parent="." instance=ExtResource( 3 )]
+[node name="LevelLo" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
 margin_top = 84.0
 margin_right = 245.0
 margin_bottom = 98.0
-label = "NODE_CLAMP_IN_PORT"
-tooltip = "NODE_CLAMP_IN_PORT_TTIP"
-min_value = 0.0
+label = "NODE_LEVEL_LO_PORT"
+tooltip = "NODE_LEVEL_LO_PORT_TTIP"
 
-[node name="Op" parent="." instance=ExtResource( 1 )]
+[node name="ClampLo" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
 margin_top = 99.0
 margin_right = 245.0
-margin_bottom = 119.0
-label = "NODE_OP_PORT"
-tooltip = "NODE_OP_PORT_TTIP"
+margin_bottom = 113.0
+label = "NODE_CLAMP_LO_PORT"
+tooltip = "NODE_CLAMP_LO_PORT_TTIP"
+min_value = 0.0
+
+[node name="Amplitude" parent="." instance=ExtResource( 3 )]
+margin_left = 16.0
+margin_top = 114.0
+margin_right = 245.0
+margin_bottom = 128.0
+type = 2
+label = "NODE_AMPLITUDE_PORT"
+tooltip = "NODE_AMPLITUDE_PORT_TTIP"
+value = 1.0
+clamp_lo = false
+clamp_hi = false
 
 [node name="Power" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
-margin_top = 120.0
+margin_top = 129.0
 margin_right = 245.0
-margin_bottom = 134.0
+margin_bottom = 143.0
 type = 4
 label = "NODE_POWER_PORT"
 tooltip = "NODE_POWER_PORT_TTIP"
@@ -150,20 +167,19 @@ clamp_hi = false
 
 [node name="Decay" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
-margin_top = 135.0
+margin_top = 144.0
 margin_right = 245.0
-margin_bottom = 149.0
+margin_bottom = 158.0
 type = 5
 label = "NODE_DECAY_PORT"
 tooltip = "NODE_DECAY_PORT_TTIP"
 min_value = 0.0
-clamp_lo = false
 
 [node name="DCOffset" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
-margin_top = 150.0
+margin_top = 159.0
 margin_right = 245.0
-margin_bottom = 164.0
+margin_bottom = 173.0
 type = 6
 label = "NODE_DC_OFFSET_PORT"
 tooltip = "NODE_DC_OFFSET_PORT_TTIP"
@@ -172,27 +188,29 @@ clamp_hi = false
 
 [node name="RangeFrom" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
-margin_top = 165.0
+margin_top = 174.0
 margin_right = 245.0
-margin_bottom = 179.0
+margin_bottom = 188.0
 type = 7
 label = "NODE_RANGE_FROM_PORT"
 tooltip = "NODE_RANGE_FROM_PORT_TTIP"
 
 [node name="RangeLength" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
-margin_top = 180.0
+margin_top = 189.0
 margin_right = 245.0
-margin_bottom = 194.0
+margin_bottom = 203.0
 type = 8
 label = "NODE_RANGE_LEN_PORT"
 tooltip = "NODE_RANGE_LEN_PORT_TTIP"
 min_value = 0.0
 value = 1.0
 
-[connection signal="value_changed" from="Mix" to="." method="_on_Mix_value_changed"]
-[connection signal="value_changed" from="ClampIn" to="." method="_on_ClampIn_value_changed"]
-[connection signal="item_selected" from="Op" to="." method="_on_Op_item_selected"]
+[connection signal="value_changed" from="LevelHi" to="." method="_on_LevelHi_value_changed"]
+[connection signal="value_changed" from="ClampHi" to="." method="_on_ClampHi_value_changed"]
+[connection signal="value_changed" from="LevelLo" to="." method="_on_LevelLo_value_changed"]
+[connection signal="value_changed" from="ClampLo" to="." method="_on_ClampLo_value_changed"]
+[connection signal="value_changed" from="Amplitude" to="." method="_on_Amplitude_value_changed"]
 [connection signal="value_changed" from="Power" to="." method="_on_Power_value_changed"]
 [connection signal="value_changed" from="Decay" to="." method="_on_Decay_value_changed"]
 [connection signal="value_changed" from="DCOffset" to="." method="_on_DCOffset_value_changed"]

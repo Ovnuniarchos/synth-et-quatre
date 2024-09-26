@@ -54,6 +54,7 @@ func calculate()->Array:
 	var t:float
 	var mix:float
 	var bidi_lerp:bool
+	reset_decay()
 	for i in sz:
 		mix=lerp(mix_values[optr],clamp(mix_values[optr],0.0,1.0),clamp_in_values[optr])
 		if op_values[optr]==MixNodeConstants.MIX_MIX:
@@ -108,4 +109,5 @@ func calculate()->Array:
 			t=lerp(t,b_values[optr],mix) if mix>0.0 else lerp(t,a_values[optr],-mix)
 		output[optr]=calculate_decay(pow(abs(t),power_values[optr])*sign(t),decay_values[optr],sz)+dc_values[optr]
 		optr=(optr+1)&(size-1)
+	output_valid=true
 	return output

@@ -1846,6 +1846,18 @@ msgstr ""
 msgid "NODE_QUAD4_PORT_TTIP"
 msgstr ""
 
+msgid "NODE_MIX_FACTOR_PORT"
+msgstr ""
+
+msgid "NODE_MIX_FACTOR_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_CLAMP_MIX_PORT"
+msgstr ""
+
+msgid "NODE_CLAMP_MIX_PORT_TTIP"
+msgstr ""
+
 # Nodes
 # Output node
 
@@ -2047,18 +2059,6 @@ msgstr ""
 msgid "NODE_INPUT_B_PORT_TTIP"
 msgstr ""
 
-msgid "NODE_MIX_FACTOR_PORT"
-msgstr ""
-
-msgid "NODE_MIX_FACTOR_PORT_TTIP"
-msgstr ""
-
-msgid "NODE_CLAMP_IN_PORT"
-msgstr ""
-
-msgid "NODE_CLAMP_IN_PORT_TTIP"
-msgstr ""
-
 msgid "NODE_OP_PORT"
 msgstr ""
 
@@ -2141,3 +2141,33 @@ msgstr ""
 
 msgid "NODE_CLAMP_LO_PORT_TTIP"
 msgstr ""
+
+# Map node
+
+msgid "NODE_MAP_TITLE"
+msgstr ""
+
+msgid "NODE_MIN_IN_PORT"
+msgstr ""
+
+msgid "NODE_MIN_IN_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_MAX_IN_PORT"
+msgstr ""
+
+msgid "NODE_MAX_IN_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_MIN_OUT_PORT"
+msgstr ""
+
+msgid "NODE_MIN_OUT_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_MAX_OUT_PORT"
+msgstr ""
+
+msgid "NODE_MAX_OUT_PORT_TTIP"
+msgstr ""
+

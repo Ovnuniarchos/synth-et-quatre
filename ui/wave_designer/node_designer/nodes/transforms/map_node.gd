@@ -8,10 +8,6 @@ func _init()->void:
 func set_parameters()->void:
 	if not is_node_ready():
 		yield(self,"ready")
-	$LevelHi.set_value(node.level_hi_value)
-	$ClampHi.set_value(node.clamp_hi_value)
-	$LevelLo.set_value(node.level_lo_value)
-	$ClampLo.set_value(node.clamp_lo_value)
 	$Amplitude.set_value(node.amplitude)
 	$Power.set_value(node.power)
 	$Decay.set_value(node.decay)
@@ -67,14 +63,4 @@ func _on_RangeFrom_value_changed(value:float)->void:
 
 func _on_RangeLength_value_changed(value:float)->void:
 	node.range_length=value
-	emit_signal("params_changed",self)
-
-
-func _on_Mix_value_changed(value) -> void:
-	node.mix_value=value
-	emit_signal("params_changed",self)
-
-
-func _on_ClampMix_value_changed(value) -> void:
-	node.clamp_mix=value
 	emit_signal("params_changed",self)

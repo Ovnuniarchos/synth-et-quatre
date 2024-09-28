@@ -14,10 +14,12 @@ const DEFAULTS:Array=[
 	{"label":"NODE_DC_OFFSET_PORT","big":5,"huge":20,"decs":2,"min":-1,"max":1,"val":0,"chi":false,"clo":false},
 	{"label":"NODE_RANGE_FROM_PORT","big":5,"huge":20,"decs":2,"min":-1,"max":1,"val":0,"chi":true,"clo":true},
 	{"label":"NODE_RANGE_LEN_PORT","big":5,"huge":20,"decs":2,"min":0,"max":1,"val":1,"chi":true,"clo":true},
+	{"label":"NODE_MIX_FACTOR_PORT","big":5,"huge":20,"decs":2,"min":-1,"max":1,"val":1,"chi":false,"clo":false},
+	{"label":"NODE_CLAMP_MIX_PORT","big":5,"huge":20,"decs":2,"min":0,"max":1,"val":1,"chi":true,"clo":true},
 ]
 
 export (int,
-	"Custom","Frequency","Amplitude","Phi0","Power","Decay","DCOffset","RangeFrom","RangeLength"
+	"Custom","Frequency","Amplitude","Phi0","Power","Decay","DCOffset","RangeFrom","RangeLength","MixFactor","ClampMix"
 	) var type:int=0 setget set_type
 export (String) var label:String setget set_label
 export (String) var tooltip:String setget set_tooltip

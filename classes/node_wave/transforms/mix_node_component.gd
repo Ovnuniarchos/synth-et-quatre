@@ -10,15 +10,15 @@ var a_value:float=0.0
 var b_slot:Array=[]
 var b_values:Array=[]
 var b_value:float=0.0
-var clamp_in_slot:Array=[]
-var clamp_in_values:Array=[]
-var clamp_in_value:float=0.0
-var op_slot:Array=[]
-var op_values:Array=[]
-var op_value:float=0.0
 var mix_slot:Array=[]
 var mix_values:Array=[]
-var mix_value:float=MixNodeConstants.MIX_MIX
+var mix_value:float=1.0
+var clamp_mix_slot:Array=[]
+var clamp_mix_values:Array=[]
+var clamp_mix_value:float=0.0
+var op_slot:Array=[]
+var op_values:Array=[]
+var op_value:float=MixNodeConstants.MIX_MIX
 var power_slot:Array=[]
 var power_values:Array=[]
 var power:float=1.0
@@ -33,7 +33,7 @@ var dc:float=0.0
 func _init()->void:
 	._init()
 	inputs=[
-		a_slot,b_slot,mix_slot,clamp_in_slot,op_slot,power_slot,decay_slot,dc_slot
+		a_slot,b_slot,mix_slot,clamp_mix_slot,op_slot,power_slot,decay_slot,dc_slot
 	]
 
 
@@ -44,7 +44,7 @@ func calculate()->Array:
 	calculate_slot(a_values,a_slot,a_value)
 	calculate_slot(b_values,b_slot,b_value)
 	calculate_slot(mix_values,mix_slot,mix_value)
-	calculate_boolean_slot(clamp_in_values,clamp_in_slot,clamp_in_value)
+	calculate_boolean_slot(clamp_mix_values,clamp_mix_slot,clamp_mix_value)
 	calculate_option_slot(op_values,op_slot,MixNodeConstants.AS_ARRAY,op_value)
 	calculate_slot(power_values,power_slot,power)
 	calculate_slot(decay_values,decay_slot,decay)
@@ -56,7 +56,7 @@ func calculate()->Array:
 	var bidi_lerp:bool
 	reset_decay()
 	for i in sz:
-		mix=lerp(mix_values[optr],clamp(mix_values[optr],0.0,1.0),clamp_in_values[optr])
+		mix=lerp(mix_values[optr],clamp(mix_values[optr],0.0,1.0),clamp_mix_values[optr])
 		if op_values[optr]==MixNodeConstants.MIX_MIX:
 			t=lerp(a_values[optr],b_values[optr],(mix+1.0)*0.5)
 			bidi_lerp=false

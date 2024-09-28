@@ -1813,6 +1813,18 @@ msgstr "Quad 4"
 msgid "NODE_QUAD4_PORT_TTIP"
 msgstr "4th quadrant"
 
+msgid "NODE_MIX_FACTOR_PORT"
+msgstr "Mix"
+
+msgid "NODE_MIX_FACTOR_PORT_TTIP"
+msgstr "Mix factor"
+
+msgid "NODE_CLAMP_IN_PORT"
+msgstr "Clamp mix"
+
+msgid "NODE_CLAMP_IN_PORT_TTIP"
+msgstr "Limits the mix values to -1.0 - 1.0"
+
 # Nodes
 # Output node
 msgid "NODE_OUTPUT_TITLE"
@@ -2007,18 +2019,6 @@ msgstr "B"
 
 msgid "NODE_INPUT_B_PORT_TTIP"
 msgstr "<EMPTY STRING>"
-
-msgid "NODE_MIX_FACTOR_PORT"
-msgstr "Mix"
-
-msgid "NODE_MIX_FACTOR_PORT_TTIP"
-msgstr "Mix factor"
-
-msgid "NODE_CLAMP_IN_PORT"
-msgstr "Clamp mix"
-
-msgid "NODE_CLAMP_IN_PORT_TTIP"
-msgstr "Limits the mix values to -1.0 - 1.0"
 
 msgid "NODE_OP_PORT"
 msgstr "Mode"

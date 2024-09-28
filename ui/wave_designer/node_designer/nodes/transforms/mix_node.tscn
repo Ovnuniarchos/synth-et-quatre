@@ -113,17 +113,23 @@ margin_left = 16.0
 margin_top = 69.0
 margin_right = 245.0
 margin_bottom = 83.0
+type = 9
 label = "NODE_MIX_FACTOR_PORT"
 tooltip = "NODE_MIX_FACTOR_PORT_TTIP"
+value = 1.0
+clamp_lo = false
+clamp_hi = false
 
-[node name="ClampIn" parent="." instance=ExtResource( 3 )]
+[node name="ClampMix" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
 margin_top = 84.0
 margin_right = 245.0
 margin_bottom = 98.0
-label = "NODE_CLAMP_IN_PORT"
-tooltip = "NODE_CLAMP_IN_PORT_TTIP"
+type = 10
+label = "NODE_CLAMP_MIX_PORT"
+tooltip = "NODE_CLAMP_MIX_PORT_TTIP"
 min_value = 0.0
+value = 1.0
 
 [node name="Op" parent="." instance=ExtResource( 1 )]
 margin_left = 16.0
@@ -157,7 +163,6 @@ type = 5
 label = "NODE_DECAY_PORT"
 tooltip = "NODE_DECAY_PORT_TTIP"
 min_value = 0.0
-clamp_lo = false
 
 [node name="DCOffset" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
@@ -190,8 +195,10 @@ tooltip = "NODE_RANGE_LEN_PORT_TTIP"
 min_value = 0.0
 value = 1.0
 
+[connection signal="value_changed" from="A" to="." method="_on_A_value_changed"]
+[connection signal="value_changed" from="B" to="." method="_on_B_value_changed"]
 [connection signal="value_changed" from="Mix" to="." method="_on_Mix_value_changed"]
-[connection signal="value_changed" from="ClampIn" to="." method="_on_ClampIn_value_changed"]
+[connection signal="value_changed" from="ClampMix" to="." method="_on_ClampMix_value_changed"]
 [connection signal="item_selected" from="Op" to="." method="_on_Op_item_selected"]
 [connection signal="value_changed" from="Power" to="." method="_on_Power_value_changed"]
 [connection signal="value_changed" from="Decay" to="." method="_on_Decay_value_changed"]

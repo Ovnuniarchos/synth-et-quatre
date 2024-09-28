@@ -1816,6 +1816,18 @@ msgstr "Cuad. 4"
 msgid "NODE_QUAD4_PORT_TTIP"
 msgstr "4º cuadrante"
 
+msgid "NODE_MIX_FACTOR_PORT"
+msgstr "Mezcla"
+
+msgid "NODE_MIX_FACTOR_PORT_TTIP"
+msgstr "Factor de mezcla"
+
+msgid "NODE_CLAMP_MIX_PORT"
+msgstr "Limitar"
+
+msgid "NODE_CLAMP_MIX_PORT_TTIP"
+msgstr "Limita los valors de mezcla al rango -1.0 - 1.0"
+
 # Nodes
 # Output node
 msgid "NODE_OUTPUT_TITLE"
@@ -2009,18 +2021,6 @@ msgstr "B"
 msgid "NODE_INPUT_B_PORT_TTIP"
 msgstr "<EMPTY STRING>"
 
-msgid "NODE_MIX_FACTOR_PORT"
-msgstr "Mezcla"
-
-msgid "NODE_MIX_FACTOR_PORT_TTIP"
-msgstr "Factor de mezcla"
-
-msgid "NODE_CLAMP_IN_PORT"
-msgstr "Limitar"
-
-msgid "NODE_CLAMP_IN_PORT_TTIP"
-msgstr "Limita los valors de mezcla al rango -1.0 - 1.0"
-
 msgid "NODE_OP_PORT"
 msgstr "Modo"
 
@@ -2077,7 +2077,7 @@ msgstr "Copiar signo"
 
 # Clamp node
 msgid "NODE_CLAMP_TITLE"
-msgstr "RECORTE"
+msgstr "LÍMITE"
 
 msgid "NODE_LEVEL_HI_PORT"
 msgstr "L. sup."
@@ -2089,7 +2089,7 @@ msgid "NODE_CLAMP_HI_PORT"
 msgstr "R. sup."
 
 msgid "NODE_CLAMP_HI_PORT_TTIP"
-msgstr "Nivel de recorte superior"
+msgstr "Nivel de mezcla del limitado superior"
 
 msgid "NODE_LEVEL_LO_PORT"
 msgstr "L. inf."
@@ -2101,4 +2101,4 @@ msgid "NODE_CLAMP_LO_PORT"
 msgstr "R. inf."
 
 msgid "NODE_CLAMP_LO_PORT_TTIP"
-msgstr "Nivel de recorte inferior"
+msgstr "Nivel de mezcla del limitado inferior"

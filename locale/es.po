@@ -1725,6 +1725,9 @@ msgstr "Mezcla"
 msgid "NODED_MENU_CLAMP"
 msgstr "Recorte"
 
+msgid "NODED_MENU_MAP_RANGE"
+msgstr "Mapeo de rango"
+
 # Common ports
 msgid "NODE_OUTPUT_PORT"
 msgstr "Salida"
@@ -2102,3 +2105,31 @@ msgstr "R. inf."
 
 msgid "NODE_CLAMP_LO_PORT_TTIP"
 msgstr "Nivel de mezcla del limitado inferior"
+
+# Map node
+msgid "NODE_MAP_TITLE"
+msgstr "MAPEO DE RANGO"
+
+msgid "NODE_MIN_IN_PORT"
+msgstr "Ent. mín."
+
+msgid "NODE_MIN_IN_PORT_TTIP"
+msgstr "Valor mínimo de entrada"
+
+msgid "NODE_MAX_IN_PORT"
+msgstr "Ent. máx."
+
+msgid "NODE_MAX_IN_PORT_TTIP"
+msgstr "Valor máximo de entrada"
+
+msgid "NODE_MIN_OUT_PORT"
+msgstr "Sal. mín."
+
+msgid "NODE_MIN_OUT_PORT_TTIP"
+msgstr "Valor mínimo de salida"
+
+msgid "NODE_MAX_OUT_PORT"
+msgstr "Sal. máx."
+
+msgid "NODE_MAX_OUT_PORT_TTIP"
+msgstr "Valor máximo de salida"

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://ui/wave_designer/node_designer/nodes/transforms/map_node.gd" type="Script" id=1]
+[ext_resource path="res://ui/wave_designer/node_designer/nodes/transforms/map_range_node.gd" type="Script" id=1]
 [ext_resource path="res://ui/widgets/slider_slot.tscn" type="PackedScene" id=3]
 
 [node name="Map" type="GraphNode"]
@@ -68,13 +68,13 @@ slot/9/left_color = Color( 1, 1, 1, 1 )
 slot/9/right_enabled = false
 slot/9/right_type = 0
 slot/9/right_color = Color( 1, 1, 1, 1 )
-slot/10/left_enabled = false
+slot/10/left_enabled = true
 slot/10/left_type = 0
 slot/10/left_color = Color( 1, 1, 1, 1 )
 slot/10/right_enabled = false
 slot/10/right_type = 0
 slot/10/right_color = Color( 1, 1, 1, 1 )
-slot/11/left_enabled = false
+slot/11/left_enabled = true
 slot/11/left_type = 0
 slot/11/left_color = Color( 1, 1, 1, 1 )
 slot/11/right_enabled = false
@@ -245,12 +245,12 @@ tooltip = "NODE_RANGE_LEN_PORT_TTIP"
 min_value = 0.0
 value = 1.0
 
-[connection signal="value_changed" from="MinIn" to="." method="_on_LevelHi_value_changed"]
-[connection signal="value_changed" from="MaxIn" to="." method="_on_ClampHi_value_changed"]
-[connection signal="value_changed" from="MinOut" to="." method="_on_LevelLo_value_changed"]
-[connection signal="value_changed" from="MaxOut" to="." method="_on_ClampLo_value_changed"]
-[connection signal="value_changed" from="Mix" to="." method="_on_ClampLo_value_changed"]
-[connection signal="value_changed" from="ClampMix" to="." method="_on_ClampLo_value_changed"]
+[connection signal="value_changed" from="MinIn" to="." method="_on_MinIn_value_changed"]
+[connection signal="value_changed" from="MaxIn" to="." method="_on_MaxIn_value_changed"]
+[connection signal="value_changed" from="MinOut" to="." method="_on_MinOut_value_changed"]
+[connection signal="value_changed" from="MaxOut" to="." method="_on_MaxOut_value_changed"]
+[connection signal="value_changed" from="Mix" to="." method="_on_Mix_value_changed"]
+[connection signal="value_changed" from="ClampMix" to="." method="_on_ClampMix_value_changed"]
 [connection signal="value_changed" from="Amplitude" to="." method="_on_Amplitude_value_changed"]
 [connection signal="value_changed" from="Power" to="." method="_on_Power_value_changed"]
 [connection signal="value_changed" from="Decay" to="." method="_on_Decay_value_changed"]

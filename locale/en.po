@@ -1725,6 +1725,9 @@ msgstr "Mix"
 msgid "NODED_MENU_CLAMP"
 msgstr "Clamp"
 
+msgid "NODED_MENU_MAP_RANGE"
+msgstr "Map range"
+
 # Common ports
 msgid "NODE_OUTPUT_PORT"
 msgstr "Output"
@@ -2101,3 +2104,31 @@ msgstr "Clamp lower"
 
 msgid "NODE_CLAMP_LO_PORT_TTIP"
 msgstr "<EMPTY STRING>"
+
+# Map node
+msgid "NODE_MAP_TITLE"
+msgstr "MAP RANGE"
+
+msgid "NODE_MIN_IN_PORT"
+msgstr "Min In"
+
+msgid "NODE_MIN_IN_PORT_TTIP"
+msgstr "Minimum input value"
+
+msgid "NODE_MAX_IN_PORT"
+msgstr "Max In"
+
+msgid "NODE_MAX_IN_PORT_TTIP"
+msgstr "Maximum input value"
+
+msgid "NODE_MIN_OUT_PORT"
+msgstr "Min Out"
+
+msgid "NODE_MIN_OUT_PORT_TTIP"
+msgstr "Minimum output value"
+
+msgid "NODE_MAX_OUT_PORT"
+msgstr "Max Out"
+
+msgid "NODE_MAX_OUT_PORT_TTIP"
+msgstr "Maximum output value"

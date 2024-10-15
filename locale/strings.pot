@@ -1754,6 +1754,9 @@ msgstr ""
 msgid "NODED_MENU_CLAMP"
 msgstr ""
 
+msgid "NODED_MENU_MAP_RANGE"
+msgstr ""
+
 # Common ports
 
 msgid "NODE_OUTPUT_PORT"
@@ -2170,4 +2173,3 @@ msgstr ""
 
 msgid "NODE_MAX_OUT_PORT_TTIP"
 msgstr ""
-

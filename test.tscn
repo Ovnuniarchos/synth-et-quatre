@@ -1,0 +1,43 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node
+
+
+func _ready() -> void:
+	var pba:PoolByteArray=PoolByteArray()
+	var bmp:BitMap=BitMap.new()
+	var arr:Array=[]
+	pba.resize(8192)
+	bmp.resize(Vector2(65536,1))
+	arr.resize(1024)
+	for i in 8192:
+		pba[i]=randi()&255
+	for i in 1024:
+		arr[i]=randi()|(randi()<<32)
+	for i in 65536:
+		bmp.set_bit(Vector2(i,0),randi()&1)
+	var cnt:int
+	var t:int
+	var ti:int=OS.get_ticks_usec()
+	for i in 10000000:
+		t=randi()&65535
+		cnt+=1 if bmp.get_bit(Vector2(t,0)) else 0
+	ti=OS.get_ticks_usec()-ti
+	print(\"BMP:\",ti,\" \",cnt)
+	ti=OS.get_ticks_usec()
+	for i in 10000000:
+		t=randi()&8191
+		cnt+=1 if pba[t>>3]&(1<<(t&7)) else 0
+	ti=OS.get_ticks_usec()-ti
+	print(\"PBA:\",ti,\" \",cnt)
+	ti=OS.get_ticks_usec()
+	for i in 10000000:
+		t=randi()&1023
+		cnt+=1 if arr[t>>6]&(1<<(t&63)) else 0
+	ti=OS.get_ticks_usec()-ti
+	print(\"ARR:\",ti,\" \",cnt)
+"
+
+[node name="test" type="Node"]
+script = SubResource( 1 )

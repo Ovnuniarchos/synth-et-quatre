@@ -1,7 +1,7 @@
 extends WaveNodeComponent
-class_name MapNodeComponent
+class_name MapRangeNodeComponent
 
-const NODE_TYPE:String="Map"
+const NODE_TYPE:String="MapRange"
 
 
 var input_slot:Array=[]
@@ -11,16 +11,19 @@ var min_in_values:Array=[]
 var min_in_value:float=-1.0
 var max_in_slot:Array=[]
 var max_in_values:Array=[]
-var max_in_value:float=-1.0
+var max_in_value:float=1.0
 var min_out_slot:Array=[]
 var min_out_values:Array=[]
-var min_out_value:float=1.0
+var min_out_value:float=-1.0
 var max_out_slot:Array=[]
 var max_out_values:Array=[]
 var max_out_value:float=1.0
 var mix_slot:Array=[]
 var mix_values:Array=[]
 var mix_value:float=1.0
+var clamp_mix_slot:Array=[]
+var clamp_mix_values:Array=[]
+var clamp_mix_value:float=0.0
 var amplitude_slot:Array=[]
 var amplitude_values:Array=[]
 var amplitude:float=1.0
@@ -53,6 +56,7 @@ func calculate()->Array:
 	calculate_slot(min_out_values,min_out_slot,min_out_value)
 	calculate_slot(max_out_values,max_out_slot,max_out_value)
 	calculate_slot(mix_values,mix_slot,mix_value)
+	calculate_boolean_slot(clamp_mix_values,clamp_mix_slot,clamp_mix_value)
 	calculate_slot(amplitude_values,amplitude_slot,amplitude)
 	calculate_slot(power_values,power_slot,power)
 	calculate_slot(decay_values,decay_slot,decay)
@@ -62,8 +66,15 @@ func calculate()->Array:
 	var t:float
 	reset_decay()
 	for i in sz:
-		t=range_lerp(input_values[optr],min_in_values[optr],max_in_values[optr],min_out_values[optr],max_out_values[optr])
-		t=lerp(t,mix_values[optr])
+		t=range_lerp(
+			input_values[optr],
+			min_in_values[optr],max_in_values[optr],
+			min_out_values[optr],max_out_values[optr]
+		)
+		t=lerp(
+			input_values[optr],t,
+			lerp(mix_values[optr],clamp(mix_values[optr],0.0,1.0),clamp_mix_values[optr])
+		)
 		output[optr]=(calculate_decay(
 			pow(abs(t),power_values[optr])*sign(t),decay_values[optr],sz
 		)*amplitude_values[optr])+dc_values[optr]

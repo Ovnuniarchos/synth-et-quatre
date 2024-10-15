@@ -285,9 +285,9 @@ _global_script_classes=[ {
 "path": "res://classes/bar_editor_language/macro_info.gd"
 }, {
 "base": "WaveNodeComponent",
-"class": "MapNodeComponent",
+"class": "MapRangeNodeComponent",
 "language": "GDScript",
-"path": "res://classes/node_wave/transforms/map_node_component.gd"
+"path": "res://classes/node_wave/transforms/map_range_node_component.gd"
 }, {
 "base": "WaveNodeComponent",
 "class": "MixNodeComponent",
@@ -750,7 +750,7 @@ _global_script_class_icons={
 "Macro": "",
 "MacroIO": "",
 "MacroInfo": "",
-"MapNodeComponent": "",
+"MapRangeNodeComponent": "",
 "MixNodeComponent": "",
 "MixNodeConstants": "",
 "NodeController": "",

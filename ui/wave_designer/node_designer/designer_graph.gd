@@ -15,7 +15,7 @@ class Sorter:
 enum{
 	OUTPUT,
 	GEN_SINE,GEN_SAW,GEN_PULSE,GEN_TRIANGLE,GEN_NOISE,
-	XFR_MIX,XFR_CLAMP,XFR_MAPR
+	XFR_MIX,XFR_CLAMP,XFR_MAPR,XFR_MAPW
 }
 const MENU:Array=[
 	"unsorted",
@@ -31,6 +31,7 @@ const MENU:Array=[
 		{"option":"NODED_MENU_MIX","id":XFR_MIX},
 		{"option":"NODED_MENU_CLAMP","id":XFR_CLAMP},
 		{"option":"NODED_MENU_MAP_RANGE","id":XFR_MAPR},
+		{"option":"NODED_MENU_MAP_WAVE","id":XFR_MAPW},
 	]}
 ]
 const NODES:Dictionary={
@@ -42,7 +43,8 @@ const NODES:Dictionary={
 	GEN_NOISE:preload("res://ui/wave_designer/node_designer/nodes/generators/noise_node.tscn"),
 	XFR_MIX:preload("res://ui/wave_designer/node_designer/nodes/transforms/mix_node.tscn"),
 	XFR_CLAMP:preload("res://ui/wave_designer/node_designer/nodes/transforms/clamp_node.tscn"),
-	XFR_MAPR:preload("res://ui/wave_designer/node_designer/nodes/transforms/map_range_node.tscn")
+	XFR_MAPR:preload("res://ui/wave_designer/node_designer/nodes/transforms/map_range_node.tscn"),
+	XFR_MAPW:preload("res://ui/wave_designer/node_designer/nodes/transforms/map_wave_node.tscn")
 }
 const NODES_CLASS:Dictionary={
 	OutputNodeComponent.NODE_TYPE:NODES[OUTPUT],
@@ -53,7 +55,8 @@ const NODES_CLASS:Dictionary={
 	NoiseNodeComponent.NODE_TYPE:NODES[GEN_NOISE],
 	MixNodeComponent.NODE_TYPE:NODES[XFR_MIX],
 	ClampNodeComponent.NODE_TYPE:NODES[XFR_CLAMP],
-	MapRangeNodeComponent.NODE_TYPE:NODES[XFR_MAPR]
+	MapRangeNodeComponent.NODE_TYPE:NODES[XFR_MAPR],
+	MapWaveNodeComponent.NODE_TYPE:NODES[XFR_MAPW]
 }
 
 

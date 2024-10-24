@@ -3,7 +3,10 @@
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node
 
-
+\"\"\"
+TODO: Crop node
+	  Quantize amplitude/time
+\"\"\"
 func _ready() -> void:
 	var pba:PoolByteArray=PoolByteArray()
 	var bmp:BitMap=BitMap.new()

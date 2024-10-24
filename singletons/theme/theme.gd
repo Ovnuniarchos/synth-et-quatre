@@ -432,10 +432,17 @@ func set_label_styles(new_theme:Theme,data:Dictionary,key:String,label_type:Stri
 
 func set_bar_styles(new_theme:Theme,data:Dictionary,key:String,bar_type:String,base_dir:String)->void:
 	var frag:Dictionary=ThemeParser.typesafe_get(data,key,{})
-	for mode in [BS_NORMAL,BS_DISABLED,BS_HOVER]:
-		var frag2:Dictionary=ThemeParser.typesafe_get(frag,mode,{})
-		new_theme.set_stylebox("bg_"+mode,bar_type,ThemeParser.create_stylebox(frag2,"background",base_dir,bar_colorsets[mode]["bg"],panel_st[mode],std_image))
-		new_theme.set_stylebox("fg_"+mode,bar_type,ThemeParser.create_stylebox(frag2,"foreground",base_dir,bar_colorsets[mode]["fg"],panel_st[mode],std_image))
+	var frag2:Dictionary=ThemeParser.typesafe_get(frag,BS_NORMAL,{})
+	var def_sb_bg:StyleBox=ThemeParser.create_stylebox(frag2,"background",base_dir,bar_colorsets[BS_NORMAL]["bg"],panel_st[BS_NORMAL],std_image)
+	var def_sb_fg:StyleBox=ThemeParser.create_stylebox(frag2,"foreground",base_dir,bar_colorsets[BS_NORMAL]["fg"],panel_st[BS_NORMAL],std_image)
+	new_theme.set_stylebox("bg_"+BS_NORMAL,bar_type,def_sb_bg)
+	new_theme.set_stylebox("fg_"+BS_NORMAL,bar_type,def_sb_fg)
+	new_theme.set_color("font_color_"+BS_NORMAL,bar_type,ThemeParser.parse_color(frag2,"color",bar_colorsets[BS_NORMAL]["text"]))
+	new_theme.set_font("font_"+BS_NORMAL,bar_type,ThemeParser.parse_font(frag2,"font",base_dir,std_font))
+	for mode in [BS_DISABLED,BS_HOVER]:
+		frag2=ThemeParser.typesafe_get(frag,mode,{})
+		new_theme.set_stylebox("bg_"+mode,bar_type,ThemeParser.create_stylebox(frag2,"background",base_dir,bar_colorsets[mode]["bg"],def_sb_bg,std_image))
+		new_theme.set_stylebox("fg_"+mode,bar_type,ThemeParser.create_stylebox(frag2,"foreground",base_dir,bar_colorsets[mode]["fg"],def_sb_fg,std_image))
 		new_theme.set_color("font_color_"+mode,bar_type,ThemeParser.parse_color(frag2,"color",bar_colorsets[mode]["text"]))
 		new_theme.set_font("font_"+mode,bar_type,ThemeParser.parse_font(frag2,"font",base_dir,std_font))
 

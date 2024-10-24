@@ -1728,6 +1728,9 @@ msgstr "Clamp"
 msgid "NODED_MENU_MAP_RANGE"
 msgstr "Map range"
 
+msgid "NODED_MENU_MAP_WAVE"
+msgstr "Map wave"
+
 # Common ports
 msgid "NODE_OUTPUT_PORT"
 msgstr "Output"
@@ -2077,6 +2080,12 @@ msgstr "Compare"
 msgid "NODE_MIX_SIGN_CP"
 msgstr "Sign copy"
 
+msgid "NODE_MIX_OVER"
+msgstr "B over A"
+
+msgid "NODE_MIX_UNDER"
+msgstr "A over B"
+
 # Clamp node
 msgid "NODE_CLAMP_TITLE"
 msgstr "CLAMP"
@@ -2105,8 +2114,8 @@ msgstr "Clamp lower"
 msgid "NODE_CLAMP_LO_PORT_TTIP"
 msgstr "<EMPTY STRING>"
 
-# Map node
-msgid "NODE_MAP_TITLE"
+# Map range node
+msgid "NODE_MAP_RANGE_TITLE"
 msgstr "MAP RANGE"
 
 msgid "NODE_MIN_IN_PORT"
@@ -2132,3 +2141,14 @@ msgstr "Max Out"
 
 msgid "NODE_MAX_OUT_PORT_TTIP"
 msgstr "Maximum output value"
+
+# Map wave node
+msgid "NODE_MAP_WAVE_TITLE"
+msgstr "MAP WAVE"
+
+msgid "NODE_MAPPING_PORT"
+msgstr ""
+
+msgid "NODE_MAPPING_PORT_TTIP"
+msgstr ""
+

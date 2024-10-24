@@ -1,24 +1,37 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://ui/widgets/spin_bar.gd" type="Script" id=1]
 [ext_resource path="res://ui/widgets/slider_slot.gd" type="Script" id=2]
+[ext_resource path="res://ui/widgets/accent_button.gd" type="Script" id=3]
 
 [node name="Slot" type="HBoxContainer"]
 margin_right = 229.0
 margin_bottom = 14.0
 script = ExtResource( 2 )
+nullable = true
 
 [node name="Label" type="Label" parent="."]
-margin_bottom = 14.0
+margin_top = 3.0
+margin_bottom = 17.0
 mouse_filter = 1
 size_flags_horizontal = 0
 
-[node name="SpinBar" type="ProgressBar" parent="."]
+[node name="Button" type="Button" parent="."]
 margin_left = 4.0
+margin_right = 24.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 20, 0 )
+toggle_mode = true
+script = ExtResource( 3 )
+
+[node name="SpinBar" type="ProgressBar" parent="."]
+margin_left = 28.0
+margin_top = 3.0
 margin_right = 229.0
-margin_bottom = 14.0
+margin_bottom = 17.0
 rect_min_size = Vector2( 53, 14 )
 size_flags_horizontal = 11
+size_flags_vertical = 4
 size_flags_stretch_ratio = 2.0
 min_value = -1.0
 max_value = 1.0
@@ -28,4 +41,5 @@ big_step = 5.0
 huge_step = 20.0
 _decimals = 2
 
+[connection signal="toggled" from="Button" to="." method="_on_Button_toggled"]
 [connection signal="value_changed" from="SpinBar" to="." method="_on_SpinBar_value_changed"]

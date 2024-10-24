@@ -43,5 +43,6 @@ huge_step = 800.0
 min_value = 0.0
 max_value = 32.0
 value = 1.0
+nullable = false
 
 [connection signal="value_changed" from="Clip" to="." method="_on_Clip_value_changed"]

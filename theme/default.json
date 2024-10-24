@@ -191,7 +191,7 @@
 				"background":"#333344",
 				"border":"white"
 			}
-		},
+		}
 	},
 	"progress":{
 		"normal":{

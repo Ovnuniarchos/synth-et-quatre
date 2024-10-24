@@ -1757,6 +1757,9 @@ msgstr ""
 msgid "NODED_MENU_MAP_RANGE"
 msgstr ""
 
+msgid "NODED_MENU_MAP_WAVE"
+msgstr ""
+
 # Common ports
 
 msgid "NODE_OUTPUT_PORT"
@@ -2116,6 +2119,12 @@ msgstr ""
 msgid "NODE_MIX_SIGN_CP"
 msgstr ""
 
+msgid "NODE_MIX_OVER"
+msgstr ""
+
+msgid "NODE_MIX_UNDER"
+msgstr ""
+
 # Clamp node
 
 msgid "NODE_CLAMP_TITLE"
@@ -2145,9 +2154,9 @@ msgstr ""
 msgid "NODE_CLAMP_LO_PORT_TTIP"
 msgstr ""
 
-# Map node
+# Map range node
 
-msgid "NODE_MAP_TITLE"
+msgid "NODE_MAP_RANGE_TITLE"
 msgstr ""
 
 msgid "NODE_MIN_IN_PORT"
@@ -2173,3 +2182,15 @@ msgstr ""
 
 msgid "NODE_MAX_OUT_PORT_TTIP"
 msgstr ""
+
+# Map wave node
+
+msgid "NODE_MAP_WAVE_TITLE"
+msgstr ""
+
+msgid "NODE_MAPPING_PORT"
+msgstr ""
+
+msgid "NODE_MAPPING_PORT_TTIP"
+msgstr ""
+

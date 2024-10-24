@@ -1728,6 +1728,9 @@ msgstr "Recorte"
 msgid "NODED_MENU_MAP_RANGE"
 msgstr "Mapeo de rango"
 
+msgid "NODED_MENU_MAP_WAVE"
+msgstr "Mapeo de onda"
+
 # Common ports
 msgid "NODE_OUTPUT_PORT"
 msgstr "Salida"
@@ -2078,6 +2081,12 @@ msgstr "Comparar"
 msgid "NODE_MIX_SIGN_CP"
 msgstr "Copiar signo"
 
+msgid "NODE_MIX_OVER"
+msgstr "B sobre A"
+
+msgid "NODE_MIX_UNDER"
+msgstr "A sobre B"
+
 # Clamp node
 msgid "NODE_CLAMP_TITLE"
 msgstr "LÍMITE"
@@ -2106,8 +2115,8 @@ msgstr "R. inf."
 msgid "NODE_CLAMP_LO_PORT_TTIP"
 msgstr "Nivel de mezcla del limitado inferior"
 
-# Map node
-msgid "NODE_MAP_TITLE"
+# Map range node
+msgid "NODE_MAP_RANGE_TITLE"
 msgstr "MAPEO DE RANGO"
 
 msgid "NODE_MIN_IN_PORT"
@@ -2133,3 +2142,14 @@ msgstr "Sal. máx."
 
 msgid "NODE_MAX_OUT_PORT_TTIP"
 msgstr "Valor máximo de salida"
+
+# Map wave node
+msgid "NODE_MAP_WAVE_TITLE"
+msgstr "MAPEO DE ONDA"
+
+msgid "NODE_MAPPING_PORT"
+msgstr ""
+
+msgid "NODE_MAPPING_PORT_TTIP"
+msgstr ""
+

@@ -31,10 +31,13 @@ export (float) var max_value:float=1.0 setget set_max_value
 export (float) var value:float=0.0 setget set_value
 export (bool) var clamp_lo:bool=true setget set_clamp_lo
 export (bool) var clamp_hi:bool=true setget set_clamp_hi
+export (bool) var nullable:bool=false setget set_nullable
+export (bool) var is_null:bool=false setget set_is_null
 
 
 func _ready()->void:
 	set_type(type)
+	_notification(NOTIFICATION_THEME_CHANGED)
 
 
 func set_type(t:int)->void:
@@ -50,8 +53,16 @@ func set_type(t:int)->void:
 		set_value(DEFAULTS[t]["val"])
 		set_clamp_lo(DEFAULTS[t]["clo"])
 		set_clamp_hi(DEFAULTS[t]["chi"])
+		set_nullable(false)
+		set_is_null(false)
 		property_list_changed_notify()
 
+
+func _notification(n:int)->void:
+	if n==NOTIFICATION_THEME_CHANGED:
+		if not is_node_ready():
+			yield(self,"ready")
+		$Button.rect_min_size.x=rect_size.y
 
 func set_label(t:String)->void:
 	label=t
@@ -106,7 +117,9 @@ func set_value(v:float)->void:
 	value=v
 	if not is_node_ready():
 		yield(self,"ready")
+	$Button.set_pressed_no_signal(is_nan(v))
 	$SpinBar.set_value_no_signal(v)
+	$SpinBar.editable=not is_nan(v)
 
 
 func set_clamp_lo(b:bool)->void:
@@ -123,6 +136,20 @@ func set_clamp_hi(b:bool)->void:
 	$SpinBar.set_allow_greater(not clamp_hi)
 
 
+func set_nullable(b:bool)->void:
+	nullable=b
+	if not is_node_ready():
+		yield(self,"ready")
+	$Button.visible=b
+
+
+func set_is_null(b:bool)->void:
+	is_null=b
+	if not is_node_ready():
+		yield(self,"ready")
+	$SpinBar.editable=not b
+
+
 func get_label_control()->Label:
 	return $Label as Label
 
@@ -130,3 +157,9 @@ func get_label_control()->Label:
 func _on_SpinBar_value_changed(v:float)->void:
 	value=v
 	emit_signal("value_changed",value)
+
+
+func _on_Button_toggled(pressed:bool)->void:
+	is_null=pressed
+	$SpinBar.editable=not pressed
+	emit_signal("value_changed",NAN if pressed else value)

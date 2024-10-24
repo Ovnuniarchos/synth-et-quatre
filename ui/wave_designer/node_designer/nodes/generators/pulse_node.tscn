@@ -98,7 +98,7 @@ base_title = "NODE_PULSE_TITLE"
 [node name="Output" type="Label" parent="."]
 margin_left = 16.0
 margin_top = 24.0
-margin_right = 254.0
+margin_right = 245.0
 margin_bottom = 38.0
 hint_tooltip = "NODE_OUTPUT_PORT_TTIP"
 mouse_filter = 1
@@ -108,7 +108,7 @@ align = 2
 [node name="Freq" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
 margin_top = 39.0
-margin_right = 254.0
+margin_right = 245.0
 margin_bottom = 53.0
 type = 1
 label = "NODE_FREQUENCY_PORT"
@@ -116,114 +116,133 @@ tooltip = "NODE_FREQUENCY_PORT_TTIP"
 min_value = -32.0
 max_value = 32.0
 value = 1.0
+clamp_lo = false
+clamp_hi = false
+nullable = false
 
 [node name="Amplitude" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
 margin_top = 54.0
-margin_right = 254.0
+margin_right = 245.0
 margin_bottom = 68.0
 type = 2
 label = "NODE_AMPLITUDE_PORT"
 tooltip = "NODE_AMPLITUDE_PORT_TTIP"
 value = 1.0
+clamp_lo = false
+clamp_hi = false
+nullable = false
 
 [node name="Phi0" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
 margin_top = 69.0
-margin_right = 254.0
+margin_right = 245.0
 margin_bottom = 83.0
 type = 3
 label = "NODE_PHI0_PORT"
 tooltip = "NODE_PHI0_PORT_TTIP"
+nullable = false
 
 [node name="Decay" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
 margin_top = 84.0
-margin_right = 254.0
+margin_right = 245.0
 margin_bottom = 98.0
 type = 5
 label = "NODE_DECAY_PORT"
 tooltip = "NODE_DECAY_PORT_TTIP"
 min_value = 0.0
+nullable = false
 
 [node name="DCOffset" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
 margin_top = 99.0
-margin_right = 254.0
+margin_right = 245.0
 margin_bottom = 113.0
 type = 6
 label = "NODE_DC_OFFSET_PORT"
 tooltip = "NODE_DC_OFFSET_PORT_TTIP"
+clamp_lo = false
+clamp_hi = false
+nullable = false
 
 [node name="PositiveStart" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
 margin_top = 114.0
-margin_right = 254.0
+margin_right = 245.0
 margin_bottom = 128.0
 label = "NODE_POS_START_PORT"
 tooltip = "NODE_POS_START_PORT_TTIP"
+nullable = false
 
 [node name="PositiveLength" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
 margin_top = 129.0
-margin_right = 254.0
+margin_right = 245.0
 margin_bottom = 143.0
-label = "NODE_POS_LEN_PORT_PORT"
-tooltip = "NODE_POS_LEN_PORT_TTIP"
+label = "NODE_POS_LEN_PORT"
+tooltip = "NODE_POS_LEN_TTIP"
 min_value = 0.0
+nullable = false
 
 [node name="PositiveAmplitude" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
 margin_top = 144.0
-margin_right = 254.0
+margin_right = 245.0
 margin_bottom = 158.0
 label = "NODE_POS_AMP_PORT"
 tooltip = "NODE_POS_AMP_PORT_TTIP"
+nullable = false
 
 [node name="NegativeStart" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
 margin_top = 159.0
-margin_right = 254.0
+margin_right = 245.0
 margin_bottom = 173.0
 label = "NODE_NEG_START_PORT"
 tooltip = "NODE_NEG_START_PORT_TTIP"
+nullable = false
 
 [node name="NegativeLength" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
 margin_top = 174.0
-margin_right = 254.0
+margin_right = 245.0
 margin_bottom = 188.0
-label = "NODE_NEG_LEN_PORT_PORT"
+label = "NODE_NEG_LEN_PORT"
 tooltip = "NODE_NEG_LEN_PORT_TTIP"
 min_value = 0.0
+nullable = false
 
 [node name="NegativeAmplitude" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
 margin_top = 189.0
-margin_right = 254.0
+margin_right = 245.0
 margin_bottom = 203.0
 label = "NODE_NEG_AMP_PORT"
 tooltip = "NODE_NEG_AMP_PORT_TTIP"
+nullable = false
 
 [node name="RangeFrom" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
 margin_top = 204.0
-margin_right = 254.0
+margin_right = 245.0
 margin_bottom = 218.0
 type = 7
 label = "NODE_RANGE_FROM_PORT"
 tooltip = "NODE_RANGE_FROM_PORT_TTIP"
+nullable = false
 
 [node name="RangeLength" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
 margin_top = 219.0
-margin_right = 254.0
+margin_right = 245.0
 margin_bottom = 233.0
 type = 8
 label = "NODE_RANGE_LEN_PORT"
 tooltip = "NODE_RANGE_LEN_PORT_TTIP"
 min_value = 0.0
 value = 1.0
+nullable = false
 
 [connection signal="value_changed" from="Freq" to="." method="_on_Freq_value_changed"]
 [connection signal="value_changed" from="Amplitude" to="." method="_on_Amplitude_value_changed"]

@@ -1,4 +1,4 @@
-extends NodeController
+tool extends NodeController
 
 
 func _init()->void:
@@ -12,6 +12,9 @@ func set_parameters()->void:
 	$ClampHi.set_value(node.clamp_hi_value)
 	$LevelLo.set_value(node.level_lo_value)
 	$ClampLo.set_value(node.clamp_lo_value)
+	$Mix.set_value(node.mix_value)
+	$ClampMix.set_value(node.clamp_mix_value)
+	$Isolate.set_pressed_no_signal(node.isolate>=0.5)
 	$Amplitude.set_value(node.amplitude)
 	$Power.set_value(node.power)
 	$Decay.set_value(node.decay)
@@ -77,4 +80,9 @@ func _on_Mix_value_changed(value) -> void:
 
 func _on_ClampMix_value_changed(value) -> void:
 	node.clamp_mix=value
+	emit_signal("params_changed",self)
+
+
+func _on_Isolate_toggled(pressed:bool)->void:
+	node.isolate=float(pressed)
 	emit_signal("params_changed",self)

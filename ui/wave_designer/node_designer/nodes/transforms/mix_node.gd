@@ -1,4 +1,4 @@
-extends NodeController
+tool extends NodeController
 
 
 func _init()->void:
@@ -23,6 +23,7 @@ func set_parameters()->void:
 	$Power.set_value(node.power)
 	$Decay.set_value(node.decay)
 	$DCOffset.set_value(node.dc)
+	$Isolate.set_pressed_no_signal(node.isolate>=0.5)
 	$RangeFrom.set_value(node.range_from)
 	$RangeLength.set_value(node.range_length)
 
@@ -77,3 +78,6 @@ func _on_RangeLength_value_changed(value:float)->void:
 	emit_signal("params_changed",self)
 
 
+func _on_Isolate_toggled(pressed:bool)->void:
+	node.isolate=float(pressed)
+	emit_signal("params_changed",self)

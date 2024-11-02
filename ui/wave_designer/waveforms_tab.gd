@@ -19,7 +19,6 @@ func _on_song_changed()->void:
 
 
 func _on_wave_deleted(wave_ix:int)->void:
-	print(wave_ix)
 	var w:Waveform=GLOBALS.song.get_wave(wave_ix)
 	if w is SynthWave:
 		synth._on_wave_deleted(wave_ix)

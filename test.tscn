@@ -4,42 +4,31 @@
 script/source = "extends Node
 
 \"\"\"
-TODO: Crop node
-	  Quantize amplitude/time
+FIXME
+TODO:
+	Node-based wave generator
+		Crop node
+		Quantize amplitude/time
+	Reset per channel parameters (as a command|button)
+	MIDI input
+		Flag?: MIDI Pitch bend
+		Flag?: MIDI modulation
+		Range?: MIDI modulation
+
+FUTURE:
+	Refactor to use inner classes instead of dictionaries
+	Constant-ify error IDs/params
+	Import instruments/waveforms/arpeggios from song
+	Import waveforms from instrument
 \"\"\"
+const TIMES:int=10000000
+
 func _ready() -> void:
-	var pba:PoolByteArray=PoolByteArray()
-	var bmp:BitMap=BitMap.new()
-	var arr:Array=[]
-	pba.resize(8192)
-	bmp.resize(Vector2(65536,1))
-	arr.resize(1024)
-	for i in 8192:
-		pba[i]=randi()&255
-	for i in 1024:
-		arr[i]=randi()|(randi()<<32)
-	for i in 65536:
-		bmp.set_bit(Vector2(i,0),randi()&1)
-	var cnt:int
-	var t:int
-	var ti:int=OS.get_ticks_usec()
-	for i in 10000000:
-		t=randi()&65535
-		cnt+=1 if bmp.get_bit(Vector2(t,0)) else 0
-	ti=OS.get_ticks_usec()-ti
-	print(\"BMP:\",ti,\" \",cnt)
+	var ti:int
+	var v:Array=[1,2]
 	ti=OS.get_ticks_usec()
-	for i in 10000000:
-		t=randi()&8191
-		cnt+=1 if pba[t>>3]&(1<<(t&7)) else 0
-	ti=OS.get_ticks_usec()-ti
-	print(\"PBA:\",ti,\" \",cnt)
-	ti=OS.get_ticks_usec()
-	for i in 10000000:
-		t=randi()&1023
-		cnt+=1 if arr[t>>6]&(1<<(t&63)) else 0
-	ti=OS.get_ticks_usec()-ti
-	print(\"ARR:\",ti,\" \",cnt)
+	print(v[floor(0.99999999999999999999)])
+	print(\"\",OS.get_ticks_usec()-ti)
 "
 
 [node name="test" type="Node"]

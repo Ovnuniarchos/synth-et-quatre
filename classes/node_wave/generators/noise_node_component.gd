@@ -76,7 +76,7 @@ func calculate()->Array:
 		output[optr]=pow(abs(q),power_values[optr])*sign(q)
 		mx=max(mx,output[optr])
 		mn=min(mn,output[optr])
-		optr=(optr+1)&(size-1)
+		optr=(optr+1)&size_mask
 		phi+=cycle
 	optr=fposmod(range_from*size,size)
 	reset_decay()
@@ -85,7 +85,7 @@ func calculate()->Array:
 			range_lerp(output[optr],mn,mx,-amplitude_values[optr],amplitude_values[optr])+dc_values[optr],
 			decay_values[optr],sz
 		)
-		optr=(optr+1)&(size-1)
+		optr=(optr+1)&size_mask
 	output_valid=true
 	return output
 

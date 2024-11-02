@@ -1,12 +1,14 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://ui/wave_designer/node_designer/nodes/transforms/map_wave_node.gd" type="Script" id=1]
 [ext_resource path="res://ui/widgets/option_slot.tscn" type="PackedScene" id=2]
 [ext_resource path="res://ui/widgets/slider_slot.tscn" type="PackedScene" id=3]
+[ext_resource path="res://ui/widgets/accent_button.gd" type="Script" id=4]
 
 [node name="MapWave" type="GraphNode"]
 margin_right = 171.0
 margin_bottom = 74.0
+title = "NODE_MAP_WAVE_TITLE"
 show_close = true
 resizable = true
 slot/0/left_enabled = false
@@ -46,14 +48,14 @@ slot/5/right_enabled = false
 slot/5/right_type = 0
 slot/5/right_color = Color( 1, 1, 1, 1 )
 slot/6/left_enabled = true
-slot/6/left_type = 0
-slot/6/left_color = Color( 1, 1, 1, 1 )
+slot/6/left_type = 1
+slot/6/left_color = Color( 0, 1, 1, 1 )
 slot/6/right_enabled = false
 slot/6/right_type = 0
 slot/6/right_color = Color( 1, 1, 1, 1 )
 slot/7/left_enabled = true
-slot/7/left_type = 0
-slot/7/left_color = Color( 1, 1, 1, 1 )
+slot/7/left_type = 2
+slot/7/left_color = Color( 0, 1, 0, 1 )
 slot/7/right_enabled = false
 slot/7/right_type = 0
 slot/7/right_color = Color( 1, 1, 1, 1 )
@@ -63,31 +65,49 @@ slot/8/left_color = Color( 1, 1, 1, 1 )
 slot/8/right_enabled = false
 slot/8/right_type = 0
 slot/8/right_color = Color( 1, 1, 1, 1 )
-slot/9/left_enabled = false
+slot/9/left_enabled = true
 slot/9/left_type = 0
 slot/9/left_color = Color( 1, 1, 1, 1 )
 slot/9/right_enabled = false
 slot/9/right_type = 0
 slot/9/right_color = Color( 1, 1, 1, 1 )
-slot/10/left_enabled = false
+slot/10/left_enabled = true
 slot/10/left_type = 0
 slot/10/left_color = Color( 1, 1, 1, 1 )
 slot/10/right_enabled = false
 slot/10/right_type = 0
 slot/10/right_color = Color( 1, 1, 1, 1 )
-slot/11/left_enabled = false
+slot/11/left_enabled = true
 slot/11/left_type = 0
 slot/11/left_color = Color( 1, 1, 1, 1 )
 slot/11/right_enabled = false
 slot/11/right_type = 0
 slot/11/right_color = Color( 1, 1, 1, 1 )
+slot/12/left_enabled = true
+slot/12/left_type = 2
+slot/12/left_color = Color( 0, 1, 0, 1 )
+slot/12/right_enabled = false
+slot/12/right_type = 0
+slot/12/right_color = Color( 1, 1, 1, 1 )
+slot/13/left_enabled = false
+slot/13/left_type = 0
+slot/13/left_color = Color( 1, 1, 1, 1 )
+slot/13/right_enabled = false
+slot/13/right_type = 0
+slot/13/right_color = Color( 1, 1, 1, 1 )
+slot/14/left_enabled = false
+slot/14/left_type = 0
+slot/14/left_color = Color( 1, 1, 1, 1 )
+slot/14/right_enabled = false
+slot/14/right_type = 0
+slot/14/right_color = Color( 1, 1, 1, 1 )
 script = ExtResource( 1 )
-base_title = "NODE_MAP_TITLE"
+base_title = "NODE_MAP_WAVE_TITLE"
 
 [node name="Output" type="Label" parent="."]
 margin_left = 16.0
 margin_top = 24.0
-margin_right = 245.0
+margin_right = 371.0
 margin_bottom = 38.0
 hint_tooltip = "NODE_OUTPUT_PORT_TTIP"
 mouse_filter = 1
@@ -117,16 +137,24 @@ text = "NODE_MAPPING_PORT"
 [node name="Lerp" parent="." instance=ExtResource( 2 )]
 margin_left = 16.0
 margin_top = 69.0
-margin_right = 245.0
+margin_right = 371.0
 margin_bottom = 89.0
 label = "NODE_LERP_PORT"
 tooltip = "NODE_LERP_PORT_TTIP"
 
-[node name="Mix" parent="." instance=ExtResource( 3 )]
+[node name="Extrapolation" parent="." instance=ExtResource( 2 )]
 margin_left = 16.0
 margin_top = 90.0
-margin_right = 245.0
-margin_bottom = 104.0
+margin_right = 371.0
+margin_bottom = 110.0
+label = "NODE_XERP_PORT"
+tooltip = "NODE_XERP_PORT_TTIP"
+
+[node name="Mix" parent="." instance=ExtResource( 3 )]
+margin_left = 16.0
+margin_top = 111.0
+margin_right = 371.0
+margin_bottom = 125.0
 type = 9
 label = "NODE_MIX_FACTOR_PORT"
 tooltip = "NODE_MIX_FACTOR_PORT_TTIP"
@@ -137,9 +165,9 @@ nullable = false
 
 [node name="ClampMix" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
-margin_top = 105.0
-margin_right = 245.0
-margin_bottom = 119.0
+margin_top = 126.0
+margin_right = 371.0
+margin_bottom = 140.0
 type = 10
 label = "NODE_CLAMP_MIX_PORT"
 tooltip = "NODE_CLAMP_MIX_PORT_TTIP"
@@ -147,11 +175,21 @@ min_value = 0.0
 value = 1.0
 nullable = false
 
+[node name="MapToEmpty" type="Button" parent="."]
+margin_left = 16.0
+margin_top = 141.0
+margin_right = 371.0
+margin_bottom = 161.0
+hint_tooltip = "NODE_MAP2EMPTY_PORT_TTIP"
+toggle_mode = true
+text = "NODE_MAP2EMPTY_PORT"
+script = ExtResource( 4 )
+
 [node name="Amplitude" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
-margin_top = 120.0
-margin_right = 245.0
-margin_bottom = 134.0
+margin_top = 162.0
+margin_right = 371.0
+margin_bottom = 176.0
 type = 2
 label = "NODE_AMPLITUDE_PORT"
 tooltip = "NODE_AMPLITUDE_PORT_TTIP"
@@ -162,9 +200,9 @@ nullable = false
 
 [node name="Power" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
-margin_top = 135.0
-margin_right = 245.0
-margin_bottom = 149.0
+margin_top = 177.0
+margin_right = 371.0
+margin_bottom = 191.0
 type = 4
 label = "NODE_POWER_PORT"
 tooltip = "NODE_POWER_PORT_TTIP"
@@ -178,9 +216,9 @@ nullable = false
 
 [node name="Decay" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
-margin_top = 150.0
-margin_right = 245.0
-margin_bottom = 164.0
+margin_top = 192.0
+margin_right = 371.0
+margin_bottom = 206.0
 type = 5
 label = "NODE_DECAY_PORT"
 tooltip = "NODE_DECAY_PORT_TTIP"
@@ -189,9 +227,9 @@ nullable = false
 
 [node name="DCOffset" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
-margin_top = 165.0
-margin_right = 245.0
-margin_bottom = 179.0
+margin_top = 207.0
+margin_right = 371.0
+margin_bottom = 221.0
 type = 6
 label = "NODE_DC_OFFSET_PORT"
 tooltip = "NODE_DC_OFFSET_PORT_TTIP"
@@ -199,11 +237,21 @@ clamp_lo = false
 clamp_hi = false
 nullable = false
 
+[node name="Isolate" type="Button" parent="."]
+margin_left = 16.0
+margin_top = 222.0
+margin_right = 371.0
+margin_bottom = 242.0
+hint_tooltip = "NODE_ISOLATE_PORT_TTIP"
+toggle_mode = true
+text = "NODE_ISOLATE_PORT"
+script = ExtResource( 4 )
+
 [node name="RangeFrom" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
-margin_top = 180.0
-margin_right = 245.0
-margin_bottom = 194.0
+margin_top = 243.0
+margin_right = 371.0
+margin_bottom = 257.0
 type = 7
 label = "NODE_RANGE_FROM_PORT"
 tooltip = "NODE_RANGE_FROM_PORT_TTIP"
@@ -211,9 +259,9 @@ nullable = false
 
 [node name="RangeLength" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
-margin_top = 195.0
-margin_right = 245.0
-margin_bottom = 209.0
+margin_top = 258.0
+margin_right = 371.0
+margin_bottom = 272.0
 type = 8
 label = "NODE_RANGE_LEN_PORT"
 tooltip = "NODE_RANGE_LEN_PORT_TTIP"
@@ -222,11 +270,14 @@ value = 1.0
 nullable = false
 
 [connection signal="item_selected" from="Lerp" to="." method="_on_Lerp_item_selected"]
+[connection signal="item_selected" from="Extrapolation" to="." method="_on_Extrapolation_item_selected"]
 [connection signal="value_changed" from="Mix" to="." method="_on_Mix_value_changed"]
 [connection signal="value_changed" from="ClampMix" to="." method="_on_ClampMix_value_changed"]
+[connection signal="toggled" from="MapToEmpty" to="." method="_on_MapToEmpty_toggled"]
 [connection signal="value_changed" from="Amplitude" to="." method="_on_Amplitude_value_changed"]
 [connection signal="value_changed" from="Power" to="." method="_on_Power_value_changed"]
 [connection signal="value_changed" from="Decay" to="." method="_on_Decay_value_changed"]
 [connection signal="value_changed" from="DCOffset" to="." method="_on_DCOffset_value_changed"]
+[connection signal="toggled" from="Isolate" to="." method="_on_Isolate_toggled"]
 [connection signal="value_changed" from="RangeFrom" to="." method="_on_RangeFrom_value_changed"]
 [connection signal="value_changed" from="RangeLength" to="." method="_on_RangeLength_value_changed"]

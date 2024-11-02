@@ -5,6 +5,7 @@ class_name WaveNodeComponent
 var viz_rect:Rect2
 var size_po2:int setget set_size_po2
 var size:int
+var size_mask:int
 var range_from:float=0.0
 var range_length:float=1.0
 var output:Array
@@ -28,12 +29,21 @@ func set_size_po2(s:int)->void:
 		clear_array(output,1<<s)
 		size_po2=s
 		size=1<<s
+		size_mask=size-1
 		output_valid=false
 
 
 func clear_array(arr:Array,new_size:int,value:float=0.0)->void:
 	arr.resize(new_size)
 	arr.fill(value)
+
+
+func fill_out_of_region(region_sz:int,optr:int,input_values:Array,isolate_values:Array)->void:
+	region_sz=size-region_sz
+	for i in region_sz:
+		if isolate_values[optr]<0.5:
+			output[optr]=input_values[optr]
+		optr=(optr+1)&size_mask
 
 
 func calculate_slot(result:Array,slot:Array,selected_value:float)->void:
@@ -50,10 +60,16 @@ func calculate_slot(result:Array,slot:Array,selected_value:float)->void:
 			result[optr]=selected_value
 
 
-func calculate_boolean_slot(result:Array,slot:Array,selected_value:float)->void:
+func calculate_diffuse_boolean_slot(result:Array,slot:Array,selected_value:float)->void:
 	calculate_slot(result,slot,selected_value)
 	for optr in size:
 		result[optr]=clamp(abs(result[optr]),0.0,1.0)
+
+
+func calculate_boolean_slot(result:Array,slot:Array,selected_value:float)->void:
+	calculate_slot(result,slot,selected_value)
+	for optr in size:
+		result[optr]=float(abs(result[optr])>=0.5)
 
 
 func calculate_option_slot(result:Array,slot:Array,values:Array,selected_value:float)->void:

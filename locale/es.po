@@ -1834,6 +1834,12 @@ msgstr "Limitar"
 msgid "NODE_CLAMP_MIX_PORT_TTIP"
 msgstr "Limita los valors de mezcla al rango -1.0 - 1.0"
 
+msgid "NODE_ISOLATE_PORT"
+msgstr "Aislar rango"
+
+msgid "NODE_ISOLATE_PORT_TTIP"
+msgstr "Elimina los valores fuera del rango de mezcla"
+
 # Nodes
 # Output node
 msgid "NODE_OUTPUT_TITLE"
@@ -2148,8 +2154,43 @@ msgid "NODE_MAP_WAVE_TITLE"
 msgstr "MAPEO DE ONDA"
 
 msgid "NODE_MAPPING_PORT"
-msgstr ""
+msgstr "Mapa"
 
 msgid "NODE_MAPPING_PORT_TTIP"
-msgstr ""
+msgstr "<EMPTY STRING>"
 
+msgid "NODE_LERP_PORT"
+msgstr "Interpolación"
+
+msgid "NODE_LERP_PORT_TTIP"
+msgstr "Tipo de interpolación"
+
+msgid "NODE_LERP_NONE"
+msgstr "Ninguna"
+
+msgid "NODE_LERP_LINEAR"
+msgstr "Lineal"
+
+msgid "NODE_LERP_COS"
+msgstr "Coseno"
+
+msgid "NODE_XERP_PORT"
+msgstr "Extrapolación"
+
+msgid "NODE_XERP_PORT_TTIP"
+msgstr "Cómo mapear valores fuera del rango -1 > 1"
+
+msgid "NODE_XERP_CONSTANT"
+msgstr "Constante"
+
+msgid "NODE_XERP_EXTEND"
+msgstr "Extender"
+
+msgid "NODE_XERP_WRAP"
+msgstr "Bucle"
+
+msgid "NODE_MAP2EMPTY_PORT"
+msgstr "Mapear vacíos"
+
+msgid "NODE_MAP2EMPTY_PORT_TTIP"
+msgstr "Hace que los valores vacíos del mapa generen vacíos, en lugar de la onda original"

@@ -1,4 +1,4 @@
-extends NodeController
+tool extends NodeController
 
 
 func _init()->void:
@@ -10,14 +10,21 @@ func _ready()->void:
 	for i in MapWaveNodeConstants.LERP_END:
 		ops.append({"label":MapWaveNodeConstants.LERP_STRINGS[i],"id":i})
 	$Lerp.set_options(ops)
+	ops.clear()
+	for i in MapWaveNodeConstants.XERP_END:
+		ops.append({"label":MapWaveNodeConstants.XERP_STRINGS[i],"id":i})
+	$Extrapolation.set_options(ops)
 
 
 func set_parameters()->void:
 	if not is_node_ready():
 		yield(self,"ready")
 	$Lerp.select(node.lerp_value)
+	$Extrapolation.select(node.extrapolate)
 	$Mix.set_value(node.mix_value)
 	$ClampMix.set_value(node.clamp_mix_value)
+	$Isolate.set_pressed_no_signal(node.isolate>=0.5)
+	$MapToEmpty.set_pressed_no_signal(node.map_empty>=0.5)
 	$Amplitude.set_value(node.amplitude)
 	$Power.set_value(node.power)
 	$Decay.set_value(node.decay)
@@ -68,4 +75,19 @@ func _on_ClampMix_value_changed(value:float)->void:
 
 func _on_Lerp_item_selected(index:int)->void:
 	node.lerp_value=index
+	emit_signal("params_changed",self)
+
+
+func _on_Isolate_toggled(pressed:bool)->void:
+	node.isolate=float(pressed)
+	emit_signal("params_changed",self)
+
+
+func _on_Extrapolation_item_selected(index:int)->void:
+	node.extrapolate=index
+	emit_signal("params_changed",self)
+
+
+func _on_MapToEmpty_toggled(pressed:bool)->void:
+	node.map_empty=float(pressed)
 	emit_signal("params_changed",self)

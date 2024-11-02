@@ -1,22 +1,5 @@
 extends Control
 
-"""
-FIXME
-TODO:
-	Node-based wave generator
-	Reset per channel parameters (as a command|button)
-	MIDI input
-		Flag?: MIDI Pitch bend
-		Flag?: MIDI modulation
-		Range?: MIDI modulation
-
-FUTURE:
-	Refactor to use inner classes instead of dictionaries
-	Constant-ify error IDs/params
-	Import instruments/waveforms/arpeggios from song
-	Import waveforms from instrument
-"""
-
 
 func _ready()->void:
 	theme=ThemeHelper.get_theme()

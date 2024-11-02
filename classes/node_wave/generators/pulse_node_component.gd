@@ -83,7 +83,7 @@ func calculate()->Array:
 		q=dc_values[optr]+q*amplitude_values[optr]
 		output[optr]=calculate_decay(q,decay_values[optr],sz)
 		iphi+=cycle
-		optr=(optr+1)&(size-1)
+		optr=(optr+1)&size_mask
 	output_valid=true
 	return output
 

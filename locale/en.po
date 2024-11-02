@@ -1831,6 +1831,12 @@ msgstr "Clamp mix"
 msgid "NODE_CLAMP_IN_PORT_TTIP"
 msgstr "Limits the mix values to -1.0 - 1.0"
 
+msgid "NODE_ISOLATE_PORT"
+msgstr "Isolate range"
+
+msgid "NODE_ISOLATE_PORT_TTIP"
+msgstr "Clears values outside range"
+
 # Nodes
 # Output node
 msgid "NODE_OUTPUT_TITLE"
@@ -2147,8 +2153,43 @@ msgid "NODE_MAP_WAVE_TITLE"
 msgstr "MAP WAVE"
 
 msgid "NODE_MAPPING_PORT"
-msgstr ""
+msgstr "Map"
 
 msgid "NODE_MAPPING_PORT_TTIP"
-msgstr ""
+msgstr "<EMPTY STRING>"
 
+msgid "NODE_LERP_PORT"
+msgstr "Interpolation"
+
+msgid "NODE_LERP_PORT_TTIP"
+msgstr "Interpolation type"
+
+msgid "NODE_LERP_NONE"
+msgstr "None"
+
+msgid "NODE_LERP_LINEAR"
+msgstr "Linear"
+
+msgid "NODE_LERP_COS"
+msgstr "Cosine"
+
+msgid "NODE_XERP_PORT"
+msgstr "Extrapolation"
+
+msgid "NODE_XERP_PORT_TTIP"
+msgstr "How to map values outside the range -1 > 1"
+
+msgid "NODE_XERP_CONSTANT"
+msgstr "Constant"
+
+msgid "NODE_XERP_EXTEND"
+msgstr "Extend"
+
+msgid "NODE_XERP_WRAP"
+msgstr "Wrap"
+
+msgid "NODE_MAP2EMPTY_PORT"
+msgstr "Map to empty"
+
+msgid "NODE_MAP2EMPTY_PORT_TTIP"
+msgstr "Empty values map to empty, instead of the original wave"

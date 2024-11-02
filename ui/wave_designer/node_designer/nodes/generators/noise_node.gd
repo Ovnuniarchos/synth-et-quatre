@@ -1,4 +1,4 @@
-extends NodeController
+tool extends NodeController
 
 
 func _init()->void:

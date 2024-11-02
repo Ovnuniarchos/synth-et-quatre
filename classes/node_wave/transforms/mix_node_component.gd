@@ -19,6 +19,9 @@ var clamp_mix_value:float=0.0
 var op_slot:Array=[]
 var op_values:Array=[]
 var op_value:float=MixNodeConstants.MIX_MIX
+var isolate_slot:Array=[]
+var isolate_values:Array=[]
+var isolate:float=0.0
 var power_slot:Array=[]
 var power_values:Array=[]
 var power:float=1.0
@@ -33,7 +36,7 @@ var dc:float=0.0
 func _init()->void:
 	._init()
 	inputs=[
-		a_slot,b_slot,mix_slot,clamp_mix_slot,op_slot,power_slot,decay_slot,dc_slot
+		a_slot,b_slot,mix_slot,clamp_mix_slot,op_slot,power_slot,decay_slot,dc_slot,isolate_slot
 	]
 
 
@@ -44,8 +47,9 @@ func calculate()->Array:
 	calculate_slot(a_values,a_slot,a_value)
 	calculate_slot(b_values,b_slot,b_value)
 	calculate_slot(mix_values,mix_slot,mix_value)
-	calculate_boolean_slot(clamp_mix_values,clamp_mix_slot,clamp_mix_value)
+	calculate_diffuse_boolean_slot(clamp_mix_values,clamp_mix_slot,clamp_mix_value)
 	calculate_option_slot(op_values,op_slot,MixNodeConstants.AS_ARRAY,op_value)
+	calculate_diffuse_boolean_slot(isolate_values,isolate_slot,isolate)
 	calculate_slot(power_values,power_slot,power)
 	calculate_slot(decay_values,decay_slot,decay)
 	calculate_slot(dc_values,dc_slot,dc)
@@ -57,7 +61,7 @@ func calculate()->Array:
 	var b_in:float
 	var bidi_lerp:bool
 	reset_decay()
-	for i in sz:
+	for i in size:
 		mix=lerp(mix_values[optr],clamp(mix_values[optr],0.0,1.0),clamp_mix_values[optr])
 		a_in=b_values[optr] if is_nan(a_values[optr]) else a_values[optr]
 		b_in=a_values[optr] if is_nan(b_values[optr]) else b_values[optr]
@@ -101,7 +105,9 @@ func calculate()->Array:
 			t=b_in if is_nan(a_in) else a_in
 		if bidi_lerp:
 			t=lerp(t,b_in,mix) if mix>0.0 else lerp(t,a_in,-mix)
-		output[optr]=calculate_decay(pow(abs(t),power_values[optr])*sign(t),decay_values[optr],sz)+dc_values[optr]
-		optr=(optr+1)&(size-1)
+		t=calculate_decay(pow(abs(t),power_values[optr])*sign(t),decay_values[optr],sz)+dc_values[optr]
+		if i<sz and isolate_values[optr]<0.5:
+			output[optr]=t
+		optr=(optr+1)&size_mask
 	output_valid=true
 	return output

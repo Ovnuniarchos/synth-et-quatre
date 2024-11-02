@@ -67,7 +67,13 @@ var reverse_graph:Dictionary={}
 var size_po2:int=0
 
 
-func _ready() -> void:
+func _init()->void:
+	for i in 3:
+		for j in 3:
+			add_valid_connection_type(i,j)
+
+
+func _ready()->void:
 	new_menu=create_menu(MENU)
 	get_parent().call_deferred("add_child",new_menu)
 	get_zoom_hbox().hide()

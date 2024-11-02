@@ -1864,6 +1864,12 @@ msgstr ""
 msgid "NODE_CLAMP_MIX_PORT_TTIP"
 msgstr ""
 
+msgid "NODE_ISOLATE_PORT"
+msgstr ""
+
+msgid "NODE_ISOLATE_PORT_TTIP"
+msgstr ""
+
 # Nodes
 # Output node
 
@@ -2194,3 +2200,38 @@ msgstr ""
 msgid "NODE_MAPPING_PORT_TTIP"
 msgstr ""
 
+msgid "NODE_LERP_PORT"
+msgstr ""
+
+msgid "NODE_LERP_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_LERP_NONE"
+msgstr ""
+
+msgid "NODE_LERP_LINEAR"
+msgstr ""
+
+msgid "NODE_LERP_COS"
+msgstr ""
+
+msgid "NODE_XERP_PORT"
+msgstr ""
+
+msgid "NODE_XERP_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_XERP_CONSTANT"
+msgstr ""
+
+msgid "NODE_XERP_EXTEND"
+msgstr ""
+
+msgid "NODE_XERP_WRAP"
+msgstr ""
+
+msgid "NODE_MAP2EMPTY_PORT"
+msgstr ""
+
+msgid "NODE_MAP2EMPTY_PORT_TTIP"
+msgstr ""

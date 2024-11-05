@@ -81,3 +81,9 @@ func calculate()->Array:
 		optr=(optr+1)&size_mask
 	fill_out_of_region(sz,optr,input_values,isolate_values)
 	return output
+
+
+func equals(other:WaveNodeComponent)->bool:
+	if (other as ClampNodeComponent)==null:
+		return false
+	return .equals(other)

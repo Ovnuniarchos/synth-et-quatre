@@ -7,8 +7,13 @@ script/source = "extends Node
 FIXME
 TODO:
 	Node-based wave generator
-		Crop node
-		Quantize amplitude/time
+		Lerp value generator
+		Clamp filter (trim amplitude)
+		Crop filter (trim time)
+		Decay filter
+		Normalize filter
+		Power filter
+		Quantize amplitude/time filter
 	Reset per channel parameters (as a command|button)
 	MIDI input
 		Flag?: MIDI Pitch bend
@@ -21,14 +26,11 @@ FUTURE:
 	Import instruments/waveforms/arpeggios from song
 	Import waveforms from instrument
 \"\"\"
-const TIMES:int=10000000
 
-func _ready() -> void:
-	var ti:int
-	var v:Array=[1,2]
-	ti=OS.get_ticks_usec()
-	print(v[floor(0.99999999999999999999)])
-	print(\"\",OS.get_ticks_usec()-ti)
+func _ready()->void:
+	var a=OutputNodeComponent.new()
+	var b=OutputNodeComponent.new()
+	print(a.are_equal_approx(b,[\"clip\"]))
 "
 
 [node name="test" type="Node"]

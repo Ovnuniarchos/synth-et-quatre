@@ -27,6 +27,4 @@ func calculate()->Array:
 func equals(other:WaveNodeComponent)->bool:
 	if (other as OutputNodeComponent)==null:
 		return false
-	if not .equals(other):
-		return false
-	return true
+	return .equals(other) and is_equal_approx(clip,other.clip)

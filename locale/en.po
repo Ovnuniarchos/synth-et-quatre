@@ -1716,6 +1716,9 @@ msgstr "Triangle"
 msgid "NODED_MENU_NOISE"
 msgstr "Noise"
 
+msgid "NODED_MENU_RAMP"
+msgstr "Ramp"
+
 msgid "NODED_MENU_TRANSFORMS"
 msgstr "Transforms"
 
@@ -2014,6 +2017,28 @@ msgid "NODE_RANDOMNESS_PORT"
 msgstr "Randomness"
 
 msgid "NODE_RANDOMNESS_PORT_TTIP"
+msgstr "<EMPTY STRING>"
+
+# Ramp node
+msgid "NODE_RAMP_TITLE"
+msgstr "Ramp"
+
+msgid "NODE_RAMP_FROM_PORT"
+msgstr "From"
+
+msgid "NODE_RAMP_FROM_PORT_TTIP"
+msgstr "<EMPTY STRING>"
+
+msgid "NODE_RAMP_TO_PORT"
+msgstr "To"
+
+msgid "NODE_RAMP_TO_PORT_TTIP"
+msgstr "<EMPTY STRING>"
+
+msgid "NODE_CURVE_PORT"
+msgstr "Curve"
+
+msgid "NODE_CURVE_PORT_TTIP"
 msgstr "<EMPTY STRING>"
 
 # Mix node

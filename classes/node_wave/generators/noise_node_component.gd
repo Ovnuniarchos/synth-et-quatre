@@ -94,6 +94,7 @@ func equals(other:WaveNodeComponent)->bool:
 	if (other as NoiseNodeComponent)==null:
 		return false
 	return .equals(other) and noise_seed==other.noise_seed and is_equal_approx(amplitude,other.amplitude)\
-		and is_equal_approx(decay,other.decay) and is_equal_approx(dc,other.dc) and octaves==other.octaves\
+		and is_equal_approx(decay,other.decay) and is_equal_approx(power,other.power)\
+		and is_equal_approx(dc,other.dc) and octaves==other.octaves\
 		and is_equal_approx(frequency,other.frequency) and is_equal_approx(persistence,other.persistence)\
 		and is_equal_approx(lacunarity,other.lacunarity) and is_equal_approx(randomness,other.randomness)

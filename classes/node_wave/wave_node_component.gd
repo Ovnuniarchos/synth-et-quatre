@@ -124,6 +124,13 @@ func equals(other:WaveNodeComponent)->bool:
 	return true
 
 
+func are_equal_approx(other:WaveNodeComponent,props:Array)->bool:
+	for p in props:
+		print(other.get(p))
+		if not is_equal_approx(get(p),other.get(p)):
+			return false
+	return true
+
 func flat_components()->Array:
 	var comps:Dictionary={}
 	for i in inputs:

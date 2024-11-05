@@ -111,3 +111,37 @@ func calculate()->Array:
 		optr=(optr+1)&size_mask
 	output_valid=true
 	return output
+
+
+func equals(other:WaveNodeComponent)->bool:
+	if (other as MixNodeComponent)==null:
+		return false
+	return .equals(other) and is_equal_approx(a_value,other.a_value)
+
+"""
+var a_value:float=0.0
+var b_slot:Array=[]
+var b_values:Array=[]
+var b_value:float=0.0
+var mix_slot:Array=[]
+var mix_values:Array=[]
+var mix_value:float=1.0
+var clamp_mix_slot:Array=[]
+var clamp_mix_values:Array=[]
+var clamp_mix_value:float=0.0
+var op_slot:Array=[]
+var op_values:Array=[]
+var op_value:float=MixNodeConstants.MIX_MIX
+var isolate_slot:Array=[]
+var isolate_values:Array=[]
+var isolate:float=0.0
+var power_slot:Array=[]
+var power_values:Array=[]
+var power:float=1.0
+var decay_slot:Array=[]
+var decay_values:Array=[]
+var decay:float=0.0
+var dc_slot:Array=[]
+var dc_values:Array=[]
+var dc:float=0.0
+"""

@@ -14,7 +14,7 @@ class Sorter:
 
 enum{
 	OUTPUT,
-	GEN_SINE,GEN_SAW,GEN_PULSE,GEN_TRIANGLE,GEN_NOISE,
+	GEN_SINE,GEN_SAW,GEN_PULSE,GEN_TRIANGLE,GEN_NOISE,GEN_RAMP,
 	XFR_MIX,XFR_CLAMP,XFR_MAPR,XFR_MAPW
 }
 const MENU:Array=[
@@ -24,7 +24,8 @@ const MENU:Array=[
 		{"option":"NODED_MENU_SAW","id":GEN_SAW},
 		{"option":"NODED_MENU_PULSE","id":GEN_PULSE},
 		{"option":"NODED_MENU_TRIANGLE","id":GEN_TRIANGLE},
-		{"option":"NODED_MENU_NOISE","id":GEN_NOISE}
+		{"option":"NODED_MENU_NOISE","id":GEN_NOISE},
+		{"option":"NODED_MENU_RAMP","id":GEN_RAMP}
 	]},
 	{"separator":true},
 	{"option":"NODED_MENU_TRANSFORMS","submenu":[
@@ -41,6 +42,7 @@ const NODES:Dictionary={
 	GEN_PULSE:preload("res://ui/wave_designer/node_designer/nodes/generators/pulse_node.tscn"),
 	GEN_TRIANGLE:preload("res://ui/wave_designer/node_designer/nodes/generators/triangle_node.tscn"),
 	GEN_NOISE:preload("res://ui/wave_designer/node_designer/nodes/generators/noise_node.tscn"),
+	GEN_RAMP:preload("res://ui/wave_designer/node_designer/nodes/generators/ramp_node.tscn"),
 	XFR_MIX:preload("res://ui/wave_designer/node_designer/nodes/transforms/mix_node.tscn"),
 	XFR_CLAMP:preload("res://ui/wave_designer/node_designer/nodes/transforms/clamp_node.tscn"),
 	XFR_MAPR:preload("res://ui/wave_designer/node_designer/nodes/transforms/map_range_node.tscn"),
@@ -53,6 +55,7 @@ const NODES_CLASS:Dictionary={
 	PulseNodeComponent.NODE_TYPE:NODES[GEN_PULSE],
 	TriangleNodeComponent.NODE_TYPE:NODES[GEN_TRIANGLE],
 	NoiseNodeComponent.NODE_TYPE:NODES[GEN_NOISE],
+	RampNodeComponent.NODE_TYPE:NODES[GEN_RAMP],
 	MixNodeComponent.NODE_TYPE:NODES[XFR_MIX],
 	ClampNodeComponent.NODE_TYPE:NODES[XFR_CLAMP],
 	MapRangeNodeComponent.NODE_TYPE:NODES[XFR_MAPR],

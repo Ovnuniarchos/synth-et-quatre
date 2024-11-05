@@ -122,3 +122,9 @@ func calculate()->Array:
 	fill_out_of_region(sz,optr,input_values,isolate_values)
 	output_valid=true
 	return output
+
+
+func equals(other:WaveNodeComponent)->bool:
+	if (other as MapWaveNodeComponent)==null:
+		return false
+	return .equals(other)

@@ -1745,6 +1745,9 @@ msgstr ""
 msgid "NODED_MENU_NOISE"
 msgstr ""
 
+msgid "NODED_MENU_RAMP"
+msgstr ""
+
 msgid "NODED_MENU_TRANSFORMS"
 msgstr ""
 
@@ -2052,6 +2055,29 @@ msgid "NODE_RANDOMNESS_PORT"
 msgstr ""
 
 msgid "NODE_RANDOMNESS_PORT_TTIP"
+msgstr ""
+
+# Ramp node
+
+msgid "NODE_RAMP_TITLE"
+msgstr ""
+
+msgid "NODE_RAMP_FROM_PORT"
+msgstr ""
+
+msgid "NODE_RAMP_FROM_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_RAMP_TO_PORT"
+msgstr ""
+
+msgid "NODE_RAMP_TO_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_CURVE_PORT"
+msgstr ""
+
+msgid "NODE_CURVE_PORT_TTIP"
 msgstr ""
 
 # Mix node

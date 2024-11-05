@@ -28,9 +28,13 @@ FUTURE:
 \"\"\"
 
 func _ready()->void:
-	var a=OutputNodeComponent.new()
-	var b=OutputNodeComponent.new()
-	print(a.are_equal_approx(b,[\"clip\"]))
+	var a=SawNodeComponent.new()
+	var b=SawNodeComponent.new()
+	var c=SawNodeComponent.new()
+	var d=SawNodeComponent.new()
+	a.frequency_slot.append(b)
+	c.frequency_slot.append(d)
+	print(a.equals(c))
 "
 
 [node name="test" type="Node"]

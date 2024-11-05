@@ -10,10 +10,10 @@ var mapping_slot:Array=[]
 var mapping_values:Array=[]
 var lerp_slot:Array=[]
 var lerp_values:Array=[]
-var lerp_value:float=MapWaveNodeConstants.LERP_LINEAR
+var lerp_value:int=MapWaveNodeConstants.LERP_LINEAR
 var extrapolate_slot:Array=[]
 var extrapolate_values:Array=[]
-var extrapolate:float=MapWaveNodeConstants.XERP_WRAP
+var extrapolate:int=MapWaveNodeConstants.XERP_WRAP
 var mix_slot:Array=[]
 var mix_values:Array=[]
 var mix_value:float=1.0
@@ -127,4 +127,7 @@ func calculate()->Array:
 func equals(other:WaveNodeComponent)->bool:
 	if (other as MapWaveNodeComponent)==null:
 		return false
-	return .equals(other)
+	return .equals(other) and are_equal_approx(other,[
+		"lerp_value","extrapolate","mix_value","clamp_mix_value","map_empty","isolate",
+		"amplitude","power","decay","dc"
+	])

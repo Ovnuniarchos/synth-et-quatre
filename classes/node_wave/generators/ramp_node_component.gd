@@ -35,5 +35,6 @@ func calculate()->Array:
 func equals(other:WaveNodeComponent)->bool:
 	if (other as RampNodeComponent)==null:
 		return false
-	return .equals(other) and is_equal_approx(other.ramp_from,ramp_from)\
-		and is_equal_approx(other.ramp_to,ramp_to) and is_equal_approx(other.curve,curve)
+	return .equals(other) and are_equal_approx(other,[
+		"ramp_from","ramp_to","curve"
+	])

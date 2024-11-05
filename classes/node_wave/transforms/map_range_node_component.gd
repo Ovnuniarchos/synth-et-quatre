@@ -91,4 +91,7 @@ func calculate()->Array:
 func equals(other:WaveNodeComponent)->bool:
 	if (other as MapRangeNodeComponent)==null:
 		return false
-	return .equals(other)
+	return .equals(other) and are_equal_approx(other,[
+		"min_in_value","max_in_value","min_out_value","max_out_value",
+		"mix_value","clamp_mix_value","isolate","amplitude","power","decay","dc"
+	])

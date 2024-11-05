@@ -112,7 +112,7 @@ func disconnect_node(from:WaveNodeComponent,to:int)->void:
 
 
 func equals(other:WaveNodeComponent)->bool:
-	if not (other.inputs.size()==inputs.size() and is_equal_approx(range_from,other.range_from)\
+	if not (is_equal_approx(range_from,other.range_from)\
 		and is_equal_approx(range_length,other.range_length)):
 		return false
 	for i in inputs.size():
@@ -125,10 +125,26 @@ func equals(other:WaveNodeComponent)->bool:
 
 
 func are_equal_approx(other:WaveNodeComponent,props:Array)->bool:
+	var a
+	var b
+	var t:int
 	for p in props:
-		print(other.get(p))
-		if not is_equal_approx(get(p),other.get(p)):
+		a=get(p)
+		b=other.get(p)
+		t=typeof(a)
+		if t!=TYPE_INT and t!=TYPE_REAL and t!=TYPE_ARRAY:
+			breakpoint
+		if (t==TYPE_REAL and not is_equal_approx(a,b))\
+			or (t==TYPE_INT and a!=b):
 			return false
+		elif t==TYPE_ARRAY:
+			for i in a.size():
+				t=typeof(a[i])
+				if t!=TYPE_INT and t!=TYPE_REAL:
+					breakpoint
+				if (t==TYPE_INT and a[i]!=b[i])\
+					or (t==TYPE_REAL and not is_equal_approx(a[i],b[i])):
+					return false
 	return true
 
 func flat_components()->Array:

@@ -79,8 +79,6 @@ func calculate()->Array:
 func equals(other:WaveNodeComponent)->bool:
 	if (other as TriangleNodeComponent)==null:
 		return false
-	return .equals(other) and is_equal_approx(other.frequency,frequency) and is_equal_approx(other.amplitude,amplitude)\
-		and is_equal_approx(other.phi0,phi0) and is_equal_approx(other.power,power)\
-		and is_equal_approx(other.decay,decay) and is_equal_approx(dc,other.dc)\
-		and quarters[0]==other.quarters[0] and quarters[1]==other.quarters[1]\
-		and quarters[2]==other.quarters[2] and quarters[3]==other.quarters[3]
+	return .equals(other) and are_equal_approx(other,[
+		"frequency","amplitude","phi0","power","decay","dc","quarters"
+	])

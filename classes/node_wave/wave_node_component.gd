@@ -69,7 +69,8 @@ func calculate_diffuse_boolean_slot(result:Array,slot:Array,selected_value:float
 func calculate_boolean_slot(result:Array,slot:Array,selected_value:float)->void:
 	calculate_slot(result,slot,selected_value)
 	for optr in size:
-		result[optr]=float(abs(result[optr])>=0.5)
+		if not is_nan(result[optr]):
+			result[optr]=float(abs(result[optr])>=0.5)
 
 
 func calculate_option_slot(result:Array,slot:Array,values:Array,selected_value:float)->void:
@@ -77,7 +78,8 @@ func calculate_option_slot(result:Array,slot:Array,values:Array,selected_value:f
 	selected_value=range_lerp(selected_value,0.0,vsz,0.0,1.0)
 	calculate_slot(result,slot,selected_value)
 	for optr in size:
-		result[optr]=values[clamp(lerp(0.0,vsz,abs(result[optr])),0.0,vsz-1)]
+		if not is_nan(result[optr]):
+			result[optr]=values[clamp(lerp(0.0,vsz,abs(result[optr])),0.0,vsz-1)]
 
 
 func reset_decay()->void:

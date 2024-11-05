@@ -80,6 +80,7 @@ func calculate()->Array:
 		)*amplitude_values[optr])+dc_values[optr]
 		optr=(optr+1)&size_mask
 	fill_out_of_region(sz,optr,input_values,isolate_values)
+	output_valid=true
 	return output
 
 

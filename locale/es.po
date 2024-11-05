@@ -1726,13 +1726,16 @@ msgid "NODED_MENU_MIX"
 msgstr "Mezcla"
 
 msgid "NODED_MENU_CLAMP"
-msgstr "Recorte"
+msgstr "Límite"
 
 msgid "NODED_MENU_MAP_RANGE"
 msgstr "Mapeo de rango"
 
 msgid "NODED_MENU_MAP_WAVE"
 msgstr "Mapeo de onda"
+
+msgid "NODED_MENU_CLIP"
+msgstr "Recorte"
 
 # Common ports
 msgid "NODE_OUTPUT_PORT"
@@ -1748,7 +1751,7 @@ msgid "NODE_INPUT_PORT_TTIP"
 msgstr "<EMPTY STRING>"
 
 msgid "NODE_CLIP_PORT"
-msgstr "Recorte"
+msgstr "Límite"
 
 msgid "NODE_CLIP_PORT_TTIP"
 msgstr "<EMPTY STRING>"
@@ -1832,7 +1835,7 @@ msgid "NODE_MIX_FACTOR_PORT_TTIP"
 msgstr "Factor de mezcla"
 
 msgid "NODE_CLAMP_MIX_PORT"
-msgstr "Limitar"
+msgstr "Lim. mezcla"
 
 msgid "NODE_CLAMP_MIX_PORT_TTIP"
 msgstr "Limita los valors de mezcla al rango -1.0 - 1.0"
@@ -1841,7 +1844,7 @@ msgid "NODE_ISOLATE_PORT"
 msgstr "Aislar rango"
 
 msgid "NODE_ISOLATE_PORT_TTIP"
-msgstr "Elimina los valores fuera del rango de mezcla"
+msgstr "Elimina los valores fuera del segmento"
 
 # Nodes
 # Output node
@@ -2219,3 +2222,8 @@ msgstr "Mapear vacíos"
 
 msgid "NODE_MAP2EMPTY_PORT_TTIP"
 msgstr "Hace que los valores vacíos del mapa generen vacíos, en lugar de la onda original"
+
+# Clip node
+msgid "NODE_CLIP_TITLE"
+msgstr "RECORTE"
+

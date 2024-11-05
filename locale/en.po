@@ -1734,6 +1734,9 @@ msgstr "Map range"
 msgid "NODED_MENU_MAP_WAVE"
 msgstr "Map wave"
 
+msgid "NODED_MENU_CLIP"
+msgstr "Clip"
+
 # Common ports
 msgid "NODE_OUTPUT_PORT"
 msgstr "Output"
@@ -1748,7 +1751,7 @@ msgid "NODE_INPUT_PORT_TTIP"
 msgstr "<EMPTY STRING>"
 
 msgid "NODE_CLIP_PORT"
-msgstr "Clip"
+msgstr "Clamp"
 
 msgid "NODE_CLIP_PORT_TTIP"
 msgstr "<EMPTY STRING>"
@@ -1835,10 +1838,10 @@ msgid "NODE_CLAMP_IN_PORT_TTIP"
 msgstr "Limits the mix values to -1.0 - 1.0"
 
 msgid "NODE_ISOLATE_PORT"
-msgstr "Isolate range"
+msgstr "Isolate segmt."
 
 msgid "NODE_ISOLATE_PORT_TTIP"
-msgstr "Clears values outside range"
+msgstr "Clears values outside segment"
 
 # Nodes
 # Output node
@@ -2218,3 +2221,8 @@ msgstr "Map to empty"
 
 msgid "NODE_MAP2EMPTY_PORT_TTIP"
 msgstr "Empty values map to empty, instead of the original wave"
+
+# Clip node
+msgid "NODE_CLIP_TITLE"
+msgstr "CLIP"
+

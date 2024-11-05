@@ -159,6 +159,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://ui/widgets/clip_container.gd"
 }, {
+"base": "WaveNodeComponent",
+"class": "ClipNodeComponent",
+"language": "GDScript",
+"path": "res://classes/node_wave/transforms/clip_node_component.gd"
+}, {
 "base": "Button",
 "class": "ConfigButton",
 "language": "GDScript",
@@ -740,6 +745,7 @@ _global_script_class_icons={
 "ClampFilterWriter": "",
 "ClampNodeComponent": "",
 "ClipContainer": "",
+"ClipNodeComponent": "",
 "ConfigButton": "",
 "ConfigSpinBar": "",
 "CycleButton": "",

@@ -1763,6 +1763,9 @@ msgstr ""
 msgid "NODED_MENU_MAP_WAVE"
 msgstr ""
 
+msgid "NODED_MENU_CLIP"
+msgstr ""
+
 # Common ports
 
 msgid "NODE_OUTPUT_PORT"
@@ -2261,3 +2264,9 @@ msgstr ""
 
 msgid "NODE_MAP2EMPTY_PORT_TTIP"
 msgstr ""
+
+# Clip node
+
+msgid "NODE_CLIP_TITLE"
+msgstr ""
+

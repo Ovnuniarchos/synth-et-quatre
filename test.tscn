@@ -7,9 +7,6 @@ script/source = "extends Node
 FIXME
 TODO:
 	Node-based wave generator
-		Lerp value generator
-		Clamp filter (trim amplitude)
-		Crop filter (trim time)
 		Decay filter
 		Normalize filter
 		Power filter

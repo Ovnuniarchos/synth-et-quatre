@@ -15,7 +15,7 @@ class Sorter:
 enum{
 	OUTPUT,
 	GEN_SINE,GEN_SAW,GEN_PULSE,GEN_TRIANGLE,GEN_NOISE,GEN_RAMP,
-	XFR_MIX,XFR_CLAMP,XFR_MAPR,XFR_MAPW,XFR_CLIP
+	XFR_MIX,XFR_CLAMP,XFR_MAPR,XFR_MAPW,XFR_CLIP,XFR_NORMALIZE
 }
 const MENU:Array=[
 	"unsorted",
@@ -34,6 +34,7 @@ const MENU:Array=[
 		{"option":"NODED_MENU_MAP_RANGE","id":XFR_MAPR},
 		{"option":"NODED_MENU_MAP_WAVE","id":XFR_MAPW},
 		{"option":"NODED_MENU_CLIP","id":XFR_CLIP},
+		{"option":"NODED_MENU_NORMALIZE","id":XFR_NORMALIZE},
 	]}
 ]
 const NODES:Dictionary={
@@ -49,6 +50,7 @@ const NODES:Dictionary={
 	XFR_MAPR:preload("res://ui/wave_designer/node_designer/nodes/transforms/map_range_node.tscn"),
 	XFR_MAPW:preload("res://ui/wave_designer/node_designer/nodes/transforms/map_wave_node.tscn"),
 	XFR_CLIP:preload("res://ui/wave_designer/node_designer/nodes/transforms/clip_node.tscn"),
+	XFR_NORMALIZE:preload("res://ui/wave_designer/node_designer/nodes/transforms/normalize_node.tscn"),
 }
 const NODES_CLASS:Dictionary={
 	OutputNodeComponent.NODE_TYPE:NODES[OUTPUT],

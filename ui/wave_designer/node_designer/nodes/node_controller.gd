@@ -14,6 +14,7 @@ const SLOT_COLORS:Array=[
 
 
 var node:WaveNodeComponent
+
 export (String) var base_title:String setget set_base_title
 
 
@@ -70,6 +71,7 @@ func _notification(n:int)->void:
 func set_base_title(t:String)->void:
 	base_title=t
 	title=tr(t)
+	property_list_changed_notify()
 
 
 func set_size_po2(s:int)->void:

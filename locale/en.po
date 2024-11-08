@@ -1737,6 +1737,9 @@ msgstr "Map wave"
 msgid "NODED_MENU_CLIP"
 msgstr "Clip"
 
+msgid "NODED_MENU_NORMALIZE"
+msgstr "Normalize"
+
 # Common ports
 msgid "NODE_OUTPUT_PORT"
 msgstr "Output"
@@ -2226,3 +2229,13 @@ msgstr "Empty values map to empty, instead of the original wave"
 msgid "NODE_CLIP_TITLE"
 msgstr "CLIP"
 
+
+# Normalize node
+msgid "NODE_NORMALIZE_TITLE"
+msgstr "NORMALIZE"
+
+msgid "NODE_KEEP0_PORT"
+msgstr "Keep 0"
+
+msgid "NODE_KEEP0_PORT_TTIP"
+msgstr "Avoids vertical recentering of the wave"

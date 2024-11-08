@@ -359,6 +359,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://classes/io_modules/wave_components/filters/normalize_writer.gd"
 }, {
+"base": "WaveNodeComponent",
+"class": "NormalizeNodeComponent",
+"language": "GDScript",
+"path": "res://classes/node_wave/transforms/normalize_node_component.gd"
+}, {
 "base": "LineEdit",
 "class": "NumberEdit",
 "language": "GDScript",
@@ -785,6 +790,7 @@ _global_script_class_icons={
 "NormalizeFilter": "",
 "NormalizeFilterReader": "",
 "NormalizeFilterWriter": "",
+"NormalizeNodeComponent": "",
 "NumberEdit": "",
 "NumberedItemList": "",
 "OutputNodeComponent": "",

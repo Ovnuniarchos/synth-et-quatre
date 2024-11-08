@@ -1766,6 +1766,9 @@ msgstr ""
 msgid "NODED_MENU_CLIP"
 msgstr ""
 
+msgid "NODED_MENU_NORMALIZE"
+msgstr ""
+
 # Common ports
 
 msgid "NODE_OUTPUT_PORT"
@@ -2270,3 +2273,13 @@ msgstr ""
 msgid "NODE_CLIP_TITLE"
 msgstr ""
 
+# Normalize node
+
+msgid "NODE_NORMALIZE_TITLE"
+msgstr ""
+
+msgid "NODE_KEEP0_PORT"
+msgstr ""
+
+msgid "NODE_KEEP0_PORT_TTIP"
+msgstr ""

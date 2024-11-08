@@ -22,7 +22,6 @@ func calculate()->Array:
 	var optr:int=fposmod(range_from*size,size)
 	var t:float
 	var mix:float
-	reset_decay()
 	for i in sz:
 		output[optr]=input_values[optr]
 		optr=(optr+1)&size_mask

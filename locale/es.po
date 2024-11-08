@@ -1737,6 +1737,9 @@ msgstr "Mapeo de onda"
 msgid "NODED_MENU_CLIP"
 msgstr "Recorte"
 
+msgid "NODED_MENU_NORMALIZE"
+msgstr "Normalización"
+
 # Common ports
 msgid "NODE_OUTPUT_PORT"
 msgstr "Salida"
@@ -2227,3 +2230,12 @@ msgstr "Hace que los valores vacíos del mapa generen vacíos, en lugar de la on
 msgid "NODE_CLIP_TITLE"
 msgstr "RECORTE"
 
+# Normalize node
+msgid "NODE_NORMALIZE_TITLE"
+msgstr "NORMALIZACIÓN"
+
+msgid "NODE_KEEP0_PORT"
+msgstr "Mantener 0"
+
+msgid "NODE_KEEP0_PORT_TTIP"
+msgstr "Evita recentrar la onda verticalmente"

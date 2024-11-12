@@ -32,12 +32,12 @@ func set_decimals(v:int)->void:
 
 
 func set_negative(v:bool)->void:
-	negative=v
+	negative=v or min_value<0 or max_value<0
 	adjust_length()
 
 
 func adjust_length()->void:
-	max_length=ceil(log(max(abs(max_value),abs(min_value)))/log(10.0))+_decimals+int(_decimals>0)+int(negative)
+	max_length=1+ceil(log(max(abs(max_value),abs(min_value)))/log(10.0))+_decimals+int(_decimals>0)+int(negative)
 	add_constant_override("minimum_spaces",max_length)
 
 

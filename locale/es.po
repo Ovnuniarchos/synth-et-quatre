@@ -2239,3 +2239,10 @@ msgstr "Mantener 0"
 
 msgid "NODE_KEEP0_PORT_TTIP"
 msgstr "Evita recentrar la onda verticalmente"
+
+msgid "NODE_USE_FULL_PORT"
+msgstr "Onda completa"
+
+msgid "NODE_USE_FULL_PORT_TTIP"
+msgstr "Usa toda la onda para calcular los valore máximos/mínimos, en vez de sólo el segmento"
+

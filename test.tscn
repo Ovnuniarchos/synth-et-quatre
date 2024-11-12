@@ -8,7 +8,6 @@ FIXME
 TODO:
 	Node-based wave generator
 		Decay filter
-		Normalize filter
 		Power filter
 		Quantize amplitude/time filter
 	Reset per channel parameters (as a command|button)
@@ -18,14 +17,82 @@ TODO:
 		Range?: MIDI modulation
 
 FUTURE:
-	Refactor to use inner classes instead of dictionaries
+	Refactor to use inner classes instead of dictionaries (only on not performance-critical)
 	Constant-ify error IDs/params
 	Import instruments/waveforms/arpeggios from song
 	Import waveforms from instrument
 \"\"\"
 
+const TIMES:int=10000000
+
+func f_A(x:float)->float:
+	return x-1.0
+
+func f_B(x:float)->float:
+	return x+1.0
+
+func f_C(x:float)->float:
+	return -x
+
+func f_D(x:float)->float:
+	return abs(x)
+
 func _ready()->void:
-	print(INF==INF)
+	var op:int
+	var val:float=0.0
+	var ti:int=OS.get_ticks_usec()
+	var fns:Array=[
+		funcref(self,\"f_A\"),
+		funcref(self,\"f_B\"),
+		funcref(self,\"f_C\"),
+		funcref(self,\"f_D\")
+	]
+	for i in TIMES:
+		op=randi()&3
+		if op==0:
+			val=val-1.0
+		elif op==1:
+			val=val+1.0
+		elif op==2:
+			val=-val
+		else:
+			val=abs(val)
+	print(\"IfChainCode: \",OS.get_ticks_usec()-ti)
+	ti=OS.get_ticks_usec()
+	for i in TIMES:
+		op=randi()&3
+		match op:
+			0: val=val-1.0
+			1: val=val+1.0
+			2: val=-val
+			_: val=abs(val)
+	print(\"MatchCode: \",OS.get_ticks_usec()-ti)
+	ti=OS.get_ticks_usec()
+	for i in TIMES:
+		op=randi()&3
+		if op==0:
+			val=f_A(val)
+		elif op==1:
+			val=f_B(val)
+		elif op==2:
+			val=f_C(val)
+		else:
+			val=f_D(val)
+	print(\"IfChainFunc: \",OS.get_ticks_usec()-ti)
+	ti=OS.get_ticks_usec()
+	for i in TIMES:
+		op=randi()&3
+		match op:
+			0: val=f_A(val)
+			1: val=f_B(val)
+			2: val=f_C(val)
+			_: val=f_D(val)
+	print(\"MatchFunc: \",OS.get_ticks_usec()-ti)
+	ti=OS.get_ticks_usec()
+	for i in TIMES:
+		op=randi()&3
+		val=fns[op].call_func(val)
+	print(\"FuncArray: \",OS.get_ticks_usec()-ti)
 "
 
 [node name="test" type="Node"]

@@ -2283,3 +2283,10 @@ msgstr ""
 
 msgid "NODE_KEEP0_PORT_TTIP"
 msgstr ""
+
+msgid "NODE_USE_FULL_PORT"
+msgstr ""
+
+msgid "NODE_USE_FULL_PORT_TTIP"
+msgstr ""
+

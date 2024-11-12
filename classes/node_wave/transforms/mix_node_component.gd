@@ -61,7 +61,7 @@ func calculate()->Array:
 	var b_in:float
 	var bidi_lerp:bool
 	reset_decay()
-	for i in size:
+	for i in sz:
 		mix=lerp(mix_values[optr],clamp(mix_values[optr],0.0,1.0),clamp_mix_values[optr])
 		a_in=b_values[optr] if is_nan(a_values[optr]) else a_values[optr]
 		b_in=a_values[optr] if is_nan(b_values[optr]) else b_values[optr]
@@ -105,10 +105,9 @@ func calculate()->Array:
 			t=b_in if is_nan(a_in) else a_in
 		if bidi_lerp:
 			t=lerp(t,b_in,mix) if mix>0.0 else lerp(t,a_in,-mix)
-		t=calculate_decay(pow(abs(t),power_values[optr])*sign(t),decay_values[optr],sz)+dc_values[optr]
-		if i<sz and isolate_values[optr]<0.5:
-			output[optr]=t
+		output[optr]=calculate_decay(pow(abs(t),power_values[optr])*sign(t),decay_values[optr],sz)+dc_values[optr]
 		optr=(optr+1)&size_mask
+	fill_out_of_region(sz,optr,a_values,isolate_values)
 	output_valid=true
 	return output
 

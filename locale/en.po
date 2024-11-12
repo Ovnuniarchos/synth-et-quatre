@@ -2239,3 +2239,10 @@ msgstr "Keep 0"
 
 msgid "NODE_KEEP0_PORT_TTIP"
 msgstr "Avoids vertical recentering of the wave"
+
+msgid "NODE_USE_FULL_PORT"
+msgstr "Full wave"
+
+msgid "NODE_USE_FULL_PORT_TTIP"
+msgstr "Uses the entire wave to calculate min/max values, instead of the range"
+

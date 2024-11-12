@@ -1,4 +1,4 @@
-extends GraphNode
+tool extends GraphNode
 class_name NodeController
 
 signal about_to_close(node)

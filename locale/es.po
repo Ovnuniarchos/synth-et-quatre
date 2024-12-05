@@ -2140,6 +2140,24 @@ msgstr "R. sup."
 msgid "NODE_CLAMP_HI_PORT_TTIP"
 msgstr "Nivel de mezcla del limitado superior"
 
+msgid "NODE_CLAMP_HI_MODE_PORT"
+msgstr "M. sup."
+
+msgid "NODE_CLAMP_HI_MODE_PORT_TTIP"
+msgstr "Modo de recorte superior"
+
+msgid "NODE_CLAMP_NONE"
+msgstr "Ninguno"
+
+msgid "NODE_CLAMP_CLAMP"
+msgstr "Recortar"
+
+msgid "NODE_CLAMP_WRAP"
+msgstr "Bucle"
+
+msgid "NODE_CLAMP_BOUNCE"
+msgstr "Rebotar"
+
 msgid "NODE_LEVEL_LO_PORT"
 msgstr "L. inf."
 
@@ -2151,6 +2169,12 @@ msgstr "R. inf."
 
 msgid "NODE_CLAMP_LO_PORT_TTIP"
 msgstr "Nivel de mezcla del limitado inferior"
+
+msgid "NODE_CLAMP_LO_MODE_PORT"
+msgstr "M. inf."
+
+msgid "NODE_CLAMP_LO_MODE_PORT_TTIP"
+msgstr "Modo de recorte inferior"
 
 # Map range node
 msgid "NODE_MAP_RANGE_TITLE"

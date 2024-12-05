@@ -7,9 +7,17 @@ script/source = "extends Node
 FIXME
 TODO:
 	Node-based wave generator
+		Nodes should tell whether their response is cached. This would enable
+			flattening of dependant slots.
+		Output should be the only persistent array. xxx_values should be discarded
+			after calculation.
 		Decay filter
 		Power filter
 		Quantize amplitude/time filter
+		Convolution/frequency filters
+		How to multivalue?
+			N-to-1/1-to-N nodes?
+			Arpeggiator
 	Reset per channel parameters (as a command|button)
 	MIDI input
 		Flag?: MIDI Pitch bend
@@ -23,7 +31,7 @@ FUTURE:
 	Import waveforms from instrument
 \"\"\"
 
-const TIMES:int=10000000
+const TIMES:int=1000000
 
 func f_A(x:float)->float:
 	return x-1.0
@@ -37,16 +45,40 @@ func f_C(x:float)->float:
 func f_D(x:float)->float:
 	return abs(x)
 
-func _ready()->void:
+class A extends Reference:
+	func fn(x:float)->float:
+		return x-1.0
+
+class B extends Reference:
+	func fn(x:float)->float:
+		return x+1.0
+
+class C extends Reference:
+	func fn(x:float)->float:
+		return -x
+
+class D extends Reference:
+	func fn(x:float)->float:
+		return abs(x)
+
+var mode:int=0
+var execs:Array=[
+	funcref(self,\"if_chain_code\"),funcref(self,\"match_code_var\"),funcref(self,\"match_code\"),
+	funcref(self,\"if_chain_func\"),funcref(self,\"match_func_var\"),funcref(self,\"match_func\"),
+	funcref(self,\"funcref_array\"),funcref(self,\"obj_array\"),funcref(self,\"obj_funcref_array\")
+]
+
+func _process(_delta:float)->void:
+	if mode<execs.size():
+		execs[mode].call_func()
+		mode+=1
+	else:
+		set_process(false)
+
+func if_chain_code()->void:
 	var op:int
 	var val:float=0.0
 	var ti:int=OS.get_ticks_usec()
-	var fns:Array=[
-		funcref(self,\"f_A\"),
-		funcref(self,\"f_B\"),
-		funcref(self,\"f_C\"),
-		funcref(self,\"f_D\")
-	]
 	for i in TIMES:
 		op=randi()&3
 		if op==0:
@@ -58,7 +90,11 @@ func _ready()->void:
 		else:
 			val=abs(val)
 	print(\"IfChainCode: \",OS.get_ticks_usec()-ti)
-	ti=OS.get_ticks_usec()
+
+func match_code_var()->void:
+	var op:int
+	var val:float=0.0
+	var ti:int=OS.get_ticks_usec()
 	for i in TIMES:
 		op=randi()&3
 		match op:
@@ -66,8 +102,23 @@ func _ready()->void:
 			1: val=val+1.0
 			2: val=-val
 			_: val=abs(val)
+	print(\"MatchVarCode: \",OS.get_ticks_usec()-ti)
+
+func match_code()->void:
+	var val:float=0.0
+	var ti:int=OS.get_ticks_usec()
+	for i in TIMES:
+		match randi()&3:
+			0: val=val-1.0
+			1: val=val+1.0
+			2: val=-val
+			_: val=abs(val)
 	print(\"MatchCode: \",OS.get_ticks_usec()-ti)
-	ti=OS.get_ticks_usec()
+
+func if_chain_func()->void:
+	var op:int
+	var val:float=0.0
+	var ti:int=OS.get_ticks_usec()
 	for i in TIMES:
 		op=randi()&3
 		if op==0:
@@ -79,7 +130,11 @@ func _ready()->void:
 		else:
 			val=f_D(val)
 	print(\"IfChainFunc: \",OS.get_ticks_usec()-ti)
-	ti=OS.get_ticks_usec()
+
+func match_func_var()->void:
+	var op:int
+	var val:float=0.0
+	var ti:int=OS.get_ticks_usec()
 	for i in TIMES:
 		op=randi()&3
 		match op:
@@ -87,12 +142,57 @@ func _ready()->void:
 			1: val=f_B(val)
 			2: val=f_C(val)
 			_: val=f_D(val)
-	print(\"MatchFunc: \",OS.get_ticks_usec()-ti)
-	ti=OS.get_ticks_usec()
+	print(\"MatchVarFunc: \",OS.get_ticks_usec()-ti)
+
+func match_func()->void:
+	var val:float=0.0
+	var ti:int=OS.get_ticks_usec()
 	for i in TIMES:
-		op=randi()&3
-		val=fns[op].call_func(val)
-	print(\"FuncArray: \",OS.get_ticks_usec()-ti)
+		match randi()&3:
+			0: val=f_A(val)
+			1: val=f_B(val)
+			2: val=f_C(val)
+			_: val=f_D(val)
+	print(\"MatchFunc: \",OS.get_ticks_usec()-ti)
+
+func funcref_array()->void:
+	var fns:Array=[
+		funcref(self,\"f_A\"),
+		funcref(self,\"f_B\"),
+		funcref(self,\"f_C\"),
+		funcref(self,\"f_D\")
+	]
+	var val:float=0.0
+	var ti:int=OS.get_ticks_usec()
+	for i in TIMES:
+		val=fns[randi()&3].call_func(val)
+	print(\"FuncrefArray: \",OS.get_ticks_usec()-ti)
+
+func obj_array()->void:
+	var objs:Array=[
+		A.new(),B.new(),C.new(),D.new()
+	]
+	var val:float=0.0
+	var ti:int=OS.get_ticks_usec()
+	for i in TIMES:
+		val=objs[randi()&3].fn(val)
+	print(\"ObjArray: \",OS.get_ticks_usec()-ti)
+
+func obj_funcref_array()->void:
+	var objs:Array=[
+		A.new(),B.new(),C.new(),D.new()
+	]
+	var fns:Array=[
+		funcref(objs[0],\"fn\"),
+		funcref(objs[1],\"fn\"),
+		funcref(objs[2],\"fn\"),
+		funcref(objs[3],\"fn\"),
+	]
+	var val:float=0.0
+	var ti:int=OS.get_ticks_usec()
+	for i in TIMES:
+		val=fns[randi()&3].call_func(val)
+	print(\"ObjFuncrefArray: \",OS.get_ticks_usec()-ti)
 "
 
 [node name="test" type="Node"]

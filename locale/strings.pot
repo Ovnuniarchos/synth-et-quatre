@@ -2180,6 +2180,24 @@ msgstr ""
 msgid "NODE_CLAMP_HI_PORT_TTIP"
 msgstr ""
 
+msgid "NODE_CLAMP_HI_MODE_PORT"
+msgstr ""
+
+msgid "NODE_CLAMP_HI_MODE_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_CLAMP_NONE"
+msgstr ""
+
+msgid "NODE_CLAMP_CLAMP"
+msgstr ""
+
+msgid "NODE_CLAMP_WRAP"
+msgstr ""
+
+msgid "NODE_CLAMP_BOUNCE"
+msgstr ""
+
 msgid "NODE_LEVEL_LO_PORT"
 msgstr ""
 
@@ -2190,6 +2208,12 @@ msgid "NODE_CLAMP_LO_PORT"
 msgstr ""
 
 msgid "NODE_CLAMP_LO_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_CLAMP_LO_MODE_PORT"
+msgstr ""
+
+msgid "NODE_CLAMP_LO_MODE_PORT_TTIP"
 msgstr ""
 
 # Map range node

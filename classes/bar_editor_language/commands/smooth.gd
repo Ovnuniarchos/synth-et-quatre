@@ -127,7 +127,7 @@ func execute(macro:MacroInfo,opcodes:Array)->LanguageResult:
 			vals_list.resize(0)
 			fetch_values(i,macro.values,1.0,vals_list,weights_list)
 			for j in range(1,size+1):
-				weight=1.0 if is_equal_approx(real_curve,0.0) else ease(range_lerp(j,0.0,size+1.0,0.0,1.0),real_curve)
+				weight=1.0 if is_zero_approx(real_curve) else ease(range_lerp(j,0.0,size+1.0,0.0,1.0),real_curve)
 				fetch_values(i+j,macro.values,weight,vals_list,weights_list)
 				fetch_values(i-j,macro.values,weight,vals_list,weights_list)
 			val_sum=0.0

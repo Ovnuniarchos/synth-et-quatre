@@ -154,6 +154,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://classes/node_wave/transforms/clamp_node_component.gd"
 }, {
+"base": "Reference",
+"class": "ClampNodeConstants",
+"language": "GDScript",
+"path": "res://classes/node_wave/transforms/clamp_node_constants.gd"
+}, {
 "base": "Container",
 "class": "ClipContainer",
 "language": "GDScript",
@@ -749,6 +754,7 @@ _global_script_class_icons={
 "ClampFilterReader": "",
 "ClampFilterWriter": "",
 "ClampNodeComponent": "",
+"ClampNodeConstants": "",
 "ClipContainer": "",
 "ClipNodeComponent": "",
 "ConfigButton": "",
@@ -944,8 +950,7 @@ ui_down={
 
 [locale]
 
-test="es"
-empty_string_marker="<EMPTY>"
+test="en"
 translations=PoolStringArray( "res://locale/en.po", "res://locale/es.po" )
 
 [rendering]

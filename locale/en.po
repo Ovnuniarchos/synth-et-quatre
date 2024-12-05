@@ -1834,10 +1834,10 @@ msgstr "Mix"
 msgid "NODE_MIX_FACTOR_PORT_TTIP"
 msgstr "Mix factor"
 
-msgid "NODE_CLAMP_IN_PORT"
+msgid "NODE_CLAMP_MIX_PORT"
 msgstr "Clamp mix"
 
-msgid "NODE_CLAMP_IN_PORT_TTIP"
+msgid "NODE_CLAMP_MIX_PORT_TTIP"
 msgstr "Limits the mix values to -1.0 - 1.0"
 
 msgid "NODE_ISOLATE_PORT"
@@ -2139,6 +2139,24 @@ msgstr "Clamp upper"
 msgid "NODE_CLAMP_HI_PORT_TTIP"
 msgstr "<EMPTY STRING>"
 
+msgid "NODE_CLAMP_HI_MODE_PORT"
+msgstr "Upper mode"
+
+msgid "NODE_CLAMP_HI_MODE_PORT_TTIP"
+msgstr "<EMPTY STRING>"
+
+msgid "NODE_CLAMP_NONE"
+msgstr "None"
+
+msgid "NODE_CLAMP_CLAMP"
+msgstr "Clamp"
+
+msgid "NODE_CLAMP_WRAP"
+msgstr "Wrap"
+
+msgid "NODE_CLAMP_BOUNCE"
+msgstr "Bounce"
+
 msgid "NODE_LEVEL_LO_PORT"
 msgstr "Lower limit"
 
@@ -2149,6 +2167,12 @@ msgid "NODE_CLAMP_LO_PORT"
 msgstr "Clamp lower"
 
 msgid "NODE_CLAMP_LO_PORT_TTIP"
+msgstr "<EMPTY STRING>"
+
+msgid "NODE_CLAMP_LO_MODE_PORT"
+msgstr "Lower mode"
+
+msgid "NODE_CLAMP_LO_MODE_PORT_TTIP"
 msgstr "<EMPTY STRING>"
 
 # Map range node

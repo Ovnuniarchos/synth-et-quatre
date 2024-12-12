@@ -41,45 +41,48 @@ func clear_array(arr:Array,new_size:int,value:float=0.0)->void:
 func fill_out_of_region(region_sz:int,optr:int,input_values:Array,isolate_values:Array)->void:
 	region_sz=size-region_sz
 	for i in region_sz:
-		if isolate_values[optr]<0.5:
-			output[optr]=input_values[optr]
+		if isolate_values[optr]<0.5: output[optr]=input_values[optr]
 		optr=(optr+1)&size_mask
 
 
-func calculate_slot(result:Array,slot:Array,selected_value:float)->void:
+# calculate_xxx return true if their result was already cached
+func calculate_slot(result:Array,slot:Array,selected_value:float)->bool:
+	var unchanged:bool=not result.empty()
+	for inp in slot:
+		unchanged=unchanged and inp.output_valid
+	if unchanged:
+		return true
 	clear_array(result,size,selected_value if slot.empty() else NAN)
 	if slot.empty():
-		return
+		return false
 	for inp in slot:
 		var in_val:Array=inp.calculate()
-		for optr in size:
-			if not is_nan(in_val[optr]):
-				result[optr]=(0.0 if is_nan(result[optr]) else result[optr])+in_val[optr]
-	for optr in size:
-		if is_nan(result[optr]):
-			result[optr]=selected_value
+		for optr in size: if not is_nan(in_val[optr]): result[optr]=(0.0 if is_nan(result[optr]) else result[optr])+in_val[optr]
+	for optr in size: if is_nan(result[optr]): result[optr]=selected_value
+	return false
 
 
-func calculate_diffuse_boolean_slot(result:Array,slot:Array,selected_value:float)->void:
-	calculate_slot(result,slot,selected_value)
-	for optr in size:
-		result[optr]=clamp(abs(result[optr]),0.0,1.0)
+func calculate_diffuse_boolean_slot(result:Array,slot:Array,selected_value:float)->bool:
+	if calculate_slot(result,slot,selected_value):
+		return true
+	for optr in size: result[optr]=clamp(abs(result[optr]),0.0,1.0)
+	return false
 
 
-func calculate_boolean_slot(result:Array,slot:Array,selected_value:float)->void:
-	calculate_slot(result,slot,selected_value)
-	for optr in size:
-		if not is_nan(result[optr]):
-			result[optr]=float(abs(result[optr])>=0.5)
+func calculate_boolean_slot(result:Array,slot:Array,selected_value:float)->bool:
+	if calculate_slot(result,slot,selected_value):
+		return true
+	for optr in size: if not is_nan(result[optr]): result[optr]=float(abs(result[optr])>=0.5)
+	return false
 
 
-func calculate_option_slot(result:Array,slot:Array,values:Array,selected_value:float)->void:
+func calculate_option_slot(result:Array,slot:Array,values:Array,selected_value:float)->bool:
 	var vsz:float=values.size()
 	selected_value=range_lerp(selected_value,0.0,vsz,0.0,1.0)
-	calculate_slot(result,slot,selected_value)
-	for optr in size:
-		if not is_nan(result[optr]):
-			result[optr]=values[clamp(lerp(0.0,vsz,abs(result[optr])),0.0,vsz-1)]
+	if calculate_slot(result,slot,selected_value):
+		return true
+	for optr in size: if not is_nan(result[optr]): result[optr]=values[clamp(lerp(0.0,vsz,abs(result[optr])),0.0,vsz-1)]
+	return false
 
 
 func reset_decay()->void:
@@ -151,7 +154,5 @@ func are_equal_approx(other:WaveNodeComponent,props:Array)->bool:
 
 func flat_components()->Array:
 	var comps:Dictionary={}
-	for i in inputs:
-		for c in i:
-			comps[c]=true
+	for i in inputs: for c in i: comps[c]=true
 	return comps.keys()

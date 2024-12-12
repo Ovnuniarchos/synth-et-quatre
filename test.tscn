@@ -9,8 +9,6 @@ TODO:
 	Node-based wave generator
 		Nodes should tell whether their response is cached. This would enable
 			flattening of dependant slots.
-		Output should be the only persistent array. xxx_values should be discarded
-			after calculation.
 		Decay filter
 		Power filter
 		Quantize amplitude/time filter

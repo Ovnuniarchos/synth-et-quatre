@@ -49,9 +49,68 @@ func _init()->void:
 	]
 
 
+func set_ppulse_start(value:float)->void:
+	ppulse_start=value
+	ppulse_start_values.resize(0)
+
+
+func set_ppulse_length(value:float)->void:
+	ppulse_length=value
+	ppulse_length_values.resize(0)
+
+
+func set_ppulse_amplitude(value:float)->void:
+	ppulse_amplitude=value
+	ppulse_amplitude_values.resize(0)
+
+
+func set_npulse_start(value:float)->void:
+	npulse_start=value
+	npulse_start_values.resize(0)
+
+
+func set_npulse_length(value:float)->void:
+	npulse_length=value
+	npulse_length_values.resize(0)
+
+
+func set_npulse_amplitude(value:float)->void:
+	npulse_amplitude=value
+	npulse_amplitude_values.resize(0)
+
+
+func set_frequency(value:float)->void:
+	frequency=value
+	frequency_values.resize(0)
+
+
+func set_amplitude(value:float)->void:
+	amplitude=value
+	amplitude_values.resize(0)
+
+
+func set_phi0(value:float)->void:
+	phi0=value
+	phi0_values.resize(0)
+
+
+func set_decay(value:float)->void:
+	decay=value
+	decay_values.resize(0)
+
+
+func set_dc(value:float)->void:
+	dc=value
+	dc_values.resize(0)
+
+
 func calculate()->Array:
 	if output_valid:
 		return output
+	var pps:Array=[]
+	var ppl:Array=[]
+	var nps:Array=[]
+	var npl:Array=[]
 	clear_array(output,size,NAN)
 	calculate_slot(ppulse_start_values,ppulse_start_slot,ppulse_start)
 	calculate_slot(ppulse_length_values,ppulse_length_slot,ppulse_length)
@@ -59,27 +118,33 @@ func calculate()->Array:
 	calculate_slot(npulse_start_values,npulse_start_slot,npulse_start)
 	calculate_slot(npulse_length_values,npulse_length_slot,npulse_length)
 	calculate_slot(npulse_amplitude_values,npulse_amplitude_slot,npulse_amplitude)
-	for i in size:
-		ppulse_start_values[i]=fposmod(ppulse_start_values[i],1.0)
-		ppulse_length_values[i]=clamp(ppulse_length_values[i],0.0,1.0)+ppulse_start_values[i]
-		npulse_start_values[i]=fposmod(npulse_start_values[i],1.0)
-		npulse_length_values[i]=clamp(npulse_length_values[i],0.0,1.0)+npulse_start_values[i]
+	var sz:int=max(1.0,size*range_length)
+	var optr:int=fposmod(range_from*size,size)
+	pps.resize(sz)
+	ppl.resize(sz)
+	nps.resize(sz)
+	npl.resize(sz)
+	for i in sz:
+		pps[i]=fposmod(ppulse_start_values[optr],1.0)
+		ppl[i]=clamp(ppulse_length_values[optr],0.0,1.0)+pps[i]
+		nps[i]=fposmod(npulse_start_values[optr],1.0)
+		npl[i]=clamp(npulse_length_values[optr],0.0,1.0)+nps[i]
+		optr=(optr+1)&size_mask
 	calculate_slot(frequency_values,frequency_slot,frequency)
 	calculate_slot(amplitude_values,amplitude_slot,amplitude)
 	calculate_slot(phi0_values,phi0_slot,phi0)
 	calculate_slot(decay_values,decay_slot,decay)
 	calculate_slot(dc_values,dc_slot,dc)
-	var sz:int=max(1.0,size*range_length)
 	var cycle:float=1.0/sz
 	var phi:float
 	var iphi:float=0.0
-	var optr:int=fposmod(range_from*size,size)
 	var q:float
 	reset_decay()
+	optr=fposmod(range_from*size,size)
 	for i in sz:
 		phi=fposmod((iphi*frequency_values[optr])+phi0_values[optr],1.0)
-		q=float(phi<ppulse_length_values[optr]-1.0 or (phi>=ppulse_start_values[optr] and phi<ppulse_length_values[optr]))*ppulse_amplitude_values[optr]
-		q-=float(phi<npulse_length_values[optr]-1.0 or (phi>=npulse_start_values[optr] and phi<npulse_length_values[optr]))*npulse_amplitude_values[optr]
+		q=float(phi<ppl[i]-1.0 or (phi>=pps[i] and phi<ppl[i]))*ppulse_amplitude_values[optr]
+		q-=float(phi<npl[i]-1.0 or (phi>=nps[i] and phi<npl[i]))*npulse_amplitude_values[optr]
 		q=dc_values[optr]+q*amplitude_values[optr]
 		output[optr]=calculate_decay(q,decay_values[optr],sz)
 		iphi+=cycle

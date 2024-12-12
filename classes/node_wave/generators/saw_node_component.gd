@@ -7,22 +7,22 @@ const NODE_TYPE:String="Saw"
 
 var frequency_slot:Array=[]
 var frequency_values:Array=[]
-var frequency:float=1.0
+var frequency:float=1.0 setget set_frequency
 var amplitude_slot:Array=[]
 var amplitude_values:Array=[]
-var amplitude:float=1.0
+var amplitude:float=1.0 setget set_amplitude
 var phi0_slot:Array=[]
 var phi0_values:Array=[]
-var phi0:float=0.0
+var phi0:float=0.0 setget set_phi0
 var power_slot:Array=[]
 var power_values:Array=[]
-var power:float=1.0
+var power:float=1.0 setget set_power
 var decay_slot:Array=[]
 var decay_values:Array=[]
-var decay:float=0.0
+var decay:float=0.0 setget set_decay
 var dc_slot:Array=[]
 var dc_values:Array=[]
-var dc:float=0.0
+var dc:float=0.0 setget set_dc
 var quarter_slots:Array=[[],[],[],[]]
 var quarter_values:Array=[[],[],[],[]]
 var quarters:Array=SawNodeConstants.get_defaults()
@@ -34,6 +34,41 @@ func _init()->void:
 		frequency_slot,amplitude_slot,phi0_slot,power_slot,decay_slot,dc_slot,
 		quarter_slots[0],quarter_slots[1],quarter_slots[2],quarter_slots[3]
 	]
+
+
+func set_frequency(value:float)->void:
+	frequency=value
+	frequency_values.resize(0)
+
+
+func set_amplitude(value:float)->void:
+	amplitude=value
+	amplitude_values.resize(0)
+
+
+func set_phi0(value:float)->void:
+	phi0=value
+	phi0_values.resize(0)
+
+
+func set_power(value:float)->void:
+	power=value
+	power_values.resize(0)
+
+
+func set_decay(value:float)->void:
+	decay=value
+	decay_values.resize(0)
+
+
+func set_dc(value:float)->void:
+	dc=value
+	dc_values.resize(0)
+
+
+func set_quarter(quarter:int,value:int)->void:
+	quarters[quarter]=value
+	quarter_values[quarter].resize(0)
 
 
 func calculate()->Array:
@@ -49,7 +84,7 @@ func calculate()->Array:
 	for i in 4:
 		calculate_option_slot(
 			quarter_values[i],quarter_slots[i],
-			range(13),
+			SawNodeConstants.AS_ARRAY,
 			quarters[i]
 		)
 	var sz:int=max(1.0,size*range_length)

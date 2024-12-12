@@ -6,7 +6,11 @@ const NODE_TYPE:String="Output"
 
 
 var input_slot:Array=[]
+var input_values:Array=[]
 var clip:float=1.0
+
+var _ti:float=0.0
+var _tic:float=0.0
 
 
 func _init()->void:
@@ -17,9 +21,13 @@ func _init()->void:
 func calculate()->Array:
 	if output_valid:
 		return output
-	calculate_slot(output,input_slot,0.0)
+	var ti:int=OS.get_ticks_usec()
+	calculate_slot(input_values,input_slot,0.0)
 	for i in size:
-		output[i]=clamp(output[i],-clip,clip)
+		output[i]=clamp(input_values[i],-clip,clip)
+	_ti+=OS.get_ticks_usec()-ti
+	_tic+=1.0
+	print(_ti/_tic)
 	output_valid=true
 	return output
 

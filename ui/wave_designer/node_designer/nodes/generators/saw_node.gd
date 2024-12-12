@@ -63,7 +63,7 @@ func _on_DCOffset_value_changed(value:float)->void:
 
 
 func _on_Quarter_item_selected(index:int,quarter:int)->void:
-	node.quarters[quarter]=index
+	node.set_quarter(quarter,index)
 	emit_signal("params_changed",self)
 
 

@@ -10,34 +10,34 @@ var mapping_slot:Array=[]
 var mapping_values:Array=[]
 var lerp_slot:Array=[]
 var lerp_values:Array=[]
-var lerp_value:int=MapWaveNodeConstants.LERP_LINEAR
+var lerp_value:int=MapWaveNodeConstants.LERP_LINEAR setget set_lerp_value
 var extrapolate_slot:Array=[]
 var extrapolate_values:Array=[]
-var extrapolate:int=MapWaveNodeConstants.XERP_WRAP
+var extrapolate:int=MapWaveNodeConstants.XERP_WRAP setget set_extrapolate
 var mix_slot:Array=[]
 var mix_values:Array=[]
-var mix_value:float=1.0
+var mix_value:float=1.0 setget set_mix_value
 var clamp_mix_slot:Array=[]
 var clamp_mix_values:Array=[]
-var clamp_mix_value:float=0.0
+var clamp_mix_value:float=0.0 setget set_clamp_mix_value
 var map_empty_slot:Array=[]
 var map_empty_values:Array=[]
-var map_empty:float=0.0
+var map_empty:float=0.0 setget set_map_empty
 var amplitude_slot:Array=[]
 var amplitude_values:Array=[]
-var amplitude:float=1.0
+var amplitude:float=1.0 setget set_amplitude
 var power_slot:Array=[]
 var power_values:Array=[]
-var power:float=1.0
+var power:float=1.0 setget set_power
 var decay_slot:Array=[]
 var decay_values:Array=[]
-var decay:float=0.0
+var decay:float=0.0 setget set_decay
 var dc_slot:Array=[]
 var dc_values:Array=[]
-var dc:float=0.0
+var dc:float=0.0 setget set_dc
 var isolate_slot:Array=[]
 var isolate_values:Array=[]
-var isolate:float=0.0
+var isolate:float=0.0 setget set_isolate
 
 
 func _init()->void:
@@ -46,6 +46,56 @@ func _init()->void:
 		input_slot,mapping_slot,lerp_slot,extrapolate_slot,mix_slot,clamp_mix_slot,
 		map_empty_slot,amplitude_slot,power_slot,decay_slot,dc_slot,isolate_slot
 	]
+
+
+func set_lerp_value(value:int)->void:
+	lerp_value=value
+	lerp_values.resize(0)
+
+
+func set_extrapolate(value:int)->void:
+	extrapolate=value
+	extrapolate_values.resize(0)
+
+
+func set_mix_value(value:float)->void:
+	mix_value=value
+	mix_values.resize(0)
+
+
+func set_clamp_mix_value(value:float)->void:
+	clamp_mix_value=value
+	clamp_mix_values.resize(0)
+
+
+func set_map_empty(value:float)->void:
+	map_empty=value
+	map_empty_values.resize(0)
+
+
+func set_isolate(value:float)->void:
+	isolate=value
+	isolate_values.resize(0)
+
+
+func set_amplitude(value:float)->void:
+	amplitude=value
+	amplitude_values.resize(0)
+
+
+func set_power(value:float)->void:
+	power=value
+	power_values.resize(0)
+
+
+func set_decay(value:float)->void:
+	decay=value
+	decay_values.resize(0)
+
+
+func set_dc(value:float)->void:
+	dc=value
+	dc_values.resize(0)
 
 
 func calculate_slope(exit:float,prev:float)->float:
@@ -128,6 +178,6 @@ func equals(other:WaveNodeComponent)->bool:
 	if (other as MapWaveNodeComponent)==null:
 		return false
 	return .equals(other) and are_equal_approx(other,[
-		"lerp_value","extrapolate","mix_value","clamp_mix_value","map_empty","isolate",
-		"amplitude","power","decay","dc"
+		"lerp_value","extrapolate","mix_value","clamp_mix_value","map_empty",
+		"amplitude","power","decay","dc","isolate",
 	])

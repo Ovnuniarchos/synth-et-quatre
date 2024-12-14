@@ -6,31 +6,31 @@ const NODE_TYPE:String="Mix"
 
 var a_slot:Array=[]
 var a_values:Array=[]
-var a_value:float=0.0
+var a_value:float=0.0 setget set_a_value
 var b_slot:Array=[]
 var b_values:Array=[]
-var b_value:float=0.0
+var b_value:float=0.0 setget set_b_value
 var mix_slot:Array=[]
 var mix_values:Array=[]
-var mix_value:float=1.0
+var mix_value:float=1.0 setget set_mix_value
 var clamp_mix_slot:Array=[]
 var clamp_mix_values:Array=[]
-var clamp_mix_value:float=0.0
+var clamp_mix_value:float=0.0 setget set_clamp_mix_value
 var op_slot:Array=[]
 var op_values:Array=[]
-var op_value:int=MixNodeConstants.MIX_MIX
+var op_value:int=MixNodeConstants.MIX_MIX setget set_op_value
 var isolate_slot:Array=[]
 var isolate_values:Array=[]
-var isolate:float=0.0
+var isolate:float=0.0 setget set_isolate
 var power_slot:Array=[]
 var power_values:Array=[]
-var power:float=1.0
+var power:float=1.0 setget set_power
 var decay_slot:Array=[]
 var decay_values:Array=[]
-var decay:float=0.0
+var decay:float=0.0 setget set_decay
 var dc_slot:Array=[]
 var dc_values:Array=[]
-var dc:float=0.0
+var dc:float=0.0 setget set_dc
 
 
 func _init()->void:
@@ -38,6 +38,51 @@ func _init()->void:
 	inputs=[
 		a_slot,b_slot,mix_slot,clamp_mix_slot,op_slot,power_slot,decay_slot,dc_slot,isolate_slot
 	]
+
+
+func set_a_value(value:float)->void:
+	a_value=value
+	a_values.resize(0)
+
+
+func set_b_value(value:float)->void:
+	b_value=value
+	b_values.resize(0)
+
+
+func set_mix_value(value:float)->void:
+	mix_value=value
+	mix_values.resize(0)
+
+
+func set_clamp_mix_value(value:float)->void:
+	clamp_mix_value=value
+	clamp_mix_values.resize(0)
+
+
+func set_op_value(value:int)->void:
+	op_value=value
+	op_values.resize(0)
+
+
+func set_isolate(value:float)->void:
+	isolate=value
+	isolate_values.resize(0)
+
+
+func set_power(value:float)->void:
+	power=value
+	power_values.resize(0)
+
+
+func set_decay(value:float)->void:
+	decay=value
+	decay_values.resize(0)
+
+
+func set_dc(value:float)->void:
+	dc=value
+	dc_values.resize(0)
 
 
 func calculate()->Array:

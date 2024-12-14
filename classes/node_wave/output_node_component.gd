@@ -21,13 +21,9 @@ func _init()->void:
 func calculate()->Array:
 	if output_valid:
 		return output
-	var ti:int=OS.get_ticks_usec()
 	calculate_slot(input_values,input_slot,0.0)
 	for i in size:
 		output[i]=clamp(input_values[i],-clip,clip)
-	_ti+=OS.get_ticks_usec()-ti
-	_tic+=1.0
-	print(_ti/_tic)
 	output_valid=true
 	return output
 

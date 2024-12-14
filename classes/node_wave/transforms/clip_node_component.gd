@@ -32,7 +32,4 @@ func calculate()->Array:
 func equals(other:WaveNodeComponent)->bool:
 	if (other as ClampNodeComponent)==null:
 		return false
-	return .equals(other) and are_equal_approx(other,[
-		"level_hi_value","clamp_hi_value","level_lo_value","clamp_lo_value",
-		"mix_value","clamp_mix_value","isolate","amplitude","power","decay","dc"
-	])
+	return .equals(other)

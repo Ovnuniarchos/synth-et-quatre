@@ -47,11 +47,12 @@ func fill_out_of_region(region_sz:int,optr:int,input_values:Array,isolate_values
 
 # calculate_xxx return true if their result was already cached
 func calculate_slot(result:Array,slot:Array,selected_value:float)->bool:
-	var unchanged:bool=not result.empty()
-	for inp in slot:
-		unchanged=unchanged and inp.output_valid
-	if unchanged:
-		return true
+	if output_valid:
+		var unchanged:bool=not result.empty()
+		for inp in slot:
+			unchanged=unchanged and inp.output_valid
+		if unchanged:
+			return true
 	clear_array(result,size,selected_value if slot.empty() else NAN)
 	if slot.empty():
 		return false

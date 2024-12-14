@@ -8,33 +8,73 @@ var input_slot:Array=[]
 var input_values:Array=[]
 var keep_0_slot:Array=[]
 var keep_0_values:Array=[]
-var keep_0:float=1.0
+var keep_0:float=1.0 setget set_keep_0
 var use_full_slot:Array=[]
 var use_full_values:Array=[]
-var use_full:float=1.0
+var use_full:float=1.0 setget set_use_full
 var mix_slot:Array=[]
 var mix_values:Array=[]
-var mix:float=1.0
+var mix:float=1.0 setget set_mix
 var clamp_mix_slot:Array=[]
 var clamp_mix_values:Array=[]
-var clamp_mix:float=1.0
+var clamp_mix:float=1.0 setget set_clamp_mix
 var amplitude_slot:Array=[]
 var amplitude_values:Array=[]
-var amplitude:float=1.0
+var amplitude:float=1.0 setget set_amplitude
 var power_slot:Array=[]
 var power_values:Array=[]
-var power:float=1.0
+var power:float=1.0 setget set_power
 var decay_slot:Array=[]
 var decay_values:Array=[]
-var decay:float=0.0
+var decay:float=0.0 setget set_decay
 var isolate_slot:Array=[]
 var isolate_values:Array=[]
-var isolate:float=1.0
+var isolate:float=1.0 setget set_isolate
 
 
 func _init()->void:
 	._init()
 	inputs=[input_slot,keep_0_slot,use_full_slot,mix_slot,clamp_mix_slot,amplitude_slot,power_slot,decay_slot,isolate_slot]
+
+
+func set_keep_0(value:float)->void:
+	keep_0=value
+	keep_0_values.resize(0)
+
+
+func set_use_full(value:float)->void:
+	use_full=value
+	use_full_values.resize(0)
+
+
+func set_mix(value:float)->void:
+	mix=value
+	mix_values.resize(0)
+
+
+func set_clamp_mix(value:float)->void:
+	clamp_mix=value
+	clamp_mix_values.resize(0)
+
+
+func set_amplitude(value:float)->void:
+	amplitude=value
+	amplitude_values.resize(0)
+
+
+func set_power(value:float)->void:
+	power=value
+	power_values.resize(0)
+
+
+func set_decay(value:float)->void:
+	decay=value
+	decay_values.resize(0)
+
+
+func set_isolate(value:float)->void:
+	isolate=value
+	isolate_values.resize(0)
 
 
 func calculate()->Array:
@@ -102,6 +142,5 @@ func equals(other:WaveNodeComponent)->bool:
 	if (other as ClampNodeComponent)==null:
 		return false
 	return .equals(other) and are_equal_approx(other,[
-		"level_hi_value","clamp_hi_value","level_lo_value","clamp_lo_value",
-		"mix_value","clamp_mix_value","isolate","amplitude","power","decay","dc"
+		"keep_0","use_full","mix","clamp_mix","amplitude","power","decay","isolate"
 	])

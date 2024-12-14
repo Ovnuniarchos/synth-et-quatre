@@ -8,37 +8,37 @@ var input_slot:Array=[]
 var input_values:Array=[]
 var min_in_slot:Array=[]
 var min_in_values:Array=[]
-var min_in_value:float=-1.0
+var min_in_value:float=-1.0 setget set_min_in_value
 var max_in_slot:Array=[]
 var max_in_values:Array=[]
-var max_in_value:float=1.0
+var max_in_value:float=1.0 setget set_max_in_value
 var min_out_slot:Array=[]
 var min_out_values:Array=[]
-var min_out_value:float=-1.0
+var min_out_value:float=-1.0 setget set_min_out_value
 var max_out_slot:Array=[]
 var max_out_values:Array=[]
-var max_out_value:float=1.0
+var max_out_value:float=1.0 setget set_max_out_value
 var mix_slot:Array=[]
 var mix_values:Array=[]
-var mix_value:float=1.0
+var mix_value:float=1.0 setget set_mix_value
 var clamp_mix_slot:Array=[]
 var clamp_mix_values:Array=[]
-var clamp_mix_value:float=0.0
+var clamp_mix_value:float=0.0 setget set_clamp_mix_value
 var isolate_slot:Array=[]
 var isolate_values:Array=[]
-var isolate:float=0.0
+var isolate:float=0.0 setget set_isolate
 var amplitude_slot:Array=[]
 var amplitude_values:Array=[]
-var amplitude:float=1.0
+var amplitude:float=1.0 setget set_amplitude
 var power_slot:Array=[]
 var power_values:Array=[]
-var power:float=1.0
+var power:float=1.0 setget set_power
 var decay_slot:Array=[]
 var decay_values:Array=[]
-var decay:float=0.0
+var decay:float=0.0 setget set_decay
 var dc_slot:Array=[]
 var dc_values:Array=[]
-var dc:float=0.0
+var dc:float=0.0 setget set_dc
 
 
 func _init()->void:
@@ -47,6 +47,61 @@ func _init()->void:
 		input_slot,min_in_slot,max_in_slot,min_out_slot,max_out_slot,
 		mix_slot,clamp_mix_slot,amplitude_slot,power_slot,decay_slot,dc_slot,isolate_slot
 	]
+
+
+func set_min_in_value(value:float)->void:
+	min_in_value=value
+	min_in_values.resize(0)
+
+
+func set_max_in_value(value:float)->void:
+	max_in_value=value
+	max_in_values.resize(0)
+
+
+func set_min_out_value(value:float)->void:
+	min_out_value=value
+	min_out_values.resize(0)
+
+
+func set_max_out_value(value:float)->void:
+	max_out_value=value
+	max_out_values.resize(0)
+
+
+func set_mix_value(value:float)->void:
+	mix_value=value
+	mix_values.resize(0)
+
+
+func set_clamp_mix_value(value:float)->void:
+	clamp_mix_value=value
+	clamp_mix_values.resize(0)
+
+
+func set_isolate(value:float)->void:
+	isolate=value
+	isolate_values.resize(0)
+
+
+func set_amplitude(value:float)->void:
+	amplitude=value
+	amplitude_values.resize(0)
+
+
+func set_power(value:float)->void:
+	power=value
+	power_values.resize(0)
+
+
+func set_decay(value:float)->void:
+	decay=value
+	decay_values.resize(0)
+
+
+func set_dc(value:float)->void:
+	dc=value
+	dc_values.resize(0)
 
 
 func calculate()->Array:

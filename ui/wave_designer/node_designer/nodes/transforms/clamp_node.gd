@@ -89,7 +89,7 @@ func _on_Mix_value_changed(value:float)->void:
 
 
 func _on_ClampMix_value_changed(value:float)->void:
-	node.clamp_mix=value
+	node.clamp_mix_value=value
 	emit_signal("params_changed",self)
 
 

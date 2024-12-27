@@ -101,9 +101,9 @@ func _on_Designer_connections_changed(connections:Array)->void:
 		return
 	for comp in wave.components:
 		for inp in comp.inputs:
-			inp.clear()
+			inp[WaveNodeComponent.SLOT_IN].clear()
 	for conn in connections:
-		conn.to.inputs[conn.to_port].append(conn.from)
+		conn.to.inputs[conn.to_port][WaveNodeComponent.SLOT_IN].append(conn.from)
 	calculate()
 
 

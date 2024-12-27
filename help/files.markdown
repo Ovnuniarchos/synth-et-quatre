@@ -90,6 +90,7 @@
 		<options>
 			<SampleWave/>
 			<SynthWave/>
+			<NodeWave/>
 		</options>
 	</foreach:Wave>
 </WaveList>
@@ -252,6 +253,9 @@
 	<ComponentHeader/>
 	<Steps type="uint8"/>
 </QuantizeFilter>
+
+<NodeWave>
+</NodeWave>
 
 =================================
 

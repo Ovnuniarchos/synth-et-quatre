@@ -10,7 +10,9 @@ var input_values:Array=[]
 
 func _init()->void:
 	._init()
-	inputs=[input_slot]
+	inputs=[
+		{SLOT_ID:SlotIds.SLOT_INPUT,SLOT_IN:input_slot}
+	]
 
 
 func calculate()->Array:

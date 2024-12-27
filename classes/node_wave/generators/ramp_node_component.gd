@@ -10,11 +10,6 @@ var ramp_to:float=1.0
 var curve:float=1.0
 
 
-func _init()->void:
-	._init()
-	inputs=[]
-
-
 func calculate()->Array:
 	if output_valid:
 		return output

@@ -43,8 +43,18 @@ var isolate:float=0.0 setget set_isolate
 func _init()->void:
 	._init()
 	inputs=[
-		input_slot,mapping_slot,lerp_slot,extrapolate_slot,mix_slot,clamp_mix_slot,
-		map_empty_slot,amplitude_slot,power_slot,decay_slot,dc_slot,isolate_slot
+		{SLOT_ID:SlotIds.SLOT_INPUT,SLOT_IN:input_slot},
+		{SLOT_ID:SlotIds.SLOT_MAPPING,SLOT_IN:mapping_slot},
+		{SLOT_ID:SlotIds.SLOT_LERP,SLOT_IN:lerp_slot},
+		{SLOT_ID:SlotIds.SLOT_EXTRAPOLATE,SLOT_IN:extrapolate_slot},
+		{SLOT_ID:SlotIds.SLOT_MIX,SLOT_IN:mix_slot},
+		{SLOT_ID:SlotIds.SLOT_CLAMP_MIX,SLOT_IN:clamp_mix_slot},
+		{SLOT_ID:SlotIds.SLOT_MAP_EMPTY,SLOT_IN:map_empty_slot},
+		{SLOT_ID:SlotIds.SLOT_AMPLITUDE,SLOT_IN:amplitude_slot},
+		{SLOT_ID:SlotIds.SLOT_POWER,SLOT_IN:power_slot},
+		{SLOT_ID:SlotIds.SLOT_DECAY,SLOT_IN:decay_slot},
+		{SLOT_ID:SlotIds.SLOT_DC,SLOT_IN:dc_slot},
+		{SLOT_ID:SlotIds.SLOT_ISOLATE,SLOT_IN:isolate_slot}
 	]
 
 

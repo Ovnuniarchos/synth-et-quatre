@@ -7,8 +7,6 @@ script/source = "extends Node
 FIXME
 TODO:
 	Node-based wave generator
-		Nodes should tell whether their response is cached. This would enable
-			flattening of dependant slots.
 		Decay filter
 		Power filter
 		Quantize amplitude/time filter
@@ -29,7 +27,7 @@ FUTURE:
 	Import waveforms from instrument
 \"\"\"
 
-const TIMES:int=1000000
+\"\"\"const TIMES:int=1000000
 
 func f_A(x:float)->float:
 	return x-1.0
@@ -191,6 +189,18 @@ func obj_funcref_array()->void:
 	for i in TIMES:
 		val=fns[randi()&3].call_func(val)
 	print(\"ObjFuncrefArray: \",OS.get_ticks_usec()-ti)
+\"\"\"
+
+func _ready()->void:
+	var r:RegEx=RegEx.new()
+	r.compile(\"const (SLOT_\\\\w+)\")
+	var s:SlotIds=SlotIds.new()
+	var used:Dictionary={}
+	for m in r.search_all(s.get_script().source_code):
+		if not used.has(s.get(m.strings[1])):
+			used[s.get(m.strings[1])]=m.strings[1]
+		else:
+			print(m.strings[1])
 "
 
 [node name="test" type="Node"]

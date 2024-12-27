@@ -78,3 +78,9 @@ func add_component(node:WaveNodeComponent)->void:
 
 func remove_component(node:WaveNodeComponent)->void:
 	components.erase(node)
+
+
+func find_component(node:WaveNodeComponent)->int:
+	if node==output:
+		return 0
+	return components.find(node)+1

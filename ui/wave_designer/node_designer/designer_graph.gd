@@ -150,7 +150,7 @@ func regen_editor_nodes(wave:NodeWave)->void:
 	for node in nodes:
 		var to_node:String=nodes[node].name
 		for input_slot in node.inputs.size():
-			for connection in node.inputs[input_slot]:
+			for connection in node.inputs[input_slot][WaveNodeComponent.SLOT_IN]:
 				connect_node(nodes[connection].name,0,to_node,input_slot)
 	update_connection_graph()
 	set_block_signals(false)

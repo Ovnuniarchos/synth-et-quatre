@@ -50,8 +50,20 @@ var dc:float=0.0 setget set_dc
 func _init()->void:
 	._init()
 	inputs=[
-		input_slot,level_hi_slot,clamp_hi_slot,mode_hi_slot,level_lo_slot,clamp_lo_slot,mode_lo_slot,
-		mix_slot,clamp_mix_slot,amplitude_slot,power_slot,decay_slot,dc_slot,isolate_slot
+		{SLOT_ID:SlotIds.SLOT_INPUT,SLOT_IN:input_slot},
+		{SLOT_ID:SlotIds.SLOT_LEVEL_HI,SLOT_IN:level_hi_slot},
+		{SLOT_ID:SlotIds.SLOT_CLAMP_HI,SLOT_IN:clamp_hi_slot},
+		{SLOT_ID:SlotIds.SLOT_MODE_HI,SLOT_IN:mode_hi_slot},
+		{SLOT_ID:SlotIds.SLOT_LEVEL_LO,SLOT_IN:level_lo_slot},
+		{SLOT_ID:SlotIds.SLOT_CLAMP_LO,SLOT_IN:clamp_lo_slot},
+		{SLOT_ID:SlotIds.SLOT_MODE_LO,SLOT_IN:mode_lo_slot},
+		{SLOT_ID:SlotIds.SLOT_MIX,SLOT_IN:mix_slot},
+		{SLOT_ID:SlotIds.SLOT_CLAMP_MIX,SLOT_IN:clamp_mix_slot},
+		{SLOT_ID:SlotIds.SLOT_AMPLITUDE,SLOT_IN:amplitude_slot},
+		{SLOT_ID:SlotIds.SLOT_POWER,SLOT_IN:power_slot},
+		{SLOT_ID:SlotIds.SLOT_DECAY,SLOT_IN:decay_slot},
+		{SLOT_ID:SlotIds.SLOT_DC,SLOT_IN:dc_slot},
+		{SLOT_ID:SlotIds.SLOT_ISOLATE,SLOT_IN:isolate_slot}
 	]
 
 

@@ -39,8 +39,15 @@ var randomness:float=1.0 setget set_randomness
 func _init()->void:
 	._init()
 	inputs=[
-		amplitude_slot,decay_slot,power_slot,dc_slot,octaves_slot,frequency_slot,
-		persistence_slot,lacunarity_slot,randomness_slot
+		{SLOT_ID:SlotIds.SLOT_AMPLITUDE,SLOT_IN:amplitude_slot},
+		{SLOT_ID:SlotIds.SLOT_DECAY,SLOT_IN:decay_slot},
+		{SLOT_ID:SlotIds.SLOT_POWER,SLOT_IN:power_slot},
+		{SLOT_ID:SlotIds.SLOT_DC,SLOT_IN:dc_slot},
+		{SLOT_ID:SlotIds.SLOT_OCTAVES,SLOT_IN:octaves_slot},
+		{SLOT_ID:SlotIds.SLOT_FREQUENCY,SLOT_IN:frequency_slot},
+		{SLOT_ID:SlotIds.SLOT_PERSISTENCE,SLOT_IN:persistence_slot},
+		{SLOT_ID:SlotIds.SLOT_LACUNARITY,SLOT_IN:lacunarity_slot},
+		{SLOT_ID:SlotIds.SLOT_RANDOMNESS,SLOT_IN:randomness_slot}
 	]
 
 

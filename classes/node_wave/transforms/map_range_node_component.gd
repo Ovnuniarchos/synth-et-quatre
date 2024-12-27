@@ -44,8 +44,18 @@ var dc:float=0.0 setget set_dc
 func _init()->void:
 	._init()
 	inputs=[
-		input_slot,min_in_slot,max_in_slot,min_out_slot,max_out_slot,
-		mix_slot,clamp_mix_slot,amplitude_slot,power_slot,decay_slot,dc_slot,isolate_slot
+		{SLOT_ID:SlotIds.SLOT_INPUT,SLOT_IN:input_slot},
+		{SLOT_ID:SlotIds.SLOT_MIN_IN,SLOT_IN:min_in_slot},
+		{SLOT_ID:SlotIds.SLOT_MAX_IN,SLOT_IN:max_in_slot},
+		{SLOT_ID:SlotIds.SLOT_MIN_OUT,SLOT_IN:min_out_slot},
+		{SLOT_ID:SlotIds.SLOT_MAX_OUT,SLOT_IN:max_out_slot},
+		{SLOT_ID:SlotIds.SLOT_MIX,SLOT_IN:mix_slot},
+		{SLOT_ID:SlotIds.SLOT_CLAMP_MIX,SLOT_IN:clamp_mix_slot},
+		{SLOT_ID:SlotIds.SLOT_AMPLITUDE,SLOT_IN:amplitude_slot},
+		{SLOT_ID:SlotIds.SLOT_POWER,SLOT_IN:power_slot},
+		{SLOT_ID:SlotIds.SLOT_DECAY,SLOT_IN:decay_slot},
+		{SLOT_ID:SlotIds.SLOT_DC,SLOT_IN:dc_slot},
+		{SLOT_ID:SlotIds.SLOT_ISOLATE,SLOT_IN:isolate_slot}
 	]
 
 

@@ -31,8 +31,16 @@ var quarters:Array=SawNodeConstants.get_defaults()
 func _init()->void:
 	._init()
 	inputs=[
-		frequency_slot,amplitude_slot,phi0_slot,power_slot,decay_slot,dc_slot,
-		quarter_slots[0],quarter_slots[1],quarter_slots[2],quarter_slots[3]
+		{SLOT_ID:SlotIds.SLOT_FREQUENCY,SLOT_IN:frequency_slot},
+		{SLOT_ID:SlotIds.SLOT_AMPLITUDE,SLOT_IN:amplitude_slot},
+		{SLOT_ID:SlotIds.SLOT_PHI0,SLOT_IN:phi0_slot},
+		{SLOT_ID:SlotIds.SLOT_POWER,SLOT_IN:power_slot},
+		{SLOT_ID:SlotIds.SLOT_DECAY,SLOT_IN:decay_slot},
+		{SLOT_ID:SlotIds.SLOT_DC,SLOT_IN:dc_slot},
+		{SLOT_ID:SlotIds.SLOT_QUARTER0,SLOT_IN:quarter_slots[0]},
+		{SLOT_ID:SlotIds.SLOT_QUARTER1,SLOT_IN:quarter_slots[1]},
+		{SLOT_ID:SlotIds.SLOT_QUARTER2,SLOT_IN:quarter_slots[2]},
+		{SLOT_ID:SlotIds.SLOT_QUARTER3,SLOT_IN:quarter_slots[3]}
 	]
 
 

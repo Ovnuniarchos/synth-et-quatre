@@ -2,6 +2,10 @@ extends Reference
 class_name WaveNodeComponent
 
 
+const SLOT_ID:String="id"
+const SLOT_IN:String="in"
+
+
 var viz_rect:Rect2
 var size_po2:int setget set_size_po2
 var size:int
@@ -106,14 +110,14 @@ func invalidate()->void:
 
 
 func connect_node(from:WaveNodeComponent,to:int)->void:
-	if to>-1 and to<inputs.size() and not from in inputs[to]:
-		inputs[to].append(from)
+	if to>-1 and to<inputs.size() and not from in inputs[to][SLOT_IN]:
+		inputs[to][SLOT_IN].append(from)
 		output_valid=false
 
 
 func disconnect_node(from:WaveNodeComponent,to:int)->void:
-	if to>-1 and to<inputs.size() and from in inputs[to]:
-		inputs[to].erase(from)
+	if to>-1 and to<inputs.size() and from in inputs[to][SLOT_IN]:
+		inputs[to][SLOT_IN].erase(from)
 		output_valid=false
 
 
@@ -121,11 +125,20 @@ func equals(other:WaveNodeComponent)->bool:
 	if not (is_equal_approx(range_from,other.range_from)\
 		and is_equal_approx(range_length,other.range_length)):
 		return false
+	if inputs.size()!=other.inputs.size():
+		return false
 	for i in inputs.size():
-		if other.inputs[i].size()!=inputs[i].size():
+		if inputs[i][SLOT_ID]!=other.inputs[i][SLOT_ID]:
 			return false
-		for j in inputs[i].size():
-			if not other.inputs[i][j].equals(inputs[i][j]):
+	var this_slot:Array
+	var other_slot:Array
+	for i in inputs.size():
+		this_slot=inputs[i][SLOT_IN]
+		other_slot=other.inputs[i][SLOT_IN]
+		if this_slot.size()!=other_slot.size():
+			return false
+		for j in this_slot.size():
+			if not this_slot[j].equals(other_slot[j]):
 				return false
 	return true
 
@@ -152,8 +165,3 @@ func are_equal_approx(other:WaveNodeComponent,props:Array)->bool:
 					or (t==TYPE_REAL and not is_equal_approx(a[i],b[i])):
 					return false
 	return true
-
-func flat_components()->Array:
-	var comps:Dictionary={}
-	for i in inputs: for c in i: comps[c]=true
-	return comps.keys()

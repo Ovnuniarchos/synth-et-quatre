@@ -43,9 +43,17 @@ var dc:float=0.0
 func _init()->void:
 	._init()
 	inputs=[
-		frequency_slot,amplitude_slot,phi0_slot,decay_slot,dc_slot,
-		ppulse_start_slot,ppulse_length_slot,ppulse_amplitude_slot,
-		npulse_start_slot,npulse_length_slot,npulse_amplitude_slot
+		{SLOT_ID:SlotIds.SLOT_FREQUENCY,SLOT_IN:frequency_slot},
+		{SLOT_ID:SlotIds.SLOT_AMPLITUDE,SLOT_IN:amplitude_slot},
+		{SLOT_ID:SlotIds.SLOT_PHI0,SLOT_IN:phi0_slot},
+		{SLOT_ID:SlotIds.SLOT_DECAY,SLOT_IN:decay_slot},
+		{SLOT_ID:SlotIds.SLOT_DC,SLOT_IN:dc_slot},
+		{SLOT_ID:SlotIds.SLOT_POS_PULSE_START,SLOT_IN:ppulse_start_slot},
+		{SLOT_ID:SlotIds.SLOT_POS_PULSE_LENGTH,SLOT_IN:ppulse_length_slot},
+		{SLOT_ID:SlotIds.SLOT_POS_PULSE_AMPLITUDE,SLOT_IN:ppulse_amplitude_slot},
+		{SLOT_ID:SlotIds.SLOT_NEG_PULSE_START,SLOT_IN:npulse_start_slot},
+		{SLOT_ID:SlotIds.SLOT_NEG_PULSE_LENGTH,SLOT_IN:npulse_length_slot},
+		{SLOT_ID:SlotIds.SLOT_NEG_PULSE_AMPLITUDE,SLOT_IN:npulse_amplitude_slot}
 	]
 
 

@@ -34,7 +34,17 @@ var isolate:float=1.0 setget set_isolate
 
 func _init()->void:
 	._init()
-	inputs=[input_slot,keep_0_slot,use_full_slot,mix_slot,clamp_mix_slot,amplitude_slot,power_slot,decay_slot,isolate_slot]
+	inputs=[
+		{SLOT_ID:SlotIds.SLOT_INPUT,SLOT_IN:input_slot},
+		{SLOT_ID:SlotIds.SLOT_KEEP_0,SLOT_IN:keep_0_slot},
+		{SLOT_ID:SlotIds.SLOT_USE_FULL_WAVE,SLOT_IN:use_full_slot},
+		{SLOT_ID:SlotIds.SLOT_MIX,SLOT_IN:mix_slot},
+		{SLOT_ID:SlotIds.SLOT_CLAMP_MIX,SLOT_IN:clamp_mix_slot},
+		{SLOT_ID:SlotIds.SLOT_AMPLITUDE,SLOT_IN:amplitude_slot},
+		{SLOT_ID:SlotIds.SLOT_POWER,SLOT_IN:power_slot},
+		{SLOT_ID:SlotIds.SLOT_DECAY,SLOT_IN:decay_slot},
+		{SLOT_ID:SlotIds.SLOT_ISOLATE,SLOT_IN:isolate_slot}
+	]
 
 
 func set_keep_0(value:float)->void:

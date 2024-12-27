@@ -9,13 +9,12 @@ var input_slot:Array=[]
 var input_values:Array=[]
 var clip:float=1.0
 
-var _ti:float=0.0
-var _tic:float=0.0
-
 
 func _init()->void:
 	._init()
-	inputs=[input_slot]
+	inputs=[
+		{SLOT_ID:SlotIds.SLOT_INPUT,SLOT_IN:input_slot}
+	]
 
 
 func calculate()->Array:

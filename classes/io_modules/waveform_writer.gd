@@ -21,6 +21,8 @@ func serialize(out:ChunkedFile,wave:Waveform)->FileResult:
 		fr=SynthWaveWriter.new().serialize(out,wave)
 	elif wave is SampleWave:
 		fr=SampleWaveWriter.new().serialize(out,wave)
+	elif wave is NodeWave:
+		fr=NodeWaveWriter.new().serialize(out,wave)
 	else:
 		fr=FileResult.new(FileResult.ERR_INVALID_WAVE_TYPE,{
 			FileResult.ERRV_TYPE:wave.get_class(),

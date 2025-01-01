@@ -146,7 +146,7 @@ func _on_files_selected(paths:PoolStringArray):
 	var res:FileResult=null
 	for path in paths:
 		res=WaveformReader.new().read(path)
-		if res.has_error:
+		if res.has_error():
 			ALERT.alert(res.get_message())
 			print(res.get_message())
 			break

@@ -1651,6 +1651,9 @@ msgstr ""
 msgid "ERR_INVALID_WAVE_TYPE"
 msgstr ""
 
+msgid "ERR_INVALID_INPUT_SLOT"
+msgstr ""
+
 msgid "ERR_INVALID_MACRO"
 msgstr ""
 

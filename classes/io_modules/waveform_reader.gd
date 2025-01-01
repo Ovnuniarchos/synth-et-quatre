@@ -29,6 +29,8 @@ func deserialize(inf:ChunkedFile,header:Dictionary)->FileResult:
 			return SynthWaveReader.new().deserialize(inf,header)
 		SampleWaveReader.CHUNK_ID:
 			return SampleWaveReader.new().deserialize(inf,header)
+		NodeWaveReader.CHUNK_ID:
+			return NodeWaveReader.new().deserialize(inf,header)
 	return FileResult.new(FileResult.ERR_INVALID_WAVE_TYPE,{
 		FileResult.ERRV_TYPE:header[ChunkedFile.CHUNK_ID],
 		FileResult.ERRV_FILE:inf.get_path()

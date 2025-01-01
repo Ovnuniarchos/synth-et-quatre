@@ -165,3 +165,10 @@ func are_equal_approx(other:WaveNodeComponent,props:Array)->bool:
 					or (t==TYPE_REAL and not is_equal_approx(a[i],b[i])):
 					return false
 	return true
+
+
+func get_slot(slot_id:String)->Dictionary:
+	for i in inputs:
+		if i[SLOT_ID]==slot_id:
+			return i
+	return {}

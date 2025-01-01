@@ -190,17 +190,6 @@ func obj_funcref_array()->void:
 		val=fns[randi()&3].call_func(val)
 	print(\"ObjFuncrefArray: \",OS.get_ticks_usec()-ti)
 \"\"\"
-
-func _ready()->void:
-	var r:RegEx=RegEx.new()
-	r.compile(\"const (SLOT_\\\\w+)\")
-	var s:SlotIds=SlotIds.new()
-	var used:Dictionary={}
-	for m in r.search_all(s.get_script().source_code):
-		if not used.has(s.get(m.strings[1])):
-			used[s.get(m.strings[1])]=m.strings[1]
-		else:
-			print(m.strings[1])
 "
 
 [node name="test" type="Node"]

@@ -8,6 +8,18 @@ func _init()->void:
 func set_parameters()->void:
 	if not is_node_ready():
 		yield(self,"ready")
+	$Seed.set_value(node.noise_seed)
+	$Amplitude.set_value(node.amplitude)
+	$Decay.set_value(node.decay)
+	$Power.set_value(node.power)
+	$DCOffset.set_value(node.dc)
+	$Octaves.set_value(node.octaves)
+	$Frequency.set_value(node.frequency)
+	$Persistence.set_value(node.persistence)
+	$Lacunarity.set_value(node.lacunarity)
+	$Randomness.set_value(node.randomness)
+	$RangeFrom.set_value(node.range_from)
+	$RangeLength.set_value(node.range_length)
 
 
 func _on_Seed_value_changed(value:float)->void:

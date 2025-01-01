@@ -255,7 +255,80 @@
 </QuantizeFilter>
 
 <NodeWave>
+	<ChunkHeader id="nODW"/>
+	<SizeLog2 type="uint8"/>
+	<Name type="string"/>
+	<NodeCount type="uint16"/><!-- Does not include the OutputNode -->
+	<OutputNode/>
+	<foreach:Node>
+		<options>
+			<NoiseNode/>
+			<PulseNode/>
+		</options>
+	</foreach:Node>
 </NodeWave>
+
+<OutputNode>
+	<ChunkHeader id="oUTN"/>
+	<GraphPositions/>
+	<ClipLevel type="float"/>
+	<Connections/>
+</OutputNode>
+
+<NoiseNode>
+	<ChunkHeader id="nOIN"/>
+	<GraphPositions/>
+	<RangeFrom type="float"/>
+	<RangeLength type="float"/>
+	<Seed type="uint32=value+0x80000000"/>
+	<Amplitude type="float"/>
+	<Decay type="float"/>
+	<Power type="float"/>
+	<DC type="float"/>
+	<Octaves type="uint8"/>
+	<Frequency type="float"/>
+	<Persistence type="float"/>
+	<Lacunarity type="float"/>
+	<Randomness type="float"/>
+	<Connections/>
+</NoiseNode>
+
+<PulseNode>
+	<ChunkHeader id="pULN"/>
+	<GraphPositions/>
+	<RangeFrom type="float"/>
+	<RangeLength type="float"/>
+	<PositivePulseStart type="float"/>
+	<PositivePulseLength type="float"/>
+	<PositivePulseAmplitude type="float"/>
+	<NegativePulseStart type="float"/>
+	<NegativePulseLength type="float"/>
+	<NegativePulseAmplitude type="float"/>
+	<Frequency type="float"/>
+	<Amplitude type="float"/>
+	<PhaseDelta type="float"/>
+	<Decay type="float"/>
+	<DC type="float"/>
+	<Connections/>
+</PulseNode>
+
+<Connections>
+	<InputsConnectedCount type="uint16"/>
+	<foreach:InputConnected>
+		<SlotId type="char(4)"/>
+		<ConnectionCount type="uint16"/>
+		<foreach:Connection>
+			<ConnectedTo type="unit16"/>
+		</foreach:Connection>
+	</foreach:InputConnected>
+</Connections>
+
+<GraphPositions>
+	<OutputNodeX type="float"/>
+	<OutputNodeY type="float"/>
+	<OutputNodeWidth type="float"/>
+	<OutputNodeHeight type="float"/>
+</GraphPositions>
 
 =================================
 

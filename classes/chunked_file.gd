@@ -70,6 +70,18 @@ func store_ascii(string:String,length:int=4)->void:
 	store_buffer(t1)
 
 
+func get_signed_16()->int:
+	var v:int=get_16()
+	v=v if v<0x8000 else v|-0x10000
+	return v
+
+
+func get_signed_32()->int:
+	var v:int=get_32()
+	v=v if v<0x80000000 else v|-0x100000000
+	return v
+
+
 func get_chunk_header()->Dictionary:
 	var pos:int=get_position()
 	var hdr:Dictionary={CHUNK_POSITION:pos,CHUNK_ID:get_ascii(4),CHUNK_VERSION:get_16(),CHUNK_NEXT:get_64()}
@@ -78,12 +90,6 @@ func get_chunk_header()->Dictionary:
 		hdr={CHUNK_POSITION:pos,CHUNK_ID:get_ascii(4),CHUNK_VERSION:0,CHUNK_NEXT:get_64()}
 		seek(pos+14)
 	return hdr
-
-
-func get_signed_16()->int:
-	var v:int=get_16()
-	v=v if v<0x8000 else v|-65536
-	return v
 
 
 func is_chunk_valid(hdr:Dictionary,id:String,version:int)->bool:

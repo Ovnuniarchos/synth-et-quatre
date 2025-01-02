@@ -6,6 +6,16 @@ var readers:Dictionary={
 	NodeComponentIO.OUTPUT_ID:OutputNodeReader,
 	NodeComponentIO.NOISE_ID:NoiseNodeReader,
 	NodeComponentIO.PULSE_ID:PulseNodeReader,
+	NodeComponentIO.RAMP_ID:RampNodeReader,
+	NodeComponentIO.SAW_ID:SawNodeReader,
+	NodeComponentIO.SINE_ID:SineNodeReader,
+	NodeComponentIO.TRIANGLE_ID:TriangleNodeReader,
+	NodeComponentIO.CLAMP_ID:ClampNodeReader,
+	NodeComponentIO.CLIP_ID:ClipNodeReader,
+	NodeComponentIO.MAP_RANGE_ID:MapRangeNodeReader,
+	NodeComponentIO.MAP_WAVE_ID:MapWaveNodeReader,
+	NodeComponentIO.MIX_ID:MixNodeReader,
+	NodeComponentIO.NORMALIZE_ID:NormalizeNodeReader,
 }
 
 

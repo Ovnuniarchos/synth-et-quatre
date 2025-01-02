@@ -8,6 +8,26 @@ const NOISE_ID:String="nOIN"
 const NOISE_VERSION:int=0
 const PULSE_ID:String="pULN"
 const PULSE_VERSION:int=0
+const RAMP_ID:String="rAMN"
+const RAMP_VERSION:int=0
+const SAW_ID:String="sAWN"
+const SAW_VERSION:int=0
+const SINE_ID:String="sINN"
+const SINE_VERSION:int=0
+const TRIANGLE_ID:String="tRIN"
+const TRIANGLE_VERSION:int=0
+const CLAMP_ID:String="cLMN"
+const CLAMP_VERSION:int=0
+const CLIP_ID:String="cLIN"
+const CLIP_VERSION:int=0
+const MAP_RANGE_ID:String="mARN"
+const MAP_RANGE_VERSION:int=0
+const MAP_WAVE_ID:String="mWAN"
+const MAP_WAVE_VERSION:int=0
+const MIX_ID:String="mIXN"
+const MIX_VERSION:int=0
+const NORMALIZE_ID:String="nORN"
+const NORMALIZE_VERSION:int=0
 
 
 func _serialize_start(out:ChunkedFile,comp:WaveNodeComponent,tag:String,version:int)->void:

@@ -1626,6 +1626,9 @@ msgstr "Invalid wave component type {s_type} writing {s_file}."
 msgid "ERR_INVALID_WAVE_TYPE"
 msgstr "Invalid wave type {s_type} writing {s_file}."
 
+msgid "ERR_INVALID_INPUT_SLOT"
+msgstr "Component {s_component} has not a slot of type {s_type}."
+
 msgid "ERR_INVALID_MACRO"
 msgstr "Invalid macro type/operator {s_type}/{i_op} in file {s_file}."
 

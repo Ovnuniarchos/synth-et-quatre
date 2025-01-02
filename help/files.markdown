@@ -4,13 +4,14 @@
 </type:string>
 
 <type:boolean>
-	<param:value type="uint8" value="value != 0">
+	<param:value type="uint8" value="value != 0"/>
 </type:boolean>
 
 <type:uint24>
 	<param:value>
-	<Hi type="uint8" value="value>>8"/>
-	<Lo type="uint16" value="value&0xffff"/>
+		<Hi type="uint8" value="value>>8"/>
+		<Lo type="uint16" value="value&0xffff"/>
+	</param:value>
 </type:uint24>
 
 <Signature>
@@ -41,7 +42,7 @@
 		<SustainRate type="uint8"/>
 		<SustainLevel type="uint8"/>
 		<ReleaseRate type="uint8"/>
-		<RepeatMode type="uint8(OFF|ATTACK|DECAY|SUSTAIN|RELEASE)"/>
+		<RepeatMode type="uint8" enum="OFF|ATTACK|DECAY|SUSTAIN|RELEASE"/>
 		<Multiplier type="uint8"/>
 		<Divider type="uint8"/>
 		<Detune type="int16"/>
@@ -76,11 +77,11 @@
 	<ReleaseLoopStart type="int16"/>
 	<StepCount type="uint16"/>
 	<Delay type="uint16"/>
-	<Mode type="uint8(ABSOLUTE|RELATIVE|MASK)"/>
+	<Mode type="uint8" enum="ABSOLUTE|RELATIVE|MASK"/>
 	<TicksPerStep type="uint16"/>
 	<Type type="ascii(4)"/>
 	<Operator type="uint8"/>
-	<Steps type="array[int64]" length="StepCount"/>
+	<Steps type="int64(StepCount)"/>
 </Macro>
 
 <WaveList>
@@ -105,10 +106,10 @@
 	<SampleFrequency type="float"/>
 	<Name type="string"/>
 	<options>
-		<Samples type="array[uint8]=value+0x80" length="SampleCount" if="BitsPerSample==8" option/>
-		<Samples type="array[uint16]=value+0x8000" length="SampleCount" if="BitsPerSample==16" option/>
-		<Samples type="array[float32]" length="SampleCount" if="BitsPerSample==32" option/>
-		<Samples type="array[uint24]=value+0x800000" length="SampleCount" option/>
+		<Samples type="uint8(SampleCount)=value+0x80" if="BitsPerSample==8" option/>
+		<Samples type="uint16(SampleCount)=value+0x8000" if="BitsPerSample==16" option/>
+		<Samples type="float32(SampleCount)" if="BitsPerSample==32" option/>
+		<Samples type="uint24(SampleCount)=value+0x800000" option/>
 	</options>
 </SampleWave>
 
@@ -147,7 +148,7 @@
 <NoiseWave>
 	<ChunkHeader id="nOIW"/>
 	<ComponentHeader/>
-	<Seed type="uint32"/>
+	<Seed type="int32"/>
 	<Tone type="float"/>
 	<StartAt type="float"/>
 	<Length type="float"/>
@@ -262,8 +263,18 @@
 	<OutputNode/>
 	<foreach:Node>
 		<options>
-			<NoiseNode/>
-			<PulseNode/>
+			<NoiseNode option/>
+			<PulseNode option/>
+			<RampNode option/>
+			<SawNode option/>
+			<SineNode option/>
+			<TriangleNode option/>
+			<ClampNode option/>
+			<ClipNode option/>
+			<MapRangeNode option/>
+			<MapWaveNode option/>
+			<MixNode option/>
+			<NormalizeNode option/>
 		</options>
 	</foreach:Node>
 </NodeWave>
@@ -280,7 +291,7 @@
 	<GraphPositions/>
 	<RangeFrom type="float"/>
 	<RangeLength type="float"/>
-	<Seed type="uint32=value+0x80000000"/>
+	<Seed type="int32"/>
 	<Amplitude type="float"/>
 	<Decay type="float"/>
 	<Power type="float"/>
@@ -312,14 +323,168 @@
 	<Connections/>
 </PulseNode>
 
+<RampNode>
+	<ChunkHeader id="rAMN"/>
+	<GraphPositions/>
+	<RangeFrom type="float"/>
+	<RangeLength type="float"/>
+	<ValueFrom type="float"/>
+	<ValueTo type="float"/>
+	<ValueCurve type="float"/>
+	<Connections/>
+</RampNode>
+
+<SawNode>
+	<ChunkHeader id="sAWN"/>
+	<GraphPositions/>
+	<RangeFrom type="float"/>
+	<RangeLength type="float"/>
+	<Frequency type="float"/>
+	<Amplitude type="float"/>
+	<PhaseDelta type="float"/>
+	<Power type="float"/>
+	<Decay type="float"/>
+	<DC type="float"/>
+	<QuarterType type="uint8(4)" enum="-1>-0.5|-0.5>0|0>0.5|0.5>1|1>0.5|0.5>0|0>-0.5|-0.5>-1|1|0.5|0|-0.5|-1"/>
+	<Connections/>
+</SawNode>
+
+<SineNode>
+	<ChunkHeader id="sINN"/>
+	<GraphPositions/>
+	<RangeFrom type="float"/>
+	<RangeLength type="float"/>
+	<Frequency type="float"/>
+	<Amplitude type="float"/>
+	<PhaseDelta type="float"/>
+	<Power type="float"/>
+	<Decay type="float"/>
+	<DC type="float"/>
+	<QuarterType type="uint8(4)" enum="0>1|1>0|0>-1|-1>0|1|0|-1"/>
+	<Connections/>
+</SineNode>
+
+<TriangleNode>
+	<ChunkHeader id="tRIN"/>
+	<GraphPositions/>
+	<RangeFrom type="float"/>
+	<RangeLength type="float"/>
+	<Frequency type="float"/>
+	<Amplitude type="float"/>
+	<PhaseDelta type="float"/>
+	<Power type="float"/>
+	<Decay type="float"/>
+	<DC type="float"/>
+	<QuarterType type="uint8(4)" enum="0>1|1>0|0>-1|-1>0|1|0|-1"/>
+	<Connections/>
+</TriangleNode>
+
+<ClampNode>
+	<ChunkHeader id="cLMN"/>
+	<GraphPositions/>
+	<RangeFrom type="float"/>
+	<RangeLength type="float"/>
+	<HighLevel type="float"/>
+	<HighClamp type="float"/>
+	<HighMode type="uint8" enum="NONE|CLAMP|WRAP|BOUNCE"/>
+	<LowLevel type="float"/>
+	<LowClamp type="float"/>
+	<LowMode type="uint8" enum="NONE|CLAMP|WRAP|BOUNCE"/>
+	<Mix type="float"/>
+	<ClampMix type="float"/>
+	<Isolate type="boolean"/>
+	<Amplitude type="float"/>
+	<Power type="float"/>
+	<Decay type="float"/>
+	<DC type="float"/>
+	<Connections/>
+</ClampNode>
+
+<ClipNode>
+	<ChunkHeader id="cLIN"/>
+	<GraphPositions/>
+	<RangeFrom type="float"/>
+	<RangeLength type="float"/>
+	<Connections/>
+</ClipNode>
+
+<MapRangeNode>
+	<ChunkHeader id="mARN"/>
+	<GraphPositions/>
+	<RangeFrom type="float"/>
+	<RangeLength type="float"/>
+	<MinimumIn type="float"/>
+	<MaximumIn type="float"/>
+	<MinimumOut type="float"/>
+	<MaximumOut type="float"/>
+	<Extrapolate type="uint8"/>
+	<Mix type="float"/>
+	<ClampMix type="float"/>
+	<Isolate type="boolean"/>
+	<Amplitude type="float"/>
+	<Power type="float"/>
+	<Decay type="float"/>
+	<DC type="float"/>
+	<Connections/>
+</MapRangeNode>
+
+<MapWaveNode>
+	<ChunkHeader id="mWAN"/>
+	<GraphPositions/>
+	<RangeFrom type="float"/>
+	<RangeLength type="float"/>
+	<InterpolationType type="uint8" enum="NONE|LINEAR|COSINE"/>
+	<ExtrapolationType type="uint8" enum="CONSTANT|EXTEND|WRAP"/>
+	<MapEmptyValues type="boolean"/>
+	<Mix type="float"/>
+	<ClampMix type="float"/>
+	<Isolate type="boolean"/>
+	<Amplitude type="float"/>
+	<Power type="float"/>
+	<Decay type="float"/>
+	<DC type="float"/>
+	<Connections/>
+</MapWaveNode>
+
+<MixNode>
+	<ChunkHeader id="mIXN"/>
+	<GraphPositions/>
+	<RangeFrom type="float"/>
+	<RangeLength type="float"/>
+	<InputA type="float"/>
+	<InputB type="float"/>
+	<Operation type="uint8" enum="MIX|ADD|SUBTRACT|MULTIPLY|DIVIDE|MODULO|FMOD|POWER|MAXIMUM|MINIMUM|GREATER|GREATER/EQUAL|LESS|LESS/EQUAL|COMPARE|SIGN COMPARE|MIX OVER|MIX UNDER"/>
+	<Mix type="float"/>
+	<ClampMix type="float"/>
+	<Isolate type="boolean"/>
+	<Power type="float"/>
+	<Decay type="float"/>
+	<DC type="float"/>
+	<Connections/>
+</MixNode>
+
+<NormalizeNode>
+	<ChunkHeader id="nORN"/>
+	<GraphPositions/>
+	<RangeFrom type="float"/>
+	<RangeLength type="float"/>
+	<KeepZero type="float"/>
+	<UseFullWave type="float"/>
+	<Mix type="float"/>
+	<ClampMix type="float"/>
+	<Isolate type="boolean"/>
+	<Amplitude type="float"/>
+	<Power type="float"/>
+	<Decay type="float"/>
+	<Connections/>
+</NormalizeNode>
+
 <Connections>
 	<InputsConnectedCount type="uint16"/>
 	<foreach:InputConnected>
 		<SlotId type="char(4)"/>
 		<ConnectionCount type="uint16"/>
-		<foreach:Connection>
-			<ConnectedTo type="unit16"/>
-		</foreach:Connection>
+		<ConnectedTo type="uint16(ConnectionCount)"/>
 	</foreach:InputConnected>
 </Connections>
 
@@ -385,7 +550,7 @@
 	<ChunkHeader id="ORDL"/>
 	<OrderCount type="uint16"/>
 	<foreach:Orders>
-		<PatternId type="array[uint8]" length="ChannelCount"/>
+		<PatternId type="uint8(ChannelCount)"/>
 	</foreach:Orders>
 </Orders>
 
@@ -442,6 +607,6 @@
 	<Delay type="uint16"/>
 	<Name type="string"/>
 	<Index type="uint8"/>
-	<Steps type="array[int64]" length="StepCount"/>
+	<Steps type="int64(StepCount)"/>
 </Arpeggio>
 

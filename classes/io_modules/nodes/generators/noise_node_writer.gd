@@ -4,7 +4,7 @@ class_name NoiseNodeWriter
 
 func serialize(out:ChunkedFile,node:NoiseNodeComponent)->FileResult:
 	_serialize_start(out,node,NOISE_ID,NOISE_VERSION)
-	out.store_32(node.noise_seed+0x80000000)
+	out.store_32(node.noise_seed)
 	out.store_float(node.amplitude)
 	out.store_float(node.decay)
 	out.store_float(node.power)

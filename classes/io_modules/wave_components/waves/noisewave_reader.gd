@@ -18,7 +18,7 @@ func deserialize(inf:ChunkedFile,header:Dictionary)->FileResult:
 	var version:int=header[ChunkedFile.CHUNK_VERSION]
 	var w:NoiseWave=NoiseWave.new()
 	_deserialize_start(inf,w,version)
-	w.rng_seed=inf.get_32()
+	w.rng_seed=inf.get_signed_32()
 	w.tone=inf.get_float()
 	w.pos0=inf.get_float()
 	w.length=inf.get_float()

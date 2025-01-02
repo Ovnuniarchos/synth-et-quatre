@@ -9,7 +9,7 @@ func deserialize(inf:ChunkedFile,header:Dictionary)->FileResult:
 	if fr.has_error():
 		return fr
 	var node:NoiseNodeComponent=fr.data
-	node.noise_seed=inf.get_32()-0x80000000
+	node.noise_seed=inf.get_signed_32()
 	node.amplitude=inf.get_float()
 	node.decay=inf.get_float()
 	node.power=inf.get_float()

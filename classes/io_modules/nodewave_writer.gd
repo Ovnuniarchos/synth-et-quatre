@@ -6,6 +6,16 @@ var writers:Dictionary={
 	OutputNodeComponent.NODE_TYPE:OutputNodeWriter,
 	NoiseNodeComponent.NODE_TYPE:NoiseNodeWriter,
 	PulseNodeComponent.NODE_TYPE:PulseNodeWriter,
+	RampNodeComponent.NODE_TYPE:RampNodeWriter,
+	SawNodeComponent.NODE_TYPE:SawNodeWriter,
+	SineNodeComponent.NODE_TYPE:SineNodeWriter,
+	TriangleNodeComponent.NODE_TYPE:TriangleNodeWriter,
+	ClampNodeComponent.NODE_TYPE:ClampNodeWriter,
+	ClipNodeComponent.NODE_TYPE:ClipNodeWriter,
+	MapRangeNodeComponent.NODE_TYPE:MapRangeNodeWriter,
+	MapWaveNodeComponent.NODE_TYPE:MapWaveNodeWriter,
+	MixNodeComponent.NODE_TYPE:MixNodeWriter,
+	NormalizeNodeComponent.NODE_TYPE:NormalizeNodeWriter,
 }
 
 

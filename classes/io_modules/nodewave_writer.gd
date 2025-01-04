@@ -16,6 +16,7 @@ var writers:Dictionary={
 	MapWaveNodeComponent.NODE_TYPE:MapWaveNodeWriter,
 	MixNodeComponent.NODE_TYPE:MixNodeWriter,
 	NormalizeNodeComponent.NODE_TYPE:NormalizeNodeWriter,
+	DecayNodeComponent.NODE_TYPE:DecayNodeWriter,
 }
 
 

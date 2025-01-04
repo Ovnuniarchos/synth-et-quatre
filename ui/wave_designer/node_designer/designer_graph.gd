@@ -16,6 +16,7 @@ enum{
 	OUTPUT,
 	GEN_SINE,GEN_SAW,GEN_PULSE,GEN_TRIANGLE,GEN_NOISE,GEN_RAMP,
 	XFR_MIX,XFR_CLAMP,XFR_MAPR,XFR_MAPW,XFR_CLIP,XFR_NORMALIZE,
+	XFR_DECAY,
 }
 const MENU:Array=[
 	"unsorted",
@@ -35,6 +36,7 @@ const MENU:Array=[
 		{"option":"NODED_MENU_MAP_WAVE","id":XFR_MAPW},
 		{"option":"NODED_MENU_CLIP","id":XFR_CLIP},
 		{"option":"NODED_MENU_NORMALIZE","id":XFR_NORMALIZE},
+		{"option":"NODED_MENU_DECAY","id":XFR_DECAY},
 	]}
 ]
 const NODES:Dictionary={
@@ -51,6 +53,7 @@ const NODES:Dictionary={
 	XFR_MAPW:preload("res://ui/wave_designer/node_designer/nodes/transforms/map_wave_node.tscn"),
 	XFR_CLIP:preload("res://ui/wave_designer/node_designer/nodes/transforms/clip_node.tscn"),
 	XFR_NORMALIZE:preload("res://ui/wave_designer/node_designer/nodes/transforms/normalize_node.tscn"),
+	XFR_DECAY:preload("res://ui/wave_designer/node_designer/nodes/transforms/decay_node.tscn"),
 }
 const NODES_CLASS:Dictionary={
 	OutputNodeComponent.NODE_TYPE:NODES[OUTPUT],
@@ -66,6 +69,7 @@ const NODES_CLASS:Dictionary={
 	MapWaveNodeComponent.NODE_TYPE:NODES[XFR_MAPW],
 	ClipNodeComponent.NODE_TYPE:NODES[XFR_CLIP],
 	NormalizeNodeComponent.NODE_TYPE:NODES[XFR_NORMALIZE],
+	DecayNodeComponent.NODE_TYPE:NODES[XFR_DECAY],
 }
 
 

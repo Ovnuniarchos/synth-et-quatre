@@ -1743,6 +1743,9 @@ msgstr "Clip"
 msgid "NODED_MENU_NORMALIZE"
 msgstr "Normalize"
 
+msgid "NODED_MENU_DECAY"
+msgstr "Decay"
+
 # Common ports
 msgid "NODE_OUTPUT_PORT"
 msgstr "Output"
@@ -2273,3 +2276,6 @@ msgstr "Full wave"
 msgid "NODE_USE_FULL_PORT_TTIP"
 msgstr "Uses the entire wave to calculate min/max values, instead of the range"
 
+# Decay node
+msgid "NODE_DECAY_TITLE"
+msgstr "DECAY"

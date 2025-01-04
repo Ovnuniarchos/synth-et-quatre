@@ -16,6 +16,7 @@ var readers:Dictionary={
 	NodeComponentIO.MAP_WAVE_ID:MapWaveNodeReader,
 	NodeComponentIO.MIX_ID:MixNodeReader,
 	NodeComponentIO.NORMALIZE_ID:NormalizeNodeReader,
+	NodeComponentIO.DECAY_ID:DecayNodeReader,
 }
 
 

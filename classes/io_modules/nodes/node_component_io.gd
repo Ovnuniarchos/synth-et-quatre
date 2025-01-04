@@ -28,6 +28,8 @@ const MIX_ID:String="mIXN"
 const MIX_VERSION:int=0
 const NORMALIZE_ID:String="nORN"
 const NORMALIZE_VERSION:int=0
+const DECAY_ID:String="dECN"
+const DECAY_VERSION:int=0
 
 
 func _serialize_start(out:ChunkedFile,comp:WaveNodeComponent,tag:String,version:int)->void:

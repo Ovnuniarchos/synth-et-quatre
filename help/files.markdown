@@ -259,10 +259,10 @@
 	<ChunkHeader id="nODW"/>
 	<SizeLog2 type="uint8"/>
 	<Name type="string"/>
-	<NodeCount type="uint16"/><!-- Does not include the OutputNode -->
-	<OutputNode/>
+	<NodeCount type="uint16"/>
 	<foreach:Node>
 		<options>
+			<OutputNode option/>
 			<NoiseNode option/>
 			<PulseNode option/>
 			<RampNode option/>
@@ -478,6 +478,20 @@
 	<Decay type="float"/>
 	<Connections/>
 </NormalizeNode>
+
+<DecayNode>
+	<ChunkHeader id="dECN"/>
+	<GraphPositions/>
+	<RangeFrom type="float"/>
+	<RangeLength type="float"/>
+	<Mix type="float"/>
+	<ClampMix type="float"/>
+	<Isolate type="boolean"/>
+	<Amplitude type="float"/>
+	<Power type="float"/>
+	<Decay type="float"/>
+	<Connections/>
+</DecayNode>
 
 <Connections>
 	<InputsConnectedCount type="uint16"/>

@@ -1743,6 +1743,9 @@ msgstr "Recorte"
 msgid "NODED_MENU_NORMALIZE"
 msgstr "Normalización"
 
+msgid "NODED_MENU_DECAY"
+msgstr "Extinción"
+
 # Common ports
 msgid "NODE_OUTPUT_PORT"
 msgstr "Salida"
@@ -2273,3 +2276,6 @@ msgstr "Onda completa"
 msgid "NODE_USE_FULL_PORT_TTIP"
 msgstr "Usa toda la onda para calcular los valore máximos/mínimos, en vez de sólo el segmento"
 
+# Decay node
+msgid "NODE_DECAY_TITLE"
+msgstr "EXTINCIÓN"

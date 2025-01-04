@@ -149,7 +149,7 @@ func calculate()->Array:
 
 
 func equals(other:WaveNodeComponent)->bool:
-	if (other as ClampNodeComponent)==null:
+	if (other as NormalizeNodeComponent)==null:
 		return false
 	return .equals(other) and are_equal_approx(other,[
 		"keep_0","use_full","mix","clamp_mix","amplitude","power","decay","isolate"

@@ -32,6 +32,6 @@ func calculate()->Array:
 
 
 func equals(other:WaveNodeComponent)->bool:
-	if (other as ClampNodeComponent)==null:
+	if (other as ClipNodeComponent)==null:
 		return false
 	return .equals(other)

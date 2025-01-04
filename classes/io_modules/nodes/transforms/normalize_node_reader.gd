@@ -4,7 +4,7 @@ class_name NormalizeNodeReader
 
 func deserialize(inf:ChunkedFile,header:Dictionary)->FileResult:
 	var fr:FileResult=_deserialize_start(
-		inf,ClampNodeComponent,header,NORMALIZE_ID,NORMALIZE_VERSION
+		inf,NormalizeNodeComponent,header,NORMALIZE_ID,NORMALIZE_VERSION
 	)
 	if fr.has_error():
 		return fr

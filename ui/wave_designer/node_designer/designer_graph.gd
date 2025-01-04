@@ -78,6 +78,7 @@ var add_position:Vector2
 var node_graph:Dictionary={}
 var reverse_graph:Dictionary={}
 var size_po2:int=0
+var curr_wave:NodeWave=null
 
 
 func _init()->void:

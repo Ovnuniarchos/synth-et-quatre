@@ -15,6 +15,7 @@ var range_length:float=1.0
 var output:Array
 var output_valid:bool
 var inputs:Array
+var wave:WeakRef
 
 var _decay:float
 var _last_value:float

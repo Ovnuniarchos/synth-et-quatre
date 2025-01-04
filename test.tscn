@@ -190,6 +190,9 @@ func obj_funcref_array()->void:
 		val=fns[randi()&3].call_func(val)
 	print(\"ObjFuncrefArray: \",OS.get_ticks_usec()-ti)
 \"\"\"
+
+func _ready()->void:
+	pass
 "
 
 [node name="test" type="Node"]

@@ -12,6 +12,7 @@ var output:OutputNodeComponent
 func _init()->void:
 	name=tr("DEFN_NODE_WAVE")
 	output=OutputNodeComponent.new()
+	output.wave=weakref(self)
 	components=[output]
 	data=output.output
 	resize_data(1<<size_po2)
@@ -73,6 +74,7 @@ func equals(other:Waveform)->bool:
 
 func add_component(node:WaveNodeComponent)->void:
 	if not node in components:
+		node.wave=weakref(self)
 		components.append(node)
 
 
@@ -81,6 +83,4 @@ func remove_component(node:WaveNodeComponent)->void:
 
 
 func find_component(node:WaveNodeComponent)->int:
-	if node==output:
-		return 0
-	return components.find(node)+1
+	return components.find(node)

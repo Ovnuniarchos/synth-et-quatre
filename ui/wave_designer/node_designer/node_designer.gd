@@ -45,6 +45,7 @@ func set_size_bytes(size:int)->void:
 func _on_wave_selected(wave:int)->void:
 	curr_wave_ix=wave
 	var w:NodeWave=GLOBALS.song.get_wave(curr_wave_ix) as NodeWave
+	$Designer.curr_wave=w
 	if w==null:
 		$Info/HBC/Name.editable=false
 		$Info/HBC/Name.text=""
@@ -62,6 +63,7 @@ func _on_wave_selected(wave:int)->void:
 
 func _on_wave_deleted(_wave:int)->void:
 	curr_wave_ix=-1
+	$Designer.curr_wave=null
 	$Info/HBC/Name.editable=false
 	$Info/HBC/Name.text=""
 	set_size_bytes(-1)

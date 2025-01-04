@@ -36,9 +36,6 @@ func serialize(out:ChunkedFile,wave:NodeWave)->FileResult:
 		return FileResult.new(out.get_error(),{FileResult.ERRV_FILE:out.get_path()})
 	# Serialize components
 	var fr:FileResult
-	fr=serialize_component(out,wave.output,wave)
-	if fr.has_error():
-		return fr
 	for comp in wave.components:
 		fr=serialize_component(out,comp,wave)
 		if fr.has_error():
@@ -51,9 +48,7 @@ func serialize(out:ChunkedFile,wave:NodeWave)->FileResult:
 func serialize_component(out:ChunkedFile,comp:WaveNodeComponent,wave:NodeWave)->FileResult:
 	var fr:FileResult
 	if writers.has(comp.NODE_TYPE):
-		comp.set_meta("wave",wave)
 		fr=lazy_load(comp.NODE_TYPE).serialize(out,comp)
-		comp.set_meta("wave",null)
 	else:
 		fr=FileResult.new(FileResult.ERR_BAD_WAVE_COMPONENT_OUT,{
 			"type":comp.NODE_TYPE,

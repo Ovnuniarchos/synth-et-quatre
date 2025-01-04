@@ -49,7 +49,7 @@ func _serialize_end(out:ChunkedFile,comp:WaveNodeComponent)->FileResult:
 		if not input[WaveNodeComponent.SLOT_IN].empty():
 			inputs_connected+=1
 	out.store_16(inputs_connected)
-	var wave:NodeWave=comp.get_meta("wave")
+	var wave:NodeWave=comp.wave.get_ref()
 	for input in comp.inputs:
 		if input[WaveNodeComponent.SLOT_IN].empty():
 			continue
@@ -61,6 +61,7 @@ func _serialize_end(out:ChunkedFile,comp:WaveNodeComponent)->FileResult:
 	if out.get_error():
 		return FileResult.new(out.get_error(),{FileResult.ERRV_FILE:out.get_path()})
 	return FileResult.new()
+
 
 func _deserialize_start(inf:ChunkedFile,comp:GDScript,header:Dictionary,tag:String,version:int)->FileResult:
 	if not inf.is_chunk_valid(header,tag,version):

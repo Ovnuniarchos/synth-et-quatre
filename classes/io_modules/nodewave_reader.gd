@@ -42,19 +42,18 @@ func deserialize(inf:ChunkedFile,header:Dictionary)->FileResult:
 	var component_count:int=inf.get_16()
 	# Components
 	var fr:FileResult
-	fr=deserialize_component(inf,NodeComponentIO.OUTPUT_ID)
-	if fr.has_error():
-		return fr
-	wave.output=fr.data
+	var wave_ref:WeakRef=weakref(wave)
 	wave.components=[]
 	for i in component_count:
 		fr=deserialize_component(inf)
 		if fr.has_error():
 			return fr
 		elif fr.data!=null:
+			fr.data.wave=wave_ref
 			wave.components.append(fr.data)
+			if fr.data is OutputNodeComponent:
+				wave.output=fr.data
 	# Connections
-	translate_connections(wave.output,wave)
 	for node in wave.components:
 		translate_connections(node,wave)
 	if inf.get_error():
@@ -77,4 +76,4 @@ func translate_connections(node:WaveNodeComponent,wave:NodeWave)->void:
 	for slot in node.inputs:
 		var connections:Array=slot[WaveNodeComponent.SLOT_IN]
 		for i in connections.size():
-			connections[i]=wave.components[connections[i]-1]
+			connections[i]=wave.components[connections[i]]

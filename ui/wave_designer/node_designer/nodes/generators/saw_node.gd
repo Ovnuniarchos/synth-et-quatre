@@ -1,10 +1,6 @@
 tool extends NodeController
 
 
-func _init()->void:
-	node=SawNodeComponent.new()
-
-
 func _ready()->void:
 	var ops:Array=[]
 	for i in SawNodeConstants.SWQ_MAX:

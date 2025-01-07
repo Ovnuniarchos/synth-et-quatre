@@ -1,10 +1,6 @@
 tool extends NodeController
 
 
-func _init()->void:
-	node=SineNodeComponent.new()
-
-
 func _ready()->void:
 	var ops:Array=[]
 	for i in SineNodeConstants.SNQ_MAX:

@@ -37,7 +37,6 @@ var randomness:float=1.0 setget set_randomness
 
 
 func _init()->void:
-	._init()
 	inputs=[
 		{SLOT_ID:SlotIds.SLOT_AMPLITUDE,SLOT_IN:amplitude_slot},
 		{SLOT_ID:SlotIds.SLOT_DECAY,SLOT_IN:decay_slot},

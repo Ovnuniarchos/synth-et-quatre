@@ -1,10 +1,6 @@
 tool extends NodeController
 
 
-func _init()->void:
-	node=MapRangeNodeComponent.new()
-
-
 func set_parameters()->void:
 	if not is_node_ready():
 		yield(self,"ready")

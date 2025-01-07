@@ -55,6 +55,22 @@ const NODES:Dictionary={
 	XFR_NORMALIZE:preload("res://ui/wave_designer/node_designer/nodes/transforms/normalize_node.tscn"),
 	XFR_DECAY:preload("res://ui/wave_designer/node_designer/nodes/transforms/decay_node.tscn"),
 }
+const COMPONENTS:Dictionary={
+	OUTPUT:OutputNodeComponent,
+	GEN_SINE:SineNodeComponent,
+	GEN_SAW:SawNodeComponent,
+	GEN_PULSE:PulseNodeComponent,
+	GEN_TRIANGLE:TriangleNodeComponent,
+	GEN_NOISE:NoiseNodeComponent,
+	GEN_RAMP:RampNodeComponent,
+	XFR_MIX:MixNodeComponent,
+	XFR_CLAMP:ClampNodeComponent,
+	XFR_MAPR:MapRangeNodeComponent,
+	XFR_MAPW:MapWaveNodeComponent,
+	XFR_CLIP:ClipNodeComponent,
+	XFR_NORMALIZE:NormalizeNodeComponent,
+	XFR_DECAY:DecayNodeComponent,
+}
 const NODES_CLASS:Dictionary={
 	OutputNodeComponent.NODE_TYPE:NODES[OUTPUT],
 	SineNodeComponent.NODE_TYPE:NODES[GEN_SINE],
@@ -127,6 +143,7 @@ func _on_add_node(type:int)->void:
 	var nn:NodeController=NODES[type].instance()
 	nn.connect("params_changed",self,"_on_params_changed")
 	nn.connect("about_to_close",self,"_on_node_about_to_close")
+	nn.node=COMPONENTS[type].new()
 	nn.offset=add_position
 	nn.set_parameters()
 	nn.set_size_po2(size_po2)

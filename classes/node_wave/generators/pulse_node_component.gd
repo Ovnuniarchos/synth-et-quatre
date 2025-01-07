@@ -41,7 +41,6 @@ var dc:float=0.0
 
 
 func _init()->void:
-	._init()
 	inputs=[
 		{SLOT_ID:SlotIds.SLOT_FREQUENCY,SLOT_IN:frequency_slot},
 		{SLOT_ID:SlotIds.SLOT_AMPLITUDE,SLOT_IN:amplitude_slot},

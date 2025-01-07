@@ -1,10 +1,6 @@
 tool extends NodeController
 
 
-func _init()->void:
-	node=MapWaveNodeComponent.new()
-
-
 func _ready()->void:
 	var ops:Array=[]
 	for i in MapWaveNodeConstants.LERP_END:

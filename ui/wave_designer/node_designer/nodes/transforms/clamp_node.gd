@@ -1,10 +1,5 @@
 tool extends NodeController
 
-# TODO: LABELS LABELS LABELS
-func _init()->void:
-	node=ClampNodeComponent.new()
-
-
 func _ready()->void:
 	var ops:Array=[]
 	for i in ClampNodeConstants.CLAMP_END:

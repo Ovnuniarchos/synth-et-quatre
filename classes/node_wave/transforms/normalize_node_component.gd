@@ -33,7 +33,6 @@ var isolate:float=1.0 setget set_isolate
 
 
 func _init()->void:
-	._init()
 	inputs=[
 		{SLOT_ID:SlotIds.SLOT_INPUT,SLOT_IN:input_slot},
 		{SLOT_ID:SlotIds.SLOT_KEEP_0,SLOT_IN:keep_0_slot},

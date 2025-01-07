@@ -42,7 +42,6 @@ var dc:float=0.0 setget set_dc
 
 
 func _init()->void:
-	._init()
 	inputs=[
 		{SLOT_ID:SlotIds.SLOT_INPUT,SLOT_IN:input_slot},
 		{SLOT_ID:SlotIds.SLOT_MIN_IN,SLOT_IN:min_in_slot},

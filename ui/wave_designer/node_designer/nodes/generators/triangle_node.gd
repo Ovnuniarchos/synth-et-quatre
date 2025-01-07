@@ -1,10 +1,6 @@
 tool extends NodeController
 
 
-func _init()->void:
-	node=TriangleNodeComponent.new()
-
-
 func _ready()->void:
 	var ops:Array=[]
 	for i in TriangleNodeConstants.TRQ_MAX:

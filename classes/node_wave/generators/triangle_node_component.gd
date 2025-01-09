@@ -124,3 +124,16 @@ func equals(other:WaveNodeComponent)->bool:
 	return .equals(other) and are_equal_approx(other,[
 		"frequency","amplitude","phi0","power","decay","dc","quarters"
 	])
+
+
+func duplicate(container:Reference)->WaveNodeComponent:
+	var nc:TriangleNodeComponent=.duplicate(container) as TriangleNodeComponent
+	nc.frequency=frequency
+	nc.amplitude=amplitude
+	nc.phi0=phi0
+	nc.power=power
+	nc.decay=decay
+	nc.dc=dc
+	for i in 4:
+		nc.quarters[i]=quarters[i]
+	return nc

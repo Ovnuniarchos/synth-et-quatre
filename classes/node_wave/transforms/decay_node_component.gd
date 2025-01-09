@@ -99,3 +99,14 @@ func equals(other:WaveNodeComponent)->bool:
 	return .equals(other) and are_equal_approx(other,[
 		"mix","clamp_mix","amplitude","power","decay","isolate"
 	])
+
+
+func duplicate(container:Reference)->WaveNodeComponent:
+	var nc:DecayNodeComponent=.duplicate(container) as DecayNodeComponent
+	nc.mix=mix
+	nc.clamp_mix=clamp_mix
+	nc.amplitude=amplitude
+	nc.power=power
+	nc.decay=decay
+	nc.isolate=isolate
+	return nc

@@ -6,6 +6,7 @@ script/source = "extends Node
 \"\"\"
 FIXME
 TODO:
+	Output node doesn't update it slider onready
 	Node-based wave generator
 		Decay filter
 		Power filter

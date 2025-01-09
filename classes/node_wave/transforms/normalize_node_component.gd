@@ -153,3 +153,16 @@ func equals(other:WaveNodeComponent)->bool:
 	return .equals(other) and are_equal_approx(other,[
 		"keep_0","use_full","mix","clamp_mix","amplitude","power","decay","isolate"
 	])
+
+
+func duplicate(container:Reference)->WaveNodeComponent:
+	var nc:NormalizeNodeComponent=.duplicate(container) as NormalizeNodeComponent
+	nc.keep_0=keep_0
+	nc.use_full=use_full
+	nc.mix=mix
+	nc.clamp_mix=clamp_mix
+	nc.amplitude=amplitude
+	nc.power=power
+	nc.decay=decay
+	nc.isolate=isolate
+	return nc

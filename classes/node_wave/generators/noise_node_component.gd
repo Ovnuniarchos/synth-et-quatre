@@ -148,3 +148,18 @@ func equals(other:WaveNodeComponent)->bool:
 		"noise_seed","amplitude","decay","power","dc","octaves","frequency",
 		"persistence","lacunarity","randomness"
 	])
+
+
+func duplicate(container:Reference)->WaveNodeComponent:
+	var nc:NoiseNodeComponent=.duplicate(container) as NoiseNodeComponent
+	nc.noise_seed=noise_seed
+	nc.amplitude=amplitude
+	nc.decay=decay
+	nc.power=power
+	nc.dc=dc
+	nc.octaves=octaves
+	nc.frequency=frequency
+	nc.persistence=persistence
+	nc.lacunarity=lacunarity
+	nc.randomness=randomness
+	return nc

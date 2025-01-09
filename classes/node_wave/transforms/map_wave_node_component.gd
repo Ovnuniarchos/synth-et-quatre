@@ -190,3 +190,18 @@ func equals(other:WaveNodeComponent)->bool:
 		"lerp_value","extrapolate","mix_value","clamp_mix_value","map_empty",
 		"amplitude","power","decay","dc","isolate",
 	])
+
+
+func duplicate(container:Reference)->WaveNodeComponent:
+	var nc:MapWaveNodeComponent=.duplicate(container) as MapWaveNodeComponent
+	nc.lerp_value=lerp_value
+	nc.extrapolate=extrapolate
+	nc.mix_value=mix_value
+	nc.clamp_mix_value=clamp_mix_value
+	nc.map_empty=map_empty
+	nc.amplitude=amplitude
+	nc.power=power
+	nc.decay=decay
+	nc.dc=dc
+	nc.isolate=isolate
+	return nc

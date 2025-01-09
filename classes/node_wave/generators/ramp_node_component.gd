@@ -33,3 +33,11 @@ func equals(other:WaveNodeComponent)->bool:
 	return .equals(other) and are_equal_approx(other,[
 		"ramp_from","ramp_to","curve"
 	])
+
+
+func duplicate(container:Reference)->WaveNodeComponent:
+	var nc:RampNodeComponent=.duplicate(container) as RampNodeComponent
+	nc.ramp_from=ramp_from
+	nc.ramp_to=ramp_to
+	nc.curve=curve
+	return nc

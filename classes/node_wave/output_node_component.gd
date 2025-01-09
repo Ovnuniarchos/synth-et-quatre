@@ -30,3 +30,9 @@ func equals(other:WaveNodeComponent)->bool:
 	if (other as OutputNodeComponent)==null:
 		return false
 	return .equals(other) and is_equal_approx(clip,other.clip)
+
+
+func duplicate(container:Reference)->WaveNodeComponent:
+	var nc:OutputNodeComponent=.duplicate(container) as OutputNodeComponent
+	nc.clip=clip
+	return nc

@@ -248,3 +248,21 @@ func equals(other:WaveNodeComponent)->bool:
 		"level_hi_value","mode_hi","clamp_hi_value","level_lo_value","mode_lo","clamp_lo_value",
 		"mix_value","clamp_mix_value","isolate","amplitude","power","decay","dc"
 	])
+
+
+func duplicate(container:Reference)->WaveNodeComponent:
+	var nc:ClampNodeComponent=.duplicate(container) as ClampNodeComponent
+	nc.level_hi_value=level_hi_value
+	nc.clamp_hi_value=clamp_hi_value
+	nc.mode_hi=mode_hi
+	nc.level_lo_value=level_lo_value
+	nc.clamp_lo_value=clamp_lo_value
+	nc.mode_lo=mode_lo
+	nc.mix_value=mix_value
+	nc.clamp_mix_value=clamp_mix_value
+	nc.isolate=isolate
+	nc.amplitude=amplitude
+	nc.power=power
+	nc.decay=decay
+	nc.dc=dc
+	return nc

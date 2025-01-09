@@ -167,3 +167,18 @@ func equals(other:WaveNodeComponent)->bool:
 		"ppulse_start","ppulse_length","ppulse_amplitude","npulse_start","npulse_length","npulse_amplitude",
 		"frequency","amplitude","phi0","decay","dc"
 	])
+
+func duplicate(container:Reference)->WaveNodeComponent:
+	var nc:PulseNodeComponent=.duplicate(container) as PulseNodeComponent
+	nc.ppulse_start=ppulse_start
+	nc.ppulse_length=ppulse_length
+	nc.ppulse_amplitude=ppulse_amplitude
+	nc.npulse_start=npulse_start
+	nc.npulse_length=npulse_length
+	nc.npulse_amplitude=npulse_amplitude
+	nc.frequency=frequency
+	nc.amplitude=amplitude
+	nc.phi0=phi0
+	nc.decay=decay
+	nc.dc=dc
+	return nc

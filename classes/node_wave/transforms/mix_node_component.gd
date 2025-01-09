@@ -12,7 +12,7 @@ var b_values:Array=[]
 var b_value:float=0.0 setget set_b_value
 var mix_slot:Array=[]
 var mix_values:Array=[]
-var mix_value:float=1.0 setget set_mix_value
+var mix_value:float=0.0 setget set_mix_value
 var clamp_mix_slot:Array=[]
 var clamp_mix_values:Array=[]
 var clamp_mix_value:float=0.0 setget set_clamp_mix_value
@@ -111,16 +111,13 @@ func calculate()->Array:
 	var mix:float
 	var a_in:float
 	var b_in:float
-	var bidi_lerp:bool
 	reset_decay()
 	for i in sz:
-		mix=lerp(mix_values[optr],clamp(mix_values[optr],0.0,1.0),clamp_mix_values[optr])
+		mix=lerp(mix_values[optr],clamp(mix_values[optr],-1.0,1.0),clamp_mix_values[optr])
 		a_in=b_values[optr] if is_nan(a_values[optr]) else a_values[optr]
 		b_in=a_values[optr] if is_nan(b_values[optr]) else b_values[optr]
-		bidi_lerp=true
 		if op_values[optr]==MixNodeConstants.MIX_MIX:
-			t=lerp(a_in,b_in,(mix+1.0)*0.5)
-			bidi_lerp=false
+			t=(a_in+b_in)*0.5
 		elif op_values[optr]==MixNodeConstants.MIX_ADD:
 			t=a_in+b_in
 		elif op_values[optr]==MixNodeConstants.MIX_SUB:
@@ -155,8 +152,7 @@ func calculate()->Array:
 			t=a_in if is_nan(a_in) else b_in
 		elif op_values[optr]==MixNodeConstants.MIX_UNDER:
 			t=b_in if is_nan(a_in) else a_in
-		if bidi_lerp:
-			t=lerp(t,b_in,mix) if mix>0.0 else lerp(t,a_in,-mix)
+		t=lerp(t,b_in,mix) if mix>0.0 else lerp(t,a_in,-mix)
 		output[optr]=calculate_decay(pow(abs(t),power_values[optr])*sign(t),decay_values[optr],sz)+dc_values[optr]
 		optr=(optr+1)&size_mask
 	fill_out_of_region(sz,optr,a_values,isolate_values)
@@ -170,3 +166,17 @@ func equals(other:WaveNodeComponent)->bool:
 	return .equals(other) and are_equal_approx(other,[
 		"a_value","b_value","mix_value","clamp_mix_value","op_value","isolate","power","decay","dc"
 	])
+
+
+func duplicate(container:Reference)->WaveNodeComponent:
+	var nc:MixNodeComponent=.duplicate(container) as MixNodeComponent
+	nc. a_value=a_value
+	nc. b_value=b_value
+	nc. mix_value=mix_value
+	nc. clamp_mix_value=clamp_mix_value
+	nc. op_value=op_value
+	nc. isolate=isolate
+	nc. power=power
+	nc. decay=decay
+	nc. dc=dc
+	return nc

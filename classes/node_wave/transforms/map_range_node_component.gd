@@ -159,3 +159,19 @@ func equals(other:WaveNodeComponent)->bool:
 		"min_in_value","max_in_value","min_out_value","max_out_value",
 		"mix_value","clamp_mix_value","isolate","amplitude","power","decay","dc"
 	])
+
+
+func duplicate(container:Reference)->WaveNodeComponent:
+	var nc:MapRangeNodeComponent=.duplicate(container) as MapRangeNodeComponent
+	nc.min_in_value=min_in_value
+	nc.max_in_value=max_in_value
+	nc.min_out_value=min_out_value
+	nc.max_out_value=max_out_value
+	nc.mix_value=mix_value
+	nc.clamp_mix_value=clamp_mix_value
+	nc.isolate=isolate
+	nc.amplitude=amplitude
+	nc.power=power
+	nc.decay=decay
+	nc.dc=dc
+	return nc

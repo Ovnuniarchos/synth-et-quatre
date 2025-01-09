@@ -34,26 +34,29 @@ func duplicate()->Waveform:
 	nw.size_po2=size_po2
 	nw.components=[]
 	for c in components:
-		var nc:WaveNodeComponent=c.duplicate()
+		var nc:WaveNodeComponent=c.duplicate(nw)
 		nw.components.append(nc)
 		if nc is OutputNodeComponent:
 			nw.output=nc
+	for nc in nw.components:
+		nc.post_duplicate()
 	nw.calculate()
 	return nw
 
 
 func copy(from:Waveform,full:bool=false)->void:
-	if (from as NodeWave)==null:
-		return
-	.copy(from,full)
-	size_po2=from.size_po2
-	components=[]
-	for c in from.components:
-		var nc:WaveNodeComponent=c.duplicate()
-		components.append(nc)
-		if nc is OutputNodeComponent:
-			output=nc
-	calculate()
+	if from.WAVE_TYPE==WAVE_TYPE:
+		.copy(from,full)
+		size_po2=from.size_po2
+		components=[]
+		for c in from.components:
+			var nc:WaveNodeComponent=c.duplicate(self)
+			components.append(nc)
+			if nc is OutputNodeComponent:
+				output=nc
+		for comp in components:
+			comp.post_duplicate()
+		calculate()
 
 
 func equals(other:Waveform)->bool:

@@ -173,3 +173,24 @@ func get_slot(slot_id:String)->Dictionary:
 		if i[SLOT_ID]==slot_id:
 			return i
 	return {}
+
+
+func duplicate(container:Reference)->WaveNodeComponent:
+	var nc:WaveNodeComponent=get_script().new()
+	nc.viz_rect=viz_rect
+	nc.size_po2=size_po2
+	nc.range_from=range_from
+	nc.range_length=range_length
+	nc.wave=weakref(container)
+	for slot_ix in inputs.size():
+		for comp in inputs[slot_ix][SLOT_IN]:
+			nc.inputs[slot_ix][SLOT_IN].append(
+				container.find_component(comp)
+			)
+	return nc
+
+
+func post_duplicate()->void:
+	for slot in inputs:
+		for inp_ix in slot[SLOT_IN].size():
+			slot[SLOT_IN][inp_ix]=wave.get_ref().components[slot[SLOT_IN][inp_ix]]

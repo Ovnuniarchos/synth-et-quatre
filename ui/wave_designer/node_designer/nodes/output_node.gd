@@ -2,6 +2,8 @@ extends NodeController
 
 
 func set_parameters()->void:
+	if not is_node_ready():
+		yield(self,"ready")
 	$Clip/SpinBar.set_value_no_signal(node.clip)
 
 

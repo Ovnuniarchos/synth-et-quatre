@@ -18,6 +18,7 @@ var inputs:Array
 var wave:WeakRef
 
 var _decay:float
+var _decay_factor:float
 var _last_value:float
 
 
@@ -91,15 +92,16 @@ func calculate_option_slot(result:Array,slot:Array,values:Array,selected_value:f
 	return false
 
 
-func reset_decay()->void:
+func reset_decay(cycle_size:float)->void:
 	_last_value=0.0
 	_decay=1.0
+	_decay_factor=128.0/max(1.0,cycle_size)
 
 
-func calculate_decay(new_value:float,decay_value:float,cycle_size:float)->float:
+func calculate_decay(new_value:float,decay_value:float)->float:
 	var t:float=new_value-_last_value
-	if abs(t)<0.0001 or sign(t)!=sign(new_value):
-		_decay=max(0.0,_decay-(pow(decay_value,4.0)*128.0/cycle_size))
+	if abs(t)<0.00000001 or sign(t)!=sign(new_value):
+		_decay=max(0.0,_decay-(pow(decay_value,4.0)*_decay_factor))
 	else:
 		_decay=1.0
 	_last_value=new_value

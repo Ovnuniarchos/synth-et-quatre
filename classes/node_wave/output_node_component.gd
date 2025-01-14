@@ -19,9 +19,11 @@ func _init()->void:
 func calculate()->Array:
 	if output_valid:
 		return output
+	var ti:int=OS.get_ticks_msec()
 	calculate_slot(input_values,input_slot,0.0)
 	for i in size:
 		output[i]=clamp(input_values[i],-clip,clip)
+	print(OS.get_ticks_msec()-ti)
 	output_valid=true
 	return output
 

@@ -101,7 +101,7 @@ func calculate()->Array:
 	var q:float
 	var optr:int=fposmod(range_from*size,size)
 	var qts:Array=TriangleNodeConstants.get_calc_array()
-	reset_decay()
+	reset_decay(sz)
 	for i in sz:
 		phi=(iphi*frequency_values[optr])+phi0_values[optr]
 		q=fposmod(phi,0.25)*4.0
@@ -111,7 +111,7 @@ func calculate()->Array:
 		qts[3]=q-1.0
 		q=qts[quarter_values[fposmod(phi,1.0)*4.0][optr]]
 		q=dc_values[optr]+pow(abs(q),power_values[optr])*sign(q)*amplitude_values[optr]
-		output[optr]=calculate_decay(q,decay_values[optr],sz)
+		output[optr]=calculate_decay(q,decay_values[optr])
 		iphi+=cycle
 		optr=(optr+1)&size_mask
 	output_valid=true

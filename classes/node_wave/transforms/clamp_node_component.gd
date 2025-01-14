@@ -158,11 +158,11 @@ func calculate()->Array:
 	var mode:int
 	var lvh:float
 	var lvl:float
-	reset_decay()
+	reset_decay(sz)
 	for i in sz:
 		mix=lerp(mix_values[optr],clamp(mix_values[optr],0.0,1.0),clamp_mix_values[optr])
 		if is_nan(mode_hi_values[optr]) or is_nan(mode_lo_values[optr]):
-			mode=ClampNodeConstants.CLAMP_SHIFT
+			mode=ClampNodeConstants.CLAMP_XX
 		else:
 			mode=(int(mode_hi_values[optr])<<ClampNodeConstants.CLAMP_SHIFT)|int(mode_lo_values[optr])
 		t=input_values[optr]
@@ -233,7 +233,7 @@ func calculate()->Array:
 						t=lvl+t
 		t=lerp(input_values[optr],t,mix)
 		output[optr]=(calculate_decay(
-			pow(abs(t),power_values[optr])*sign(t),decay_values[optr],sz
+			pow(abs(t),power_values[optr])*sign(t),decay_values[optr]
 		)*amplitude_values[optr])+dc_values[optr]
 		optr=(optr+1)&size_mask
 	fill_out_of_region(sz,optr,input_values,isolate_values)

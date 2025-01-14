@@ -136,7 +136,7 @@ func calculate()->Array:
 	var t:float
 	var t1:float
 	var t2:float
-	reset_decay()
+	reset_decay(sz)
 	for i in sz:
 		if not is_nan(input_values[optr]):
 			t=range_lerp(input_values[optr],-1.0,1.0,0.0,size)
@@ -173,10 +173,11 @@ func calculate()->Array:
 				t=lerp(mapping_values[t],t1,t2)
 		else:
 			t=NAN
-		if map_empty_values[optr]>=0.5:
-			output[optr]=t
-		else:
-			output[optr]=input_values[optr] if is_nan(t) else t
+		if map_empty_values[optr]<0.5:
+			t=input_values[optr] if is_nan(t) else t
+		output[optr]=(calculate_decay(
+			pow(abs(t),power_values[optr])*sign(t),decay_values[optr]
+		)*amplitude_values[optr])+dc_values[optr]
 		optr=(optr+1)&size_mask
 	fill_out_of_region(sz,optr,input_values,isolate_values)
 	output_valid=true

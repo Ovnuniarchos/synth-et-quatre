@@ -111,7 +111,7 @@ func calculate()->Array:
 	var mix:float
 	var a_in:float
 	var b_in:float
-	reset_decay()
+	reset_decay(sz)
 	for i in sz:
 		mix=lerp(mix_values[optr],clamp(mix_values[optr],-1.0,1.0),clamp_mix_values[optr])
 		a_in=b_values[optr] if is_nan(a_values[optr]) else a_values[optr]
@@ -153,7 +153,7 @@ func calculate()->Array:
 		elif op_values[optr]==MixNodeConstants.MIX_UNDER:
 			t=b_in if is_nan(a_in) else a_in
 		t=lerp(t,b_in,mix) if mix>0.0 else lerp(t,a_in,-mix)
-		output[optr]=calculate_decay(pow(abs(t),power_values[optr])*sign(t),decay_values[optr],sz)+dc_values[optr]
+		output[optr]=calculate_decay(pow(abs(t),power_values[optr])*sign(t),decay_values[optr])+dc_values[optr]
 		optr=(optr+1)&size_mask
 	fill_out_of_region(sz,optr,a_values,isolate_values)
 	output_valid=true

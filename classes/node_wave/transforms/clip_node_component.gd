@@ -21,8 +21,6 @@ func calculate()->Array:
 	calculate_slot(input_values,input_slot,NAN)
 	var sz:int=max(1.0,size*range_length)
 	var optr:int=fposmod(range_from*size,size)
-	var t:float
-	var mix:float
 	for i in sz:
 		output[optr]=input_values[optr]
 		optr=(optr+1)&size_mask

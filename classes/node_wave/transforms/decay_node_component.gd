@@ -82,9 +82,9 @@ func calculate()->Array:
 	var sz:int=max(1.0,size*range_length)
 	var optr:int=fposmod(range_from*size,size)
 	var t:float
-	reset_decay()
+	reset_decay(sz)
 	for i in sz:
-		t=calculate_decay(input_values[optr],decay_values[optr],sz)
+		t=calculate_decay(input_values[optr],decay_values[optr])
 		t=lerp(input_values[optr],t,lerp(mix_values[optr],clamp(mix_values[optr],0.0,1.0),clamp_mix_values[optr]))
 		output[optr]=pow(abs(t),power_values[optr])*sign(t)*amplitude_values[optr]
 		optr=(optr+1)&size_mask

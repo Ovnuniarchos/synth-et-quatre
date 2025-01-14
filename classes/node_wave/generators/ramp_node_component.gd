@@ -18,7 +18,6 @@ func calculate()->Array:
 	var cycle:float=1.0/sz
 	var phi:float=0.0
 	var optr:int=fposmod(range_from*size,size)
-	reset_decay()
 	for i in sz:
 		output[optr]=lerp(ramp_from,ramp_to,ease(phi,curve))
 		phi+=cycle

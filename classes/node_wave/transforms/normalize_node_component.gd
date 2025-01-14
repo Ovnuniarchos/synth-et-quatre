@@ -125,7 +125,7 @@ func calculate()->Array:
 	calculate_slot(decay_values,decay_slot,decay)
 	calculate_boolean_slot(isolate_values,isolate_slot,isolate)
 	optr=fposmod(range_from*size,size)
-	reset_decay()
+	reset_decay(sz)
 	var h:float
 	var l:float
 	var hl:float
@@ -139,7 +139,7 @@ func calculate()->Array:
 		)
 		t=lerp(input_values[optr],t,lerp(mix_values[optr],clamp(mix_values[optr],0.0,1.0),clamp_mix_values[optr]))
 		output[optr]=calculate_decay(
-			pow(abs(t),power_values[optr])*sign(t),decay_values[optr],sz
+			pow(abs(t),power_values[optr])*sign(t),decay_values[optr]
 		)*amplitude_values[optr]
 		optr=(optr+1)&size_mask
 	fill_out_of_region(sz,optr,input_values,isolate_values)

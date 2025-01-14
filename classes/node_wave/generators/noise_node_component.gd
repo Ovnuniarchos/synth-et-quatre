@@ -130,11 +130,11 @@ func calculate()->Array:
 		optr=(optr+1)&size_mask
 		phi+=cycle
 	optr=fposmod(range_from*size,size)
-	reset_decay()
+	reset_decay(sz)
 	for i in sz:
 		output[optr]=calculate_decay(
 			range_lerp(output[optr],mn,mx,-amplitude_values[optr],amplitude_values[optr])+dc_values[optr],
-			decay_values[optr],sz
+			decay_values[optr]
 		)
 		optr=(optr+1)&size_mask
 	output_valid=true

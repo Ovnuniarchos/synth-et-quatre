@@ -50,5 +50,5 @@ func _on_Decay_value_changed(value:float)->void:
 
 
 func _on_Isolate_toggled(pressed:bool)->void:
-	node.decay=float(pressed)
+	node.isolate=float(pressed)
 	emit_signal("params_changed",self)

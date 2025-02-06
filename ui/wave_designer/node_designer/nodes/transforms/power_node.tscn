@@ -1,10 +1,10 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://ui/wave_designer/node_designer/nodes/transforms/decay_node.gd" type="Script" id=1]
+[ext_resource path="res://ui/wave_designer/node_designer/nodes/transforms/power_node.gd" type="Script" id=1]
 [ext_resource path="res://ui/widgets/accent_button.gd" type="Script" id=2]
 [ext_resource path="res://ui/widgets/slider_slot.tscn" type="PackedScene" id=3]
 
-[node name="Decay" type="GraphNode"]
+[node name="Power" type="GraphNode"]
 margin_right = 171.0
 margin_bottom = 74.0
 title = "NODE_DECAY_TITLE"
@@ -98,15 +98,20 @@ hint_tooltip = "NODE_INPUT_PORT_TTIP"
 mouse_filter = 1
 text = "NODE_INPUT_PORT"
 
-[node name="Decay" parent="." instance=ExtResource( 3 )]
+[node name="Power" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
 margin_top = 54.0
 margin_right = 245.0
 margin_bottom = 68.0
-type = 5
-label = "NODE_DECAY_PORT"
-tooltip = "NODE_DECAY_PORT_TTIP"
+type = 4
+label = "NODE_POWER_PORT"
+tooltip = "NODE_POWER_PORT_TTIP"
+big_step = 100.0
+huge_step = 500.0
 min_value = 0.0
+max_value = 500.0
+value = 1.0
+clamp_hi = false
 nullable = false
 
 [node name="Mix" parent="." instance=ExtResource( 3 )]
@@ -147,20 +152,15 @@ clamp_lo = false
 clamp_hi = false
 nullable = false
 
-[node name="Power" parent="." instance=ExtResource( 3 )]
+[node name="Decay" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
 margin_top = 114.0
 margin_right = 245.0
 margin_bottom = 128.0
-type = 4
-label = "NODE_POWER_PORT"
-tooltip = "NODE_POWER_PORT_TTIP"
-big_step = 100.0
-huge_step = 500.0
+type = 5
+label = "NODE_DECAY_PORT"
+tooltip = "NODE_DECAY_PORT_TTIP"
 min_value = 0.0
-max_value = 500.0
-value = 1.0
-clamp_hi = false
 nullable = false
 
 [node name="DCOffset" parent="." instance=ExtResource( 3 )]
@@ -207,11 +207,11 @@ min_value = 0.0
 value = 1.0
 nullable = false
 
-[connection signal="value_changed" from="Decay" to="." method="_on_Decay_value_changed"]
+[connection signal="value_changed" from="Power" to="." method="_on_Power_value_changed"]
 [connection signal="value_changed" from="Mix" to="." method="_on_Mix_value_changed"]
 [connection signal="value_changed" from="ClampMix" to="." method="_on_ClampMix_value_changed"]
 [connection signal="value_changed" from="Amplitude" to="." method="_on_Amplitude_value_changed"]
-[connection signal="value_changed" from="Power" to="." method="_on_Power_value_changed"]
+[connection signal="value_changed" from="Decay" to="." method="_on_Decay_value_changed"]
 [connection signal="value_changed" from="DCOffset" to="." method="_on_DCOffset_value_changed"]
 [connection signal="toggled" from="Isolate" to="." method="_on_Isolate_toggled"]
 [connection signal="value_changed" from="RangeFrom" to="." method="_on_RangeFrom_value_changed"]

@@ -1,9 +1,9 @@
 extends NodeComponentIO
-class_name DecayNodeWriter
+class_name PowerNodeWriter
 
 
-func serialize(out:ChunkedFile,node:DecayNodeComponent)->FileResult:
-	_serialize_start(out,node,DECAY_ID,DECAY_VERSION)
+func serialize(out:ChunkedFile,node:PowerNodeComponent)->FileResult:
+	_serialize_start(out,node,POWER_ID,POWER_VERSION)
 	out.store_float(node.mix_value)
 	out.store_float(node.clamp_mix_value)
 	out.store_8(int(node.isolate>=0.5))

@@ -17,6 +17,7 @@ var writers:Dictionary={
 	MixNodeComponent.NODE_TYPE:MixNodeWriter,
 	NormalizeNodeComponent.NODE_TYPE:NormalizeNodeWriter,
 	DecayNodeComponent.NODE_TYPE:DecayNodeWriter,
+	PowerNodeComponent.NODE_TYPE:PowerNodeWriter,
 }
 
 
@@ -45,7 +46,7 @@ func serialize(out:ChunkedFile,wave:NodeWave)->FileResult:
 	return FileResult.new()
 
 
-func serialize_component(out:ChunkedFile,comp:WaveNodeComponent,wave:NodeWave)->FileResult:
+func serialize_component(out:ChunkedFile,comp:WaveNodeComponent,_wave:NodeWave)->FileResult:
 	var fr:FileResult
 	if writers.has(comp.NODE_TYPE):
 		fr=lazy_load(comp.NODE_TYPE).serialize(out,comp)

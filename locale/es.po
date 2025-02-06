@@ -1746,6 +1746,9 @@ msgstr "Normalización"
 msgid "NODED_MENU_DECAY"
 msgstr "Extinción"
 
+msgid "NODED_MENU_POWER"
+msgstr "Exponente"
+
 # Common ports
 msgid "NODE_OUTPUT_PORT"
 msgstr "Salida"
@@ -2279,3 +2282,8 @@ msgstr "Usa toda la onda para calcular los valore máximos/mínimos, en vez de s
 # Decay node
 msgid "NODE_DECAY_TITLE"
 msgstr "EXTINCIÓN"
+
+# Power node
+msgid "NODE_POWER_TITLE"
+msgstr "EXPONENTE"
+

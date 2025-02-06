@@ -490,8 +490,24 @@
 	<Amplitude type="float"/>
 	<Power type="float"/>
 	<Decay type="float"/>
+	<DC type="float"/>
 	<Connections/>
 </DecayNode>
+
+<PowerNode>
+	<ChunkHeader id="pOWN"/>
+	<GraphPositions/>
+	<RangeFrom type="float"/>
+	<RangeLength type="float"/>
+	<Mix type="float"/>
+	<ClampMix type="float"/>
+	<Isolate type="boolean"/>
+	<Amplitude type="float"/>
+	<Power type="float"/>
+	<Decay type="float"/>
+	<DC type="float"/>
+	<Connections/>
+</PowerNode>
 
 <Connections>
 	<InputsConnectedCount type="uint16"/>

@@ -7,7 +7,6 @@ script/source = "extends Node
 FIXME
 TODO:
 	Node-based wave generator
-		Power filter
 		Quantize amplitude/time filter
 		Convolution/frequency filters
 		How to multivalue?

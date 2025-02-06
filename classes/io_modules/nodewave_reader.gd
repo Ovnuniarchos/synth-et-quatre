@@ -17,6 +17,7 @@ var readers:Dictionary={
 	NodeComponentIO.MIX_ID:MixNodeReader,
 	NodeComponentIO.NORMALIZE_ID:NormalizeNodeReader,
 	NodeComponentIO.DECAY_ID:DecayNodeReader,
+	NodeComponentIO.POWER_ID:PowerNodeReader,
 }
 
 

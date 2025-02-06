@@ -139,5 +139,5 @@ func duplicate(container:Reference)->WaveNodeComponent:
 	nc.decay=decay
 	nc.dc=dc
 	for i in 4:
-		nc.quarters[i]=quarters[i]
+		nc.quarters[i]=quarters[i].duplicate()
 	return nc

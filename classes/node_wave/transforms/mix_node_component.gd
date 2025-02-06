@@ -170,13 +170,13 @@ func equals(other:WaveNodeComponent)->bool:
 
 func duplicate(container:Reference)->WaveNodeComponent:
 	var nc:MixNodeComponent=.duplicate(container) as MixNodeComponent
-	nc. a_value=a_value
-	nc. b_value=b_value
-	nc. mix_value=mix_value
-	nc. clamp_mix_value=clamp_mix_value
-	nc. op_value=op_value
-	nc. isolate=isolate
-	nc. power=power
-	nc. decay=decay
-	nc. dc=dc
+	nc.a_value=a_value
+	nc.b_value=b_value
+	nc.mix_value=mix_value
+	nc.clamp_mix_value=clamp_mix_value
+	nc.op_value=op_value
+	nc.isolate=isolate
+	nc.power=power
+	nc.decay=decay
+	nc.dc=dc
 	return nc

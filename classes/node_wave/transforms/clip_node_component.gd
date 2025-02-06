@@ -32,3 +32,6 @@ func equals(other:WaveNodeComponent)->bool:
 	if (other as ClipNodeComponent)==null:
 		return false
 	return .equals(other)
+
+
+# Uses parent duplicate()

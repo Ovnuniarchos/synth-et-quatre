@@ -152,8 +152,7 @@ func calculate()->Array:
 		phi=fposmod((iphi*frequency_values[optr])+phi0_values[optr],1.0)
 		q=float(phi<ppl[i]-1.0 or (phi>=pps[i] and phi<ppl[i]))*ppulse_amplitude_values[optr]
 		q-=float(phi<npl[i]-1.0 or (phi>=nps[i] and phi<npl[i]))*npulse_amplitude_values[optr]
-		q=dc_values[optr]+q*amplitude_values[optr]
-		output[optr]=calculate_decay(q,decay_values[optr])
+		output[optr]=calculate_decay(q,decay_values[optr])*amplitude_values[optr]+dc_values[optr]
 		iphi+=cycle
 		optr=(optr+1)&size_mask
 	output_valid=true

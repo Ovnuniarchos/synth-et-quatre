@@ -25,7 +25,7 @@ FUTURE:
 	Import waveforms from instrument
 \"\"\"
 
-\"\"\"const TIMES:int=1000000
+const TIMES:int=1000000
 
 func f_A(x:float)->float:
 	return x-1.0
@@ -187,10 +187,6 @@ func obj_funcref_array()->void:
 	for i in TIMES:
 		val=fns[randi()&3].call_func(val)
 	print(\"ObjFuncrefArray: \",OS.get_ticks_usec()-ti)
-\"\"\"
-
-func _ready()->void:
-	pass
 "
 
 [node name="test" type="Node"]

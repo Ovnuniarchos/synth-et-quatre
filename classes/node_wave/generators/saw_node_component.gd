@@ -114,8 +114,7 @@ func calculate()->Array:
 		qts[6]=-q
 		qts[7]=-0.5-q
 		q=qts[quarter_values[fposmod(phi,1.0)*4.0][optr]]
-		q=dc_values[optr]+pow(abs(q),power_values[optr])*sign(q)*amplitude_values[optr]
-		output[optr]=calculate_decay(q,decay_values[optr])
+		output[optr]=calculate_decay(pow(abs(q),power_values[optr])*sign(q),decay_values[optr])*amplitude_values[optr]+dc_values[optr]
 		iphi+=cycle
 		optr=(optr+1)&size_mask
 	output_valid=true

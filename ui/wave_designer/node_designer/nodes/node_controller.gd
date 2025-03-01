@@ -13,7 +13,7 @@ const SLOT_COLORS:Array=[
 ]
 
 
-var node:WaveNodeComponent
+var node:WaveNodeComponent setget set_node
 
 export (String) var base_title:String setget set_base_title
 
@@ -37,14 +37,20 @@ func _ready()->void:
 				set_slot_color_left(i,c)
 			if is_slot_enabled_right(i):
 				set_slot_color_right(i,c)
-	if node.viz_rect.is_equal_approx(Rect2(Vector2.ZERO,Vector2.ZERO)):
-		node.viz_rect=Rect2(offset,rect_size)
-	else:
-		offset=node.viz_rect.position
-		rect_size=node.viz_rect.size
+	set_node(node)
 	for i in get_child_count():
 		_on_slot_updated(i)
 	_notification(NOTIFICATION_TRANSLATION_CHANGED)
+
+
+func set_node(n:WaveNodeComponent)->void:
+	if n!=null:
+		if n.viz_rect.is_equal_approx(Rect2(Vector2.ZERO,Vector2.ZERO)):
+			n.viz_rect=Rect2(offset,rect_size)
+		else:
+			offset=n.viz_rect.position
+			rect_size=n.viz_rect.size
+	node=n
 
 
 func _notification(n:int)->void:

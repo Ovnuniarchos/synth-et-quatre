@@ -27,45 +27,138 @@ FUTURE:
 
 const TIMES:int=1000000
 
-func f_A(x:float)->float:
+func f_0(x:float)->float:
 	return x-1.0
 
-func f_B(x:float)->float:
+func f_1(x:float)->float:
 	return x+1.0
 
-func f_C(x:float)->float:
+func f_2(x:float)->float:
 	return -x
 
-func f_D(x:float)->float:
+func f_3(x:float)->float:
 	return abs(x)
 
-class A extends Reference:
+func f_4(x:float)->float:
+	return -abs(x)
+
+func f_5(x:float)->float:
+	return x+2.0
+
+func f_6(x:float)->float:
+	return x-2.0
+
+func f_7(x:float)->float:
+	return x-abs(x)
+
+func f_8(x:float)->float:
+	return x+abs(x)
+
+func f_9(x:float)->float:
+	return abs(x+1.0)
+
+func f_10(x:float)->float:
+	return abs(x-1.0)
+
+func f_11(x:float)->float:
+	return x+0.5
+
+func f_12(x:float)->float:
+	return x-0.5
+
+func f_13(x:float)->float:
+	return x+0.1
+
+func f_14(x:float)->float:
+	return x-0.1
+
+func f_15(x:float)->float:
+	return sign(x)
+
+class F0 extends Reference:
 	func fn(x:float)->float:
 		return x-1.0
 
-class B extends Reference:
+class F1 extends Reference:
 	func fn(x:float)->float:
 		return x+1.0
 
-class C extends Reference:
+class F2 extends Reference:
 	func fn(x:float)->float:
 		return -x
 
-class D extends Reference:
+class F3 extends Reference:
 	func fn(x:float)->float:
 		return abs(x)
 
+class F4 extends Reference:
+	func fn(x:float)->float:
+		return -abs(x)
+
+class F5 extends Reference:
+	func fn(x:float)->float:
+		return x+2.0
+
+class F6 extends Reference:
+	func fn(x:float)->float:
+		return x-2.0
+
+class F7 extends Reference:
+	func fn(x:float)->float:
+		return x-abs(x)
+
+class F8 extends Reference:
+	func fn(x:float)->float:
+		return x+abs(x)
+
+class F9 extends Reference:
+	func fn(x:float)->float:
+		return abs(x+1.0)
+
+class F10 extends Reference:
+	func fn(x:float)->float:
+		return abs(x-1.0)
+
+class F11 extends Reference:
+	func fn(x:float)->float:
+		return x+0.5
+
+class F12 extends Reference:
+	func fn(x:float)->float:
+		return x-0.5
+
+class F13 extends Reference:
+	func fn(x:float)->float:
+		return x+0.1
+
+class F14 extends Reference:
+	func fn(x:float)->float:
+		return x-0.1
+
+class F15 extends Reference:
+	func fn(x:float)->float:
+		return sign(x)
+
 var mode:int=0
+var mask:int=15
 var execs:Array=[
-	funcref(self,\"if_chain_code\"),funcref(self,\"match_code_var\"),funcref(self,\"match_code\"),
-	funcref(self,\"if_chain_func\"),funcref(self,\"match_func_var\"),funcref(self,\"match_func\"),
+	funcref(self,\"if_chain_code\"),funcref(self,\"if_tree_code\"),funcref(self,\"match_code_var\"),funcref(self,\"match_code\"),
+	funcref(self,\"if_chain_func\"),funcref(self,\"if_tree_func\"),funcref(self,\"match_func_var\"),funcref(self,\"match_func\"),
 	funcref(self,\"funcref_array\"),funcref(self,\"obj_array\"),funcref(self,\"obj_funcref_array\")
 ]
 
+func _ready()->void:
+	print(\">>>>\",mask)
+
 func _process(_delta:float)->void:
-	if mode<execs.size():
-		execs[mode].call_func()
-		mode+=1
+	if mask>1:
+		if mode<execs.size():
+			execs[mode].call_func()
+			mode+=1
+		else:
+			mode=0
+			mask>>=1
+			print(\">>>>\",mask)
 	else:
 		set_process(false)
 
@@ -74,39 +167,215 @@ func if_chain_code()->void:
 	var val:float=0.0
 	var ti:int=OS.get_ticks_usec()
 	for i in TIMES:
-		op=randi()&3
+		op=randi()&mask
 		if op==0:
-			val=val-1.0
+			val-=1.0
 		elif op==1:
-			val=val+1.0
+			val+=1.0
 		elif op==2:
 			val=-val
-		else:
+		elif op==3:
 			val=abs(val)
+		elif op==4:
+			val=-abs(val)
+		elif op==5:
+			val+=2.0
+		elif op==6:
+			val-=2.0
+		elif op==7:
+			val-=abs(val)
+		elif op==8:
+			val+=abs(val)
+		elif op==9:
+			val=abs(val+1.0)
+		elif op==10:
+			val=abs(val-1.0)
+		elif op==11:
+			val+=0.5
+		elif op==12:
+			val-=0.5
+		elif op==13:
+			val+=0.1
+		elif op==14:
+			val-=0.1
+		else:
+			val=sign(val)
 	print(\"IfChainCode: \",OS.get_ticks_usec()-ti)
+
+func if_tree_code()->void:
+	var op:int
+	var val:float=0.0
+	var ti:int
+	if mask==15:
+		ti=OS.get_ticks_usec()
+		for i in TIMES:
+			op=randi()&mask
+			if op<8:
+				if op<4:
+					if op<2:
+						if op==0:
+							val-=1.0
+						else:
+							val+=1.0
+					else:
+						if op==2:
+							val=-val
+						else:
+							val=abs(val)
+				else:
+					if op<6:
+						if op==4:
+							val=-abs(val)
+						else:
+							val+=2.0
+					else:
+						if op==6:
+							val-=2.0
+						else:
+							val-=abs(val)
+			else:
+				if op<12:
+					if op<10:
+						if op==8:
+							val+=abs(val)
+						else:
+							val=abs(val+1.0)
+					else:
+						if op==10:
+							val=abs(val-1.0)
+						else:
+							val+=0.5
+				else:
+					if op<14:
+						if op==12:
+							val-=0.5
+						else:
+							val+=0.1
+					else:
+						if op==14:
+							val-=0.1
+						else:
+							val=sign(val)
+	elif mask==7:
+		ti=OS.get_ticks_usec()
+		for i in TIMES:
+			op=randi()&mask
+			if op<4:
+				if op<2:
+					if op==0:
+						val-=1.0
+					else:
+						val+=1.0
+				else:
+					if op==2:
+						val=-val
+					else:
+						val=abs(val)
+			else:
+				if op<6:
+					if op==4:
+						val=-abs(val)
+					else:
+						val+=2.0
+				else:
+					if op==6:
+						val-=2.0
+					else:
+						val-=abs(val)
+	elif mask==3:
+		ti=OS.get_ticks_usec()
+		for i in TIMES:
+			op=randi()&mask
+			if op<2:
+				if op==0:
+					val-=1.0
+				else:
+					val+=1.0
+			else:
+				if op==2:
+					val=-val
+				else:
+					val=abs(val)
+	print(\"IfTreeCode: \",OS.get_ticks_usec()-ti)
 
 func match_code_var()->void:
 	var op:int
 	var val:float=0.0
 	var ti:int=OS.get_ticks_usec()
 	for i in TIMES:
-		op=randi()&3
+		op=randi()&mask
 		match op:
-			0: val=val-1.0
-			1: val=val+1.0
-			2: val=-val
-			_: val=abs(val)
+			0:
+				val=val-1.0
+			1:
+				val=val+1.0
+			2:
+				val=-val
+			3:
+				val=abs(val)
+			4:
+				val=-abs(val)
+			5:
+				val+=2.0
+			6:
+				val-=2.0
+			7:
+				val-=abs(val)
+			8:
+				val+=abs(val)
+			9:
+				val=abs(val+1.0)
+			10:
+				val=abs(val-1.0)
+			11:
+				val+=0.5
+			12:
+				val-=0.5
+			13:
+				val+=0.1
+			14:
+				val-=0.1
+			_:
+				val=sign(val)
 	print(\"MatchVarCode: \",OS.get_ticks_usec()-ti)
 
 func match_code()->void:
 	var val:float=0.0
 	var ti:int=OS.get_ticks_usec()
 	for i in TIMES:
-		match randi()&3:
-			0: val=val-1.0
-			1: val=val+1.0
-			2: val=-val
-			_: val=abs(val)
+		match randi()&mask:
+			0:
+				val=val-1.0
+			1:
+				val=val+1.0
+			2:
+				val=-val
+			3:
+				val=abs(val)
+			4:
+				val=-abs(val)
+			5:
+				val+=2.0
+			6:
+				val-=2.0
+			7:
+				val-=abs(val)
+			8:
+				val+=abs(val)
+			9:
+				val=abs(val+1.0)
+			10:
+				val=abs(val-1.0)
+			11:
+				val+=0.5
+			12:
+				val-=0.5
+			13:
+				val+=0.1
+			14:
+				val-=0.1
+			_:
+				val=sign(val)
 	print(\"MatchCode: \",OS.get_ticks_usec()-ti)
 
 func if_chain_func()->void:
@@ -114,78 +383,287 @@ func if_chain_func()->void:
 	var val:float=0.0
 	var ti:int=OS.get_ticks_usec()
 	for i in TIMES:
-		op=randi()&3
+		op=randi()&mask
 		if op==0:
-			val=f_A(val)
+			val=f_0(val)
 		elif op==1:
-			val=f_B(val)
+			val=f_1(val)
 		elif op==2:
-			val=f_C(val)
-		else:
-			val=f_D(val)
+			val=f_2(val)
+		elif op==3:
+			val=f_3(val)
+		elif op==4:
+			val=f_4(val)
+		elif op==5:
+			val=f_5(val)
+		elif op==6:
+			val=f_6(val)
+		elif op==7:
+			val=f_7(val)
+		elif op==8:
+			val=f_8(val)
+		elif op==9:
+			val=f_9(val)
+		elif op==10:
+			val=f_10(val)
+		elif op==11:
+			val=f_11(val)
+		elif op==12:
+			val=f_12(val)
+		elif op==13:
+			val=f_13(val)
+		elif op==14:
+			val=f_14(val)
+		elif op==15:
+			val=f_15(val)
 	print(\"IfChainFunc: \",OS.get_ticks_usec()-ti)
+
+func if_tree_func()->void:
+	var op:int
+	var val:float=0.0
+	var ti:int
+	if mask==15:
+		ti=OS.get_ticks_usec()
+		for i in TIMES:
+			op=randi()&mask
+			if op<8:
+				if op<4:
+					if op<2:
+						if op==0:
+							val=f_0(val)
+						else:
+							val=f_1(val)
+					else:
+						if op==2:
+							val=f_2(val)
+						else:
+							val=f_3(val)
+				else:
+					if op<6:
+						if op==4:
+							val=f_4(val)
+						else:
+							val=f_5(val)
+					else:
+						if op==6:
+							val=f_6(val)
+						else:
+							val=f_7(val)
+			else:
+				if op<12:
+					if op<10:
+						if op==8:
+							val=f_8(val)
+						else:
+							val=f_9(val)
+					else:
+						if op==10:
+							val=f_10(val)
+						else:
+							val=f_11(val)
+				else:
+					if op<14:
+						if op==12:
+							val=f_12(val)
+						else:
+							val=f_13(val)
+					else:
+						if op==14:
+							val=f_14(val)
+						else:
+							val=f_15(val)
+	if mask==15:
+		ti=OS.get_ticks_usec()
+		for i in TIMES:
+			op=randi()&mask
+			if op<8:
+				if op<4:
+					if op<2:
+						if op==0:
+							val=f_0(val)
+						else:
+							val=f_1(val)
+					else:
+						if op==2:
+							val=f_2(val)
+						else:
+							val=f_3(val)
+				else:
+					if op<6:
+						if op==4:
+							val=f_4(val)
+						else:
+							val=f_5(val)
+					else:
+						if op==6:
+							val=f_6(val)
+						else:
+							val=f_7(val)
+			else:
+				if op<12:
+					if op<10:
+						if op==8:
+							val=f_8(val)
+						else:
+							val=f_9(val)
+					else:
+						if op==10:
+							val=f_10(val)
+						else:
+							val=f_11(val)
+				else:
+					if op<14:
+						if op==12:
+							val=f_12(val)
+						else:
+							val=f_13(val)
+					else:
+						if op==14:
+							val=f_14(val)
+						else:
+							val=f_15(val)
+	elif mask==7:
+		ti=OS.get_ticks_usec()
+		for i in TIMES:
+			op=randi()&mask
+			if op<4:
+				if op<2:
+					if op==0:
+						val=f_0(val)
+					else:
+						val=f_1(val)
+				else:
+					if op==2:
+						val=f_2(val)
+					else:
+						val=f_3(val)
+			else:
+				if op<6:
+					if op==4:
+						val=f_4(val)
+					else:
+						val=f_5(val)
+				else:
+					if op==6:
+						val=f_6(val)
+					else:
+						val=f_7(val)
+	elif mask==3:
+		ti=OS.get_ticks_usec()
+		for i in TIMES:
+			op=randi()&mask
+			if op<2:
+				if op==0:
+					val=f_0(val)
+				else:
+					val=f_1(val)
+			else:
+				if op==2:
+					val=f_2(val)
+				else:
+					val=f_3(val)
+	print(\"IfTreeFunc: \",OS.get_ticks_usec()-ti)
 
 func match_func_var()->void:
 	var op:int
 	var val:float=0.0
 	var ti:int=OS.get_ticks_usec()
 	for i in TIMES:
-		op=randi()&3
+		op=randi()&mask
 		match op:
-			0: val=f_A(val)
-			1: val=f_B(val)
-			2: val=f_C(val)
-			_: val=f_D(val)
+			0: val=f_0(val)
+			1: val=f_1(val)
+			2: val=f_2(val)
+			3: val=f_3(val)
+			4: val=f_4(val)
+			5: val=f_5(val)
+			6: val=f_6(val)
+			7: val=f_7(val)
+			8: val=f_8(val)
+			9: val=f_9(val)
+			10: val=f_10(val)
+			11: val=f_11(val)
+			12: val=f_12(val)
+			13: val=f_13(val)
+			14: val=f_14(val)
+			15: val=f_15(val)
 	print(\"MatchVarFunc: \",OS.get_ticks_usec()-ti)
 
 func match_func()->void:
 	var val:float=0.0
 	var ti:int=OS.get_ticks_usec()
 	for i in TIMES:
-		match randi()&3:
-			0: val=f_A(val)
-			1: val=f_B(val)
-			2: val=f_C(val)
-			_: val=f_D(val)
+		match randi()&mask:
+			0: val=f_0(val)
+			1: val=f_1(val)
+			2: val=f_2(val)
+			3: val=f_3(val)
+			4: val=f_4(val)
+			5: val=f_5(val)
+			6: val=f_6(val)
+			7: val=f_7(val)
+			8: val=f_8(val)
+			9: val=f_9(val)
+			10: val=f_10(val)
+			11: val=f_11(val)
+			12: val=f_12(val)
+			13: val=f_13(val)
+			14: val=f_14(val)
+			15: val=f_15(val)
 	print(\"MatchFunc: \",OS.get_ticks_usec()-ti)
 
 func funcref_array()->void:
 	var fns:Array=[
-		funcref(self,\"f_A\"),
-		funcref(self,\"f_B\"),
-		funcref(self,\"f_C\"),
-		funcref(self,\"f_D\")
+		funcref(self,\"f_0\"),
+		funcref(self,\"f_1\"),
+		funcref(self,\"f_2\"),
+		funcref(self,\"f_3\"),
+		funcref(self,\"f_4\"),
+		funcref(self,\"f_5\"),
+		funcref(self,\"f_6\"),
+		funcref(self,\"f_7\"),
+		funcref(self,\"f_8\"),
+		funcref(self,\"f_9\"),
+		funcref(self,\"f_10\"),
+		funcref(self,\"f_11\"),
+		funcref(self,\"f_12\"),
+		funcref(self,\"f_13\"),
+		funcref(self,\"f_14\"),
+		funcref(self,\"f_15\"),
 	]
 	var val:float=0.0
 	var ti:int=OS.get_ticks_usec()
 	for i in TIMES:
-		val=fns[randi()&3].call_func(val)
+		val=fns[randi()&mask].call_func(val)
 	print(\"FuncrefArray: \",OS.get_ticks_usec()-ti)
 
 func obj_array()->void:
 	var objs:Array=[
-		A.new(),B.new(),C.new(),D.new()
+		F0.new(),F1.new(),F2.new(),F3.new(),
+		F4.new(),F5.new(),F6.new(),F7.new(),
+		F8.new(),F9.new(),F10.new(),F11.new(),
+		F12.new(),F13.new(),F14.new(),F15.new(),
 	]
 	var val:float=0.0
 	var ti:int=OS.get_ticks_usec()
 	for i in TIMES:
-		val=objs[randi()&3].fn(val)
+		val=objs[randi()&mask].fn(val)
 	print(\"ObjArray: \",OS.get_ticks_usec()-ti)
 
 func obj_funcref_array()->void:
 	var objs:Array=[
-		A.new(),B.new(),C.new(),D.new()
+		F0.new(),F1.new(),F2.new(),F3.new(),
+		F4.new(),F5.new(),F6.new(),F7.new(),
+		F8.new(),F9.new(),F10.new(),F11.new(),
+		F12.new(),F13.new(),F14.new(),F15.new(),
 	]
-	var fns:Array=[
-		funcref(objs[0],\"fn\"),
-		funcref(objs[1],\"fn\"),
-		funcref(objs[2],\"fn\"),
-		funcref(objs[3],\"fn\"),
-	]
+	var fns:Array=[]
+	for obj in objs:
+		fns.append(funcref(obj,\"fn\"))
 	var val:float=0.0
 	var ti:int=OS.get_ticks_usec()
 	for i in TIMES:
-		val=fns[randi()&3].call_func(val)
+		val=fns[randi()&mask].call_func(val)
 	print(\"ObjFuncrefArray: \",OS.get_ticks_usec()-ti)
 "
 

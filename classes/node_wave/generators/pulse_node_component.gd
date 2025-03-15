@@ -114,10 +114,6 @@ func set_dc(value:float)->void:
 func calculate()->Array:
 	if output_valid:
 		return output
-	var pps:Array=[]
-	var ppl:Array=[]
-	var nps:Array=[]
-	var npl:Array=[]
 	clear_array(output,size,NAN)
 	calculate_slot(ppulse_start_values,ppulse_start_slot,ppulse_start)
 	calculate_slot(ppulse_length_values,ppulse_length_slot,ppulse_length)
@@ -125,36 +121,16 @@ func calculate()->Array:
 	calculate_slot(npulse_start_values,npulse_start_slot,npulse_start)
 	calculate_slot(npulse_length_values,npulse_length_slot,npulse_length)
 	calculate_slot(npulse_amplitude_values,npulse_amplitude_slot,npulse_amplitude)
-	var sz:int=max(1.0,size*range_length)
-	var optr:int=fposmod(range_from*size,size)
-	pps.resize(sz)
-	ppl.resize(sz)
-	nps.resize(sz)
-	npl.resize(sz)
-	for i in sz:
-		pps[i]=fposmod(ppulse_start_values[optr],1.0)
-		ppl[i]=clamp(ppulse_length_values[optr],0.0,1.0)+pps[i]
-		nps[i]=fposmod(npulse_start_values[optr],1.0)
-		npl[i]=clamp(npulse_length_values[optr],0.0,1.0)+nps[i]
-		optr=(optr+1)&size_mask
 	calculate_slot(frequency_values,frequency_slot,frequency)
 	calculate_slot(amplitude_values,amplitude_slot,amplitude)
 	calculate_slot(phi0_values,phi0_slot,phi0)
 	calculate_slot(decay_values,decay_slot,decay)
 	calculate_slot(dc_values,dc_slot,dc)
-	var cycle:float=1.0/sz
-	var phi:float
-	var iphi:float=0.0
-	var q:float
-	reset_decay(sz)
-	optr=fposmod(range_from*size,size)
-	for i in sz:
-		phi=fposmod((iphi*frequency_values[optr])+phi0_values[optr],1.0)
-		q=float(phi<ppl[i]-1.0 or (phi>=pps[i] and phi<ppl[i]))*ppulse_amplitude_values[optr]
-		q-=float(phi<npl[i]-1.0 or (phi>=nps[i] and phi<npl[i]))*npulse_amplitude_values[optr]
-		output[optr]=calculate_decay(q,decay_values[optr])*amplitude_values[optr]+dc_values[optr]
-		iphi+=cycle
-		optr=(optr+1)&size_mask
+	NODES.pulse(output,max(1.0,size*range_length),fposmod(range_from*size,size),
+		ppulse_start_values,ppulse_length_values,ppulse_amplitude_values,
+		npulse_start_values,npulse_length_values,npulse_amplitude_values,
+		frequency_values,amplitude_values,phi0_values,decay_values,dc_values
+	)
 	output_valid=true
 	return output
 

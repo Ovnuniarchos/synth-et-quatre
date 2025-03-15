@@ -19,11 +19,7 @@ func calculate()->Array:
 		return output
 	clear_array(output,size,NAN)
 	calculate_slot(input_values,input_slot,NAN)
-	var sz:int=max(1.0,size*range_length)
-	var optr:int=fposmod(range_from*size,size)
-	for i in sz:
-		output[optr]=input_values[optr]
-		optr=(optr+1)&size_mask
+	NODES.clip(output,max(1.0,size*range_length),fposmod(range_from*size,size),input_values)
 	output_valid=true
 	return output
 

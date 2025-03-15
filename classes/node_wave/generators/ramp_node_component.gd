@@ -14,14 +14,9 @@ func calculate()->Array:
 	if output_valid:
 		return output
 	clear_array(output,size,NAN)
-	var sz:int=max(1.0,size*range_length)
-	var cycle:float=1.0/sz
-	var phi:float=0.0
-	var optr:int=fposmod(range_from*size,size)
-	for i in sz:
-		output[optr]=lerp(ramp_from,ramp_to,ease(phi,curve))
-		phi+=cycle
-		optr=(optr+1)&size_mask
+	NODES.ramp(output,max(1.0,size*range_length),fposmod(range_from*size,size),
+		ramp_from,ramp_to,curve
+	)
 	output_valid=true
 	return output
 

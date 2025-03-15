@@ -129,25 +129,11 @@ func calculate()->Array:
 	calculate_slot(power_values,power_slot,power)
 	calculate_slot(decay_values,decay_slot,decay)
 	calculate_slot(dc_values,dc_slot,dc)
-	var sz:int=max(1.0,size*range_length)
-	var optr:int=fposmod(range_from*size,size)
-	var t:float
-	reset_decay(sz)
-	for i in sz:
-		t=range_lerp(
-			input_values[optr],
-			min_in_values[optr],max_in_values[optr],
-			min_out_values[optr],max_out_values[optr]
-		)
-		t=lerp(
-			input_values[optr],t,
-			lerp(mix_values[optr],clamp(mix_values[optr],0.0,1.0),clamp_mix_values[optr])
-		)
-		output[optr]=(calculate_decay(
-			pow(abs(t),power_values[optr])*sign(t),decay_values[optr]
-		)*amplitude_values[optr])+dc_values[optr]
-		optr=(optr+1)&size_mask
-	fill_out_of_region(sz,optr,input_values,isolate_values)
+	NODES.map_range(output,max(1.0,size*range_length),fposmod(range_from*size,size),input_values,
+		min_in_values,max_in_values,min_out_values,max_out_values,
+		mix_values,clamp_mix_values,isolate_values,
+		amplitude_values,power_values,decay_values,dc_values
+	)
 	output_valid=true
 	return output
 

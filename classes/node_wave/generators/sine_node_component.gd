@@ -91,32 +91,13 @@ func calculate()->Array:
 	for i in 4:
 		calculate_option_slot(
 			quarter_values[i],quarter_slots[i],
-			SineNodeConstants.AS_ARRAY,
+			SineNodeConstants.SNQ_MAX,
 			quarters[i]
 		)
-	var sz:int=max(1.0,size*range_length)
-	var cycle:float=1.0/sz
-	var phi:float
-	var iphi:float=0.0
-	var q:float
-	var t:float
-	var optr:int=fposmod(range_from*size,size)
-	var qts:Array=SineNodeConstants.get_calc_array()
-	var si:Array=GLOBALS.SIN
-	reset_decay(sz)
-	for i in sz:
-		phi=(iphi*frequency_values[optr])+phi0_values[optr]
-		q=fposmod(phi,0.25)*65536
-		t=si[q]
-		qts[0]=t
-		qts[2]=-t
-		t=si[16383-q]
-		qts[1]=t
-		qts[3]=-t
-		q=qts[quarter_values[fposmod(phi,1.0)*4.0][optr]]
-		output[optr]=calculate_decay(pow(abs(q),power_values[optr])*sign(q),decay_values[optr])*amplitude_values[optr]+dc_values[optr]
-		iphi+=cycle
-		optr=(optr+1)&size_mask
+	NODES.sine(output,max(1.0,size*range_length),fposmod(range_from*size,size),
+		frequency_values,amplitude_values,phi0_values,power_values,decay_values,dc_values,
+		quarter_values[0],quarter_values[1],quarter_values[2],quarter_values[3]
+	)
 	output_valid=true
 	return output
 

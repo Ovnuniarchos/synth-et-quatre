@@ -100,76 +100,16 @@ func calculate()->Array:
 	calculate_slot(b_values,b_slot,b_value)
 	calculate_slot(mix_values,mix_slot,mix_value)
 	calculate_diffuse_boolean_slot(clamp_mix_values,clamp_mix_slot,clamp_mix_value)
-	calculate_option_slot(op_values,op_slot,MixNodeConstants.AS_ARRAY,op_value)
+	calculate_option_slot(op_values,op_slot,MixNodeConstants.MIX_END,op_value)
 	calculate_diffuse_boolean_slot(isolate_values,isolate_slot,isolate)
 	calculate_slot(power_values,power_slot,power)
 	calculate_slot(decay_values,decay_slot,decay)
 	calculate_slot(dc_values,dc_slot,dc)
-	var sz:int=max(1.0,size*range_length)
-	var optr:int=fposmod(range_from*size,size)
-	var t:float
-	var q:int
-	var mix:float
-	var a_in:float
-	var b_in:float
-	reset_decay(sz)
-	for i in sz:
-		mix=lerp(mix_values[optr],clamp(mix_values[optr],-1.0,1.0),clamp_mix_values[optr])
-		a_in=b_values[optr] if is_nan(a_values[optr]) else a_values[optr]
-		b_in=a_values[optr] if is_nan(b_values[optr]) else b_values[optr]
-		q=op_values[optr]
-		if q<MixNodeConstants.MIX_MIN:
-			if q<MixNodeConstants.MIX_MOD:
-				if q<MixNodeConstants.MIX_MUL:
-					if q<MixNodeConstants.MIX_SUB:
-						if q<MixNodeConstants.MIX_ADD:
-							t=(a_in+b_in)*0.5
-						else:
-							t=a_in+b_in
-					else:
-						t=a_in-b_in
-				elif q==MixNodeConstants.MIX_MUL:
-					t=a_in*b_in
-				else:
-					t=a_in/b_in if b_in!=0.0 else 0.0
-			else:
-				if q<MixNodeConstants.MIX_POWER:
-					if q==MixNodeConstants.MIX_MOD:
-						t=fmod(a_in,b_in) if b_in!=0.0 else 0.0
-					else:
-						t=fposmod(a_in,b_in) if b_in!=0.0 else 0.0
-				elif q==MixNodeConstants.MIX_POWER:
-					t=pow(abs(a_in),b_in)*sign(a_in)
-				else:
-					t=max(a_in,b_in)
-		else:
-			if q<MixNodeConstants.MIX_CMP:
-				if q<MixNodeConstants.MIX_LT:
-					if q<MixNodeConstants.MIX_GE:
-						if q==MixNodeConstants.MIX_MIN:
-							t=min(a_in,b_in)
-						else:
-							t=float(b_in>a_in)
-					else:
-						t=float(b_in>=a_in)
-				elif q==MixNodeConstants.MIX_LT:
-					t=float(b_in<a_in)
-				else:
-					t=float(b_in<=a_in)
-			else:
-				if q<MixNodeConstants.MIX_OVER:
-					if q==MixNodeConstants.MIX_CMP:
-						t=sign(b_in-a_in)
-					else:
-						t=abs(a_in) if b_in>0.0 else -abs(a_in) if b_in<0.0 else 0.0
-				elif q==MixNodeConstants.MIX_OVER:
-					t=a_in if is_nan(a_in) else b_in
-				else:
-					t=b_in if is_nan(a_in) else a_in
-		t=lerp(t,b_in,mix) if mix>0.0 else lerp(t,a_in,-mix)
-		output[optr]=calculate_decay(pow(abs(t),power_values[optr])*sign(t),decay_values[optr])+dc_values[optr]
-		optr=(optr+1)&size_mask
-	fill_out_of_region(sz,optr,a_values,isolate_values)
+	NODES.mix(output,max(1.0,size*range_length),fposmod(range_from*size,size),
+		a_values,b_values,op_values,
+		mix_values,clamp_mix_values,isolate_values,
+		power_values,decay_values,dc_values
+	)
 	output_valid=true
 	return output
 

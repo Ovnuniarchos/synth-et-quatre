@@ -2005,7 +2005,7 @@ msgid "NODE_SEED_PORT_TTIP"
 msgstr "<EMPTY STRING>"
 
 msgid "NODE_OCTAVES_PORT"
-msgstr "Ocatves"
+msgstr "Octaves"
 
 msgid "NODE_OCTAVES_PORT_TTIP"
 msgstr "<EMPTY STRING>"

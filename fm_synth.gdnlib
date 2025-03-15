@@ -7,7 +7,7 @@ reloadable=true
 
 [entry]
 
-X11.64="res://fmsynth/bin/x11/libsynth_tracker.so"
+X11.64="res://libs/fmsynth/bin/x11/libsynth_tracker.so"
 
 [dependencies]
 

@@ -5,7 +5,6 @@ class_name NoiseNodeComponent
 const NODE_TYPE:String="Noise"
 
 
-var noiz:OpenSimplexNoise=OpenSimplexNoise.new()
 var noise_seed:int=0
 var amplitude_slot:Array=[]
 var amplitude_values:Array=[]
@@ -108,35 +107,10 @@ func calculate()->Array:
 	calculate_slot(persistence_values,persistence_slot,persistence)
 	calculate_slot(lacunarity_values,lacunarity_slot,lacunarity)
 	calculate_slot(randomness_values,randomness_slot,randomness)
-	seed(noise_seed)
-	noiz.seed=noise_seed
-	var sz:int=max(1.0,size*range_length)
-	var optr:int=fposmod(range_from*size,size)
-	var cycle:float=1.0/sz
-	var phi:float=0.0
-	var mx:float=-INF
-	var mn:float=INF
-	var q:float
-	for i in sz:
-		noiz.persistence=persistence_values[optr]
-		noiz.lacunarity=lacunarity_values[optr]
-		noiz.period=1.0/frequency_values[optr] if abs(frequency_values[optr])>0.0001 else 0.0
-		noiz.octaves=octaves_values[optr]
-		q=lerp(noiz.get_noise_1d(phi),noiz.get_noise_1d(phi-1.0),phi)\
-			+rand_range(-randomness_values[optr],randomness_values[optr])
-		output[optr]=pow(abs(q),power_values[optr])*sign(q)
-		mx=max(mx,output[optr])
-		mn=min(mn,output[optr])
-		optr=(optr+1)&size_mask
-		phi+=cycle
-	optr=fposmod(range_from*size,size)
-	reset_decay(sz)
-	for i in sz:
-		output[optr]=calculate_decay(
-			range_lerp(output[optr],mn,mx,-amplitude_values[optr],amplitude_values[optr])+dc_values[optr],
-			decay_values[optr]
-		)
-		optr=(optr+1)&size_mask
+	NODES.noise(output,max(1.0,size*range_length),fposmod(range_from*size,size),
+		noise_seed,amplitude_values,decay_values,power_values,dc_values,
+		octaves_values,frequency_values,persistence_values,lacunarity_values,randomness_values
+	)
 	output_valid=true
 	return output
 

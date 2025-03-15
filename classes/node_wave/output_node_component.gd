@@ -6,7 +6,6 @@ const NODE_TYPE:String="Output"
 
 
 var input_slot:Array=[]
-var input_values:Array=[]
 var clip:float=1.0
 
 
@@ -20,10 +19,8 @@ func calculate()->Array:
 	if output_valid:
 		return output
 	var ti:int=OS.get_ticks_msec()
-	calculate_slot(input_values,input_slot,0.0)
-	for i in size:
-		output[i]=clamp(input_values[i],-clip,clip)
-	print(OS.get_ticks_msec()-ti)
+	calculate_clamped_slot(output,input_slot,0.0,-clip,clip)
+	print(OS.get_ticks_msec()-ti,"ms")
 	output_valid=true
 	return output
 

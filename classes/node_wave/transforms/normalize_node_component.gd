@@ -93,31 +93,18 @@ func calculate()->Array:
 	calculate_slot(input_values,input_slot,NAN)
 	var sz:int=max(1.0,size*range_length)
 	var optr:int=fposmod(range_from*size,size)
+	var hl_values:Array=[0.0,0.0,0.0,0.0,0.0,0.0]
+	NODES.pre_normalize(input_values,sz,optr,hl_values)
 	var t:float
-	var hi:float=-INF
-	var lo:float=INF
-	var hilo:float
-	var hi_full:float=-INF
-	var lo_full:float=INF
-	var hilo_full:float
-	for i in size:
-		t=input_values[optr]
-		if i<sz and not is_nan(t):
-			hi=max(hi,t)
-			lo=min(lo,t)
-		t=input_values[i]
-		if not is_nan(t):
-			hi_full=max(hi_full,t)
-			lo_full=min(lo_full,t)
-		optr=(optr+1)&size_mask
+	var hi:float=hl_values[0]
+	var lo:float=hl_values[1]
+	var hilo:float=hl_values[2]
+	var hi_full:float=hl_values[3]
+	var lo_full:float=hl_values[4]
+	var hilo_full:float=hl_values[5]
 	if hi_full==-INF and lo_full==INF:
 		output_valid=true
 		return output
-	if hi==-INF and lo==INF:
-		hi=1.0
-		lo=-1.0
-	hilo=max(abs(hi),abs(lo))
-	hilo_full=max(abs(hi_full),abs(lo_full))
 	calculate_diffuse_boolean_slot(keep_0_values,keep_0_slot,keep_0)
 	calculate_diffuse_boolean_slot(use_full_values,use_full_slot,use_full)
 	calculate_slot(mix_values,mix_slot,mix)
@@ -126,25 +113,12 @@ func calculate()->Array:
 	calculate_slot(power_values,power_slot,power)
 	calculate_slot(decay_values,decay_slot,decay)
 	calculate_boolean_slot(isolate_values,isolate_slot,isolate)
-	optr=fposmod(range_from*size,size)
-	reset_decay(sz)
-	var h:float
-	var l:float
-	var hl:float
-	for i in sz:
-		h=lerp(hi,hi_full,use_full_values[optr])
-		l=lerp(lo,lo_full,use_full_values[optr])
-		hl=lerp(hilo,hilo_full,use_full_values[optr])
-		t=lerp(range_lerp(input_values[optr],l,h,-1.0,1.0),
-			range_lerp(input_values[optr],-hl,hl,-1.0,1.0),
-			keep_0_values[optr]
-		)
-		t=lerp(input_values[optr],t,lerp(mix_values[optr],clamp(mix_values[optr],0.0,1.0),clamp_mix_values[optr]))
-		output[optr]=calculate_decay(
-			pow(abs(t),power_values[optr])*sign(t),decay_values[optr]
-		)*amplitude_values[optr]
-		optr=(optr+1)&size_mask
-	fill_out_of_region(sz,optr,input_values,isolate_values)
+	NODES.normalize(output,sz,optr,
+		hi,lo,hilo,hi_full,lo_full,hilo_full,
+		input_values,keep_0_values,use_full_values,
+		mix_values,clamp_mix_values,isolate_values,
+		amplitude_values,power_values,decay_values
+	)
 	output_valid=true
 	return output
 

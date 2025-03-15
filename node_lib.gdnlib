@@ -2,12 +2,12 @@
 
 singleton=false
 load_once=true
-symbol_prefix="dsplib_"
+symbol_prefix="nodelib_"
 reloadable=true
 
 [entry]
 
-X11.64="res://libs/dsplib/bin/x11/libdsp.so"
+X11.64="res://libs/nodelib/bin/x11/libnode.so"
 
 [dependencies]
 

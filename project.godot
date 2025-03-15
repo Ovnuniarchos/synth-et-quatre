@@ -394,6 +394,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://ui/wave_designer/node_designer/nodes/node_controller.gd"
 }, {
+"base": "Node",
+"class": "NodeLib",
+"language": "NativeScript",
+"path": "res://node_lib.gdns"
+}, {
 "base": "Waveform",
 "class": "NodeWave",
 "language": "GDScript",
@@ -987,6 +992,7 @@ _global_script_class_icons={
 "MixNodeWriter": "",
 "NodeComponentIO": "",
 "NodeController": "",
+"NodeLib": "",
 "NodeWave": "",
 "NodeWaveIO": "",
 "NodeWaveReader": "",
@@ -1107,6 +1113,7 @@ mix_rate=48000
 [autoload]
 
 DSP="*res://dsp_lib.gdns"
+NODES="*res://node_lib.gdns"
 GLOBALS="*res://singletons/globals.gd"
 CONFIG="*res://singletons/config.gd"
 THEME="*res://singletons/theme/theme.gd"

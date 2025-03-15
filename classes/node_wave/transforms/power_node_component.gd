@@ -89,17 +89,11 @@ func calculate()->Array:
 	calculate_slot(decay_values,decay_slot,decay)
 	calculate_slot(dc_values,dc_slot,dc)
 	calculate_boolean_slot(isolate_values,isolate_slot,isolate)
-	var sz:int=max(1.0,size*range_length)
-	var optr:int=fposmod(range_from*size,size)
-	var t:float
-	reset_decay(sz)
-	for i in sz:
-		t=input_values[optr]
-		t=pow(abs(t),power_values[optr])*sign(t)
-		t=lerp(input_values[optr],t,lerp(mix_values[optr],clamp(mix_values[optr],0.0,1.0),clamp_mix_values[optr]))
-		output[optr]=calculate_decay(t,decay_values[optr])*amplitude_values[optr]+dc_values[optr]
-		optr=(optr+1)&size_mask
-	fill_out_of_region(sz,optr,input_values,isolate_values)
+	NODES.power(output,max(1.0,size*range_length),fposmod(range_from*size,size),
+		input_values,power_values,
+		mix_values,clamp_mix_values,isolate_values,
+		amplitude_values,decay_values,dc_values
+	)
 	output_valid=true
 	return output
 

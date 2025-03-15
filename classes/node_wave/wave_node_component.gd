@@ -4,6 +4,7 @@ class_name WaveNodeComponent
 
 const SLOT_ID:String="id"
 const SLOT_IN:String="in"
+enum{DE_NAN,DIFF_BOOL,BOOL,OPTION,CLAMP}
 
 
 var viz_rect:Rect2
@@ -52,7 +53,7 @@ func fill_out_of_region(region_sz:int,optr:int,input_values:Array,isolate_values
 
 
 # calculate_xxx return true if their result was already cached
-func calculate_slot(result:Array,slot:Array,selected_value:float)->bool:
+func calculate_slot(result:Array,slot:Array,selected_value:float,mode:Array=[DE_NAN])->bool:
 	if output_valid:
 		var unchanged:bool=not result.empty()
 		for inp in slot:
@@ -63,41 +64,44 @@ func calculate_slot(result:Array,slot:Array,selected_value:float)->bool:
 	if slot.empty():
 		return false
 	for inp in slot:
-		var in_val:Array=inp.calculate()
-		for optr in size: if not is_nan(in_val[optr]): result[optr]=(0.0 if is_nan(result[optr]) else result[optr])+in_val[optr]
-	for optr in size: if is_nan(result[optr]): result[optr]=selected_value
+		NODES.accumulate(inp.calculate(),result)
+	if mode[0]==DE_NAN:
+		NODES.de_nan_ize(result,selected_value)
+	elif mode[0]==DIFF_BOOL:
+		NODES.diff_booleanize(result)
+	elif mode[0]==BOOL:
+		NODES.booleanize(result)
+	elif mode[0]==OPTION:
+		NODES.optionize(result,selected_value,mode[1])
+	elif mode[0]==CLAMP:
+		NODES.clamp(result,mode[1],mode[2])
 	return false
 
 
 func calculate_diffuse_boolean_slot(result:Array,slot:Array,selected_value:float)->bool:
-	if calculate_slot(result,slot,selected_value):
-		return true
-	for optr in size: result[optr]=clamp(abs(result[optr]),0.0,1.0)
-	return false
+	return calculate_slot(result,slot,selected_value,[DIFF_BOOL])
 
 
 func calculate_boolean_slot(result:Array,slot:Array,selected_value:float)->bool:
-	if calculate_slot(result,slot,selected_value):
-		return true
-	for optr in size: if not is_nan(result[optr]): result[optr]=float(abs(result[optr])>=0.5)
-	return false
+	return calculate_slot(result,slot,selected_value,[BOOL])
 
 
-func calculate_option_slot(result:Array,slot:Array,values:Array,selected_value:float)->bool:
-	var vsz:float=values.size()
-	selected_value=range_lerp(selected_value,0.0,vsz,0.0,1.0)
-	if calculate_slot(result,slot,selected_value):
-		return true
-	for optr in size: if not is_nan(result[optr]): result[optr]=values[clamp(lerp(0.0,vsz,abs(result[optr])),0.0,vsz-1)]
-	return false
+func calculate_option_slot(result:Array,slot:Array,option_count:int,selected_value:float)->bool:
+	return calculate_slot(result,slot,selected_value,[OPTION,option_count])
 
 
+func calculate_clamped_slot(result:Array,slot:Array,selected_value:float,minval:float,maxval:float)->bool:
+	return calculate_slot(result,slot,selected_value,[CLAMP,minval,maxval])
+
+
+# DEPRECATE
 func reset_decay(cycle_size:float)->void:
 	_last_value=0.0
 	_decay=1.0
 	_decay_factor=128.0/max(1.0,cycle_size)
 
 
+# DEPRECATE
 func calculate_decay(new_value:float,decay_value:float)->float:
 	var t:float=new_value-_last_value
 	if abs(t)<0.00000001 or sign(t)!=sign(new_value):

@@ -90,6 +90,7 @@ func set_value_no_signal(f:float)->void:
 
 
 func set_decimals(v:int)->void:
+	step=pow(10.0,-v)
 	_decimals=v
 	input.set_decimals(v)
 	set_value(value)

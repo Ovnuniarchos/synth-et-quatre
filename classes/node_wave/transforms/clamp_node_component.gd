@@ -138,10 +138,10 @@ func calculate()->Array:
 	calculate_slot(input_values,input_slot,NAN)
 	calculate_slot(level_hi_values,level_hi_slot,level_hi_value)
 	calculate_slot(clamp_hi_values,clamp_hi_slot,clamp_hi_value)
-	calculate_option_slot(mode_hi_values,mode_hi_slot,ClampNodeConstants.AS_ARRAY,mode_hi)
+	calculate_option_slot(mode_hi_values,mode_hi_slot,ClampNodeConstants.CLAMP_END,mode_hi)
 	calculate_slot(level_lo_values,level_lo_slot,level_lo_value)
 	calculate_slot(clamp_lo_values,clamp_lo_slot,clamp_lo_value)
-	calculate_option_slot(mode_lo_values,mode_lo_slot,ClampNodeConstants.AS_ARRAY,mode_lo)
+	calculate_option_slot(mode_lo_values,mode_lo_slot,ClampNodeConstants.CLAMP_END,mode_lo)
 	calculate_slot(mix_values,mix_slot,mix_value)
 	calculate_diffuse_boolean_slot(clamp_mix_values,clamp_mix_slot,clamp_mix_value)
 	calculate_boolean_slot(isolate_values,isolate_slot,isolate)
@@ -149,91 +149,12 @@ func calculate()->Array:
 	calculate_slot(power_values,power_slot,power)
 	calculate_slot(decay_values,decay_slot,decay)
 	calculate_slot(dc_values,dc_slot,dc)
-	var sz:int=max(1.0,size*range_length)
-	var optr:int=fposmod(range_from*size,size)
-	var t:float
-	var d:float
-	var d2:float
-	var mix:float
-	var mode:int
-	var lvh:float
-	var lvl:float
-	reset_decay(sz)
-	for i in sz:
-		mix=lerp(mix_values[optr],clamp(mix_values[optr],0.0,1.0),clamp_mix_values[optr])
-		if is_nan(mode_hi_values[optr]) or is_nan(mode_lo_values[optr]):
-			mode=ClampNodeConstants.CLAMP_NN
-		else:
-			mode=(int(mode_hi_values[optr])<<ClampNodeConstants.CLAMP_SHIFT)|int(mode_lo_values[optr])
-		t=input_values[optr]
-		lvh=lerp(level_hi_values[optr],clamp(level_hi_values[optr],-1.0,1.0),clamp_hi_values[optr])
-		lvl=lerp(level_lo_values[optr],clamp(level_lo_values[optr],-1.0,1.0),clamp_lo_values[optr])
-		if mode<ClampNodeConstants.CLAMP_WN:
-			if mode<ClampNodeConstants.CLAMP_CC:
-				if mode<ClampNodeConstants.CLAMP_NB:
-					if mode==ClampNodeConstants.CLAMP_NC:
-						t=max(t,lvl)
-					elif mode==ClampNodeConstants.CLAMP_NW:
-						if t<lvl: t=wrapf(t,lvl,1.0)
-				elif mode==ClampNodeConstants.CLAMP_NB:
-					if t<lvl: t=lvl-(t-lvl)
-				else:
-					t=min(t,lvh)
-			else:
-				if mode==ClampNodeConstants.CLAMP_CC:
-					t=clamp(t,lvl,lvh)
-				elif mode==ClampNodeConstants.CLAMP_CW:
-					if t<lvl: t=wrapf(t,lvl,lvh)
-					t=min(lvh,t)
-				else:
-					if t<lvl: t=lvl-(t-lvl)
-					t=min(t,lvh)
-		else:
-			if mode<ClampNodeConstants.CLAMP_BN:
-				if mode==ClampNodeConstants.CLAMP_WN:
-					if t>lvh:
-						t=wrapf(t,-1.0,lvh)
-				elif mode==ClampNodeConstants.CLAMP_WC:
-					if t>lvh:
-						t=wrapf(t,lvl,lvh)
-					t=max(t,lvl)
-				elif mode==ClampNodeConstants.CLAMP_WW:
-					t=wrapf(t,lvl,lvh)
-				elif mode==ClampNodeConstants.CLAMP_WB:
-					if t<lvl:
-						t=lvl-(t-lvl)
-					t=wrapf(t,lvl,lvh)
-			else:
-				if mode<ClampNodeConstants.CLAMP_BW:
-					if mode==ClampNodeConstants.CLAMP_BN:
-						if t>lvh: t=lvh-(t-lvh)
-					else:
-						if t>lvh: t=lvh-(t-lvh)
-						t=max(t,lvl)
-				else:
-					if mode==ClampNodeConstants.CLAMP_BW:
-						if t>lvh: t=lvh-(t-lvh)
-						t=wrapf(t,lvl,lvh)
-					elif t<lvl or t>lvh:
-						d=lvh-lvl
-						if is_nan(d) or is_zero_approx(d):
-							t=(lvh+lvl)*0.5
-						elif t<lvl:
-							d2=fposmod((t-lvl)/d,2.0)
-							t=fposmod(t-lvl,abs(d))
-							if d2<1.0: t=lvl+t
-							else: t=lvh-t
-						else:
-							d2=fposmod((t-lvh)/d,2.0)
-							t=fposmod(t-lvh,abs(d))
-							if d2<1.0: t=lvh-t
-							else: t=lvl+t
-		t=lerp(input_values[optr],t,mix)
-		output[optr]=(calculate_decay(
-			pow(abs(t),power_values[optr])*sign(t),decay_values[optr]
-		)*amplitude_values[optr])+dc_values[optr]
-		optr=(optr+1)&size_mask
-	fill_out_of_region(sz,optr,input_values,isolate_values)
+	NODES.multiclamp(output,max(1.0,size*range_length),fposmod(range_from*size,size),input_values,
+		level_hi_values,clamp_hi_values,mode_hi_values,
+		level_lo_values,clamp_lo_values,mode_lo_values,
+		mix_values,clamp_mix_values,isolate_values,
+		amplitude_values,power_values,decay_values,dc_values
+	)
 	output_valid=true
 	return output
 

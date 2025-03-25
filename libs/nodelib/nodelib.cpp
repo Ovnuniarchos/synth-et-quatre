@@ -12,6 +12,7 @@
 #include "nodes/transforms/map_range.cpp"
 #include "nodes/transforms/map_wave.cpp"
 #include "nodes/transforms/mix.cpp"
+#include "nodes/transforms/mux.cpp"
 #include "nodes/transforms/normalize.cpp"
 #include "nodes/transforms/power.cpp"
 #include <cstdio>
@@ -56,6 +57,7 @@ void NodeLib::_register_methods(){
 	register_method("map_range", &NodeLib::map_range);
 	register_method("map_wave", &NodeLib::map_wave);
 	register_method("mix", &NodeLib::mix);
+	register_method("mux", &NodeLib::mux);
 	register_method("pre_normalize", &NodeLib::pre_normalize);
 	register_method("normalize", &NodeLib::normalize);
 	register_method("power", &NodeLib::power);

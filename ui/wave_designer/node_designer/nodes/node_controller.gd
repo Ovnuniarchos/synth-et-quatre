@@ -2,10 +2,13 @@ tool extends GraphNode
 class_name NodeController
 
 signal about_to_close(node)
+# warning-ignore:unused_signal
 signal params_changed(node)
+# warning-ignore:unused_signal
+signal slots_changed
 
 
-enum {SLOT_VALUE,SLOT_DIFF_BOOL,SLOT_BOOL}
+enum {SLOT_VALUE,SLOT_DIFF_BOOL,SLOT_BOOL,SLOT_MAX}
 const SLOT_COLORS:Array=[
 	Color("ffffff"),
 	Color("00ffff"),
@@ -44,13 +47,13 @@ func _ready()->void:
 
 
 func set_node(n:WaveNodeComponent)->void:
+	node=n
 	if n!=null:
 		if n.viz_rect.is_equal_approx(Rect2(Vector2.ZERO,Vector2.ZERO)):
 			n.viz_rect=Rect2(offset,rect_size)
 		else:
 			offset=n.viz_rect.position
 			rect_size=n.viz_rect.size
-	node=n
 
 
 func _notification(n:int)->void:
@@ -104,11 +107,12 @@ func _on_slot_updated(slot:int)->void:
 	c_r=get_slot_type_right(slot)
 	set_block_signals(true)
 	if is_slot_enabled_left(slot):
-		set_slot_color_left(slot,SLOT_COLORS[c_l if c_l>=0 and c_l<=2 else 0])
+		set_slot_color_left(slot,SLOT_COLORS[c_l if c_l>=0 and c_l<SLOT_MAX else 0])
 	if is_slot_enabled_right(slot):
-		set_slot_color_right(slot,SLOT_COLORS[c_r if c_r>=0 and c_r<=2 else 0])
+		set_slot_color_right(slot,SLOT_COLORS[c_r if c_r>=0 and c_r<SLOT_MAX else 0])
 	set_block_signals(false)
 	property_list_changed_notify()
+
 
 
 func invalidate()->void:

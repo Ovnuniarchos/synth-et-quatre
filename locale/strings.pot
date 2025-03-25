@@ -1778,6 +1778,9 @@ msgstr ""
 msgid "NODED_MENU_POWER"
 msgstr ""
 
+msgid "NODED_MENU_MUX"
+msgstr ""
+
 # Common ports
 
 msgid "NODE_OUTPUT_PORT"
@@ -2333,3 +2336,36 @@ msgstr ""
 msgid "NODE_POWER_TITLE"
 msgstr ""
 
+# Mux node
+msgid "NODE_MUX_TITLE"
+msgstr ""
+
+msgid "NODE_INPUT_COUNT_PORT"
+msgstr ""
+
+msgid "NODE_INPUT_COUNT_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_MULTIINPUT_PORT"
+msgstr ""
+
+msgid "NODE_MULTIINPUT_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_SELECTOR_PORT"
+msgstr ""
+
+msgid "NODE_SELECTOR_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_MUX_CLIP_PORT"
+msgstr ""
+
+msgid "NODE_MUX_CLIP_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_MUX_CLAMP"
+msgstr ""
+
+msgid "NODE_MUX_WRAP"
+msgstr ""

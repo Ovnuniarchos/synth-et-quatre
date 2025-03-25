@@ -1749,6 +1749,9 @@ msgstr "Decay"
 msgid "NODED_MENU_POWER"
 msgstr "Power"
 
+msgid "NODED_MENU_MUX"
+msgstr "Multiplexer"
+
 # Common ports
 msgid "NODE_OUTPUT_PORT"
 msgstr "Output"
@@ -2287,3 +2290,36 @@ msgstr "DECAY"
 msgid "NODE_POWER_TITLE"
 msgstr "Power"
 
+# Mux node
+msgid "NODE_MUX_TITLE"
+msgstr "Multiplexor"
+
+msgid "NODE_INPUT_COUNT_PORT"
+msgstr "Input ct."
+
+msgid "NODE_INPUT_COUNT_PORT_TTIP"
+msgstr "<EMPTY STRING>"
+
+msgid "NODE_MULTIINPUT_PORT"
+msgstr "Input"
+
+msgid "NODE_MULTIINPUT_PORT_TTIP"
+msgstr "<EMPTY STRING>"
+
+msgid "NODE_SELECTOR_PORT"
+msgstr "Selector"
+
+msgid "NODE_SELECTOR_PORT_TTIP"
+msgstr "<EMPTY STRING>"
+
+msgid "NODE_MUX_CLIP_PORT"
+msgstr "Sel. limit"
+
+msgid "NODE_MUX_CLIP_PORT_TTIP"
+msgstr "How the selection values are to be limited."
+
+msgid "NODE_MUX_CLAMP"
+msgstr "Clamp"
+
+msgid "NODE_MUX_WRAP"
+msgstr "Wrap"

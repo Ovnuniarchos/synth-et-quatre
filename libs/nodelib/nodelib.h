@@ -75,7 +75,7 @@ private:
 
 	static inline double fposmod(double a,double b){
 		double t=fmod(a,b);
-		return ((t<0.0)!=(b<0.0)) ?(t+b):t;
+		return ((t<0.0)!=(b<0.0))?(t+b):t;
 	};
 
 	static inline double to_double(bool b){return b?1.0:0.0;}
@@ -171,6 +171,10 @@ public:
 		Array a,Array b,Array mode,
 		Array mix,Array clamp_mix,Array isolate,
 		Array power,Array decay,Array dc
+	);
+
+	void mux(Array output,int segment_size,int outptr,
+		Array inputs,Array selector,Array clip
 	);
 
 	void pre_normalize(Array input,int segment_size,int outptr,Array hi_lo);

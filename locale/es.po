@@ -1749,6 +1749,9 @@ msgstr "Extinción"
 msgid "NODED_MENU_POWER"
 msgstr "Exponente"
 
+msgid "NODED_MENU_MUX"
+msgstr "Multiplexor"
+
 # Common ports
 msgid "NODE_OUTPUT_PORT"
 msgstr "Salida"
@@ -2287,3 +2290,36 @@ msgstr "EXTINCIÓN"
 msgid "NODE_POWER_TITLE"
 msgstr "EXPONENTE"
 
+# Mux node
+msgid "NODE_MUX_TITLE"
+msgstr "Multiplexor"
+
+msgid "NODE_INPUT_COUNT_PORT"
+msgstr "Nº de entradas"
+
+msgid "NODE_INPUT_COUNT_PORT_TTIP"
+msgstr "<EMPTY STRING>"
+
+msgid "NODE_MULTIINPUT_PORT"
+msgstr "Entrada"
+
+msgid "NODE_MULTIINPUT_PORT_TTIP"
+msgstr "<EMPTY STRING>"
+
+msgid "NODE_SELECTOR_PORT"
+msgstr "Selector"
+
+msgid "NODE_SELECTOR_PORT_TTIP"
+msgstr "<EMPTY STRING>"
+
+msgid "NODE_MUX_CLIP_PORT"
+msgstr "Límite sel."
+
+msgid "NODE_MUX_CLIP_PORT_TTIP"
+msgstr "Cómo se limitan los valores de selección."
+
+msgid "NODE_MUX_CLAMP"
+msgstr "Limitar"
+
+msgid "NODE_MUX_WRAP"
+msgstr "Ciclo"

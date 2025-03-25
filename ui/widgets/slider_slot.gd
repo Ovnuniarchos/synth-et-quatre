@@ -155,6 +155,8 @@ func get_label_control()->Label:
 
 
 func _on_SpinBar_value_changed(v:float)->void:
+	if is_equal_approx(v,value) or (is_nan(v) and is_nan(value)):
+		return
 	value=v
 	emit_signal("value_changed",value)
 

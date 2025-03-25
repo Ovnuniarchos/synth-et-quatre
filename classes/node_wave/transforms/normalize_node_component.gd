@@ -95,7 +95,6 @@ func calculate()->Array:
 	var optr:int=fposmod(range_from*size,size)
 	var hl_values:Array=[0.0,0.0,0.0,0.0,0.0,0.0]
 	NODES.pre_normalize(input_values,sz,optr,hl_values)
-	var t:float
 	var hi:float=hl_values[0]
 	var lo:float=hl_values[1]
 	var hilo:float=hl_values[2]

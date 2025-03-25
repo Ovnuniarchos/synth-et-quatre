@@ -9,9 +9,6 @@ TODO:
 	Node-based wave generator
 		Quantize amplitude/time filter
 		Convolution/frequency filters
-		How to multivalue?
-			Selector N-to-1/1-to-N
-			Arpeggiator (not worth it)
 	Reset per channel parameters (as a command|button)
 	MIDI input
 		Flag?: MIDI Pitch bend

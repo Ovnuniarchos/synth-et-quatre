@@ -16,7 +16,7 @@ enum{
 	OUTPUT,
 	GEN_SINE,GEN_SAW,GEN_PULSE,GEN_TRIANGLE,GEN_NOISE,GEN_RAMP,
 	XFR_MIX,XFR_CLAMP,XFR_MAPR,XFR_MAPW,XFR_CLIP,XFR_NORMALIZE,
-	XFR_DECAY,XFR_POWER
+	XFR_DECAY,XFR_POWER,XFR_MUX
 }
 const MENU:Array=[
 	"unsorted",
@@ -38,6 +38,7 @@ const MENU:Array=[
 		{"option":"NODED_MENU_NORMALIZE","id":XFR_NORMALIZE},
 		{"option":"NODED_MENU_DECAY","id":XFR_DECAY},
 		{"option":"NODED_MENU_POWER","id":XFR_POWER},
+		{"option":"NODED_MENU_MUX","id":XFR_MUX}
 	]}
 ]
 const NODES:Dictionary={
@@ -56,6 +57,7 @@ const NODES:Dictionary={
 	XFR_NORMALIZE:preload("res://ui/wave_designer/node_designer/nodes/transforms/normalize_node.tscn"),
 	XFR_DECAY:preload("res://ui/wave_designer/node_designer/nodes/transforms/decay_node.tscn"),
 	XFR_POWER:preload("res://ui/wave_designer/node_designer/nodes/transforms/power_node.tscn"),
+	XFR_MUX:preload("res://ui/wave_designer/node_designer/nodes/transforms/mux_node.tscn"),
 }
 const COMPONENTS:Dictionary={
 	OUTPUT:OutputNodeComponent,
@@ -73,6 +75,7 @@ const COMPONENTS:Dictionary={
 	XFR_NORMALIZE:NormalizeNodeComponent,
 	XFR_DECAY:DecayNodeComponent,
 	XFR_POWER:PowerNodeComponent,
+	XFR_MUX:MuxNodeComponent
 }
 const NODES_CLASS:Dictionary={
 	OutputNodeComponent.NODE_TYPE:NODES[OUTPUT],
@@ -90,6 +93,7 @@ const NODES_CLASS:Dictionary={
 	NormalizeNodeComponent.NODE_TYPE:NODES[XFR_NORMALIZE],
 	DecayNodeComponent.NODE_TYPE:NODES[XFR_DECAY],
 	PowerNodeComponent.NODE_TYPE:NODES[XFR_POWER],
+	MuxNodeComponent.NODE_TYPE:NODES[XFR_MUX]
 }
 
 
@@ -102,8 +106,8 @@ var curr_wave:NodeWave=null
 
 
 func _init()->void:
-	for i in 3:
-		for j in 3:
+	for i in 4:
+		for j in 4:
 			add_valid_connection_type(i,j)
 
 
@@ -147,12 +151,18 @@ func _on_add_node(type:int)->void:
 	var nn:NodeController=NODES[type].instance()
 	nn.connect("params_changed",self,"_on_params_changed")
 	nn.connect("about_to_close",self,"_on_node_about_to_close")
+	nn.call_deferred("connect","slots_changed",self,"_on_slots_changed")
 	nn.node=COMPONENTS[type].new()
 	nn.offset=add_position
 	nn.set_parameters()
 	nn.set_size_po2(size_po2)
 	add_child(nn)
 	emit_signal("node_added",nn.node)
+
+
+
+func _on_slots_changed()->void:
+	regen_editor_nodes(curr_wave)
 
 
 func regen_editor_nodes(wave:NodeWave)->void:
@@ -170,8 +180,9 @@ func regen_editor_nodes(wave:NodeWave)->void:
 		nn.node=n
 		nn.connect("params_changed",self,"_on_params_changed")
 		nn.connect("about_to_close",self,"_on_node_about_to_close")
-		nn.set_parameters()
+		nn.call_deferred("connect","slots_changed",self,"_on_slots_changed")
 		add_child(nn)
+		nn.set_parameters()
 		nodes[n]=nn
 	for node in nodes:
 		var to_node:String=nodes[node].name

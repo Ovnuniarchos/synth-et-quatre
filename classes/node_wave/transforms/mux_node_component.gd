@@ -20,8 +20,8 @@ func _init()->void:
 		{SLOT_ID:SlotIds.SLOT_SELECTOR,SLOT_IN:selector_slot},
 		{SLOT_ID:SlotIds.SLOT_CLIP,SLOT_IN:clip_slot},
 		# Dynamic
-		{SLOT_ID:SlotIds.SLOT_INPUT,SLOT_IN:input_slots[0]},
-		{SLOT_ID:SlotIds.SLOT_INPUT,SLOT_IN:input_slots[1]}
+		{SLOT_ID:SlotIds.SLOT_MULTIINPUT%[0],SLOT_IN:input_slots[0]},
+		{SLOT_ID:SlotIds.SLOT_MULTIINPUT%[1],SLOT_IN:input_slots[1]}
 	]
 
 
@@ -46,8 +46,8 @@ func resize_inputs(new_size:int)->void:
 		for _i in new_size-input_count:
 			input_values.append([])
 			input_slots.append([])
-			input.append(0.0)
-			inputs.append({SLOT_ID:SlotIds.SLOT_INPUT,SLOT_IN:input_slots[-1]})
+			input.append(NAN)
+			inputs.append({SLOT_ID:SlotIds.SLOT_MULTIINPUT%[get_inputs_size()],SLOT_IN:input_slots[-1]})
 	elif input_count>new_size:
 		inputs.resize(new_size+2)
 		input_values.resize(new_size)

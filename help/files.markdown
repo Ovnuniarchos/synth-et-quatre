@@ -509,6 +509,17 @@
 	<Connections/>
 </PowerNode>
 
+<MuxNode>
+	<ChunkHeader id="mUXN"/>
+	<GraphPositions/>
+	<RangeFrom type="float"/>
+	<RangeLength type="float"/>
+	<Selector type="float"/>
+	<ClipMode type="uint8"/>
+	<InputCount type="uint8"/>
+	<Connections/>
+</MuxNode>
+
 <Connections>
 	<InputsConnectedCount type="uint16"/>
 	<foreach:InputConnected>

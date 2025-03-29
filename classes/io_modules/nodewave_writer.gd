@@ -18,6 +18,7 @@ var writers:Dictionary={
 	NormalizeNodeComponent.NODE_TYPE:NormalizeNodeWriter,
 	DecayNodeComponent.NODE_TYPE:DecayNodeWriter,
 	PowerNodeComponent.NODE_TYPE:PowerNodeWriter,
+	MuxNodeComponent.NODE_TYPE:MuxNodeWriter
 }
 
 
@@ -41,6 +42,7 @@ func serialize(out:ChunkedFile,wave:NodeWave)->FileResult:
 		fr=serialize_component(out,comp,wave)
 		if fr.has_error():
 			return fr
+	out.end_chunk()
 	if out.get_error():
 		return FileResult.new(out.get_error(),{FileResult.ERRV_FILE:out.get_path()})
 	return FileResult.new()

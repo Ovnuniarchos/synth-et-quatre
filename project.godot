@@ -394,6 +394,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://classes/node_wave/transforms/mux_node_constants.gd"
 }, {
+"base": "NodeComponentIO",
+"class": "MuxNodeReader",
+"language": "GDScript",
+"path": "res://classes/io_modules/nodes/transforms/mux_node_reader.gd"
+}, {
+"base": "NodeComponentIO",
+"class": "MuxNodeWriter",
+"language": "GDScript",
+"path": "res://classes/io_modules/nodes/transforms/mux_node_writer.gd"
+}, {
 "base": "Reference",
 "class": "NodeComponentIO",
 "language": "GDScript",
@@ -1002,6 +1012,8 @@ _global_script_class_icons={
 "MixNodeWriter": "",
 "MuxNodeComponent": "",
 "MuxNodeConstants": "",
+"MuxNodeReader": "",
+"MuxNodeWriter": "",
 "NodeComponentIO": "",
 "NodeController": "",
 "NodeLib": "",

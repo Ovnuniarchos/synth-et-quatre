@@ -38,6 +38,12 @@ func start_chunk(name:String,version:int)->void:
 	store_64(-1)
 
 
+func seek(pos:int)->void:
+	.seek(pos)
+	if pos<0:
+		breakpoint
+
+
 func end_chunk()->void:
 	var pos:int=get_position()
 	seek(chunk_start.pop_back()+6)

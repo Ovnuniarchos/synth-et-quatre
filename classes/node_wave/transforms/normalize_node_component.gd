@@ -94,7 +94,7 @@ func calculate()->Array:
 	var sz:int=max(1.0,size*range_length)
 	var optr:int=fposmod(range_from*size,size)
 	var hl_values:Array=[0.0,0.0,0.0,0.0,0.0,0.0]
-	NODES.pre_normalize(input_values,sz,optr,hl_values)
+	NODES.find_amplitude_bounds(input_values,sz,optr,hl_values)
 	var hi:float=hl_values[0]
 	var lo:float=hl_values[1]
 	var hilo:float=hl_values[2]

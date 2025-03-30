@@ -625,6 +625,11 @@ _global_script_classes=[ {
 "path": "res://classes/io_modules/wave_components/filters/quantize_writer.gd"
 }, {
 "base": "WaveNodeComponent",
+"class": "QuantizeNodeComponent",
+"language": "GDScript",
+"path": "res://classes/node_wave/transforms/quantize_node_component.gd"
+}, {
+"base": "WaveNodeComponent",
 "class": "RampNodeComponent",
 "language": "GDScript",
 "path": "res://classes/node_wave/generators/ramp_node_component.gd"
@@ -1058,6 +1063,7 @@ _global_script_class_icons={
 "QuantizeFilter": "",
 "QuantizeFilterReader": "",
 "QuantizeFilterWriter": "",
+"QuantizeNodeComponent": "",
 "RampNodeComponent": "",
 "RampNodeReader": "",
 "RampNodeWriter": "",

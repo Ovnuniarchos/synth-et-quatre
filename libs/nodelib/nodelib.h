@@ -177,7 +177,7 @@ public:
 		Array inputs,Array selector,Array clip
 	);
 
-	void pre_normalize(Array input,int segment_size,int outptr,Array hi_lo);
+	void find_amplitude_bounds(Array input,int segment_size,int outptr,Array hi_lo);
 
 	void normalize(Array output,int segment_size,int outptr,
 		double hi,double lo,double hilo,double hi_full,double lo_full,double hilo_full,
@@ -190,6 +190,13 @@ public:
 		Array input,Array power,
 		Array mix,Array clamp_mix,Array isolate,
 		Array amplitude,Array decay,Array dc
+	);
+
+	void quantize(Array output,int segment_size,int outptr,
+		double hi,double lo,double hi_full,double lo_full,
+		Array input,Array levels,Array use_full,Array full_amplitude,
+		Array mix,Array clamp_mix,Array isolate,
+		Array amplitude,Array power,Array decay
 	);
 
 };

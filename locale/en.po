@@ -153,37 +153,37 @@ msgid "PTEDIT_FX_DEL"
 msgstr "-"
 
 msgid "PTEDIT_DEL_FX_TTIP"
-msgstr "Delete effects column"
+msgstr "Delete effects column."
 
 msgid "PTEDIT_FX_ADD"
 msgstr "+"
 
 msgid "PTEDIT_ADD_FX_TTIP"
-msgstr "Add effects column"
+msgstr "Add effects column."
 
 msgid "PTEDIT_ADD_ORD"
 msgstr " + "
 
 msgid "PTEDIT_ADD_ORD_TTIP"
-msgstr "Add order"
+msgstr "Add order."
 
 msgid "PTEDIT_DUP_ORD"
 msgstr " D "
 
 msgid "PTEDIT_DUP_ORD_TTIP"
-msgstr "Duplicate order"
+msgstr "Duplicate order."
 
 msgid "PTEDIT_UP_ORD_TTIP"
-msgstr "Move order up"
+msgstr "Move order up."
 
 msgid "PTEDIT_DOWN_ORD_TTIP"
-msgstr "Move order down"
+msgstr "Move order down."
 
 msgid "PTEDIT_DEL_ORD"
 msgstr " - "
 
 msgid "PTEDIT_DEL_ORD_TTIP"
-msgstr "Delete order"
+msgstr "Delete order."
 
 # Play controls
 msgid "PLAY_TEXT_PLAY"
@@ -221,19 +221,19 @@ msgid "INSTED_ADD"
 msgstr " + "
 
 msgid "INSTED_ADD_TTIP"
-msgstr "Add instrument"
+msgstr "Add instrument."
 
 msgid "INSTED_DUP"
 msgstr " D "
 
 msgid "INSTED_DUP_TTIP"
-msgstr "Duplicate instrument"
+msgstr "Duplicate instrument."
 
 msgid "INSTED_DEL"
 msgstr " - "
 
 msgid "INSTED_DEL_TTIP"
-msgstr "Delete instrument"
+msgstr "Delete instrument."
 
 msgid "INSTED_LOAD"
 msgstr "Load"
@@ -291,13 +291,13 @@ msgid "FMED_OPX"
 msgstr "OP {i_op}"
 
 msgid "FMED_OPX_TTIP"
-msgstr "Operator {i_op} enable/disable"
+msgstr "Operator {i_op} enable/disable."
 
 msgid "FMED_COPY_TO_OPX"
 msgstr "> OP{i_op}"
 
 msgid "FMED_COPY_TO_OPX_TTIP"
-msgstr "Copy to operator {i_op}"
+msgstr "Copy to operator {i_op}."
 
 msgid "FMED_WAVE_TITLE"
 msgstr "Wave"
@@ -782,19 +782,19 @@ msgid "WAVED_ADD"
 msgstr " + "
 
 msgid "WAVED_ADD_TTIP"
-msgstr "Add wave"
+msgstr "Add wave."
 
 msgid "WAVED_DUP"
 msgstr " D "
 
 msgid "WAVED_DUP_TTIP"
-msgstr "Duplicate wave"
+msgstr "Duplicate wave."
 
 msgid "WAVED_DEL"
 msgstr " - "
 
 msgid "WAVED_DEL_TTIP"
-msgstr "Delete wave"
+msgstr "Delete wave."
 
 msgid "WAVED_WTYPE_SYNTH"
 msgstr "Synthetic"
@@ -863,10 +863,10 @@ msgid "WAVED_SYN_DECAY"
 msgstr "Decay"
 
 msgid "WAVED_BAR_LEFT_TTIP"
-msgstr "Move to start"
+msgstr "Move to start."
 
 msgid "WAVED_BAR_RIGHT_TTIP"
-msgstr "Move to end"
+msgstr "Move to end."
 
 msgid "WAVED_BAR_CLOSE_TTIP"
 msgstr "Delete"
@@ -1187,7 +1187,7 @@ msgid "WAVE_NORM_KEEP_0"
 msgstr "Keep 0"
 
 msgid "WAVE_NORM_KEEP_0_TTIP"
-msgstr "Don't center result"
+msgstr "Don't center result."
 
 msgid "WAVE_NORM_KEEP_0_BUT"
 msgstr "Keep"
@@ -1217,13 +1217,13 @@ msgid "WAVED_SAM_RECORDED_FREQ"
 msgstr "Recorded freq."
 
 msgid "WAVED_SAM_RECORDED_FREQ_TTIP"
-msgstr "Frequency this sample was recorded at"
+msgstr "Frequency this sample was recorded at."
 
 msgid "WAVED_SAM_SAMPLE_FREQ"
 msgstr "Note freq."
 
 msgid "WAVED_SAM_SAMPLE_FREQ_TTIP"
-msgstr "Frequency this sample represents"
+msgstr "Frequency this sample represents."
 
 msgid "WAVED_SAM_SFREQ_STONE0"
 msgstr "C"
@@ -1284,31 +1284,31 @@ msgid "ARPED_ADD"
 msgstr " + "
 
 msgid "ARPED_ADD_TTIP"
-msgstr "Add arpeggio"
+msgstr "Add arpeggio."
 
 msgid "ARPED_DUP"
 msgstr " D "
 
 msgid "ARPED_DUP_TTIP"
-msgstr "Duplicate arpeggio"
+msgstr "Duplicate arpeggio."
 
 msgid "ARPED_DEL"
 msgstr " - "
 
 msgid "ARPED_DEL_TTIP"
-msgstr "Delete arpeggio"
+msgstr "Delete arpeggio."
 
 msgid "ARPED_SAVE"
 msgstr "Save"
 
 msgid "ARPED_SAVE_DLG"
-msgstr "Save arpeggio"
+msgstr "Save arpeggio."
 
 msgid "ARPED_LOAD"
 msgstr "Load"
 
 msgid "ARPED_LOAD_DLG"
-msgstr "Load arpeggio"
+msgstr "Load arpeggio."
 
 msgid "ARPED_NAME"
 msgstr "Name"
@@ -1336,7 +1336,7 @@ msgid "OPTS_AUDIO_BUFFER_LENGTH_TTIP"
 msgstr "<EMPTY STRING>"
 
 msgid "OPTS_WAVEXP_TITLE"
-msgstr "Export to .WAV"
+msgstr "Export to .WAV."
 
 msgid "OPTS_WAVEXP_SAMPLE_RATE"
 msgstr "Sample rate (Hz)"
@@ -1752,6 +1752,9 @@ msgstr "Power"
 msgid "NODED_MENU_MUX"
 msgstr "Multiplexer"
 
+msgid "NODED_MENU_QUANTIZE"
+msgstr "Quantize"
+
 # Common ports
 msgid "NODE_OUTPUT_PORT"
 msgstr "Output"
@@ -1850,13 +1853,13 @@ msgid "NODE_CLAMP_MIX_PORT"
 msgstr "Clamp mix"
 
 msgid "NODE_CLAMP_MIX_PORT_TTIP"
-msgstr "Limits the mix values to -1.0 - 1.0"
+msgstr "Limits the mix values to -1.0 - 1.0."
 
 msgid "NODE_ISOLATE_PORT"
 msgstr "Isolate segmt."
 
 msgid "NODE_ISOLATE_PORT_TTIP"
-msgstr "Clears values outside segment"
+msgstr "Clears values outside segment."
 
 # Nodes
 # Output node
@@ -2244,7 +2247,7 @@ msgid "NODE_XERP_PORT"
 msgstr "Extrapolation"
 
 msgid "NODE_XERP_PORT_TTIP"
-msgstr "How to map values outside the range -1 > 1"
+msgstr "How to map values outside the range -1 > 1."
 
 msgid "NODE_XERP_CONSTANT"
 msgstr "Constant"
@@ -2259,7 +2262,7 @@ msgid "NODE_MAP2EMPTY_PORT"
 msgstr "Map to empty"
 
 msgid "NODE_MAP2EMPTY_PORT_TTIP"
-msgstr "Empty values map to empty, instead of the original wave"
+msgstr "Empty values map to empty, instead of the original wave."
 
 # Clip node
 msgid "NODE_CLIP_TITLE"
@@ -2274,13 +2277,13 @@ msgid "NODE_KEEP0_PORT"
 msgstr "Keep 0"
 
 msgid "NODE_KEEP0_PORT_TTIP"
-msgstr "Avoids vertical recentering of the wave"
+msgstr "Avoids vertical recentering of the wave."
 
 msgid "NODE_USE_FULL_PORT"
 msgstr "Full wave"
 
 msgid "NODE_USE_FULL_PORT_TTIP"
-msgstr "Uses the entire wave to calculate min/max values, instead of the range"
+msgstr "Uses the entire wave to calculate min/max values, instead of the range."
 
 # Decay node
 msgid "NODE_DECAY_TITLE"
@@ -2292,7 +2295,7 @@ msgstr "Power"
 
 # Mux node
 msgid "NODE_MUX_TITLE"
-msgstr "Multiplexor"
+msgstr "MULTIPLEXOR"
 
 msgid "NODE_INPUT_COUNT_PORT"
 msgstr "Input ct."
@@ -2323,3 +2326,19 @@ msgstr "Clamp"
 
 msgid "NODE_MUX_WRAP"
 msgstr "Wrap"
+
+# Quantize node
+msgid "NODE_QUANTIZE_TITLE"
+msgstr "QUANTIZE"
+
+msgid "NODE_LEVELS"
+msgstr "Levels"
+
+msgid "NODE_LEVELS_TTIP"
+msgstr "<EMPTY STRING>"
+
+msgid "NODE_FULL_AMP_PORT"
+msgstr "Full amplitude"
+
+msgid "NODE_FULL_AMP_PORT_TTIP"
+msgstr "Quantizes the full amplitude range instead of the range -1 > 1."

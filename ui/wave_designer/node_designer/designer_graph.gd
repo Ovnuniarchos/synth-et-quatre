@@ -16,7 +16,7 @@ enum{
 	OUTPUT,
 	GEN_SINE,GEN_SAW,GEN_PULSE,GEN_TRIANGLE,GEN_NOISE,GEN_RAMP,
 	XFR_MIX,XFR_CLAMP,XFR_MAPR,XFR_MAPW,XFR_CLIP,XFR_NORMALIZE,
-	XFR_DECAY,XFR_POWER,XFR_MUX
+	XFR_DECAY,XFR_POWER,XFR_MUX,XFR_QUANTIZE
 }
 const MENU:Array=[
 	"unsorted",
@@ -38,7 +38,8 @@ const MENU:Array=[
 		{"option":"NODED_MENU_NORMALIZE","id":XFR_NORMALIZE},
 		{"option":"NODED_MENU_DECAY","id":XFR_DECAY},
 		{"option":"NODED_MENU_POWER","id":XFR_POWER},
-		{"option":"NODED_MENU_MUX","id":XFR_MUX}
+		{"option":"NODED_MENU_MUX","id":XFR_MUX},
+		{"option":"NODED_MENU_QUANTIZE","id":XFR_QUANTIZE}
 	]}
 ]
 const NODES:Dictionary={
@@ -58,6 +59,7 @@ const NODES:Dictionary={
 	XFR_DECAY:preload("res://ui/wave_designer/node_designer/nodes/transforms/decay_node.tscn"),
 	XFR_POWER:preload("res://ui/wave_designer/node_designer/nodes/transforms/power_node.tscn"),
 	XFR_MUX:preload("res://ui/wave_designer/node_designer/nodes/transforms/mux_node.tscn"),
+	XFR_QUANTIZE:preload("res://ui/wave_designer/node_designer/nodes/transforms/quantize_node.tscn"),
 }
 const COMPONENTS:Dictionary={
 	OUTPUT:OutputNodeComponent,
@@ -75,7 +77,8 @@ const COMPONENTS:Dictionary={
 	XFR_NORMALIZE:NormalizeNodeComponent,
 	XFR_DECAY:DecayNodeComponent,
 	XFR_POWER:PowerNodeComponent,
-	XFR_MUX:MuxNodeComponent
+	XFR_MUX:MuxNodeComponent,
+	XFR_QUANTIZE:QuantizeNodeComponent
 }
 const NODES_CLASS:Dictionary={
 	OutputNodeComponent.NODE_TYPE:NODES[OUTPUT],
@@ -93,7 +96,8 @@ const NODES_CLASS:Dictionary={
 	NormalizeNodeComponent.NODE_TYPE:NODES[XFR_NORMALIZE],
 	DecayNodeComponent.NODE_TYPE:NODES[XFR_DECAY],
 	PowerNodeComponent.NODE_TYPE:NODES[XFR_POWER],
-	MuxNodeComponent.NODE_TYPE:NODES[XFR_MUX]
+	MuxNodeComponent.NODE_TYPE:NODES[XFR_MUX],
+	QuantizeNodeComponent.NODE_TYPE:NODES[XFR_QUANTIZE]
 }
 
 

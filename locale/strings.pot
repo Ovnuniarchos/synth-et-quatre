@@ -1781,6 +1781,9 @@ msgstr ""
 msgid "NODED_MENU_MUX"
 msgstr ""
 
+msgid "NODED_MENU_QUANTIZE"
+msgstr ""
+
 # Common ports
 
 msgid "NODE_OUTPUT_PORT"
@@ -2337,6 +2340,7 @@ msgid "NODE_POWER_TITLE"
 msgstr ""
 
 # Mux node
+
 msgid "NODE_MUX_TITLE"
 msgstr ""
 
@@ -2368,4 +2372,21 @@ msgid "NODE_MUX_CLAMP"
 msgstr ""
 
 msgid "NODE_MUX_WRAP"
+msgstr ""
+
+# Quantize node
+
+msgid "NODE_QUANTIZE_TITLE"
+msgstr ""
+
+msgid "NODE_LEVELS"
+msgstr ""
+
+msgid "NODE_LEVELS_TTIP"
+msgstr ""
+
+msgid "NODE_FULL_AMP_PORT"
+msgstr ""
+
+msgid "NODE_FULL_AMP_PORT_TTIP"
 msgstr ""

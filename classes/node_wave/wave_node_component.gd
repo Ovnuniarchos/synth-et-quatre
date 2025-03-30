@@ -45,13 +45,6 @@ func clear_array(arr:Array,new_size:int,value:float=0.0)->void:
 	arr.fill(value)
 
 
-func fill_out_of_region(region_sz:int,optr:int,input_values:Array,isolate_values:Array)->void:
-	region_sz=size-region_sz
-	for i in region_sz:
-		if isolate_values[optr]<0.5: output[optr]=input_values[optr]
-		optr=(optr+1)&size_mask
-
-
 # calculate_xxx return true if their result was already cached
 func calculate_slot(result:Array,slot:Array,selected_value:float,mode:Array=[DE_NAN])->bool:
 	if output_valid:
@@ -92,24 +85,6 @@ func calculate_option_slot(result:Array,slot:Array,option_count:int,selected_val
 
 func calculate_clamped_slot(result:Array,slot:Array,selected_value:float,minval:float,maxval:float)->bool:
 	return calculate_slot(result,slot,selected_value,[CLAMP,minval,maxval])
-
-
-# DEPRECATE
-func reset_decay(cycle_size:float)->void:
-	_last_value=0.0
-	_decay=1.0
-	_decay_factor=128.0/max(1.0,cycle_size)
-
-
-# DEPRECATE
-func calculate_decay(new_value:float,decay_value:float)->float:
-	var t:float=new_value-_last_value
-	if abs(t)<0.00000001 or sign(t)!=sign(new_value):
-		_decay=max(0.0,_decay-(pow(decay_value,4.0)*_decay_factor))
-	else:
-		_decay=1.0
-	_last_value=new_value
-	return new_value*_decay
 
 
 func invalidate()->void:

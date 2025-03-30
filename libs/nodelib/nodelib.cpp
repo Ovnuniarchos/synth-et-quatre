@@ -15,6 +15,7 @@
 #include "nodes/transforms/mux.cpp"
 #include "nodes/transforms/normalize.cpp"
 #include "nodes/transforms/power.cpp"
+#include "nodes/transforms/quantize.cpp"
 #include <cstdio>
 
 
@@ -58,9 +59,10 @@ void NodeLib::_register_methods(){
 	register_method("map_wave", &NodeLib::map_wave);
 	register_method("mix", &NodeLib::mix);
 	register_method("mux", &NodeLib::mux);
-	register_method("pre_normalize", &NodeLib::pre_normalize);
+	register_method("find_amplitude_bounds", &NodeLib::find_amplitude_bounds);
 	register_method("normalize", &NodeLib::normalize);
 	register_method("power", &NodeLib::power);
+	register_method("quantize", &NodeLib::quantize);
 }
 
 NodeLib::NodeLib(){
@@ -85,3 +87,46 @@ void NodeLib::fill_out_of_region(int segment_size,int outptr,Array output,Array 
 	}
 }
 
+void NodeLib::find_amplitude_bounds(Array input,int segment_size,int outptr,Array hi_lo){
+	enum{
+		HI,LO,HILO,
+		HI_FULL,LO_FULL,HILO_FULL
+	};
+	int size=input.size();
+	int size_mask=size-1;
+	double t;
+	double range;
+	double range_full;
+	double hi=-INFINITY;
+	double lo=INFINITY;
+	double hi_full=-INFINITY;
+	double lo_full=INFINITY;
+	for(int i=0;i<size;i++){
+		t=(double)input[outptr];
+		if (i<segment_size && !std::isnan(t)){
+			hi=t>hi?t:hi;
+			lo=t<lo?t:lo;
+		}
+		t=(double)input[outptr];
+		if (!std::isnan(t)){
+			hi_full=t>hi_full?t:hi_full;
+			lo_full=t<lo_full?t:lo_full;
+		}
+		outptr=(outptr+1)&size_mask;
+	}
+	if (hi_full==-INFINITY && lo_full==INFINITY){
+		hi_lo[HI_FULL]=-INFINITY;
+		hi_lo[LO_FULL]=-INFINITY;
+		return;
+	}
+	if (hi==-INFINITY && lo==INFINITY){
+		hi=1.0;
+		lo=-1.0;
+	}
+	hi_lo[HI]=hi;
+	hi_lo[LO]=lo;
+	hi_lo[HILO]=Math::max(std::abs(hi),std::abs(lo));
+	hi_lo[HI_FULL]=hi_full;
+	hi_lo[LO_FULL]=lo_full;
+	hi_lo[HILO_FULL]=Math::max(std::abs(hi_full),std::abs(lo_full));
+}

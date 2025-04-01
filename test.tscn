@@ -7,7 +7,7 @@ script/source = "extends Node
 FIXME
 TODO:
 	Node-based wave generator
-		Quantize amplitude/time filter
+		Quantize time filter
 		Convolution/frequency filters
 	Reset per channel parameters (as a command|button)
 	MIDI input

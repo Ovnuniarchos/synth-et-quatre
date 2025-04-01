@@ -18,7 +18,8 @@ var writers:Dictionary={
 	NormalizeNodeComponent.NODE_TYPE:NormalizeNodeWriter,
 	DecayNodeComponent.NODE_TYPE:DecayNodeWriter,
 	PowerNodeComponent.NODE_TYPE:PowerNodeWriter,
-	MuxNodeComponent.NODE_TYPE:MuxNodeWriter
+	MuxNodeComponent.NODE_TYPE:MuxNodeWriter,
+	QuantizeNodeComponent.NODE_TYPE:QuantizeNodeWriter
 }
 
 

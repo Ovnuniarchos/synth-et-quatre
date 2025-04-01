@@ -1,8 +1,5 @@
 tool extends NodeController
 
-func _ready()->void:
-	pass
-
 
 func set_parameters()->void:
 	if not is_node_ready():

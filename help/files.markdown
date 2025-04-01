@@ -520,6 +520,23 @@
 	<Connections/>
 </MuxNode>
 
+<QuantizeNode>
+	<ChunkHeader id="qUAN"/>
+	<RangeFrom type="float"/>
+	<RangeLength type="float"/>
+	<Levels type="uint8"/>
+	<UseFullLength type="boolean"/>
+	<UseFullAmplitude type="boolean"/>
+	<Mix type="float"/>
+	<ClampMix type="float"/>
+	<Isolate type="boolean"/>
+	<Amplitude type="float"/>
+	<Power type="float"/>
+	<Decay type="float"/>
+	<DC type="float"/>
+	<Connections/>
+</QuantizeNode>
+
 <Connections>
 	<InputsConnectedCount type="uint16"/>
 	<foreach:InputConnected>

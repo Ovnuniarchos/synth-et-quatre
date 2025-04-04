@@ -5,6 +5,7 @@ func set_parameters()->void:
 	if not is_node_ready():
 		yield(self,"ready")
 	$Levels.set_value(node.levels_value)
+	$Dither.set_value(node.dither_value)
 	$UseFull.set_value(node.use_full_value)
 	$FullAmp.set_value(node.full_amplitude_value)
 	$Mix.set_value(node.mix_value)
@@ -73,6 +74,11 @@ func _on_UseFull_value_changed(value:float)->void:
 	emit_signal("params_changed",self)
 
 
-func _on_FullAmp_value_changed(value) -> void:
+func _on_FullAmp_value_changed(value:float)->void:
 	node.full_amplitude_value=value
+	emit_signal("params_changed",self)
+
+
+func _on_Dither_value_changed(value:float)->void:
+	node.dither_value=value
 	emit_signal("params_changed",self)

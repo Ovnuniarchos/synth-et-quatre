@@ -525,8 +525,9 @@
 	<RangeFrom type="float"/>
 	<RangeLength type="float"/>
 	<Levels type="uint8"/>
-	<UseFullLength type="boolean"/>
-	<UseFullAmplitude type="boolean"/>
+	<Dither type="float"/>
+	<UseFullLength type="float"/>
+	<UseFullAmplitude type="float"/>
 	<Mix type="float"/>
 	<ClampMix type="float"/>
 	<Isolate type="boolean"/>

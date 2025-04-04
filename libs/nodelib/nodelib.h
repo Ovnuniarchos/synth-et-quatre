@@ -194,7 +194,7 @@ public:
 
 	void quantize(Array output,int segment_size,int outptr,
 		double hi,double lo,double hi_full,double lo_full,
-		Array input,Array levels,Array use_full,Array full_amplitude,
+		Array input,Array levels,Array dither,Array use_full,Array full_amplitude,
 		Array mix,Array clamp_mix,Array isolate,
 		Array amplitude,Array power,Array decay
 	);

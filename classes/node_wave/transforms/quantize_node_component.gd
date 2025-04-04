@@ -8,7 +8,10 @@ var input_slot:Array=[]
 var input_values:Array=[]
 var levels_slot:Array=[]
 var levels_values:Array=[]
-var levels_value:float=1.0 setget set_levels_value
+var levels_value:float=2.0 setget set_levels_value
+var dither_slot:Array=[]
+var dither_values:Array=[]
+var dither_value:float=0.0 setget set_dither_value
 var use_full_slot:Array=[]
 var use_full_values:Array=[]
 var use_full_value:float=1.0 setget set_use_full_value
@@ -42,6 +45,7 @@ func _init()->void:
 	inputs=[
 		{SLOT_ID:SlotIds.SLOT_INPUT,SLOT_IN:input_slot},
 		{SLOT_ID:SlotIds.SLOT_LEVELS,SLOT_IN:levels_slot},
+		{SLOT_ID:SlotIds.SLOT_DITHER,SLOT_IN:dither_slot},
 		{SLOT_ID:SlotIds.SLOT_USE_FULL_WAVE,SLOT_IN:use_full_slot},
 		{SLOT_ID:SlotIds.SLOT_FULL_AMPLITUDE,SLOT_IN:full_amplitude_slot},
 		{SLOT_ID:SlotIds.SLOT_MIX,SLOT_IN:mix_slot},
@@ -57,6 +61,11 @@ func _init()->void:
 func set_levels_value(value:float)->void:
 	levels_value=value
 	levels_values.resize(0)
+
+
+func set_dither_value(value:float)->void:
+	dither_value=value
+	dither_values.resize(0)
 
 
 func set_use_full_value(value:float)->void:
@@ -109,9 +118,6 @@ func calculate()->Array:
 		return output
 	clear_array(output,size,NAN)
 	calculate_slot(input_values,input_slot,NAN)
-	calculate_slot(levels_values,levels_slot,levels_value)
-	calculate_diffuse_boolean_slot(use_full_values,use_full_slot,use_full_value)
-	calculate_diffuse_boolean_slot(full_amplitude_values,full_amplitude_slot,full_amplitude_value)
 	var sz:int=max(1.0,size*range_length)
 	var optr:int=fposmod(range_from*size,size)
 	var hl_values:Array=[0.0,0.0,0.0,0.0,0.0,0.0]
@@ -123,6 +129,10 @@ func calculate()->Array:
 	if hi_full==-INF and lo_full==INF:
 		output_valid=true
 		return output
+	calculate_slot(levels_values,levels_slot,levels_value)
+	calculate_diffuse_boolean_slot(dither_values,dither_slot,dither_value)
+	calculate_diffuse_boolean_slot(use_full_values,use_full_slot,use_full_value)
+	calculate_diffuse_boolean_slot(full_amplitude_values,full_amplitude_slot,full_amplitude_value)
 	calculate_slot(mix_values,mix_slot,mix_value)
 	calculate_diffuse_boolean_slot(clamp_mix_values,clamp_mix_slot,clamp_mix_value)
 	calculate_boolean_slot(isolate_values,isolate_slot,isolate)
@@ -131,7 +141,7 @@ func calculate()->Array:
 	calculate_slot(decay_values,decay_slot,decay)
 	calculate_slot(dc_values,dc_slot,dc)
 	NODES.quantize(output,sz,optr,hi,lo,hi_full,lo_full,
-		input_values,levels_values,use_full_values,full_amplitude_values,
+		input_values,levels_values,dither_values,use_full_values,full_amplitude_values,
 		mix_values,clamp_mix_values,isolate_values,
 		amplitude_values,power_values,decay_values
 	)
@@ -143,7 +153,7 @@ func equals(other:WaveNodeComponent)->bool:
 	if (other as ClampNodeComponent)==null:
 		return false
 	return .equals(other) and are_equal_approx(other,[
-		"levels_value","use_full_value","full_amplitude_value",
+		"levels_value","dither_value","use_full_value","full_amplitude_value",
 		"mix_value","clamp_mix_value","isolate",
 		"amplitude","power","decay","dc"
 	])
@@ -152,6 +162,7 @@ func equals(other:WaveNodeComponent)->bool:
 func duplicate(container:Reference)->WaveNodeComponent:
 	var nc:QuantizeNodeComponent=.duplicate(container) as QuantizeNodeComponent
 	nc.levels_value=levels_value
+	nc.dither_value=dither_value
 	nc.use_full_value=use_full_value
 	nc.full_amplitude_value=full_amplitude_value
 	nc.mix_value=mix_value

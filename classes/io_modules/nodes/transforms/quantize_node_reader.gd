@@ -10,8 +10,9 @@ func deserialize(inf:ChunkedFile,header:Dictionary)->FileResult:
 		return fr
 	var node:QuantizeNodeComponent=fr.data
 	node.levels_value=inf.get_8()
-	node.use_full_value=float(bool(inf.get_8()))
-	node.full_amplitude_value=float(bool(inf.get_8()))
+	node.dither_value=inf.get_float()
+	node.use_full_value=inf.get_float()
+	node.full_amplitude_value=inf.get_float()
 	node.mix_value=inf.get_float()
 	node.clamp_mix_value=inf.get_float()
 	node.isolate=float(bool(inf.get_8()))

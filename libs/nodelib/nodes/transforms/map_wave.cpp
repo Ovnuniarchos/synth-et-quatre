@@ -9,7 +9,7 @@ void NodeLib::map_wave(Array output,int segment_size,int outptr,Array input,
 	enum{XERP_CONSTANT,XERP_EXTEND,XERP_WRAP};
 
 	double size=(double)output.size();
-	double t1;
+	double t1,_;
 	int size_mask=output.size()-1;
 	int mode;
 	I2DConverter i2d;
@@ -42,7 +42,9 @@ void NodeLib::map_wave(Array output,int segment_size,int outptr,Array input,
 				}else{
 					t1=(double)map[t1];
 				}
-				i2d.d=Math::lerp((double)map[i2d.d],t1,i2d.d-Math::floor(i2d.d));
+				t1-=(double)map[i2d.d];
+				i2d.d+=t1*std::modf(i2d.d,&_);
+				// i2d.d=Math::lerp((double)map[i2d.d],t1,i2d.d-Math::floor(i2d.d));
 			}else{
 				if (t1<0.0){
 					t1=(double)map[0]-slope_neg*t1;
@@ -51,7 +53,9 @@ void NodeLib::map_wave(Array output,int segment_size,int outptr,Array input,
 				}else{
 					t1=(double)map[t1];
 				}
-				i2d.d=Math::lerp(map[i2d.d],t1,(1.0-cos((i2d.d-floor(i2d.d))*Math_PI))*0.5);
+				t1-=(double)map[i2d.d];
+				i2d.d+=t1*(1.0-cos(std::modf(i2d.d,&_)*Math_PI))*0.5;
+				// i2d.d=Math::lerp(map[i2d.d],t1,(1.0-cos((i2d.d-floor(i2d.d))*Math_PI))*0.5);
 			}
 		}
 		if ((double)map_empty[outptr]<0.5 && std::isnan(i2d.d)){

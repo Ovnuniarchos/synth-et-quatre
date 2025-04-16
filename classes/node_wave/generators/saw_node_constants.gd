@@ -21,16 +21,7 @@ const STRINGS:Dictionary={
 	SWQ_NH:"NODE_SAWQ_-0.5",
 	SWQ_N1:"NODE_SAWQ_-1"
 }
-const AS_ARRAY:Array=[
-	SWQ_N1_NH,SWQ_NH_0,SWQ_0_H,SWQ_H_1,
-	SWQ_1_H,SWQ_H_0,SWQ_0_NH,SWQ_NH_N1,
-	SWQ_1,SWQ_H,SWQ_0,SWQ_NH,SWQ_N1
-]
 
 
 static func get_defaults()->Array:
 	return [SWQ_N1_NH,SWQ_NH_0,SWQ_0_H,SWQ_H_1].duplicate()
-
-
-static func get_calc_array()->Array:
-	return [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.5,0.0,-0.5,-1.0].duplicate()

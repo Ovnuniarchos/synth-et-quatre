@@ -275,6 +275,11 @@
 			<MapWaveNode option/>
 			<MixNode option/>
 			<NormalizeNode option/>
+			<DecayNode option/>
+			<PowerNode option/>
+			<MuxNode option/>
+			<QuantizeNode option/>
+			<DecimateNode option/>
 		</options>
 	</foreach:Node>
 </NodeWave>
@@ -522,9 +527,10 @@
 
 <QuantizeNode>
 	<ChunkHeader id="qUAN"/>
+	<GraphPositions/>
 	<RangeFrom type="float"/>
 	<RangeLength type="float"/>
-	<Levels type="uint8"/>
+	<Levels type="uint16"/>
 	<Dither type="float"/>
 	<UseFullLength type="float"/>
 	<UseFullAmplitude type="float"/>
@@ -537,6 +543,23 @@
 	<DC type="float"/>
 	<Connections/>
 </QuantizeNode>
+
+<DecimateNode>
+	<ChunkHeader id="dECI"/>
+	<RangeFrom type="float"/>
+	<RangeLength type="float"/>
+	<Levels type="uint16"/>
+	<UseFullLength type="float"/>
+	<LerpType type="uint8"/>
+	<Mix type="float"/>
+	<ClampMix type="float"/>
+	<Isolate type="boolean"/>
+	<Amplitude type="float"/>
+	<Power type="float"/>
+	<Decay type="float"/>
+	<DC type="float"/>
+	<Connections/>
+</DecimateNode>
 
 <Connections>
 	<InputsConnectedCount type="uint16"/>

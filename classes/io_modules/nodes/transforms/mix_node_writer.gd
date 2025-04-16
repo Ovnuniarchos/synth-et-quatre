@@ -9,7 +9,7 @@ func serialize(out:ChunkedFile,node:MixNodeComponent)->FileResult:
 	out.store_8(node.op_value)
 	out.store_float(node.mix_value)
 	out.store_float(node.clamp_mix_value)
-	out.store_8(int(node.isolate>=0.5))
+	out.store_boolean(node.isolate)
 	out.store_float(node.power)
 	out.store_float(node.decay)
 	out.store_float(node.dc)

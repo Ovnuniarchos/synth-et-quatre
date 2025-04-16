@@ -11,10 +11,10 @@ func deserialize(inf:ChunkedFile,header:Dictionary)->FileResult:
 	var node:MapWaveNodeComponent=fr.data
 	node.lerp_value=inf.get_8()
 	node.extrapolate=inf.get_8()
-	node.map_empty=float(bool(inf.get_8()))
+	node.map_empty=inf.get_boolean()
 	node.mix_value=inf.get_float()
 	node.clamp_mix_value=inf.get_float()
-	node.isolate=float(bool(inf.get_8()))
+	node.isolate=inf.get_boolean()
 	node.amplitude=inf.get_float()
 	node.power=inf.get_float()
 	node.decay=inf.get_float()

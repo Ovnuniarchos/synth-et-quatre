@@ -1755,6 +1755,9 @@ msgstr "Multiplexer"
 msgid "NODED_MENU_QUANTIZE"
 msgstr "Quantize"
 
+msgid "NODED_MENU_DECIMATE"
+msgstr "Decimate"
+
 # Common ports
 msgid "NODE_OUTPUT_PORT"
 msgstr "Output"
@@ -1860,6 +1863,21 @@ msgstr "Isolate segmt."
 
 msgid "NODE_ISOLATE_PORT_TTIP"
 msgstr "Clears values outside segment."
+
+msgid "NODE_LERP_PORT"
+msgstr "Interpolation"
+
+msgid "NODE_LERP_PORT_TTIP"
+msgstr "Interpolation type"
+
+msgid "NODE_LERP_NONE"
+msgstr "None"
+
+msgid "NODE_LERP_LINEAR"
+msgstr "Linear"
+
+msgid "NODE_LERP_COS"
+msgstr "Cosine"
 
 # Nodes
 # Output node
@@ -2228,21 +2246,6 @@ msgstr "Map"
 msgid "NODE_MAPPING_PORT_TTIP"
 msgstr "<EMPTY STRING>"
 
-msgid "NODE_LERP_PORT"
-msgstr "Interpolation"
-
-msgid "NODE_LERP_PORT_TTIP"
-msgstr "Interpolation type"
-
-msgid "NODE_LERP_NONE"
-msgstr "None"
-
-msgid "NODE_LERP_LINEAR"
-msgstr "Linear"
-
-msgid "NODE_LERP_COS"
-msgstr "Cosine"
-
 msgid "NODE_XERP_PORT"
 msgstr "Extrapolation"
 
@@ -2337,8 +2340,18 @@ msgstr "Levels"
 msgid "NODE_LEVELS_TTIP"
 msgstr "<EMPTY STRING>"
 
+msgid "NODE_DITHER"
+msgstr "Dither"
+
+msgid "NODE_DITHER_TTIP"
+msgstr "<EMPTY STRING>"
+
 msgid "NODE_FULL_AMP_PORT"
 msgstr "Full amplitude"
 
 msgid "NODE_FULL_AMP_PORT_TTIP"
 msgstr "Quantizes the full amplitude range instead of the range -1 > 1."
+
+# Decimate node
+msgid "NODE_DECIMATE_TITLE"
+msgstr "DECIMATE"

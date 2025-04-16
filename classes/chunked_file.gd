@@ -76,6 +76,14 @@ func store_ascii(string:String,length:int=4)->void:
 	store_buffer(t1)
 
 
+func store_boolean(value:float)->void:
+	store_8(value>=0.5)
+
+
+func get_boolean()->bool:
+	return bool(get_8())
+
+
 func get_signed_16()->int:
 	var v:int=get_16()
 	v=v if v<0x8000 else v|-0x10000

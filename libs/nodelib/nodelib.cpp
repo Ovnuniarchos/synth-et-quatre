@@ -16,6 +16,7 @@
 #include "nodes/transforms/normalize.cpp"
 #include "nodes/transforms/power.cpp"
 #include "nodes/transforms/quantize.cpp"
+#include "nodes/transforms/decimate.cpp"
 #include <cstdio>
 
 
@@ -63,6 +64,7 @@ void NodeLib::_register_methods(){
 	register_method("normalize", &NodeLib::normalize);
 	register_method("power", &NodeLib::power);
 	register_method("quantize", &NodeLib::quantize);
+	register_method("decimate", &NodeLib::decimate);
 }
 
 NodeLib::NodeLib(){

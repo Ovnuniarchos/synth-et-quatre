@@ -2,10 +2,9 @@
 #define NODELIB
 
 #include <Godot.hpp>
-#include <Node.hpp>
-#include <Vector2.hpp>
 #include <Math.hpp>
 #include <OpenSimplexNoise.hpp>
+#include <Node.hpp>
 #include <cmath>
 #include <limits>
 #include <cstdio>
@@ -24,9 +23,6 @@ private:
 		double d;
 		I2DConverter(){i=0L;}
 		I2DConverter(double v){d=v;}
-		/*inline void setMantissa(uint64_t m){i=0x3FF0000000000000UL+(m&0x000fffffffffffffUL);d-=1.0;}
-		inline bool isNegative(){return (bool)(i&0x8000000000000000UL);}
-		inline void setSign(bool neg){i=(i&0x7fffffffffffffffUL)|((neg<<63UL)&0x8000000000000000UL);}*/
 		inline double setSign(double b){I2DConverter i2(b);i=(i&0x7fffffffffffffffUL)|(i2.i&0x8000000000000000UL);return d;}
 		inline double setExpMantissa(uint64_t m){i=0x3FF0000000000000UL+(m&0x000fffffffffffffUL);d-=1.0;i|=(m&0x8000000000000000UL);return d;}
 		inline double setPositive(){i&=0x7fffffffffffffffUL;return d;}
@@ -195,6 +191,12 @@ public:
 	void quantize(Array output,int segment_size,int outptr,
 		double hi,double lo,double hi_full,double lo_full,
 		Array input,Array levels,Array dither,Array use_full,Array full_amplitude,
+		Array mix,Array clamp_mix,Array isolate,
+		Array amplitude,Array power,Array decay
+	);
+
+	void decimate(Array output,int segment_size,int outptr,
+		Array input,Array samples,Array use_full,Array lerp,
 		Array mix,Array clamp_mix,Array isolate,
 		Array amplitude,Array power,Array decay
 	);

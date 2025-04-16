@@ -1,9 +1,12 @@
 extends NodeComponentIO
-class_name DecayNodeWriter
+class_name DecimateNodeWriter
 
 
-func serialize(out:ChunkedFile,node:DecayNodeComponent)->FileResult:
-	_serialize_start(out,node,DECAY_ID,DECAY_VERSION)
+func serialize(out:ChunkedFile,node:DecimateNodeComponent)->FileResult:
+	_serialize_start(out,node,DECIMATE_ID,DECIMATE_VERSION)
+	out.store_16(node.samples_value)
+	out.store_float(node.use_full_value)
+	out.store_8(node.lerp_value)
 	out.store_float(node.mix_value)
 	out.store_float(node.clamp_mix_value)
 	out.store_8(node.isolate)

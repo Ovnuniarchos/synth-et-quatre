@@ -11,7 +11,7 @@ func deserialize(inf:ChunkedFile,header:Dictionary)->FileResult:
 	var node:DecayNodeComponent=fr.data
 	node.mix_value=inf.get_float()
 	node.clamp_mix_value=inf.get_float()
-	node.isolate=float(bool(inf.get_8()))
+	node.isolate=inf.get_boolean()
 	node.amplitude=inf.get_float()
 	node.power=inf.get_float()
 	node.decay=inf.get_float()

@@ -19,7 +19,8 @@ var writers:Dictionary={
 	DecayNodeComponent.NODE_TYPE:DecayNodeWriter,
 	PowerNodeComponent.NODE_TYPE:PowerNodeWriter,
 	MuxNodeComponent.NODE_TYPE:MuxNodeWriter,
-	QuantizeNodeComponent.NODE_TYPE:QuantizeNodeWriter
+	QuantizeNodeComponent.NODE_TYPE:QuantizeNodeWriter,
+	DecimateNodeComponent.NODE_TYPE:DecimateNodeWriter
 }
 
 

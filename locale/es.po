@@ -2237,6 +2237,18 @@ msgstr "Sal. máx."
 msgid "NODE_MAX_OUT_PORT_TTIP"
 msgstr "Valor máximo de salida"
 
+msgid "NODE_XERP_IN_PORT"
+msgstr "Extr. Ent."
+
+msgid "NODE_XERP_IN_PORT_TTIP"
+msgstr "Extrapolar valores por debajo de la entrada mínima."
+
+msgid "NODE_XERP_OUT_PORT"
+msgstr "Extr. Sal."
+
+msgid "NODE_XERP_OUT_PORT_TTIP"
+msgstr "Extrapolar valores por encima de la entrada máxima."
+
 # Map wave node
 msgid "NODE_MAP_WAVE_TITLE"
 msgstr "MAPEO DE ONDA"

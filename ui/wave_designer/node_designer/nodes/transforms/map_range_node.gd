@@ -8,6 +8,8 @@ func set_parameters()->void:
 	$MaxIn.set_value(node.max_in_value)
 	$MinOut.set_value(node.min_out_value)
 	$MaxOut.set_value(node.max_out_value)
+	$XerpIn.set_value(node.xerp_in_value)
+	$XerpOut.set_value(node.xerp_out_value)
 	$Mix.set_value(node.mix_value)
 	$ClampMix.set_value(node.clamp_mix_value)
 	$Isolate.set_pressed_no_signal(node.isolate>=0.5)
@@ -81,4 +83,14 @@ func _on_ClampMix_value_changed(value:float)->void:
 
 func _on_Isolate_toggled(pressed:bool)->void:
 	node.isolate=float(pressed)
+	emit_signal("params_changed",self)
+
+
+func _on_XerpIn_value_changed(value:float)->void:
+	node.xerp_in_value=value
+	emit_signal("params_changed",self)
+
+
+func _on_XerpOut_value_changed(value:float)->void:
+	node.xerp_out_value=value
 	emit_signal("params_changed",self)

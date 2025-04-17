@@ -47,8 +47,8 @@ slot/5/right_enabled = false
 slot/5/right_type = 0
 slot/5/right_color = Color( 1, 1, 1, 1 )
 slot/6/left_enabled = true
-slot/6/left_type = 0
-slot/6/left_color = Color( 1, 1, 1, 1 )
+slot/6/left_type = 1
+slot/6/left_color = Color( 0, 1, 1, 1 )
 slot/6/right_enabled = false
 slot/6/right_type = 0
 slot/6/right_color = Color( 1, 1, 1, 1 )
@@ -65,8 +65,8 @@ slot/8/right_enabled = false
 slot/8/right_type = 0
 slot/8/right_color = Color( 1, 1, 1, 1 )
 slot/9/left_enabled = true
-slot/9/left_type = 0
-slot/9/left_color = Color( 1, 1, 1, 1 )
+slot/9/left_type = 1
+slot/9/left_color = Color( 0, 1, 1, 1 )
 slot/9/right_enabled = false
 slot/9/right_type = 0
 slot/9/right_color = Color( 1, 1, 1, 1 )
@@ -83,23 +83,35 @@ slot/11/right_enabled = false
 slot/11/right_type = 0
 slot/11/right_color = Color( 1, 1, 1, 1 )
 slot/12/left_enabled = true
-slot/12/left_type = 2
-slot/12/left_color = Color( 0, 1, 0, 1 )
+slot/12/left_type = 0
+slot/12/left_color = Color( 1, 1, 1, 1 )
 slot/12/right_enabled = false
 slot/12/right_type = 0
 slot/12/right_color = Color( 1, 1, 1, 1 )
-slot/13/left_enabled = false
+slot/13/left_enabled = true
 slot/13/left_type = 0
 slot/13/left_color = Color( 1, 1, 1, 1 )
 slot/13/right_enabled = false
 slot/13/right_type = 0
 slot/13/right_color = Color( 1, 1, 1, 1 )
-slot/14/left_enabled = false
-slot/14/left_type = 0
-slot/14/left_color = Color( 1, 1, 1, 1 )
+slot/14/left_enabled = true
+slot/14/left_type = 2
+slot/14/left_color = Color( 0, 1, 0, 1 )
 slot/14/right_enabled = false
 slot/14/right_type = 0
 slot/14/right_color = Color( 1, 1, 1, 1 )
+slot/15/left_enabled = false
+slot/15/left_type = 0
+slot/15/left_color = Color( 1, 1, 1, 1 )
+slot/15/right_enabled = false
+slot/15/right_type = 0
+slot/15/right_color = Color( 1, 1, 1, 1 )
+slot/16/left_enabled = false
+slot/16/left_type = 0
+slot/16/left_color = Color( 1, 1, 1, 1 )
+slot/16/right_enabled = false
+slot/16/right_type = 0
+slot/16/right_color = Color( 1, 1, 1, 1 )
 script = ExtResource( 1 )
 base_title = "NODE_MAP_RANGE_TITLE"
 
@@ -166,11 +178,33 @@ clamp_lo = false
 clamp_hi = false
 nullable = false
 
-[node name="Mix" parent="." instance=ExtResource( 3 )]
+[node name="XerpIn" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
 margin_top = 114.0
 margin_right = 245.0
 margin_bottom = 128.0
+label = "NODE_XERP_IN_PORT"
+tooltip = "NODE_XERP_IN_PORT_TTIP"
+min_value = 0.0
+value = 1.0
+nullable = false
+
+[node name="XerpOut" parent="." instance=ExtResource( 3 )]
+margin_left = 16.0
+margin_top = 129.0
+margin_right = 245.0
+margin_bottom = 143.0
+label = "NODE_XERP_OUT_PORT"
+tooltip = "NODE_XERP_OUT_PORT_TTIP"
+min_value = 0.0
+value = 1.0
+nullable = false
+
+[node name="Mix" parent="." instance=ExtResource( 3 )]
+margin_left = 16.0
+margin_top = 144.0
+margin_right = 245.0
+margin_bottom = 158.0
 type = 9
 label = "NODE_MIX_FACTOR_PORT"
 tooltip = "NODE_MIX_FACTOR_PORT_TTIP"
@@ -181,9 +215,9 @@ nullable = false
 
 [node name="ClampMix" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
-margin_top = 129.0
+margin_top = 159.0
 margin_right = 245.0
-margin_bottom = 143.0
+margin_bottom = 173.0
 type = 10
 label = "NODE_CLAMP_MIX_PORT"
 tooltip = "NODE_CLAMP_MIX_PORT_TTIP"
@@ -193,9 +227,9 @@ nullable = false
 
 [node name="Amplitude" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
-margin_top = 144.0
+margin_top = 174.0
 margin_right = 245.0
-margin_bottom = 158.0
+margin_bottom = 188.0
 type = 2
 label = "NODE_AMPLITUDE_PORT"
 tooltip = "NODE_AMPLITUDE_PORT_TTIP"
@@ -206,9 +240,9 @@ nullable = false
 
 [node name="Power" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
-margin_top = 159.0
+margin_top = 189.0
 margin_right = 245.0
-margin_bottom = 173.0
+margin_bottom = 203.0
 type = 4
 label = "NODE_POWER_PORT"
 tooltip = "NODE_POWER_PORT_TTIP"
@@ -222,9 +256,9 @@ nullable = false
 
 [node name="Decay" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
-margin_top = 174.0
+margin_top = 204.0
 margin_right = 245.0
-margin_bottom = 188.0
+margin_bottom = 218.0
 type = 5
 label = "NODE_DECAY_PORT"
 tooltip = "NODE_DECAY_PORT_TTIP"
@@ -233,9 +267,9 @@ nullable = false
 
 [node name="DCOffset" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
-margin_top = 189.0
+margin_top = 219.0
 margin_right = 245.0
-margin_bottom = 203.0
+margin_bottom = 233.0
 type = 6
 label = "NODE_DC_OFFSET_PORT"
 tooltip = "NODE_DC_OFFSET_PORT_TTIP"
@@ -245,9 +279,9 @@ nullable = false
 
 [node name="Isolate" type="Button" parent="."]
 margin_left = 16.0
-margin_top = 204.0
+margin_top = 234.0
 margin_right = 245.0
-margin_bottom = 224.0
+margin_bottom = 254.0
 hint_tooltip = "NODE_ISOLATE_PORT_TTIP"
 toggle_mode = true
 text = "NODE_ISOLATE_PORT"
@@ -255,9 +289,9 @@ script = ExtResource( 2 )
 
 [node name="RangeFrom" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
-margin_top = 225.0
+margin_top = 255.0
 margin_right = 245.0
-margin_bottom = 239.0
+margin_bottom = 269.0
 type = 7
 label = "NODE_RANGE_FROM_PORT"
 tooltip = "NODE_RANGE_FROM_PORT_TTIP"
@@ -265,9 +299,9 @@ nullable = false
 
 [node name="RangeLength" parent="." instance=ExtResource( 3 )]
 margin_left = 16.0
-margin_top = 240.0
+margin_top = 270.0
 margin_right = 245.0
-margin_bottom = 254.0
+margin_bottom = 284.0
 type = 8
 label = "NODE_RANGE_LEN_PORT"
 tooltip = "NODE_RANGE_LEN_PORT_TTIP"
@@ -279,6 +313,8 @@ nullable = false
 [connection signal="value_changed" from="MaxIn" to="." method="_on_MaxIn_value_changed"]
 [connection signal="value_changed" from="MinOut" to="." method="_on_MinOut_value_changed"]
 [connection signal="value_changed" from="MaxOut" to="." method="_on_MaxOut_value_changed"]
+[connection signal="value_changed" from="XerpIn" to="." method="_on_XerpIn_value_changed"]
+[connection signal="value_changed" from="XerpOut" to="." method="_on_XerpOut_value_changed"]
 [connection signal="value_changed" from="Mix" to="." method="_on_Mix_value_changed"]
 [connection signal="value_changed" from="ClampMix" to="." method="_on_ClampMix_value_changed"]
 [connection signal="value_changed" from="Amplitude" to="." method="_on_Amplitude_value_changed"]

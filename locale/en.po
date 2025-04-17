@@ -2236,6 +2236,18 @@ msgstr "Max Out"
 msgid "NODE_MAX_OUT_PORT_TTIP"
 msgstr "Maximum output value"
 
+msgid "NODE_XERP_IN_PORT"
+msgstr "Xerp In"
+
+msgid "NODE_XERP_IN_PORT_TTIP"
+msgstr "Extrapolate values under minimum input."
+
+msgid "NODE_XERP_OUT_PORT"
+msgstr "Xerp Out"
+
+msgid "NODE_XERP_OUT_PORT_TTIP"
+msgstr "Extrapolate values over maximum input."
+
 # Map wave node
 msgid "NODE_MAP_WAVE_TITLE"
 msgstr "MAP WAVE"

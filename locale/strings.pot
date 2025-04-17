@@ -2278,6 +2278,18 @@ msgstr ""
 msgid "NODE_MAX_OUT_PORT_TTIP"
 msgstr ""
 
+msgid "NODE_XERP_IN_PORT"
+msgstr ""
+
+msgid "NODE_XERP_IN_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_XERP_OUT_PORT"
+msgstr ""
+
+msgid "NODE_XERP_OUT_PORT_TTIP"
+msgstr ""
+
 # Map wave node
 
 msgid "NODE_MAP_WAVE_TITLE"

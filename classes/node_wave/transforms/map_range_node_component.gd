@@ -18,6 +18,12 @@ var min_out_value:float=-1.0 setget set_min_out_value
 var max_out_slot:Array=[]
 var max_out_values:Array=[]
 var max_out_value:float=1.0 setget set_max_out_value
+var xerp_in_slot:Array=[]
+var xerp_in_values:Array=[]
+var xerp_in_value:float=1.0 setget set_xerp_in_value
+var xerp_out_slot:Array=[]
+var xerp_out_values:Array=[]
+var xerp_out_value:float=1.0 setget set_xerp_out_value
 var mix_slot:Array=[]
 var mix_values:Array=[]
 var mix_value:float=1.0 setget set_mix_value
@@ -48,6 +54,8 @@ func _init()->void:
 		{SLOT_ID:SlotIds.SLOT_MAX_IN,SLOT_IN:max_in_slot},
 		{SLOT_ID:SlotIds.SLOT_MIN_OUT,SLOT_IN:min_out_slot},
 		{SLOT_ID:SlotIds.SLOT_MAX_OUT,SLOT_IN:max_out_slot},
+		{SLOT_ID:SlotIds.SLOT_XERP_IN,SLOT_IN:xerp_in_slot},
+		{SLOT_ID:SlotIds.SLOT_XERP_OUT,SLOT_IN:xerp_out_slot},
 		{SLOT_ID:SlotIds.SLOT_MIX,SLOT_IN:mix_slot},
 		{SLOT_ID:SlotIds.SLOT_CLAMP_MIX,SLOT_IN:clamp_mix_slot},
 		{SLOT_ID:SlotIds.SLOT_AMPLITUDE,SLOT_IN:amplitude_slot},
@@ -76,6 +84,16 @@ func set_min_out_value(value:float)->void:
 func set_max_out_value(value:float)->void:
 	max_out_value=value
 	max_out_values.resize(0)
+
+
+func set_xerp_in_value(value:float)->void:
+	xerp_in_value=value
+	xerp_in_values.resize(0)
+
+
+func set_xerp_out_value(value:float)->void:
+	xerp_out_value=value
+	xerp_out_values.resize(0)
 
 
 func set_mix_value(value:float)->void:
@@ -122,6 +140,8 @@ func calculate()->Array:
 	calculate_slot(max_in_values,max_in_slot,max_in_value)
 	calculate_slot(min_out_values,min_out_slot,min_out_value)
 	calculate_slot(max_out_values,max_out_slot,max_out_value)
+	calculate_diffuse_boolean_slot(xerp_in_values,xerp_in_slot,xerp_in_value)
+	calculate_diffuse_boolean_slot(xerp_out_values,xerp_out_slot,xerp_out_value)
 	calculate_slot(mix_values,mix_slot,mix_value)
 	calculate_diffuse_boolean_slot(clamp_mix_values,clamp_mix_slot,clamp_mix_value)
 	calculate_boolean_slot(isolate_values,isolate_slot,isolate)
@@ -130,7 +150,7 @@ func calculate()->Array:
 	calculate_slot(decay_values,decay_slot,decay)
 	calculate_slot(dc_values,dc_slot,dc)
 	NODES.map_range(output,max(1.0,size*range_length),fposmod(range_from*size,size),input_values,
-		min_in_values,max_in_values,min_out_values,max_out_values,
+		min_in_values,max_in_values,min_out_values,max_out_values,xerp_in_values,xerp_out_values,
 		mix_values,clamp_mix_values,isolate_values,
 		amplitude_values,power_values,decay_values,dc_values
 	)

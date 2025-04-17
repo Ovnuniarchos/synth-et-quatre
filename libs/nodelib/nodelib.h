@@ -152,7 +152,7 @@ public:
 	);
 
 	void map_range(Array output,int segment_size,int outptr,Array input,
-		Array min_in,Array max_in,Array min_out,Array max_out,
+		Array min_in,Array max_in,Array min_out,Array max_out,Array xerp_in,Array xerp_out,
 		Array mix,Array clamp_mix,Array isolate,
 		Array amplitude,Array power,Array decay,Array dc
 	);

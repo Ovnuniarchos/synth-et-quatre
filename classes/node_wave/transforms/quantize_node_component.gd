@@ -122,13 +122,16 @@ func calculate()->Array:
 	var optr:int=fposmod(range_from*size,size)
 	var hl_values:Array=[0.0,0.0,0.0,0.0,0.0,0.0]
 	NODES.find_amplitude_bounds(input_values,sz,optr,hl_values)
+	if hl_values[5]==INF:
+		output_valid=true
+		return output
+	if hl_values[2]==INF:
+		hl_values[0]=1.0
+		hl_values[1]=-1.0
 	var hi:float=hl_values[0]
 	var lo:float=hl_values[1]
 	var hi_full:float=hl_values[3]
 	var lo_full:float=hl_values[4]
-	if hi_full==-INF and lo_full==INF:
-		output_valid=true
-		return output
 	calculate_slot(levels_values,levels_slot,levels_value)
 	calculate_diffuse_boolean_slot(dither_values,dither_slot,dither_value)
 	calculate_diffuse_boolean_slot(use_full_values,use_full_slot,use_full_value)

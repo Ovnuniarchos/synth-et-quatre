@@ -8,6 +8,8 @@
 #include <cmath>
 #include <limits>
 #include <cstdio>
+#include <complex>
+#include <vector>
 
 
 namespace godot{
@@ -16,7 +18,15 @@ class NodeLib:public Node{
 	GODOT_CLASS(NodeLib,Node)
 
 private:
+	typedef std::complex<double> Complex;
+	typedef std::vector<Complex> VectorC;
+
 	double sineTable[16384];
+
+	enum AmplitudeBounds{
+		HI,LO,HILO,
+		HI_FULL,LO_FULL,HILO_FULL
+	};
 
 	union I2DConverter{
 		uint64_t i;
@@ -86,6 +96,18 @@ private:
 	}
 
 	void fill_out_of_region(int segment_size,int outptr,Array output,Array input,Array isolate);
+
+	void fft_convert(Array input,VectorC &data){
+		// TODO interpolate NaN regions
+		data.resize(input.size());
+		for(int i=input.size()-1;i>=0;i--) data[i]=(double)input[i];
+	}
+
+	void fft(VectorC &data,bool inverse);
+
+	std::vector<int> create_chunks(int segment_size,int outptr,int steps);
+
+	void lp_coeffs(VectorC &source,VectorC &dest,int cutoff,double attenuation);
 
 public:
 	static void _register_methods();
@@ -198,9 +220,15 @@ public:
 	void decimate(Array output,int segment_size,int outptr,
 		Array input,Array samples,Array use_full,Array lerp,
 		Array mix,Array clamp_mix,Array isolate,
-		Array amplitude,Array power,Array decay
+		Array amplitude,Array power,Array decay,Array dc
 	);
 
+	void lowpass(Array output,int segment_size,int outptr,
+		double cutoff_mul,int steps,
+		Array input,Array cutoff,Array attenuation,
+		Array mix,Array clamp_mix,Array isolate,
+		Array amplitude,Array power,Array decay,Array dc
+	);
 };
 
 }

@@ -25,7 +25,7 @@ func get_component_index(wc:WaveComponent)->int:
 
 func adjust_max_node_from()->void:
 	if from_node!=null:
-		from_node.max_value=wave.components.size()-1
+		from_node.set_max(wave.components.size()-1)
 
 
 func setup()->void:

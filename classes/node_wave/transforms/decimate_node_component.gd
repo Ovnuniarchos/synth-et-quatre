@@ -122,7 +122,7 @@ func calculate()->Array:
 	NODES.decimate(output,max(1.0,size*range_length),fposmod(range_from*size,size),
 		input_values,samples_values,use_full_values,lerp_values,
 		mix_values,clamp_mix_values,isolate_values,
-		amplitude_values,power_values,decay_values
+		amplitude_values,power_values,decay_values,dc_values
 	)
 	output_valid=true
 	return output

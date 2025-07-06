@@ -98,9 +98,9 @@ func update_values(w:SampleWave)->void:
 	sam_note.select(n["note"])
 	sam_octave.select(n["v_octave"])
 	sam_detune.set_value_no_signal(n["detune"])
-	$Designer/SC/VBC/GC/Start.max_value=w.data.size()-1
+	$Designer/SC/VBC/GC/Start.set_max(w.data.size()-1)
 	$Designer/SC/VBC/GC/Start.set_value(w.loop_start)
-	$Designer/SC/VBC/GC/End.max_value=w.data.size()-1
+	$Designer/SC/VBC/GC/End.set_max(w.data.size()-1)
 	$Designer/SC/VBC/GC/End.set_value(w.loop_end)
 	$Designer/SC/VBC/GC/RecFreq.set_block_signals(false)
 	sam_freq.set_block_signals(false)

@@ -15,16 +15,16 @@ script = ExtResource( 2 )
 [node name="VBC" type="VBoxContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 275.0
+margin_right = 245.0
 margin_bottom = 387.0
 
 [node name="Title" parent="VBC" instance=ExtResource( 1 )]
-margin_right = 268.0
+margin_right = 238.0
 title = "WAVED_BRF_TITLE"
 
 [node name="Params" type="GridContainer" parent="VBC"]
 margin_top = 24.0
-margin_right = 268.0
+margin_right = 238.0
 margin_bottom = 380.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -33,15 +33,15 @@ custom_constants/hseparation = 8
 columns = 2
 
 [node name="LabelCutoffLo" type="Label" parent="VBC/Params" groups=["Label"]]
-margin_right = 204.0
+margin_right = 174.0
 margin_bottom = 14.0
 hint_tooltip = "WAVED_FILTER_CUTOFF_LO_TTIP"
 mouse_filter = 1
 text = "WAVED_FILTER_CUTOFF_LO"
 
 [node name="CutoffLo" type="ProgressBar" parent="VBC/Params"]
-margin_left = 212.0
-margin_right = 268.0
+margin_left = 182.0
+margin_right = 238.0
 margin_bottom = 14.0
 rect_min_size = Vector2( 56, 14 )
 size_flags_horizontal = 3
@@ -58,16 +58,16 @@ _decimals = 1
 
 [node name="LabelCutoffHi" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 16.0
-margin_right = 204.0
+margin_right = 174.0
 margin_bottom = 30.0
 hint_tooltip = "WAVED_FILTER_CUTOFF_HI_TTIP"
 mouse_filter = 1
-text = "WAVED_FILTER_CUTOFF_HI_TTIP"
+text = "WAVED_FILTER_CUTOFF_HI"
 
 [node name="CutoffHi" type="ProgressBar" parent="VBC/Params"]
-margin_left = 212.0
+margin_left = 182.0
 margin_top = 16.0
-margin_right = 268.0
+margin_right = 238.0
 margin_bottom = 30.0
 rect_min_size = Vector2( 56, 14 )
 size_flags_horizontal = 3
@@ -84,16 +84,16 @@ _decimals = 1
 
 [node name="LabelTaps" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 32.0
-margin_right = 204.0
+margin_right = 174.0
 margin_bottom = 46.0
 hint_tooltip = "WAVED_FILTER_TAPS_TTIP"
 mouse_filter = 1
 text = "WAVED_FILTER_TAPS"
 
 [node name="Taps" type="ProgressBar" parent="VBC/Params"]
-margin_left = 212.0
+margin_left = 182.0
 margin_top = 32.0
-margin_right = 268.0
+margin_right = 238.0
 margin_bottom = 46.0
 rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 3
@@ -109,7 +109,7 @@ huge_step = 8.0
 
 [node name="LabelVol" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 48.0
-margin_right = 204.0
+margin_right = 174.0
 margin_bottom = 62.0
 hint_tooltip = "WAVED_STD_VOLUME_TTIP"
 mouse_filter = 1
@@ -119,9 +119,9 @@ __meta__ = {
 }
 
 [node name="Vol" type="ProgressBar" parent="VBC/Params"]
-margin_left = 212.0
+margin_left = 182.0
 margin_top = 48.0
-margin_right = 268.0
+margin_right = 238.0
 margin_bottom = 62.0
 rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
@@ -135,44 +135,44 @@ huge_step = 10.0
 
 [node name="ReferenceRect" type="ReferenceRect" parent="VBC/Params"]
 margin_top = 64.0
-margin_right = 204.0
+margin_right = 174.0
 margin_bottom = 88.0
 rect_min_size = Vector2( 0, 24 )
 
 [node name="ReferenceRect2" type="ReferenceRect" parent="VBC/Params"]
-margin_left = 212.0
+margin_left = 182.0
 margin_top = 64.0
-margin_right = 268.0
+margin_right = 238.0
 margin_bottom = 88.0
 rect_min_size = Vector2( 0, 24 )
 
 [node name="LabelOutput" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 93.0
-margin_right = 204.0
+margin_right = 174.0
 margin_bottom = 107.0
 hint_tooltip = "WAVED_STD_OUTPUT_TTIP"
 mouse_filter = 1
 text = "WAVED_STD_OUTPUT"
 
 [node name="Output" type="OptionButton" parent="VBC/Params"]
-margin_left = 212.0
+margin_left = 182.0
 margin_top = 90.0
-margin_right = 268.0
+margin_right = 238.0
 margin_bottom = 110.0
 script = ExtResource( 4 )
 
 [node name="LabelFrom" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 112.0
-margin_right = 204.0
+margin_right = 174.0
 margin_bottom = 126.0
 hint_tooltip = "WAVED_STD_FROM_TTIP"
 mouse_filter = 1
 text = "WAVED_STD_FROM"
 
 [node name="From" type="ProgressBar" parent="VBC/Params"]
-margin_left = 212.0
+margin_left = 182.0
 margin_top = 112.0
-margin_right = 268.0
+margin_right = 238.0
 margin_bottom = 126.0
 rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 3
@@ -186,16 +186,16 @@ huge_step = 1.0
 
 [node name="LabelAM" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 128.0
-margin_right = 204.0
+margin_right = 174.0
 margin_bottom = 142.0
 hint_tooltip = "WAVED_STD_AM_TTIP"
 mouse_filter = 1
 text = "WAVED_STD_AM"
 
 [node name="AM" type="ProgressBar" parent="VBC/Params"]
-margin_left = 212.0
+margin_left = 182.0
 margin_top = 128.0
-margin_right = 268.0
+margin_right = 238.0
 margin_bottom = 142.0
 rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3
@@ -209,7 +209,7 @@ huge_step = 10.0
 
 [node name="LabelXM" type="Label" parent="VBC/Params" groups=["Label"]]
 margin_top = 144.0
-margin_right = 204.0
+margin_right = 174.0
 margin_bottom = 158.0
 hint_tooltip = "WAVED_STD_XM_TTIP"
 mouse_filter = 1
@@ -219,9 +219,9 @@ __meta__ = {
 }
 
 [node name="XM" type="ProgressBar" parent="VBC/Params"]
-margin_left = 212.0
+margin_left = 182.0
 margin_top = 144.0
-margin_right = 268.0
+margin_right = 238.0
 margin_bottom = 158.0
 rect_min_size = Vector2( 41, 14 )
 size_flags_horizontal = 3

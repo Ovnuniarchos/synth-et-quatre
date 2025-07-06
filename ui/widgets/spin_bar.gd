@@ -88,6 +88,15 @@ func set_value_no_signal(f:float)->void:
 	_on_value_changed(f)
 	update()
 
+func set_max(f:float)->void:
+	.set_max(f)
+	input.set_max_val(f)
+	update()
+
+func set_min(f:float)->void:
+	.set_min(f)
+	input.set_min_val(f)
+	update()
 
 func set_decimals(v:int)->void:
 	step=pow(10.0,-v)

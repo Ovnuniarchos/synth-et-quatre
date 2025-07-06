@@ -17,6 +17,7 @@
 #include "nodes/transforms/power.cpp"
 #include "nodes/transforms/quantize.cpp"
 #include "nodes/transforms/decimate.cpp"
+#include "nodes/transforms/lowpass.cpp"
 #include <cstdio>
 
 
@@ -65,6 +66,7 @@ void NodeLib::_register_methods(){
 	register_method("power", &NodeLib::power);
 	register_method("quantize", &NodeLib::quantize);
 	register_method("decimate", &NodeLib::decimate);
+	register_method("lowpass", &NodeLib::lowpass);
 }
 
 NodeLib::NodeLib(){
@@ -90,10 +92,6 @@ void NodeLib::fill_out_of_region(int segment_size,int outptr,Array output,Array 
 }
 
 void NodeLib::find_amplitude_bounds(Array input,int segment_size,int outptr,Array hi_lo){
-	enum{
-		HI,LO,HILO,
-		HI_FULL,LO_FULL,HILO_FULL
-	};
 	int size=input.size();
 	int size_mask=size-1;
 	double t;
@@ -105,30 +103,95 @@ void NodeLib::find_amplitude_bounds(Array input,int segment_size,int outptr,Arra
 	double lo_full=INFINITY;
 	for(int i=0;i<size;i++){
 		t=(double)input[outptr];
-		if (i<segment_size && !std::isnan(t)){
-			hi=t>hi?t:hi;
-			lo=t<lo?t:lo;
-		}
-		t=(double)input[outptr];
-		if (!std::isnan(t)){
+		if(!std::isnan(t)){
+			if(i<segment_size){
+				hi=t>hi?t:hi;
+				lo=t<lo?t:lo;
+			}
 			hi_full=t>hi_full?t:hi_full;
 			lo_full=t<lo_full?t:lo_full;
 		}
 		outptr=(outptr+1)&size_mask;
 	}
 	if (hi_full==-INFINITY && lo_full==INFINITY){
-		hi_lo[HI_FULL]=-INFINITY;
-		hi_lo[LO_FULL]=-INFINITY;
+		hi_lo[HILO_FULL]=INFINITY;
 		return;
 	}
+	hi_lo[HI_FULL]=hi_full;
+	hi_lo[LO_FULL]=lo_full;
+	hi_lo[HILO_FULL]=Math::max(std::abs(hi_full),std::abs(lo_full));
 	if (hi==-INFINITY && lo==INFINITY){
-		hi=1.0;
-		lo=-1.0;
+		hi_lo[HILO]=INFINITY;
+		return;
 	}
 	hi_lo[HI]=hi;
 	hi_lo[LO]=lo;
 	hi_lo[HILO]=Math::max(std::abs(hi),std::abs(lo));
-	hi_lo[HI_FULL]=hi_full;
-	hi_lo[LO_FULL]=lo_full;
-	hi_lo[HILO_FULL]=Math::max(std::abs(hi_full),std::abs(lo_full));
 }
+
+void NodeLib::fft(std::vector<Complex> &data,bool inverse){
+	unsigned int N=data.size(),k=N,n;
+	double thetaT=Math_PI/N;
+	Complex phiT=Complex(std::cos(thetaT),-std::sin(thetaT)),T;
+	while(k>1){
+		n=k;
+		k>>=1;
+		phiT=phiT*phiT;
+		T=1.0;
+		for(unsigned int l=0;l<k;l++){
+			for(unsigned int a=l;a<N;a+=n){
+				unsigned int b=a+k;
+				Complex t=data[a]-data[b];
+				data[a]+=data[b];
+				data[b]=t*T;
+			}
+			T*=phiT;
+		}
+	}
+	unsigned int m=(unsigned int)std::log2(N);
+	double sum=-INFINITY;
+	for (unsigned int a=0;a<N;a++){
+		unsigned int b=a;
+		b=(((b&0xaaaaaaaa)>>1)|((b&0x55555555)<<1));
+		b=(((b&0xcccccccc)>>2)|((b&0x33333333)<<2));
+		b=(((b&0xf0f0f0f0)>>4)|((b&0x0f0f0f0f)<<4));
+		b=(((b&0xff00ff00)>>8)|((b&0x00ff00ff)<<8));
+		b=((b>>16)|(b<<16))>>(32-m);
+		if(b>a){
+			Complex t=data[a];
+			data[a]=data[b];
+			data[b]=t;
+		}
+		if(std::abs(data[a].real())>sum) sum=std::abs(data[a].real());
+	}
+	if(inverse){
+		// If its an IFFT, we use the calculated factor
+		double factor=1.0/std::max(std::abs(sum),(double)N);
+		for(int i=0;i<N;i++) data[i].real(data[i].real()*factor);
+	}else{
+		for(int i=0;i<N;i++) data[i].imag(-data[i].imag());
+	}
+}
+
+std::vector<int> NodeLib::create_chunks(int segment_size,int outptr,int steps){
+	std::vector<int> chunks=std::vector<int>(0);
+	int pos=0,npos;
+	int opos=-1,onpos=-1;
+	for(int i=0;i<steps;i++){
+		npos=((i+1)*segment_size)/steps;
+		if (pos!=npos && pos!=opos && npos!=onpos){
+			chunks.push_back(pos+outptr);
+			chunks.push_back(npos-pos);
+			opos=pos;
+			onpos=npos;
+			pos=npos;
+		}
+	}
+	npos=segment_size;
+	if (pos<segment_size && pos!=opos && npos!=onpos){
+		chunks.push_back(pos+outptr);
+		chunks.push_back(npos-pos);
+	}
+	return chunks;
+}
+

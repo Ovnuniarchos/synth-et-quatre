@@ -5,6 +5,7 @@ script/source = "extends Node
 
 \"\"\"
 FIXME
+	X Decimate ignores dc
 TODO:
 	Node-based wave generator
 		Convolution/frequency filters

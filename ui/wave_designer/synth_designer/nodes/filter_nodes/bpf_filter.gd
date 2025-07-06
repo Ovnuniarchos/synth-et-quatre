@@ -14,14 +14,14 @@ func setup()->void:
 	$VBC/Params/Vol.value=component.vol*100.0
 	$VBC/Params/Output.selected=component.output_mode
 	from_node.value=get_component_index(component.input_comp)
-	from_node.max_value=wave.components.size()-1
+	from_node.set_max(wave.components.size()-1)
 	$VBC/Params/AM.value=component.am*100.0
 	$VBC/Params/XM.value=component.xm*100.0
 	adjust_max_node_from()
 	set_block_signals(false)
 
 func adjust_max_node_from()->void:
-	from_node.max_value=wave.components.size()-2
+	from_node.set_max(wave.components.size()-2)
 
 #
 

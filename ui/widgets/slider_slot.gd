@@ -103,14 +103,14 @@ func set_min_value(v:float)->void:
 	min_value=v
 	if not is_node_ready():
 		yield(self,"ready")
-	$SpinBar.min_value=v
+	$SpinBar.set_min(v)
 
 
 func set_max_value(v:float)->void:
 	max_value=v
 	if not is_node_ready():
 		yield(self,"ready")
-	$SpinBar.max_value=v
+	$SpinBar.set_max(v)
 
 
 func set_value(v:float)->void:

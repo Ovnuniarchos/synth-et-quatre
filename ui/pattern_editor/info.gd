@@ -57,8 +57,8 @@ func _on_Velocity_value_changed(value:float)->void:
 
 func _on_RowsPat_value_changed(value:float)->void:
 	GLOBALS.song.set_pattern_length(value)
-	$SC/VBC/GC/MinHlite.max_value=value
-	$SC/VBC/GC/MajHlite.max_value=value
+	$SC/VBC/GC/MinHlite.set_max(value)
+	$SC/VBC/GC/MajHlite.set_max(value)
 
 
 func _on_Channels_value_changed(value:float)->void:

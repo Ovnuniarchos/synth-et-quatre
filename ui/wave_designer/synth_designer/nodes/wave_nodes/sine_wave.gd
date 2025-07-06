@@ -27,7 +27,7 @@ func setup()->void:
 	$VBC/Params/Cycles.value=component.cycles
 	$VBC/Params/Position.value=component.pos0*100.0
 	from_node.value=get_component_index(component.input_comp)
-	from_node.max_value=wave.components.size()-1
+	from_node.set_max(wave.components.size()-1)
 	$VBC/Params/Output.selected=component.output_mode
 	$VBC/Params/PM.value=component.pm*100.0
 	$VBC/Params/AM.value=component.am*100.0

@@ -16,7 +16,8 @@ enum{
 	OUTPUT,
 	GEN_SINE,GEN_SAW,GEN_PULSE,GEN_TRIANGLE,GEN_NOISE,GEN_RAMP,
 	XFR_MIX,XFR_CLAMP,XFR_MAPR,XFR_MAPW,XFR_CLIP,XFR_NORMALIZE,
-	XFR_DECAY,XFR_POWER,XFR_MUX,XFR_QUANTIZE,XFR_DECIMATE
+	XFR_DECAY,XFR_POWER,XFR_MUX,XFR_QUANTIZE,XFR_DECIMATE,
+	XFR_LPF
 }
 const MENU:Array=[
 	"unsorted",
@@ -40,7 +41,8 @@ const MENU:Array=[
 		{"option":"NODED_MENU_POWER","id":XFR_POWER},
 		{"option":"NODED_MENU_MUX","id":XFR_MUX},
 		{"option":"NODED_MENU_QUANTIZE","id":XFR_QUANTIZE},
-		{"option":"NODED_MENU_DECIMATE","id":XFR_DECIMATE}
+		{"option":"NODED_MENU_DECIMATE","id":XFR_DECIMATE},
+		{"option":"NODED_MENU_LOWPASS","id":XFR_LPF},
 	]}
 ]
 const NODES:Dictionary={
@@ -62,6 +64,7 @@ const NODES:Dictionary={
 	XFR_MUX:preload("res://ui/wave_designer/node_designer/nodes/transforms/mux_node.tscn"),
 	XFR_QUANTIZE:preload("res://ui/wave_designer/node_designer/nodes/transforms/quantize_node.tscn"),
 	XFR_DECIMATE:preload("res://ui/wave_designer/node_designer/nodes/transforms/decimate_node.tscn"),
+	XFR_LPF:preload("res://ui/wave_designer/node_designer/nodes/transforms/lowpass_node.tscn"),
 }
 const COMPONENTS:Dictionary={
 	OUTPUT:OutputNodeComponent,
@@ -81,7 +84,8 @@ const COMPONENTS:Dictionary={
 	XFR_POWER:PowerNodeComponent,
 	XFR_MUX:MuxNodeComponent,
 	XFR_QUANTIZE:QuantizeNodeComponent,
-	XFR_DECIMATE:DecimateNodeComponent
+	XFR_DECIMATE:DecimateNodeComponent,
+	XFR_LPF:LowpassNodeComponent,
 }
 const NODES_CLASS:Dictionary={
 	OutputNodeComponent.NODE_TYPE:NODES[OUTPUT],
@@ -101,7 +105,8 @@ const NODES_CLASS:Dictionary={
 	PowerNodeComponent.NODE_TYPE:NODES[XFR_POWER],
 	MuxNodeComponent.NODE_TYPE:NODES[XFR_MUX],
 	QuantizeNodeComponent.NODE_TYPE:NODES[XFR_QUANTIZE],
-	DecimateNodeComponent.NODE_TYPE:NODES[XFR_DECIMATE]
+	DecimateNodeComponent.NODE_TYPE:NODES[XFR_DECIMATE],
+	LowpassNodeComponent.NODE_TYPE:NODES[XFR_LPF]
 }
 
 

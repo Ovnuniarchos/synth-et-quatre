@@ -46,7 +46,7 @@ private:
 		inline double next(){
 			seed=(((seed&1ULL)<<63ULL) | ((seed>>1ULL)&0x7fffffffffffffffULL)) ^ ((~seed&0x4020000000ULL)>>26ULL) ^ ((~seed&0x230ULL)<<19ULL) ^ ((~seed&0x1050ULL)<<39ULL) ^ 0x30f04050010109ULL;
 			I2DConverter i2d;
-			return setPlusMinusOne(seed);
+			return i2d.setPlusMinusOne(seed);
 		}
 		inline double next(double v){
 			return next()*v;

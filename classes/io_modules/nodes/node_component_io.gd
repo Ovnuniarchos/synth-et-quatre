@@ -38,6 +38,8 @@ const QUANTIZE_ID:String="qUAN"
 const QUANTIZE_VERSION:int=0
 const DECIMATE_ID:String="dECI"
 const DECIMATE_VERSION:int=0
+const LOWPASS_ID:String="lOWP"
+const LOWPASS_VERSION:int=0
 
 
 func _serialize_start(out:ChunkedFile,comp:WaveNodeComponent,tag:String,version:int)->void:

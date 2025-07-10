@@ -6,6 +6,7 @@ func set_parameters()->void:
 		yield(self,"ready")
 	$Cutoff.set_value(node.cutoff)
 	$Attenuation.set_value(node.attenuation)
+	$Resonance.set_value(node.resonance)
 	$Mix.set_value(node.mix)
 	$ClampMix.set_value(node.clamp_mix)
 	$Amplitude.set_value(node.amplitude)
@@ -48,6 +49,11 @@ func _on_Power_value_changed(value:float)->void:
 
 func _on_Cutoff_value_changed(value:float)->void:
 	node.cutoff=value
+	emit_signal("params_changed",self)
+
+
+func _on_Resonance_value_changed(value:float)->void:
+	node.resonance=value
 	emit_signal("params_changed",self)
 
 

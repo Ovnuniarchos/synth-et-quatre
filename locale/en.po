@@ -1758,6 +1758,9 @@ msgstr "Quantize"
 msgid "NODED_MENU_DECIMATE"
 msgstr "Decimate"
 
+msgid "NODED_MENU_LOWPASS"
+msgstr "Lowpass"
+
 # Common ports
 msgid "NODE_OUTPUT_PORT"
 msgstr "Output"
@@ -1878,6 +1881,24 @@ msgstr "Linear"
 
 msgid "NODE_LERP_COS"
 msgstr "Cosine"
+
+msgid "NODE_CUTOFF_PORT"
+msgstr "Cutoff (Hz)"
+
+msgid "NODE_CUTOFF_PORT_TTIP"
+msgstr "<EMPTY STRING>"
+
+msgid "NODE_ATTENUATION_PORT"
+msgstr "Attenuation"
+
+msgid "NODE_ATTENUATION_PORT_TTIP"
+msgstr "Per octave"
+
+msgid "NODE_RESONANCE_PORT"
+msgstr "Resonance"
+
+msgid "NODE_RESONANCE_PORT_TTIP"
+msgstr "<EMPTY STRING>"
 
 # Nodes
 # Output node
@@ -2367,3 +2388,8 @@ msgstr "Quantizes the full amplitude range instead of the range -1 > 1."
 # Decimate node
 msgid "NODE_DECIMATE_TITLE"
 msgstr "DECIMATE"
+
+
+# Lowpass node
+msgid "NODE_LOWPASS_TITLE"
+msgstr "LOWPASS"

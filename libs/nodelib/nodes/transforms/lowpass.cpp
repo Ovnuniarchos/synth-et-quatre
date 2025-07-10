@@ -1,15 +1,15 @@
 using namespace godot;
 
-void NodeLib::lp_coeffs(VectorC &source,VectorC &dest,int cutoff,double attenuation){
+void NodeLib::lp_coeffs(VectorC &source,VectorC &dest,int cutoff,double attenuation,double resonance){
 	int end=source.size();
 	int sz2=(source.size()>>1)-1;
 	double attn=1.0;
-	//double attf=1.0/std::log(2);
+	double attf=1.0/std::log(2);
 	dest[0]=source[0];
-	// dest[end]=source[end];
 	for(int i=1;i<sz2;i++){
+		attn=(std::pow(0.5,std::abs(cutoff-i))*resonance)+1.0;
 		if(i>cutoff){
-			attn*=attenuation;
+			attn*=std::pow(attenuation,std::log(i-cutoff)*attf);
 		}
 		dest[i]=source[i]*attn;
 		dest[end-i]=source[end-i]*attn;
@@ -23,7 +23,7 @@ void NodeLib::lp_coeffs(VectorC &source,VectorC &dest,int cutoff,double attenuat
 
 void NodeLib::lowpass(Array output,int segment_size,int outptr,
 	double cutoff_mul,int steps,
-	Array input,Array cutoff,Array attenuation,
+	Array input,Array cutoff,Array attenuation,Array resonance,
 	Array mix,Array clamp_mix,Array isolate,
 	Array amplitude,Array power,Array decay,Array dc
 ){
@@ -36,7 +36,7 @@ void NodeLib::lowpass(Array output,int segment_size,int outptr,
 		//
 		data[1].resize(data[0].size());
 		outptr=chunks[0]&size_mask;
-		lp_coeffs(data[0],data[1],(double)cutoff[outptr]*cutoff_mul,(double)attenuation[outptr]);
+		lp_coeffs(data[0],data[1],(double)cutoff[outptr]*cutoff_mul,(double)attenuation[outptr],(double)resonance[outptr]);
 		fft(data[1],true);
 		//
 		data[2].resize(data[0].size());
@@ -45,7 +45,7 @@ void NodeLib::lowpass(Array output,int segment_size,int outptr,
 		Decay decayer(segment_size);
 		for(int i=0;i<chunks.size();i+=2){
 			outptr=(chunks[i]+chunks[i+1])&size_mask;
-			lp_coeffs(data[0],data[2],(double)cutoff[outptr]*cutoff_mul,(double)attenuation[outptr]);
+			lp_coeffs(data[0],data[2],(double)cutoff[outptr]*cutoff_mul,(double)attenuation[outptr],(double)resonance[outptr]);
 			fft(data[2],true);
 			outptr=chunks[i];
 			double li=0.0,dli=1.0/chunks[i+1];
@@ -54,8 +54,8 @@ void NodeLib::lowpass(Array output,int segment_size,int outptr,
 					output[outptr]=input[outptr];
 				}else{
 					i2d.d=Math::lerp(data[1][outptr].real(),data[2][outptr].real(),li);
-					i2d.d=Math::lerp((double)input[outptr],i2d.d,Math::lerp((double)mix[outptr],Math::clamp((double)mix[outptr],0.0,1.0),(double)clamp_mix[outptr]));
-					output[outptr]=(double)dc[outptr]+decayer.next(i2d.abspow((double)power[outptr]),(double)decay[outptr])*(double)amplitude[outptr];
+					i2d.d=(double)dc[outptr]+decayer.next(i2d.abspow((double)power[outptr]),(double)decay[outptr])*(double)amplitude[outptr];
+					output[outptr]=Math::lerp((double)input[outptr],i2d.d,Math::lerp((double)mix[outptr],Math::clamp((double)mix[outptr],0.0,1.0),(double)clamp_mix[outptr]));
 				}
 				outptr=(outptr+1)&size_mask;
 			}

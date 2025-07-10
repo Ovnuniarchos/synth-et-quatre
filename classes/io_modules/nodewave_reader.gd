@@ -20,7 +20,8 @@ var readers:Dictionary={
 	NodeComponentIO.POWER_ID:PowerNodeReader,
 	NodeComponentIO.MUX_ID:MuxNodeReader,
 	NodeComponentIO.QUANTIZE_ID:QuantizeNodeReader,
-	NodeComponentIO.DECIMATE_ID:DecimateNodeReader
+	NodeComponentIO.DECIMATE_ID:DecimateNodeReader,
+	NodeComponentIO.LOWPASS_ID:LowpassNodeReader
 }
 
 

@@ -1787,6 +1787,9 @@ msgstr ""
 msgid "NODED_MENU_DECIMATE"
 msgstr ""
 
+msgid "NODED_MENU_LOWPASS"
+msgstr ""
+
 # Common ports
 
 msgid "NODE_OUTPUT_PORT"
@@ -1910,6 +1913,24 @@ msgid "NODE_LERP_LINEAR"
 msgstr ""
 
 msgid "NODE_LERP_COS"
+msgstr ""
+
+msgid "NODE_CUTOFF_PORT"
+msgstr ""
+
+msgid "NODE_CUTOFF_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_ATTENUATION_PORT"
+msgstr ""
+
+msgid "NODE_ATTENUATION_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_RESONANCE_PORT"
+msgstr ""
+
+msgid "NODE_RESONANCE_PORT_TTIP"
 msgstr ""
 
 # Nodes
@@ -2415,4 +2436,9 @@ msgstr ""
 # Decimate node
 
 msgid "NODE_DECIMATE_TITLE"
+msgstr ""
+
+# Lowpass node
+
+msgid "NODE_LOWPASS_TITLE"
 msgstr ""

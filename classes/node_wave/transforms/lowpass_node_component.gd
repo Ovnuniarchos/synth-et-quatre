@@ -12,6 +12,9 @@ var cutoff:float=0.0 setget set_cutoff
 var attenuation_slot:Array=[]
 var attenuation_values:Array=[]
 var attenuation:float=0.0 setget set_attenuation
+var resonance_slot:Array=[]
+var resonance_values:Array=[]
+var resonance:float=0.0 setget set_resonance
 var mix_slot:Array=[]
 var mix_values:Array=[]
 var mix:float=1.0 setget set_mix
@@ -40,6 +43,7 @@ func _init()->void:
 		{SLOT_ID:SlotIds.SLOT_INPUT,SLOT_IN:input_slot},
 		{SLOT_ID:SlotIds.SLOT_CUTOFF,SLOT_IN:cutoff_slot},
 		{SLOT_ID:SlotIds.SLOT_ATTENUATION,SLOT_IN:attenuation_slot},
+		{SLOT_ID:SlotIds.SLOT_RESONANCE,SLOT_IN:resonance_slot},
 		{SLOT_ID:SlotIds.SLOT_MIX,SLOT_IN:mix_slot},
 		{SLOT_ID:SlotIds.SLOT_CLAMP_MIX,SLOT_IN:clamp_mix_slot},
 		{SLOT_ID:SlotIds.SLOT_AMPLITUDE,SLOT_IN:amplitude_slot},
@@ -58,6 +62,11 @@ func set_cutoff(value:float)->void:
 func set_attenuation(value:float)->void:
 	attenuation=value
 	attenuation_values.resize(0)
+
+
+func set_resonance(value:float)->void:
+	resonance=value
+	resonance_values.resize(0)
 
 
 func set_mix(value:float)->void:
@@ -109,6 +118,7 @@ func calculate()->Array:
 		return output
 	calculate_diffuse_boolean_slot(cutoff_values,cutoff_slot,1.0)
 	calculate_diffuse_boolean_slot(attenuation_values,attenuation_slot,attenuation)
+	calculate_diffuse_boolean_slot(resonance_values,resonance_slot,resonance)
 	calculate_slot(mix_values,mix_slot,mix)
 	calculate_diffuse_boolean_slot(clamp_mix_values,clamp_mix_slot,clamp_mix)
 	calculate_slot(amplitude_values,amplitude_slot,amplitude)
@@ -117,7 +127,7 @@ func calculate()->Array:
 	calculate_slot(dc_values,dc_slot,dc)
 	calculate_boolean_slot(isolate_values,isolate_slot,isolate)
 	NODES.lowpass(output,sz,optr,cutoff,16,
-		input_values,cutoff_values,attenuation_values,
+		input_values,cutoff_values,attenuation_values,resonance_values,
 		mix_values,clamp_mix_values,isolate_values,
 		amplitude_values,power_values,decay_values,dc_values
 	)

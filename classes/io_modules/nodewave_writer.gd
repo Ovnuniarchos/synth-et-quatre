@@ -20,7 +20,8 @@ var writers:Dictionary={
 	PowerNodeComponent.NODE_TYPE:PowerNodeWriter,
 	MuxNodeComponent.NODE_TYPE:MuxNodeWriter,
 	QuantizeNodeComponent.NODE_TYPE:QuantizeNodeWriter,
-	DecimateNodeComponent.NODE_TYPE:DecimateNodeWriter
+	DecimateNodeComponent.NODE_TYPE:DecimateNodeWriter,
+	LowpassNodeComponent.NODE_TYPE:LowpassNodeWriter
 }
 
 

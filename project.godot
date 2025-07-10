@@ -334,6 +334,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://classes/node_wave/transforms/lowpass_node_component.gd"
 }, {
+"base": "NodeComponentIO",
+"class": "LowpassNodeReader",
+"language": "GDScript",
+"path": "res://classes/io_modules/nodes/transforms/lowpass_node_reader.gd"
+}, {
+"base": "NodeComponentIO",
+"class": "LowpassNodeWriter",
+"language": "GDScript",
+"path": "res://classes/io_modules/nodes/transforms/lowpass_node_writer.gd"
+}, {
 "base": "WaveComponent",
 "class": "LpfFilter",
 "language": "GDScript",
@@ -1040,6 +1050,8 @@ _global_script_class_icons={
 "LPFFilterWriter": "",
 "LanguageResult": "",
 "LowpassNodeComponent": "",
+"LowpassNodeReader": "",
+"LowpassNodeWriter": "",
 "LpfFilter": "",
 "Macro": "",
 "MacroIO": "",

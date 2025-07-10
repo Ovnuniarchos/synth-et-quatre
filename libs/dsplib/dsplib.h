@@ -14,20 +14,20 @@ class DSPLib:public Node{
 	GODOT_CLASS(DSPLib,Node)
 private:
 	enum MixMode{OFF,REPLACE,ADD,AM,XM};
-	const uint64_t FIXP_1=0x10000000000UL;
-	const uint64_t FIXP_1MASK=0xffffffffff;
+	const uint64_t FIXP_1=0x10000000000ULL;
+	const uint64_t FIXP_1MASK=0xffffffffffULL;
 	union I2FConverter{
 		uint32_t i;
 		float f;
-		inline void setMantissa(uint32_t m){i=0x3f800000+(m&0x007fffff);f-=1.0f;}
-		inline bool isNegative(){return (bool)(i&0x80000000);}
+		inline void setMantissa(uint32_t m){i=0x3f800000U+(m&0x007fffffU);f-=1.0f;}
+		inline bool isNegative(){return (bool)(i&0x80000000U);}
 		inline void setSign(bool neg){i=(i&0x7fffffff)|((neg<<31U)&0x80000000U);}
 		inline void setPositive(){i&=0x7fffffff;}
 	};
 	uint64_t randomSeed;
 	float sineTable[16384];
 	inline float randSample(){
-		randomSeed=((randomSeed&1UL)<<63) | ((randomSeed>>1)&0x7fffffffffffffffUL) ^ ((~randomSeed&0x4020000000UL)>>26) ^ ((~randomSeed&0x200UL)<<19) ^ ((~randomSeed&0x1000UL)<<29);
+		randomSeed=((randomSeed&1ULL)<<63ULL) | ((randomSeed>>1ULL)&0x7fffffffffffffffULL) ^ ((~randomSeed&0x4020000000ULL)>>26ULL) ^ ((~randomSeed&0x200ULL)<<19ULL) ^ ((~randomSeed&0x1000ULL)<<29ULL);
 		I2FConverter i2f;
 		i2f.i=(randomSeed^(randomSeed>>32))&0x807fffff;
 		return i2f.f;

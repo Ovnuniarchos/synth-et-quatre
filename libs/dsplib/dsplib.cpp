@@ -297,7 +297,7 @@ void DSPLib::normalize(Array input,Array output,bool keepCenter,float vol){
 	float vMax=input.max();
 	float vMin=input.min();
 	if (keepCenter){
-		vMax=Math::max(abs(vMax),abs(vMin));
+		vMax=Math::max(std::abs(vMax),std::abs(vMin));
 		for(int i=input.size()-1;i>-1;i--){
 			output[i]=Math::range_lerp(variant2Float(input[i]),-vMax,vMax,-1.0f,1.0f)*vol;
 		}

@@ -33,20 +33,20 @@ private:
 		double d;
 		I2DConverter(){i=0L;}
 		I2DConverter(double v){d=v;}
-		inline double setSign(double b){I2DConverter i2(b);i=(i&0x7fffffffffffffffUL)|(i2.i&0x8000000000000000UL);return d;}
-		inline double setExpMantissa(uint64_t m){i=0x3FF0000000000000UL+(m&0x000fffffffffffffUL);d-=1.0;i|=(m&0x8000000000000000UL);return d;}
-		inline double setPositive(){i&=0x7fffffffffffffffUL;return d;}
-		inline double abspow(double p){uint64_t s=i&0x8000000000000000UL;setPositive();d=pow(d,p);i|=s;return d;}
+		I2DConverter(uint64_t v){i=v;}
+		inline double setSign(double b){I2DConverter i2(b);i=(i&0x7fffffffffffffffULL)|(i2.i&0x8000000000000000ULL);return d;}
+		inline double setPlusMinusOne(uint64_t m){i=0x3fe0000000000000ULL|(m&0x800fffffffffffffULL);return d;}
+		inline double setPositive(){i&=0x7fffffffffffffffULL;return d;}
+		inline double abspow(double p){uint64_t s=i&0x8000000000000000ULL;setPositive();d=pow(d,p);i|=s;return d;}
 	};
 
 	struct Random{
 		uint64_t seed;
 		Random(uint64_t v){seed=v;}
 		inline double next(){
-			seed=((seed&1UL)<<63) | ((seed>>1)&0x7fffffffffffffffUL) ^ ((~seed&0x4020000000UL)>>26) ^ ((seed&0x200UL)<<19) ^ ((~seed&0x1000UL)<<29);
+			seed=(((seed&1ULL)<<63ULL) | ((seed>>1ULL)&0x7fffffffffffffffULL)) ^ ((~seed&0x4020000000ULL)>>26ULL) ^ ((~seed&0x230ULL)<<19ULL) ^ ((~seed&0x1050ULL)<<39ULL) ^ 0x30f04050010109ULL;
 			I2DConverter i2d;
-			i2d.setExpMantissa(seed);
-			return i2d.d;
+			return setPlusMinusOne(seed);
 		}
 		inline double next(double v){
 			return next()*v;
@@ -107,7 +107,7 @@ private:
 
 	std::vector<int> create_chunks(int segment_size,int outptr,int steps);
 
-	void lp_coeffs(VectorC &source,VectorC &dest,int cutoff,double attenuation);
+	void lp_coeffs(VectorC &source,VectorC &dest,int cutoff,double attenuation,double resonance);
 
 public:
 	static void _register_methods();
@@ -225,7 +225,7 @@ public:
 
 	void lowpass(Array output,int segment_size,int outptr,
 		double cutoff_mul,int steps,
-		Array input,Array cutoff,Array attenuation,
+		Array input,Array cutoff,Array attenuation,Array resonance,
 		Array mix,Array clamp_mix,Array isolate,
 		Array amplitude,Array power,Array decay,Array dc
 	);

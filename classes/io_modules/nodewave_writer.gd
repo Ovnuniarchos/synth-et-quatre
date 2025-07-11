@@ -21,7 +21,8 @@ var writers:Dictionary={
 	MuxNodeComponent.NODE_TYPE:MuxNodeWriter,
 	QuantizeNodeComponent.NODE_TYPE:QuantizeNodeWriter,
 	DecimateNodeComponent.NODE_TYPE:DecimateNodeWriter,
-	LowpassNodeComponent.NODE_TYPE:LowpassNodeWriter
+	LowpassNodeComponent.NODE_TYPE:LowpassNodeWriter,
+	HighpassNodeComponent.NODE_TYPE:HighpassNodeWriter,
 }
 
 

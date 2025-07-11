@@ -21,7 +21,8 @@ var readers:Dictionary={
 	NodeComponentIO.MUX_ID:MuxNodeReader,
 	NodeComponentIO.QUANTIZE_ID:QuantizeNodeReader,
 	NodeComponentIO.DECIMATE_ID:DecimateNodeReader,
-	NodeComponentIO.LOWPASS_ID:LowpassNodeReader
+	NodeComponentIO.LOWPASS_ID:LowpassNodeReader,
+	NodeComponentIO.HIGHPASS_ID:HighpassNodeReader,
 }
 
 

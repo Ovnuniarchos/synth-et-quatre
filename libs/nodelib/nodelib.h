@@ -109,6 +109,8 @@ private:
 
 	void lp_coeffs(VectorC &source,VectorC &dest,int cutoff,double attenuation,double resonance);
 
+	void hp_coeffs(VectorC &source,VectorC &dest,int cutoff,double attenuation,double resonance);
+
 public:
 	static void _register_methods();
 
@@ -224,6 +226,13 @@ public:
 	);
 
 	void lowpass(Array output,int segment_size,int outptr,
+		double cutoff_mul,int steps,
+		Array input,Array cutoff,Array attenuation,Array resonance,
+		Array mix,Array clamp_mix,Array isolate,
+		Array amplitude,Array power,Array decay,Array dc
+	);
+
+	void highpass(Array output,int segment_size,int outptr,
 		double cutoff_mul,int steps,
 		Array input,Array cutoff,Array attenuation,Array resonance,
 		Array mix,Array clamp_mix,Array isolate,

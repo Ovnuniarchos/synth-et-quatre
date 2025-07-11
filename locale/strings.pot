@@ -1790,6 +1790,9 @@ msgstr ""
 msgid "NODED_MENU_LOWPASS"
 msgstr ""
 
+msgid "NODED_MENU_HIGHPASS"
+msgstr ""
+
 # Common ports
 
 msgid "NODE_OUTPUT_PORT"
@@ -2441,4 +2444,9 @@ msgstr ""
 # Lowpass node
 
 msgid "NODE_LOWPASS_TITLE"
+msgstr ""
+
+# Highpass node
+
+msgid "NODE_HIGHPASS_TITLE"
 msgstr ""

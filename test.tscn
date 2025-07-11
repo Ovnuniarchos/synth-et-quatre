@@ -8,6 +8,7 @@ FIXME
 	X Decimate ignores dc
 	Mix/MixFactor should be calculated last.
 	X Randomness not working on Noise node.
+	Step selector for filters
 	Amplitude+dc should be outside decay.
 TODO:
 	Node-based wave generator

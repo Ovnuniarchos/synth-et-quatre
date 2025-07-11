@@ -281,6 +281,7 @@
 			<QuantizeNode option/>
 			<DecimateNode option/>
 			<LowpassNode option/>
+			<HighpassNode option/>
 		</options>
 	</foreach:Node>
 </NodeWave>
@@ -565,6 +566,24 @@
 
 <LowpassNode>
 	<ChunkHeader id="lOWP"/>
+	<GraphPositions/>
+	<RangeFrom type="float"/>
+	<RangeLength type="float"/>
+	<Cutoff type="uint16"/>
+	<Attenuation type="float"/>
+	<Resonance type="float"/>
+	<Mix type="float"/>
+	<ClampMix type="float"/>
+	<Isolate type="boolean"/>
+	<Amplitude type="float"/>
+	<Power type="float"/>
+	<Decay type="float"/>
+	<DC type="float"/>
+	<Connections/>
+</LowpassNode>
+
+<HighpassNode>
+	<ChunkHeader id="hIGP"/>
 	<GraphPositions/>
 	<RangeFrom type="float"/>
 	<RangeLength type="float"/>

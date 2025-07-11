@@ -1761,6 +1761,9 @@ msgstr "Decimate"
 msgid "NODED_MENU_LOWPASS"
 msgstr "Lowpass"
 
+msgid "NODED_MENU_HIGHPASS"
+msgstr "Highpass"
+
 # Common ports
 msgid "NODE_OUTPUT_PORT"
 msgstr "Output"
@@ -2389,7 +2392,10 @@ msgstr "Quantizes the full amplitude range instead of the range -1 > 1."
 msgid "NODE_DECIMATE_TITLE"
 msgstr "DECIMATE"
 
-
 # Lowpass node
 msgid "NODE_LOWPASS_TITLE"
 msgstr "LOWPASS"
+
+# Highpass node
+msgid "NODE_HIGHPASS_TITLE"
+msgstr "HIGHPASS"

@@ -18,6 +18,7 @@
 #include "nodes/transforms/quantize.cpp"
 #include "nodes/transforms/decimate.cpp"
 #include "nodes/transforms/lowpass.cpp"
+#include "nodes/transforms/highpass.cpp"
 #include <cstdio>
 
 
@@ -67,6 +68,7 @@ void NodeLib::_register_methods(){
 	register_method("quantize", &NodeLib::quantize);
 	register_method("decimate", &NodeLib::decimate);
 	register_method("lowpass", &NodeLib::lowpass);
+	register_method("highpass", &NodeLib::highpass);
 }
 
 NodeLib::NodeLib(){

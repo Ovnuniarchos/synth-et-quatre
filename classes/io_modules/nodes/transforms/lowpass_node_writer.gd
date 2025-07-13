@@ -7,6 +7,7 @@ func serialize(out:ChunkedFile,node:LowpassNodeComponent)->FileResult:
 	out.store_16(node.cutoff)
 	out.store_float(node.attenuation)
 	out.store_float(node.resonance)
+	out.store_16(node.steps)
 	out.store_float(node.mix_value)
 	out.store_float(node.clamp_mix_value)
 	out.store_8(node.isolate)

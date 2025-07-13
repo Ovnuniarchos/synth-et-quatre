@@ -12,6 +12,7 @@ func deserialize(inf:ChunkedFile,header:Dictionary)->FileResult:
 	node.cutoff=inf.get_16()
 	node.attenuation=inf.get_float()
 	node.resonance=inf.get_float()
+	node.steps=inf.get_16()
 	node.mix_value=inf.get_float()
 	node.clamp_mix_value=inf.get_float()
 	node.isolate=inf.get_boolean()

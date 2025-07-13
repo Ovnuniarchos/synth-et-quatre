@@ -72,6 +72,11 @@ func _on_Attenuation_value_changed(value:float)->void:
 	emit_signal("params_changed",self)
 
 
-func _on_Decay_value_changed(value) -> void:
+func _on_Decay_value_changed(value:float)->void:
 	node.decay=value
+	emit_signal("params_changed",self)
+
+
+func _on_Steps_value_changed(value:float)->void:
+	node.steps=value
 	emit_signal("params_changed",self)

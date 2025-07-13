@@ -1,15 +1,16 @@
 extends NodeComponentIO
-class_name HighpassNodeReader
+class_name BandRejectNodeReader
 
 
 func deserialize(inf:ChunkedFile,header:Dictionary)->FileResult:
 	var fr:FileResult=_deserialize_start(
-		inf,HighpassNodeComponent,header,HIGHPASS_ID,HIGHPASS_VERSION
+		inf,BandRejectNodeComponent,header,BANDREJECT_ID,BANDREJECT_VERSION
 	)
 	if fr.has_error():
 		return fr
-	var node:HighpassNodeComponent=fr.data
-	node.cutoff=inf.get_16()
+	var node:BandRejectNodeComponent=fr.data
+	node.cutofflo=inf.get_16()
+	node.cutoffhi=inf.get_16()
 	node.attenuation=inf.get_float()
 	node.resonance=inf.get_float()
 	node.steps=inf.get_16()

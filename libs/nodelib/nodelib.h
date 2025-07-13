@@ -28,6 +28,10 @@ private:
 		HI_FULL,LO_FULL,HILO_FULL
 	};
 
+	enum FilterMode{
+		LOPASS,HIPASS,BANDPASS,BANDREJECT
+	};
+
 	union I2DConverter{
 		uint64_t i;
 		double d;
@@ -107,9 +111,20 @@ private:
 
 	std::vector<int> create_chunks(int segment_size,int outptr,int steps);
 
+	void multi_fft(Array output,int segment_size,int outptr,
+		double* cutoff_mul,int steps,FilterMode mode,
+		Array input,Array* cutoff,Array attenuation,Array resonance,
+		Array mix,Array clamp_mix,Array isolate,
+		Array amplitude,Array power,Array decay,Array dc
+	);
+
 	void lp_coeffs(VectorC &source,VectorC &dest,int cutoff,double attenuation,double resonance);
 
 	void hp_coeffs(VectorC &source,VectorC &dest,int cutoff,double attenuation,double resonance);
+
+	void bp_coeffs(VectorC &source,VectorC &dest,int cutofflo,int cutoffhi,double attenuation,double resonance);
+
+	void br_coeffs(VectorC &source,VectorC &dest,int cutofflo,int cutoffhi,double attenuation,double resonance);
 
 public:
 	static void _register_methods();
@@ -235,6 +250,20 @@ public:
 	void highpass(Array output,int segment_size,int outptr,
 		double cutoff_mul,int steps,
 		Array input,Array cutoff,Array attenuation,Array resonance,
+		Array mix,Array clamp_mix,Array isolate,
+		Array amplitude,Array power,Array decay,Array dc
+	);
+
+	void bandpass(Array output,int segment_size,int outptr,
+		double cutofflo_mul,double cutoffhi_mul,int steps,
+		Array input,Array cutofflo,Array cutoffhi,Array attenuation,Array resonance,
+		Array mix,Array clamp_mix,Array isolate,
+		Array amplitude,Array power,Array decay,Array dc
+	);
+
+	void bandreject(Array output,int segment_size,int outptr,
+		double cutofflo_mul,double cutoffhi_mul,int steps,
+		Array input,Array cutofflo,Array cutoffhi,Array attenuation,Array resonance,
 		Array mix,Array clamp_mix,Array isolate,
 		Array amplitude,Array power,Array decay,Array dc
 	);

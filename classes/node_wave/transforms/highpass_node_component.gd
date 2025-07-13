@@ -36,6 +36,7 @@ var dc:float=0.0 setget set_dc
 var isolate_slot:Array=[]
 var isolate_values:Array=[]
 var isolate:float=1.0 setget set_isolate
+var steps:int=1
 
 
 func _init()->void:
@@ -126,7 +127,7 @@ func calculate()->Array:
 	calculate_slot(decay_values,decay_slot,decay)
 	calculate_slot(dc_values,dc_slot,dc)
 	calculate_boolean_slot(isolate_values,isolate_slot,isolate)
-	NODES.highpass(output,sz,optr,cutoff,16,
+	NODES.highpass(output,sz,optr,cutoff,steps,
 		input_values,cutoff_values,attenuation_values,resonance_values,
 		mix_values,clamp_mix_values,isolate_values,
 		amplitude_values,power_values,decay_values,dc_values
@@ -140,7 +141,7 @@ func equals(other:WaveNodeComponent)->bool:
 		return false
 	return .equals(other) and are_equal_approx(other,[
 		"cutoff","attenuation","mix","clamp_mix","amplitude","power","isolate",
-		"decay","dc"
+		"decay","dc","steps"
 	])
 
 
@@ -155,4 +156,5 @@ func duplicate(container:Reference)->WaveNodeComponent:
 	nc.decay=decay
 	nc.dc=dc
 	nc.isolate=isolate
+	nc.steps=steps
 	return nc

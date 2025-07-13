@@ -1,10 +1,11 @@
 extends NodeComponentIO
-class_name HighpassNodeWriter
+class_name BandpassNodeWriter
 
 
-func serialize(out:ChunkedFile,node:HighpassNodeComponent)->FileResult:
-	_serialize_start(out,node,HIGHPASS_ID,HIGHPASS_VERSION)
-	out.store_16(node.cutoff)
+func serialize(out:ChunkedFile,node:BandpassNodeComponent)->FileResult:
+	_serialize_start(out,node,BANDPASS_ID,BANDPASS_VERSION)
+	out.store_16(node.cutofflo)
+	out.store_16(node.cutoffhi)
 	out.store_float(node.attenuation)
 	out.store_float(node.resonance)
 	out.store_16(node.steps)

@@ -1764,6 +1764,12 @@ msgstr "Paso bajo"
 msgid "NODED_MENU_HIGHPASS"
 msgstr "Paso alto"
 
+msgid "NODED_MENU_BANDPASS"
+msgstr "Paso banda"
+
+msgid "NODED_MENU_BANDREJECT"
+msgstr "Rechaza banda"
+
 # Common ports
 msgid "NODE_OUTPUT_PORT"
 msgstr "Salida"
@@ -1904,6 +1910,24 @@ msgid "NODE_RESONANCE_PORT"
 msgstr "Resonancia"
 
 msgid "NODE_RESONANCE_PORT_TTIP"
+msgstr "<EMPTY STRING>"
+
+msgid "NODE_STEPS_PORT"
+msgstr "Pasos"
+
+msgid "NODE_STEPS_PORT_TTIP"
+msgstr "<EMPTY STRING>"
+
+msgid "NODE_CUTOFFLO_PORT"
+msgstr "Corte inf. (Hz)"
+
+msgid "NODE_CUTOFFLO_PORT_TTIP"
+msgstr "<EMPTY STRING>"
+
+msgid "NODE_CUTOFFHI_PORT"
+msgstr "Corte sup. (Hz)"
+
+msgid "NODE_CUTOFFHI_PORT_TTIP"
 msgstr "<EMPTY STRING>"
 
 # Nodes
@@ -2399,3 +2423,11 @@ msgstr "PASO BAJO"
 # Highpass node
 msgid "NODE_HIGHPASS_TITLE"
 msgstr "PASO ALTO"
+
+# Bandpass node
+msgid "NODE_BANDPASS_TITLE"
+msgstr "PASO BANDA"
+
+# Band reject node
+msgid "NODE_BANDREJECT_TITLE"
+msgstr "RECHAZA BANDA"

@@ -4,7 +4,8 @@ tool extends NodeController
 func set_parameters()->void:
 	if not is_node_ready():
 		yield(self,"ready")
-	$Cutoff.set_value(node.cutoff)
+	$CutoffLo.set_value(node.cutofflo)
+	$CutoffHi.set_value(node.cutoffhi)
 	$Attenuation.set_value(node.attenuation)
 	$Resonance.set_value(node.resonance)
 	$Mix.set_value(node.mix)
@@ -47,8 +48,13 @@ func _on_Power_value_changed(value:float)->void:
 	emit_signal("params_changed",self)
 
 
-func _on_Cutoff_value_changed(value:float)->void:
-	node.cutoff=value
+func _on_CutoffLo_value_changed(value:float)->void:
+	node.cutofflo=value
+	emit_signal("params_changed",self)
+
+
+func _on_CutoffHi_value_changed(value:float)->void:
+	node.cutoffhi=value
 	emit_signal("params_changed",self)
 
 

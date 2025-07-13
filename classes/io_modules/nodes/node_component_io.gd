@@ -42,6 +42,10 @@ const LOWPASS_ID:String="lOWP"
 const LOWPASS_VERSION:int=0
 const HIGHPASS_ID:String="hIGP"
 const HIGHPASS_VERSION:int=0
+const BANDPASS_ID:String="bPSF"
+const BANDPASS_VERSION:int=0
+const BANDREJECT_ID:String="bPRF"
+const BANDREJECT_VERSION:int=0
 
 
 func _serialize_start(out:ChunkedFile,comp:WaveNodeComponent,tag:String,version:int)->void:

@@ -1,14 +1,17 @@
 extends WaveNodeComponent
-class_name LowpassNodeComponent
+class_name BandRejectNodeComponent
 
-const NODE_TYPE:String="Lowpass"
+const NODE_TYPE:String="BandReject"
 
 
 var input_slot:Array=[]
 var input_values:Array=[]
-var cutoff_slot:Array=[]
-var cutoff_values:Array=[]
-var cutoff:float=0.0 setget set_cutoff
+var cutofflo_slot:Array=[]
+var cutofflo_values:Array=[]
+var cutofflo:float=0.0 setget set_cutofflo
+var cutoffhi_slot:Array=[]
+var cutoffhi_values:Array=[]
+var cutoffhi:float=0.0 setget set_cutoffhi
 var attenuation_slot:Array=[]
 var attenuation_values:Array=[]
 var attenuation:float=0.0 setget set_attenuation
@@ -36,13 +39,14 @@ var dc:float=0.0 setget set_dc
 var isolate_slot:Array=[]
 var isolate_values:Array=[]
 var isolate:float=1.0 setget set_isolate
-var steps:int=1.0
+var steps:int=1
 
 
 func _init()->void:
 	inputs=[
 		{SLOT_ID:SlotIds.SLOT_INPUT,SLOT_IN:input_slot},
-		{SLOT_ID:SlotIds.SLOT_CUTOFF,SLOT_IN:cutoff_slot},
+		{SLOT_ID:SlotIds.SLOT_CUTOFFLO,SLOT_IN:cutofflo_slot},
+		{SLOT_ID:SlotIds.SLOT_CUTOFFHI,SLOT_IN:cutoffhi_slot},
 		{SLOT_ID:SlotIds.SLOT_ATTENUATION,SLOT_IN:attenuation_slot},
 		{SLOT_ID:SlotIds.SLOT_RESONANCE,SLOT_IN:resonance_slot},
 		{SLOT_ID:SlotIds.SLOT_MIX,SLOT_IN:mix_slot},
@@ -55,9 +59,14 @@ func _init()->void:
 	]
 
 
-func set_cutoff(value:float)->void:
-	cutoff=value
-	cutoff_values.resize(0)
+func set_cutofflo(value:float)->void:
+	cutofflo=value
+	cutofflo_values.resize(0)
+
+
+func set_cutoffhi(value:float)->void:
+	cutoffhi=value
+	cutoffhi_values.resize(0)
 
 
 func set_attenuation(value:float)->void:
@@ -117,7 +126,8 @@ func calculate()->Array:
 	if bounds[5]==INF:
 		output_valid=true
 		return output
-	calculate_diffuse_boolean_slot(cutoff_values,cutoff_slot,1.0)
+	calculate_diffuse_boolean_slot(cutofflo_values,cutofflo_slot,1.0)
+	calculate_diffuse_boolean_slot(cutoffhi_values,cutoffhi_slot,1.0)
 	calculate_diffuse_boolean_slot(attenuation_values,attenuation_slot,attenuation)
 	calculate_diffuse_boolean_slot(resonance_values,resonance_slot,resonance)
 	calculate_slot(mix_values,mix_slot,mix)
@@ -127,8 +137,8 @@ func calculate()->Array:
 	calculate_slot(decay_values,decay_slot,decay)
 	calculate_slot(dc_values,dc_slot,dc)
 	calculate_boolean_slot(isolate_values,isolate_slot,isolate)
-	NODES.lowpass(output,sz,optr,cutoff,steps,
-		input_values,cutoff_values,attenuation_values,resonance_values,
+	NODES.band_reject(output,sz,optr,cutofflo,cutoffhi,steps,
+		input_values,cutofflo_values,cutoffhi_values,attenuation_values,resonance_values,
 		mix_values,clamp_mix_values,isolate_values,
 		amplitude_values,power_values,decay_values,dc_values
 	)
@@ -137,17 +147,18 @@ func calculate()->Array:
 
 
 func equals(other:WaveNodeComponent)->bool:
-	if (other as LowpassNodeComponent)==null:
+	if (other as BandRejectNodeComponent)==null:
 		return false
 	return .equals(other) and are_equal_approx(other,[
-		"cutoff","attenuation","mix","clamp_mix","amplitude","power","isolate",
+		"cutofflo","cutoffhi","attenuation","mix","clamp_mix","amplitude","power","isolate",
 		"decay","dc","steps"
 	])
 
 
 func duplicate(container:Reference)->WaveNodeComponent:
-	var nc:LowpassNodeComponent=.duplicate(container) as LowpassNodeComponent
-	nc.cutoff=cutoff
+	var nc:BandRejectNodeComponent=.duplicate(container) as BandRejectNodeComponent
+	nc.cutofflo=cutofflo
+	nc.cutoffhi=cutoffhi
 	nc.attenuation=attenuation
 	nc.mix=mix
 	nc.clamp_mix=clamp_mix

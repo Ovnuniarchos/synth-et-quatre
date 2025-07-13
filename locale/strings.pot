@@ -1793,6 +1793,12 @@ msgstr ""
 msgid "NODED_MENU_HIGHPASS"
 msgstr ""
 
+msgid "NODED_MENU_BANDPASS"
+msgstr ""
+
+msgid "NODED_MENU_BANDREJECT"
+msgstr ""
+
 # Common ports
 
 msgid "NODE_OUTPUT_PORT"
@@ -1934,6 +1940,24 @@ msgid "NODE_RESONANCE_PORT"
 msgstr ""
 
 msgid "NODE_RESONANCE_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_STEPS_PORT"
+msgstr ""
+
+msgid "NODE_STEPS_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_CUTOFFLO_PORT"
+msgstr ""
+
+msgid "NODE_CUTOFFLO_PORT_TTIP"
+msgstr ""
+
+msgid "NODE_CUTOFFHI_PORT"
+msgstr ""
+
+msgid "NODE_CUTOFFHI_PORT_TTIP"
 msgstr ""
 
 # Nodes
@@ -2449,4 +2473,14 @@ msgstr ""
 # Highpass node
 
 msgid "NODE_HIGHPASS_TITLE"
+msgstr ""
+
+# Bandpass node
+
+msgid "NODE_BANDPASS_TITLE"
+msgstr ""
+
+# Band reject node
+
+msgid "NODE_BANDREJECT_TITLE"
 msgstr ""

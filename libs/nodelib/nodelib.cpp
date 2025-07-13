@@ -17,8 +17,7 @@
 #include "nodes/transforms/power.cpp"
 #include "nodes/transforms/quantize.cpp"
 #include "nodes/transforms/decimate.cpp"
-#include "nodes/transforms/lowpass.cpp"
-#include "nodes/transforms/highpass.cpp"
+#include "nodes/transforms/multipass.cpp"
 #include <cstdio>
 
 
@@ -69,6 +68,8 @@ void NodeLib::_register_methods(){
 	register_method("decimate", &NodeLib::decimate);
 	register_method("lowpass", &NodeLib::lowpass);
 	register_method("highpass", &NodeLib::highpass);
+	register_method("bandpass", &NodeLib::bandpass);
+	register_method("band_reject", &NodeLib::bandreject);
 }
 
 NodeLib::NodeLib(){
@@ -197,3 +198,70 @@ std::vector<int> NodeLib::create_chunks(int segment_size,int outptr,int steps){
 	return chunks;
 }
 
+void NodeLib::multi_fft(Array output,int segment_size,int outptr,
+	double* cutoff_mul,int steps,FilterMode mode,
+	Array input,Array* cutoff,Array attenuation,Array resonance,
+	Array mix,Array clamp_mix,Array isolate,
+	Array amplitude,Array power,Array decay,Array dc
+){
+	if(segment_size>0){
+		int size_mask=output.size()-1;
+		VectorC data[3];
+		std::vector<int> chunks=create_chunks(segment_size,outptr,steps);
+		fft_convert(input,data[0]);
+		fft(data[0],false);
+		//
+		data[1].resize(data[0].size());
+		outptr=chunks[0]&size_mask;
+		switch(mode){
+		case LOPASS:
+			lp_coeffs(data[0],data[1],(double)cutoff[0][outptr]*cutoff_mul[0],(double)attenuation[outptr],(double)resonance[outptr]);
+			break;
+		case HIPASS:
+			hp_coeffs(data[0],data[1],(double)cutoff[0][outptr]*cutoff_mul[0],(double)attenuation[outptr],(double)resonance[outptr]);
+			break;
+		case BANDPASS:
+			bp_coeffs(data[0],data[1],(double)cutoff[0][outptr]*cutoff_mul[0],(double)cutoff[1][outptr]*cutoff_mul[1],(double)attenuation[outptr],(double)resonance[outptr]);
+			break;
+		case BANDREJECT:
+			br_coeffs(data[0],data[1],(double)cutoff[0][outptr]*cutoff_mul[0],(double)cutoff[1][outptr]*cutoff_mul[1],(double)attenuation[outptr],(double)resonance[outptr]);
+			break;
+		}
+		fft(data[1],true);
+		//
+		data[2].resize(data[0].size());
+		//
+		I2DConverter i2d;
+		Decay decayer(segment_size);
+		for(int i=0;i<chunks.size();i+=2){
+			outptr=(chunks[i]+chunks[i+1])&size_mask;
+			switch(mode){
+			case LOPASS:
+				lp_coeffs(data[0],data[2],(double)cutoff[0][outptr]*cutoff_mul[0],(double)attenuation[outptr],(double)resonance[outptr]);
+				break;
+			case HIPASS:
+				hp_coeffs(data[0],data[2],(double)cutoff[0][outptr]*cutoff_mul[0],(double)attenuation[outptr],(double)resonance[outptr]);
+				break;
+			case BANDPASS:
+				bp_coeffs(data[0],data[2],(double)cutoff[0][outptr]*cutoff_mul[0],(double)cutoff[1][outptr]*cutoff_mul[1],(double)attenuation[outptr],(double)resonance[outptr]);
+				break;
+			case BANDREJECT:
+				br_coeffs(data[0],data[2],(double)cutoff[0][outptr]*cutoff_mul[0],(double)cutoff[1][outptr]*cutoff_mul[1],(double)attenuation[outptr],(double)resonance[outptr]);
+				break;
+			}
+			fft(data[2],true);
+			outptr=chunks[i];
+			double li=0.0,dli=1.0/chunks[i+1];
+			for(int j=chunks[i+1];j>0;j--,li+=dli){
+				if(!std::isnan((double)input[outptr])){
+					i2d.d=Math::lerp(data[1][outptr].real(),data[2][outptr].real(),li);
+					i2d.d=(double)dc[outptr]+decayer.next(i2d.abspow((double)power[outptr]),(double)decay[outptr])*(double)amplitude[outptr];
+					output[outptr]=Math::lerp((double)input[outptr],i2d.d,Math::lerp((double)mix[outptr],Math::clamp((double)mix[outptr],0.0,1.0),(double)clamp_mix[outptr]));
+				}
+				outptr=(outptr+1)&size_mask;
+			}
+			data[1].swap(data[2]);
+		}
+	}
+	fill_out_of_region(segment_size,outptr,output,input,isolate);
+}

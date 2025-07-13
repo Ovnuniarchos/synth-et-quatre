@@ -23,6 +23,8 @@ var readers:Dictionary={
 	NodeComponentIO.DECIMATE_ID:DecimateNodeReader,
 	NodeComponentIO.LOWPASS_ID:LowpassNodeReader,
 	NodeComponentIO.HIGHPASS_ID:HighpassNodeReader,
+	NodeComponentIO.BANDPASS_ID:BandpassNodeReader,
+	NodeComponentIO.BANDREJECT_ID:BandRejectNodeReader,
 }
 
 

@@ -23,6 +23,8 @@ var writers:Dictionary={
 	DecimateNodeComponent.NODE_TYPE:DecimateNodeWriter,
 	LowpassNodeComponent.NODE_TYPE:LowpassNodeWriter,
 	HighpassNodeComponent.NODE_TYPE:HighpassNodeWriter,
+	BandpassNodeComponent.NODE_TYPE:BandpassNodeWriter,
+	BandRejectNodeComponent.NODE_TYPE:BandRejectNodeWriter,
 }
 
 

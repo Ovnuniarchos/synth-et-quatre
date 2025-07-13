@@ -282,6 +282,8 @@
 			<DecimateNode option/>
 			<LowpassNode option/>
 			<HighpassNode option/>
+			<BandpassNode option/>
+			<BandRejectNode option/>
 		</options>
 	</foreach:Node>
 </NodeWave>
@@ -572,6 +574,7 @@
 	<Cutoff type="uint16"/>
 	<Attenuation type="float"/>
 	<Resonance type="float"/>
+	<Steps type="uint16"/>
 	<Mix type="float"/>
 	<ClampMix type="float"/>
 	<Isolate type="boolean"/>
@@ -590,6 +593,7 @@
 	<Cutoff type="uint16"/>
 	<Attenuation type="float"/>
 	<Resonance type="float"/>
+	<Steps type="uint16"/>
 	<Mix type="float"/>
 	<ClampMix type="float"/>
 	<Isolate type="boolean"/>
@@ -599,6 +603,46 @@
 	<DC type="float"/>
 	<Connections/>
 </LowpassNode>
+
+<BandpassNode>
+	<ChunkHeader id="hIGP"/>
+	<GraphPositions/>
+	<RangeFrom type="float"/>
+	<RangeLength type="float"/>
+	<CutoffLow type="uint16"/>
+	<CutoffHigh type="uint16"/>
+	<Attenuation type="float"/>
+	<Resonance type="float"/>
+	<Steps type="uint16"/>
+	<Mix type="float"/>
+	<ClampMix type="float"/>
+	<Isolate type="boolean"/>
+	<Amplitude type="float"/>
+	<Power type="float"/>
+	<Decay type="float"/>
+	<DC type="float"/>
+	<Connections/>
+</BandpassNode>
+
+<BandRejectNode>
+	<ChunkHeader id="hIGP"/>
+	<GraphPositions/>
+	<RangeFrom type="float"/>
+	<RangeLength type="float"/>
+	<CutoffLow type="uint16"/>
+	<CutoffHigh type="uint16"/>
+	<Attenuation type="float"/>
+	<Resonance type="float"/>
+	<Steps type="uint16"/>
+	<Mix type="float"/>
+	<ClampMix type="float"/>
+	<Isolate type="boolean"/>
+	<Amplitude type="float"/>
+	<Power type="float"/>
+	<Decay type="float"/>
+	<DC type="float"/>
+	<Connections/>
+</BandRejectNode>
 
 <Connections>
 	<InputsConnectedCount type="uint16"/>

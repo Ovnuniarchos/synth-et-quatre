@@ -9,13 +9,13 @@ void NodeLib::map_wave(Array output,int segment_size,int outptr,Array input,
 	enum{XERP_CONSTANT,XERP_EXTEND,XERP_WRAP};
 
 	double size=(double)output.size();
-	double t1,_;
+	double t,t1,_;
 	int size_mask=output.size()-1;
 	int mode;
 	I2DConverter i2d;
 	Decay decayer(segment_size);
 	for(int i=segment_size;i;i--){
-		i2d.d=(double)input[outptr];
+		t=i2d.d=(double)input[outptr];
 		if (!std::isnan(i2d.d)){
 			i2d.d=(i2d.d+1.0)*size*0.5;
 			t1=i2d.d+1.0;
@@ -61,7 +61,8 @@ void NodeLib::map_wave(Array output,int segment_size,int outptr,Array input,
 		if ((double)map_empty[outptr]<0.5 && std::isnan(i2d.d)){
 			i2d.d=(double)input[outptr];
 		}
-		output[outptr]=decayer.next(i2d.abspow((double)power[outptr]),(double)decay[outptr])*(double)amplitude[outptr]+(double)dc[outptr];
+		i2d.d=decayer.next(i2d.abspow((double)power[outptr]),(double)decay[outptr])*(double)amplitude[outptr]+(double)dc[outptr];
+		output[outptr]=Math::lerp(t,i2d.d,Math::lerp((double)mix[outptr],Math::clamp((double)mix[outptr],0.0,1.0),(double)clamp_mix[outptr]));
 		outptr=(outptr+1)&size_mask;
 	}
 	fill_out_of_region(segment_size,outptr,output,input,isolate);

@@ -35,8 +35,8 @@ void NodeLib::decimate(Array output,int segment_size,int outptr,
 				}
 			}
 		}
-		i2d.d=Math::lerp((double)input[outptr],i2d.d,Math::lerp((double)mix[outptr],Math::clamp((double)mix[outptr],0.0,1.0),(double)clamp_mix[outptr]));
-		output[outptr]=decayer.next(i2d.abspow((double)power[outptr]),(double)decay[outptr])*(double)amplitude[outptr]+(double)dc[outptr];
+		i2d.d=decayer.next(i2d.abspow((double)power[outptr]),(double)decay[outptr])*(double)amplitude[outptr]+(double)dc[outptr];
+		output[outptr]=Math::lerp((double)input[outptr],i2d.d,Math::lerp((double)mix[outptr],Math::clamp((double)mix[outptr],0.0,1.0),(double)clamp_mix[outptr]));
 		outptr=(outptr+1)&size_mask;
 	}
 	fill_out_of_region(segment_size,outptr,output,input,isolate);

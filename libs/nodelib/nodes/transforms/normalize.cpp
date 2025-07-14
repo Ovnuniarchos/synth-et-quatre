@@ -23,8 +23,8 @@ void NodeLib::normalize(Array output,int segment_size,int outptr,
 			(double)keep_0[outptr]
 		);
 		full=(double)mix[outptr];
-		i2d.d=Math::lerp(t,i2d.d,Math::lerp(full,Math::clamp(full,0.0,1.0),(double)clamp_mix[outptr]));
-		output[outptr]=decayer.next(i2d.abspow((double)power[outptr]),(double)decay[outptr])*(double)amplitude[outptr];
+		i2d.d=decayer.next(i2d.abspow((double)power[outptr]),(double)decay[outptr])*(double)amplitude[outptr];
+		output[outptr]=Math::lerp(t,i2d.d,Math::lerp(full,Math::clamp(full,0.0,1.0),(double)clamp_mix[outptr]));
 		outptr=(outptr+1)&size_mask;
 	}
 	fill_out_of_region(segment_size,outptr,output,input,isolate);

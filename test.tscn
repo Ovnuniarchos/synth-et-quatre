@@ -5,10 +5,9 @@ script/source = "extends Node
 
 \"\"\"
 FIXME
-	Amplitude+dc should be outside decay.
 TODO:
-	Node-based wave generator
-		Convolution/frequency filters
+	Rename SynthWave to SimpleWave
+	New envelope generator
 	Reset per channel parameters (as a command|button)
 	MIDI input
 		Flag?: MIDI Pitch bend

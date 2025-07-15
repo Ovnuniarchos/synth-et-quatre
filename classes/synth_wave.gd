@@ -9,7 +9,7 @@ var components:Array=[]
 
 
 func _init()->void:
-	name=tr("DEFN_SYNTH_WAVE")
+	name=tr("DEFN_SIMPLE_WAVE")
 	resize_data(1<<size_po2)
 
 

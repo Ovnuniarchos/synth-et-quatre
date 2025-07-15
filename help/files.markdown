@@ -90,7 +90,7 @@
 	<foreach:Wave>
 		<options>
 			<SampleWave/>
-			<SynthWave/>
+			<SimpleWave/>
 			<NodeWave/>
 		</options>
 	</foreach:Wave>
@@ -113,8 +113,8 @@
 	</options>
 </SampleWave>
 
-<SynthWave>
-	<ChunkHeader id="sYNW">
+<SimpleWave>
+	<ChunkHeader id="sYNW"><!-- Chunk ID is a historical artifact -->
 		<SizeLog2 type="uint8"/>
 		<Name type="string"/>
 		<ComponentCount type="uint16"/>
@@ -135,7 +135,7 @@
 			</options>
 		</foreach:Component>
 	</ChunkHeader>
-</SynthWave>
+</SimpleWave>
 
 <ComponentHeader>
 	<OutputMode type="uint8"/>

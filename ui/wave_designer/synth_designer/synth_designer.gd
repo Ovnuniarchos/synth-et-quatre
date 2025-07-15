@@ -5,20 +5,20 @@ signal name_changed(wave_ix,text)
 
 enum WAVE_TYPES{SIN,TRI,SAW,RECT,NOISE,LPF,HPF,BPF,BRF,CLAMP,NORM,QUANT,POWER,DECAY}
 const WAVES=[
-	["WAVED_SYN_SINE",WAVE_TYPES.SIN,preload("nodes/wave_nodes/sine_wave.tscn")],
-	["WAVED_SYN_TRIANGLE",WAVE_TYPES.TRI,preload("nodes/wave_nodes/triangle_wave.tscn")],
-	["WAVED_SYN_SAW",WAVE_TYPES.SAW,preload("nodes/wave_nodes/saw_wave.tscn")],
-	["WAVED_SYN_RECTANGLE",WAVE_TYPES.RECT,preload("nodes/wave_nodes/rect_wave.tscn")],
-	["WAVED_SYN_NOISE",WAVE_TYPES.NOISE,preload("nodes/wave_nodes/noise_wave.tscn")],
-	["WAVED_SYN_LOWPASS",WAVE_TYPES.LPF,preload("nodes/filter_nodes/lpf_filter.tscn")],
-	["WAVED_SYN_HIGHPASS",WAVE_TYPES.HPF,preload("nodes/filter_nodes/hpf_filter.tscn")],
-	["WAVED_SYN_BANDPASS",WAVE_TYPES.BPF,preload("nodes/filter_nodes/bpf_filter.tscn")],
-	["WAVED_SYN_BANDREJECT",WAVE_TYPES.BRF,preload("nodes/filter_nodes/brf_filter.tscn")],
-	["WAVED_SYN_CLAMP",WAVE_TYPES.CLAMP,preload("nodes/filter_nodes/clamp_filter.tscn")],
-	["WAVED_SYN_NORMALIZE",WAVE_TYPES.NORM,preload("nodes/filter_nodes/normalize_filter.tscn")],
-	["WAVED_SYN_QUANTIZE",WAVE_TYPES.QUANT,preload("nodes/filter_nodes/quantize_filter.tscn")],
-	["WAVED_SYN_POWER",WAVE_TYPES.POWER,preload("nodes/filter_nodes/power_filter.tscn")],
-	["WAVED_SYN_DECAY",WAVE_TYPES.DECAY,preload("nodes/filter_nodes/decay_filter.tscn")],
+	["WAVED_SIMPLE_SINE",WAVE_TYPES.SIN,preload("nodes/wave_nodes/sine_wave.tscn")],
+	["WAVED_SIMPLE_TRIANGLE",WAVE_TYPES.TRI,preload("nodes/wave_nodes/triangle_wave.tscn")],
+	["WAVED_SIMPLE_SAW",WAVE_TYPES.SAW,preload("nodes/wave_nodes/saw_wave.tscn")],
+	["WAVED_SIMPLE_RECTANGLE",WAVE_TYPES.RECT,preload("nodes/wave_nodes/rect_wave.tscn")],
+	["WAVED_SIMPLE_NOISE",WAVE_TYPES.NOISE,preload("nodes/wave_nodes/noise_wave.tscn")],
+	["WAVED_SIMPLE_LOWPASS",WAVE_TYPES.LPF,preload("nodes/filter_nodes/lpf_filter.tscn")],
+	["WAVED_SIMPLE_HIGHPASS",WAVE_TYPES.HPF,preload("nodes/filter_nodes/hpf_filter.tscn")],
+	["WAVED_SIMPLE_BANDPASS",WAVE_TYPES.BPF,preload("nodes/filter_nodes/bpf_filter.tscn")],
+	["WAVED_SIMPLE_BANDREJECT",WAVE_TYPES.BRF,preload("nodes/filter_nodes/brf_filter.tscn")],
+	["WAVED_SIMPLE_CLAMP",WAVE_TYPES.CLAMP,preload("nodes/filter_nodes/clamp_filter.tscn")],
+	["WAVED_SIMPLE_NORMALIZE",WAVE_TYPES.NORM,preload("nodes/filter_nodes/normalize_filter.tscn")],
+	["WAVED_SIMPLE_QUANTIZE",WAVE_TYPES.QUANT,preload("nodes/filter_nodes/quantize_filter.tscn")],
+	["WAVED_SIMPLE_POWER",WAVE_TYPES.POWER,preload("nodes/filter_nodes/power_filter.tscn")],
+	["WAVED_SIMPLE_DECAY",WAVE_TYPES.DECAY,preload("nodes/filter_nodes/decay_filter.tscn")],
 ]
 
 var curr_wave_ix:int=-1

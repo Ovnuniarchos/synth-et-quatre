@@ -18,7 +18,7 @@ margin_bottom = 20.0
 hint_tooltip = "WAVED_ADD_TTIP"
 text = "WAVED_ADD"
 flat = false
-items = [ "WAVED_WTYPE_SYNTH", null, 0, false, false, 0, 0, null, "", false, "WAVED_WTYPE_SAMPLED", null, 0, false, false, 1, 0, null, "", false, "WAVED_WTYPE_NODE", null, 0, false, false, 2, 0, null, "", false ]
+items = [ "WAVED_WTYPE_SIMPLE", null, 0, false, false, 0, 0, null, "", false, "WAVED_WTYPE_SAMPLED", null, 0, false, false, 1, 0, null, "", false, "WAVED_WTYPE_NODE", null, 0, false, false, 2, 0, null, "", false ]
 
 [node name="Duplicate" type="Button" parent="Buttons"]
 margin_left = 98.0

@@ -796,8 +796,8 @@ msgstr " - "
 msgid "WAVED_DEL_TTIP"
 msgstr "Delete wave."
 
-msgid "WAVED_WTYPE_SYNTH"
-msgstr "Synthetic"
+msgid "WAVED_WTYPE_SIMPLE"
+msgstr "Simple"
 
 msgid "WAVED_WTYPE_SAMPLED"
 msgstr "Sample"
@@ -817,49 +817,49 @@ msgstr "{i_samples} samples"
 msgid "WAVED_SIZE_NONE"
 msgstr "-- samples"
 
-msgid "WAVED_NEW_SYNTH"
+msgid "WAVED_NEW_SIMPLE"
 msgstr " + "
 
-msgid "WAVED_SYN_SINE"
+msgid "WAVED_SIMPLE_SINE"
 msgstr "Sine"
 
-msgid "WAVED_SYN_TRIANGLE"
+msgid "WAVED_SIMPLE_TRIANGLE"
 msgstr "Triangle"
 
-msgid "WAVED_SYN_SAW"
+msgid "WAVED_SIMPLE_SAW"
 msgstr "Saw"
 
-msgid "WAVED_SYN_RECTANGLE"
+msgid "WAVED_SIMPLE_RECTANGLE"
 msgstr "Rectangle"
 
-msgid "WAVED_SYN_NOISE"
+msgid "WAVED_SIMPLE_NOISE"
 msgstr "Noise"
 
-msgid "WAVED_SYN_LOWPASS"
+msgid "WAVED_SIMPLE_LOWPASS"
 msgstr "Low pass"
 
-msgid "WAVED_SYN_HIGHPASS"
+msgid "WAVED_SIMPLE_HIGHPASS"
 msgstr "High pass"
 
-msgid "WAVED_SYN_BANDPASS"
+msgid "WAVED_SIMPLE_BANDPASS"
 msgstr "Band pass"
 
-msgid "WAVED_SYN_BANDREJECT"
+msgid "WAVED_SIMPLE_BANDREJECT"
 msgstr "Band reject"
 
-msgid "WAVED_SYN_CLAMP"
+msgid "WAVED_SIMPLE_CLAMP"
 msgstr "Clamp"
 
-msgid "WAVED_SYN_NORMALIZE"
+msgid "WAVED_SIMPLE_NORMALIZE"
 msgstr "Normalize"
 
-msgid "WAVED_SYN_QUANTIZE"
+msgid "WAVED_SIMPLE_QUANTIZE"
 msgstr "Quantize"
 
-msgid "WAVED_SYN_POWER"
+msgid "WAVED_SIMPLE_POWER"
 msgstr "Power"
 
-msgid "WAVED_SYN_DECAY"
+msgid "WAVED_SIMPLE_DECAY"
 msgstr "Decay"
 
 msgid "WAVED_BAR_LEFT_TTIP"
@@ -1451,14 +1451,14 @@ msgstr "Instrument"
 msgid "DEFN_FM_INSTRUMENT"
 msgstr "FM Instrument"
 
-msgid "DEFN_SYNTH_WAVE"
-msgstr "Synth Wave"
+msgid "DEFN_SIMPLE_WAVE"
+msgstr "Simple Wave"
 
 msgid "DEFN_SAMPLE_WAVE"
 msgstr "Sample"
 
 msgid "DEFN_NODE_WAVE"
-msgstr "Node"
+msgstr "Node Wave"
 
 # File dialog
 msgid "Go to parent folder."

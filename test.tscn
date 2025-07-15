@@ -6,7 +6,6 @@ script/source = "extends Node
 \"\"\"
 FIXME
 TODO:
-	Rename SynthWave to SimpleWave
 	New envelope generator
 	Reset per channel parameters (as a command|button)
 	MIDI input

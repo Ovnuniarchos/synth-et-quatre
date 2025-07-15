@@ -109,7 +109,7 @@ size_flags_vertical = 3
 margin_right = 142.0
 margin_bottom = 548.0
 size_flags_vertical = 3
-text = "WAVED_NEW_SYNTH"
+text = "WAVED_NEW_SIMPLE"
 
 [node name="NewMenu" type="PopupMenu" parent="Designer"]
 margin_right = 44.0

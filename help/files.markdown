@@ -37,12 +37,25 @@
 		<Clip type="boolean"/>
 	</if>
 	<foreach:Operator>
+		<if test="InstrumentParameters.version > 4">
+			<PreAttackRate type="uint8"/>
+			<PreAttackLevel type="uint8"/>
+		</if>
 		<AttackRate type="uint8"/>
+		<if test="InstrumentParameters.version > 4">
+			<PreDecayRate type="uint8"/>
+			<PreDecayLevel type="uint8"/>
+		</if>
 		<DecayRate type="uint8"/>
 		<SustainRate type="uint8"/>
 		<SustainLevel type="uint8"/>
 		<ReleaseRate type="uint8"/>
-		<RepeatMode type="uint8" enum="OFF|ATTACK|DECAY|SUSTAIN|RELEASE"/>
+		<if test="InstrumentParameters.version < 5">
+			<RepeatMode type="uint8" enum="OFF|ATTACK|DECAY|SUSTAIN|RELEASE"/>
+		</if>
+		<if test="InstrumentParameters.version > 4">
+			<RepeatMode type="uint8" enum="OFF|PRE_ATTACK|ATTACK|PRE_DECAY|DECAY|SUSTAIN|RELEASE"/>
+		</if>
 		<Multiplier type="uint8"/>
 		<Divider type="uint8"/>
 		<Detune type="int16"/>

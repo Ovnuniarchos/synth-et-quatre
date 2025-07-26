@@ -109,8 +109,24 @@ void FmSynth::set_velocity(int voice,int vel){
 	voices[voice%MAX_VOICES].set_velocity(vel);
 }
 
+void FmSynth::set_pre_attack_rate(int voice,int op_mask,int rate){
+	voices[voice%MAX_VOICES].set_pre_attack_rate(op_mask,rate);
+}
+
+void FmSynth::set_pre_attack_level(int voice,int op_mask,int level){
+	voices[voice%MAX_VOICES].set_pre_attack_level(op_mask,level);
+}
+
 void FmSynth::set_attack_rate(int voice,int op_mask,int rate){
 	voices[voice%MAX_VOICES].set_attack_rate(op_mask,rate);
+}
+
+void FmSynth::set_pre_decay_rate(int voice,int op_mask,int rate){
+	voices[voice%MAX_VOICES].set_pre_decay_rate(op_mask,rate);
+}
+
+void FmSynth::set_pre_decay_level(int voice,int op_mask,int level){
+	voices[voice%MAX_VOICES].set_pre_decay_level(op_mask,level);
 }
 
 void FmSynth::set_decay_rate(int voice,int op_mask,int rate){

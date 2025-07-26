@@ -65,8 +65,16 @@ var velocity_sent=null
 var panning_dirty:bool=true
 var panning_sent:int=0
 var channel_invert_sent:int=0
+var pre_attack_dirty:Array=[true,true,true,true]
+var pre_attack_values:Array=[0,0,0,0]
+var pre_attack_level_dirty:Array=[true,true,true,true]
+var pre_attack_level_values:Array=[0,0,0,0]
 var attack_dirty:Array=[true,true,true,true]
 var attack_values:Array=[0,0,0,0]
+var pre_decay_dirty:Array=[true,true,true,true]
+var pre_decay_values:Array=[0,0,0,0]
+var pre_decay_level_dirty:Array=[true,true,true,true]
+var pre_decay_level_values:Array=[0,0,0,0]
 var decay_dirty:Array=[true,true,true,true]
 var decay_values:Array=[0,0,0,0]
 var suslev_dirty:Array=[true,true,true,true]
@@ -155,7 +163,11 @@ func reset()->void:
 	multiplier_dirty=[false,false,false,false]
 	divider_dirty=[false,false,false,false]
 	detune_dirty=[false,false,false,false]
+	pre_attack_dirty=[false,false,false,false]
+	pre_attack_level_dirty=[false,false,false,false]
 	attack_dirty=[false,false,false,false]
+	pre_decay_dirty=[false,false,false,false]
+	pre_decay_level_dirty=[false,false,false,false]
 	decay_dirty=[false,false,false,false]
 	suslev_dirty=[false,false,false,false]
 	susrate_dirty=[false,false,false,false]
@@ -280,8 +292,16 @@ func process_tick_0(note:Array,song:Song,num_fxs:int)->void:
 				arpeggio=song.get_arp(fx_vals[fx_cmd])
 			elif fx_cmd==CONSTS.FX_ARP_SPEED:
 				arpeggio_speed=fx_val[fx_cmd]
+			elif fx_cmd==CONSTS.FX_PAR_SET:
+				set_opmasked(fx_val,pre_attacks,pre_attack_dirty,fx_opm)
+			elif fx_cmd==CONSTS.FX_PAL_SET:
+				set_opmasked(fx_val,pre_attack_levels,pre_attack_level_dirty,fx_opm)
 			elif fx_cmd==CONSTS.FX_ATK_SET:
 				set_opmasked(fx_val,attacks,attack_dirty,fx_opm)
+			elif fx_cmd==CONSTS.FX_PDR_SET:
+				set_opmasked(fx_val,pre_decays,pre_decay_dirty,fx_opm)
+			elif fx_cmd==CONSTS.FX_PDL_SET:
+				set_opmasked(fx_val,pre_decay_levels,pre_decay_level_dirty,fx_opm)
 			elif fx_cmd==CONSTS.FX_DEC_SET:
 				set_opmasked(fx_val,decays,decay_dirty,fx_opm)
 			elif fx_cmd==CONSTS.FX_SUL_SET:
@@ -427,8 +447,16 @@ func apply_macros()->void:
 	apply_op_macro(duty_macros,duty_cycles,duty_values,duty_cycle_dirty)
 	# Op Wave
 	apply_op_macro(wave_macros,waveforms,wave_values,wave_dirty)
+	# Op Pre Attack
+	apply_op_macro(pre_attack_macros,pre_attacks,pre_attack_values,pre_attack_dirty)
+	# Op Pre Attack Level
+	apply_op_macro(pre_attack_level_macros,pre_attack_levels,pre_attack_values,pre_attack_level_dirty)
 	# Op Attack
 	apply_op_macro(attack_macros,attacks,attack_values,attack_dirty)
+	# Op Pre Decay
+	apply_op_macro(pre_decay_macros,pre_decays,pre_decay_values,pre_decay_dirty)
+	# Op Pre Decay Level
+	apply_op_macro(pre_decay_level_macros,pre_decay_levels,pre_decay_values,pre_decay_level_dirty)
 	# Op Decay
 	apply_op_macro(decay_macros,decays,decay_values,decay_dirty)
 	# Op SusLevel
@@ -557,8 +585,16 @@ func commit(channel:int,cmds:Array,ptr:int)->int:
 		ptr=commit_opmasked_short(channel,cmds,ptr,CONSTS.CMD_DETMODE,detune_mode_dirty,detune_mode_values)
 	if true in detune_dirty:
 		ptr=commit_opmasked_long(channel,cmds,ptr,CONSTS.CMD_DET,detune_dirty,detune_values)
+	if true in pre_attack_dirty:
+		ptr=commit_opmasked_short(channel,cmds,ptr,CONSTS.CMD_PAR,pre_attack_dirty,pre_attack_values)
+	if true in pre_attack_level_dirty:
+		ptr=commit_opmasked_short(channel,cmds,ptr,CONSTS.CMD_PAL,pre_attack_level_dirty,pre_attack_level_values)
 	if true in attack_dirty:
 		ptr=commit_opmasked_short(channel,cmds,ptr,CONSTS.CMD_AR,attack_dirty,attack_values)
+	if true in pre_decay_dirty:
+		ptr=commit_opmasked_short(channel,cmds,ptr,CONSTS.CMD_PDR,pre_decay_dirty,pre_decay_values)
+	if true in pre_decay_level_dirty:
+		ptr=commit_opmasked_short(channel,cmds,ptr,CONSTS.CMD_PDL,pre_decay_level_dirty,pre_decay_level_values)
 	if true in decay_dirty:
 		ptr=commit_opmasked_short(channel,cmds,ptr,CONSTS.CMD_DR,decay_dirty,decay_values)
 	if true in suslev_dirty:
@@ -759,7 +795,11 @@ func set_instrument(inst:FmInstrument)->void:
 		divider_dirty[i]=true
 		detune_dirty[i]=true
 		detune_mode_dirty[i]=true
+		pre_attack_dirty[i]=true
+		pre_attack_level_dirty[i]=true
 		attack_dirty[i]=true
+		pre_decay_dirty[i]=true
+		pre_decay_level_dirty[i]=true
 		decay_dirty[i]=true
 		suslev_dirty[i]=true
 		susrate_dirty[i]=true

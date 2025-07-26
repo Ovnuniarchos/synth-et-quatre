@@ -43,8 +43,12 @@ public:
 	void shift_phase(int op_mask,FixedPoint delta);
 
 	void set_velocity(int vel);
+	void set_pre_attack_rate(int op_mask,int rate);
+	void set_pre_attack_level(int op_mask,int level);
 	void set_attack_rate(int op_mask,int rate);
 	void set_decay_rate(int op_mask,int rate);
+	void set_pre_decay_rate(int op_mask,int rate);
+	void set_pre_decay_level(int op_mask,int level);
 	void set_sustain_level(int op_mask,int level);
 	void set_sustain_rate(int op_mask,int rate);
 	void set_release_rate(int op_mask,int rate);

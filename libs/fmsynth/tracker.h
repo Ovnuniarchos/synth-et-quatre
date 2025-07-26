@@ -32,7 +32,11 @@ private:
 		CMD_DET_M,
 		CMD_DUC,
 		CMD_WAVE,
+		CMD_PAR,
+		CMD_PAL,
 		CMD_AR,
+		CMD_PDR,
+		CMD_PDL,
 		CMD_DR,
 		CMD_SL,
 		CMD_SR,
@@ -82,7 +86,11 @@ public:
 	void define_sample(int wave_num,int loop_start,int loop_end,float rec_freq,float sam_freq,Array sample);
 
 	void set_velocity(int voice,int vel);
+	void set_pre_attack_rate(int voice,int op_mask,int rate);
+	void set_pre_attack_level(int voice,int op_mask,int level);
 	void set_attack_rate(int voice,int op_mask,int rate);
+	void set_pre_decay_rate(int voice,int op_mask,int rate);
+	void set_pre_decay_level(int voice,int op_mask,int level);
 	void set_decay_rate(int voice,int op_mask,int rate);
 	void set_sustain_level(int voice,int op_mask,int level);
 	void set_sustain_rate(int voice,int op_mask,int rate);

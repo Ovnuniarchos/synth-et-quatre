@@ -1,6 +1,7 @@
 extends FmInstrumentIO
 class_name FmInstrumentReader
 
+const REPEAT:=FmInstrument.REPEAT
 
 func read(path:String)->FileResult:
 	if not GLOBALS.song.can_add_instrument():
@@ -114,12 +115,21 @@ func deserialize(inf:ChunkedFile,header:Dictionary)->FileResult:
 	else:
 		ins.clip=0
 	for i in 4:
+		if version>4:
+			ins.pre_attacks[i]=inf.get_8()
+			ins.pre_attack_levels[i]=inf.get_8()
 		ins.attacks[i]=inf.get_8()
+		if version>4:
+			ins.pre_decays[i]=inf.get_8()
+			ins.pre_decay_levels[i]=inf.get_8()
 		ins.decays[i]=inf.get_8()
 		ins.sustains[i]=inf.get_8()
 		ins.sustain_levels[i]=inf.get_8()
 		ins.releases[i]=inf.get_8()
-		ins.repeats[i]=inf.get_8()
+		if version>4:
+			ins.repeats[i]=inf.get_8()
+		else:
+			ins.repeats[i]=[REPEAT.OFF,REPEAT.ATTACK,REPEAT.DECAY,REPEAT.SUSTAIN,REPEAT.RELEASE][inf.get_8()%5]
 		ins.multipliers[i]=inf.get_8()+(1 if version>3 else 0)
 		ins.dividers[i]=inf.get_8()
 		ins.detunes[i]=inf.get_signed_16()

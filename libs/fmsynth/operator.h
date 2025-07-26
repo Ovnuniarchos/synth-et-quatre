@@ -8,7 +8,7 @@ private:
 	const int EG_DIVIDER=32;
 	const FixedPoint ENVELOPE_RATE_1S=FP_ONE*EG_DIVIDER*256;
 
-	enum ADSR{OFF,ATTACK,DECAY,SUSTAIN,RELEASE,SUSTAIN_UP};
+	enum ADSR{OFF,PRE_ATTACK,ATTACK,PRE_DECAY,DECAY,SUSTAIN,RELEASE,SUSTAIN_UP};
 	enum DET_MODE{NORMAL,FIXED,DELTA};
 
 	float mix_rate=DEFAULT_MIX_RATE;
@@ -33,17 +33,27 @@ private:
 	bool on=false;
 	ADSR eg_phase=OFF;
 	FixedPoint eg_vol=0L;
+	FixedPoint eg_tick=0L;
+	FixedPoint eg_delta_tick=0L;
 	int eg_counter=EG_DIVIDER;
+	int pre_attack_rate=0;
+	int pre_attack_level=0;
+	FixedPoint eg_patk_rate=0L;
+	FixedPoint eg_patk_level=0L; // Doubles as hold length
 	int attack_rate=240;
-	FixedPoint eg_ar=0L;
+	FixedPoint eg_atk_rate=0L;
+	int pre_decay_rate=0;
+	int pre_decay_level=0;
+	FixedPoint eg_pdec_rate=0L;
+	FixedPoint eg_pdec_level=0L; // Doubles as hold length
 	int decay_rate=192;
-	FixedPoint eg_dr=0L;
+	FixedPoint eg_dec_rate=0L;
 	int sustain_level=192;
-	FixedPoint eg_sl=0L;
+	FixedPoint eg_sus_level=0L;
 	int sustain_rate=16;
-	FixedPoint eg_sr=0L;
+	FixedPoint eg_sus_rate=0L;
 	int release_rate=64;
-	FixedPoint eg_rr=0L;
+	FixedPoint eg_rel_rate=0L;
 	ADSR eg_repeat=OFF;
 	int key_scale=0;
 
@@ -77,7 +87,11 @@ public:
 	void set_phase(FixedPoint phi);
 	void shift_phase(FixedPoint delta);
 
+	void set_pre_attack_rate(int rate);
+	void set_pre_attack_level(int level);
 	void set_attack_rate(int rate);
+	void set_pre_decay_rate(int rate);
+	void set_pre_decay_level(int level);
 	void set_decay_rate(int rate);
 	void set_sustain_level(int level);
 	void set_sustain_rate(int rate);

@@ -13,44 +13,82 @@ _ALWAYS_INLINE_ void Operator::calculate_envelope(){
 		return;
 	}
 	eg_counter=EG_DIVIDER;
+	// PRE_ATTACK: speed+(endlevel if speed>0 else duration)
+	// PRE_DECAY: speed+(endlevel if speed>0 else duration)
+	// FIXME: Check interactions with eg_repeat
 	switch(eg_phase){
+		case PRE_ATTACK:
+			if(eg_patk_rate>0L){
+				eg_vol+=eg_patk_rate;
+				if(eg_vol>=eg_patk_level){
+					eg_tick=0L;
+					eg_vol=eg_repeat==PRE_ATTACK?0L:eg_patk_level;
+					eg_phase=eg_repeat==PRE_ATTACK?PRE_ATTACK:ATTACK;
+				}
+			}else{
+				eg_tick+=eg_delta_tick;
+				if(eg_tick>=eg_patk_level){
+					eg_tick=0L;
+					eg_vol=eg_repeat==PRE_ATTACK?0L:eg_vol;
+					eg_phase=eg_repeat==PRE_ATTACK?PRE_ATTACK:ATTACK;
+				}
+			}
+			break;
 		case ATTACK:
-			eg_vol+=eg_ar;
+			eg_vol+=eg_atk_rate;
 			if(eg_vol>=FP_ONE){
-				eg_vol=eg_repeat==ATTACK?0L:FP_ONE;
-				eg_phase=eg_repeat==ATTACK?ATTACK:DECAY;
+				eg_vol=eg_repeat==ATTACK?eg_patk_level:FP_ONE;
+				eg_phase=eg_repeat==ATTACK?PRE_ATTACK:PRE_DECAY;
+				eg_tick=0L;
+			}
+			break;
+		case PRE_DECAY:
+			if(eg_pdec_rate>0L){
+				eg_vol-=eg_pdec_rate;
+				if(eg_vol<=eg_pdec_level){
+					eg_tick=0L;
+					eg_vol=eg_repeat==PRE_DECAY?0L:eg_pdec_level;
+					eg_phase=eg_repeat==PRE_DECAY?PRE_ATTACK:DECAY;
+				}
+			}else{
+				eg_tick+=eg_delta_tick;
+				if(eg_tick>=eg_pdec_level){
+					eg_tick=0L;
+					eg_vol=eg_repeat==PRE_DECAY?0L:eg_vol;
+					eg_phase=eg_repeat==PRE_DECAY?PRE_ATTACK:DECAY;
+				}
 			}
 			break;
 		case DECAY:
-			eg_vol-=eg_dr;
-			if(eg_vol<=eg_sl){
-				eg_vol=eg_sl;
-				eg_phase=eg_repeat==DECAY?ATTACK:SUSTAIN;
+			eg_vol-=eg_dec_rate;
+			if(eg_vol<=eg_sus_level){
+				eg_vol=eg_sus_level;
+				eg_phase=eg_repeat==DECAY?PRE_ATTACK:SUSTAIN;
 			}
 			break;
 		case SUSTAIN:
-			eg_vol-=eg_sr;
+			eg_vol-=eg_sus_rate;
 			if(!on){
-				eg_phase=eg_repeat==SUSTAIN?ATTACK:RELEASE;
+				eg_phase=eg_repeat==SUSTAIN?PRE_ATTACK:RELEASE;
 			}else if(eg_vol<=0L){
 				eg_vol=0L;
-				eg_phase=eg_repeat==SUSTAIN?ATTACK:OFF;
+				eg_phase=eg_repeat==SUSTAIN?PRE_ATTACK:OFF;
 			}
 			break;
 		case SUSTAIN_UP:
-			eg_vol+=eg_ar;
+			eg_vol+=eg_atk_rate;
 			if(!on){
-				eg_phase=eg_repeat==SUSTAIN?ATTACK:RELEASE;
-			}else if(eg_vol>=eg_sl){
-				eg_vol=eg_sl;
+				eg_phase=eg_repeat==SUSTAIN?PRE_ATTACK:RELEASE;
+			}else if(eg_vol>=eg_sus_level){
+				eg_vol=eg_sus_level;
 				eg_phase=SUSTAIN;
 			}
 			break;
 		case RELEASE:
-			eg_vol-=eg_rr;
+			eg_vol-=eg_rel_rate;
 			if(eg_vol<=0L){
 				eg_vol=0L;
-				eg_phase=eg_repeat==RELEASE?ATTACK:OFF;
+				eg_phase=eg_repeat==RELEASE?PRE_ATTACK:OFF;
 			}
 			break;
 		default:
@@ -113,6 +151,8 @@ void Operator::set_mix_rate(float m){
 	set_decay_rate(decay_rate);
 	set_sustain_rate(sustain_rate);
 	set_release_rate(release_rate);
+	eg_tick=0L;
+	eg_delta_tick=(FP_ONE*EG_DIVIDER)/mix_rate;
 }
 
 void Operator::set_frequency(int cents,float _frequency){
@@ -142,6 +182,7 @@ void Operator::set_detune_mode(int mode){
 	set_delta();
 }
 
+//
 
 void Operator::set_wave(int wave_num){
 	wave_ix=wave_num;
@@ -160,22 +201,51 @@ void Operator::shift_phase(FixedPoint delta){
 	phi+=delta;
 }
 
+//
+
+void Operator::set_pre_attack_rate(int rate){
+	if(rate>0){
+		eg_patk_rate=get_rate(rate,pre_attack_rate);
+	}else{
+		pre_attack_rate=0;
+		eg_patk_rate=0L;
+	}
+}
+
+void Operator::set_pre_attack_level(int level){
+	pre_attack_level=clamp(level,0,255);
+	eg_patk_level=(FP_ONE*level)/255;
+}
 
 void Operator::set_attack_rate(int rate){
-	eg_ar=get_rate(rate,attack_rate);
+	eg_atk_rate=get_rate(rate,attack_rate);
+}
+
+void Operator::set_pre_decay_rate(int rate){
+	if(rate>0){
+		eg_pdec_rate=get_rate(rate,pre_decay_rate);
+	}else{
+		pre_decay_rate=0;
+		eg_pdec_rate=0L;
+	}
+}
+
+void Operator::set_pre_decay_level(int level){
+	pre_decay_level=clamp(level,0,255);
+	eg_pdec_level=(FP_ONE*level)/255;
 }
 
 void Operator::set_decay_rate(int rate){
-	eg_dr=get_rate(rate,decay_rate);
+	eg_dec_rate=get_rate(rate,decay_rate);
 }
 
 void Operator::set_sustain_level(int level){
 	sustain_level=clamp(level,0,255);
-	eg_sl=(FP_ONE*level)/255;
+	eg_sus_level=(FP_ONE*level)/255;
 	if(eg_phase==SUSTAIN || eg_phase==SUSTAIN_UP){
-		if(eg_vol>eg_sl){
+		if(eg_vol>eg_sus_level){
 			eg_phase=DECAY;
-		}else if(eg_vol<eg_sl){
+		}else if(eg_vol<eg_sus_level){
 			eg_phase=SUSTAIN_UP;
 		}
 	}
@@ -183,19 +253,19 @@ void Operator::set_sustain_level(int level){
 
 void Operator::set_sustain_rate(int rate){
 	if(rate>0){
-		eg_sr=get_rate(rate,sustain_rate);
+		eg_sus_rate=get_rate(rate,sustain_rate);
 	}else{
 		sustain_rate=0;
-		eg_sr=0L;
+		eg_sus_rate=0L;
 	}
 }
 
 void Operator::set_release_rate(int rate){
-	eg_rr=get_rate(rate,release_rate);
+	eg_rel_rate=get_rate(rate,release_rate);
 }
 
 void Operator::set_repeat(int phase){
-	eg_repeat=(ADSR)clamp(phase,(int)OFF,(int)ATTACK);
+	eg_repeat=(ADSR)clamp(phase,(int)OFF,(int)PRE_ATTACK);
 }
 
 void Operator::set_ksr(int ksr){
@@ -206,6 +276,7 @@ void Operator::set_ksr(int ksr){
 	set_release_rate(release_rate);
 }
 
+//
 
 void Operator::set_am_intensity(int intensity){
 	intensity=clamp(intensity,0,255)+(intensity<=0?0:1);
@@ -219,6 +290,7 @@ void Operator::set_fm_intensity(int millis){
 	fm_min=-((pow(2.0,-fm)*FP_ONE)-FP_ONE);
 }
 
+//
 
 void Operator::set_enable(bool enable){
 	enabled=enable;
@@ -228,26 +300,36 @@ void Operator::key_on(bool legato){
 	enabled=true;
 	if(eg_phase==OFF){
 		phi=0L;
-		eg_counter=EG_DIVIDER;
-		eg_phase=ATTACK;
+		eg_counter=0L;
+		eg_phase=PRE_ATTACK;
+		eg_tick=0;
 		on=true;
 	}
 	if(!legato){
 		if(is_valid_wave(wave_ix) && waves[wave_ix]->resets_on_keyon()) {
 			phi=0L;
 		}
-		eg_phase=ATTACK;
+		eg_phase=PRE_ATTACK;
+		eg_tick=0;
 		on=true;
 	}
 	set_attack_rate(attack_rate);
+	set_pre_attack_rate(pre_attack_rate);
+	set_pre_attack_level(pre_attack_level);
 	set_decay_rate(decay_rate);
 	set_sustain_rate(sustain_rate);
 	set_release_rate(release_rate);
 }
 
 void Operator::key_off(){
-	eg_phase=eg_repeat==SUSTAIN?ATTACK:RELEASE;
-	on=eg_phase==ATTACK;
+	if(eg_repeat==SUSTAIN){
+		eg_phase=PRE_ATTACK;
+		on=true;
+		eg_tick=0;
+	}else{
+		eg_phase=RELEASE;
+		on=false;
+	}
 }
 
 void Operator::stop(){

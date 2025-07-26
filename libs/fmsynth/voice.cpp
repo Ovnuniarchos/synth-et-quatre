@@ -101,9 +101,33 @@ void Voice::set_velocity(int vel){
 	new_volume=clamp(vel,0,255)+(vel==0?0:1);
 }
 
+void Voice::set_pre_attack_rate(int op_mask,int rate){
+	for(int i=0;i<MAX_OPS;i++,op_mask>>=1){
+		if(op_mask&1) ops[i].set_pre_attack_rate(rate);
+	}
+}
+
+void Voice::set_pre_attack_level(int op_mask,int level){
+	for(int i=0;i<MAX_OPS;i++,op_mask>>=1){
+		if(op_mask&1) ops[i].set_pre_attack_level(level);
+	}
+}
+
 void Voice::set_attack_rate(int op_mask,int rate){
 	for(int i=0;i<MAX_OPS;i++,op_mask>>=1){
 		if(op_mask&1) ops[i].set_attack_rate(rate);
+	}
+}
+
+void Voice::set_pre_decay_rate(int op_mask,int rate){
+	for(int i=0;i<MAX_OPS;i++,op_mask>>=1){
+		if(op_mask&1) ops[i].set_pre_decay_rate(rate);
+	}
+}
+
+void Voice::set_pre_decay_level(int op_mask,int level){
+	for(int i=0;i<MAX_OPS;i++,op_mask>>=1){
+		if(op_mask&1) ops[i].set_pre_decay_level(level);
 	}
 }
 

@@ -32,7 +32,11 @@ void SynthTracker::_register_methods(){
 	register_method("define_sample",&SynthTracker::define_sample);
 
 	register_method("set_velocity",&SynthTracker::set_velocity);
+	register_method("set_pre_attack_rate",&SynthTracker::set_pre_attack_rate);
+	register_method("set_pre_attack_level",&SynthTracker::set_pre_attack_level);
 	register_method("set_attack_rate",&SynthTracker::set_attack_rate);
+	register_method("set_pre_decay_rate",&SynthTracker::set_pre_decay_rate);
+	register_method("set_pre_decay_level",&SynthTracker::set_pre_decay_level);
 	register_method("set_decay_rate",&SynthTracker::set_decay_rate);
 	register_method("set_sustain_level",&SynthTracker::set_sustain_level);
 	register_method("set_sustain_rate",&SynthTracker::set_sustain_rate);
@@ -94,7 +98,11 @@ void SynthTracker::_init(){
 #define TRACE_DETUNE_MODE "DTM[%d %02x %d] "
 #define TRACE_DUTY "DUC[%d %02x %06x] "
 #define TRACE_WAVE "WAV[%d %02x %d] "
+#define TRACE_PATK_RATE "PAR[%d %02x %d] "
+#define TRACE_PATK_LEVEL "PAL[%d %02x %d] "
 #define TRACE_ATTACK "ATR[%d %02x %d] "
+#define TRACE_PDEC_RATE "PDR[%d %02x %d] "
+#define TRACE_PDEC_LEVEL "PDL[%d %02x %d] "
 #define TRACE_DECAY "DER[%d %02x %d] "
 #define TRACE_SUST_LEVEL "SUL[%d %02x %d] "
 #define TRACE_SUST_RATE "SUR[%d %02x %d] "
@@ -211,9 +219,25 @@ Array SynthTracker::generate(int size,float volume,Array cmds){
 				case CMD_VEL:
 					TRACE(TRACE_VELOCITY,voice,op_mask);
 					synth.set_velocity(voice,op_mask);
+				case CMD_PAR:
+					TRACE(TRACE_PATK_RATE,voice,op_mask,data_8);
+					synth.set_pre_attack_rate(voice,op_mask,data_8);
+					break;
+				case CMD_PAL:
+					TRACE(TRACE_PATK_LEVEL,voice,op_mask,data_8);
+					synth.set_pre_attack_level(voice,op_mask,data_8);
+					break;
 				case CMD_AR:
 					TRACE(TRACE_ATTACK,voice,op_mask,data_8);
 					synth.set_attack_rate(voice,op_mask,data_8);
+					break;
+				case CMD_PDR:
+					TRACE(TRACE_PDEC_RATE,voice,op_mask,data_8);
+					synth.set_pre_decay_rate(voice,op_mask,data_8);
+					break;
+				case CMD_PDL:
+					TRACE(TRACE_PDEC_LEVEL,voice,op_mask,data_8);
+					synth.set_pre_decay_level(voice,op_mask,data_8);
 					break;
 				case CMD_DR:
 					TRACE(TRACE_DECAY,voice,op_mask,data_8);
@@ -521,8 +545,24 @@ void SynthTracker::set_velocity(int voice,int vel){
 	synth.set_velocity(voice,vel);
 }
 
+void SynthTracker::set_pre_attack_rate(int voice,int op_mask,int rate){
+	synth.set_pre_attack_rate(voice,op_mask,rate);
+}
+
+void SynthTracker::set_pre_attack_level(int voice,int op_mask,int level){
+	synth.set_pre_attack_rate(voice,op_mask,level);
+}
+
 void SynthTracker::set_attack_rate(int voice,int op_mask,int rate){
 	synth.set_attack_rate(voice,op_mask,rate);
+}
+
+void SynthTracker::set_pre_decay_rate(int voice,int op_mask,int rate){
+	synth.set_pre_decay_rate(voice,op_mask,rate);
+}
+
+void SynthTracker::set_pre_decay_level(int voice,int op_mask,int level){
+	synth.set_pre_decay_rate(voice,op_mask,level);
 }
 
 void SynthTracker::set_decay_rate(int voice,int op_mask,int rate){

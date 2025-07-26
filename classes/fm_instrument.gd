@@ -2,7 +2,7 @@ extends Instrument
 class_name FmInstrument
 
 enum WAVE{RECTANGLE,SAW,TRIANGLE,NOISE,CUSTOM}
-enum REPEAT{OFF,RELEASE,SUSTAIN,DECAY,ATTACK}
+enum REPEAT{OFF,PRE_ATTACK,ATTACK,PRE_DECAY,DECAY,SUSTAIN,RELEASE}
 enum {DETMODE_NORMAL,DETMODE_FIXED,DETMODE_DELTA}
 const TYPE:String="FmInstrument"
 const MLIMITS:Dictionary=MacroIO.MACRO_LIMITS
@@ -10,7 +10,11 @@ const MLIMITS:Dictionary=MacroIO.MACRO_LIMITS
 
 var op_mask:int=1
 var clip:bool=false
+var pre_attacks:Array=[0,0,0,0]
+var pre_attack_levels:Array=[0,0,0,0]
 var attacks:Array=[255,255,255,255]
+var pre_decays:Array=[0,0,0,0]
+var pre_decay_levels:Array=[0,0,0,0]
 var decays:Array=[255,255,255,255]
 var sustains:Array=[0,0,0,0]
 var sustain_levels:Array=[255,255,255,255]
@@ -56,10 +60,26 @@ var wave_macros:Array=[ParamMacro.new(MLIMITS[MacroIO.MACRO_WAVE],ParamMacro.PMM
 	ParamMacro.new(MLIMITS[MacroIO.MACRO_WAVE],ParamMacro.PMM_ABSOLUTE),
 	ParamMacro.new(MLIMITS[MacroIO.MACRO_WAVE],ParamMacro.PMM_ABSOLUTE),
 	ParamMacro.new(MLIMITS[MacroIO.MACRO_WAVE],ParamMacro.PMM_ABSOLUTE)]
+var pre_attack_macros:Array=[ParamMacro.new(MLIMITS[MacroIO.MACRO_PRE_ATTACK]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_PRE_ATTACK]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_PRE_ATTACK]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_PRE_ATTACK])]
+var pre_attack_level_macros:Array=[ParamMacro.new(MLIMITS[MacroIO.MACRO_PRE_ATTACK_LEVEL]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_PRE_ATTACK_LEVEL]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_PRE_ATTACK_LEVEL]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_PRE_ATTACK_LEVEL])]
 var attack_macros:Array=[ParamMacro.new(MLIMITS[MacroIO.MACRO_ATTACK]),
 	ParamMacro.new(MLIMITS[MacroIO.MACRO_ATTACK]),
 	ParamMacro.new(MLIMITS[MacroIO.MACRO_ATTACK]),
 	ParamMacro.new(MLIMITS[MacroIO.MACRO_ATTACK])]
+var pre_decay_macros:Array=[ParamMacro.new(MLIMITS[MacroIO.MACRO_PRE_DECAY]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_PRE_DECAY]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_PRE_DECAY]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_PRE_DECAY])]
+var pre_decay_level_macros:Array=[ParamMacro.new(MLIMITS[MacroIO.MACRO_PRE_DECAY_LEVEL]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_PRE_DECAY_LEVEL]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_PRE_DECAY_LEVEL]),
+	ParamMacro.new(MLIMITS[MacroIO.MACRO_PRE_DECAY_LEVEL])]
 var decay_macros:Array=[ParamMacro.new(MLIMITS[MacroIO.MACRO_DECAY]),
 	ParamMacro.new(MLIMITS[MacroIO.MACRO_DECAY]),
 	ParamMacro.new(MLIMITS[MacroIO.MACRO_DECAY]),
@@ -156,7 +176,11 @@ func duplicate()->Instrument:
 	var ni:FmInstrument=.duplicate() as FmInstrument
 	ni.op_mask=op_mask
 	ni.clip=clip
+	ni.pre_attacks=pre_attacks.duplicate()
+	ni.pre_attack_levels=pre_attack_levels.duplicate()
 	ni.attacks=attacks.duplicate()
+	ni.pre_decays=pre_decays.duplicate()
+	ni.pre_decay_levels=pre_decay_levels.duplicate()
 	ni.decays=decays.duplicate()
 	ni.sustains=sustains.duplicate()
 	ni.sustain_levels=sustain_levels.duplicate()
@@ -208,7 +232,11 @@ func copy(from:Instrument,full:bool=false)->void:
 		.copy(from,full)
 		op_mask=from.op_mask
 		clip=from.clip
+		pre_attacks=from.pre_attacks.duplicate()
+		pre_attack_levels=from.pre_attack_level.duplicate()
 		attacks=from.attacks.duplicate()
+		pre_decays=from.pre_decays.duplicate()
+		pre_decay_levels=from.pre_decay_level.duplicate()
 		decays=from.decays.duplicate()
 		sustains=from.sustains.duplicate()
 		sustain_levels=from.sustain_levels.duplicate()
@@ -263,6 +291,8 @@ func delete_waveform(w_ix:int)->void:
 				waveforms[i]=WAVE.TRIANGLE
 
 func copy_op(from:int,to:int)->void:
+	pre_attacks[to]=pre_attacks[from]
+	pre_attack_levels[to]=pre_attack_levels[from]
 	attacks[to]=attacks[from]
 	decays[to]=decays[from]
 	sustains[to]=sustains[from]
@@ -295,7 +325,11 @@ func macros_as_dict()->Dictionary:
 		MacroIO.MACRO_CLIP:clip_macro,
 		MacroIO.MACRO_DUTY_CYCLE:duty_macros,
 		MacroIO.MACRO_WAVE:wave_macros,
+		MacroIO.MACRO_PRE_ATTACK:pre_attack_macros,
+		MacroIO.MACRO_PRE_ATTACK_LEVEL:pre_attack_level_macros,
 		MacroIO.MACRO_ATTACK:attack_macros,
+		MacroIO.MACRO_PRE_DECAY:pre_decay_macros,
+		MacroIO.MACRO_PRE_DECAY_LEVEL:pre_decay_level_macros,
 		MacroIO.MACRO_DECAY:decay_macros,
 		MacroIO.MACRO_SUSTAIN_LEVEL:sus_level_macros,
 		MacroIO.MACRO_SUSTAIN_RATE:sus_rate_macros,
@@ -346,8 +380,16 @@ func set_macro(id:String,op:int,macro:ParamMacro)->bool:
 			duty_macros[op]=macro
 		MacroIO.MACRO_WAVE:
 			wave_macros[op]=macro
+		MacroIO.MACRO_PRE_ATTACK:
+			pre_attack_macros[op]=macro
+		MacroIO.MACRO_PRE_ATTACK_LEVEL:
+			pre_attack_level_macros[op]=macro
 		MacroIO.MACRO_ATTACK:
 			attack_macros[op]=macro
+		MacroIO.MACRO_PRE_DECAY:
+			pre_decay_macros[op]=macro
+		MacroIO.MACRO_PRE_DECAY_LEVEL:
+			pre_decay_level_macros[op]=macro
 		MacroIO.MACRO_DECAY:
 			decay_macros[op]=macro
 		MacroIO.MACRO_SUSTAIN_LEVEL:

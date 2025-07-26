@@ -45,7 +45,11 @@ func serialize(out:ChunkedFile,inst:FmInstrument)->FileResult:
 	out.store_8(inst.op_mask)
 	out.store_8(int(inst.clip))
 	for i in 4:
+		out.store_8(inst.pre_attacks[i])
+		out.store_8(inst.pre_attack_levels[i])
 		out.store_8(inst.attacks[i])
+		out.store_8(inst.pre_decays[i])
+		out.store_8(inst.pre_decay_levels[i])
 		out.store_8(inst.decays[i])
 		out.store_8(inst.sustains[i])
 		out.store_8(inst.sustain_levels[i])

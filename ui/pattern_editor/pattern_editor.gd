@@ -656,7 +656,7 @@ func calculate_velocity(base:int,vel:int,vol:int)->int:
 
 func put_inverter(val)->void:
 	song.set_note(curr_order,curr_channel,curr_row,curr_column,val)
-	set_inverter(curr_row,COLS[curr_column],val)
+	set_inverter(curr_row,COLS[curr_column]+channel_col0[curr_channel],val)
 	if CONFIG.get_value(CONFIG.EDIT_HORIZ_FX):
 		set_column(curr_column+1)
 	else:

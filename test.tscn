@@ -5,8 +5,8 @@ script/source = "extends Node
 
 \"\"\"
 FIXME
+	Button HoverPressed style
 TODO:
-	New envelope generator
 	Reset per channel parameters (as a command|button)
 	MIDI input
 		Flag?: MIDI Pitch bend

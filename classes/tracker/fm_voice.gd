@@ -549,7 +549,7 @@ func get_fx_val(v,note,cmd:int,cmd_col:int)->int:
 	elif cmd==CONSTS.FX_KS_SET:
 		fx_vals[cmd]=clamp(v,0,7)
 	elif cmd==CONSTS.FX_RPM_SET:
-		fx_vals[cmd]=clamp(v,0,4)
+		fx_vals[cmd]=clamp(v,0,6)
 	else:
 		fx_vals[cmd]=v
 	fx_apply[cmd_col]=true

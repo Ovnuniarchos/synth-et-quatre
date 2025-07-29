@@ -317,11 +317,47 @@ msgstr "Onda"
 msgid "FMED_ENVELOPE_TITLE"
 msgstr "Envolvente"
 
+msgid "FMED_PATK_RATE"
+msgstr "PAT"
+
+msgid "FMED_PATK_RATE_TTIP"
+msgstr "Velocidad de preataque"
+
+msgid "FMED_PATK_LEVEL"
+msgstr "PAL"
+
+msgid "FMED_PATK_LEVEL_TTIP"
+msgstr "Nivel final del preataque"
+
+msgid "FMED_PATK_DELAY"
+msgstr "PAD"
+
+msgid "FMED_PATK_DELAY_TTIP"
+msgstr "Retraso de preataque"
+
 msgid "FMED_ATTACK"
 msgstr "ATR"
 
 msgid "FMED_ATTACK_TTIP"
 msgstr "Velocidad de ataque"
+
+msgid "FMED_PDEC_RATE"
+msgstr "PDR"
+
+msgid "FMED_PDEC_RATE_TTIP"
+msgstr "Velocidad de predecaimiento"
+
+msgid "FMED_PDEC_LEVEL"
+msgstr "PDL"
+
+msgid "FMED_PDEC_LEVEL_TTIP"
+msgstr "Nivel final del predecaimiento"
+
+msgid "FMED_PDEC_DELAY"
+msgstr "PDD"
+
+msgid "FMED_PDEC_DELAY_TTIP"
+msgstr "Retraso de predecaimiento"
 
 msgid "FMED_DECAY"
 msgstr "DER"

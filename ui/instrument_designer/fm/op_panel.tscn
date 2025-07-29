@@ -16,7 +16,7 @@ script = ExtResource( 3 )
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 1017.0
-margin_bottom = 383.0
+margin_bottom = 419.0
 size_flags_vertical = 0
 
 [node name="Switches" type="HBoxContainer" parent="Params"]
@@ -141,21 +141,73 @@ text = "FMED_ENVELOPE_TITLE"
 [node name="ADSR" type="GridContainer" parent="Params"]
 margin_top = 124.0
 margin_right = 1010.0
-margin_bottom = 216.0
+margin_bottom = 252.0
 custom_constants/hseparation = 2
 columns = 5
 
-[node name="ARLabel" type="Label" parent="Params/ADSR" groups=["Label"]]
+[node name="PARLabel" type="Label" parent="Params/ADSR" groups=["Label"]]
 margin_right = 139.0
 margin_bottom = 14.0
+hint_tooltip = "FMED_PATK_RATE_TTIP"
+mouse_filter = 1
+text = "FMED_PATK_RATE"
+
+[node name="PARSlider" type="ProgressBar" parent="Params/ADSR"]
+margin_left = 141.0
+margin_right = 498.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 36, 14 )
+size_flags_horizontal = 7
+size_flags_vertical = 4
+max_value = 255.0
+step = 1.0
+percent_visible = false
+script = ExtResource( 5 )
+big_step = 4.0
+huge_step = 16.0
+
+[node name="Sep7" type="ReferenceRect" parent="Params/ADSR"]
+margin_left = 500.0
+margin_right = 516.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 16, 0 )
+size_flags_vertical = 7
+
+[node name="PALLabel" type="Label" parent="Params/ADSR" groups=["Label"]]
+margin_left = 518.0
+margin_right = 652.0
+margin_bottom = 14.0
+hint_tooltip = "FMED_PATK_LEVEL_TTIP"
+mouse_filter = 1
+text = "FMED_PATK_LEVEL"
+
+[node name="PALSlider" type="ProgressBar" parent="Params/ADSR"]
+margin_left = 654.0
+margin_right = 1010.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 36, 14 )
+size_flags_horizontal = 7
+size_flags_vertical = 4
+max_value = 255.0
+step = 1.0
+percent_visible = false
+script = ExtResource( 5 )
+big_step = 4.0
+huge_step = 16.0
+
+[node name="ARLabel" type="Label" parent="Params/ADSR" groups=["Label"]]
+margin_top = 18.0
+margin_right = 139.0
+margin_bottom = 32.0
 hint_tooltip = "FMED_ATTACK_TTIP"
 mouse_filter = 1
 text = "FMED_ATTACK"
 
 [node name="ARSlider" type="ProgressBar" parent="Params/ADSR"]
 margin_left = 141.0
+margin_top = 18.0
 margin_right = 498.0
-margin_bottom = 14.0
+margin_bottom = 32.0
 rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 7
 size_flags_vertical = 4
@@ -168,23 +220,81 @@ huge_step = 16.0
 
 [node name="Sep" type="ReferenceRect" parent="Params/ADSR"]
 margin_left = 500.0
+margin_top = 18.0
 margin_right = 516.0
-margin_bottom = 14.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 16, 0 )
+size_flags_vertical = 7
+
+[node name="PDRLabel" type="Label" parent="Params/ADSR" groups=["Label"]]
+margin_left = 518.0
+margin_top = 18.0
+margin_right = 652.0
+margin_bottom = 32.0
+hint_tooltip = "FMED_PDEC_RATE_TTIP"
+mouse_filter = 1
+text = "FMED_PDEC_RATE"
+
+[node name="PDRSlider" type="ProgressBar" parent="Params/ADSR"]
+margin_left = 654.0
+margin_top = 18.0
+margin_right = 1010.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 36, 14 )
+size_flags_horizontal = 7
+size_flags_vertical = 4
+max_value = 255.0
+step = 1.0
+percent_visible = false
+script = ExtResource( 5 )
+big_step = 4.0
+huge_step = 16.0
+
+[node name="PDLLabel" type="Label" parent="Params/ADSR" groups=["Label"]]
+margin_top = 36.0
+margin_right = 139.0
+margin_bottom = 50.0
+hint_tooltip = "FMED_PDEC_LEVEL_TTIP"
+mouse_filter = 1
+text = "FMED_PDEC_LEVEL"
+
+[node name="PDLSlider" type="ProgressBar" parent="Params/ADSR"]
+margin_left = 141.0
+margin_top = 36.0
+margin_right = 498.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 36, 14 )
+size_flags_horizontal = 7
+size_flags_vertical = 4
+max_value = 255.0
+step = 1.0
+percent_visible = false
+script = ExtResource( 5 )
+big_step = 4.0
+huge_step = 16.0
+
+[node name="Sep8" type="ReferenceRect" parent="Params/ADSR"]
+margin_left = 500.0
+margin_top = 36.0
+margin_right = 516.0
+margin_bottom = 50.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
 [node name="DRLabel" type="Label" parent="Params/ADSR" groups=["Label"]]
 margin_left = 518.0
+margin_top = 36.0
 margin_right = 652.0
-margin_bottom = 14.0
+margin_bottom = 50.0
 hint_tooltip = "FMED_DECAY_TTIP"
 mouse_filter = 1
 text = "FMED_DECAY"
 
 [node name="DRSlider" type="ProgressBar" parent="Params/ADSR"]
 margin_left = 654.0
+margin_top = 36.0
 margin_right = 1010.0
-margin_bottom = 14.0
+margin_bottom = 50.0
 rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 7
 size_flags_vertical = 4
@@ -196,18 +306,18 @@ big_step = 4.0
 huge_step = 16.0
 
 [node name="SLLabel" type="Label" parent="Params/ADSR" groups=["Label"]]
-margin_top = 18.0
+margin_top = 54.0
 margin_right = 139.0
-margin_bottom = 32.0
+margin_bottom = 68.0
 hint_tooltip = "FMED_SUSTAIN_LEVEL_TTIP"
 mouse_filter = 1
 text = "FMED_SUSTAIN_LEVEL"
 
 [node name="SLSlider" type="ProgressBar" parent="Params/ADSR"]
 margin_left = 141.0
-margin_top = 18.0
+margin_top = 54.0
 margin_right = 498.0
-margin_bottom = 32.0
+margin_bottom = 68.0
 rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 7
 size_flags_vertical = 4
@@ -220,26 +330,26 @@ huge_step = 16.0
 
 [node name="Sep2" type="ReferenceRect" parent="Params/ADSR"]
 margin_left = 500.0
-margin_top = 18.0
+margin_top = 54.0
 margin_right = 516.0
-margin_bottom = 32.0
+margin_bottom = 68.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
 [node name="SRLabel" type="Label" parent="Params/ADSR" groups=["Label"]]
 margin_left = 518.0
-margin_top = 18.0
+margin_top = 54.0
 margin_right = 652.0
-margin_bottom = 32.0
+margin_bottom = 68.0
 hint_tooltip = "FMED_SUSTAIN_RATE_TTIP"
 mouse_filter = 1
 text = "FMED_SUSTAIN_RATE"
 
 [node name="SRSlider" type="ProgressBar" parent="Params/ADSR"]
 margin_left = 654.0
-margin_top = 18.0
+margin_top = 54.0
 margin_right = 1010.0
-margin_bottom = 32.0
+margin_bottom = 68.0
 rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 7
 size_flags_vertical = 4
@@ -251,18 +361,18 @@ big_step = 4.0
 huge_step = 16.0
 
 [node name="RRLabel" type="Label" parent="Params/ADSR" groups=["Label"]]
-margin_top = 39.0
+margin_top = 75.0
 margin_right = 139.0
-margin_bottom = 53.0
+margin_bottom = 89.0
 hint_tooltip = "FMED_RELEASE_TTIP"
 mouse_filter = 1
 text = "FMED_RELEASE"
 
 [node name="RRSlider" type="ProgressBar" parent="Params/ADSR"]
 margin_left = 141.0
-margin_top = 39.0
+margin_top = 75.0
 margin_right = 498.0
-margin_bottom = 53.0
+margin_bottom = 89.0
 rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 7
 size_flags_vertical = 4
@@ -275,43 +385,43 @@ huge_step = 16.0
 
 [node name="Sep3" type="ReferenceRect" parent="Params/ADSR"]
 margin_left = 500.0
-margin_top = 36.0
+margin_top = 72.0
 margin_right = 516.0
-margin_bottom = 56.0
+margin_bottom = 92.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
 [node name="RPLabel" type="Label" parent="Params/ADSR" groups=["Label"]]
 margin_left = 518.0
-margin_top = 39.0
+margin_top = 75.0
 margin_right = 652.0
-margin_bottom = 53.0
+margin_bottom = 89.0
 hint_tooltip = "FMED_REPEAT_MODE_TTIP"
 mouse_filter = 1
 text = "FMED_REPEAT_MODE"
 
 [node name="Repeat" type="OptionButton" parent="Params/ADSR"]
 margin_left = 654.0
-margin_top = 36.0
+margin_top = 72.0
 margin_right = 1010.0
-margin_bottom = 56.0
+margin_bottom = 92.0
 text = "FMED_RPT_OFF"
-items = [ "FMED_RPT_OFF", null, false, 0, null, "FMED_RPT_ATTACK", null, false, 1, null, "FMED_RPT_DECAY", null, false, 2, null, "FMED_RPT_SUSTAIN", null, false, 3, null, "FMED_RPT_RELEASE", null, false, 4, null ]
+items = [ "FMED_RPT_OFF", null, false, 0, null, "FMED_RPT_PRE_ATTACK", null, false, 1, null, "FMED_RPT_ATTACK", null, false, 2, null, "FMED_RPT_PRE_DECAY", null, false, 3, null, "FMED_RPT_DECAY", null, false, 4, null, "FMED_RPT_SUSTAIN", null, false, 5, null, "FMED_RPT_RELEASE", null, false, 6, null ]
 selected = 0
 
 [node name="AMSLabel" type="Label" parent="Params/ADSR" groups=["Label"]]
-margin_top = 60.0
+margin_top = 96.0
 margin_right = 139.0
-margin_bottom = 74.0
+margin_bottom = 110.0
 hint_tooltip = "FMED_AM_INTENSITY_TTIP"
 mouse_filter = 1
 text = "FMED_AM_INTENSITY"
 
 [node name="AMSSlider" type="ProgressBar" parent="Params/ADSR"]
 margin_left = 141.0
-margin_top = 60.0
+margin_top = 96.0
 margin_right = 498.0
-margin_bottom = 74.0
+margin_bottom = 110.0
 rect_min_size = Vector2( 36, 14 )
 size_flags_horizontal = 7
 size_flags_vertical = 4
@@ -324,41 +434,41 @@ huge_step = 16.0
 
 [node name="Sep4" type="ReferenceRect" parent="Params/ADSR"]
 margin_left = 500.0
-margin_top = 60.0
+margin_top = 96.0
 margin_right = 516.0
-margin_bottom = 74.0
+margin_bottom = 110.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
 [node name="Sep5" type="ReferenceRect" parent="Params/ADSR"]
 margin_left = 518.0
-margin_top = 60.0
+margin_top = 96.0
 margin_right = 652.0
-margin_bottom = 74.0
+margin_bottom = 110.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
 [node name="Sep6" type="ReferenceRect" parent="Params/ADSR"]
 margin_left = 654.0
-margin_top = 60.0
+margin_top = 96.0
 margin_right = 1010.0
-margin_bottom = 74.0
+margin_bottom = 110.0
 rect_min_size = Vector2( 16, 0 )
 size_flags_vertical = 7
 
 [node name="KSRLabel" type="Label" parent="Params/ADSR" groups=["Label"]]
-margin_top = 78.0
+margin_top = 114.0
 margin_right = 139.0
-margin_bottom = 92.0
+margin_bottom = 128.0
 hint_tooltip = "FMED_KEY_SCALING_TTIP"
 mouse_filter = 1
 text = "FMED_KEY_SCALING"
 
 [node name="KSRSlider" type="ProgressBar" parent="Params/ADSR"]
 margin_left = 141.0
-margin_top = 78.0
+margin_top = 114.0
 margin_right = 498.0
-margin_bottom = 92.0
+margin_bottom = 128.0
 rect_min_size = Vector2( 20, 14 )
 size_flags_horizontal = 7
 size_flags_vertical = 4
@@ -370,23 +480,23 @@ big_step = 1.0
 huge_step = 1.0
 
 [node name="ReferenceRect3" type="ReferenceRect" parent="Params"]
-margin_top = 220.0
+margin_top = 256.0
 margin_right = 1010.0
-margin_bottom = 236.0
+margin_bottom = 272.0
 rect_min_size = Vector2( 0, 16 )
 
 [node name="FrequencyTitle" type="Label" parent="Params" groups=["Title"]]
-margin_top = 240.0
+margin_top = 276.0
 margin_right = 156.0
-margin_bottom = 254.0
+margin_bottom = 290.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 text = "FMED_FREQUENCY_TITLE"
 
 [node name="Frequency" type="GridContainer" parent="Params"]
-margin_top = 258.0
+margin_top = 294.0
 margin_right = 1010.0
-margin_bottom = 272.0
+margin_bottom = 308.0
 custom_constants/hseparation = 2
 columns = 5
 
@@ -445,9 +555,9 @@ big_step = 2.0
 huge_step = 4.0
 
 [node name="FreqMods" type="GridContainer" parent="Params"]
-margin_top = 276.0
+margin_top = 312.0
 margin_right = 1010.0
-margin_bottom = 314.0
+margin_bottom = 350.0
 columns = 2
 
 [node name="DETMode" type="Button" parent="Params/FreqMods"]
@@ -497,15 +607,15 @@ percent_visible = false
 script = ExtResource( 5 )
 
 [node name="Sep2" type="ReferenceRect" parent="Params"]
-margin_top = 318.0
+margin_top = 354.0
 margin_right = 1010.0
-margin_bottom = 334.0
+margin_bottom = 370.0
 rect_min_size = Vector2( 0, 16 )
 
 [node name="LFOsTitle" type="Label" parent="Params" groups=["Title"]]
-margin_top = 338.0
+margin_top = 374.0
 margin_right = 74.0
-margin_bottom = 352.0
+margin_bottom = 388.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 custom_constants/shadow_offset_x = 2
@@ -513,9 +623,9 @@ custom_constants/shadow_offset_y = 2
 text = "FMED_LFOS"
 
 [node name="LFOs" type="HBoxContainer" parent="Params"]
-margin_top = 356.0
+margin_top = 392.0
 margin_right = 1010.0
-margin_bottom = 376.0
+margin_bottom = 412.0
 size_flags_horizontal = 3
 
 [node name="AMFLabel" type="Label" parent="Params/LFOs" groups=["Label"]]
@@ -563,7 +673,11 @@ selected = 0
 [connection signal="toggled" from="Params/Switches/Switch" to="." method="_on_Switch_toggled"]
 [connection signal="value_changed" from="Params/Wave/DUCSlider" to="." method="_on_DUCSlider_value_changed"]
 [connection signal="item_selected" from="Params/Wave/WAVButton" to="." method="_on_WAVButton_item_selected"]
+[connection signal="value_changed" from="Params/ADSR/PARSlider" to="." method="_on_PARSlider_value_changed"]
+[connection signal="value_changed" from="Params/ADSR/PALSlider" to="." method="_on_PALSlider_value_changed"]
 [connection signal="value_changed" from="Params/ADSR/ARSlider" to="." method="_on_ARSlider_value_changed"]
+[connection signal="value_changed" from="Params/ADSR/PDRSlider" to="." method="_on_PDRSlider_value_changed"]
+[connection signal="value_changed" from="Params/ADSR/PDLSlider" to="." method="_on_PDLSlider_value_changed"]
 [connection signal="value_changed" from="Params/ADSR/DRSlider" to="." method="_on_DRSlider_value_changed"]
 [connection signal="value_changed" from="Params/ADSR/SLSlider" to="." method="_on_SLSlider_value_changed"]
 [connection signal="value_changed" from="Params/ADSR/SRSlider" to="." method="_on_SRSlider_value_changed"]

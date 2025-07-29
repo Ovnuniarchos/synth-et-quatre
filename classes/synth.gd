@@ -77,7 +77,11 @@ func set_fm_instrument(channel:int,instr:FmInstrument)->void:
 	synth.set_clip(channel,instr.clip)
 	for i in 4:
 		var op_mask:int=1<<i
+		synth.set_pre_attack_rate(channel,op_mask,instr.pre_attacks[i])
+		synth.set_pre_attack_level(channel,op_mask,instr.pre_attack_levels[i])
 		synth.set_attack_rate(channel,op_mask,instr.attacks[i])
+		synth.set_pre_decay_rate(channel,op_mask,instr.pre_decays[i])
+		synth.set_pre_decay_level(channel,op_mask,instr.pre_decay_levels[i])
 		synth.set_decay_rate(channel,op_mask,instr.decays[i])
 		synth.set_sustain_level(channel,op_mask,instr.sustain_levels[i])
 		synth.set_sustain_rate(channel,op_mask,instr.sustains[i])

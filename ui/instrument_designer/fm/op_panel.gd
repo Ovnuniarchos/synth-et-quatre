@@ -3,6 +3,8 @@ extends PanelContainer
 signal instrument_changed
 signal operator_changed(op)
 
+const DETMODE_TTIPS:Array=["FMED_DETUNE_TTIP","FMED_FIXED_FREQUENCY_TTIP","FMED_DELTA_FREQUENCY_TTIP"]
+
 export (int) var operator:int=0 setget set_op
 
 var op_mask:int
@@ -106,7 +108,7 @@ func _on_DIVSlider_value_changed(value:float)->void:
 func _on_DETMode_cycled(mode:int)->void:
 	GLOBALS.get_instrument().detune_modes[operator]=mode
 	IM_SYNTH.set_detune_mode(operator,mode)
-	$Params/FreqMods/DETSlider.hint_tooltip=["FMED_DETUNE_TTIP","FMED_FIXED_FREQUENCY_TTIP","FMED_DELTA_FREQUENCY_TTIP"][mode]
+	$Params/FreqMods/DETSlider.hint_tooltip=DETMODE_TTIPS[mode]
 	emit_signal("instrument_changed")
 
 func _on_DETSlider_value_changed(value:int)->void:
@@ -125,7 +127,11 @@ func _on_Switch_toggled(on:bool)->void:
 func set_sliders(inst:FmInstrument)->void:
 	set_block_signals(true)
 	$Params/Switches/Switch.pressed=bool(inst.op_mask&op_mask)
+	$Params/ADSR/PARSlider.value=inst.pre_attacks[operator]
+	$Params/ADSR/PALSlider.value=inst.pre_attack_levels[operator]
 	$Params/ADSR/ARSlider.value=inst.attacks[operator]
+	$Params/ADSR/PDRSlider.value=inst.pre_decays[operator]
+	$Params/ADSR/PDLSlider.value=inst.pre_decay_levels[operator]
 	$Params/ADSR/DRSlider.value=inst.decays[operator]
 	$Params/ADSR/SLSlider.value=inst.sustain_levels[operator]
 	$Params/ADSR/SRSlider.value=inst.sustains[operator]
@@ -141,6 +147,44 @@ func set_sliders(inst:FmInstrument)->void:
 	$Params/ADSR/KSRSlider.value=inst.key_scalers[operator]
 	$Params/FreqMods/FMSSlider.value=inst.fm_intensity[operator]
 	$Params/LFOs/FreqLFO.select($Params/LFOs/FreqLFO.get_item_index(inst.fm_lfo[operator]))
-	$Params/FreqMods/DETSlider.hint_tooltip=["FMED_DETUNE_TTIP","FMED_FIXED_FREQUENCY_TTIP","FMED_DELTA_FREQUENCY_TTIP"][inst.detune_modes[operator]]
+	$Params/FreqMods/DETSlider.hint_tooltip=DETMODE_TTIPS[inst.detune_modes[operator]]
+	var text:String=["FMED_PATK_LEVEL","FMED_PATK_DELAY"][0 if inst.pre_attacks[operator]>0 else 1]
+	$Params/ADSR/PALLabel.text=text
+	$Params/ADSR/PALLabel.hint_tooltip=text+"_TTIP"
+	text=["FMED_PDEC_LEVEL","FMED_PDEC_DELAY"][0 if inst.pre_attacks[operator]>0 else 1]
+	$Params/ADSR/PDLLabel.text=text
+	$Params/ADSR/PDLLabel.hint_tooltip=text+"_TTIP"
 	set_block_signals(false)
+	emit_signal("instrument_changed")
+
+
+func _on_PARSlider_value_changed(value:float)->void:
+	var v:int=int(value)
+	GLOBALS.get_instrument().pre_attacks[operator]=v
+	IM_SYNTH.set_pre_attack_rate(operator,v)
+	var text:String=["FMED_PATK_LEVEL","FMED_PATK_DELAY"][0 if v>0 else 1]
+	$Params/ADSR/PALLabel.text=text
+	$Params/ADSR/PALLabel.hint_tooltip=text+"_TTIP"
+	emit_signal("instrument_changed")
+
+
+func _on_PALSlider_value_changed(value:float)->void:
+	GLOBALS.get_instrument().pre_attack_levels[operator]=int(value)
+	IM_SYNTH.set_pre_attack_level(operator,int(value))
+	emit_signal("instrument_changed")
+
+
+func _on_PDRSlider_value_changed(value:float)->void:
+	var v:int=int(value)
+	GLOBALS.get_instrument().pre_decays[operator]=v
+	IM_SYNTH.set_pre_decay_rate(operator,v)
+	var text:String=["FMED_PDEC_LEVEL","FMED_PDEC_DELAY"][0 if v>0 else 1]
+	$Params/ADSR/PDLLabel.text=text
+	$Params/ADSR/PDLLabel.hint_tooltip=text+"_TTIP"
+	emit_signal("instrument_changed")
+
+
+func _on_PDLSlider_value_changed(value:float)->void:
+	GLOBALS.get_instrument().pre_decay_levels[operator]=int(value)
+	IM_SYNTH.set_pre_decay_level(operator,int(value))
 	emit_signal("instrument_changed")

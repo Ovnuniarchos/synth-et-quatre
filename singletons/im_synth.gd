@@ -83,6 +83,7 @@ func play_fm_note(chan:int,instr:FmInstrument,semi:int,legato:bool)->void:
 
 #
 
+#TODO: add pre_xxx macros
 func _on_macro_timer()->void:
 	if ti<0:
 		ti=Time.get_ticks_msec()
@@ -215,192 +216,102 @@ func _on_macro_timer()->void:
 
 #
 
-func set_freq_mul(op:int,multiplier:int)->void:
+func set_param(data:Array,setter:String)->void:
+	var inst:FmInstrument=GLOBALS.get_instrument()
+	if inst==null:
+		return
+	var fn:FuncRef=funcref(synth,setter)
+	data.insert(0,0)
+	for i in MAX_CHANNELS:
+		if instr_ids[i]==GLOBALS.curr_instrument:
+			data[0]=i
+			fn.call_funcv(data)
+
+func set_op_param(op:int,data:int,setter:String)->void:
 	var inst:FmInstrument=GLOBALS.get_instrument()
 	if inst==null:
 		return
 	var op_mask:int=1<<op
+	var fn:FuncRef=funcref(synth,setter)
 	for i in MAX_CHANNELS:
 		if instr_ids[i]==GLOBALS.curr_instrument:
-			synth.set_freq_mul(i,op_mask,multiplier)
+			fn.call_func(i,op_mask,data)
+
+func set_freq_mul(op:int,multiplier:int)->void:
+	set_op_param(op,multiplier,"set_freq_mul")
 
 func set_freq_div(op:int,divider:int)->void:
-	var inst:FmInstrument=GLOBALS.get_instrument()
-	if inst==null:
-		return
-	var op_mask:int=1<<op
-	for i in MAX_CHANNELS:
-		if instr_ids[i]==GLOBALS.curr_instrument:
-			synth.set_freq_div(i,op_mask,divider)
+	set_op_param(op,divider,"set_freq_div")
 
 func set_detune(op:int,millis:int)->void:
-	var inst:FmInstrument=GLOBALS.get_instrument()
-	if inst==null:
-		return
-	var op_mask:int=1<<op
-	for i in MAX_CHANNELS:
-		if instr_ids[i]==GLOBALS.curr_instrument:
-			synth.set_detune(i,op_mask,millis)
+	set_op_param(op,millis,"set_detune")
 
 func set_detune_mode(op:int,mode:int)->void:
-	var inst:FmInstrument=GLOBALS.get_instrument()
-	if inst==null:
-		return
-	var op_mask:int=1<<op
-	for i in MAX_CHANNELS:
-		if instr_ids[i]==GLOBALS.curr_instrument:
-			synth.set_detune_mode(i,op_mask,mode)
+	set_op_param(op,mode,"mode")
 
-func set_wave(op:int,ix:int)->void:
-	var inst:FmInstrument=GLOBALS.get_instrument()
-	if inst==null:
-		return
-	var op_mask:int=1<<op
-	for i in MAX_CHANNELS:
-		if instr_ids[i]==GLOBALS.curr_instrument:
-			synth.set_wave(i,op_mask,ix)
+func set_wave(op:int,wave_ix:int)->void:
+	set_op_param(op,wave_ix,"set_wave")
 
-func set_duty_cycle(op:int,duc:int)->void:
-	var inst:FmInstrument=GLOBALS.get_instrument()
-	if inst==null:
-		return
-	var op_mask:int=1<<op
-	duc<<=16
-	for i in MAX_CHANNELS:
-		if instr_ids[i]==GLOBALS.curr_instrument:
-			synth.set_duty_cycle(i,op_mask,duc)
+func set_duty_cycle(op:int,duty_cycle:int)->void:
+	set_op_param(op,duty_cycle,"set_duty_cycle")
 
-func set_attack_rate(op:int,ar:int)->void:
-	var inst:FmInstrument=GLOBALS.get_instrument()
-	if inst==null:
-		return
-	var op_mask:int=1<<op
-	for i in MAX_CHANNELS:
-		if instr_ids[i]==GLOBALS.curr_instrument:
-			synth.set_attack_rate(i,op_mask,ar)
+func set_pre_attack_rate(op:int,rate:int)->void:
+	set_op_param(op,rate,"set_pre_attack_rate")
 
-func set_decay_rate(op:int,dr:int)->void:
-	var inst:FmInstrument=GLOBALS.get_instrument()
-	if inst==null:
-		return
-	var op_mask:int=1<<op
-	for i in MAX_CHANNELS:
-		if instr_ids[i]==GLOBALS.curr_instrument:
-			synth.set_decay_rate(i,op_mask,dr)
+func set_pre_attack_level(op:int,level:int)->void:
+	set_op_param(op,level,"set_pre_attack_level")
 
-func set_sustain_level(op:int,sl:int)->void:
-	var inst:FmInstrument=GLOBALS.get_instrument()
-	if inst==null:
-		return
-	var op_mask:int=1<<op
-	for i in MAX_CHANNELS:
-		if instr_ids[i]==GLOBALS.curr_instrument:
-			synth.set_sustain_level(i,op_mask,sl)
+func set_attack_rate(op:int,rate:int)->void:
+	set_op_param(op,rate,"set_attack_rate")
 
-func set_sustain_rate(op:int,sr:int)->void:
-	var inst:FmInstrument=GLOBALS.get_instrument()
-	if inst==null:
-		return
-	var op_mask:int=1<<op
-	for i in MAX_CHANNELS:
-		if instr_ids[i]==GLOBALS.curr_instrument:
-			synth.set_sustain_rate(i,op_mask,sr)
+func set_pre_decay_rate(op:int,rate:int)->void:
+	set_op_param(op,rate,"set_pre_decay_rate")
 
-func set_release_rate(op:int,rr:int)->void:
-	var inst:FmInstrument=GLOBALS.get_instrument()
-	if inst==null:
-		return
-	var op_mask:int=1<<op
-	for i in MAX_CHANNELS:
-		if instr_ids[i]==GLOBALS.curr_instrument:
-			synth.set_release_rate(i,op_mask,rr)
+func set_pre_decay_level(op:int,level:int)->void:
+	set_op_param(op,level,"set_pre_decay_level")
+
+func set_decay_rate(op:int,rate:int)->void:
+	set_op_param(op,rate,"set_decay_rate")
+
+func set_sustain_level(op:int,level:int)->void:
+	set_op_param(op,level,"set_sustain_level")
+
+func set_sustain_rate(op:int,rate:int)->void:
+	set_op_param(op,rate,"set_sustain_rate")
+
+func set_release_rate(op:int,rate:int)->void:
+	set_op_param(op,rate,"set_release_rate")
 
 func set_repeat(op:int,phase:int)->void:
-	var inst:FmInstrument=GLOBALS.get_instrument()
-	if inst==null:
-		return
-	var op_mask:int=1<<op
-	for i in MAX_CHANNELS:
-		if instr_ids[i]==GLOBALS.curr_instrument:
-			synth.set_repeat(i,op_mask,phase)
+	set_op_param(op,phase,"set_repeat")
 
-func set_ksr(op:int,ksr:int)->void:
-	var inst:FmInstrument=GLOBALS.get_instrument()
-	if inst==null:
-		return
-	var op_mask:int=1<<op
-	for i in MAX_CHANNELS:
-		if instr_ids[i]==GLOBALS.curr_instrument:
-			synth.set_ksr(i,op_mask,ksr)
+func set_ksr(op:int,rate:int)->void:
+	set_op_param(op,rate,"set_ksr")
 
 func set_am_intensity(op:int,intensity:int)->void:
-	var inst:FmInstrument=GLOBALS.get_instrument()
-	if inst==null:
-		return
-	var op_mask:int=1<<op
-	for i in MAX_CHANNELS:
-		if instr_ids[i]==GLOBALS.curr_instrument:
-			synth.set_am_intensity(i,op_mask,intensity)
+	set_op_param(op,intensity,"set_am_intensity")
 
-func set_am_lfo(op:int,ix:int)->void:
-	var inst:FmInstrument=GLOBALS.get_instrument()
-	if inst==null:
-		return
-	var op_mask:int=1<<op
-	for i in MAX_CHANNELS:
-		if instr_ids[i]==GLOBALS.curr_instrument:
-			synth.set_am_lfo(i,op_mask,ix)
+func set_am_lfo(op:int,lfo_ix:int)->void:
+	set_op_param(op,lfo_ix,"set_am_lfo")
 
 func set_fm_intensity(op:int,millis:int)->void:
-	var inst:FmInstrument=GLOBALS.get_instrument()
-	if inst==null:
-		return
-	var op_mask:int=1<<op
-	for i in MAX_CHANNELS:
-		if instr_ids[i]==GLOBALS.curr_instrument:
-			synth.set_fm_intensity(i,op_mask,millis)
+	set_op_param(op,millis,"set_fm_intensity")
 
-func set_fm_lfo(op:int,ix:int)->void:
-	var inst:FmInstrument=GLOBALS.get_instrument()
-	if inst==null:
-		return
-	var op_mask:int=1<<op
-	for i in MAX_CHANNELS:
-		if instr_ids[i]==GLOBALS.curr_instrument:
-			synth.set_fm_lfo(i,op_mask,ix)
+func set_fm_lfo(op:int,lfo_ix:int)->void:
+	set_op_param(op,lfo_ix,"set_fm_lfo")
 
 func set_enable(opmask:int)->void:
-	var inst:FmInstrument=GLOBALS.get_instrument()
-	if inst==null:
-		return
-	for i in MAX_CHANNELS:
-		if instr_ids[i]==GLOBALS.curr_instrument:
-			synth.set_enable(i,15,opmask)
+	set_param([15,opmask],"set_enable")
 
 func set_clip(clip:bool)->void:
-	var inst:FmInstrument=GLOBALS.get_instrument()
-	if inst==null:
-		return
-	for i in MAX_CHANNELS:
-		if instr_ids[i]==GLOBALS.curr_instrument:
-			synth.set_clip(i,clip)
+	set_param([clip],"set_clip")
 
 func set_pm_factor(from_op:int,to_op:int,pm_factor:int)->void:
-	var inst:FmInstrument=GLOBALS.get_instrument()
-	if inst==null:
-		return
-	for i in MAX_CHANNELS:
-		if instr_ids[i]==GLOBALS.curr_instrument:
-			synth.set_pm_factor(i,from_op,to_op,pm_factor)
+	set_param([from_op,to_op,pm_factor],"set_pm_factor")
 
 func set_output(op:int,output:int)->void:
-	var inst:FmInstrument=GLOBALS.get_instrument()
-	if inst==null:
-		return
-	var op_mask:int=1<<op
-	for i in MAX_CHANNELS:
-		if instr_ids[i]==GLOBALS.curr_instrument:
-			synth.set_output(i,op_mask,output)
+	set_op_param(op,output,"set_output")
+
 """
 //void SynthTracker::set_phase(int voice,int op_mask,FixedPoint phi)
 //void SynthTracker::set_volume(int voice,int vel)

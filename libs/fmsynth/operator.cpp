@@ -13,8 +13,6 @@ _ALWAYS_INLINE_ void Operator::calculate_envelope(){
 		return;
 	}
 	eg_counter=EG_DIVIDER;
-	// PRE_ATTACK: speed+(endlevel if speed>0 else duration)
-	// PRE_DECAY: speed+(endlevel if speed>0 else duration)
 	// FIXME: Check interactions with eg_repeat
 	switch(eg_phase){
 		case PRE_ATTACK:

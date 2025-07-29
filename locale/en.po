@@ -317,11 +317,47 @@ msgstr "Wave"
 msgid "FMED_ENVELOPE_TITLE"
 msgstr "Envelope"
 
+msgid "FMED_PATK_RATE"
+msgstr "PAT"
+
+msgid "FMED_PATK_RATE_TTIP"
+msgstr "Pre-attack rate"
+
+msgid "FMED_PATK_LEVEL"
+msgstr "PAL"
+
+msgid "FMED_PATK_LEVEL_TTIP"
+msgstr "Pre-attack end level"
+
+msgid "FMED_PATK_DELAY"
+msgstr "PAD"
+
+msgid "FMED_PATK_DELAY_TTIP"
+msgstr "Pre-attack delay"
+
 msgid "FMED_ATTACK"
 msgstr "ATR"
 
 msgid "FMED_ATTACK_TTIP"
 msgstr "Attack rate"
+
+msgid "FMED_PDEC_RATE"
+msgstr "PDR"
+
+msgid "FMED_PDEC_RATE_TTIP"
+msgstr "Pre-decay rate"
+
+msgid "FMED_PDEC_LEVEL"
+msgstr "PDL"
+
+msgid "FMED_PDEC_LEVEL_TTIP"
+msgstr "Pre-decay end level"
+
+msgid "FMED_PDEC_DELAY"
+msgstr "PDD"
+
+msgid "FMED_PDEC_DELAY_TTIP"
+msgstr "Pre-decay delay"
 
 msgid "FMED_DECAY"
 msgstr "DER"
@@ -333,7 +369,7 @@ msgid "FMED_SUSTAIN_LEVEL"
 msgstr "SUL"
 
 msgid "FMED_SUSTAIN_LEVEL_TTIP"
-msgstr "Sustain level"
+msgstr "Sustain start level"
 
 msgid "FMED_SUSTAIN_RATE"
 msgstr "SUR"

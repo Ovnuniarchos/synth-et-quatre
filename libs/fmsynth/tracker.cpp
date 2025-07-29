@@ -409,8 +409,20 @@ void SynthTracker::debug(Array cmds,int end_ix){
 			case CMD_VEL:
 				printf(TRACE_VELOCITY,voice,op_mask);
 				break;
+			case CMD_PAR:
+				printf(TRACE_PATK_RATE,voice,op_mask,data_8);
+				break;
+			case CMD_PAL:
+				printf(TRACE_PATK_LEVEL,voice,op_mask,data_8);
+				break;
 			case CMD_AR:
 				printf(TRACE_ATTACK,voice,op_mask,data_8);
+				break;
+			case CMD_PDR:
+				printf(TRACE_PDEC_RATE,voice,op_mask,data_8);
+				break;
+			case CMD_PDL:
+				printf(TRACE_PDEC_LEVEL,voice,op_mask,data_8);
 				break;
 			case CMD_DR:
 				printf(TRACE_DECAY,voice,op_mask,data_8);
@@ -550,7 +562,7 @@ void SynthTracker::set_pre_attack_rate(int voice,int op_mask,int rate){
 }
 
 void SynthTracker::set_pre_attack_level(int voice,int op_mask,int level){
-	synth.set_pre_attack_rate(voice,op_mask,level);
+	synth.set_pre_attack_level(voice,op_mask,level);
 }
 
 void SynthTracker::set_attack_rate(int voice,int op_mask,int rate){
@@ -562,7 +574,7 @@ void SynthTracker::set_pre_decay_rate(int voice,int op_mask,int rate){
 }
 
 void SynthTracker::set_pre_decay_level(int voice,int op_mask,int level){
-	synth.set_pre_decay_rate(voice,op_mask,level);
+	synth.set_pre_decay_level(voice,op_mask,level);
 }
 
 void SynthTracker::set_decay_rate(int voice,int op_mask,int rate){

@@ -322,10 +322,46 @@ msgstr ""
 msgid "FMED_ENVELOPE_TITLE"
 msgstr ""
 
+msgid "FMED_PATK_RATE"
+msgstr ""
+
+msgid "FMED_PATK_RATE_TTIP"
+msgstr ""
+
+msgid "FMED_PATK_LEVEL"
+msgstr ""
+
+msgid "FMED_PATK_LEVEL_TTIP"
+msgstr ""
+
+msgid "FMED_PATK_DELAY"
+msgstr ""
+
+msgid "FMED_PATK_DELAY_TTIP"
+msgstr ""
+
 msgid "FMED_ATTACK"
 msgstr ""
 
 msgid "FMED_ATTACK_TTIP"
+msgstr ""
+
+msgid "FMED_PDEC_RATE"
+msgstr ""
+
+msgid "FMED_PDEC_RATE_TTIP"
+msgstr ""
+
+msgid "FMED_PDEC_LEVEL"
+msgstr ""
+
+msgid "FMED_PDEC_LEVEL_TTIP"
+msgstr ""
+
+msgid "FMED_PDEC_DELAY"
+msgstr ""
+
+msgid "FMED_PDEC_DELAY_TTIP"
 msgstr ""
 
 msgid "FMED_DECAY"
@@ -361,7 +397,13 @@ msgstr ""
 msgid "FMED_RPT_OFF"
 msgstr ""
 
+msgid "FMED_RPT_PRE_ATTACK"
+msgstr ""
+
 msgid "FMED_RPT_ATTACK"
+msgstr ""
+
+msgid "FMED_RPT_PRE_DECAY"
 msgstr ""
 
 msgid "FMED_RPT_DECAY"

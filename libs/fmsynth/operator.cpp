@@ -13,7 +13,6 @@ _ALWAYS_INLINE_ void Operator::calculate_envelope(){
 		return;
 	}
 	eg_counter=EG_DIVIDER;
-	// FIXME: Check interactions with eg_repeat
 	switch(eg_phase){
 		case PRE_ATTACK:
 			if(eg_patk_rate>0L){
@@ -35,7 +34,7 @@ _ALWAYS_INLINE_ void Operator::calculate_envelope(){
 		case ATTACK:
 			eg_vol+=eg_atk_rate;
 			if(eg_vol>=FP_ONE){
-				eg_vol=eg_repeat==ATTACK?eg_patk_level:FP_ONE;
+				eg_vol=eg_repeat==ATTACK?0L:FP_ONE;
 				eg_phase=eg_repeat==ATTACK?PRE_ATTACK:PRE_DECAY;
 				eg_tick=0L;
 			}
@@ -61,12 +60,14 @@ _ALWAYS_INLINE_ void Operator::calculate_envelope(){
 			eg_vol-=eg_dec_rate;
 			if(eg_vol<=eg_sus_level){
 				eg_vol=eg_sus_level;
+				eg_vol=eg_repeat==DECAY?0L:eg_vol;
 				eg_phase=eg_repeat==DECAY?PRE_ATTACK:SUSTAIN;
 			}
 			break;
 		case SUSTAIN:
 			eg_vol-=eg_sus_rate;
 			if(!on){
+				eg_vol=eg_repeat==SUSTAIN?0L:eg_vol;
 				eg_phase=eg_repeat==SUSTAIN?PRE_ATTACK:RELEASE;
 			}else if(eg_vol<=0L){
 				eg_vol=0L;
@@ -76,6 +77,7 @@ _ALWAYS_INLINE_ void Operator::calculate_envelope(){
 		case SUSTAIN_UP:
 			eg_vol+=eg_atk_rate;
 			if(!on){
+				eg_vol=eg_repeat==SUSTAIN?0L:eg_vol;
 				eg_phase=eg_repeat==SUSTAIN?PRE_ATTACK:RELEASE;
 			}else if(eg_vol>=eg_sus_level){
 				eg_vol=eg_sus_level;
@@ -263,7 +265,7 @@ void Operator::set_release_rate(int rate){
 }
 
 void Operator::set_repeat(int phase){
-	eg_repeat=(ADSR)clamp(phase,(int)OFF,(int)PRE_ATTACK);
+	eg_repeat=(ADSR)clamp(phase,(int)OFF,(int)RELEASE);
 }
 
 void Operator::set_ksr(int ksr){

@@ -392,8 +392,14 @@ msgstr "Repeat mode"
 msgid "FMED_RPT_OFF"
 msgstr "No"
 
+msgid "FMED_RPT_PRE_ATTACK"
+msgstr "Pre-attack"
+
 msgid "FMED_RPT_ATTACK"
 msgstr "Attack"
+
+msgid "FMED_RPT_PRE_DECAY"
+msgstr "Pre-decay"
 
 msgid "FMED_RPT_DECAY"
 msgstr "Decay"

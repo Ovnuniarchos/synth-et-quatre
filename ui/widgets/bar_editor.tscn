@@ -1,10 +1,8 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://ui/widgets/bar_editor.gd" type="Script" id=1]
 [ext_resource path="res://ui/widgets/spin_bar.gd" type="Script" id=2]
 [ext_resource path="res://ui/widgets/tooltip.gd" type="Script" id=3]
-
-[sub_resource type="Theme" id=1]
 
 [sub_resource type="Image" id=5]
 data = {
@@ -34,7 +32,6 @@ anchor_right = 1.0
 margin_bottom = 28.0
 size_flags_horizontal = 3
 size_flags_vertical = 8
-theme = SubResource( 1 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_pinned_properties_": [ "min_value_rel", "max_value_rel", "min_value_abs", "max_value_abs", "big_step", "huge_step", "mode", "labels", "parameter", "title", "arpeggio", "title_tooltip" ]

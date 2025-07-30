@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://ui/instrument_designer/fm/lfo_panel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://ui/instrument_designer/fm/routing.tscn" type="PackedScene" id=2]
@@ -9,20 +9,6 @@
 [ext_resource path="res://ui/widgets/macro_list.gd" type="Script" id=7]
 [ext_resource path="res://ui/widgets/bar_editor.tscn" type="PackedScene" id=8]
 [ext_resource path="res://ui/widgets/i18n_tab_container.gd" type="Script" id=9]
-
-[sub_resource type="Theme" id=1]
-
-[sub_resource type="Theme" id=2]
-
-[sub_resource type="Theme" id=3]
-
-[sub_resource type="Theme" id=4]
-
-[sub_resource type="Theme" id=5]
-
-[sub_resource type="Theme" id=6]
-
-[sub_resource type="Theme" id=7]
 
 [node name="FmEditor" type="VBoxContainer"]
 anchor_right = 1.0
@@ -121,12 +107,12 @@ scroll_vertical = 100
 [node name="VBC" type="VBoxContainer" parent="Tabs/Parameters/Params"]
 margin_top = -100.0
 margin_right = 1004.0
-margin_bottom = 872.0
+margin_bottom = 944.0
 size_flags_horizontal = 3
 
 [node name="OPS" type="GridContainer" parent="Tabs/Parameters/Params/VBC"]
 margin_right = 1004.0
-margin_bottom = 796.0
+margin_bottom = 868.0
 size_flags_horizontal = 3
 custom_constants/vseparation = 16
 custom_constants/hseparation = 16
@@ -135,34 +121,34 @@ columns = 2
 [node name="OP1" parent="Tabs/Parameters/Params/VBC/OPS" instance=ExtResource( 5 )]
 anchor_right = 0.0
 margin_right = 494.0
-margin_bottom = 390.0
+margin_bottom = 426.0
 
 [node name="OP2" parent="Tabs/Parameters/Params/VBC/OPS" instance=ExtResource( 5 )]
 anchor_right = 0.0
 margin_left = 510.0
 margin_right = 1004.0
-margin_bottom = 390.0
+margin_bottom = 426.0
 operator = 1
 
 [node name="OP3" parent="Tabs/Parameters/Params/VBC/OPS" instance=ExtResource( 5 )]
 anchor_right = 0.0
-margin_top = 406.0
+margin_top = 442.0
 margin_right = 494.0
-margin_bottom = 796.0
+margin_bottom = 868.0
 operator = 2
 
 [node name="OP4" parent="Tabs/Parameters/Params/VBC/OPS" instance=ExtResource( 5 )]
 anchor_right = 0.0
 margin_left = 510.0
-margin_top = 406.0
+margin_top = 442.0
 margin_right = 1004.0
-margin_bottom = 796.0
+margin_bottom = 868.0
 operator = 3
 
 [node name="Routing" parent="Tabs/Parameters/Params/VBC" instance=ExtResource( 2 )]
-margin_top = 800.0
+margin_top = 872.0
 margin_right = 1004.0
-margin_bottom = 972.0
+margin_bottom = 1044.0
 
 [node name="Macros" type="Tabs" parent="Tabs"]
 visible = false
@@ -195,7 +181,6 @@ script = ExtResource( 7 )
 [node name="Tone" parent="Tabs/Macros/Macro/VBC" instance=ExtResource( 8 )]
 anchor_right = 0.0
 margin_right = 1016.0
-theme = SubResource( 1 )
 title = "FMED_MG_TONE"
 title_tooltip = "FMED_MG_TONE_TTIP"
 parameter = "G_TONE"
@@ -211,7 +196,6 @@ anchor_right = 0.0
 margin_top = 32.0
 margin_right = 1016.0
 margin_bottom = 60.0
-theme = SubResource( 2 )
 title = "FMED_MG_VOLUME"
 title_tooltip = "FMED_MG_VOLUME_TTIP"
 parameter = "G_VOLUME"
@@ -225,7 +209,6 @@ anchor_right = 0.0
 margin_top = 64.0
 margin_right = 1016.0
 margin_bottom = 92.0
-theme = SubResource( 3 )
 title = "FMED_MG_PAN"
 title_tooltip = "FMED_MG_PAN_TTIP"
 parameter = "G_PAN"
@@ -240,7 +223,6 @@ anchor_right = 0.0
 margin_top = 96.0
 margin_right = 1016.0
 margin_bottom = 124.0
-theme = SubResource( 4 )
 title = "FMED_MG_CHAN_INVERT"
 title_tooltip = "FMED_MG_CHAN_INVERT_TTIP"
 parameter = "G_CHNINVERT"
@@ -253,7 +235,6 @@ anchor_right = 0.0
 margin_top = 128.0
 margin_right = 1016.0
 margin_bottom = 156.0
-theme = SubResource( 5 )
 title = "FMED_MG_KEY_ON"
 title_tooltip = "FMED_MG_KEY_ON_TTIP"
 parameter = "G_KEY"
@@ -267,7 +248,6 @@ anchor_right = 0.0
 margin_top = 160.0
 margin_right = 1016.0
 margin_bottom = 188.0
-theme = SubResource( 6 )
 title = "FMED_MG_OP_ENABLE"
 title_tooltip = "FMED_MG_OP_ENABLE_TTIP"
 parameter = "G_OPEN"
@@ -280,7 +260,6 @@ anchor_right = 0.0
 margin_top = 192.0
 margin_right = 1016.0
 margin_bottom = 220.0
-theme = SubResource( 7 )
 title = "FMED_MG_CLIP"
 title_tooltip = "FMED_MG_CLIP_TTIP"
 parameter = "G_CLIP"

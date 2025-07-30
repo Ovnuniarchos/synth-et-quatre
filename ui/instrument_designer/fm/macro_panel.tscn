@@ -1,58 +1,8 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://ui/widgets/macro_list.gd" type="Script" id=2]
 [ext_resource path="res://ui/instrument_designer/fm/macro_panel.gd" type="Script" id=3]
 [ext_resource path="res://ui/widgets/bar_editor.tscn" type="PackedScene" id=4]
-
-[sub_resource type="Theme" id=1]
-
-[sub_resource type="Theme" id=2]
-
-[sub_resource type="Theme" id=3]
-
-[sub_resource type="Theme" id=4]
-
-[sub_resource type="Theme" id=5]
-
-[sub_resource type="Theme" id=6]
-
-[sub_resource type="Theme" id=7]
-
-[sub_resource type="Theme" id=8]
-
-[sub_resource type="Theme" id=9]
-
-[sub_resource type="Theme" id=10]
-
-[sub_resource type="Theme" id=11]
-
-[sub_resource type="Theme" id=12]
-
-[sub_resource type="Theme" id=13]
-
-[sub_resource type="Theme" id=14]
-
-[sub_resource type="Theme" id=15]
-
-[sub_resource type="Theme" id=16]
-
-[sub_resource type="Theme" id=17]
-
-[sub_resource type="Theme" id=18]
-
-[sub_resource type="Theme" id=19]
-
-[sub_resource type="Theme" id=20]
-
-[sub_resource type="Theme" id=21]
-
-[sub_resource type="Theme" id=22]
-
-[sub_resource type="Theme" id=23]
-
-[sub_resource type="Theme" id=24]
-
-[sub_resource type="Theme" id=25]
 
 [node name="Macro" type="ScrollContainer"]
 anchor_right = 1.0
@@ -71,7 +21,6 @@ script = ExtResource( 2 )
 [node name="Tone" parent="VBC" instance=ExtResource( 4 )]
 anchor_right = 0.0
 margin_right = 1012.0
-theme = SubResource( 1 )
 title = "FMED_MO_TONE"
 title_tooltip = "FMED_MO_TONE_TTIP"
 parameter = "TONE"
@@ -87,7 +36,6 @@ anchor_right = 0.0
 margin_top = 32.0
 margin_right = 1012.0
 margin_bottom = 60.0
-theme = SubResource( 2 )
 title = "FMED_MO_KEY_ON"
 title_tooltip = "FMED_MO_KEY_ON_TTIP"
 parameter = "KEY"
@@ -101,7 +49,6 @@ anchor_right = 0.0
 margin_top = 64.0
 margin_right = 1012.0
 margin_bottom = 92.0
-theme = SubResource( 3 )
 title = "FMED_MO_DUTY_CYCLE"
 title_tooltip = "FMED_MO_DUTY_CYCLE_TTIP"
 parameter = "DUTY"
@@ -114,7 +61,6 @@ anchor_right = 0.0
 margin_top = 96.0
 margin_right = 1012.0
 margin_bottom = 124.0
-theme = SubResource( 4 )
 title = "FMED_MO_WAVE"
 title_tooltip = "FMED_MO_WAVE_TTIP"
 parameter = "WAVE"
@@ -126,7 +72,6 @@ anchor_right = 0.0
 margin_top = 128.0
 margin_right = 1012.0
 margin_bottom = 156.0
-theme = SubResource( 5 )
 title = "FMED_MO_ATTACK"
 title_tooltip = "FMED_MO_ATTACK_TTIP"
 parameter = "ATTACK"
@@ -141,7 +86,6 @@ anchor_right = 0.0
 margin_top = 160.0
 margin_right = 1012.0
 margin_bottom = 188.0
-theme = SubResource( 6 )
 title = "FMED_MO_DECAY"
 title_tooltip = "FMED_MO_DECAY_TTIP"
 parameter = "DECAY"
@@ -156,7 +100,6 @@ anchor_right = 0.0
 margin_top = 192.0
 margin_right = 1012.0
 margin_bottom = 220.0
-theme = SubResource( 7 )
 title = "FMED_MO_SUSTAIN_LEVEL"
 title_tooltip = "FMED_MO_SUSTAIN_LEVEL_TTIP"
 parameter = "SUSLEV"
@@ -171,7 +114,6 @@ anchor_right = 0.0
 margin_top = 224.0
 margin_right = 1012.0
 margin_bottom = 252.0
-theme = SubResource( 8 )
 title = "FMED_MO_SUSTAIN_RATE"
 title_tooltip = "FMED_MO_SUSTAIN_RATE_TTIP"
 parameter = "SUSTAIN"
@@ -186,7 +128,6 @@ anchor_right = 0.0
 margin_top = 256.0
 margin_right = 1012.0
 margin_bottom = 284.0
-theme = SubResource( 9 )
 title = "FMED_MO_RELEASE"
 title_tooltip = "FMED_MO_RELEASE_TTIP"
 parameter = "RELEASE"
@@ -201,7 +142,6 @@ anchor_right = 0.0
 margin_top = 288.0
 margin_right = 1012.0
 margin_bottom = 316.0
-theme = SubResource( 10 )
 title = "FMED_MO_REPEAT"
 title_tooltip = "FMED_MO_REPEAT_TTIP"
 parameter = "REPEAT"
@@ -214,7 +154,6 @@ anchor_right = 0.0
 margin_top = 320.0
 margin_right = 1012.0
 margin_bottom = 348.0
-theme = SubResource( 11 )
 title = "FMED_MO_AM_INTENSITY"
 title_tooltip = "FMED_MO_AM_INTENSITY_TTIP"
 parameter = "AMS"
@@ -229,7 +168,6 @@ anchor_right = 0.0
 margin_top = 352.0
 margin_right = 1012.0
 margin_bottom = 380.0
-theme = SubResource( 12 )
 title = "FMED_MO_AM_LFO"
 title_tooltip = "FMED_MO_AM_LFO_TTIP"
 parameter = "AMLFO"
@@ -244,7 +182,6 @@ anchor_right = 0.0
 margin_top = 384.0
 margin_right = 1012.0
 margin_bottom = 412.0
-theme = SubResource( 13 )
 title = "FMED_MO_KEY_SCALING"
 title_tooltip = "FMED_MO_KEY_SCALING_TTIP"
 parameter = "KSR"
@@ -259,7 +196,6 @@ anchor_right = 0.0
 margin_top = 416.0
 margin_right = 1012.0
 margin_bottom = 444.0
-theme = SubResource( 14 )
 title = "FMED_MO_MULTIPLIER"
 title_tooltip = "FMED_MO_MULTIPLIER_TTIP"
 parameter = "MUL"
@@ -275,7 +211,6 @@ anchor_right = 0.0
 margin_top = 448.0
 margin_right = 1012.0
 margin_bottom = 476.0
-theme = SubResource( 15 )
 title = "FMED_MO_DIVIDER"
 title_tooltip = "FMED_MO_DIVIDER_TTIP"
 parameter = "DIV"
@@ -291,7 +226,6 @@ anchor_right = 0.0
 margin_top = 480.0
 margin_right = 1012.0
 margin_bottom = 508.0
-theme = SubResource( 16 )
 title = "FMED_MO_DETUNE_MODE"
 title_tooltip = "FMED_MO_DETUNE_MODE_TTIP"
 parameter = "DETUNE_M"
@@ -308,7 +242,6 @@ anchor_right = 0.0
 margin_top = 512.0
 margin_right = 1012.0
 margin_bottom = 540.0
-theme = SubResource( 17 )
 title = "FMED_MO_DETUNE_VALUE"
 title_tooltip = "FMED_MO_DETUNE_VALUE_TTIP"
 parameter = "DETUNE"
@@ -324,7 +257,6 @@ anchor_right = 0.0
 margin_top = 544.0
 margin_right = 1012.0
 margin_bottom = 572.0
-theme = SubResource( 18 )
 title = "FMED_MO_FM_INTENSITY"
 title_tooltip = "FMED_MO_FM_INTENSITY_TTIP"
 parameter = "FMS"
@@ -339,7 +271,6 @@ anchor_right = 0.0
 margin_top = 576.0
 margin_right = 1012.0
 margin_bottom = 604.0
-theme = SubResource( 19 )
 title = "FMED_MO_FM_LFO"
 title_tooltip = "FMED_MO_FM_LFO_TTIP"
 parameter = "FMLFO"
@@ -354,7 +285,6 @@ anchor_right = 0.0
 margin_top = 608.0
 margin_right = 1012.0
 margin_bottom = 636.0
-theme = SubResource( 20 )
 title = "FMED_MO_PHASE"
 title_tooltip = "FMED_MO_PHASE_TTIP"
 parameter = "PHI"
@@ -369,7 +299,6 @@ anchor_right = 0.0
 margin_top = 640.0
 margin_right = 1012.0
 margin_bottom = 668.0
-theme = SubResource( 21 )
 parameter = "OP1"
 min_value_rel = -256
 max_value_rel = 256
@@ -382,7 +311,6 @@ anchor_right = 0.0
 margin_top = 672.0
 margin_right = 1012.0
 margin_bottom = 700.0
-theme = SubResource( 22 )
 parameter = "OP2"
 min_value_rel = -256
 max_value_rel = 256
@@ -395,7 +323,6 @@ anchor_right = 0.0
 margin_top = 704.0
 margin_right = 1012.0
 margin_bottom = 732.0
-theme = SubResource( 23 )
 parameter = "OP3"
 min_value_rel = -256
 max_value_rel = 256
@@ -408,7 +335,6 @@ anchor_right = 0.0
 margin_top = 736.0
 margin_right = 1012.0
 margin_bottom = 764.0
-theme = SubResource( 24 )
 parameter = "OP4"
 min_value_rel = -256
 max_value_rel = 256
@@ -421,7 +347,6 @@ anchor_right = 0.0
 margin_top = 768.0
 margin_right = 1012.0
 margin_bottom = 796.0
-theme = SubResource( 25 )
 title = "FMED_MO_OUTPUT"
 title_tooltip = "FMED_MO_OUTPUT_TTIP"
 parameter = "OUT"

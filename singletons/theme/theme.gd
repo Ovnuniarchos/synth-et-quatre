@@ -4,16 +4,17 @@ const BS_NORMAL:String="normal"
 const BS_DISABLED:String="disabled"
 const BS_HOVER:String="hover"
 const BS_PRESSED:String="pressed"
+const BS_HOVER_PRESSED="hover-pressed"
 const TB_NORMAL:String="normal"
 const TB_SELECTED:String="selected"
-const CO_DEFAULT_FG:String="default-fg"
-const CO_DEFAULT_BG:String="default-bg"
-const CO_FADED_FG:String="faded-fg"
-const CO_FADED_BG:String="faded-bg"
-const CO_HOVER_FG:String="hover-fg"
-const CO_HOVER_BG:String="hover-bg"
-const CO_ACCENT_FG:String="accent-fg"
-const CO_ACCENT_BG:String="accent-bg"
+const CO_DEFAULT_FG:String=ThemeParser.CO_DEFAULT_FG
+const CO_DEFAULT_BG:String=ThemeParser.CO_DEFAULT_BG
+const CO_FADED_FG:String=ThemeParser.CO_FADED_FG
+const CO_FADED_BG:String=ThemeParser.CO_FADED_BG
+const CO_HOVER_FG:String=ThemeParser.CO_HOVER_FG
+const CO_HOVER_BG:String=ThemeParser.CO_HOVER_BG
+const CO_ACCENT_FG:String=ThemeParser.CO_ACCENT_FG
+const CO_ACCENT_BG:String=ThemeParser.CO_ACCENT_BG
 const DEFAULT_COLORS:Dictionary={
 	CO_DEFAULT_FG:Color.black,
 	CO_DEFAULT_BG:Color.white,
@@ -82,20 +83,21 @@ func parse_theme(file:String)->Theme:
 	# Colors
 	std_colors=set_default_colors(new_theme,theme_data)
 	ThemeParser.set_std_colors({
-		"background":std_colors[CO_DEFAULT_BG],
-		"foreground":std_colors[CO_DEFAULT_FG],
-		"backgroundfaded":std_colors[CO_FADED_BG],
-		"foregroundfaded":std_colors[CO_FADED_FG],
-		"backgroundhover":std_colors[CO_HOVER_BG],
-		"foregroundhover":std_colors[CO_HOVER_FG],
-		"backgroundaccent":std_colors[CO_ACCENT_BG],
-		"foregroundaccent":std_colors[CO_ACCENT_FG],
+		CO_DEFAULT_BG:std_colors[CO_DEFAULT_BG],
+		CO_DEFAULT_FG:std_colors[CO_DEFAULT_FG],
+		CO_FADED_BG:std_colors[CO_FADED_BG],
+		CO_FADED_FG:std_colors[CO_FADED_FG],
+		CO_HOVER_BG:std_colors[CO_HOVER_BG],
+		CO_HOVER_FG:std_colors[CO_HOVER_FG],
+		CO_ACCENT_BG:std_colors[CO_ACCENT_BG],
+		CO_ACCENT_FG:std_colors[CO_ACCENT_FG],
 	})
 	button_colorsets={
 		BS_NORMAL:{"fg":std_colors[CO_DEFAULT_FG],"bg":std_colors[CO_DEFAULT_BG]},
 		BS_DISABLED:{"fg":std_colors[CO_FADED_FG],"bg":std_colors[CO_FADED_BG]},
 		BS_HOVER:{"fg":std_colors[CO_HOVER_FG],"bg":std_colors[CO_HOVER_BG]},
-		BS_PRESSED:{"fg":std_colors[CO_DEFAULT_BG],"bg":std_colors[CO_DEFAULT_FG]}
+		BS_PRESSED:{"fg":std_colors[CO_DEFAULT_BG],"bg":std_colors[CO_DEFAULT_FG]},
+		BS_HOVER_PRESSED:{"fg":std_colors[CO_HOVER_BG],"bg":std_colors[CO_HOVER_FG]}
 	}
 	bar_colorsets={
 		BS_NORMAL:{
@@ -589,18 +591,22 @@ func set_button_styles(new_theme:Theme,data:Dictionary,key:String,node_type:Stri
 		BS_NORMAL:std_colors[CO_DEFAULT_FG],
 		BS_DISABLED:std_colors[CO_FADED_FG],
 		BS_HOVER:std_colors[CO_DEFAULT_BG],
-		BS_PRESSED:std_colors[CO_DEFAULT_BG]
+		BS_PRESSED:std_colors[CO_DEFAULT_BG],
+		BS_HOVER_PRESSED:std_colors[CO_DEFAULT_BG]
 	}
 	new_theme.set_constant("hseparation",node_type,0)
 	var frag:Dictionary=ThemeParser.typesafe_get(data,key,{})
 	if not frag.empty():
 		new_theme.set_font("font",node_type,ThemeParser.parse_font(frag,"font",base_dir,std_font))
-		for st in [BS_NORMAL,BS_DISABLED,BS_HOVER,BS_PRESSED]:
+		for st in [BS_NORMAL,BS_DISABLED,BS_HOVER,BS_PRESSED,BS_HOVER_PRESSED]:
 			but_st[st]=ThemeParser.create_stylebox(frag,st,base_dir,button_colorsets[st],but_st[BS_NORMAL],std_image)
 			but_cl[st]=ThemeParser.parse_color(ThemeParser.typesafe_get(frag,st,{}),"color",button_colorsets[st]["fg"])
 	for st in but_st:
-		new_theme.set_stylebox(st,node_type,but_st[st])
-		new_theme.set_color("font_color" if st==BS_NORMAL else "font_color_"+st,node_type,but_cl[st])
+		var st2:String=st
+		if st2==BS_HOVER_PRESSED:
+			st2="hover_pressed"
+		new_theme.set_stylebox(st2,node_type,but_st[st])
+		new_theme.set_color("font_color" if st==BS_NORMAL else "font_color_"+st2,node_type,but_cl[st])
 		# Undocumented (but handy) new_theme color
-		new_theme.set_color("icon_color_"+st,node_type,but_cl[st])
+		new_theme.set_color("icon_color_"+st2,node_type,but_cl[st])
 

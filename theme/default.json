@@ -117,11 +117,11 @@
 		},
 		"pressed":{
 			"type":"flat",
-			"background":"backgroundaccent",
-			"border":"foregroundaccent",
+			"background":"accent-bg",
+			"border":"accent-fg",
 			"border-width":2,
 			"margin":4,
-			"color":"foregroundaccent"
+			"color":"accent-fg"
 		}
 	},
 	"popup":{
@@ -260,12 +260,12 @@
 			"border-width":0
 		},
 		"rownum-sel":{
-			"background":"backgroundaccent",
-			"color":"foregroundaccent"
+			"background":"accent-bg",
+			"color":"accent-fg"
 		},
 		"rownum-sel-hover":{
-			"background":"foregroundaccent",
-			"color":"backgroundaccent"
+			"background":"accent-fg",
+			"color":"accent-bg"
 		},
 		"margin":1
 	},
@@ -291,7 +291,7 @@
 			},
 			"port":{
 				"rect":[111,115,10,10],
-				"color":"foregroundhover"
+				"color":"hover-fg"
 			},
 			"normal":{
 				"margin":[4,8]

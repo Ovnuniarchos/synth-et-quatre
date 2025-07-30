@@ -58,6 +58,11 @@ var cmd_history:Array=[]
 var cmd_ptr:int=0
 
 
+func set_theme(t:Theme)->void:
+	theme=t
+	breakpoint
+
+
 func _ready()->void:
 	init_node_caches()
 	recalc_scrollbars()

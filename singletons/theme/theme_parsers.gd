@@ -43,13 +43,23 @@ const SHADOW_TYPES:Dictionary={
 	ST_DROP:1,
 	ST_OUTLINE:2
 }
+const CO_DEFAULT_FG:String="default-fg"
+const CO_DEFAULT_BG:String="default-bg"
+const CO_FADED_FG:String="faded-fg"
+const CO_FADED_BG:String="faded-bg"
+const CO_HOVER_FG:String="hover-fg"
+const CO_HOVER_BG:String="hover-bg"
+const CO_ACCENT_FG:String="accent-fg"
+const CO_ACCENT_BG:String="accent-bg"
 const STD_COLORS:Dictionary={
-	"background":Color.transparent,
-	"foreground":Color.transparent,
-	"backgroundfaded":Color.transparent,
-	"foregroundfaded":Color.transparent,
-	"backgroundhover":Color.transparent,
-	"foregroundhover":Color.transparent
+	CO_DEFAULT_BG:Color.transparent,
+	CO_DEFAULT_FG:Color.transparent,
+	CO_FADED_BG:Color.transparent,
+	CO_FADED_FG:Color.transparent,
+	CO_HOVER_BG:Color.transparent,
+	CO_HOVER_FG:Color.transparent,
+	CO_ACCENT_BG:Color.transparent,
+	CO_ACCENT_FG:Color.transparent
 }
 
 static func set_std_colors(colors:Dictionary):

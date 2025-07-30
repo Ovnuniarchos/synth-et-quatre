@@ -1,10 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://ui/arp_designer/arp_designer.gd" type="Script" id=1]
 [ext_resource path="res://ui/arp_designer/arp_list.tscn" type="PackedScene" id=2]
 [ext_resource path="res://ui/widgets/bar_editor.tscn" type="PackedScene" id=3]
-
-[sub_resource type="Theme" id=1]
 
 [node name="Arpeggios" type="Tabs"]
 anchor_right = 1.0
@@ -59,7 +57,6 @@ anchor_right = 0.0
 margin_top = 42.0
 margin_right = 715.0
 margin_bottom = 70.0
-theme = SubResource( 1 )
 arpeggio = true
 title = "ARPED_MACRO"
 title_tooltip = "ARPED_MACRO_TTIP"

@@ -625,10 +625,34 @@ msgstr ""
 msgid "FMED_MO_WAVE_TTIP"
 msgstr ""
 
+msgid "FMED_MO_PATK_RATE"
+msgstr ""
+
+msgid "FMED_MO_PATK_RATE_TTIP"
+msgstr ""
+
+msgid "FMED_MO_PATK_LEVEL"
+msgstr ""
+
+msgid "FMED_MO_PATK_LEVEL_TTIP"
+msgstr ""
+
 msgid "FMED_MO_ATTACK"
 msgstr ""
 
 msgid "FMED_MO_ATTACK_TTIP"
+msgstr ""
+
+msgid "FMED_MO_PDEC_RATE"
+msgstr ""
+
+msgid "FMED_MO_PDEC_RATE_TTIP"
+msgstr ""
+
+msgid "FMED_MO_PDEC_LEVEL"
+msgstr ""
+
+msgid "FMED_MO_PDEC_LEVEL_TTIP"
 msgstr ""
 
 msgid "FMED_MO_DECAY"

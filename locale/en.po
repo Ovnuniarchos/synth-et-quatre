@@ -620,11 +620,35 @@ msgstr "Wave"
 msgid "FMED_MO_WAVE_TTIP"
 msgstr "<EMPTY STRING>"
 
+msgid "FMED_MO_PATK_RATE"
+msgstr "PATK rate"
+
+msgid "FMED_MO_PATK_RATE_TTIP"
+msgstr "Pre-attack rate"
+
+msgid "FMED_MO_PATK_LEVEL"
+msgstr "PATK level"
+
+msgid "FMED_MO_PATK_LEVEL_TTIP"
+msgstr "Pre-attack end level/length"
+
 msgid "FMED_MO_ATTACK"
 msgstr "Attack"
 
 msgid "FMED_MO_ATTACK_TTIP"
 msgstr "Attack rate"
+
+msgid "FMED_MO_PDEC_RATE"
+msgstr "PDEC rate"
+
+msgid "FMED_MO_PDEC_RATE_TTIP"
+msgstr "Pre-decay rate"
+
+msgid "FMED_MO_PDEC_LEVEL"
+msgstr "PDEC level"
+
+msgid "FMED_MO_PDEC_LEVEL_TTIP"
+msgstr "Pre-decay end level/length"
 
 msgid "FMED_MO_DECAY"
 msgstr "Decay"

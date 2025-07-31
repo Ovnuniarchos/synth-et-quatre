@@ -33,8 +33,6 @@ func update_instrument()->void:
 	for i in range(1,5):
 		params.get_node("OPS/OP%d"%[i]).set_sliders(ci)
 	params.get_node("Routing").set_sliders(ci)
-	for opm in ops_macro:
-		opm.update_macros(ci)
 	gen_macro.get_node("Tone").set_macro(ci.freq_macro)
 	gen_macro.get_node("Volume").set_macro(ci.volume_macro)
 	gen_macro.get_node("Pan").set_macro(ci.pan_macro)
@@ -42,6 +40,8 @@ func update_instrument()->void:
 	gen_macro.get_node("OpEnable").set_macro(ci.op_enable_macro)
 	gen_macro.get_node("ChInvert").set_macro(ci.chanl_invert_macro)
 	gen_macro.get_node("Clip").set_macro(ci.clip_macro)
+	for opm in ops_macro:
+		opm.update_macros(ci)
 	param_dict={
 		"G_TONE":ci.freq_macro,
 		"G_VOLUME":ci.volume_macro,
@@ -56,7 +56,11 @@ func update_instrument()->void:
 		param_dict["%d_KEY"%[i]]=ci.op_key_macro[i-1]
 		param_dict["%d_DUTY"%[i]]=ci.duty_macros[i-1]
 		param_dict["%d_WAVE"%[i]]=ci.wave_macros[i-1]
+		param_dict["%d_PREATK"%[i]]=ci.pre_attack_macros[i-1]
+		param_dict["%d_PREATKLEV"%[i]]=ci.pre_attack_level_macros[i-1]
 		param_dict["%d_ATTACK"%[i]]=ci.attack_macros[i-1]
+		param_dict["%d_PREDEC"%[i]]=ci.pre_decay_macros[i-1]
+		param_dict["%d_PREDECLEV"%[i]]=ci.pre_decay_level_macros[i-1]
 		param_dict["%d_DECAY"%[i]]=ci.decay_macros[i-1]
 		param_dict["%d_SUSLEV"%[i]]=ci.sus_level_macros[i-1]
 		param_dict["%d_SUSTAIN"%[i]]=ci.sus_rate_macros[i-1]

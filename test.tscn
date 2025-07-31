@@ -5,7 +5,6 @@ script/source = "extends Node
 
 \"\"\"
 FIXME
-	Button HoverPressed style
 TODO:
 	Reset per channel parameters (as a command|button)
 	MIDI input

@@ -14,7 +14,7 @@ script = ExtResource( 3 )
 
 [node name="VBC" type="VBoxContainer" parent="."]
 margin_right = 1012.0
-margin_bottom = 796.0
+margin_bottom = 924.0
 size_flags_horizontal = 3
 script = ExtResource( 2 )
 
@@ -67,11 +67,39 @@ parameter = "WAVE"
 max_value_abs = 255
 mode = 5
 
-[node name="Attack" parent="VBC" instance=ExtResource( 4 )]
+[node name="PreAtkRate" parent="VBC" instance=ExtResource( 4 )]
 anchor_right = 0.0
 margin_top = 128.0
 margin_right = 1012.0
 margin_bottom = 156.0
+title = "FMED_MO_PATK_RATE"
+title_tooltip = "FMED_MO_PATK_RATE_TTIP"
+parameter = "PREATK"
+min_value_rel = -256
+max_value_rel = 256
+max_value_abs = 255
+big_step = 8
+huge_step = 32
+
+[node name="PreAtkLev" parent="VBC" instance=ExtResource( 4 )]
+anchor_right = 0.0
+margin_top = 160.0
+margin_right = 1012.0
+margin_bottom = 188.0
+title = "FMED_MO_PATK_LEVEL"
+title_tooltip = "FMED_MO_PATK_LEVEL_TTIP"
+parameter = "PREATKLEV"
+min_value_rel = -256
+max_value_rel = 256
+max_value_abs = 255
+big_step = 8
+huge_step = 32
+
+[node name="Attack" parent="VBC" instance=ExtResource( 4 )]
+anchor_right = 0.0
+margin_top = 192.0
+margin_right = 1012.0
+margin_bottom = 220.0
 title = "FMED_MO_ATTACK"
 title_tooltip = "FMED_MO_ATTACK_TTIP"
 parameter = "ATTACK"
@@ -81,11 +109,39 @@ max_value_abs = 255
 big_step = 8
 huge_step = 32
 
+[node name="PreDecRate" parent="VBC" instance=ExtResource( 4 )]
+anchor_right = 0.0
+margin_top = 224.0
+margin_right = 1012.0
+margin_bottom = 252.0
+title = "FMED_MO_PDEC_RATE"
+title_tooltip = "FMED_MO_PDEC_RATE_TTIP"
+parameter = "PREDEC"
+min_value_rel = -256
+max_value_rel = 256
+max_value_abs = 255
+big_step = 8
+huge_step = 32
+
+[node name="PreDecLev" parent="VBC" instance=ExtResource( 4 )]
+anchor_right = 0.0
+margin_top = 256.0
+margin_right = 1012.0
+margin_bottom = 284.0
+title = "FMED_MO_PDEC_LEVEL"
+title_tooltip = "FMED_MO_PDEC_LEVEL_TTIP"
+parameter = "PREDECLEV"
+min_value_rel = -256
+max_value_rel = 256
+max_value_abs = 255
+big_step = 8
+huge_step = 32
+
 [node name="Decay" parent="VBC" instance=ExtResource( 4 )]
 anchor_right = 0.0
-margin_top = 160.0
+margin_top = 288.0
 margin_right = 1012.0
-margin_bottom = 188.0
+margin_bottom = 316.0
 title = "FMED_MO_DECAY"
 title_tooltip = "FMED_MO_DECAY_TTIP"
 parameter = "DECAY"
@@ -97,9 +153,9 @@ huge_step = 32
 
 [node name="SusLev" parent="VBC" instance=ExtResource( 4 )]
 anchor_right = 0.0
-margin_top = 192.0
+margin_top = 320.0
 margin_right = 1012.0
-margin_bottom = 220.0
+margin_bottom = 348.0
 title = "FMED_MO_SUSTAIN_LEVEL"
 title_tooltip = "FMED_MO_SUSTAIN_LEVEL_TTIP"
 parameter = "SUSLEV"
@@ -111,9 +167,9 @@ huge_step = 32
 
 [node name="SusRate" parent="VBC" instance=ExtResource( 4 )]
 anchor_right = 0.0
-margin_top = 224.0
+margin_top = 352.0
 margin_right = 1012.0
-margin_bottom = 252.0
+margin_bottom = 380.0
 title = "FMED_MO_SUSTAIN_RATE"
 title_tooltip = "FMED_MO_SUSTAIN_RATE_TTIP"
 parameter = "SUSTAIN"
@@ -125,9 +181,9 @@ huge_step = 32
 
 [node name="Release" parent="VBC" instance=ExtResource( 4 )]
 anchor_right = 0.0
-margin_top = 256.0
+margin_top = 384.0
 margin_right = 1012.0
-margin_bottom = 284.0
+margin_bottom = 412.0
 title = "FMED_MO_RELEASE"
 title_tooltip = "FMED_MO_RELEASE_TTIP"
 parameter = "RELEASE"
@@ -139,9 +195,9 @@ huge_step = 32
 
 [node name="Repeat" parent="VBC" instance=ExtResource( 4 )]
 anchor_right = 0.0
-margin_top = 288.0
+margin_top = 416.0
 margin_right = 1012.0
-margin_bottom = 316.0
+margin_bottom = 444.0
 title = "FMED_MO_REPEAT"
 title_tooltip = "FMED_MO_REPEAT_TTIP"
 parameter = "REPEAT"
@@ -151,9 +207,9 @@ labels = PoolStringArray( "FMED_MO_REPEAT_RELEASE", "FMED_MO_REPEAT_SUSTAIN", "F
 
 [node name="AMIntensity" parent="VBC" instance=ExtResource( 4 )]
 anchor_right = 0.0
-margin_top = 320.0
+margin_top = 448.0
 margin_right = 1012.0
-margin_bottom = 348.0
+margin_bottom = 476.0
 title = "FMED_MO_AM_INTENSITY"
 title_tooltip = "FMED_MO_AM_INTENSITY_TTIP"
 parameter = "AMS"
@@ -165,9 +221,9 @@ huge_step = 32
 
 [node name="AMLFO" parent="VBC" instance=ExtResource( 4 )]
 anchor_right = 0.0
-margin_top = 352.0
+margin_top = 480.0
 margin_right = 1012.0
-margin_bottom = 380.0
+margin_bottom = 508.0
 title = "FMED_MO_AM_LFO"
 title_tooltip = "FMED_MO_AM_LFO_TTIP"
 parameter = "AMLFO"
@@ -179,9 +235,9 @@ labels = PoolStringArray( "FMED_MO_LFO4", "FMED_MO_LFO3", "FMED_MO_LFO2", "FMED_
 
 [node name="KeyScaling" parent="VBC" instance=ExtResource( 4 )]
 anchor_right = 0.0
-margin_top = 384.0
+margin_top = 512.0
 margin_right = 1012.0
-margin_bottom = 412.0
+margin_bottom = 540.0
 title = "FMED_MO_KEY_SCALING"
 title_tooltip = "FMED_MO_KEY_SCALING_TTIP"
 parameter = "KSR"
@@ -193,9 +249,9 @@ huge_step = 4
 
 [node name="Multiplier" parent="VBC" instance=ExtResource( 4 )]
 anchor_right = 0.0
-margin_top = 416.0
+margin_top = 544.0
 margin_right = 1012.0
-margin_bottom = 444.0
+margin_bottom = 572.0
 title = "FMED_MO_MULTIPLIER"
 title_tooltip = "FMED_MO_MULTIPLIER_TTIP"
 parameter = "MUL"
@@ -208,9 +264,9 @@ huge_step = 4
 
 [node name="Divider" parent="VBC" instance=ExtResource( 4 )]
 anchor_right = 0.0
-margin_top = 448.0
+margin_top = 576.0
 margin_right = 1012.0
-margin_bottom = 476.0
+margin_bottom = 604.0
 title = "FMED_MO_DIVIDER"
 title_tooltip = "FMED_MO_DIVIDER_TTIP"
 parameter = "DIV"
@@ -223,9 +279,9 @@ huge_step = 4
 
 [node name="DetuneMode" parent="VBC" instance=ExtResource( 4 )]
 anchor_right = 0.0
-margin_top = 480.0
+margin_top = 608.0
 margin_right = 1012.0
-margin_bottom = 508.0
+margin_bottom = 636.0
 title = "FMED_MO_DETUNE_MODE"
 title_tooltip = "FMED_MO_DETUNE_MODE_TTIP"
 parameter = "DETUNE_M"
@@ -239,9 +295,9 @@ labels = PoolStringArray( "FMED_MO_DETMODE_DELTA", "FMED_MO_DETMODE_FIXED", "FME
 
 [node name="Detune" parent="VBC" instance=ExtResource( 4 )]
 anchor_right = 0.0
-margin_top = 512.0
+margin_top = 640.0
 margin_right = 1012.0
-margin_bottom = 540.0
+margin_bottom = 668.0
 title = "FMED_MO_DETUNE_VALUE"
 title_tooltip = "FMED_MO_DETUNE_VALUE_TTIP"
 parameter = "DETUNE"
@@ -254,9 +310,9 @@ huge_step = 100
 
 [node name="FMIntensity" parent="VBC" instance=ExtResource( 4 )]
 anchor_right = 0.0
-margin_top = 544.0
+margin_top = 672.0
 margin_right = 1012.0
-margin_bottom = 572.0
+margin_bottom = 700.0
 title = "FMED_MO_FM_INTENSITY"
 title_tooltip = "FMED_MO_FM_INTENSITY_TTIP"
 parameter = "FMS"
@@ -268,9 +324,9 @@ huge_step = 32
 
 [node name="FMLFO" parent="VBC" instance=ExtResource( 4 )]
 anchor_right = 0.0
-margin_top = 576.0
+margin_top = 704.0
 margin_right = 1012.0
-margin_bottom = 604.0
+margin_bottom = 732.0
 title = "FMED_MO_FM_LFO"
 title_tooltip = "FMED_MO_FM_LFO_TTIP"
 parameter = "FMLFO"
@@ -282,9 +338,9 @@ labels = PoolStringArray( "FMED_MO_LFO4", "FMED_MO_LFO3", "FMED_MO_LFO2", "FMED_
 
 [node name="Phase" parent="VBC" instance=ExtResource( 4 )]
 anchor_right = 0.0
-margin_top = 608.0
+margin_top = 736.0
 margin_right = 1012.0
-margin_bottom = 636.0
+margin_bottom = 764.0
 title = "FMED_MO_PHASE"
 title_tooltip = "FMED_MO_PHASE_TTIP"
 parameter = "PHI"
@@ -296,9 +352,9 @@ huge_step = 32
 
 [node name="OP1" parent="VBC" instance=ExtResource( 4 )]
 anchor_right = 0.0
-margin_top = 640.0
+margin_top = 768.0
 margin_right = 1012.0
-margin_bottom = 668.0
+margin_bottom = 796.0
 parameter = "OP1"
 min_value_rel = -256
 max_value_rel = 256
@@ -308,9 +364,9 @@ huge_step = 32
 
 [node name="OP2" parent="VBC" instance=ExtResource( 4 )]
 anchor_right = 0.0
-margin_top = 672.0
+margin_top = 800.0
 margin_right = 1012.0
-margin_bottom = 700.0
+margin_bottom = 828.0
 parameter = "OP2"
 min_value_rel = -256
 max_value_rel = 256
@@ -320,9 +376,9 @@ huge_step = 32
 
 [node name="OP3" parent="VBC" instance=ExtResource( 4 )]
 anchor_right = 0.0
-margin_top = 704.0
+margin_top = 832.0
 margin_right = 1012.0
-margin_bottom = 732.0
+margin_bottom = 860.0
 parameter = "OP3"
 min_value_rel = -256
 max_value_rel = 256
@@ -332,9 +388,9 @@ huge_step = 32
 
 [node name="OP4" parent="VBC" instance=ExtResource( 4 )]
 anchor_right = 0.0
-margin_top = 736.0
+margin_top = 864.0
 margin_right = 1012.0
-margin_bottom = 764.0
+margin_bottom = 892.0
 parameter = "OP4"
 min_value_rel = -256
 max_value_rel = 256
@@ -344,9 +400,9 @@ huge_step = 32
 
 [node name="Output" parent="VBC" instance=ExtResource( 4 )]
 anchor_right = 0.0
-margin_top = 768.0
+margin_top = 896.0
 margin_right = 1012.0
-margin_bottom = 796.0
+margin_bottom = 924.0
 title = "FMED_MO_OUTPUT"
 title_tooltip = "FMED_MO_OUTPUT_TTIP"
 parameter = "OUT"
@@ -360,7 +416,11 @@ huge_step = 32
 [connection signal="macro_changed" from="VBC/KeyOn" to="." method="_on_macro_changed"]
 [connection signal="macro_changed" from="VBC/Duty" to="." method="_on_macro_changed"]
 [connection signal="macro_changed" from="VBC/Wave" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="VBC/PreAtkRate" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="VBC/PreAtkLev" to="." method="_on_macro_changed"]
 [connection signal="macro_changed" from="VBC/Attack" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="VBC/PreDecRate" to="." method="_on_macro_changed"]
+[connection signal="macro_changed" from="VBC/PreDecLev" to="." method="_on_macro_changed"]
 [connection signal="macro_changed" from="VBC/Decay" to="." method="_on_macro_changed"]
 [connection signal="macro_changed" from="VBC/SusLev" to="." method="_on_macro_changed"]
 [connection signal="macro_changed" from="VBC/SusRate" to="." method="_on_macro_changed"]

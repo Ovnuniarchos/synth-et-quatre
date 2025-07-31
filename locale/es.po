@@ -620,11 +620,35 @@ msgstr "Onda"
 msgid "FMED_MO_WAVE_TTIP"
 msgstr "<EMPTY STRING>"
 
+msgid "FMED_MO_PATK_RATE"
+msgstr "Vel. PATK"
+
+msgid "FMED_MO_PATK_RATE_TTIP"
+msgstr "Velocidad de preataque"
+
+msgid "FMED_MO_PATK_LEVEL"
+msgstr "Niv. PATK"
+
+msgid "FMED_MO_PATK_LEVEL_TTIP"
+msgstr "Nivel final/longitud de preataque"
+
 msgid "FMED_MO_ATTACK"
 msgstr "Ataque"
 
 msgid "FMED_MO_ATTACK_TTIP"
 msgstr "Velocidad de ataque"
+
+msgid "FMED_MO_PDEC_RATE"
+msgstr "Vel. PDEC"
+
+msgid "FMED_MO_PDEC_RATE_TTIP"
+msgstr "Velocidad de predecaimiento"
+
+msgid "FMED_MO_PDEC_LEVEL"
+msgstr "Niv. PDEC"
+
+msgid "FMED_MO_PDEC_LEVEL_TTIP"
+msgstr "Nivel final/longitud de predecaimiento"
 
 msgid "FMED_MO_DECAY"
 msgstr "Decaimiento"

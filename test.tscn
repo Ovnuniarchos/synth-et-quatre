@@ -5,6 +5,7 @@ script/source = "extends Node
 
 \"\"\"
 FIXME
+	Macro value commands use absolute macro limits
 TODO:
 	Reset per channel parameters (as a command|button)
 	MIDI input

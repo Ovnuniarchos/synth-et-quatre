@@ -2,6 +2,9 @@ extends PatternIO
 class_name PatternReader
 
 
+const ATTRS=Pattern.ATTRS
+
+
 func _init(l:int).(l)->void:
 	pass
 
@@ -20,13 +23,13 @@ func deserialize(inf:ChunkedFile,header:Dictionary)->FileResult:
 	for j in _length:
 		var row:Array=pat.notes[j]
 		var mask:int=inf.get_32()
-		for i in Pattern.ATTRS.MAX:
+		for i in ATTRS.MAX:
 			if mask&(1<<i):
-				row[i]=inf.get_8()
-		if row[Pattern.ATTRS.NOTE]==255:
-			row[Pattern.ATTRS.NOTE]=-1
-		elif row[Pattern.ATTRS.NOTE]==254:
-			row[Pattern.ATTRS.NOTE]=-2
+				row[convert_col_number(i,version)]=inf.get_8()
+		if row[ATTRS.NOTE]==255:
+			row[ATTRS.NOTE]=-1
+		elif row[ATTRS.NOTE]==254:
+			row[ATTRS.NOTE]=-2
 		if version==0:
 			convert_from_v0(row)
 	if inf.get_error():
@@ -34,11 +37,18 @@ func deserialize(inf:ChunkedFile,header:Dictionary)->FileResult:
 	return FileResult.new(OK,pat)
 
 
+func convert_col_number(col:int,version:int)->int:
+	if version==0:
+		if col>=ATTRS.INVL:
+			return col+2
+	return col
+
+
 func convert_from_v0(row:Array)->void:
-	if row[Pattern.ATTRS.PAN]==null:
+	if row[ATTRS.PAN]==null:
 		return
-	var pan:int=int(range_lerp(row[Pattern.ATTRS.PAN]&0x1F,0,63,0,255))
-	var chi:int=row[Pattern.ATTRS.PAN]>>6
-	row[Pattern.ATTRS.PAN]=pan
-	row[Pattern.ATTRS.INVL]=chi&1
-	row[Pattern.ATTRS.INVR]=chi&2
+	var pan:int=int(range_lerp(row[ATTRS.PAN]&0x3F,0,63,0,255))
+	var chi:int=row[ATTRS.PAN]>>6
+	row[ATTRS.PAN]=pan
+	row[ATTRS.INVL]=chi&1
+	row[ATTRS.INVR]=chi&2

@@ -1,3 +1,19 @@
+ABBBB CC DD EFGG HHIJJ [HHIJJ]…
+
+A - Staccato mode
+B - Note/octave
+C - Instrument number
+D - Volume
+E - Left volume sign
+F - Right volume sign
+G - Pan 00-FF
+H - Command
+I - Operator mask
+J - Value
+
+
+
+V0:
 ABBBB CC DD EE FFGHH [FFGHH]…
 
 A - Staccato mode
